@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import EscrowContractFormContainer from '../ui/escrowfactoryform/EscrowFactoryFormContainer'
+import EscrowFactoryFormContainer from '../ui/escrowfactoryform/EscrowFactoryFormContainer'
 
 class EscrowFactory extends Component {
   render() {
@@ -9,7 +9,7 @@ class EscrowFactory extends Component {
           <div className="pure-u-1-1">
             <h1>EscrowFactory</h1>
             <p>Create and deploy the escrow contract here.</p>
-            <EscrowContractFormContainer />
+            <EscrowFactoryFormContainer />
           </div>
         </div>
       </main>
