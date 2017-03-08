@@ -7,16 +7,17 @@ contract EscrowFactory is Ownable {
 
   uint private feePercent;
   uint constant INIT_FEE_PERCENT = 10;
-  address wallet;
+  address wallet = 0x0;
 
-  function EscrowFactory(address _wallet) {
+  function EscrowFactory() {
     feePercent = INIT_FEE_PERCENT;
-    wallet = _wallet;
   }
 
   event EscrowCreated(uint blocks, address escrowAddress);
 
   function createEscrow(address _buyer, address _seller, uint _amount) onlyOwner external returns (address) {
+    if(wallet == 0x0)
+      throw;
     uint fee = ((_amount * 100) / feePercent) / 100;
     Escrow escrow = new Escrow(_buyer, _seller, wallet, _amount, fee);
 
@@ -27,13 +28,13 @@ contract EscrowFactory is Ownable {
     return escrow;
   }
 
-  function changeFeePercent(uint _feePercent) onlyOwner {
+  function setFeePercent(uint _feePercent) external onlyOwner {
      if(_feePercent > 100)
       throw;
      feePercent = _feePercent;
   }
 
-  function changeWalletAddress(address _wallet) onlyOwner {
+  function setWalletAddress(address _wallet) external onlyOwner {
     wallet = _wallet;
   }
 

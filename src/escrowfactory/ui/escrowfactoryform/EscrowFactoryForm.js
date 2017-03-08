@@ -14,25 +14,31 @@ class EscrowFactoryForm extends Component {
     var _factoryInputs = this.state.factoryInputs
     if(event.target.id === "buyerAddress"){
       _factoryInputs['buyerAddress'] = event.target.value
-      //this.setState({ factoryInputs: _factoryInputs })    
+      //this.setState({ factoryInputs: _factoryInputs })
     } else if (event.target.id === "sellerAddress") {
       _factoryInputs['sellerAddress'] = event.target.value
     } else if (event.target.id === "etherAmount") {
       _factoryInputs['etherAmount'] = event.target.value
     }
-    this.setState({ factoryInputs: _factoryInputs })    
+    this.setState({ factoryInputs: _factoryInputs })
     //this.setState({ name: event.target.value })
   }
 
   handleSubmit(event) {
     event.preventDefault()
     console.log(this.state.factoryInputs.buyerAddress.length)
-    // TODO check if the address is valid using web3
-    if (this.state.factoryInputs.buyerAddress.length !== 42 || this.state.factoryInputs.sellerAddress.length !== 42 ){
+
+    //TODO: validate form properly
+    if(!this.state.web3.web3.isAddress(this.state.factoryInputs.buyerAddress)) {
+      return alert("please fill in a valid address")
+    }
+
+    if(!this.state.web3.web3.isAddress(this.state.factoryInputs.sellerAddress)) {
       return alert("please fill in a valid address")
     }
     // TODO put a limit
     // TODO check that its a positive integer
+
 
     this.props.onEscrowFactoryFormSubmit(
       this.state.web3.web3,
