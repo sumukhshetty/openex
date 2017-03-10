@@ -26,6 +26,9 @@ class App extends Component {
         <li className="pure-menu-item">
           <Link to="/escrowfactory" className="pure-menu-link">Escrow Factory</Link>
         </li>
+        <li className="pure-menu-item">
+          <Link to="/posttrade" className="pure-menu-link">Post a Trade</Link>
+        </li>
         <LogoutButtonContainer />
       </span>
     )
