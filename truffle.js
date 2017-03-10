@@ -1,6 +1,8 @@
 var HDWalletProvider = require("truffle-hdwallet-provider");
 var fs = require("fs");
 var path = require("path")
+require('babel-register');
+require('babel-polyfill');
 
 var mnemonic = fs.readFileSync(path.join("./secrets/", "deploy_mnemonic.key"), {encoding: "utf8"}).trim();
 

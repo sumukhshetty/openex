@@ -3,34 +3,28 @@ pragma solidity ^0.4.2;
 import "./zeppelin/ownership/Ownable.sol";
 import "./zeppelin/SafeMath.sol";
 
-contract Escrow is Ownable, SafeMath {
+contract BuyOrder is Ownable, SafeMath {
   address private buyer;
   address private seller; //TODO handle multiple sellers
 
   //amout is in wei
-  uint private amount;
+  uint public amount;
 
   /*uint private multiplier = 100;
   uint private feePercent = 10; //10%*/
-
-  address multiSig;
-
-  //TODO add a struct to store some other things about a buyer
-  //TODO add a struct to store some other things about a owner
 
   enum State { Open, InEscrow }
 
   State public state;
   uint private fee;
 
-  function Escrow(address _buyer, address _seller, address _multiSig, uint _amount, uint _fee) {
-    owner = msg.sender;
-    multiSig = _multiSig;
+  function BuyOrder(address _buyer, address _seller, uint _amount, uint _fee) {
     buyer = _buyer;
     seller = _seller;
     amount = _amount;
-    state = State.Open;
     fee = _fee;
+
+    state = State.Open;
   }
 
 
@@ -55,9 +49,10 @@ contract Escrow is Ownable, SafeMath {
     if(!buyer.send(amount))
       throw;
 
-    selfdestruct(multiSig);
+    selfdestruct(owner);
   }
 
+  //If the seller does not receive payment, the ether can be refunded
   function refundToSeller() stateIs(State.InEscrow) onlyOwner {
     selfdestruct(seller);
   }
