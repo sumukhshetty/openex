@@ -1,4 +1,5 @@
 import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
+import ContractDirectoryContract from '../../../build/contracts/ContractDirectory.json'
 import SellOrderContract from '../../../build/contracts/SellOrder.json'
 import BuyOrderContract from '../../../build/contracts/BuyOrder.json'
 import { browserHistory } from 'react-router'
@@ -22,6 +23,9 @@ export function postTrade(postTradeDetails, web3) {
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
 
+    const directory = contract(ContractDirectoryContract);
+    directory.setProvider(web3.currentProvider);
+
     // Declaring this for later so we can chain functions on Authentication.
     var factoryInstance;
     var gasCost;
@@ -31,7 +35,13 @@ export function postTrade(postTradeDetails, web3) {
     console.log("ok lets go get this")
     var block, orderAddress;
 
-    factory.at('0x12580d09d90e6f6edba8d22e8675997440b03047')
+    directory.deployed()
+    .then(function(_directory) {
+      return _directory.orderFactoryAddress();
+    })
+    .then(function(_orderFactoryAddress) {
+      return factory.at(_orderFactoryAddress);
+    })
     .then(function(_factory) {
       factoryInstance = _factory;
       return web3.eth.getBlockNumber();
