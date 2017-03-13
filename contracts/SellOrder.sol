@@ -5,11 +5,6 @@ import "./zeppelin/SafeMath.sol";
 
 contract SellOrder is Ownable, SafeMath {
 
-  struct Order {
-    bool paymentReceived;
-    uint amount;
-  }
-
   mapping(address => uint) public buyers;
   address public seller;
 
