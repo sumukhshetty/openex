@@ -28,18 +28,27 @@ class OrdersList extends Component {
     //var list = JSON.stringify(this.state.ordersList).split(',');
     //console.log(list);
     const orderList = ordersList.map( (val, index) => (
-      <li class="orderItem" key={index}>
-        Address:
-        {val}
-      </li>
+      <tr class="orderItem" key={index}>
+        <td>
+          {val[0]}
+        </td>
+        <td>
+          {val[1]}
+        </td>
+      </tr>
     ));
 
     return(
-      <div className="orderList">
-        <ul>
+      <table className="orderList">
+        <th>
+          <tr>
+            <td>Address</td>
+          </tr>
+        </th>
+        <tbody>
           {orderList}
-        </ul>
-      </div>
+        </tbody>
+      </table>
     )
   }
 }

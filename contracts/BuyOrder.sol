@@ -5,13 +5,10 @@ import "./zeppelin/SafeMath.sol";
 
 contract BuyOrder is Ownable, SafeMath {
   address private buyer;
-  address private seller; //TODO handle multiple sellers
+  address private seller;
 
   //amout is in wei
   uint public amount;
-
-  /*uint private multiplier = 100;
-  uint private feePercent = 10; //10%*/
 
   enum State { Open, InEscrow }
 
@@ -37,7 +34,7 @@ contract BuyOrder is Ownable, SafeMath {
   function pay() payable stateIs(State.Open) {
     if(msg.value != safeAdd(amount, fee))
       throw;
-    //possible book keeping?
+
     state = State.InEscrow;
     InEscrow(block.number);
   }
@@ -53,7 +50,9 @@ contract BuyOrder is Ownable, SafeMath {
   }
 
   //If the seller does not receive payment, the ether can be refunded
-  function refundToSeller() stateIs(State.InEscrow) onlyOwner {
+  function refundToSeller() stateIs(State.InEscrow) {
+    if(msg.sender != buyer && msg.sender != owner)
+      throw;
     selfdestruct(seller);
   }
 

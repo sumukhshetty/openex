@@ -16,28 +16,25 @@ contract OrderFactory is Ownable {
     feePercent = INIT_FEE_PERCENT;
   }
 
-  //consider refactoring into one Order event with an order type parameter
-  event BuyOrderCreated(address seller, address orderAddress);
-  event SellOrderCreated(address seller, address orderAddress);
+  //Only contracts whose addresses are logged by this event will appear on the exchange.
+  event OrderCreated(address seller, address orderAddress, string orderType);
 
   function createBuyOrder(address _buyer, uint amount) external returns (address) {
     BuyOrder order = new BuyOrder(_buyer, msg.sender, amount, calculateFee(amount));
 
     order.transferOwnership(owner);
 
-    //Only Order contracts whose addresses are passed to this event will appear as listings on the exchange.
-    BuyOrderCreated(msg.sender, order);
+    OrderCreated(msg.sender, order, "buy");
 
     return order;
   }
 
   function createSellOrder() external returns (address) {
-    SellOrder order = new SellOrder(msg.sender);
+    SellOrder order = new SellOrder(msg.sender, feePercent);
 
     order.transferOwnership(owner);
 
-    //Only Order contracts whose addresses are passed to this event will appear as listings on the exchange.
-    SellOrderCreated(msg.sender, order);
+    OrderCreated(msg.sender, order, "sell");
 
     return order;
   }

@@ -14,6 +14,8 @@ import Profile from './user/layouts/profile/Profile';
 import EscrowFactory from './escrowfactory/layouts/EscrowFactory'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'
 import OrdersList from './orderslist/layouts/OrdersList'
+import OrderDetail from './orderdetail/layouts/OrderDetail'
+
 
 // Redux Store
 import store from './store';
@@ -34,6 +36,7 @@ ReactDOM.render((
           <Route path="escrowfactory" component={UserIsAuthenticated(EscrowFactory)} />
           <Route path="posttrade" component={UserIsAuthenticated(PostTradeForm)} />
           <Route path="orderslist" component={UserIsAuthenticated(OrdersList)} />
+          <Route path="orderdetail/:address" component={UserIsAuthenticated(OrderDetail)} />
         </Route>
       </Router>
     </Provider>

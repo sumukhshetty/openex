@@ -36,12 +36,12 @@ export function ordersList(web3) {
     })
     .then(function(_factory) {
       factoryInstance = _factory;
-      var sellOrderCreatedEvent = factoryInstance.SellOrderCreated({seller: web3.eth.coinbase},{fromBlock: 0, toBlock: 'pending'});
-        sellOrderCreatedEvent.watch(function(error, result) {
+      var orderCreatedEvent = factoryInstance.OrderCreated({seller: web3.eth.coinbase},{fromBlock: 0, toBlock: 'pending'});
+        orderCreatedEvent.watch(function(error, result) {
           if(error) {
             console.log(error);
           }
-          _ordersList.push(result.args.orderAddress);
+          _ordersList.push([result.args.orderAddress, result.args.orderType]);
           console.log(_ordersList);
           dispatch(getOrdersList(_ordersList));
         });

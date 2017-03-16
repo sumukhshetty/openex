@@ -56,33 +56,22 @@ export function postTrade(postTradeDetails, web3) {
       }
     })
     .then(function(txHash) {
-      console.log(txHash);
-      //return browserHistory.push('/dashboard');
-      console.log(postTradeDetails.tradeType);
-      if(postTradeDetails.tradeType === "sell-ether") {
-        return new Promise(function(resolve, reject) {
-        var sellOrderCreatedEvent = factoryInstance.SellOrderCreated({seller: web3.eth.coinbase},{fromBlock: block, toBlock: 'pending'});
-          sellOrderCreatedEvent.watch(function(error, result) {
-            if(error) {
-              console.log(error);
-            }
+      let orderType = (postTradeDetails.tradeType === "sell-ether") ? "sell" : "buy";
+      return new Promise(function(resolve, reject) {
+      var orderCreatedEvent = factoryInstance.OrderCreated({seller: web3.eth.coinbase, orderType: web3.sha3(orderType)},{fromBlock: block, toBlock: 'pending'});
+        orderCreatedEvent.watch(function(error, result) {
+          if(error) {
+            console.log(error);
+          }
+          console.log(result.args);
+          if(result.args.orderAddress) {
             orderAddress = result.args.orderAddress;
-            sellOrderCreatedEvent.stopWatching();
+            orderCreatedEvent.stopWatching();
             resolve();
-          })});
-      } else {
-        var buyOrderCreatedEvent = factoryInstance.BuyOrderCreated({seller: web3.eth.coinbase},{fromBlock: block, toBlock: 'latest'});
-        return new Promise(function(resolve, reject) {
-          buyOrderCreatedEvent.watch(function(error, result) {
-            if(error) {
-              console.log(error);
-            }
-            orderAddress = result.args.orderAddress;
-            buyOrderCreatedEvent.stopWatching();
-            resolve();
-          })});
-      }
-    }).then(function() {
+          }
+        })});
+    })
+    .then(function() {
       //add orderAddress to the list of this user's orders.
       console.log(orderAddress);
       console.log("event was fired?")
