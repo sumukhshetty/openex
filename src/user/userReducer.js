@@ -1,9 +1,9 @@
 const initialState = {
-  data: null
+  data: null,
 }
 
 const userReducer = (state = initialState, action) => {
-  if (action.type === 'USER_LOGGED_IN' || action.type === 'USER_UPDATED')
+  if (action.type === 'USER_LOGGED_IN' || action.type === 'USER_UPDATED' || action.type === 'USER_SIGNED_UP' )
   {
     return Object.assign({}, state, {
       data: action.payload

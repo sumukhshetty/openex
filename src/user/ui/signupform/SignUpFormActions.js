@@ -1,8 +1,6 @@
-import AuthenticationContract from '../../../../build/contracts/Authentication.json'
-import { loginUser } from '../loginbutton/LoginButtonActions'
+import {firebaseRef} from './../../../index.js'
 //import { browserHistory } from 'react-router'
 
-const contract = require('truffle-contract')
 
 export const USER_SIGNED_UP = 'USER_SIGNED_UP'
 function userSignedUp(user) {
@@ -12,34 +10,24 @@ function userSignedUp(user) {
   }
 }
 
-export function signUpUser(name, web3) {
+
+export function signUpUser(signUpInfo, web3) {
   return function(dispatch) {
-    // Using truffle-contract we create the authentication object.
-    const authentication = contract(AuthenticationContract)
-    authentication.setProvider(web3.currentProvider)
+    const auth = firebaseRef.auth()
+    var userid = "";
+    var email = signUpInfo.email;
+    const pass = signUpInfo.password;
+    var errormessage = '';
+    auth.createUserWithEmailAndPassword(email, pass).then(function(firebaseUser) {
+      userid = firebaseUser.uid;
+      var userdata = {"email":email};
+      firebaseRef.database().ref("users/" + userid).set(userdata);
+      dispatch(userSignedUp(firebaseUser))
 
-    // Declaring this for later so we can chain functions on Authentication.
-    var authenticationInstance;
-
-    // Get current ethereum wallet.
-    var coinbase = web3.eth.coinbase;
-
-    authentication.deployed().then(function(instance) {
-      authenticationInstance = instance
-
-      // Attempt to sign up user.
-      authenticationInstance.signup(name, {from: coinbase})
-      .catch(function(result) {
-        // If error...
-        console.log(result);
-      })
-      .then(function(result) {
-        // If no error, login user.
-        // DEVELOPER NOTE: calling dispatch with the userSignedUp action
-        // will send an undefined action type to the reducer
-        //dispatch(userSignedUp())
-        dispatch(loginUser(web3))
-      })
-    })
+    }).catch(function(error) {
+      errormessage = error.message;
+      console.log(errormessage)
+      //TODO handleAuthError
+    });
   }
 }
