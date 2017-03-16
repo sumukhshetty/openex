@@ -45,7 +45,7 @@ a:hover {
 
 header {
   position: relative;
-  min-height: 20vh;
+  min-height: 120px;
   width: 100%;
 }
 
@@ -80,7 +80,7 @@ header .menu a:hover {
 
 .usp {
   font-weight: 100;
-  margin-top: 15%;
+  margin-top: 120px;
   color: white;
 }
 
@@ -194,7 +194,7 @@ header .menu a:hover {
 
 main footer {
   font-size: smaller;
-  margin-top: 4rem;
+  margin-top: 8rem;
 }
 
 /* button customizations */
