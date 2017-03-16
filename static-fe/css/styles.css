@@ -109,6 +109,13 @@ header .menu a:hover {
   cursor: pointer;
 }
 
+.check-mark {
+  display: block;
+  width: 20px;
+  margin: auto;
+  margin-top: 0.5rem;
+}
+
 .ethereum-automte {
   padding: 1px 1rem; /*prevent margin collapse with 1px padding on top*/
   background-color: white;
