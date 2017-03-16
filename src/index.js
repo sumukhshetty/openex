@@ -13,13 +13,23 @@ import SignUp from './user/layouts/signup/SignUp';
 import Profile from './user/layouts/profile/Profile';
 import EscrowFactory from './escrowfactory/layouts/EscrowFactory'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'
+import Login from './user/layouts/login/Login'
 
 // Redux Store
-import store from './store';
-
+import store from './store'
+import * as firebase from 'firebase'
+import * as _firebaseconfig from './../secrets/firebaseconfig'
 // Config
 //import truffleConfig from './../truffle-config.js'
 
+var config = {
+  apiKey: _firebaseconfig._apiKey,
+  authDomain: _firebaseconfig._authDomain,
+  databaseURL: _firebaseconfig._databaseURL,
+  storageBucket: _firebaseconfig._storageBucket,
+  messagingSenderId: _firebaseconfig._messagingSenderId
+};
+export var firebaseRef = firebase.initializeApp(config);
 const history = syncHistoryWithStore(browserHistory, store)
 
 ReactDOM.render((
@@ -29,6 +39,7 @@ ReactDOM.render((
           <IndexRoute component={Home} />
           <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
           <Route path="signup" component={UserIsNotAuthenticated(SignUp)} />
+          <Route path="login" component={UserIsNotAuthenticated(Login)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
           <Route path="escrowfactory" component={UserIsAuthenticated(EscrowFactory)} />
           <Route path="posttrade" component={UserIsAuthenticated(PostTradeForm)} />

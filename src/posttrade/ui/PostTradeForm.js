@@ -20,6 +20,7 @@ class PostTradeForm extends Component {
         termsOfTrade:''
       },
       buyFormBool: false,
+      user: this.props.user
     }
   }
 
@@ -88,6 +89,7 @@ class PostTradeForm extends Component {
     this.props.onPostTradeFormSubmit(
       this.state.postTradeDetails,
       this.state.web3.web3,
+      this.state
     )
   }
   render() {

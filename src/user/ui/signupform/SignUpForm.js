@@ -6,33 +6,55 @@ class SignUpForm extends Component {
 
     this.state = {
       name: '',
+      signUpInfo: {},
+      email:'',
+      password:'',
       web3: this.props.web3
     }
   }
 
+  componentWillMount(){
+    this.setState({signUpInfo:Object.assign({}, 
+        this.state.signUpInfo, {address:this.props.web3.web3.coinbase}
+      )})
+  }
+
   onInputChange(event) {
-    this.setState({ name: event.target.value })
+    var _signUpInfo = this.state.signUpInfo
+    if(event.target.id === "email"){
+      _signUpInfo = Object.assign({}, 
+        this.state.signUpInfo, {email:event.target.value}
+      )
+    }
+    if(event.target.id === "password"){
+      _signUpInfo = Object.assign({}, 
+        this.state.signUpInfo, {password:event.target.value}
+      )
+    }
+    this.setState({ signUpInfo: _signUpInfo })
   }
 
   handleSubmit(event) {
     event.preventDefault()
 
-    if (this.state.name.length < 2)
-    {
-      return alert('Please fill in your name.')
-    }
-    this.props.onSignUpFormSubmit(this.state.name, this.props.web3.web3)
+    this.props.onSignUpFormSubmit(this.state.signUpInfo, this.props.web3.web3)
   }
 
   render() {
     return(
       <form className="pure-form pure-form-stacked" onSubmit={this.handleSubmit.bind(this)}>
         <fieldset>
-          <label htmlFor="name">Name</label>
-          <input id="name" type="text" value={this.state.name} onChange={this.onInputChange.bind(this)} placeholder="Name" />
+          <label htmlFor="email">Email</label>
+          <input id="email" type="email" value={this.state.signUpInfo.email} onChange={this.onInputChange.bind(this)} placeholder="Email" />
           <span className="pure-form-message">This is a required field.</span>
 
           <br />
+          <label htmlFor="password">password</label>
+          <input id="password" type="password" value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder="Email" />
+          <span className="pure-form-message">This is a required field.</span>
+
+          <br />
+
 
           <button type="submit" className="pure-button pure-button-primary">Sign Up</button>
         </fieldset>
