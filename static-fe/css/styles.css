@@ -34,6 +34,15 @@ body {
   background-size: 100%;
 }
 
+a {
+  text-decoration: none;
+  color: #007ee5;
+}
+
+a:hover {
+  color: #004ea5;
+}
+
 header {
   position: relative;
   min-height: 20vh;
@@ -104,7 +113,7 @@ header .menu a:hover {
   padding: 1px 1rem; /*prevent margin collapse with 1px padding on top*/
   background-color: white;
   height: 100%;
-  min-height: 30rem;
+  min-height: 22rem;
   box-shadow: 0 5px 10px rgba(0,0,0,0.2);
   position: relative;
 }
@@ -141,6 +150,12 @@ header .menu a:hover {
   width: 100%;
 }
 
+.ethereum-automte footer {
+  font-size: 0.8rem;
+  line-height: 35px;
+  margin-top: 1rem;
+}
+
 .conversion-rate {
   margin-top: 2rem;
   color: #eee;
@@ -168,6 +183,11 @@ header .menu a:hover {
   color: #4890e2;
   border-color: #4890e2;
   box-shadow: 0 0 16px #4890e2;
+}
+
+main footer {
+  font-size: smaller;
+  margin-top: 4rem;
 }
 
 /* button customizations */
