@@ -11,7 +11,7 @@ import Web3InitContainer from './web3/Web3InitContainer'
 import './css/oswald.css'
 import './css/open-sans.css'
 import './css/pure-min.css'
-import './App.css'
+import './css/styles-common.css'
 
 class App extends Component {
   render() {
@@ -45,7 +45,7 @@ class App extends Component {
     return (
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
-          <Link to="/" className="pure-menu-heading pure-menu-link">Truffle Box</Link>
+          <Link to="/" className="pure-menu-heading pure-menu-link">Automte</Link>
           <Web3InitContainer/>
           <ul className="pure-menu-list navbar-right">
             <OnlyGuestLinks />
