@@ -23,16 +23,10 @@ class App extends Component {
           <Link to="/profile" className="pure-menu-link">Profile</Link>
         </li>
         <li className="pure-menu-item">
-          <Link to="/escrowfactory" className="pure-menu-link">Escrow Factory</Link>
-        </li>
-        <li className="pure-menu-item">
           <Link to="/posttrade" className="pure-menu-link">Post a Trade</Link>
         </li>
         <li className="pure-menu-item">
           <Link to="/orderslist" className="pure-menu-link">View Orders</Link>
-        </li>
-        <li className="pure-menu-item">
-          <Link to="/sellorderslist" className="pure-menu-link">View Sell Orders</Link>
         </li>
         <LogoutButtonContainer />
       </span>
