@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
 // UI Components
-import LoginButtonContainer from './user/ui/loginbutton/LoginButtonContainer'
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import Web3InitContainer from './web3/Web3InitContainer'
 
@@ -24,10 +23,10 @@ class App extends Component {
           <Link to="/profile" className="pure-menu-link">Profile</Link>
         </li>
         <li className="pure-menu-item">
-          <Link to="/escrowfactory" className="pure-menu-link">Escrow Factory</Link>
+          <Link to="/posttrade" className="pure-menu-link">Post a Trade</Link>
         </li>
         <li className="pure-menu-item">
-          <Link to="/posttrade" className="pure-menu-link">Post a Trade</Link>
+          <Link to="/orderslist" className="pure-menu-link">View Orders</Link>
         </li>
         <LogoutButtonContainer />
       </span>
@@ -38,7 +37,9 @@ class App extends Component {
         <li className="pure-menu-item">
           <Link to="/signup" className="pure-menu-link">Sign Up</Link>
         </li>
-        <LoginButtonContainer />
+        <li className="pure-menu-item">
+          <Link to="/login" className="pure-menu-link">Log in</Link>
+        </li>
       </span>
     )
 

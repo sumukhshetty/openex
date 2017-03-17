@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import SignUpForm from './SignUpForm'
-import { signUpUser } from './SignUpFormActions'
+import LoginForm from './LoginForm'
+import { loginUser } from './LoginFormActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -11,17 +11,16 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSignUpFormSubmit: (name, web3) => {
+    onLoginFormSubmit: (loginInfo, web3) => {
       event.preventDefault();
-
-      dispatch(signUpUser(name, web3))
+      dispatch(loginUser(loginInfo, web3))
     }
   }
 }
 
-const SignUpFormContainer = connect(
+const LoginFormContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignUpForm)
+)(LoginForm)
 
-export default SignUpFormContainer
+export default LoginFormContainer
