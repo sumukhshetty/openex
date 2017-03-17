@@ -1,4 +1,5 @@
 import { browserHistory } from 'react-router'
+import {firebaseRef} from './../../../index.js'
 
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT'
 function userLoggedOut(user) {
@@ -11,7 +12,11 @@ function userLoggedOut(user) {
 export function logoutUser() {
   return function(dispatch) {
     // Logout user.
-    dispatch(userLoggedOut())
+    const auth = firebaseRef.auth()
+    auth.signOut().then(function(promise){
+      console.log("logout")
+      dispatch(userLoggedOut())
+    })   
 
     // Redirect home.
     return browserHistory.push('/')
