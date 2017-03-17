@@ -83,7 +83,7 @@ export function postTrade(postTradeDetails, web3, state) {
         firebaseRef.database().ref("buyorders/" + state.user.data.uid + '/' + orderId).set(postTradeDetails);
       }
       dispatch(tradeCreated(postTradeDetails))
-      browserHistory.push('/dashboard')
+      browserHistory.push('/orderslist')
     })
   }
 }

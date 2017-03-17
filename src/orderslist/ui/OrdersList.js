@@ -24,32 +24,41 @@ class OrdersList extends Component {
   render() {
     console.log(this.props);
     console.log(typeof this.props.ordersList);
-    var ordersList = (this.props.ordersList.ordersList) ? this.props.ordersList.ordersList : [];
+    var ordersList = this.props.ordersList.ordersList;
     //var list = JSON.stringify(this.state.ordersList).split(',');
     //console.log(list);
-    const orderList = ordersList.map( (val, index) => (
-      <tr class="orderItem" key={index}>
-        <td>
-          {val[0]}
-        </td>
-        <td>
-          {val[1]}
-        </td>
-      </tr>
-    ));
 
-    return(
-      <table className="orderList">
-        <th>
-          <tr>
-            <td>Address</td>
-          </tr>
-        </th>
-        <tbody>
-          {orderList}
-        </tbody>
-      </table>
-    )
+    if(ordersList) {
+      const orderList = ordersList.map( (val, index) => (
+        <tr className="orderItem" key={index}>
+          <td>
+            {val[0]}
+          </td>
+          <td>
+            {val[1]}
+          </td>
+        </tr>
+      ));
+      return(
+        <table className="orderList">
+          <th>
+            <tr>
+              <td>Address</td>
+            </tr>
+          </th>
+          <tbody>
+            {orderList}
+          </tbody>
+        </table>
+      )
+    } else {
+      return(
+        //TODO: sick animation
+        <label>Loading...</label>
+      )
+    }
+
+
   }
 }
 
