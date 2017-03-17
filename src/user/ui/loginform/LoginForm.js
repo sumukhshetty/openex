@@ -6,6 +6,7 @@ class LoginForm extends Component {
 
     this.state = {
       web3: this.props.web3,
+      user: this.props.user,
       loginInfo: {}
     }
   }

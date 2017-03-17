@@ -7,7 +7,7 @@ class Dashboard extends Component {
         <div className="pure-g">
           <div className="pure-u-1-1">
             <h1>Dashboard</h1>
-            <p><strong>Congratulations {this.props.user.data.email}!</strong> If you're seeing this page, you've logged in with your own smart contract successfully.</p>
+            <p><strong>Congratulations {this.props.user}!</strong> If you're seeing this page, you've logged in with your own smart contract successfully.</p>
           </div>
         </div>
       </main>

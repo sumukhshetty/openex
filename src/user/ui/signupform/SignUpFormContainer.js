@@ -4,7 +4,8 @@ import { signUpUser } from './SignUpFormActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    web3: state.web3
+    web3: state.web3,
+    user: state.user
   }
 }
 
