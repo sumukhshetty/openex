@@ -16,7 +16,7 @@ class LoginButton extends Component {
   render(){
     return(
       <li className="pure-menu-item">
-        <a href="#" className="pure-menu-link" onClick={this.onLoginButtonClick.bind(this)}>Login</a>
+        <a href="#" onClick={this.onLoginButtonClick.bind(this)}>Login</a>
       </li>
     )
   }

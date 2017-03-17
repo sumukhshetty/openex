@@ -12,49 +12,60 @@ import './css/oswald.css'
 import './css/open-sans.css'
 import './css/pure-min.css'
 import './css/styles-common.css'
+import logo from './images/logo.svg'
 
 class App extends Component {
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
-      <span>
+      <ul className="pure-menu-list">
         <li className="pure-menu-item">
-          <Link to="/dashboard" className="pure-menu-link">Dashboard</Link>
+          <Link to="/dashboard">Dashboard</Link>
         </li>
         <li className="pure-menu-item">
-          <Link to="/profile" className="pure-menu-link">Profile</Link>
+          <Link to="/profile">Profile</Link>
         </li>
         <li className="pure-menu-item">
-          <Link to="/escrowfactory" className="pure-menu-link">Escrow Factory</Link>
+          <Link to="/escrowfactory">Escrow Factory</Link>
         </li>
         <li className="pure-menu-item">
-          <Link to="/posttrade" className="pure-menu-link">Post a Trade</Link>
+          <Link to="/posttrade">Post a Trade</Link>
         </li>
         <LogoutButtonContainer />
-      </span>
+      </ul>
     )
 
     const OnlyGuestLinks = HiddenOnlyAuth(() =>
-      <span>
+      <ul className="pure-menu-list">
         <li className="pure-menu-item">
-          <Link to="/signup" className="pure-menu-link">Sign Up</Link>
+          <Link to="/signup">Sign Up</Link>
         </li>
         <LoginButtonContainer />
-      </span>
+      </ul>
     )
 
     return (
-      <div className="App">
-        <nav className="navbar pure-menu pure-menu-horizontal">
-          <Link to="/" className="pure-menu-heading pure-menu-link">Automte</Link>
-          <Web3InitContainer/>
-          <ul className="pure-menu-list navbar-right">
-            <OnlyGuestLinks />
-            <OnlyAuthLinks />
-          </ul>
-        </nav>
+      <section className="App">
+        <header>
+          <div className="container">
+            <div className="pure-g">
+              <div className="pure-u-1-4 brand">
+                <Link to="/">
+                  <img className="brand" src={logo} alt="" />
+                </Link>
+              </div>
+              <div className="pure-u-3-4 menu">
+                <nav className="pure-menu pure-menu-horizontal">
+                  <Web3InitContainer/>
+                  <OnlyGuestLinks />
+                  <OnlyAuthLinks />
+                </nav>
+              </div>
+            </div>
+          </div>
+        </header>
 
         {this.props.children}
-      </div>
+      </section>
     );
   }
 }
