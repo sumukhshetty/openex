@@ -83,15 +83,33 @@ class PostTradeForm extends Component {
     this.setState({postTradeDetails: _postTradeDetails}) 
   }
 
+
   handleSubmit(event) {
     event.preventDefault()
+    var now = new Date()
+    var orderId = this.state.web3.web3.sha3(this.state.user.data.uid + '-'+ now)
+    var _postTradeDetails = Object.assign({}, 
+      this.state.postTradeDetails, 
+        {lastUpated:now.toUTCString(),
+          orderId: orderId
+        }
+      )
+    if (this.state.postTradeDetails.tradeType === "sell-ether") {
+      this.props.onPostTradeFormSubmit(
+        this.state.postTradeDetails,
+        this.state.web3.web3,
+        this.state
+      )
+    }
+    if (this.state.postTradeDetails.tradeType === "buy-ether") {
+      this.props.onBuyEtherFormSubmit(
+        _postTradeDetails,
+        this.state.web3.web3,
+        this.state
+        )
+    }
+    }
 
-    this.props.onPostTradeFormSubmit(
-      this.state.postTradeDetails,
-      this.state.web3.web3,
-      this.state
-    )
-  }
   render() {
 
     return(

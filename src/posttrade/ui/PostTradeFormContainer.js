@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import PostTradeForm from './PostTradeForm'
-import { postTrade } from './PostTradeFormActions'
+import { postTrade, buyEtherPostTrade } from './PostTradeFormActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -15,6 +15,10 @@ const mapDispatchToProps = (dispatch) => {
       event.preventDefault();
 
       dispatch(postTrade(tradeDetails, web3, state))
+    },
+    onBuyEtherFormSubmit: (tradeDetails, web3, state) => {
+      event.preventDefault();
+      dispatch(buyEtherPostTrade(tradeDetails, web3, state))
     }
   }
 }

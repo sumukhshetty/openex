@@ -1,8 +1,6 @@
 import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
 import ContractDirectoryContract from '../../../build/contracts/ContractDirectory.json'
-import SellOrderContract from '../../../build/contracts/SellOrder.json'
-import BuyOrderContract from '../../../build/contracts/BuyOrder.json'
-import { browserHistory } from 'react-router'
+//import { browserHistory } from 'react-router'
 
 const contract = require('truffle-contract')
 
@@ -15,9 +13,7 @@ function getOrdersList(ordersListPayload) {
 }
 
 export function ordersList(web3) {
-  console.log("in ordersList(web3)")
   return function(dispatch) {
-    console.log("web3.eth.coinbase: " + web3.eth.coinbase);
     const factory = contract(OrderFactoryContract);
     var factoryInstance;
 
@@ -27,7 +23,7 @@ export function ordersList(web3) {
     factory.setProvider(web3.currentProvider);
     directory.setProvider(web3.currentProvider);
 
-    directory.deployed()
+    directory.at("0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3")
     .then(function(_directory) {
       return _directory.orderFactoryAddress();
     })
@@ -41,24 +37,11 @@ export function ordersList(web3) {
           if(error) {
             console.log(error);
           }
+          // TODO change this to a list of dict
+          console.log(result)
           _ordersList.push([result.args.orderAddress, result.args.orderType]);
-          console.log(_ordersList);
           dispatch(getOrdersList(_ordersList));
         });
     })
-    // factory.at('0x12580d09d90e6f6edba8d22e8675997440b03047')
-    // .then(function(_factory) {
-    //   factoryInstance = _factory;
-    //   var sellOrderCreatedEvent = factoryInstance.SellOrderCreated({seller: web3.eth.coinbase},{fromBlock: 0, toBlock: 'pending'});
-    //     sellOrderCreatedEvent.watch(function(error, result) {
-    //       if(error) {
-    //         console.log(error);
-    //       }
-    //       _ordersList.push(result.args.orderAddress);
-    //       console.log(_ordersList);
-    //       dispatch(getOrdersList(_ordersList));
-    //     });
-    //
-    // })
   }
 }

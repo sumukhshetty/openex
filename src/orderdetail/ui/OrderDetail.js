@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
-import {orderDetail} from './OrderDetailActions.js'
+//import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
+//import {orderDetail} from './OrderDetailActions.js'
 
 class OrderDetail extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class OrderDetail extends Component {
     var orderDetail = (this.props.orderDetail.orderDetail) ? this.props.orderDetail.orderDetail : [];
     //var list = JSON.stringify(this.state.ordersList).split(',');
     //console.log(list);
-    if(orderDetail.length == 0) {
+    if(orderDetail.length === 0) {
       return(
         <label>Loading...</label>
       )
