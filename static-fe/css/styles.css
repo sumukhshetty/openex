@@ -197,6 +197,10 @@ main footer {
   margin-top: 8rem;
 }
 
+.copyright {
+  color: #ddd;
+}
+
 /* button customizations */
 button.right {
   float: right;
