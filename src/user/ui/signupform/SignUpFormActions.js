@@ -13,8 +13,6 @@ function userSignedUp(user) {
 
 export function signUpUser(signUpInfo, web3) {
   return function(dispatch) {
-    // Using truffle-contract we create the authentication object.
-    // Get current ethereum wallet.
     const auth = firebaseRef.auth()
     var userid = "";
     var email = signUpInfo.email;
@@ -31,6 +29,5 @@ export function signUpUser(signUpInfo, web3) {
       console.log(errormessage)
       //TODO handleAuthError
     });
-
   }
 }
