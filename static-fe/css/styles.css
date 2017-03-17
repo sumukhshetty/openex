@@ -192,9 +192,10 @@ header .menu a:hover {
   box-shadow: 0 0 16px #4890e2;
 }
 
-main footer {
+footer.page-footer {
   font-size: smaller;
   margin-top: 8rem;
+  margin-bottom: 1rem;
 }
 
 .copyright {
