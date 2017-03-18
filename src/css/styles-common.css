@@ -1,0 +1,208 @@
+html * {
+  box-sizing: border-box;
+  font-family: Lato, sans-serif;
+}
+
+.container {
+  width: 70%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.gradient, .gradient:hover {
+  background: rgba(5,213,255,1);
+  background: -moz-linear-gradient(-45deg, rgba(5,213,255,1) 0%, rgba(0,126,229,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(5,213,255,1)), color-stop(100%, rgba(0,126,229,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(5,213,255,1) 0%, rgba(0,126,229,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(5,213,255,1) 0%, rgba(0,126,229,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(5,213,255,1) 0%, rgba(0,126,229,1) 100%);
+  background: linear-gradient(135deg, rgba(5,213,255,1) 0%, rgba(0,126,229,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#05d5ff', endColorstr='#007ee5', GradientType=1 );
+}
+
+.gradient:hover {
+  box-shadow: 0 3px 2px rgba(0,0,0,0.1);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #666;
+  background-color: white;
+  background-image: url('../images/bg.svg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #007ee5;
+}
+
+a:hover {
+  color: #004ea5;
+}
+
+header {
+  position: relative;
+  min-height: 120px;
+  width: 100%;
+}
+
+header img.brand {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+header .menu {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+header .menu,
+header .menu a {
+  color: #eee;
+  line-height: 30px;
+}
+
+header .menu a {
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  border-bottom: 2px solid transparent;
+}
+
+header .menu a:hover {
+  color: white;
+  border-bottom: 2px solid white;
+}
+
+.usp {
+  font-weight: 100;
+  margin-top: 120px;
+  color: white;
+}
+
+.usp h1 {
+  font-weight: 100;
+}
+
+.usp span {
+  display: block;
+}
+
+.ethereum-wallet-id {
+  width: 100%;
+  padding: 0.2rem;
+  text-align: center;
+  color: white;
+  border: 1px solid #05d5ff;
+  font-size: 0.8rem;
+  line-height: 2.6rem;
+  border-radius: 6px;
+}
+
+.ethereum-wallet-id:hover {
+  border: 1px solid #007ee5;
+  box-shadow: 0 0 10px white;
+  cursor: pointer;
+}
+
+.check-mark {
+  display: block;
+  width: 20px;
+  margin: auto;
+  margin-top: 0.5rem;
+}
+
+.ethereum-automte {
+  padding: 1px 1rem; /*prevent margin collapse with 1px padding on top*/
+  background-color: white;
+  height: 100%;
+  min-height: 22rem;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.ethereum-automte h3 {
+  font-weight: 100;
+}
+
+.ethereum-automte span.switcher {
+  display: block;
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  font-size: 0.7rem;
+}
+
+.ethereum-automte a {
+  text-decoration: none;
+  color: #007ee5;
+}
+
+.ethereum-automte a:hover {
+  color: #004ea5;
+}
+
+.ethereum-automte .metamask,
+.ethereum-automte .signup-form,
+.spaced-button {
+  margin-top: 1rem;
+}
+
+.ethereum-automte .signup-form input,
+.ethereum-automte .signup-form select {
+  width: 100%;
+}
+
+.ethereum-automte footer {
+  font-size: 0.8rem;
+  line-height: 35px;
+  margin-top: 1rem;
+}
+
+.conversion-rate {
+  margin-top: 2rem;
+  color: #eee;
+}
+
+.help-link {
+  width: 50%;
+  margin: auto;
+}
+
+.help-link a {
+  width: 100%;
+  display: inline-block;
+  padding: 1rem;
+  margin-top: 4rem;
+  color: silver;
+  font-size: 2rem;
+  text-align: center;
+  border: 1px solid silver;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.help-link a:hover {
+  color: #4890e2;
+  border-color: #4890e2;
+  box-shadow: 0 0 16px #4890e2;
+}
+
+footer.page-footer {
+  font-size: smaller;
+  margin-top: 8rem;
+  margin-bottom: 1rem;
+}
+
+.copyright {
+  color: #ddd;
+}
+
+/* button customizations */
+button.right {
+  float: right;
+}
