@@ -30,7 +30,7 @@ export function orderDetail(web3, address) {
     factory.setProvider(web3.currentProvider);
     directory.setProvider(web3.currentProvider);
 
-    directory.deployed()
+    directory.at('0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3')
     .then(function(_directory) {
       return _directory.orderFactoryAddress();
     })

@@ -17,7 +17,8 @@ function getOrdersList(ordersListPayload) {
 export function ordersList(web3) {
   console.log("in ordersList(web3)")
   return function(dispatch) {
-    console.log("web3.eth.coinbase: " + web3.eth.coinbase);
+    var coinbase = web3.eth.coinbase;
+    console.log("web3.eth.coinbase: " + coinbase);
     const factory = contract(OrderFactoryContract);
     var factoryInstance;
 
@@ -27,7 +28,7 @@ export function ordersList(web3) {
     factory.setProvider(web3.currentProvider);
     directory.setProvider(web3.currentProvider);
 
-    directory.deployed()
+    directory.at('0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3')
     .then(function(_directory) {
       return _directory.orderFactoryAddress();
     })
@@ -36,14 +37,20 @@ export function ordersList(web3) {
     })
     .then(function(_factory) {
       factoryInstance = _factory;
-      var orderCreatedEvent = factoryInstance.OrderCreated({seller: web3.eth.coinbase},{fromBlock: 0, toBlock: 'pending'});
+      var orderCreatedEvent = factoryInstance.OrderCreated({},{fromBlock: 0, toBlock: 'latest'});
         orderCreatedEvent.watch(function(error, result) {
           if(error) {
             console.log(error);
           }
-          _ordersList.push([result.args.orderAddress, result.args.orderType]);
-          console.log(_ordersList);
-          dispatch(getOrdersList(_ordersList));
+          console.log(result.args.seller);
+          console.log(coinbase);
+          console.log('typeof seller: ' + (typeof result.args.seller));
+          console.log('typeof coinbase: ' + (typeof coinbase));
+          if(result.args.seller == coinbase) {
+            _ordersList.push([result.args.orderAddress, result.args.orderType]);
+            console.log(_ordersList);
+            dispatch(getOrdersList(_ordersList));
+          }
         });
     })
     // factory.at('0x12580d09d90e6f6edba8d22e8675997440b03047')

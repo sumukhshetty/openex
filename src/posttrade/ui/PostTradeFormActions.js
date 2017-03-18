@@ -36,7 +36,7 @@ export function postTrade(postTradeDetails, web3, state) {
     console.log("ok lets go get this")
     var block, orderAddress;
 
-    directory.deployed()
+    directory.at('0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3')
     .then(function(_directory) {
       return _directory.orderFactoryAddress();
     })
