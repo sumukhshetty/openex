@@ -23,7 +23,7 @@ export function ordersList(web3) {
     factory.setProvider(web3.currentProvider);
     directory.setProvider(web3.currentProvider);
 
-    directory.at("0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3")
+    directory.at('0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3')
     .then(function(_directory) {
       return _directory.orderFactoryAddress();
     })
@@ -32,15 +32,17 @@ export function ordersList(web3) {
     })
     .then(function(_factory) {
       factoryInstance = _factory;
-      var orderCreatedEvent = factoryInstance.OrderCreated({seller: web3.eth.coinbase},{fromBlock: 0, toBlock: 'pending'});
+      var orderCreatedEvent = factoryInstance.OrderCreated({},{fromBlock: 0, toBlock: 'latest'});
         orderCreatedEvent.watch(function(error, result) {
           if(error) {
             console.log(error);
           }
-          // TODO change this to a list of dict
-          console.log(result)
-          _ordersList.push([result.args.orderAddress, result.args.orderType]);
-          dispatch(getOrdersList(_ordersList));
+
+          if(result.args.seller == web3.eth.coinbase) {
+            _ordersList.push([result.args.orderAddress, result.args.orderType]);
+            console.log(_ordersList);
+            dispatch(getOrdersList(_ordersList));
+          }
         });
     })
   }

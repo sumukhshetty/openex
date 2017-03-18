@@ -32,7 +32,7 @@ export function postTrade(postTradeDetails, web3, state) {
     var coinbase = web3.eth.coinbase;
     var block, orderAddress;
 
-    directory.at("0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3")
+    directory.at('0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3')
     .then(function(_directory) {
       return _directory.orderFactoryAddress();
     })

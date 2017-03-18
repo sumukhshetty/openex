@@ -18,11 +18,38 @@ class OrdersList extends Component {
 
   render() {
     var ordersList = this.props.ordersList.ordersList;
+    var buyOrdersList = [];
+    var sellOrdersList = [];
     //var list = JSON.stringify(this.state.ordersList).split(',');
     //console.log(list);
 
+
     if(ordersList) {
-      const orderList = ordersList.map( (val, index) => (
+      for(var i = 0; i < ordersList.length; i++) {
+        console.log("orderslist[" + i + "]");
+        console.log(ordersList[i]);
+        console.log(ordersList[i][1]);
+        if(ordersList[i][1] === "sell") {
+          sellOrdersList.push(ordersList[i]);
+        } else {
+          buyOrdersList.push(ordersList[i]);
+        }
+      }
+      console.log('selllist: ');
+      console.log(sellOrdersList);
+      console.log('buylist: ');
+      console.log(buyOrdersList);
+      const buyOrderList = buyOrdersList.map( (val, index) => (
+        <tr className="orderItem" key={index}>
+          <td>
+            {val[0]}
+          </td>
+          <td>
+            {val[1]}
+          </td>
+        </tr>
+      ));
+      const sellOrderList = sellOrdersList.map( (val, index) => (
         <tr className="orderItem" key={index}>
           <td>
             {val[0]}
@@ -33,16 +60,29 @@ class OrdersList extends Component {
         </tr>
       ));
       return(
-        <table className="orderList">
+        <div>
+        <table className="buyOrderList">
           <th>
             <tr>
               <td>Address</td>
             </tr>
           </th>
           <tbody>
-            {orderList}
+            {buyOrderList}
           </tbody>
         </table>
+
+        <table className="sellOrderList">
+          <th>
+            <tr>
+              <td>Address</td>
+            </tr>
+          </th>
+          <tbody>
+            {sellOrderList}
+          </tbody>
+        </table>
+        </div>
       )
     } else {
       return(
