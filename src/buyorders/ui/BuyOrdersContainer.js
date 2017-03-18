@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (web3) => {
 
-      dispatch(ordersList(web3))
+      dispatch(buyOrders(web3))
     }
   }
 }
