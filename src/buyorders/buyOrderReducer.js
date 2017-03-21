@@ -1,16 +1,22 @@
 const initialState = {
-  data: null
+  buyorders: null
 }
 
-const ordersListReducer = (state = initialState, action) => {
+const buyOrderReducer = (state = initialState, action) => {
   if (action.type === 'GET_BUY_ORDERS')
   {
     return Object.assign({}, state, {
-      data: action.payload
+      buyorders: action.payload
+    })
+  }
+  if (action.type === 'RECEIVE_BUY_ORDERS_DATA')
+  {
+    return Object.assign({}, state, {
+      buyorders: action.payload
     })
   }
 
   return state
 }
 
-export default ordersListReducer
+export default buyOrderReducer

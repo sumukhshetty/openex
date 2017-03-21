@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import BuyOrders from './BuyOrders'
+import BuyOrdersList from './BuyOrdersList'
 import { buyOrders } from './BuyOrdersActions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,9 +19,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const BuyOrdersContainer = connect(
+const BuyOrdersListContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(BuyOrders)
+)(BuyOrdersList)
 
-export default BuyOrdersContainer
+export default BuyOrdersListContainer

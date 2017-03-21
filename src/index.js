@@ -21,6 +21,8 @@ import BuyOrders from './buyorders/layouts/BuyOrders'
 import store from './store'
 import * as firebase from 'firebase'
 import * as _firebaseconfig from './../secrets/firebaseconfig'
+import * as actions from './buyorders/ui/BuyOrdersActions'
+
 // Config
 //import truffleConfig from './../truffle-config.js'
 
@@ -53,3 +55,8 @@ ReactDOM.render((
   ),
   document.getElementById('root')
 );
+
+
+setTimeout(function(){
+  store.dispatch( actions.startListeningToBuyOrders() );
+});
