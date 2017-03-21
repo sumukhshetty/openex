@@ -11,7 +11,6 @@ import Home from './layouts/home/Home';
 import Dashboard from './layouts/dashboard/Dashboard';
 import SignUp from './user/layouts/signup/SignUp';
 import Profile from './user/layouts/profile/Profile';
-import EscrowFactory from './escrowfactory/layouts/EscrowFactory'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'
 import OrdersList from './orderslist/layouts/OrdersList'
 import OrderDetail from './orderdetail/layouts/OrderDetail'
@@ -43,7 +42,6 @@ ReactDOM.render((
           <Route path="signup" component={UserIsNotAuthenticated(SignUp)} />
           <Route path="login" component={UserIsNotAuthenticated(Login)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
-          <Route path="escrowfactory" component={UserIsAuthenticated(EscrowFactory)} />
           <Route path="posttrade" component={UserIsAuthenticated(PostTradeForm)} />
           <Route path="orderslist" component={UserIsAuthenticated(OrdersList)} />
           <Route path="orderdetail/:address" component={UserIsAuthenticated(OrderDetail)} />

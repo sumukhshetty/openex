@@ -11,14 +11,6 @@ class LoginForm extends Component {
     }
   }
 
-  componentWillMount(){
-    console.log("LoginForm.componentWillMount")
-    console.log(this.state)
-/*    this.setState({signUpInfo:Object.assign({}, 
-        this.state.signUpInfo, {address:this.props.web3.web3.coinbase}
-      )})*/
-  }
-
   onInputChange(event) {
     var _loginInfo = this.state.loginInfo
     if(event.target.id === "email"){

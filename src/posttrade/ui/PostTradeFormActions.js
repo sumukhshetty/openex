@@ -1,7 +1,5 @@
 import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
 import ContractDirectoryContract from '../../../build/contracts/ContractDirectory.json'
-import SellOrderContract from '../../../build/contracts/SellOrder.json'
-import BuyOrderContract from '../../../build/contracts/BuyOrder.json'
 import { browserHistory } from 'react-router'
 
 const contract = require('truffle-contract')
@@ -29,14 +27,12 @@ export function postTrade(postTradeDetails, web3, state) {
 
     // Declaring this for later so we can chain functions on Authentication.
     var factoryInstance;
-    var gasCost;
 
     // Get current ethereum wallet. TODO: Wrap in try/catch.
     var coinbase = web3.eth.coinbase;
-    console.log("ok lets go get this")
     var block, orderAddress;
 
-    directory.deployed()
+    directory.at('0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3')
     .then(function(_directory) {
       return _directory.orderFactoryAddress();
     })
@@ -51,7 +47,7 @@ export function postTrade(postTradeDetails, web3, state) {
       block = _block;
       //SellOrder
       if(postTradeDetails.tradeType === "sell-ether") {
-        return factoryInstance.createSellOrder({from: web3.eth.coinbase});
+        return factoryInstance.createSellOrder({from: coinbase});
       } else {
         return factoryInstance.createBuyOrder(postTradeDetails.buyerAddress, postTradeDetails.amount, {from: web3.eth.coinbase});
       }
@@ -85,5 +81,16 @@ export function postTrade(postTradeDetails, web3, state) {
       dispatch(tradeCreated(postTradeDetails))
       browserHistory.push('/orderslist')
     })
+  }
+}
+
+
+export function buyEtherPostTrade(postTradeDetails, web3, state) {
+  return function(dispatch){
+    console.log(postTradeDetails)
+    console.log("buyorders/" + state.user.data.uid + '/' + postTradeDetails.orderId)
+    firebaseRef.database().ref("buyorders/" + state.user.data.uid + '/' + postTradeDetails.orderId).set(postTradeDetails);
+    dispatch(tradeCreated(postTradeDetails))
+    browserHistory.push('/orderslist')
   }
 }

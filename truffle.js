@@ -15,9 +15,9 @@ module.exports = {
       network_id: "*" // Match any network id
     },
     ropsten: {
-      provider: new HDWalletProvider(mnemonic, "https://eth3.augur.net/"),
+      provider: new HDWalletProvider(mnemonic, "https://eth3.augur.net"),
       network_id: 3
-    }
+    },
     // mainnet: {
     //   provider: new HDWalletProvider(mnemonic, "https://mainnet.infura.io/0xf4d8083560e1bde04c269132d2211d9b4c62305b"),
     //   network_id: 1
