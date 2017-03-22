@@ -21,13 +21,16 @@ class App extends Component {
           <Link to="/dashboard">Dashboard</Link>
         </li>
         <li className="pure-menu-item">
-          <Link to="/profile">Profile</Link>
+          <Link to="/buyorders">Buy</Link>
+        </li>
+        <li className="pure-menu-item">
+          <Link to="/sellorders">Sell</Link>
         </li>
         <li className="pure-menu-item">
           <Link to="/posttrade">Post a Trade</Link>
         </li>
         <li className="pure-menu-item">
-          <Link to="/orderslist">View Orders</Link>
+          <Link to="/help">Help</Link>
         </li>
         <LogoutButtonContainer />
       </ul>
@@ -59,7 +62,11 @@ class App extends Component {
                   <Web3InitContainer/>
                   <OnlyGuestLinks />
                   <OnlyAuthLinks />
+
                 </nav>
+              </div>
+              <div>
+                <ProfileNotificationWalletContainer />
               </div>
             </div>
           </div>
