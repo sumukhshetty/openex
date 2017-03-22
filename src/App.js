@@ -36,6 +36,14 @@ class App extends Component {
     const OnlyGuestLinks = HiddenOnlyAuth(() =>
       <ul className="pure-menu-list">
         <li className="pure-menu-item">
+          <a href="#about">About</a></li>
+        <li className="pure-menu-item">
+          <a href="#demo">Demo</a></li>
+        <li className="pure-menu-item">
+          <a href="#trade">Trade</a></li>
+        <li className="pure-menu-item">
+          <a href="#support">Support</a></li>
+        <li className="pure-menu-item">
           <Link to="/signup">Sign Up</Link>
         </li>
         <li className="pure-menu-item">
