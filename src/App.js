@@ -5,6 +5,7 @@ import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 // UI Components
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import Web3InitContainer from './web3/Web3InitContainer'
+import ProfileNotificationWallet from './profilenotificationwallet/layouts/ProfileNotificationWallet'
 
 // Styles
 import './css/oswald.css'
@@ -69,7 +70,7 @@ class App extends Component {
                 </nav>
               </div>
               <div>
-                <ProfileNotificationWalletContainer />
+                <ProfileNotificationWallet />
               </div>
             </div>
           </div>

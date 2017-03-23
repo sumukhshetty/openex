@@ -16,6 +16,9 @@ import OrdersList from './orderslist/layouts/OrdersList'
 import OrderDetail from './orderdetail/layouts/OrderDetail'
 import Login from './user/layouts/login/Login'
 import BuyOrders from './buyorders/layouts/BuyOrders'
+import SellOrders from './sellorders/layouts/SellOrders'
+import Help from './help/layouts/Help'
+
 
 // Redux Store
 import store from './store'
@@ -51,7 +54,6 @@ ReactDOM.render((
           <Route path="posttrade" component={UserIsAuthenticated(PostTradeForm)} />
           <Route path="orderslist" component={UserIsAuthenticated(OrdersList)} />
           <Route path="orderdetail/:address" component={UserIsAuthenticated(OrderDetail)} />
-          <Route path="buyorders" component={UserIsAuthenticated(BuyOrders)} />
         </Route>
       </Router>
     </Provider>

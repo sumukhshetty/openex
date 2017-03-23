@@ -19,7 +19,7 @@ class BuyOrder extends Component {
   }
 
   render(){
-    var buyorders = this.props.buyorders
+    var buyorders = this.state.buyorders
     const BuyOrdersLoadingDisplay = () => (<div> loading </div>)
     return (
       <div>
