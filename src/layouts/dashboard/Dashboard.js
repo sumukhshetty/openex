@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DashboardInfoMessage from './DashboardInfoMessage'
 import ActiveTradeContainer from './../../activetrade/layouts/ActiveTradeContainer'
-import TradeAdvertisement from './../../tradeadvertisement/layouts/TradeAdvertisement'
+import TradeAdvertisementContainer from './../../tradeadvertisement/layouts/TradeAdvertisementContainer'
 
 
 class Dashboard extends Component {
@@ -12,7 +12,7 @@ class Dashboard extends Component {
           <div className="pure-u-1-1">
             <DashboardInfoMessage />
             <ActiveTradeContainer />
-            <TradeAdvertisement/>
+            <TradeAdvertisementContainer/>
           </div>
         </div>
       </main>
