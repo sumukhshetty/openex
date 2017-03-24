@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-class Copywrite extends Component {
+class Copyright extends Component {
   render() {
     return(
       <div>
-      Copywrite
+        Copyright
       </div>
     )
   }
 }
 
-export default Copywrite
+export default Copyright

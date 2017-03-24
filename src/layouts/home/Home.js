@@ -3,6 +3,7 @@ import Footer from './../../footer/Footer'
 import HomeNav from './HomeNav'
 import ProductShortDescription from './ProductShortDescription'
 import SignUpContainer from './../../signup/SignUpContainer'
+import tick from '../../images/tick.svg'
 
 class Home extends Component {
   render() {
