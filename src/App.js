@@ -18,6 +18,9 @@ class App extends Component {
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <ul className="pure-menu-list">
+        <div>
+          <ProfileNotificationWallet />
+        </div>
         <li className="pure-menu-item">
           <Link to="/dashboard">Dashboard</Link>
         </li>
@@ -69,9 +72,7 @@ class App extends Component {
 
                 </nav>
               </div>
-              <div>
-                <ProfileNotificationWallet />
-              </div>
+
             </div>
           </div>
         </header>
