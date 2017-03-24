@@ -3,9 +3,7 @@ import React, { Component } from 'react'
 class Copyright extends Component {
   render() {
     return(
-      <div>
-        Copyright
-      </div>
+      <span>&copy; 2017, Automte</span>
     )
   }
 }

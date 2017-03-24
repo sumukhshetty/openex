@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 class Region extends Component {
   render() {
     return(
-      <div>
-      Region
-      </div>
+      <strong>
+        <a href="#">English (United States)</a>
+      </strong>
     )
   }
 }

@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 class SwitchAccounts extends Component {
   render() {
     return(
-      <div>
-      SwitchAccounts
-      </div>
+      <span className="switcher">
+        <a href="#">Switch Accounts</a>
+      </span>
     )
   }
 }

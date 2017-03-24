@@ -9,12 +9,21 @@ import Help from './Help'
 class SignUpContainer extends Component {
   render() {
     return(
-      <div>
-      SignUpContainer
-      <SwitchAccounts />
-      <WalletComponent />
-      <SignUpForm />
-      <Help />
+      <div className="ethereum-automte">
+        <section>
+          <h3>Sign Up</h3>
+          <SwitchAccounts />
+        </section>
+
+        <section className="metamask">
+          <WalletComponent />
+        </section>
+
+        <section className="signup-form">
+          <SignUpForm />
+        </section>
+
+        <Help />
       </div>
     )
   }

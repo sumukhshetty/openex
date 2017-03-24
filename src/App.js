@@ -46,14 +46,6 @@ class App extends Component {
     const OnlyGuestLinks = HiddenOnlyAuth(() =>
       <ul className="pure-menu-list">
         <li className="pure-menu-item">
-          <a href="#about">About</a></li>
-        <li className="pure-menu-item">
-          <a href="#demo">Demo</a></li>
-        <li className="pure-menu-item">
-          <a href="#trade">Trade</a></li>
-        <li className="pure-menu-item">
-          <a href="#support">Support</a></li>
-        <li className="pure-menu-item">
           <Link to="/signup">Sign Up</Link>
         </li>
         <li className="pure-menu-item">
@@ -64,27 +56,9 @@ class App extends Component {
 
     return (
       <section className="App">
-        <header>
-          <div className="container">
-            <div className="pure-g">
-              <div className="pure-u-1-4 brand">
-                <Link to="/">
-                  <img className="brand" src={logo} alt="" />
-                </Link>
-              </div>
-              <div className="pure-u-3-4 menu">
-                <nav className="pure-menu pure-menu-horizontal">
-                  <Web3InitContainer/>
-                  <OnlyGuestLinks />
-                  <OnlyAuthLinks />
-
-                </nav>
-              </div>
-
-            </div>
-          </div>
-        </header>
-
+        {/* TODO: cleanup the following components */}
+        <Web3InitContainer/>
+        <OnlyAuthLinks />
         {this.props.children}
       </section>
     );
