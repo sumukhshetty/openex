@@ -16,6 +16,9 @@ import OrdersList from './orderslist/layouts/OrdersList'
 import OrderDetail from './orderdetail/layouts/OrderDetail'
 import Login from './user/layouts/login/Login'
 import BuyOrders from './buyorders/layouts/BuyOrders'
+import SellOrders from './sellorders/layouts/SellOrders'
+import Help from './help/layouts/Help'
+
 
 // Redux Store
 import store from './store'
@@ -45,10 +48,12 @@ ReactDOM.render((
           <Route path="signup" component={UserIsNotAuthenticated(SignUp)} />
           <Route path="login" component={UserIsNotAuthenticated(Login)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
+          <Route path="buyorders" component={UserIsAuthenticated(BuyOrders)} />
+          <Route path="sellorders" component={UserIsAuthenticated(SellOrders)} />
+          <Route path="help" component={UserIsAuthenticated(Help)} />
           <Route path="posttrade" component={UserIsAuthenticated(PostTradeForm)} />
           <Route path="orderslist" component={UserIsAuthenticated(OrdersList)} />
           <Route path="orderdetail/:address" component={UserIsAuthenticated(OrderDetail)} />
-          <Route path="buyorders" component={UserIsAuthenticated(BuyOrders)} />
         </Route>
       </Router>
     </Provider>

@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
-import tick from '../../images/tick.svg'
+import Footer from './../../footer/Footer'
+import HomeNav from './HomeNav'
+import ProductShortDescription from './ProductShortDescription'
+import SignUpContainer from './../../signup/SignUpContainer'
 
 class Home extends Component {
   render() {
     return(
       <main className="container">
+          <HomeNav/>
         <div className="pure-g">
-          <div className="pure-u-2-3">
-            <div className="usp">
-              <h1>Buy, Sell and Trade Ether Online</h1>
-              <span>Quick, Secure and Decentralized</span>
-            </div>
+          <div className="pure-u-1">
+            <ProductShortDescription />
+            <SignUpContainer/>
+            <Footer/>
           </div>
 
           <div className="pure-u-1-3">

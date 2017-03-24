@@ -38,7 +38,7 @@ export function ordersList(web3) {
             console.log(error);
           }
 
-          if(result.args.seller == web3.eth.coinbase) {
+          if(result.args.seller === web3.eth.coinbase) {
             _ordersList.push([result.args.orderAddress, result.args.orderType]);
             console.log(_ordersList);
             dispatch(getOrdersList(_ordersList));
