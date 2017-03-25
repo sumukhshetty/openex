@@ -8,8 +8,6 @@ import Web3InitContainer from './web3/Web3InitContainer'
 import ProfileNotificationWallet from './profilenotificationwallet/layouts/ProfileNotificationWallet'
 
 // Styles
-import './css/oswald.css'
-import './css/open-sans.css'
 import './css/pure-min.css'
 import './css/styles-common.css'
 import logo from './images/logo.svg'

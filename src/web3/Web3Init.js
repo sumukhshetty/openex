@@ -8,9 +8,8 @@ class Web3Init extends Component {
   }
   render() {
     return(
-    <li className="pure-menu-item">
-    </li>
-      )
+    <span></span>
+    )
   }
 }
 
