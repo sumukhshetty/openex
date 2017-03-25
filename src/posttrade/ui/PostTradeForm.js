@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { BuyForm } from './BuyForm'
 import { SellForm } from './SellForm'
+import PostTradeInstructions from './PostTradeInstructions'
+import PostTradeFormHelp from './PostTradeFormHelp'
 
 class PostTradeForm extends Component {
   constructor(props) {
@@ -113,6 +115,11 @@ class PostTradeForm extends Component {
   render() {
 
     return(
+      <div>
+      <div>
+      <PostTradeInstructions />
+      <h3>Trade Information</h3>
+      </div>
       <form className="pure-form pure-form-stacked" onSubmit={this.handleSubmit.bind(this)}>
         <fieldset>
           <label htmlFor="tradeType">Trade Type</label>
@@ -145,9 +152,11 @@ class PostTradeForm extends Component {
             termsOfTrade={this.state.postTradeDetails.termsOfTrade}/> : <SellForm 
             onChangeProp={this.onInputChange.bind(this)}/>
           }
-          <button type="submit" className="pure-button pure-button-primary">Post Trade</button>
+          <button type="submit" className="pure-button pure-button-primary">Publish Advertisement</button>
         </fieldset>
       </form>
+      <PostTradeFormHelp />
+      </div>
     )
   }
 }

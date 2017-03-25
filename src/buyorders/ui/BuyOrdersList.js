@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as _ from 'lodash'
 import UserBuyOrdersContainer from './UserBuyOrdersContainer'
+import LoadMoreBuyOrders from './LoadMoreBuyOrders'
 
 class BuyOrdersList extends Component {
   constructor(props) {
@@ -23,6 +24,9 @@ class BuyOrdersList extends Component {
     return (
       <div>
       {rows}
+      <div>
+      <LoadMoreBuyOrders />
+      </div>
       </div>)
   }
 }
