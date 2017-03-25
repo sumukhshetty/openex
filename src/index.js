@@ -18,6 +18,7 @@ import Login from './user/layouts/login/Login'
 import BuyOrders from './buyorders/layouts/BuyOrders'
 import SellOrders from './sellorders/layouts/SellOrders'
 import Help from './help/layouts/Help'
+import ReviewActiveTrade from './activetrade/layouts/ReviewActiveTrade'
 
 
 // Redux Store
@@ -54,6 +55,7 @@ ReactDOM.render((
           <Route path="posttrade" component={UserIsAuthenticated(PostTradeForm)} />
           <Route path="orderslist" component={UserIsAuthenticated(OrdersList)} />
           <Route path="orderdetail/:address" component={UserIsAuthenticated(OrderDetail)} />
+          <Route path="activetrade/:orderId" component={UserIsAuthenticated(ReviewActiveTrade)} />
         </Route>
       </Router>
     </Provider>

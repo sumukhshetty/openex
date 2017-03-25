@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 //TODO import HelpContainer
 
 class ViewActiveTradeButton extends Component {
@@ -7,7 +8,9 @@ class ViewActiveTradeButton extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <button>View/Message </button>
+          <li className="pure-menu-item">
+            <Link to="/activetrade/:orderId">View/Message</Link>
+          </li>
           </div>
         </div>
       </main>
