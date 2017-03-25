@@ -4,6 +4,7 @@ import ActiveTradeProgress from './ActiveTradeProgress'
 import MakePaymentButton from './MakePaymentButton'
 import ChatMessages from './ChatMessages'
 import NewChatMessage from './NewChatMessage'
+import TradeFeedbackContainer from './../../tradefeedback/TradeFeedbackContainer'
 
 class ReviewActiveTrade extends Component {
   render() {
@@ -16,6 +17,7 @@ class ReviewActiveTrade extends Component {
             <MakePaymentButton />
             <ChatMessages />
             <NewChatMessage />
+            <TradeFeedbackContainer />
           </div>
         </div>
       </main>
