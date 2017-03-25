@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import * as _ from 'lodash'
 
 import BuyOrdersListContainer from './BuyOrdersListContainer'
+import BuyOrderTradeDetailsHeader from './BuyOrderTradeDetailsHeader'
 
 class BuyOrder extends Component {
   constructor(props) {
@@ -23,8 +24,12 @@ class BuyOrder extends Component {
     const BuyOrdersLoadingDisplay = () => (<div> loading </div>)
     return (
       <div>
+      <BuyOrderTradeDetailsHeader/>
+      <div>
         { buyorders.buyorders ? <BuyOrdersListContainer/>:<BuyOrdersLoadingDisplay/>}
-      </div>)
+      </div>
+      </div>
+      )
   }
 }
 

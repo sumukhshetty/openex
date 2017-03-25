@@ -10,7 +10,6 @@ class UserBuyOrders extends Component {
     })
     return (
       <div>
-        {this.props.userId}
         {rows}
       </div>)
   }
