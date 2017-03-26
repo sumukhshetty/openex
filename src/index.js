@@ -15,11 +15,18 @@ import PostTradeForm from './posttrade/layouts/PostTradeForm'
 import OrdersList from './orderslist/layouts/OrdersList'
 import OrderDetail from './orderdetail/layouts/OrderDetail'
 import Login from './user/layouts/login/Login'
+import BuyOrders from './buyorders/layouts/BuyOrders'
+import SellOrders from './sellorders/layouts/SellOrders'
+import Help from './help/layouts/Help'
+import ReviewActiveTrade from './activetrade/layouts/ReviewActiveTrade'
+
 
 // Redux Store
 import store from './store'
 import * as firebase from 'firebase'
 import * as _firebaseconfig from './../secrets/firebaseconfig'
+import * as actions from './buyorders/ui/BuyOrdersActions'
+
 // Config
 //import truffleConfig from './../truffle-config.js'
 
@@ -42,12 +49,21 @@ ReactDOM.render((
           <Route path="signup" component={UserIsNotAuthenticated(SignUp)} />
           <Route path="login" component={UserIsNotAuthenticated(Login)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
+          <Route path="buyorders" component={UserIsAuthenticated(BuyOrders)} />
+          <Route path="sellorders" component={UserIsAuthenticated(SellOrders)} />
+          <Route path="help" component={UserIsAuthenticated(Help)} />
           <Route path="posttrade" component={UserIsAuthenticated(PostTradeForm)} />
           <Route path="orderslist" component={UserIsAuthenticated(OrdersList)} />
           <Route path="orderdetail/:address" component={UserIsAuthenticated(OrderDetail)} />
+          <Route path="activetrade/:orderId" component={UserIsAuthenticated(ReviewActiveTrade)} />
         </Route>
       </Router>
     </Provider>
   ),
   document.getElementById('root')
 );
+
+
+setTimeout(function(){
+  store.dispatch( actions.startListeningToBuyOrders() );
+});
