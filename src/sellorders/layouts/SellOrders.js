@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-//TODO import SellOrdersContainer
+import SellOrderTradeDetailsHeader from './SellOrderTradeDetailsHeader'
+import SellOrdersList from './SellOrdersList'
 
 class SellOrders extends Component {
   render() {
@@ -7,8 +8,8 @@ class SellOrders extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <h1>Sell Orders</h1>
-            <p>The sell orders out on the exchange</p>
+            <SellOrderTradeDetailsHeader/>
+            <SellOrdersList/>
           </div>
         </div>
       </main>
