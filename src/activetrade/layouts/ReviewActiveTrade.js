@@ -5,6 +5,9 @@ import MakePaymentButton from './MakePaymentButton'
 import ChatMessages from './ChatMessages'
 import NewChatMessage from './NewChatMessage'
 import TradeFeedbackContainer from './../../tradefeedback/TradeFeedbackContainer'
+import ReleaseEther from './../../releaseether/ReleaseEther'
+import DisputeTrade from './../../disputetrade/DisputeTrade' 
+import CancelTrade from './../../canceltrade/CancelTrade' 
 
 class ReviewActiveTrade extends Component {
   render() {
@@ -17,6 +20,9 @@ class ReviewActiveTrade extends Component {
             <MakePaymentButton />
             <ChatMessages />
             <NewChatMessage />
+            <ReleaseEther />
+            <CancelTrade />
+            <DisputeTrade />
             <TradeFeedbackContainer />
           </div>
         </div>
