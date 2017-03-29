@@ -54,18 +54,18 @@ header img.brand {
   margin-top: 1rem;
 }
 
-header .menu {
+.menu {
   margin-top: 1rem;
   text-align: right;
 }
 
-header .menu,
-header .menu a {
+.menu,
+.menu a {
   color: #eee;
   line-height: 30px;
 }
 
-header .menu a {
+.menu a {
   text-decoration: none;
   display: inline-block;
   margin-left: 2rem;
@@ -73,7 +73,7 @@ header .menu a {
   border-bottom: 2px solid transparent;
 }
 
-header .menu a:hover {
+.menu a:hover {
   color: white;
   border-bottom: 2px solid white;
 }
@@ -210,13 +210,16 @@ button.right {
   float: right;
 }
 
-main[role='main'] {
-  margin-bottom: 8rem;
+main[role='main'] section {
+  margin-bottom: 10rem;
+}
+main[role='main'] section.dashboard {
+  margin-bottom: 0;
 }
 
-.flow main[role='main'] {
+.dashboard {
   background-color: white;
-  min-height: 36rem;
+  min-height: 30rem;
   margin-bottom: 0;
 }
 
