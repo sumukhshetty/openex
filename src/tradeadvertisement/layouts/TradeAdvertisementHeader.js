@@ -4,19 +4,18 @@ import React, { Component } from 'react'
 class TradeAdvertisementHeader extends Component {
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <li>#</li>
-            <li>Status</li>
-            <li>Info</li>
-            <li>Country</li>
-            <li>Payment Method</li>
-            <li>Price</li>
-            <li>Units</li>
-          </div>
-        </div>
-      </main>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Status</th>
+          <th>Info</th>
+          <th>Country</th>
+          <th>Payment Method</th>
+          <th>Price</th>
+          <th>Units</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
     )
   }
 }

@@ -4,20 +4,19 @@ import React, { Component } from 'react'
 class ActiveTradeHeader extends Component {
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <li>#</li>
-            <li>Created at</li>
-            <li>Info</li>
-            <li>Username</li>
-            <li>Ether</li>
-            <li>Amount</li>
-            <li>Status</li>
-            <li>Last Online</li>
-          </div>
-        </div>
-      </main>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Created at</th>
+          <th>Info</th>
+          <th>Username</th>
+          <th>Ether</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Last Online</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
     )
   }
 }

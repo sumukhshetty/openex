@@ -4,13 +4,9 @@ import React, { Component } from 'react'
 class EditTradeAdvertisementButton extends Component {
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <button> Edit </button>
-          </div>
-        </div>
-      </main>
+      <td>
+        <button className="pure-button pure-button-primary button-edit">Edit</button>
+      </td>
     )
   }
 }

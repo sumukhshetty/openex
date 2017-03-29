@@ -45,7 +45,7 @@ a:hover {
 
 header {
   position: relative;
-  min-height: 120px;
+  min-height: 80px;
   width: 100%;
 }
 
@@ -54,18 +54,18 @@ header img.brand {
   margin-top: 1rem;
 }
 
-header .menu {
+.menu {
   margin-top: 1rem;
   text-align: right;
 }
 
-header .menu,
-header .menu a {
+.menu,
+.menu a {
   color: #eee;
   line-height: 30px;
 }
 
-header .menu a {
+.menu a {
   text-decoration: none;
   display: inline-block;
   margin-left: 2rem;
@@ -73,9 +73,13 @@ header .menu a {
   border-bottom: 2px solid transparent;
 }
 
-header .menu a:hover {
+.menu a:hover {
   color: white;
   border-bottom: 2px solid white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 200;
 }
 
 .usp {
@@ -194,7 +198,6 @@ header .menu a:hover {
 
 footer.page-footer {
   font-size: smaller;
-  margin-top: 8rem;
   margin-bottom: 1rem;
 }
 
@@ -205,4 +208,48 @@ footer.page-footer {
 /* button customizations */
 button.right {
   float: right;
+}
+
+main[role='main'] section {
+  margin-bottom: 10rem;
+}
+main[role='main'] section.dashboard {
+  margin-bottom: 0;
+}
+
+.dashboard {
+  background-color: white;
+  min-height: 30rem;
+  margin-bottom: 0;
+}
+
+.tab-listing {
+  margin-top: 1rem;
+}
+.tab-listing table { width: 100%; }
+
+.tab-listing table * { font-size: small; }
+
+.more-button {
+  min-width: 8rem;
+  display: block;
+  margin: 1rem auto;
+}
+
+.create-ad-button {
+  float: right;
+  margin-top: 1rem;
+}
+
+p.lead {
+  font-size: larger;
+  font-weight: lighter;
+}
+
+.icon {
+  /* temporary class used for icon tags just as a
+  dev note to include an icon font and use appropriate
+  icons at these places in html */
+  display: none;
+  font-size: 0;
 }

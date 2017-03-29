@@ -7,15 +7,13 @@ import ActiveTrade from './ActiveTrade'
 class ActiveTradeContainer1 extends Component {
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <h1>Your active escrows</h1>
-            <ActiveTradeHeader />
-            <ActiveTrade />
-          </div>
-        </div>
-      </main>
+      <div className="tab-listing">
+        <h2>Your active escrows</h2>
+        <table className="pure-table pure-table-horizontal">
+          <ActiveTradeHeader />
+          <ActiveTrade />
+        </table>
+      </div>
     )
   }
 }

@@ -6,11 +6,9 @@ import HomeMain from './HomeMain'
 class Home extends Component {
   render() {
     return(
-      <section>
-        <Header />
+      <div className="container">
         <HomeMain />
-        <Footer />
-      </section>
+      </div>
     )
   }
 }
