@@ -5,14 +5,18 @@ import EditTradeAdvertisementButton from './EditTradeAdvertisementButton'
 class TradeAdvertisement extends Component {
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <h1>TradeAdvertisement</h1>
-            <EditTradeAdvertisementButton/>
-          </div>
-        </div>
-      </main>
+      <tbody>
+        <tr>
+          <td>60</td>
+          <td>Live</td>
+          <td>Online Sell</td>
+          <td>India</td>
+          <td>IMPS</td>
+          <td>2000</td>
+          <td>0 - 39090.47</td>
+          <EditTradeAdvertisementButton/>
+        </tr>
+      </tbody>
     )
   }
 }

@@ -236,6 +236,11 @@ main[role='main'] section.dashboard {
   margin: 1rem auto;
 }
 
+.create-ad-button {
+  float: right;
+  margin-top: 1rem;
+}
+
 p.lead {
   font-size: larger;
   font-weight: lighter;

@@ -5,14 +5,19 @@ import ViewActiveTradeButton from './ViewActiveTradeButton'
 class ActiveTrade extends Component {
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <h1>ActiveTrade1</h1>
-            <ViewActiveTradeButton />
-          </div>
-        </div>
-      </main>
+      <tbody>
+        <tr>
+          <td>1238</td>
+          <td>10 Oct, 2017, 7:45 am</td>
+          <td>Online Sell</td>
+          <td>David Washington</td>
+          <td>5</td>
+          <td>10000</td>
+          <td>In Escrow</td>
+          <td><i class='icon'>greendot</i> Active</td>
+          <ViewActiveTradeButton />
+        </tr>
+      </tbody>
     )
   }
 }

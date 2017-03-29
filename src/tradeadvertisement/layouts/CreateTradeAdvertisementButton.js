@@ -4,13 +4,8 @@ import React, { Component } from 'react'
 class CreateTradeAdvertisementButton extends Component {
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <button> + Create Advertisement </button>
-          </div>
-        </div>
-      </main>
+      <button
+          className="pure-button pure-button-primary create-ad-button">+ Create Advertisement</button>
     )
   }
 }

@@ -6,6 +6,8 @@ import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import Web3InitContainer from './web3/Web3InitContainer'
 import ProfileNotificationWallet from './profilenotificationwallet/layouts/ProfileNotificationWallet'
+import Header from './header/Header'
+import Footer from './footer/Footer'
 
 // Styles
 import './css/pure-min.css'
@@ -15,30 +17,36 @@ import logo from './images/logo.svg'
 class App extends Component {
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
-      <ul className="pure-menu-list">
-        <div>
-          <ProfileNotificationWallet />
+      <div className="menu">
+        <div className="container">
+          <nav className="pure-menu pure-menu-horizontal">
+            <ul className="pure-menu-list">
+              <li className="pure-menu-item">
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+              <li className="pure-menu-item">
+                <Link to="/buyorders">Buy</Link>
+              </li>
+              <li className="pure-menu-item">
+                <Link to="/sellorders">Sell</Link>
+              </li>
+              <li className="pure-menu-item">
+                <Link to="/posttrade">Post a Trade</Link>
+              </li>
+              <li className="pure-menu-item">
+                <Link to="/buyorders">View Buy Orders</Link>
+              </li>
+              <li className="pure-menu-item">
+                <Link to="/help">Help</Link>
+              </li>
+              <li className="pure-menu-item">
+                <ProfileNotificationWallet />
+              </li>
+              <LogoutButtonContainer />
+            </ul>
+          </nav>
         </div>
-        <li className="pure-menu-item">
-          <Link to="/dashboard">Dashboard</Link>
-        </li>
-        <li className="pure-menu-item">
-          <Link to="/buyorders">Buy</Link>
-        </li>
-        <li className="pure-menu-item">
-          <Link to="/sellorders">Sell</Link>
-        </li>
-        <li className="pure-menu-item">
-          <Link to="/posttrade">Post a Trade</Link>
-        </li>
-        <li className="pure-menu-item">
-          <Link to="/help">Help</Link>
-        </li>
-        <li className="pure-menu-item">
-          <Link to="/buyorders">View Buy Orders</Link>
-        </li>
-        <LogoutButtonContainer />
-      </ul>
+      </div>
     )
 
     const OnlyGuestLinks = HiddenOnlyAuth(() =>
@@ -52,12 +60,17 @@ class App extends Component {
       </ul>
     )
 
+    console.log(this.props.children);
     return (
       <section className="App">
         {/* TODO: cleanup the following components */}
+        <Header />
         <Web3InitContainer/>
         <OnlyAuthLinks />
-        {this.props.children}
+        <main role="main">
+          {this.props.children}
+        </main>
+        <Footer />
       </section>
     );
   }

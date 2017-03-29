@@ -5,15 +5,12 @@ import { Link } from 'react-router'
 class ViewActiveTradeButton extends Component {
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-          <li className="pure-menu-item">
-            <Link to="/activetrade/:orderId">View/Message</Link>
-          </li>
-          </div>
-        </div>
-      </main>
+      <td>
+        <Link className="pure-button pure-button-primary"
+            to="/activetrade/:orderId">View / Message</Link>
+        {/* <button class="pure-button pure-button-primary">View / Message</button> */}
+        {/* above comment is just for styling reference for the link */}
+      </td>
     )
   }
 }
