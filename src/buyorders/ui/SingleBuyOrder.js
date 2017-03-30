@@ -1,23 +1,26 @@
-import React, { Component } from 'react'
-import * as _ from 'lodash'
-import SellButton from './SellButton'
+import React, { PropTypes } from 'react';
+import * as _ from 'lodash';
+import BuyButton from './BuyButton';
+import LastOnline from './LastOnline';
+import Trustworthiness from './Trustworthiness';
 
-class SingleBuyOrder extends Component {
+const SingleBuyOrder = (props) => {
+  return (
+    <div className='flex list bg-white pa3 ma2 gray'>
+      <li className='fb20' >David Washington - {props.buyOrderData.location}</li>
+      <li className='fb10 tc' >IMPS</li>
+      <li className='fb15 tc' >{props.buyOrderData.amount} INR</li>
+      <li className='fb5 tc' >{props.buyOrderData.maxTransactionLimit}</li>
+      <li className='fb15 tc' >10 Oct 2017</li>
+      <Trustworthiness trustLevel={'Perfect'} />
+      <LastOnline time={props.buyOrderData.lastUpated} />
+      <BuyButton />
+    </div>
+  );
+};
 
-  render(){
+SingleBuyOrder.propTypes = {
+  buyOrderData: PropTypes.object.isRequired
+};
 
-    return (
-      <div>
-        <li>David Washington - EUR</li>
-        <li>IMPS</li>
-        <li>1300 INR</li>
-        <li>0-{this.props.buyOrderData.amountq}</li>
-        <li>10 October 2017</li>
-        <li>Sufficient</li>
-        <li>Active</li>
-        <li><SellButton/></li>
-      </div>)
-  }
-}
-
-export default SingleBuyOrder
+export default SingleBuyOrder;

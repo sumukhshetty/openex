@@ -206,6 +206,15 @@ footer.page-footer {
 }
 
 /* button customizations */
+
+button {
+  background-color: #2196F3;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  padding: .5em 1em;
+}
+
 button.right {
   float: right;
 }
@@ -252,4 +261,18 @@ p.lead {
   icons at these places in html */
   display: none;
   font-size: 0;
+}
+
+.greenDot {
+  background-color: #8BC34A;
+  border-radius: 50%;
+  height: 5px;
+  width: 5px;
+}
+
+.blackDot {
+  background-color: #666;
+  border-radius: 50%;
+  height: 5px;
+  width: 5px;
 }

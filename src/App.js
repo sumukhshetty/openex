@@ -12,6 +12,8 @@ import Footer from './footer/Footer'
 // Styles
 import './css/pure-min.css'
 import './css/styles-common.css'
+import './css/atomic.css'
+import './css/swatch.css'
 import logo from './images/logo.svg'
 
 class App extends Component {
