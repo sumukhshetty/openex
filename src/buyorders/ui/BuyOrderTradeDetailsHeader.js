@@ -1,24 +1,20 @@
-import React, { Component } from 'react'
-//TODO import HelpContainer
+import React, { Component } from 'react';
+// TODO import HelpContainer
 
 class BuyOrderTradeDetailsHeader extends Component {
-  render() {
-    return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <li>Username</li>
-            <li>Payment method</li>
-            <li>Price/ether</li>
-            <li>Limits</li>
-            <li>Last Transfer</li>
-            <li>Trustworthiness</li>
-            <li>Last Online</li>
-          </div>
-        </div>
-      </main>
-    )
+  render () {
+    return (
+      <ul className='flex list bh-white bb pa3 ma2 light-gray'>
+        <li className='fb20'>Username</li>
+        <li className='fb10 tc'>Payment method</li>
+        <li className='fb15 tc'>Price/ether</li>
+        <li className='fb5 tc'>Limits</li>
+        <li className='fb15 tc'>Last Transfer</li>
+        <li className='fb15 tc'>Trustworthiness</li>
+        <li className='fb15 tc'>Last Online</li>
+      </ul>
+    );
   }
 }
 
-export default BuyOrderTradeDetailsHeader
+export default BuyOrderTradeDetailsHeader;
