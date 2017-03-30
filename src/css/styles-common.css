@@ -43,6 +43,11 @@ a:hover {
   color: #004ea5;
 }
 
+.view-active-trade-button,
+.view-active-trade-button:hover {
+  color: white;
+}
+
 header {
   position: relative;
   min-height: 80px;
@@ -210,11 +215,8 @@ button.right {
   float: right;
 }
 
-main[role='main'] section {
+main[role='main'] section.home {
   margin-bottom: 10rem;
-}
-main[role='main'] section.dashboard {
-  margin-bottom: 0;
 }
 
 .dashboard {
