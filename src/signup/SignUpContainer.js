@@ -8,6 +8,7 @@ import Help from './Help'
 
 class SignUpContainer extends Component {
   render() {
+    var web3=this.props.web3
     return(
       <div className="ethereum-automte">
         <section>
@@ -16,7 +17,7 @@ class SignUpContainer extends Component {
         </section>
 
         <section className="metamask">
-          <WalletComponent />
+          <WalletComponent web3={this.props.web3}/>
         </section>
 
         <section className="signup-form">
