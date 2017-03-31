@@ -34,6 +34,7 @@ contract SellOrder is Ownable, SafeMath {
     return ((amount * 100) / feePercent) / 100;
   }
 
+  //implement possible purchase minimums and limits
   function addOrder(address buyer, uint amount) {
     uint fee = calculateFee(amount);
     if(msg.sender != seller || (amount+fee) > availableFunds || buyers[buyer].amount > 0)
@@ -75,5 +76,7 @@ contract SellOrder is Ownable, SafeMath {
     buyers[buyer].amount = 0;
     buyers[buyer].fee = 0;
   }
+
+  //options for seller to withdraw the funds
 
 }
