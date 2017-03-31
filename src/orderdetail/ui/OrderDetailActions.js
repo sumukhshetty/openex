@@ -4,6 +4,8 @@ import SellOrderContract from '../../../build/contracts/SellOrder.json'
 import BuyOrderContract from '../../../build/contracts/BuyOrder.json'
 //import { browserHistory } from 'react-router'
 
+import factoryAddress from '../../contract_addresses/orderfactory.js'
+
 const contract = require('truffle-contract')
 
 export const GET_ORDER = 'GET_ORDER'
@@ -31,13 +33,7 @@ export function orderDetail(web3, address) {
     directory.setProvider(web3.currentProvider);
 
 
-    directory.at('0xacefc4413172035a7f9f22df21f748964f1bd00a')
-    .then(function(_directory) {
-      return _directory.orderFactoryAddress();
-    })
-    .then(function(_orderFactoryAddress) {
-      return factory.at(_orderFactoryAddress);
-    })
+    factory.at(factoryAddress.factoryAddress)
     .then(function(_factory) {
       factoryInstance = _factory;
       var orderCreatedEvent = factoryInstance.OrderCreated({orderAddress: address},{});
