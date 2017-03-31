@@ -15,10 +15,6 @@ module.exports = {
       port: 8545,
       network_id: "*" // Match any network id
     },
-    ropsten: {
-      provider: new HDWalletProvider(mnemonic, "https://api.myetherapi.com/rop"),
-      network_id: 3
-    },
     kovan:{
         provider: new HDWalletProvider(mnemonic, "http://localhost:8545"),
         network_id:42,
