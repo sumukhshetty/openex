@@ -8,7 +8,7 @@ class ActiveTradeProgress extends Component {
     const progress_map = this.props.progress_map;
 
     return(
-      <Progress map={progress_map} />
+      <Progress progress_map={progress_map} />
     )
   }
 }

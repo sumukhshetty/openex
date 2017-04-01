@@ -4,7 +4,7 @@ import './Progress.css'
 
 class Progress extends Component {
   render() {
-    const progress_map = this.props.map;
+    const progress_map = this.props.progress_map;
     return(
       <nav className="progress-steps">
         { progress_map.map(function(params, index) {
