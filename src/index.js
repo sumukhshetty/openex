@@ -50,7 +50,7 @@ ReactDOM.render((
         <Route path='login' component={UserIsNotAuthenticated(Login)} />
         <Route path='profile' component={UserIsAuthenticated(Profile)} />
         <Route path='buyorders' component={UserIsAuthenticated(BuyOrders)} />
-        <Route path='sellorders' component={UserIsAuthenticated(SellOrders)} />
+        <Route path='sellorders' component={UserIsAuthenticated(BuyOrders)} />
         <Route path='help' component={UserIsAuthenticated(Help)} />
         <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />
         <Route path='orderslist' component={UserIsAuthenticated(OrdersList)} />
