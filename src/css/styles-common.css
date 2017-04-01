@@ -257,6 +257,10 @@ p.lead {
   font-weight: lighter;
 }
 
+.panel {
+  font-size: smaller;
+}
+
 .icon {
   /* temporary class used for icon tags just as a
   dev note to include an icon font and use appropriate
