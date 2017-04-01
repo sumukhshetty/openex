@@ -22,7 +22,7 @@
   width: 100%;
   background-color: var(--inactive-color, black);
   position: absolute;
-  left: 180px;
+  left: 50%;
   top: 62px;
   z-index: -1;
 }
