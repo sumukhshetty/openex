@@ -17,7 +17,7 @@ class Progress extends Component {
           return <ProgressStepsItem
                       key={index}
                       status={params.status}
-                      label={params.label}
+                      label={params.label !== ''? params.label:(index+1)}
                       text={params.text} />
         })}
       </nav>

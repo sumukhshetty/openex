@@ -13,4 +13,4 @@ class ActiveTradeProgress extends Component {
   }
 }
 
-export default ActiveTradeProgress
+export default ActiveTradeProgress;

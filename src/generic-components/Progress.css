@@ -1,3 +1,6 @@
+/* NOTE: CSS variables are experimental tech,
+but supported in Chrome, our target browser at
+this time: Apr, 2017. */
 :root {
   --active-color: #2196F3;
   --inactive-color: #CCCCCC;
