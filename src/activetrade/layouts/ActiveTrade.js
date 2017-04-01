@@ -14,7 +14,7 @@ class ActiveTrade extends Component {
           <td>5</td>
           <td>10000</td>
           <td>In Escrow</td>
-          <td><i class='icon'>greendot</i> Active</td>
+          <td><i className='icon'>greendot</i> Active</td>
           <ViewActiveTradeButton />
         </tr>
       </tbody>
