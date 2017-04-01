@@ -19,6 +19,8 @@ const Flag = (props) => {
     case 'Checking':
       colour = '#666';
       break;
+    default:
+      colour = '#999';
   }
 
   console.log(colour);
