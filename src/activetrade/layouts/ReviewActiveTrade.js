@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ActiveTradeInfo from './ActiveTradeInfo'
 import ActiveTradeProgress from './ActiveTradeProgress'
+import StepNote from './StepNote';
 import MakePaymentButton from './MakePaymentButton'
 import ChatMessages from './ChatMessages'
 import NewChatMessage from './NewChatMessage'
@@ -11,13 +12,23 @@ import CancelTrade from './../../canceltrade/CancelTrade'
 
 class ReviewActiveTrade extends Component {
   render() {
+
+    const progress_map = [
+      { status: 'completed', label: '1', text: 'Escrow' },
+      { status: 'active', label: '2', text: 'Payment' },
+      { status: '', label: '3', text: 'Ether Released' }
+    ]
+    const step = "payment";
+    // NOTE / TODO: above variables hold mock data
+
     return(
       <section className="activeTrade">
         <div className="container">
           <div className="pure-g">
             <div className="pure-u-1">
               <ActiveTradeInfo />
-              <ActiveTradeProgress />
+              <ActiveTradeProgress progress_map={progress_map} />
+              <StepNote step={step} />
               <MakePaymentButton />
               <ChatMessages />
               <NewChatMessage />
