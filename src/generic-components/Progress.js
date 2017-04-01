@@ -4,6 +4,12 @@ import './Progress.css'
 
 class Progress extends Component {
   render() {
+    // DOC: This component expects data in the form
+    // of an array of dictionaries containing the following keys:
+    // status, label, text
+    // for example:
+    // [{status: 'Yay', label: '3', text: 'Step 3'}]
+
     const progress_map = this.props.progress_map;
     return(
       <nav className="progress-steps">
