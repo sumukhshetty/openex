@@ -211,7 +211,6 @@ footer.page-footer {
 }
 
 /* button customizations */
-
 button {
   background-color: #2196F3;
   border: none;
@@ -277,4 +276,12 @@ p.lead {
   border-radius: 50%;
   height: 5px;
   width: 5px;
+}
+
+/*form elements*/
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
 }

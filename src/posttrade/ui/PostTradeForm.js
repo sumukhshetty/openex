@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { BuyForm } from './BuyForm';
 import { SellForm } from './SellForm';
 import PostTradeInstructions from './PostTradeInstructions';
-import PostTradeFormHelp from './PostTradeFormHelp';
+// import PostTradeFormHelp from './PostTradeFormHelp';
+// <PostTradeFormHelp />
 
 class PostTradeForm extends Component {
   constructor (props) {
@@ -117,25 +118,30 @@ class PostTradeForm extends Component {
         <div>
           <PostTradeInstructions />
         </div>
-        <div className='flex'>
-          <form className='pure-form pure-form-stacked' onSubmit={this.handleSubmit.bind(this)}>
-            <fieldset>
-              <legend className='b'>Trade Information</legend>
-              <div className='flex'>
-                <p className='w4 ss'>I want to...</p>
-                <div>
-                  <label htmlFor='sellTradeType'> <input id='sellTradeType' name='tradeType' type='radio' value='sell-ether' onChange={this.onTradeTypeChange.bind(this)}
-                    className='v-top' />Sell Ether</label>
-                  <label htmlFor='buyTradeType'><input id='buyTradeType' name='tradeType' type='radio' value='buy-ether' onChange={this.onTradeTypeChange.bind(this)}
-                    className='v-top' defaultChecked='true' />Buy Ether</label>
-                </div>
+        <form className='mv3' onSubmit={this.handleSubmit.bind(this)}>
+          <fieldset >
+            <legend className='b'>Trade Information</legend>
+            <div className='flex pa0 mb3'>
+              <p className='w5'>I want to...</p>
+              <div className='flex col'>
+                <label htmlFor='sellTradeType'> <input id='sellTradeType' name='tradeType' type='radio' value='sell-ether' onChange={this.onTradeTypeChange.bind(this)}
+                  className='mr2' />Sell Ether</label>
+                <label htmlFor='buyTradeType'><input id='buyTradeType' name='tradeType' type='radio' value='buy-ether' onChange={this.onTradeTypeChange.bind(this)}
+                  className='mr2' defaultChecked='true' />Buy Ether</label>
               </div>
-              <label htmlFor='location'>Location</label>
-              <input id='location' name='location' type='text' value={this.state.postTradeDetails.location} onChange={this.onInputChange.bind(this)} placeholder='Enter a Location' />
-              <span className='pure-form-message'>For online trade you need to specify the country. For local trade, please specify a city, postal code or street name.</span>
-              <br />
-              <label htmlFor='paymentMethod'>Payment Method</label>
-              <select id='paymentMethod' name='paymentMethod' onChange={this.onPaymentMethodChange.bind(this)}>
+              <span className='measure-narrow fw1 i pa0 me'>
+                What kind of trade advertisement do you wish to create? If you wish to sell ether make sure you have ether in your Metamask wallet.
+              </span>
+            </div>
+            <div className='flex mb3'>
+              <label htmlFor='location' className='w5' >Location</label>
+              <input id='location' name='location' type='text' value={this.state.postTradeDetails.location} onChange={this.onInputChange.bind(this)} placeholder='Enter a Location' className='w5 h-100' />
+              <span className='measure-narrow fw1 i pa0 me'>For online trade you need to specify the country. For local trade, please specify a city, postal code or street name.</span>
+            </div>
+            <div className='flex mb3'>
+              <label htmlFor='paymentMethod' className='w5'>Payment Method</label>
+              <select id='paymentMethod' name='paymentMethod' onChange={this.onPaymentMethodChange.bind(this)}
+                className='w5'>
                 <option value='UPI'>UPI</option>
                 <option value='neft'>neft</option>
                 <option value='IMPS'>IMPS</option>
@@ -143,23 +149,26 @@ class PostTradeForm extends Component {
                 <option value='payTm'>payTm</option>
                 <option value='RTGS'>RTGS</option>
               </select>
+            </div>
 
-              { (this.state.buyFormBool) ? <BuyForm
-                onChangeProp={this.onInputChange.bind(this)}
-                amount={this.state.postTradeDetails.amount}
-                paymentMethod={this.state.postTradeDetails.paymentMethod}
-                onCurrencyChange={this.onCurrencyChange.bind(this)}
-                bankInformation={this.state.postTradeDetails.bankInformation}
-                minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
-                maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
-                termsOfTrade={this.state.postTradeDetails.termsOfTrade} /> : <SellForm
-                  onChangeProp={this.onInputChange.bind(this)} />
-          }
-              <button type='submit' className='ma4'>Publish Advertisement</button>
-            </fieldset>
-          </form>
-          <PostTradeFormHelp />
-        </div>
+            { (this.state.buyFormBool) ? <BuyForm
+              onChangeProp={this.onInputChange.bind(this)}
+              amount={this.state.postTradeDetails.amount}
+              paymentMethod={this.state.postTradeDetails.paymentMethod}
+              onCurrencyChange={this.onCurrencyChange.bind(this)}
+              bankInformation={this.state.postTradeDetails.bankInformation}
+              minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
+              maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
+              termsOfTrade={this.state.postTradeDetails.termsOfTrade} /> : <SellForm
+                onChangeProp={this.onInputChange.bind(this)} />
+            }
+
+            <button
+              type='submit'
+              className='ma5'>Publish Advertisement</button>
+
+          </fieldset>
+        </form>
       </div>
     );
   }
