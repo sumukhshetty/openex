@@ -6,6 +6,21 @@ height: 1px;
 overflow: hidden;
 clip: rect(1px, 1px, 1px, 1px);
 }
+
+/*form overwrite*/
+
+.percent{
+  background: url("../images/percentAppend.png") 100% !important;
+  background-repeat: no-repeat !important;
+  background-size: auto 100% !important;
+}
+
+.inr{
+  background: url("../images/inrAppend.png") 100% !important;
+  background-repeat: no-repeat !important;
+  background-size: auto 100% !important;
+}
+
 /* Variables */
 
 :root {
@@ -60,11 +75,12 @@ clip: rect(1px, 1px, 1px, 1px);
 .cxc { align-items: center; }
 .cxb { align-items: baseline; }
 .cxf { align-items: stretch; }
-.ss { align-self: flex-start; }
-.se { align-self: flex-end; }
-.sc { align-self: center; }
-.sb { align-self: baseline; }
-.sf { align-self: stretch; }
+.cs { align-self: flex-start; }
+.ce { align-self: flex-end; }
+.cc { align-self: center; }
+.cb { align-self: baseline; }
+.cf { align-self: stretch; }
+.ca { align-self: auto; }
 /*mx is for main axis*/
 .mxs { justify-content: flex-start; }
 .mxe { justify-content: flex-end; }
@@ -77,6 +93,8 @@ clip: rect(1px, 1px, 1px, 1px);
 .acb { align-content: space-between; }
 .aca { align-content: space-around; }
 .acf { align-content: stretch; }
+.ms { margin-right: auto; }
+.me { margin-left: auto; }
 .0 { order: 0; }
 .1 { order: 1; }
 .2 { order: 2; }
@@ -98,7 +116,6 @@ clip: rect(1px, 1px, 1px, 1px);
 
 
 /* Width Scale */
-
 .w1 {    width: 1rem; }
 .w2 {    width: 2rem; }
 .w3 {    width: 4rem; }
@@ -111,6 +128,7 @@ clip: rect(1px, 1px, 1px, 1px);
 .w-100 { width: 100%; }
 
 .min-w-100 { min-width: 100%; }
+.min-w-30 { min-width: 20em;}
 
 .w-third { width: calc(100% / 3); }
 .w-two-thirds { width: calc(100% / 1.5); }
@@ -435,3 +453,86 @@ clip: rect(1px, 1px, 1px, 1px);
 .z-inherit { z-index: inherit; }
 .z-initial { z-index: initial; }
 .z-unset { z-index: unset; }
+
+/* Measure is limited to ~66 characters */
+.measure {
+  max-width: 30em;
+}
+
+/* Measure is limited to ~80 characters */
+.measure-wide {
+  max-width: 34em;
+}
+
+/* Measure is limited to ~45 characters */
+.measure-narrow {
+  max-width: 20em;
+}
+
+/* Book paragraph style - paragraphs are indented with no vertical spacing. */
+.indent {
+  text-indent: 1em;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.small-caps {
+  font-variant: small-caps;
+}
+
+/* Combine this class with a width to truncate text (or just leave as is to truncate at width of containing element. */
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*font weights*/
+
+.normal { font-weight: normal; }
+.b      { font-weight: bold; }
+.fw1    { font-weight: 100; }
+.fw2    { font-weight: 200; }
+.fw3    { font-weight: 300; }
+.fw4    { font-weight: 400; }
+.fw5    { font-weight: 500; }
+.fw6    { font-weight: 600; }
+.fw7    { font-weight: 700; }
+.fw8    { font-weight: 800; }
+.fw9    { font-weight: 900; }
+
+/*font style*/
+.i         { font-style: italic; }
+.fs-normal { font-style: normal; }
+
+/*LINE HEIGHT / LEADING*/
+.lh-solid { line-height: 1; }
+.lh-title { line-height: 1.25; }
+.lh-copy  { line-height: 1.5; }
+
+/*FLOATS*/
+
+/*1. Floated elements are automatically rendered as block level elements.
+     Setting floats to display inline will fix the double margin bug in
+     ie6. You know... just in case.*/
+/*2. Don't forget to clearfix your floats with .cf*/
+.fl { float: left;  _display: inline; }
+.fr { float: right; _display: inline; }
+.fn { float: none; }
+
+/* Nicolas Gallaghers Clearfix solution
+   Ref: http://nicolasgallagher.com/micro-clearfix-hack/ */
+
+.cf:before,
+.cf:after   { content: " "; display: table; }
+.cf:after   { clear: both; }
+.cf         { *zoom: 1; }
+
+/* Type Scale */
+.f1 { font-size: 3rem; }
+.f2 { font-size: 2.25rem; }
+.f3 { font-size: 1.5rem; }
+.f4 { font-size: 1.25rem; }
+.f5 { font-size: 1rem; }
+.f6 { font-size: .875rem; }

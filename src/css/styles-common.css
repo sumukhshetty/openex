@@ -211,7 +211,6 @@ footer.page-footer {
 }
 
 /* button customizations */
-
 button {
   background-color: #2196F3;
   border: none;
@@ -310,4 +309,35 @@ input::placeholder, textarea::placeholder {
 
 textarea {
   border: 1px solid #CCC
+}
+
+select {
+  border: 1px solid #4C92C2;
+  width: 16rem;
+  padding: 3px 0;
+  text-indent: .25rem;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  background: url("../images/dropdownCaret.png") white no-repeat 95% !important; /* !important used for overriding all other customisations */
+}
+
+
+input[type="submit"] {
+  background-color: #2196F3;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  padding: .5em 1em;
+  width:inherit;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  position: absolute;
+
+}
+
+input[type="number"] {
+  text-indent: 1rem;
 }
