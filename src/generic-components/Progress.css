@@ -1,0 +1,98 @@
+/* NOTE: CSS variables are experimental tech,
+but supported in Chrome, our target browser at
+this time: Apr, 2017. */
+:root {
+  --active-color: #2196F3;
+  --inactive-color: #CCCCCC;
+}
+.progress-steps {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.progress-steps-item {
+  padding: 2rem 0;
+  position: relative;
+  display: table-cell;
+  z-index: 2;
+}
+
+.progress-steps-item:after {
+  content: ' ';
+  display: inline-block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--inactive-color, black);
+  position: absolute;
+  left: 50%;
+  top: 62px;
+  z-index: -1;
+}
+
+.progress-steps-item:last-child:after {
+  content: none;
+  display: none;
+}
+
+.progree-steps-label {
+  z-index: 1;
+}
+
+.progress-steps-item-content {
+  display: inline-block;
+}
+
+.progress-steps-item-icon {
+  background: var(--inactive-color, black);
+  color: white;
+  display: block;
+  border-radius: 100%;
+  text-align: center;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  margin: 1rem auto;
+}
+
+.progress-steps-item-text {
+  font-size: 0.8rem;
+  color: var(--inactive-color, black);
+  text-align: center;
+}
+
+.progress-steps-item--active {
+  color: var(--active-color, green);
+}
+
+.progress-steps-item--active .progress-steps-item-icon {
+  background-color: var(--active-color, green);
+  color: white;
+}
+
+.progress-steps-item--active .progress-steps-item-text {
+  color: var(--active-color, green);
+}
+
+.progress-steps-item--completed .progress-steps-item-text {
+  color: black;
+}
+
+.progress-steps-item--completed .progress-steps-item-icon {
+  background-color: var(--active-color, green);
+  color: transparent;
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9Ii03MCAxNjIuOCA0NjkuMiA0NjkuMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAtNzAgMTYyLjggNDY5LjIgNDY5LjI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj48c3R5bGUgdHlwZT0idGV4dC9jc3MiPi5zdDB7ZmlsbDojRkZGRkZGO308L3N0eWxlPjxnPjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0zOTIuNSwyNTlsLTIxLjctMjEuN2MtOS05LTIzLjYtOS0zMi42LDBMMTEwLjQsNDY1LjJMLTksMzQ1LjhjLTktOS0yMy42LTktMzIuNiwwbC0yMS43LDIxLjdjLTguOSw5LTguOSwyMy42LDAsMzIuNkw5NCw1NTcuNGM0LjUsNC41LDEwLjMsNi44LDE2LjIsNi44czExLjgtMi4zLDE2LjItNi44bDI2NS44LTI2NS44QzQwMS41LDI4Mi41LDQwMS41LDI2OCwzOTIuNSwyNTl6Ii8+PC9nPjwvc3ZnPg==");
+  background-size: 1rem;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.progress-steps-item--completed:after {
+  background-color: var(--active-color, green);
+}
+
+.progress-steps-item:first-child {
+  padding-left: 1rem;
+}
+
+

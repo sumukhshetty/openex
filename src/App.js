@@ -62,7 +62,6 @@ class App extends Component {
       </ul>
     )
 
-    console.log(this.props.children);
     return (
       <section className="App">
         {/* TODO: cleanup the following components */}

@@ -227,7 +227,7 @@ main[role='main'] section.home {
   margin-bottom: 10rem;
 }
 
-.dashboard {
+.dashboard, .activeTrade {
   background-color: white;
   min-height: 30rem;
   margin-bottom: 0;
@@ -254,6 +254,10 @@ main[role='main'] section.home {
 p.lead {
   font-size: larger;
   font-weight: lighter;
+}
+
+.panel {
+  font-size: smaller;
 }
 
 .icon {
