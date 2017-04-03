@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 class BuyButton extends Component {
   render () {
     return (
-      <li className='fb5'>
+      <td className='fb5'>
         <button> Buy </button>
-      </li>
+      </td>
     );
   }
 }
