@@ -282,3 +282,32 @@ p.lead {
   height: 5px;
   width: 5px;
 }
+
+/*form elements*/
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  border: 1px solid #4C92C2;
+  width: 16rem;
+  padding: 3px 0;
+  text-indent: .25rem;
+}
+
+input[type="radio"] {
+  width: inherit;
+}
+
+input::placeholder, textarea::placeholder {
+  font-style: italic;
+  font-size: .75rem;
+  color: #9B9B9B;
+}
+
+textarea {
+  border: 1px solid #CCC
+}
