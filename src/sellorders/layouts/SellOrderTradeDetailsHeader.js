@@ -1,24 +1,28 @@
-import React, { Component } from 'react'
-//TODO import HelpContainer
+// NOTE from joshpitzalis
+//
+// all this stuff is exactly teh same as /buyorders folder. Commeneted out to show it has no ionfluence on teh system. Not deleted incase we need it later.
 
-class SellOrderTradeDetailsHeader extends Component {
-  render() {
-    return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <li>Username</li>
-            <li>Payment method</li>
-            <li>Price/ether</li>
-            <li>Limits</li>
-            <li>Last Transfer</li>
-            <li>Trustworthiness</li>
-            <li>Last Online</li>
-          </div>
-        </div>
-      </main>
-    )
-  }
-}
-
-export default SellOrderTradeDetailsHeader
+// import React, { Component } from 'react'
+// //TODO import HelpContainer
+//
+// class SellOrderTradeDetailsHeader extends Component {
+//   render() {
+//     return(
+//       <main className="container">
+//         <div className="pure-g">
+//           <div className="pure-u-1-1">
+//             <li>Username</li>
+//             <li>Payment method</li>
+//             <li>Price/ether</li>
+//             <li>Limits</li>
+//             <li>Last Transfer</li>
+//             <li>Trustworthiness</li>
+//             <li>Last Online</li>
+//           </div>
+//         </div>
+//       </main>
+//     )
+//   }
+// }
+//
+// export default SellOrderTradeDetailsHeader

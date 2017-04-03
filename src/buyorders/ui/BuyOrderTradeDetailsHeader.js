@@ -4,15 +4,15 @@ import React, { Component } from 'react';
 class BuyOrderTradeDetailsHeader extends Component {
   render () {
     return (
-      <ul className='flex list bh-white bb pa3 ma2 light-gray'>
-        <li className='fb20'>Username</li>
-        <li className='fb10 tc'>Payment method</li>
-        <li className='fb15 tc'>Price/ether</li>
-        <li className='fb5 tc'>Limits</li>
-        <li className='fb15 tc'>Last Transfer</li>
-        <li className='fb15 tc'>Trustworthiness</li>
-        <li className='fb15 tc'>Last Online</li>
-      </ul>
+      <tr className='flex list bh-white bb pa3 ma2 light-gray'>
+        <th className='fb20'>Username</th>
+        <th className='fb10 tc'>Payment method</th>
+        <th className='fb15 tc'>Price/ether</th>
+        <th className='fb5 tc'>Limits</th>
+        <th className='fb15 tc'>Last Transfer</th>
+        <th className='fb15 tc'>Trustworthiness</th>
+        <th className='fb15 tc'>Last Online</th>
+      </tr>
     );
   }
 }
