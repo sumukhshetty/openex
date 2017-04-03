@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { BuyForm } from './BuyForm';
 import { SellForm } from './SellForm';
 import PostTradeInstructions from './PostTradeInstructions';
-// import PostTradeFormHelp from './PostTradeFormHelp';
-// <PostTradeFormHelp />
+// import {Input} from '../../components/Input';
 
 class PostTradeForm extends Component {
   constructor (props) {
@@ -14,7 +13,8 @@ class PostTradeForm extends Component {
       postTradeDetails: {
         tradeType: '',
         amount: 0,
-        // TODO check this
+        location: '',
+        // TODO check this ( who wrote this? Please tag your name so we know whos to do it is')
         buyerAddress: '',
         paymentMethod: '',
         bankInformation: '',
@@ -23,7 +23,8 @@ class PostTradeForm extends Component {
         termsOfTrade: ''
       },
       buyFormBool: false,
-      user: this.props.user
+      user: this.props.user,
+      currentETHMarketValue: 1203
     };
   }
 
@@ -37,14 +38,22 @@ class PostTradeForm extends Component {
     if (event.target.id === 'location') {
       _postTradeDetails['location'] = event.target.value;
       // this.setState({ postTradeDetails: _postTradeDetails })
+    } else if (event.target.id === 'margin') {
+      _postTradeDetails['margin'] = event.target.value;
+    } else if (event.target.id === 'equation') {
+      _postTradeDetails['equation'] = event.target.value;
     } else if (event.target.id === 'amount') {
       _postTradeDetails['amount'] = event.target.value;
     } else if (event.target.id === 'bankInformation') {
       _postTradeDetails['bankInformation'] = event.target.value;
+    } else if (event.target.id === 'location') {
+      _postTradeDetails['location'] = event.target.value;
     } else if (event.target.id === 'minTransactionLimit') {
       _postTradeDetails['minTransactionLimit'] = event.target.value;
     } else if (event.target.id === 'maxTransactionLimit') {
       _postTradeDetails['maxTransactionLimit'] = event.target.value;
+    } else if (event.target.id === 'restrictTo') {
+      _postTradeDetails['restrictTo'] = event.target.value;
     } else if (event.target.id === 'termsOfTrade') {
       _postTradeDetails['termsOfTrade'] = event.target.value;
     }
@@ -120,8 +129,8 @@ class PostTradeForm extends Component {
         </div>
         <form className='mv3' onSubmit={this.handleSubmit.bind(this)}>
           <fieldset >
-            <legend className='b'>Trade Information</legend>
-            <div className='flex pa0 mb3'>
+            <legend className='b f4 mv3'>Trade Information</legend>
+            <div className='flex pa0 mv3'>
               <p className='w5'>I want to...</p>
               <div className='flex col'>
                 <label htmlFor='sellTradeType'> <input id='sellTradeType' name='tradeType' type='radio' value='sell-ether' onChange={this.onTradeTypeChange.bind(this)}
@@ -133,12 +142,35 @@ class PostTradeForm extends Component {
                 What kind of trade advertisement do you wish to create? If you wish to sell ether make sure you have ether in your Metamask wallet.
               </span>
             </div>
-            <div className='flex mb3'>
+
+            <div className='flex mv3'>
               <label htmlFor='location' className='w5' >Location</label>
-              <input id='location' name='location' type='text' value={this.state.postTradeDetails.location} onChange={this.onInputChange.bind(this)} placeholder='Enter a Location' className='w5 h-100' />
+              <input id='location' name='location' type='text' valueProp={this.state.postTradeDetails.location} onChangeProp={this.onInputChange.bind(this)}
+                placeholder='Enter a Location' className='w5 h-100' />
               <span className='measure-narrow fw1 i pa0 me'>For online trade you need to specify the country. For local trade, please specify a city, postal code or street name.</span>
             </div>
-            <div className='flex mb3'>
+
+            <div className='flex mv3'>
+              <label htmlFor='margin' className='w5' >Margin</label>
+              <input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5 h-100 percent' />
+              <span className='measure-narrow fw1 i pa0 me'>Margin you want over the ether market price. Use a negative value for buying or selling under the market price to attract more contracts. For more complex pricing edit the price equation directly.</span>
+            </div>
+
+            <div className='flex mv3'>
+              <label htmlFor='equation' className='w5' >Price equation</label>
+              <div className='flex col'><input id='equation' name='equation' type='text' value={this.state.postTradeDetails.equation} onChange={this.onInputChange.bind(this)} placeholder='Kraken_API' className='w5' />
+                <small className='f6 fw3 mt3'>Trade price with current market value <span className='green'>{this.state.currentETHMarketValue} INR/ETH</span></small>
+              </div>
+
+              <span className='measure-narrow fw1 i pa0 me'>
+                  How the trade price is determined from the hourly market price. For more information about equations how to determine your traing price see pricing FAQ.
+                  <span className='b fw1'>
+                    Please note that the advertiser is always responsible for all payment processing fees.
+                  </span>
+              </span>
+            </div>
+
+            <div className='flex mv3'>
               <label htmlFor='paymentMethod' className='w5'>Payment Method</label>
               <select id='paymentMethod' name='paymentMethod' onChange={this.onPaymentMethodChange.bind(this)}
                 className='w5'>
@@ -163,9 +195,11 @@ class PostTradeForm extends Component {
                 onChangeProp={this.onInputChange.bind(this)} />
             }
 
-            <button
-              type='submit'
-              className='ma5'>Publish Advertisement</button>
+            <div className='flex mv3'>
+              <label className='w5 ' /><input
+                type='submit'
+                className='mv5'
+                value='Publish Advertisement' /></div>
 
           </fieldset>
         </form>
