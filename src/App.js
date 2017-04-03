@@ -36,9 +36,6 @@ class App extends Component {
                 <Link to="/posttrade">Post a Trade</Link>
               </li>
               <li className="pure-menu-item">
-                <Link to="/buyorders">View Buy Orders</Link>
-              </li>
-              <li className="pure-menu-item">
                 <Link to="/help">Help</Link>
               </li>
               <li className="pure-menu-item">
