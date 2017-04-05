@@ -14,6 +14,7 @@ import Profile from './user/layouts/profile/Profile';
 import PostTradeForm from './posttrade/layouts/PostTradeForm';
 import OrdersList from './orderslist/layouts/OrdersList';
 import OrderDetail from './orderdetail/layouts/OrderDetail';
+import BuyOrderDetail from './buyorderdetail/layouts/BuyOrderDetail';
 import Login from './user/layouts/login/Login';
 import BuyOrders from './buyorders/layouts/BuyOrders';
 // import SellOrders from './sellorders/layouts/SellOrders';
@@ -55,6 +56,7 @@ ReactDOM.render((
         <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />
         <Route path='orderslist' component={UserIsAuthenticated(OrdersList)} />
         <Route path='orderdetail/:address' component={UserIsAuthenticated(OrderDetail)} />
+        <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
         <Route path='activetrade/:orderId' component={UserIsAuthenticated(ReviewActiveTrade)} />
         <Route path='html' component={HTMLStyles} />
       </Route>

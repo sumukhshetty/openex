@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import * as _ from 'lodash';
-import BuyButton from './BuyButton';
+import BuyButton from './BuyButton'
+
 import LastOnline from './LastOnline';
 import Trustworthiness from './Trustworthiness';
 
@@ -14,7 +15,7 @@ const SingleBuyOrder = (props) => {
       <td className='fb15 tc' >10 Oct 2017</td>
       <Trustworthiness trustLevel={'Perfect'} />
       <LastOnline time={props.buyOrderData.lastUpated} />
-      <BuyButton />
+      <BuyButton orderId={props.buyOrderData.orderId}/>
     </tr>
   );
 };
