@@ -11,6 +11,7 @@ import DisputeTrade from './../../disputetrade/DisputeTrade'
 import CancelTrade from './../../canceltrade/CancelTrade'
 
 class ReviewActiveTrade extends Component {
+
   render() {
 
     const progress_map = [
@@ -26,7 +27,7 @@ class ReviewActiveTrade extends Component {
         <div className="container">
           <div className="pure-g">
             <div className="pure-u-1">
-              <ActiveTradeInfo />
+              <ActiveTradeInfo params={this.props.params} />
               <ActiveTradeProgress progress_map={progress_map} />
               <StepNote step={step} />
               <MakePaymentButton />

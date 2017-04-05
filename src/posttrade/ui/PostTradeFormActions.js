@@ -48,7 +48,8 @@ export function postTrade(postTradeDetails, web3, state) {
       }
     })
     .then(function(txHash) {
-      let orderType = (postTradeDetails.tradeType === "sell-ether") ? "sell" : "buy";
+      //TODO delete
+/*      let orderType = (postTradeDetails.tradeType === "sell-ether") ? "sell" : "buy";
       return new Promise(function(resolve, reject) {
       var orderCreatedEvent = factoryInstance.OrderCreated({seller: web3.eth.coinbase, orderType: web3.sha3(orderType)},{fromBlock: block, toBlock: 'pending'});
         orderCreatedEvent.watch(function(error, result) {
@@ -61,7 +62,8 @@ export function postTrade(postTradeDetails, web3, state) {
             orderCreatedEvent.stopWatching();
             resolve();
           }
-        })});
+        })});*/
+       // TODO  
     })
     .then(function() {
       //add orderAddress to the list of this user's orders.
@@ -69,10 +71,10 @@ export function postTrade(postTradeDetails, web3, state) {
       console.log("event was fired?")
 
       var currentdate = new Date().toString()
-      if (postTradeDetails.tradeType === 'buy-ether'){
+/*      if (postTradeDetails.tradeType === 'buy-ether'){
         var orderId = web3.sha3(state.user.data.uid + '-'+ currentdate)
         firebaseRef.database().ref("buyorders/" + state.user.data.uid + '/' + orderId).set(postTradeDetails);
-      }
+      }*/
       dispatch(tradeCreated(postTradeDetails))
       browserHistory.push('/orderslist')
     })
@@ -86,6 +88,6 @@ export function buyEtherPostTrade(postTradeDetails, web3, state) {
     console.log("buyorders/" + state.user.data.uid + '/' + postTradeDetails.orderId)
     firebaseRef.database().ref("buyorders/" + state.user.data.uid + '/' + postTradeDetails.orderId).set(postTradeDetails);
     dispatch(tradeCreated(postTradeDetails))
-    browserHistory.push('/orderslist')
+    browserHistory.push('/activetrade/' + postTradeDetails.orderId)
   }
 }

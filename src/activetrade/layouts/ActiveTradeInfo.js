@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 //TODO import HelpContainer
 
 class ActiveTradeInfo extends Component {
+  componentWillMount(){
+    console.log("ActiveTradeInfo")
+    console.log(this.props.params)
+  }
   render() {
     return(
       <p className="lead">Contract #1234: Buying 5 ether for 2000000.00 INR with
