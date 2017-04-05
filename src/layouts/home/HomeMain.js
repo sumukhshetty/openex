@@ -2,7 +2,6 @@ import Web3 from 'web3'
 import React, { Component } from 'react'
 import ProductShortDescription from './ProductShortDescription'
 import SignUpContainer from './../../signup/SignUpContainer'
-import SignUpFormContainer from './../../user/ui/signupform/SignUpFormContainer'
 import truffleConfig from './../../../truffle-config.js'
 
 var web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`
@@ -35,7 +34,6 @@ class HomeMain extends Component {
       }
   }
   render() {
-    console.log(this.web3Provided)
     var web3 = this.web3Provided
     return(
       <div className="pure-g">
