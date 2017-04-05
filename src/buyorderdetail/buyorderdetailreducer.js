@@ -3,6 +3,11 @@ const initialState = {
 }
 
 const buyOrderDetailReducer = (state = initialState, action) => {
+  if(action.type == 'CLEAR_BUY_ORDER')
+  {
+    console.log('clearing buyOrder state');
+    return initialState;
+  }
   if (action.type === 'GET_BUY_ORDER')
   {
     console.log('in buyorder reducer');

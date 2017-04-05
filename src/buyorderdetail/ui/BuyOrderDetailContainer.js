@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 import BuyOrderDetail from './BuyOrderDetail'
 import { buyOrder } from './BuyOrderDetailActions'
 import { createBuyOrderContract } from './BuyOrderDetailActions'
+import { clearBuyOrderState } from './BuyOrderDetailActions'
+
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -15,6 +17,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (orderId) => {
       dispatch(buyOrder(orderId))
+    },
+    clearBuyOrder: () => {
+      dispatch(clearBuyOrderState());
     },
     createBuyOrder: (amount, buyerAddress, web3) => {
       dispatch(createBuyOrderContract(amount, buyerAddress, web3));

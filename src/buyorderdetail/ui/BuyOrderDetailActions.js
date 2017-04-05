@@ -14,6 +14,9 @@ function getBuyOrder(buyOrderPayload) {
 }
 
 module.exports = {
+  clearBuyOrderState: () => (dispatch) => {
+    dispatch({ type: 'CLEAR_BUY_ORDER'});
+  },
   buyOrder: (orderId) => (dispatch) => {
     firebaseRef.database().ref('orders')
     .orderByKey().equalTo(orderId)
@@ -47,6 +50,7 @@ module.exports = {
       console.log(txHash);
 
       //TODO: update state of buyOrder in firebase
+      //TODO: redirect to activetrade screen
     })
   }
 }
