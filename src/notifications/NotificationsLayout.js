@@ -61,10 +61,10 @@ export default class Notifications extends Component {
 
   render () {
     return (
-      <div className='flex mxe absolute--fill absolute bg-black-80 z-1'>
+      <div className='flex mxe absolute--fill fixed bg-black-80 z-1'>
         <div className='w5 bg-smoke pa3 overflow-y-auto'>
           <div className='flex mxb cxc'>
-            <CancelIcon />
+            <CancelIcon action={this.props.close} />
             <div className='ms pl3'>Notifications</div>
             <GearIcon />
           </div>
@@ -73,8 +73,9 @@ export default class Notifications extends Component {
               <ClearIcon action={this.handleClear} />
             </div>
             {
-              this.state.notifications.map(notification =>
+              this.state.notifications.map((notification, index) =>
                 <NotificationGroup
+                  key={index}
                   day={notification.day}
                   updates={notification.updates} />)
               }
