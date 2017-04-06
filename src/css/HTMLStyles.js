@@ -53,7 +53,7 @@ const HTMLStyles = (props) => {
             <samp>
               <pre>
           /Sites/html master  ☠ ☢
-          $                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <kbd>ls -gto</kbd>
+          $                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <kbd>ls -gto</kbd>
 
           total 104
           -rw-r--r--   1   10779 Jun  5 16:24 index.html
@@ -212,13 +212,13 @@ const HTMLStyles = (props) => {
                   <td>&amp;#38;</td>
                 </tr>
                 <tr>
-                  <td>"</td>
+                  <td />
                   <td>double quotation mark</td>
                   <td>&amp;quot;</td>
                   <td>&amp;#34</td>
                 </tr>
                 <tr>
-                  <td>'</td>
+                  <td>&amp;apos;</td>
                   <td>single quotation mark (apostrophe)</td>
                   <td>&amp;apos;</td>
                   <td>&amp;#39;</td>
@@ -272,8 +272,8 @@ const HTMLStyles = (props) => {
 
                 <div>
                   <label>Text Input Label</label>
-                  <input type='text' />
-                  <p>Helper text if necessary.</p>
+                  <input type='text' placeholder='placeholder text' />
+                  <small>Helper text if necessary.</small>
                 </div>
 
                 <div>

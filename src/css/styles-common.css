@@ -211,7 +211,6 @@ footer.page-footer {
 }
 
 /* button customizations */
-
 button {
   background-color: #2196F3;
   border: none;
@@ -228,7 +227,7 @@ main[role='main'] section.home {
   margin-bottom: 10rem;
 }
 
-.dashboard {
+.dashboard, .activeTrade {
   background-color: white;
   min-height: 30rem;
   margin-bottom: 0;
@@ -257,6 +256,10 @@ p.lead {
   font-weight: lighter;
 }
 
+.panel {
+  font-size: smaller;
+}
+
 .icon {
   /* temporary class used for icon tags just as a
   dev note to include an icon font and use appropriate
@@ -277,4 +280,64 @@ p.lead {
   border-radius: 50%;
   height: 5px;
   width: 5px;
+}
+
+/*form elements*/
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  border: 1px solid #4C92C2;
+  width: 16rem;
+  padding: 3px 0;
+  text-indent: .25rem;
+}
+
+input[type="radio"] {
+  width: inherit;
+}
+
+input::placeholder, textarea::placeholder {
+  font-style: italic;
+  font-size: .75rem;
+  color: #9B9B9B;
+}
+
+textarea {
+  border: 1px solid #CCC
+}
+
+select {
+  border: 1px solid #4C92C2;
+  width: 16rem;
+  padding: 3px 0;
+  text-indent: .25rem;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  background: url("../images/dropdownCaret.png") white no-repeat 95% !important; /* !important used for overriding all other customisations */
+}
+
+
+input[type="submit"] {
+  background-color: #2196F3;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  padding: .5em 1em;
+  width:inherit;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  position: absolute;
+
+}
+
+input[type="number"] {
+  text-indent: 1rem;
 }

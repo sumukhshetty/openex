@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import SwitchAccounts from './SwitchAccounts'
 import WalletComponent from './../wallet/WalletComponent'
-import SignUpForm from './SignUpForm'
+import SignUpFormContainer from './../user/ui/signupform/SignUpFormContainer'
 import Help from './Help'
 
 
@@ -16,11 +16,11 @@ class SignUpContainer extends Component {
         </section>
 
         <section className="metamask">
-          <WalletComponent />
+          <WalletComponent web3={this.props.web3}/>
         </section>
 
         <section className="signup-form">
-          <SignUpForm />
+          <SignUpFormContainer />
         </section>
 
         <Help />

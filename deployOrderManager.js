@@ -4,22 +4,24 @@ var ContractDirectory = artifacts.require("./ContractDirectory.sol");
 
 module.exports = function(callback) {
 
-var factory;
+var factory, directory;
 var owners = [];
 var wallet;
 var manager;
 OrderManager.new(owners, 2, 10)
 .then(function(_manager) {
   manager = _manager;
+  console.log('Created manager at: ' + manager);
   return manager.factory();
 })
 .then(function(_factory) {
   factory = _factory;
   console.log('Created factory at: ' + factory);
-  return ContractDirectory.deployed();
+  return ContractDirectory.new();
 })
-.then(function(directory) {
-  console.log(directory);
+.then(function(_directory) {
+  console.log('Created directory at: ' + _directory);
+  directory = _directory;
   return directory.setFactoryAddress(factory);
 })
 .then(function() {

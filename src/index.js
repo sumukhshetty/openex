@@ -14,9 +14,10 @@ import Profile from './user/layouts/profile/Profile';
 import PostTradeForm from './posttrade/layouts/PostTradeForm';
 import OrdersList from './orderslist/layouts/OrdersList';
 import OrderDetail from './orderdetail/layouts/OrderDetail';
+import BuyOrderDetail from './buyorderdetail/layouts/BuyOrderDetail';
 import Login from './user/layouts/login/Login';
 import BuyOrders from './buyorders/layouts/BuyOrders';
-import SellOrders from './sellorders/layouts/SellOrders';
+// import SellOrders from './sellorders/layouts/SellOrders';
 import Help from './help/layouts/Help';
 import ReviewActiveTrade from './activetrade/layouts/ReviewActiveTrade';
 import HTMLStyles from './css/HTMLStyles.js';
@@ -26,6 +27,7 @@ import store from './store';
 import * as firebase from 'firebase';
 import * as _firebaseconfig from './../secrets/firebaseconfig';
 import * as actions from './buyorders/ui/BuyOrdersActions';
+import * as useractions from './user/userActions';
 
 // Config
 // import truffleConfig from './../truffle-config.js'
@@ -50,11 +52,12 @@ ReactDOM.render((
         <Route path='login' component={UserIsNotAuthenticated(Login)} />
         <Route path='profile' component={UserIsAuthenticated(Profile)} />
         <Route path='buyorders' component={UserIsAuthenticated(BuyOrders)} />
-        <Route path='sellorders' component={UserIsAuthenticated(SellOrders)} />
+        <Route path='sellorders' component={UserIsAuthenticated(BuyOrders)} />
         <Route path='help' component={UserIsAuthenticated(Help)} />
         <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />
         <Route path='orderslist' component={UserIsAuthenticated(OrdersList)} />
         <Route path='orderdetail/:address' component={UserIsAuthenticated(OrderDetail)} />
+        <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
         <Route path='activetrade/:orderId' component={UserIsAuthenticated(ReviewActiveTrade)} />
         <Route path='html' component={HTMLStyles} />
       </Route>
@@ -66,4 +69,5 @@ ReactDOM.render((
 
 setTimeout(function () {
   store.dispatch(actions.startListeningToBuyOrders());
+  store.dispatch(useractions.startListeningUserAuth());
 });

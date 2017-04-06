@@ -1,6 +1,7 @@
 import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
 import ContractDirectoryContract from '../../../build/contracts/ContractDirectory.json'
 import { browserHistory } from 'react-router'
+import factoryAddress from '../../contract_addresses/orderfactory.js'
 
 const contract = require('truffle-contract')
 
@@ -32,18 +33,14 @@ export function postTrade(postTradeDetails, web3, state) {
     var coinbase = web3.eth.coinbase;
     var block, orderAddress;
 
-    directory.at('0xfbd7975bfe2e0e01b3430f49348d3967eddd78a3')
-    .then(function(_directory) {
-      return _directory.orderFactoryAddress();
-    })
-    .then(function(_orderFactoryAddress) {
-      return factory.at(_orderFactoryAddress);
-    })
+    factory.at(factoryAddress.factoryAddress)
     .then(function(_factory) {
+      console.log('got factory contract');
       factoryInstance = _factory;
       return web3.eth.getBlockNumber();
     })
     .then(function(_block) {
+      console.log('got bloc');
       block = _block;
       //SellOrder
       if(postTradeDetails.tradeType === "sell-ether") {
@@ -53,33 +50,17 @@ export function postTrade(postTradeDetails, web3, state) {
       }
     })
     .then(function(txHash) {
-      let orderType = (postTradeDetails.tradeType === "sell-ether") ? "sell" : "buy";
-      return new Promise(function(resolve, reject) {
-      var orderCreatedEvent = factoryInstance.OrderCreated({seller: web3.eth.coinbase, orderType: web3.sha3(orderType)},{fromBlock: block, toBlock: 'pending'});
-        orderCreatedEvent.watch(function(error, result) {
-          if(error) {
-            console.log(error);
-          }
-          console.log(result.args);
-          if(result.args.orderAddress) {
-            orderAddress = result.args.orderAddress;
-            orderCreatedEvent.stopWatching();
-            resolve();
-          }
-        })});
-    })
-    .then(function() {
       //add orderAddress to the list of this user's orders.
       console.log(orderAddress);
       console.log("event was fired?")
 
       var currentdate = new Date().toString()
-      if (postTradeDetails.tradeType === 'buy-ether'){
-        var orderId = web3.sha3(state.user.data.uid + '-'+ currentdate)
-        firebaseRef.database().ref("buyorders/" + state.user.data.uid + '/' + orderId).set(postTradeDetails);
-      }
+      firebaseRef.database().ref("sellorders/" + postTradeDetails.orderId).set(postTradeDetails);
       dispatch(tradeCreated(postTradeDetails))
       browserHistory.push('/orderslist')
+    })
+    .catch(function (error) {
+      console.log(error);
     })
   }
 }
@@ -89,8 +70,8 @@ export function buyEtherPostTrade(postTradeDetails, web3, state) {
   return function(dispatch){
     console.log(postTradeDetails)
     console.log("buyorders/" + state.user.data.uid + '/' + postTradeDetails.orderId)
-    firebaseRef.database().ref("buyorders/" + state.user.data.uid + '/' + postTradeDetails.orderId).set(postTradeDetails);
+    firebaseRef.database().ref("buyorders/" + postTradeDetails.orderId).set(postTradeDetails);
     dispatch(tradeCreated(postTradeDetails))
-    browserHistory.push('/orderslist')
+    browserHistory.push('/activetrade/' + postTradeDetails.orderId)
   }
 }

@@ -5,6 +5,7 @@ import web3Reducer from './web3/web3Reducer'
 import postTradeReducer from './posttrade/postTradeReducer'
 import ordersListReducer from './orderslist/orderslistreducer'
 import orderDetailReducer from './orderdetail/orderdetailreducer'
+import buyOrderDetailReducer from './buyorderdetail/buyorderdetailreducer'
 import buyOrderReducer from './buyorders/buyOrderReducer'
 
 
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   postTrade: postTradeReducer,
   ordersList: ordersListReducer,
   orderDetail: orderDetailReducer,
+  buyOrderDetail: buyOrderDetailReducer,
   buyorders: buyOrderReducer
 })
 

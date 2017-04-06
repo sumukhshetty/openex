@@ -6,6 +6,21 @@ height: 1px;
 overflow: hidden;
 clip: rect(1px, 1px, 1px, 1px);
 }
+
+/*form overwrite*/
+
+.percent{
+  background: url("../images/percentAppend.png") 100% !important;
+  background-repeat: no-repeat !important;
+  background-size: auto 100% !important;
+}
+
+.inr{
+  background: url("../images/inrAppend.png") 100% !important;
+  background-repeat: no-repeat !important;
+  background-size: auto 100% !important;
+}
+
 /* Variables */
 
 :root {
@@ -15,6 +30,26 @@ clip: rect(1px, 1px, 1px, 1px);
   --spacing-medium: 1rem;
   --spacing-large: 2rem;
   --spacing-extra-large: 4rem;
+
+  --black-90: rgba(0,0,0,.9);
+  --black-80: rgba(0,0,0,.8);
+  --black-70: rgba(0,0,0,.7);
+  --black-60: rgba(0,0,0,.6);
+  --black-50: rgba(0,0,0,.5);
+  --black-40: rgba(0,0,0,.4);
+  --black-30: rgba(0,0,0,.3);
+  --black-20: rgba(0,0,0,.2);
+  --black-10: rgba(0,0,0,.1);
+
+  --white-90: rgba(255,255,255,.9);
+  --white-80: rgba(255,255,255,.8);
+  --white-70: rgba(255,255,255,.7);
+  --white-60: rgba(255,255,255,.6);
+  --white-50: rgba(255,255,255,.5);
+  --white-40: rgba(255,255,255,.4);
+  --white-30: rgba(255,255,255,.3);
+  --white-20: rgba(255,255,255,.2);
+  --white-10: rgba(255,255,255,.1);
 }
 
 /*Layout*/
@@ -40,11 +75,12 @@ clip: rect(1px, 1px, 1px, 1px);
 .cxc { align-items: center; }
 .cxb { align-items: baseline; }
 .cxf { align-items: stretch; }
-.ss { align-self: flex-start; }
-.se { align-self: flex-end; }
-.sc { align-self: center; }
-.sb { align-self: baseline; }
-.sf { align-self: stretch; }
+.cs { align-self: flex-start; }
+.ce { align-self: flex-end; }
+.cc { align-self: center; }
+.cb { align-self: baseline; }
+.cf { align-self: stretch; }
+.ca { align-self: auto; }
 /*mx is for main axis*/
 .mxs { justify-content: flex-start; }
 .mxe { justify-content: flex-end; }
@@ -57,6 +93,8 @@ clip: rect(1px, 1px, 1px, 1px);
 .acb { align-content: space-between; }
 .aca { align-content: space-around; }
 .acf { align-content: stretch; }
+.ms { margin-right: auto; }
+.me { margin-left: auto; }
 .0 { order: 0; }
 .1 { order: 1; }
 .2 { order: 2; }
@@ -78,7 +116,6 @@ clip: rect(1px, 1px, 1px, 1px);
 
 
 /* Width Scale */
-
 .w1 {    width: 1rem; }
 .w2 {    width: 2rem; }
 .w3 {    width: 4rem; }
@@ -91,6 +128,7 @@ clip: rect(1px, 1px, 1px, 1px);
 .w-100 { width: 100%; }
 
 .min-w-100 { min-width: 100%; }
+.min-w-30 { min-width: 20em;}
 
 .w-third { width: calc(100% / 3); }
 .w-two-thirds { width: calc(100% / 1.5); }
@@ -365,3 +403,179 @@ clip: rect(1px, 1px, 1px, 1px);
 .shadow-3 { box-shadow: 2px 2px 4px 2px rgba( 0, 0, 0, 0.2 ); }
 .shadow-4 { box-shadow: 2px 2px 8px 0px rgba( 0, 0, 0, 0.2 ); }
 .shadow-5 { box-shadow: 4px 4px 8px 0px rgba( 0, 0, 0, 0.2 ); }
+
+/*OPACITY*/
+
+.o-100 { opacity: 1;    }
+.o-90  { opacity: .9;   }
+.o-80  { opacity: .8;   }
+.o-70  { opacity: .7;   }
+.o-60  { opacity: .6;   }
+.o-50  { opacity: .5;   }
+.o-40  { opacity: .4;   }
+.o-30  { opacity: .3;   }
+.o-20  { opacity: .2;   }
+.o-10  { opacity: .1;   }
+.o-05  { opacity: .05;  }
+.o-025 { opacity: .025; }
+.o-0   { opacity: 0; }
+
+.bg-black-90 {         background-color: var(--black-90); }
+.bg-black-80 {         background-color: var(--black-80); }
+.bg-black-70 {         background-color: var(--black-70); }
+.bg-black-60 {         background-color: var(--black-60); }
+.bg-black-50 {         background-color: var(--black-50); }
+.bg-black-40 {         background-color: var(--black-40); }
+.bg-black-30 {         background-color: var(--black-30); }
+.bg-black-20 {         background-color: var(--black-20); }
+.bg-black-10 {         background-color: var(--black-10); }
+
+.bg-white-90 {        background-color: var(--white-90); }
+.bg-white-80 {        background-color: var(--white-80); }
+.bg-white-70 {        background-color: var(--white-70); }
+.bg-white-60 {        background-color: var(--white-60); }
+.bg-white-50 {        background-color: var(--white-50); }
+.bg-white-40 {        background-color: var(--white-40); }
+.bg-white-30 {        background-color: var(--white-30); }
+.bg-white-20 {        background-color: var(--white-20); }
+.bg-white-10 {        background-color: var(--white-10); }
+
+/*z-index*/
+.z-0 { z-index: 0; }
+.z-1 { z-index: 1; }
+.z-2 { z-index: 2; }
+.z-3 { z-index: 3; }
+.z-4 { z-index: 4; }
+.z-5 { z-index: 5; }
+.z-999 { z-index: 999; }
+.z-9999 { z-index: 9999; }
+.z-max { z-index: 2147483647; }
+.z-inherit { z-index: inherit; }
+.z-initial { z-index: initial; }
+.z-unset { z-index: unset; }
+
+/* Measure is limited to ~66 characters */
+.measure {
+  max-width: 30em;
+}
+
+/* Measure is limited to ~80 characters */
+.measure-wide {
+  max-width: 34em;
+}
+
+/* Measure is limited to ~45 characters */
+.measure-narrow {
+  max-width: 20em;
+}
+
+/* Book paragraph style - paragraphs are indented with no vertical spacing. */
+.indent {
+  text-indent: 1em;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.small-caps {
+  font-variant: small-caps;
+}
+
+/* Combine this class with a width to truncate text (or just leave as is to truncate at width of containing element. */
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*font weights*/
+
+.normal { font-weight: normal; }
+.b      { font-weight: bold; }
+.fw1    { font-weight: 100; }
+.fw2    { font-weight: 200; }
+.fw3    { font-weight: 300; }
+.fw4    { font-weight: 400; }
+.fw5    { font-weight: 500; }
+.fw6    { font-weight: 600; }
+.fw7    { font-weight: 700; }
+.fw8    { font-weight: 800; }
+.fw9    { font-weight: 900; }
+
+/*font style*/
+.i         { font-style: italic; }
+.fs-normal { font-style: normal; }
+
+/*LINE HEIGHT / LEADING*/
+.lh-solid { line-height: 1; }
+.lh-title { line-height: 1.25; }
+.lh-copy  { line-height: 1.5; }
+
+/*FLOATS*/
+
+/*1. Floated elements are automatically rendered as block level elements.
+     Setting floats to display inline will fix the double margin bug in
+     ie6. You know... just in case.*/
+/*2. Don't forget to clearfix your floats with .cf*/
+.fl { float: left;  _display: inline; }
+.fr { float: right; _display: inline; }
+.fn { float: none; }
+
+/* Nicolas Gallaghers Clearfix solution
+   Ref: http://nicolasgallagher.com/micro-clearfix-hack/ */
+
+.cf:before,
+.cf:after   { content: " "; display: table; }
+.cf:after   { clear: both; }
+.cf         { *zoom: 1; }
+
+/* Type Scale */
+.f1 { font-size: 3rem; }
+.f2 { font-size: 2.25rem; }
+.f3 { font-size: 1.5rem; }
+.f4 { font-size: 1.25rem; }
+.f5 { font-size: 1rem; }
+.f6 { font-size: .875rem; }
+
+/* Position */
+.static { position: static; }
+.relative  { position: relative; }
+.absolute  { position: absolute; }
+.fixed  { position: fixed; }
+
+/*COORDINATES*/
+
+.top-0    { top:    0; }
+.right-0  { right:  0; }
+.bottom-0 { bottom: 0; }
+.left-0   { left:   0; }
+
+.top-1    { top:    1rem; }
+.right-1  { right:  1rem; }
+.bottom-1 { bottom: 1rem; }
+.left-1   { left:   1rem; }
+
+/* opacity */
+
+.top-2    { top:    2rem; }
+.right-2  { right:  2rem; }
+.bottom-2 { bottom: 2rem; }
+.left-2   { left:   2rem; }
+
+.top--1    { top:    -1rem; }
+.right--1  { right:  -1rem; }
+.bottom--1 { bottom: -1rem; }
+.left--1   { left:   -1rem; }
+
+.top--2    { top:    -2rem; }
+.right--2  { right:  -2rem; }
+.bottom--2 { bottom: -2rem; }
+.left--2   { left:   -2rem; }
+
+
+.absolute--fill {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

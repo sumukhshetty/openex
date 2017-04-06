@@ -1,14 +1,14 @@
 import React, {
   PropTypes
 } from 'react';
-import Flag from './Flag';
+import Flag from '../../generic-components/Flag';
 
 const Trustworthiness = (props) => {
   return (
-    <li className='fb15 flex cxc mxc'>
+    <td className='fb15 flex cxc mxc'>
       <Flag color={props.trustLevel} />
       {props.trustLevel}
-    </li>
+    </td>
   );
 };
 

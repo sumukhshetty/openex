@@ -1,37 +1,23 @@
-import React, { Component } from 'react'
-//TODO import HelpContainer
+// TODO import Help Container
+// Who's todo is this? leave your name beside it.
 
-class UnsupportedBrowser extends Component {
-  render() {
-    return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <h3>You seem to be using an unsupported browser</h3>
-            <p>To get the most out of using the Automte Ether Exchange please login to the new experinence with a supported browser</p>
-            <div>
-              Internet Explorer
-            </div>
-            <div>
-              Chrome
-            </div>
-            <div>
-              Firefox
-            </div>
-            <div>
-              Safari
-            </div>
-            <div>
-              Opera
-            </div>
-            <div>
-              <button> Got it </button>
-            </div>
-          </div>
-        </div>
-      </main>
-    )
-  }
-}
+import React from 'react';
+import browserImages from '../../images/browserGroup.png';
 
-export default UnsupportedBrowser
+const UseChrome = () => {
+  return (
+    <div className='flex x absolute--fill absolute bg-black-80 z-1'>
+      <div className='bg-white white w-75 h-75 br3 tc mt6 flex col x pv3'>
+        <p className='measure f3'>You seem to be using an unsupported browser</p>
+        <p className='measure f5'>To get the most out of using the new Automte Ether Exchange
+please login to the new experience with a supported browser.</p>
+        <img
+          src={browserImages}
+          alt='different browser icons with chrome highlighted in colour' className='pa4 w-80' />
+        <a href='https://www.google.com/chrome/browser/desktop/index.html' target='_blank' className='mv3'><button>Use Google Chrome</button></a>
+      </div>
+    </div>
+  );
+};
+
+export default UseChrome;
