@@ -54,7 +54,7 @@ class BuyOrderDetail extends Component {
           Buyer Address: {buyOrder.buyerAddress}
         </div> */}
         {rows}
-        <button onClick={()=>this.props.createBuyOrder(buyOrder.amount, buyOrder.buyerAddress, this.props.web3.web3)}>Accept Order</button>
+        <button onClick={()=>this.props.createBuyOrder(buyOrder.amount, buyOrder.buyerAddress, this.props.params.orderId, this.props.web3.web3)}>Accept Order</button>
         </div>
       )
     } else {

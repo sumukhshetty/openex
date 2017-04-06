@@ -28,7 +28,7 @@ module.exports = {
       })
   },
 
-  createBuyOrderContract: (amount, buyerAddress, web3) => (dispatch) => {
+  createBuyOrderContract: (amount, buyerAddress, orderId, web3) => (dispatch) => {
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
     var factoryInstance;
@@ -39,7 +39,6 @@ module.exports = {
     console.log('buyerAddress');
     console.log(buyerAddress);
 
-
     factory.at(factoryAddress.factoryAddress)
     .then(function(_factory) {
       console.log('got factory contract');
@@ -49,6 +48,10 @@ module.exports = {
     .then(function(txHash) {
       console.log('called factory.createBuyOrder');
       console.log(txHash);
+      firebaseRef.database().ref('/buyorders/' + orderId + '/ordercontract')
+      .set({
+            'tx': txHash['tx']
+          });
 
 
 
