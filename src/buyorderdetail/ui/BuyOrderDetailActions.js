@@ -18,7 +18,7 @@ module.exports = {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
   },
   buyOrder: (orderId) => (dispatch) => {
-    firebaseRef.database().ref('orders')
+    firebaseRef.database().ref('buyorders')
     .orderByKey().equalTo(orderId)
       .on("value", function(snapshot){
         console.log('got buyorder by id');

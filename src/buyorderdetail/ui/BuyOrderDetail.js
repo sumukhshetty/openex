@@ -41,14 +41,19 @@ class BuyOrderDetail extends Component {
     var buyOrder;
     if(this.props.buyOrderDetail.buyOrder) {
       buyOrder = this.props.buyOrderDetail.buyOrder;
+      var rows = [];
+      Object.entries(buyOrder).forEach(
+        ([key, value]) => rows.push(<div key={key}>{key} : {value}</div>)
+      );
       return(
         <div>
-        <div>
+        {/* <div>
           amount: {buyOrder.amount}
         </div>
         <div>
           Buyer Address: {buyOrder.buyerAddress}
-        </div>
+        </div> */}
+        {rows}
         <button onClick={()=>this.props.createBuyOrder(buyOrder.amount, buyOrder.buyerAddress, this.props.web3.web3)}>Accept Order</button>
         </div>
       )
