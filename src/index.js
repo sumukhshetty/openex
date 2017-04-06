@@ -21,6 +21,7 @@ import BuyOrders from './buyorders/layouts/BuyOrders';
 import Help from './help/layouts/Help';
 import ReviewActiveTrade from './activetrade/layouts/ReviewActiveTrade';
 import HTMLStyles from './css/HTMLStyles.js';
+import Static from './staticPages/Master/Static';
 
 // Redux Store
 import store from './store';
@@ -60,6 +61,7 @@ ReactDOM.render((
         <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
         <Route path='activetrade/:orderId' component={UserIsAuthenticated(ReviewActiveTrade)} />
         <Route path='html' component={HTMLStyles} />
+        <Route path='static' component={Static} />
       </Route>
     </Router>
   </Provider>
