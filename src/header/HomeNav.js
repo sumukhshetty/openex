@@ -21,9 +21,6 @@ class HomeNav extends Component {
                 <li className="pure-menu-item"><a href="#support">Support</a></li>
 
                 <li className="pure-menu-item">
-                  <Link to="/signup">Sign Up</Link>
-                </li>
-                <li className="pure-menu-item">
                   <Link to="/login">Log in</Link>
                 </li>
               </ul>

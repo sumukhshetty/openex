@@ -16,11 +16,16 @@ export function signUpUser(signUpInfo, web3) {
     const auth = firebaseRef.auth()
     var userid = "";
     var email = signUpInfo.email;
+    var username = signUpInfo.username
+    var country = signUpInfo.country
     const pass = signUpInfo.password;
     var errormessage = '';
     auth.createUserWithEmailAndPassword(email, pass).then(function(firebaseUser) {
       userid = firebaseUser.uid;
-      var userdata = {"email":email};
+      var userdata = {"email":email,
+        "country": country,
+        "username": username
+      };
       firebaseRef.database().ref("users/" + userid).set(userdata);
       dispatch(userSignedUp(firebaseUser))
 

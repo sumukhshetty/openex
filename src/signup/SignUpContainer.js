@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import SwitchAccounts from './SwitchAccounts'
 import WalletComponent from './../wallet/WalletComponent'
-import SignUpForm from './SignUpForm'
+import SignUpFormContainer from './../user/ui/signupform/SignUpFormContainer'
 import Help from './Help'
 
 
 
 class SignUpContainer extends Component {
   render() {
-    var web3=this.props.web3
     return(
       <div className="ethereum-automte">
         <section>
@@ -21,7 +20,7 @@ class SignUpContainer extends Component {
         </section>
 
         <section className="signup-form">
-          <SignUpForm />
+          <SignUpFormContainer />
         </section>
 
         <Help />
