@@ -18,12 +18,13 @@ module.exports = {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
   },
   buyOrder: (orderId) => (dispatch) => {
-    firebaseRef.database().ref('buyorders')
-    .orderByKey().equalTo(orderId)
+    // firebaseRef.database().ref('buyorders')
+    // .orderByKey().equalTo(orderId)
+    firebaseRef.database().ref('/buyorders/' + orderId)
       .on("value", function(snapshot){
         console.log('got buyorder by id');
         console.log(snapshot.val());
-        dispatch(getBuyOrder(snapshot.val()[orderId]))
+        dispatch(getBuyOrder(snapshot.val()))
       })
   },
 
@@ -48,6 +49,8 @@ module.exports = {
     .then(function(txHash) {
       console.log('called factory.createBuyOrder');
       console.log(txHash);
+
+
 
       //TODO: update state of buyOrder in firebase
       //TODO: redirect to activetrade screen
