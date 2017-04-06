@@ -20,7 +20,8 @@ class PostTradeForm extends Component {
         bankInformation: '',
         minTransactionLimit: '',
         maxTransactionLimit: '',
-        termsOfTrade: ''
+        termsOfTrade: '',
+        status:''
       },
       buyFormBool: false,
       user: this.props.user,
@@ -102,7 +103,9 @@ class PostTradeForm extends Component {
     var _postTradeDetails = Object.assign({},
       this.state.postTradeDetails,
       {lastUpated: now.toUTCString(),
-        orderId: orderId
+        orderId: orderId,
+        status: 'orderInitiated',
+        active: true
       }
       );
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
