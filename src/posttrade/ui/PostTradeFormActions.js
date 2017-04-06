@@ -50,45 +50,17 @@ export function postTrade(postTradeDetails, web3, state) {
       }
     })
     .then(function(txHash) {
-      console.log('called factory');
-      console.log(txHash);
-      // let orderType = (postTradeDetails.tradeType === "sell-ether") ? "sell" : "buy";
-      // return new Promise(function(resolve, reject) {
-      // var orderCreatedEvent = factoryInstance.OrderCreated({seller: web3.eth.coinbase, orderType: web3.sha3(orderType)},{fromBlock: block, toBlock: 'pending'});
-      //   orderCreatedEvent.watch(function(error, result) {
-      //     if(error) {
-      //       console.log(error);
-      //     }
-      //     console.log(result.args);
-      //     if(result.args.orderAddress) {
-      //       orderAddress = result.args.orderAddress;
-      //       orderCreatedEvent.stopWatching();
-      //       resolve();
-      //     }
-      //   })});
-
-      //add orderAddress to the list of this user's orders.
-      console.log(orderAddress);
-      console.log("event was fired?")
-
-/*      var currentdate = new Date().toString()
-      dispatch(tradeCreated(postTradeDetails))
-      browserHistory.push('/orderslist')*/
-
-    })
-    .then(function() {
       //add orderAddress to the list of this user's orders.
       console.log(orderAddress);
       console.log("event was fired?")
 
       var currentdate = new Date().toString()
-      firebaseRef.database().ref("sellorders/" + state.user.data.uid + '/' + postTradeDetails.orderId).set(postTradeDetails);
+      firebaseRef.database().ref("sellorders/" + postTradeDetails.orderId).set(postTradeDetails);
       dispatch(tradeCreated(postTradeDetails))
       browserHistory.push('/orderslist')
     })
     .catch(function (error) {
       console.log(error);
-
     })
   }
 }
@@ -98,7 +70,7 @@ export function buyEtherPostTrade(postTradeDetails, web3, state) {
   return function(dispatch){
     console.log(postTradeDetails)
     console.log("buyorders/" + state.user.data.uid + '/' + postTradeDetails.orderId)
-    firebaseRef.database().ref("buyorders/" + state.user.data.uid + '/' + postTradeDetails.orderId).set(postTradeDetails);
+    firebaseRef.database().ref("buyorders/" + postTradeDetails.orderId).set(postTradeDetails);
     dispatch(tradeCreated(postTradeDetails))
     browserHistory.push('/activetrade/' + postTradeDetails.orderId)
   }

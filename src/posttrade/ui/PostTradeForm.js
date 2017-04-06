@@ -183,7 +183,8 @@ class PostTradeForm extends Component {
               </select>
             </div>
 
-            { (this.state.buyFormBool) ? <BuyForm
+            { (this.state.buyFormBool) ? <SellForm
+                onChangeProp={this.onInputChange.bind(this)} /> : <BuyForm
               onChangeProp={this.onInputChange.bind(this)}
               amount={this.state.postTradeDetails.amount}
               paymentMethod={this.state.postTradeDetails.paymentMethod}
@@ -191,8 +192,7 @@ class PostTradeForm extends Component {
               bankInformation={this.state.postTradeDetails.bankInformation}
               minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
               maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
-              termsOfTrade={this.state.postTradeDetails.termsOfTrade} /> : <SellForm
-                onChangeProp={this.onInputChange.bind(this)} />
+              termsOfTrade={this.state.postTradeDetails.termsOfTrade} />
             }
 
             <div className='flex mv3'>
