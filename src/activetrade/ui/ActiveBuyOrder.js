@@ -3,6 +3,10 @@ import React, { Component } from 'react'
 import ActiveTradeInfo from '../layouts/ActiveTradeInfo'
 import ActiveTradeProgress from '../layouts/ActiveTradeProgress'
 import StepNote from '../layouts/StepNote';
+import BuyerStepNote from './BuyerStepNote';
+import SellerStepNote from './SellerStepNote';
+
+
 import MakePaymentButton from '../layouts/MakePaymentButton'
 import ChatMessages from '../layouts/ChatMessages'
 import NewChatMessage from '../layouts/NewChatMessage'
@@ -18,12 +22,14 @@ class ActiveBuyOrder extends Component {
     this.state = {
       web3: this.props.web3,
       buyOrderDetail: this.props.buyOrderDetail,
-      params: this.props.params
+      params: this.props.params,
+      uid: this.props.uid
     }
   }
 
   componentWillMount(){
     console.log("activebuyorder: in component will mount");
+    console.log('uid: ' + this.props.uid);
     this.props.onBeforeComponentLoad(this.props.params.orderId);
   }
 
@@ -65,14 +71,48 @@ class ActiveBuyOrder extends Component {
       ]
     }
 
-    const step = "payment";
-    // NOTE / TODO: above variables hold mock data
-
     var status = 'getting status....';
-    var tradeProgress;
+    var buyOrder, tradeProgress, stepNote, makePaymentButton, viewerRole, releaseEther, tradeFeedback;
     if(this.props.buyOrderDetail.buyOrder) {
-      status = this.props.buyOrderDetail.buyOrder['status'];
+      buyOrder = this.props.buyOrderDetail.buyOrder;
+
+      console.log('buyerUid');
+      console.log(buyOrder.buyerUid);
+      console.log('sellerUid');
+      console.log(buyOrder.sellerUid);
+      console.log('user uid');
+      console.log(this.props.uid);
+      if(buyOrder.buyerUid === this.props.uid) {
+        viewerRole = 'buyer';
+      } else if (buyOrder.sellerUid === this.props.uid) {
+        viewerRole = 'seller';
+      } else {
+        return (
+          <section className="activeTrade">
+            <div className="container">
+              <div className="pure-g">
+                <div className="pure-u-1">
+                  Access Denied
+                </div>
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      status = buyOrder['status'];
       tradeProgress = <ActiveTradeProgress progress_map={progress_maps[status]} />
+
+      stepNote = (viewerRole === 'buyer') ? <BuyerStepNote step={status} /> : <SellerStepNote step={status} />
+
+      if(viewerRole === 'buyer' && status === 'In Escrow')
+        makePaymentButton = <MakePaymentButton />
+
+      if(viewerRole === 'seller' && status === 'Payment Confirmed')
+        releaseEther = <ReleaseEther />
+
+      if(status === 'Ether Released')
+        tradeFeedback = <TradeFeedbackContainer />
     }
 
     return(
@@ -82,14 +122,17 @@ class ActiveBuyOrder extends Component {
             <div className="pure-u-1">
               <ActiveTradeInfo />
               {tradeProgress}
-              <StepNote step={step} />
+              {stepNote}
+              {makePaymentButton}
+              {releaseEther}
+              {tradeFeedback}
               {/* <MakePaymentButton />
               <ChatMessages />
               <NewChatMessage />
               <ReleaseEther />
-              <CancelTrade />
               <DisputeTrade />
               <TradeFeedbackContainer /> */}
+              <CancelTrade />
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class StepNote extends Component {
+class BuyerStepNote extends Component {
   render() {
 
     const step_notes = {
@@ -121,4 +121,4 @@ class StepNote extends Component {
   }
 }
 
-export default StepNote;
+export default BuyerStepNote;

@@ -6,7 +6,7 @@ class PostTrade extends Component {
     return (
       <main className='bg-smoke'>
         <div className='w-75 center pv3'>
-          <PostTradeFormContainer />
+          <PostTradeFormContainer uid={this.props.authData.uid}/>
         </div>
       </main>
     );

@@ -5,7 +5,8 @@ import { postTrade, buyEtherPostTrade } from './PostTradeFormActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    user: state.user
+    user: state.user,
+    uid: ownProps.uid
   }
 }
 

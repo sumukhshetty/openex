@@ -16,6 +16,9 @@ class PostTradeForm extends Component {
         location: '',
         // TODO check this ( who wrote this? Please tag your name so we know whos to do it is')
         buyerAddress: '',
+        buyerUid: '',
+        sellerAddress: '',
+        sellerUid: '',
         paymentMethod: '',
         bankInformation: '',
         minTransactionLimit: '',
@@ -26,6 +29,7 @@ class PostTradeForm extends Component {
       },
       buyFormBool: false,
       user: this.props.user,
+      uid: this.props.uid,
       currentETHMarketValue: 1203
     };
   }
@@ -35,7 +39,8 @@ class PostTradeForm extends Component {
     this.setState({postTradeDetails: {
                                       amount: 0,
                                       buyerAddress: connectedAccount,
-                                      tradeType: 'buy-ether' //NOTE Arseniy: Set this on mount because buy-ether is the checked tradeType on load.
+                                      tradeType: 'buy-ether',  //NOTE Arseniy: Set this on mount because buy-ether is the checked tradeType on load.
+                                      buyerUid: this.props.uid //If the default trade type is change for whatever reason, tradeType and buyerUid must be changed as well.
                                     }});
   }
 
@@ -72,12 +77,20 @@ class PostTradeForm extends Component {
     _postTradeDetails['tradeType'] = event.target.value;
     if (_postTradeDetails['tradeType'] === 'sell-ether') {
       _postTradeDetails = Object.assign({},
-        this.state.postTradeDetails, {tradeType: event.target.value}
+        this.state.postTradeDetails, {
+          tradeType: event.target.value,
+          sellerUid: this.state.uid,
+          buyerUid: ''
+        }
       );
       _buyFormBool = false;
     } else {
       _postTradeDetails = Object.assign({},
-      this.state.postTradeDetails, {tradeType: event.target.value}
+      this.state.postTradeDetails, {
+        tradeType: event.target.value,
+        buyerUid: this.state.uid,
+        sellerUid: ''
+      }
     );
       _buyFormBool = true;
     }

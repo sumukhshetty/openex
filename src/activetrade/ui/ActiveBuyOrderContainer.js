@@ -9,7 +9,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     buyOrderDetail: state.buyOrderDetail,
-    params: ownProps.params
+    params: ownProps.params,
+    uid: ownProps.uid
   }
 }
 
