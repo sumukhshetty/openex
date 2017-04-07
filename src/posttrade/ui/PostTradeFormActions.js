@@ -56,6 +56,7 @@ export function postTrade(postTradeDetails, web3, state) {
 
       var currentdate = new Date().toString()
       firebaseRef.database().ref("sellorders/" + postTradeDetails.orderId).set(postTradeDetails);
+      firebaseRef.database().ref("users/"+state.user.data.uid+"/activeEscrows/").child(postTradeDetails.orderId).set({value:true})
       dispatch(tradeCreated(postTradeDetails))
       browserHistory.push('/orderslist')
     })
@@ -68,9 +69,8 @@ export function postTrade(postTradeDetails, web3, state) {
 
 export function buyEtherPostTrade(postTradeDetails, web3, state) {
   return function(dispatch){
-    console.log(postTradeDetails)
-    console.log("buyorders/" + state.user.data.uid + '/' + postTradeDetails.orderId)
     firebaseRef.database().ref("buyorders/" + postTradeDetails.orderId).set(postTradeDetails);
+    firebaseRef.database().ref("users/"+state.user.data.uid).child('activeEscrows').child(postTradeDetails.orderId).set({value:true})
     dispatch(tradeCreated(postTradeDetails))
     browserHistory.push('/activetrade/' + postTradeDetails.orderId)
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { browserHistory } from 'react-router'
 //import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
 //import {buyorder} from './OrderDetailActions.js'
 
@@ -41,15 +42,25 @@ class BuyOrderDetail extends Component {
     var buyOrder;
     if(this.props.buyOrderDetail.buyOrder) {
       buyOrder = this.props.buyOrderDetail.buyOrder;
+      var rows = [];
+      Object.entries(buyOrder).forEach(
+        ([key, value]) => {
+          if(typeof value != 'object') {
+            rows.push(<div key={key}>{key} : {value}</div>)
+          }
+        }
+      );
       return(
         <div>
-        <div>
+        {/* <div>
           amount: {buyOrder.amount}
         </div>
         <div>
           Buyer Address: {buyOrder.buyerAddress}
-        </div>
-        <button onClick={()=>this.props.createBuyOrder(buyOrder.amount, buyOrder.buyerAddress, this.props.web3.web3)}>Accept Order</button>
+        </div> */}
+        {rows}
+        <button onClick={()=>this.props.createBuyOrder(buyOrder.amount, buyOrder.buyerAddress, this.props.params.orderId, this.props.web3.web3)}>Accept Order</button>
+        <button onClick={()=>browserHistory.push('activebuyorder/'+this.props.params.orderId)}>View activebuyorder</button>
         </div>
       )
     } else {

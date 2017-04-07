@@ -7,6 +7,7 @@ import ordersListReducer from './orderslist/orderslistreducer'
 import orderDetailReducer from './orderdetail/orderdetailreducer'
 import buyOrderDetailReducer from './buyorderdetail/buyorderdetailreducer'
 import buyOrderReducer from './buyorders/buyOrderReducer'
+import activeEscrowListReducer from './activeescrowlist/activeescrowslistreducer'
 
 
 const reducer = combineReducers({
@@ -17,7 +18,8 @@ const reducer = combineReducers({
   ordersList: ordersListReducer,
   orderDetail: orderDetailReducer,
   buyOrderDetail: buyOrderDetailReducer,
-  buyorders: buyOrderReducer
+  buyorders: buyOrderReducer,
+  activeTrades: activeEscrowListReducer
 })
 
 export default reducer

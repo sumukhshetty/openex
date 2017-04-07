@@ -4,8 +4,6 @@ class StepNote extends Component {
   render() {
 
     console.log("On step: ", this.props.step, " [StepNote.js]");
-    // TODO: Contextual help/instructions for each step in the process
-
     return(
       <div className="panel bg-smoke center pv3 ph5 w-75">
       {/* Show the following only when step === 'payment'. Each step should have its own set of instructions. */}

@@ -9,6 +9,12 @@
   height: 1px;
 }
 
+/*font*/
+
+.lato {
+font-family: Lato, sans-serif;
+}
+
 /*form overwrite*/
 
 .percent {
