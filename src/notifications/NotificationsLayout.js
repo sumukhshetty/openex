@@ -56,14 +56,14 @@ export default class Notifications extends Component {
     this.handleClear = this.handleClear.bind(this);
   }
   handleClear () {
-    this.setState({updates: []});
+    this.setState({notifications: []});
   }
 
   render () {
     return (
       <div className='flex mxe absolute--fill fixed bg-black-80 z-1'>
         <div className='w5 bg-smoke pa3 overflow-y-auto'>
-          <div className='flex mxb cxc'>
+          <div className='flex mxb cxc coal'>
             <CancelIcon action={this.props.close} />
             <div className='ms pl3'>Notifications</div>
             <GearIcon />
