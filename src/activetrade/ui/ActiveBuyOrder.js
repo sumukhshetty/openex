@@ -37,17 +37,42 @@ class ActiveBuyOrder extends Component {
 
   render() {
 
-    const progress_map = [
-      { status: 'completed', label: '', text: 'Escrow' },
-      { status: 'active', label: '', text: 'Payment' },
-      { status: '', label: '', text: 'Ether Released' }
-    ]
+    const progress_maps = {
+      'Initiated': [
+        { status: '', label: '', text: 'Escrow' },
+        { status: '', label: '', text: 'Payment' },
+        { status: '', label: '', text: 'Ether Released' }
+      ],
+      'Contract Created': [
+        { status: 'active', label: '', text: 'Escrow' },
+        { status: '', label: '', text: 'Payment' },
+        { status: '', label: '', text: 'Ether Released' }
+      ],
+      'In Escrow': [
+        { status: 'completed', label: '', text: 'Escrow' },
+        { status: 'active', label: '', text: 'Payment' },
+        { status: '', label: '', text: 'Ether Released' }
+      ],
+      'Payment Confirmed': [
+        { status: 'completed', label: '', text: 'Escrow' },
+        { status: 'completed', label: '', text: 'Payment' },
+        { status: 'active', label: '', text: 'Ether Released' }
+      ],
+      'Ether Released': [
+        { status: 'completed', label: '', text: 'Escrow' },
+        { status: 'completed', label: '', text: 'Payment' },
+        { status: 'completed', label: '', text: 'Ether Released' }
+      ]
+    }
+
     const step = "payment";
     // NOTE / TODO: above variables hold mock data
 
     var status = 'getting status....';
+    var tradeProgress;
     if(this.props.buyOrderDetail.buyOrder) {
       status = this.props.buyOrderDetail.buyOrder['status'];
+      tradeProgress = <ActiveTradeProgress progress_map={progress_maps[status]} />
     }
 
     return(
@@ -55,9 +80,8 @@ class ActiveBuyOrder extends Component {
         <div className="container">
           <div className="pure-g">
             <div className="pure-u-1">
-            {status}
               <ActiveTradeInfo />
-              <ActiveTradeProgress progress_map={progress_map} />
+              {tradeProgress}
               <StepNote step={step} />
               {/* <MakePaymentButton />
               <ChatMessages />

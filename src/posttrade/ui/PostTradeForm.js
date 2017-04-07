@@ -32,7 +32,11 @@ class PostTradeForm extends Component {
 
   componentWillMount () {
     var connectedAccount = this.props.web3.web3.eth.accounts[0];
-    this.setState({postTradeDetails: {amount: 0, buyerAddress: connectedAccount}});
+    this.setState({postTradeDetails: {
+                                      amount: 0,
+                                      buyerAddress: connectedAccount,
+                                      tradeType: 'buy-ether' //NOTE Arseniy: Set this on mount because buy-ether is the checked tradeType on load.
+                                    }});
   }
 
   onInputChange (event) {
