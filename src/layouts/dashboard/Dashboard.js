@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import DashboardInfoMessage from './DashboardInfoMessage'
-import ActiveTradeContainer from '../../activetrade/layouts/ActiveTradeContainer'
+import ActiveEscrowList from './../../activeescrowlist/layouts/ActiveEscrowList'
 import TradeAdvertisementContainer from '../../tradeadvertisement/layouts/TradeAdvertisementContainer'
 
 
@@ -12,7 +12,7 @@ class Dashboard extends Component {
           <div className="pure-g">
             <div className="pure-u-1">
               <DashboardInfoMessage />
-              <ActiveTradeContainer />
+              <ActiveEscrowList />
               <TradeAdvertisementContainer/>
             </div>
           </div>

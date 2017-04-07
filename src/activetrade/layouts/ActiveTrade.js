@@ -3,9 +3,11 @@ import React, { Component } from 'react'
 import ViewActiveTradeButton from './ViewActiveTradeButton'
 
 class ActiveTrade extends Component {
+  componentWillMount(){
+    console.log(this.props.orderId)
+  }
   render() {
     return(
-      <tbody>
         <tr>
           <td>1238</td>
           <td>10 Oct, 2017, 7:45 am</td>
@@ -17,7 +19,6 @@ class ActiveTrade extends Component {
           <td><i className='icon'>greendot</i> Active</td>
           <ViewActiveTradeButton />
         </tr>
-      </tbody>
     )
   }
 }

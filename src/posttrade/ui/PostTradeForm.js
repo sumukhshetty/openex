@@ -21,7 +21,8 @@ class PostTradeForm extends Component {
         minTransactionLimit: '',
         maxTransactionLimit: '',
         termsOfTrade: '',
-        status:''
+        status:'',
+        active:false
       },
       buyFormBool: false,
       user: this.props.user,
@@ -104,7 +105,7 @@ class PostTradeForm extends Component {
       this.state.postTradeDetails,
       {lastUpated: now.toUTCString(),
         orderId: orderId,
-        status: 'orderInitiated',
+        status: 'Initiated',
         active: true
       }
       );

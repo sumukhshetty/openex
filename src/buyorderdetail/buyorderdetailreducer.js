@@ -3,7 +3,7 @@ const initialState = {
 }
 
 const buyOrderDetailReducer = (state = initialState, action) => {
-  if(action.type == 'CLEAR_BUY_ORDER')
+  if(action.type === 'CLEAR_BUY_ORDER')
   {
     console.log('clearing buyOrder state');
     return initialState;

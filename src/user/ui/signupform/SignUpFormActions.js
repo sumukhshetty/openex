@@ -27,7 +27,11 @@ export function signUpUser(signUpInfo, web3) {
         "username": username,
         "isAdmin": false,
         "trustworthiness": "unknown",
-        "lastTransfer": "unknown"
+        "lastTransfer": "unknown",
+        "verifiedIdentification": false,
+        "verifiedPhoneNumber": false,
+        "verifiedEmail": false,
+        "numberOfTrades": 0
       };
       firebaseRef.database().ref("users/" + userid).set(userdata);
       dispatch(userSignedUp(firebaseUser))
