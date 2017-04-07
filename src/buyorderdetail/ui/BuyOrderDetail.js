@@ -43,7 +43,11 @@ class BuyOrderDetail extends Component {
       buyOrder = this.props.buyOrderDetail.buyOrder;
       var rows = [];
       Object.entries(buyOrder).forEach(
-        ([key, value]) => rows.push(<div key={key}>{key} : {value}</div>)
+        ([key, value]) => {
+          if(typeof value != 'object') {
+            rows.push(<div key={key}>{key} : {value}</div>)
+          }
+        }
       );
       return(
         <div>

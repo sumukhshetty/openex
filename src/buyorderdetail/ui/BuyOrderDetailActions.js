@@ -52,6 +52,9 @@ module.exports = {
       .set({
             'tx': txHash['tx']
           });
+      //TODO: way to do this in one function?
+      firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+      .set('Contract Created');
 
 
 
