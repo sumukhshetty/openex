@@ -22,6 +22,7 @@ import Help from './help/layouts/Help';
 import ReviewActiveTrade from './activetrade/layouts/ReviewActiveTrade';
 import HTMLStyles from './css/HTMLStyles.js';
 import Static from './staticPages/Master/Static';
+import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder';
 
 // Redux Store
 import store from './store';
@@ -59,6 +60,7 @@ ReactDOM.render((
         <Route path='orderslist' component={UserIsAuthenticated(OrdersList)} />
         <Route path='orderdetail/:address' component={UserIsAuthenticated(OrderDetail)} />
         <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
+        <Route path='buyTradeOrder' component={UserIsAuthenticated(BuyTradeOrder)} />
         <Route path='activetrade/:orderId' component={UserIsAuthenticated(ReviewActiveTrade)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
