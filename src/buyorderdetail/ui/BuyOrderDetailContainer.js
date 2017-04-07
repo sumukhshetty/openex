@@ -9,7 +9,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     buyOrderDetail: state.buyOrderDetail,
-    params: ownProps.params
+    params: ownProps.params,
+    uid: ownProps.uid
   }
 }
 
@@ -21,8 +22,8 @@ const mapDispatchToProps = (dispatch) => {
     clearBuyOrder: () => {
       dispatch(clearBuyOrderState());
     },
-    createBuyOrder: (amount, buyerAddress, orderId, web3) => {
-      dispatch(createBuyOrderContract(amount, buyerAddress, orderId, web3));
+    createBuyOrder: (amount, buyerAddress, orderId, uid, web3) => {
+      dispatch(createBuyOrderContract(amount, buyerAddress, orderId, uid, web3));
     }
   }
 }
