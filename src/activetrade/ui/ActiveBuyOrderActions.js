@@ -23,13 +23,12 @@ module.exports = {
     // .orderByKey().equalTo(orderId)
     firebaseRef.database().ref('/buyorders/' + orderId)
       .on("value", function(snapshot) {
-        console.log('got buyorder by id');
-        console.log(snapshot.val());
         dispatch(getBuyOrder(snapshot.val()))
       })
   },
 
   fillEscrow: (orderId, web3) => (dispatch) => {
+    console.log("fillEscrow")
     //get txHash from db
     var txHash;
     firebaseRef.database().ref('/buyorders/' + orderId + '/ordercontract/tx')
@@ -37,6 +36,7 @@ module.exports = {
       txHash = snapshot.val();
     })
     console.log('txHash');
+    console.log(txHash)
     console.log('called fillEscrow [ActiveBuyOrderActions]');
   }
 }

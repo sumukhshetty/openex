@@ -34,26 +34,15 @@ module.exports = {
     var factoryInstance;
     var coinbase = web3.eth.coinbase;
     var block, orderAddress;
-    console.log('amount');
-    console.log(amount);
-    console.log('buyerAddress');
-    console.log(buyerAddress);
-    console.log('uid');
-    console.log(uid);
 
     factory.at(factoryAddress.factoryAddress)
     .then(function(_factory) {
-      console.log('got factory contract');
       factoryInstance = _factory;
       return factoryInstance.createBuyOrder(buyerAddress, amount, {from: coinbase});
     })
     .then(function(txHash) {
-      console.log('called factory.createBuyOrder');
-      console.log(txHash);
-      firebaseRef.database().ref('/buyorders/' + orderId + '/ordercontract')
-      .set({
-            'tx': txHash['tx']
-          });
+      firebaseRef.database().ref('/buyorders/' + orderId + '/contractTx')
+      .set(txHash['tx']);
       //TODO: way to do this in one function?
       firebaseRef.database().ref('/buyorders/' + orderId + '/status')
       .set('Contract Created');
@@ -61,6 +50,7 @@ module.exports = {
       .set(uid);
 
       firebaseRef.database().ref("users/"+buyerUid).child('activeEscrows').child(orderId).set({value: 'true'})
+      firebaseRef.database().ref("users/"+uid).child('activeEscrows').child(orderId).set({value: 'true'})
       firebaseRef.database().ref("users/"+buyerUid).child('advertisements').child(orderId).set(null)
 
 

@@ -18,7 +18,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(postTrade(tradeDetails, web3, state))
     },
     onBuyEtherFormSubmit: (tradeDetails, web3, state) => {
-      console.log('form called in container');
       event.preventDefault();
       dispatch(buyEtherPostTrade(tradeDetails, web3, state))
     }
