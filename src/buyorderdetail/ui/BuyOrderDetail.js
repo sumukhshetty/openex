@@ -10,7 +10,8 @@ class BuyOrderDetail extends Component {
     this.state = {
       web3: this.props.web3,
       buyOrderDetail: this.props.buyOrderDetail,
-      params: this.props.params
+      params: this.props.params,
+      uid: this.props.uid
     }
   }
 
@@ -59,7 +60,7 @@ class BuyOrderDetail extends Component {
           Buyer Address: {buyOrder.buyerAddress}
         </div> */}
         {rows}
-        <button onClick={()=>this.props.createBuyOrder(buyOrder.amount, buyOrder.buyerAddress, this.props.params.orderId, this.props.web3.web3)}>Accept Order</button>
+        <button onClick={()=>this.props.createBuyOrder(buyOrder.amount, buyOrder.buyerAddress, this.props.params.orderId, this.props.uid, this.props.web3.web3)}>Accept Order</button>
         <button onClick={()=>browserHistory.push('activebuyorder/'+this.props.params.orderId)}>View activebuyorder</button>
         </div>
       )
