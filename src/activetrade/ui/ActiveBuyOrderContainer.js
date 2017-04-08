@@ -3,6 +3,8 @@ import ActiveBuyOrder from './ActiveBuyOrder'
 import { buyOrder } from './ActiveBuyOrderActions'
 import { createBuyOrderContract } from './ActiveBuyOrderActions'
 import { clearBuyOrderState } from './ActiveBuyOrderActions'
+import { fillEscrow } from './ActiveBuyOrderActions'
+
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -21,6 +23,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     clearBuyOrder: () => {
       dispatch(clearBuyOrderState());
+    },
+    sendEther: (orderId, web3) => {
+      dispatch(fillEscrow(orderId, web3));
     }
   }
 }

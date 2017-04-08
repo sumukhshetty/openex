@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 //TODO import HelpContainer
 import ViewActiveTradeButton from './ViewActiveTradeButton'
+import { browserHistory } from 'react-router'
 
 class ActiveTrade extends Component {
   componentWillMount(){
@@ -17,7 +18,7 @@ class ActiveTrade extends Component {
           <td>10000</td>
           <td>In Escrow</td>
           <td><i className='icon'>greendot</i> Active</td>
-          <ViewActiveTradeButton />
+          <ViewActiveTradeButton orderId={this.props.orderId} />
         </tr>
     )
   }

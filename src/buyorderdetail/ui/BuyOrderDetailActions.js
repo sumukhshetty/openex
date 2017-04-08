@@ -28,7 +28,7 @@ module.exports = {
       })
   },
 
-  createBuyOrderContract: (amount, buyerAddress, orderId, uid, web3) => (dispatch) => {
+  createBuyOrderContract: (amount, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
     var factoryInstance;
@@ -59,6 +59,9 @@ module.exports = {
       .set('Contract Created');
       firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
       .set(uid);
+
+      firebaseRef.database().ref("users/"+buyerUid).child('activeEscrows').child(orderId).set({value: 'true'})
+      firebaseRef.database().ref("users/"+buyerUid).child('advertisements').child(orderId).set(null)
 
 
 

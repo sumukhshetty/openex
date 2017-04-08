@@ -17,14 +17,26 @@ module.exports = {
   clearBuyOrderState: () => (dispatch) => {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
   },
+
   buyOrder: (orderId) => (dispatch) => {
     // firebaseRef.database().ref('buyorders')
     // .orderByKey().equalTo(orderId)
     firebaseRef.database().ref('/buyorders/' + orderId)
-      .on("value", function(snapshot){
+      .on("value", function(snapshot) {
         console.log('got buyorder by id');
         console.log(snapshot.val());
         dispatch(getBuyOrder(snapshot.val()))
       })
+  },
+
+  fillEscrow: (orderId, web3) => (dispatch) => {
+    //get txHash from db
+    var txHash;
+    firebaseRef.database().ref('/buyorders/' + orderId + '/ordercontract/tx')
+    .once('value', function(snapshot) {
+      txHash = snapshot.val();
+    })
+    console.log('txHash');
+    console.log('called fillEscrow [ActiveBuyOrderActions]');
   }
 }
