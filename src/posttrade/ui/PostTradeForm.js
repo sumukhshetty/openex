@@ -196,15 +196,13 @@ class PostTradeForm extends Component {
                 termsOfTrade={this.state.postTradeDetails.termsOfTrade} />
             }
 
-            <Link to='/buyTradeOrder'>
-              <div className='flex mv3'>
-                <label className='w5 ' />
-                <input
-                  type='submit'
-                  className='mv5'
-                  value='Publish Advertisement' />
-              </div>
-            </Link>
+            <div className='flex mv3'>
+              <label className='w5 ' />
+              <input
+                type='submit'
+                className='mv5'
+                value='Publish Advertisement' />
+            </div>
 
           </fieldset>
         </form>
