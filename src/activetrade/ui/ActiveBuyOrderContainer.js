@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(clearBuyOrderState());
     },
     sendEther: (contractAddress, orderId, web3) => {
-      dispatch(fillEscrow(contractAddress, web3));
+      dispatch(fillEscrow(contractAddress, orderId, web3));
     },
     releaseEther: (contractAddress, orderId, web3) => {
       dispatch(releaseEscrow(contractAddress, web3))
