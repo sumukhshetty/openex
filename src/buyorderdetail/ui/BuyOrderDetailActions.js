@@ -18,16 +18,17 @@ module.exports = {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
   },
   buyOrder: (orderId) => (dispatch) => {
-    firebaseRef.database().ref('orders')
-    .orderByKey().equalTo(orderId)
+    // firebaseRef.database().ref('buyorders')
+    // .orderByKey().equalTo(orderId)
+    firebaseRef.database().ref('/buyorders/' + orderId)
       .on("value", function(snapshot){
         console.log('got buyorder by id');
         console.log(snapshot.val());
-        dispatch(getBuyOrder(snapshot.val()[orderId]))
+        dispatch(getBuyOrder(snapshot.val()))
       })
   },
 
-  createBuyOrderContract: (amount, buyerAddress, web3) => (dispatch) => {
+  createBuyOrderContract: (amount, buyerAddress, orderId, web3) => (dispatch) => {
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
     var factoryInstance;
@@ -38,7 +39,6 @@ module.exports = {
     console.log('buyerAddress');
     console.log(buyerAddress);
 
-
     factory.at(factoryAddress.factoryAddress)
     .then(function(_factory) {
       console.log('got factory contract');
@@ -48,6 +48,15 @@ module.exports = {
     .then(function(txHash) {
       console.log('called factory.createBuyOrder');
       console.log(txHash);
+      firebaseRef.database().ref('/buyorders/' + orderId + '/ordercontract')
+      .set({
+            'tx': txHash['tx']
+          });
+      //TODO: way to do this in one function?
+      firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+      .set('Contract Created');
+
+
 
       //TODO: update state of buyOrder in firebase
       //TODO: redirect to activetrade screen

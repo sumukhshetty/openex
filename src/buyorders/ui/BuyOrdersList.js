@@ -17,7 +17,9 @@ class BuyOrdersList extends Component {
 
   render(){
     var buyorders = this.props.buyorders
-    const rows = _.map(buyorders.buyorders,function(buyOrderData, key){
+    console.log('buyorders');
+    console.log(buyorders);
+    const rows = _.map(buyorders,function(buyOrderData, key){
         return <UserBuyOrdersContainer buyOrderData={buyOrderData} userId={key} key={key}/>
     })
 

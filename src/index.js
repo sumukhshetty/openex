@@ -20,6 +20,8 @@ import BuyOrders from './buyorders/layouts/BuyOrders';
 // import SellOrders from './sellorders/layouts/SellOrders';
 import Help from './help/layouts/Help';
 import ReviewActiveTrade from './activetrade/layouts/ReviewActiveTrade';
+import ActiveBuyOrder from './activetrade/layouts/ActiveBuyOrder';
+
 import HTMLStyles from './css/HTMLStyles.js';
 import Static from './staticPages/Master/Static';
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder';
@@ -62,6 +64,7 @@ ReactDOM.render((
         <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
         <Route path='buyTradeOrder' component={UserIsAuthenticated(BuyTradeOrder)} />
         <Route path='activetrade/:orderId' component={UserIsAuthenticated(ReviewActiveTrade)} />
+        <Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>

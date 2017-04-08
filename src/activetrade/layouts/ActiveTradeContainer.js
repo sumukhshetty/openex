@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import ActiveTradeHeader from './ActiveTradeHeader'
 import ActiveTrade from './ActiveTrade'
 
-
-class ActiveTradeContainer1 extends Component {
+// TODO @qjflores deprecate this component
+class ActiveTradeContainer extends Component {
   render() {
     return(
       <div className="tab-listing">
@@ -18,4 +18,4 @@ class ActiveTradeContainer1 extends Component {
   }
 }
 
-export default ActiveTradeContainer1
+export default ActiveTradeContainer
