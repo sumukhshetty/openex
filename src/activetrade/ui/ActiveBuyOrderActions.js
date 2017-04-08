@@ -1,4 +1,5 @@
 import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
+import BuyOrderContract from '../../../build/contracts/BuyOrder.json'
 import { browserHistory } from 'react-router'
 import factoryAddress from '../../contract_addresses/orderfactory.js'
 
@@ -23,20 +24,63 @@ module.exports = {
     // .orderByKey().equalTo(orderId)
     firebaseRef.database().ref('/buyorders/' + orderId)
       .on("value", function(snapshot) {
-        console.log('got buyorder by id');
-        console.log(snapshot.val());
         dispatch(getBuyOrder(snapshot.val()))
       })
   },
 
-  fillEscrow: (orderId, web3) => (dispatch) => {
-    //get txHash from db
-    var txHash;
-    firebaseRef.database().ref('/buyorders/' + orderId + '/ordercontract/tx')
-    .once('value', function(snapshot) {
-      txHash = snapshot.val();
+  fillEscrow: (contractAddress, orderId, web3) => (dispatch) => {
+    console.log("fillEscrow")
+    var coinbase = web3.eth.coinbase;
+    const order = contract(BuyOrderContract);
+    order.setProvider(web3.currentProvider);
+    var orderInstance;
+    order.at(contractAddress)
+    .then(function(_order) {
+      orderInstance = _order;
+      return orderInstance.amount();
     })
-    console.log('txHash');
+    .then(function(amount) {
+      console.log('amount:' + amount);
+      console.log(contractAddress);
+      var value = Number(amount) + Number(amount * 0.1);
+      console.log(value); //TODO ak: this needs to grab the fee percentage from somewhere!!!
+      web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, address) {
+        if(!err) {
+          firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+          .set('In Escrow');
+        } else {
+          console.log(err);
+        }
+      });
+    });
+
+
     console.log('called fillEscrow [ActiveBuyOrderActions]');
+  },
+
+  releaseEscrow: (contractAddress, orderId, web3) => (dispatch) => {
+    console.log("releasEther");
+    const order = contract(BuyOrderContract);
+    order.setProvider(web3.currentProvider);
+    var orderInstance;
+    var coinbase = web3.eth.coinbase;
+
+    order.at(contractAddress)
+    .then(function(_order) {
+      orderInstance = _order;
+      return orderInstance.payoutToBuyer({from: coinbase});
+    })
+    .then(function(txHash) {
+      firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+      .set('Ether Released');
+    })
+  },
+
+  paymentConfirmed: (orderId) => (dispatch) => {
+    console.log('paymentConfirmed');
+    firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+    .set('Payment Confirmed');
   }
+
+
 }

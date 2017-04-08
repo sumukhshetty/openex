@@ -103,16 +103,17 @@ class ActiveBuyOrder extends Component {
       status = buyOrder['status'];
       tradeProgress = <ActiveTradeProgress progress_map={progress_maps[status]} />
 
-      stepNote = (viewerRole === 'buyer') ? <BuyerStepNote step={status} /> : <SellerStepNote step={status} />
+      stepNote = (viewerRole === 'buyer') ? <BuyerStepNote step={status} contractAddress={buyOrder.contractAddress} /> :
+                                            <SellerStepNote step={status} contractAddress={buyOrder.contractAddress} />
 
       if(viewerRole === 'seller' && status === 'Contract Created')
-        sendEtherButton = <button onClick={()=>this.props.sendEther(buyOrder.orderId, this.props.web3.web3)}>Send Ether</button>
+        sendEtherButton = <button onClick={()=>this.props.sendEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3)}>Send Ether</button>
 
       if(viewerRole === 'buyer' && status === 'In Escrow')
-        makePaymentButton = <MakePaymentButton />
+        makePaymentButton = <button onClick={()=>this.props.confirmPayment(buyOrder.orderId)}>Confirm Payment</button>
 
       if(viewerRole === 'seller' && status === 'Payment Confirmed')
-        releaseEther = <ReleaseEther />
+        releaseEther = <button onClick={()=>this.props.releaseEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3)}>Release Ether</button>
 
       if(status === 'Ether Released')
         tradeFeedback = <TradeFeedbackContainer />

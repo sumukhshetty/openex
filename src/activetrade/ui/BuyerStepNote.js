@@ -41,11 +41,12 @@ class BuyerStepNote extends Component {
           </div>
         )
       case 'Contract Created':
+
         return(
           <div className="panel bg-smoke center pv3 ph5 w-75">
             <p><strong>Waiting for escrow</strong></p>
             <p>A seller has accepted your order.</p>
-            <p>An escrow contract has been created at address <a href="https://kovan.etherscan.io/address/0xd03fcf6ef9e02e8e2d54ecad19e24369a6e56341">0xd03fcf6ef9e02e8e2d54ecad19e24369a6e56341</a></p>
+            <p>An escrow contract has been created at address <a href={"https://kovan.etherscan.io/address/"+this.props.contractAddress}>{this.props.contractAddress}</a></p>
             <p>When the seller sends the ether to the escrow, you will recieve a notification.</p>
           </div>
         )

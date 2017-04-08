@@ -45,7 +45,7 @@ class SellerStepNote extends Component {
           <div className="panel bg-smoke center pv3 ph5 w-75">
             <p><strong>Waiting for escrow</strong></p>
             <p>You have accepted the order.</p>
-            <p>An escrow contract has been created at address <a href="https://kovan.etherscan.io/address/0xd03fcf6ef9e02e8e2d54ecad19e24369a6e56341">0xd03fcf6ef9e02e8e2d54ecad19e24369a6e56341</a></p>
+            <p>An escrow contract has been created at address <a href={"https://kovan.etherscan.io/address/"+this.props.contractAddress}>{this.props.contractAddress}</a></p>
             <p>Please send the ether to the address.</p>
           </div>
         )
