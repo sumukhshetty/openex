@@ -31,15 +31,27 @@ module.exports = {
   fillEscrow: (contractAddress, orderId, web3) => (dispatch) => {
     console.log("fillEscrow")
     var coinbase = web3.eth.coinbase;
-
-    web3.eth.sendTransaction({from: coinbase, to: contractAddress}, function(err, address) {
-      if(!err) {
-        firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-        .set('In Escrow');
-      } else {
-        console.log(err);
-      }
+    const order = contract(BuyOrderContract);
+    order.setProvider(web3.currentProvider);
+    var orderInstance;
+    order.at(contractAddress)
+    .then(function(_order) {
+      orderInstance = _order;
+      return orderInstance.amount();
+    })
+    .then(function(amount) {
+      console.log('amount:' + amount);
+      web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: amount}, function(err, address) {
+        if(!err) {
+          firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+          .set('In Escrow');
+        } else {
+          console.log(err);
+        }
+      });
     });
+
+
     console.log('called fillEscrow [ActiveBuyOrderActions]');
   },
 
