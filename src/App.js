@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js';
+
 import logo from './images/logo.svg';
 
 // UI Components
@@ -16,6 +17,7 @@ import './css/styles-common.css';
 import './css/atomic.css';
 import './css/swatch.css';
 // import logo from './images/logo.svg'
+
 import Bell from './images/svgReactComponents/Bell';
 import Notifications from './notifications/NotificationsLayout';
 
@@ -36,6 +38,7 @@ class App extends Component {
   removeNotifications () {
     this.setState({showNotifications: false});
   }
+
   render () {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <div className='menu'>
@@ -94,35 +97,3 @@ class App extends Component {
 }
 
 export default App;
-
-//
-//
-// class HomeNav extends Component {
-//   render () {
-//     return (
-//       <div className='container'>
-//         <div className='pure-g'>
-//           <div className='pure-u-1-4 brand'>
-//             <Link to='/'>
-//               <img className='brand' src={logo} alt='' />
-//             </Link>
-//           </div>
-//           <div className='pure-u-3-4 menu'>
-//             <nav className='pure-menu pure-menu-horizontal'>
-//               <ul className='pure-menu-list'>
-//                 <li className='pure-menu-item'><a href='#about'>About</a></li>
-//                 <li className='pure-menu-item'><a href='#demo'>Demo</a></li>
-//                 <li className='pure-menu-item'><a href='#trade'>Trade</a></li>
-//                 <li className='pure-menu-item'><a href='#support'>Support</a></li>
-//
-//                 <li className='pure-menu-item'>
-//                   <Link to='/login'>Log in</Link>
-//                 </li>
-//               </ul>
-//             </nav>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }

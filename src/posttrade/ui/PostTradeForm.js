@@ -3,6 +3,7 @@ import { BuyForm } from './BuyForm';
 import { SellForm } from './SellForm';
 import PostTradeInstructions from './PostTradeInstructions';
 // import {Input} from '../../components/Input';
+import { Link } from 'react-router';
 
 class PostTradeForm extends Component {
   constructor (props) {
@@ -205,22 +206,24 @@ class PostTradeForm extends Component {
             </div>
 
             { (this.state.buyFormBool) ? <SellForm
-                onChangeProp={this.onInputChange.bind(this)} /> : <BuyForm
-              onChangeProp={this.onInputChange.bind(this)}
-              amount={this.state.postTradeDetails.amount}
-              paymentMethod={this.state.postTradeDetails.paymentMethod}
-              onCurrencyChange={this.onCurrencyChange.bind(this)}
-              bankInformation={this.state.postTradeDetails.bankInformation}
-              minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
-              maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
-              termsOfTrade={this.state.postTradeDetails.termsOfTrade} />
+              onChangeProp={this.onInputChange.bind(this)} /> : <BuyForm
+                onChangeProp={this.onInputChange.bind(this)}
+                amount={this.state.postTradeDetails.amount}
+                paymentMethod={this.state.postTradeDetails.paymentMethod}
+                onCurrencyChange={this.onCurrencyChange.bind(this)}
+                bankInformation={this.state.postTradeDetails.bankInformation}
+                minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
+                maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
+                termsOfTrade={this.state.postTradeDetails.termsOfTrade} />
             }
 
             <div className='flex mv3'>
-              <label className='w5 ' /><input
+              <label className='w5 ' />
+              <input
                 type='submit'
                 className='mv5'
-                value='Publish Advertisement' /></div>
+                value='Publish Advertisement' />
+            </div>
 
           </fieldset>
         </form>
