@@ -38,7 +38,7 @@ module.exports = {
     factory.at(factoryAddress.factoryAddress)
     .then(function(_factory) {
       factoryInstance = _factory;
-      return factoryInstance.createBuyOrder(buyerAddress, amount, {from: coinbase});
+      return factoryInstance.createBuyOrder(buyerAddress, web3.toWei(amount, 'ether'), {from: coinbase});
     })
     .then(function(txHash) {
       console.log(txHash);
