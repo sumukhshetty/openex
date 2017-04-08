@@ -5,7 +5,8 @@ import { postTrade, buyEtherPostTrade } from './PostTradeFormActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    user: state.user
+    user: state.user,
+    uid: ownProps.uid
   }
 }
 
@@ -17,6 +18,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(postTrade(tradeDetails, web3, state))
     },
     onBuyEtherFormSubmit: (tradeDetails, web3, state) => {
+      console.log('form called in container');
       event.preventDefault();
       dispatch(buyEtherPostTrade(tradeDetails, web3, state))
     }

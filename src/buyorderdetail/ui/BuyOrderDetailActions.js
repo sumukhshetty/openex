@@ -28,7 +28,7 @@ module.exports = {
       })
   },
 
-  createBuyOrderContract: (amount, buyerAddress, orderId, web3) => (dispatch) => {
+  createBuyOrderContract: (amount, buyerAddress, orderId, uid, web3) => (dispatch) => {
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
     var factoryInstance;
@@ -38,6 +38,8 @@ module.exports = {
     console.log(amount);
     console.log('buyerAddress');
     console.log(buyerAddress);
+    console.log('uid');
+    console.log(uid);
 
     factory.at(factoryAddress.factoryAddress)
     .then(function(_factory) {
@@ -55,6 +57,8 @@ module.exports = {
       //TODO: way to do this in one function?
       firebaseRef.database().ref('/buyorders/' + orderId + '/status')
       .set('Contract Created');
+      firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
+      .set(uid);
 
 
 

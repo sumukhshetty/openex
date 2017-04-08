@@ -17,7 +17,7 @@ class ActiveBuyOrder extends Component {
         <div className="container">
           <div className="pure-g">
             <div className="pure-u-1">
-              <ActiveBuyOrderContainer  params={this.props.params}/>
+              <ActiveBuyOrderContainer uid={this.props.authData.uid} params={this.props.params}/>
             </div>
           </div>
         </div>
