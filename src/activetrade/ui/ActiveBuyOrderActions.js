@@ -32,11 +32,14 @@ module.exports = {
     console.log("fillEscrow")
     var coinbase = web3.eth.coinbase;
 
-    web3.eth.sendTransaction({from: coinbase, to: contractAddress})
-    .then(function(txHash) {
-      firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-      .set('In Escrow');
-    })
+    web3.eth.sendTransaction({from: coinbase, to: contractAddress}, function(err, address) {
+      if(!err) {
+        firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+        .set('In Escrow');
+      } else {
+        console.log(err);
+      }
+    });
     console.log('called fillEscrow [ActiveBuyOrderActions]');
   },
 
