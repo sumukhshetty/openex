@@ -1,4 +1,5 @@
 import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
+import BuyOrderContract from '../../../build/contracts/BuyOrder.json'
 import { browserHistory } from 'react-router'
 import factoryAddress from '../../contract_addresses/orderfactory.js'
 
@@ -27,16 +28,41 @@ module.exports = {
       })
   },
 
-  fillEscrow: (orderId, web3) => (dispatch) => {
+  fillEscrow: (contractAddress, orderId, web3) => (dispatch) => {
     console.log("fillEscrow")
-    //get txHash from db
-    var txHash;
-    firebaseRef.database().ref('/buyorders/' + orderId + '/ordercontract/tx')
-    .once('value', function(snapshot) {
-      txHash = snapshot.val();
+    var coinbase = web3.eth.coinbase;
+
+    web3.eth.sendTransaction({from: coinbase, to: contractAddress})
+    .then(function(txHash) {
+      firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+      .set('In Escrow');
     })
-    console.log('txHash');
-    console.log(txHash)
     console.log('called fillEscrow [ActiveBuyOrderActions]');
+  },
+
+  releaseEscrow: (contractAddress, orderId, web3) => (dispatch) => {
+    console.log("releasEther");
+    const order = contract(BuyOrderContract);
+    order.setProvider(web3.currentProvider);
+    var orderInstance;
+    var coinbase = web3.eth.coinbase;
+
+    order.at(contractAddress)
+    .then(function(_order) {
+      orderInstance = _order;
+      return orderInstance.payoutToBuyer({from: coinbase});
+    })
+    .then(function(txHash) {
+      firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+      .set('Ether Released');
+    })
+  },
+
+  paymentConfirmed: (orderId) => (dispatch) => {
+    console.log('paymentConfirmed');
+    firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+    .set('Payment Confirmed');
   }
+
+
 }

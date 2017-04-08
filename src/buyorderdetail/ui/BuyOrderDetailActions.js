@@ -41,8 +41,11 @@ module.exports = {
       return factoryInstance.createBuyOrder(buyerAddress, amount, {from: coinbase});
     })
     .then(function(txHash) {
+      console.log(txHash);
       firebaseRef.database().ref('/buyorders/' + orderId + '/contractTx')
       .set(txHash['tx']);
+      firebaseRef.database().ref('/buyorders/' + orderId + '/contractAddress')
+      .set(txHash['logs'][0]['args']['orderAddress']);
       //TODO: way to do this in one function?
       firebaseRef.database().ref('/buyorders/' + orderId + '/status')
       .set('Contract Created');
