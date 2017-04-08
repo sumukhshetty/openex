@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 const LogoutButton = ({ onLogoutUserClick }) => {
-  return(
-    <li className="pure-menu-item">
-      <a href="#" className="pure-menu-link" onClick={(event) => onLogoutUserClick(event)}>Logout</a>
-    </li>
-  )
-}
+  return (
+    <p className='tracked mh4 pointer dim' onClick={(event) => onLogoutUserClick(event)}>Logout</p>
+  );
+};
 
-export default LogoutButton
+export default LogoutButton;

@@ -1,19 +1,17 @@
-import React, { Component } from 'react'
-//TODO import HelpContainer
+import React, { Component } from 'react';
+// TODO import HelpContainer
+import HelpForm from './HelpForm';
 
 class Help extends Component {
-  render() {
-    return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <h1>Help</h1>
-            <p>The help screen on the exchange</p>
-          </div>
+  render () {
+    return (
+      <div className='bg-smoke'>
+        <div className='w-75 center pv3'>
+          <HelpForm />
         </div>
-      </main>
-    )
+      </div>
+    );
   }
 }
 
-export default Help
+export default Help;
