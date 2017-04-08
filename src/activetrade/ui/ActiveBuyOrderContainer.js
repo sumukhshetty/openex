@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fillEscrow(contractAddress, orderId, web3));
     },
     releaseEther: (contractAddress, orderId, web3) => {
-      dispatch(releaseEscrow(contractAddress, web3))
+      dispatch(releaseEscrow(contractAddress, orderId, web3))
     },
     confirmPayment: (orderId) => {
       dispatch(paymentConfirmed(orderId));

@@ -41,8 +41,10 @@ module.exports = {
     })
     .then(function(amount) {
       console.log('amount:' + amount);
-      var value = amount + (amount * 0.1); //TODO ak: this needs to grab the fee percentage from somewhere!!!
-      web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: amount}, function(err, address) {
+      console.log(contractAddress);
+      var value = Number(amount) + Number(amount * 0.1);
+      console.log(value); //TODO ak: this needs to grab the fee percentage from somewhere!!!
+      web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, address) {
         if(!err) {
           firebaseRef.database().ref('/buyorders/' + orderId + '/status')
           .set('In Escrow');
