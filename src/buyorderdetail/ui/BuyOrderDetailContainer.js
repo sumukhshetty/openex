@@ -22,8 +22,8 @@ const mapDispatchToProps = (dispatch) => {
     clearBuyOrder: () => {
       dispatch(clearBuyOrderState());
     },
-    createBuyOrder: (amount, buyerAddress, orderId, uid, web3) => {
-      dispatch(createBuyOrderContract(amount, buyerAddress, orderId, uid, web3));
+    createBuyOrder: (amount, buyerAddress, orderId, uid, buyerUid, web3) => {
+      dispatch(createBuyOrderContract(amount, buyerAddress, orderId, uid, buyerUid, web3));
     }
   }
 }

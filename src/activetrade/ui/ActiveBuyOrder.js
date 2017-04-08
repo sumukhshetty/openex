@@ -72,7 +72,7 @@ class ActiveBuyOrder extends Component {
     }
 
     var status = 'getting status....';
-    var buyOrder, tradeProgress, stepNote, makePaymentButton, viewerRole, releaseEther, tradeFeedback;
+    var buyOrder, tradeProgress, stepNote, makePaymentButton, viewerRole, releaseEther, tradeFeedback, sendEtherButton;
     if(this.props.buyOrderDetail.buyOrder) {
       buyOrder = this.props.buyOrderDetail.buyOrder;
 
@@ -105,6 +105,9 @@ class ActiveBuyOrder extends Component {
 
       stepNote = (viewerRole === 'buyer') ? <BuyerStepNote step={status} /> : <SellerStepNote step={status} />
 
+      if(viewerRole === 'seller' && status === 'Contract Created')
+        sendEtherButton = <button onClick={()=>this.props.sendEther(buyOrder.orderId, this.props.web3.web3)}>Send Ether</button>
+
       if(viewerRole === 'buyer' && status === 'In Escrow')
         makePaymentButton = <MakePaymentButton />
 
@@ -123,6 +126,7 @@ class ActiveBuyOrder extends Component {
               <ActiveTradeInfo />
               {tradeProgress}
               {stepNote}
+              {sendEtherButton}
               {makePaymentButton}
               {releaseEther}
               {tradeFeedback}

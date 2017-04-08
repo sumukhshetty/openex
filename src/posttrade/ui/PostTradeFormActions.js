@@ -70,8 +70,8 @@ export function postTrade(postTradeDetails, web3, state) {
 export function buyEtherPostTrade(postTradeDetails, web3, state) {
   return function(dispatch){
     firebaseRef.database().ref("buyorders/" + postTradeDetails.orderId).set(postTradeDetails);
-    firebaseRef.database().ref("users/"+state.user.data.uid).child('activeEscrows').child(postTradeDetails.orderId).set({value:true})
+    firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(postTradeDetails.orderId).set({value:true})
     dispatch(tradeCreated(postTradeDetails))
-    browserHistory.push('/activetrade/' + postTradeDetails.orderId)
+    browserHistory.push('/activebuyorder/' + postTradeDetails.orderId)
   }
 }
