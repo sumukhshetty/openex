@@ -34,6 +34,9 @@ export function signUpUser(signUpInfo, web3) {
         "numberOfTrades": 0
       };
       firebaseRef.database().ref("users/" + userid).set(userdata);
+      firebaseUser.updateProfile({
+        displayName: username
+      })
       dispatch(userSignedUp(firebaseUser))
 
     }).catch(function(error) {
