@@ -5,7 +5,7 @@ class BuyOrderTradeDetailsHeader extends Component {
   render () {
     return (
       <thead>
-        <tr className='flex list b--zircon bb pa3 mv2 light-gray'>
+        <tr>
           <th className='fb20'>Username</th>
           <th className='fb10 tc'>Payment method</th>
           <th className='fb15 tc'>Price/ether</th>

@@ -27,7 +27,6 @@ import Static from './staticPages/Master/Static';
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder';
 import User from './userScreen/layouts/UserScreen';
 
-
 // Redux Store
 import store from './store';
 import * as firebase from 'firebase';

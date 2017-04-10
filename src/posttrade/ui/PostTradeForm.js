@@ -25,8 +25,8 @@ class PostTradeForm extends Component {
         minTransactionLimit: '',
         maxTransactionLimit: '',
         termsOfTrade: '',
-        status:'',
-        active:false
+        status: '',
+        active: false
       },
       buyFormBool: false,
       user: this.props.user,
@@ -38,11 +38,11 @@ class PostTradeForm extends Component {
   componentWillMount () {
     var connectedAccount = this.props.web3.web3.eth.accounts[0];
     this.setState({postTradeDetails: {
-                                      amount: 0,
-                                      buyerAddress: connectedAccount,
-                                      tradeType: 'buy-ether',  //NOTE Arseniy: Set this on mount because buy-ether is the checked tradeType on load.
-                                      buyerUid: this.props.uid //If the default trade type is change for whatever reason, tradeType and buyerUid must be changed as well.
-                                    }});
+      amount: 0,
+      buyerAddress: connectedAccount,
+      tradeType: 'buy-ether',  // NOTE Arseniy: Set this on mount because buy-ether is the checked tradeType on load.
+      buyerUid: this.props.uid // If the default trade type is change for whatever reason, tradeType and buyerUid must be changed as well.
+    }});
   }
 
   onInputChange (event) {
@@ -181,7 +181,7 @@ class PostTradeForm extends Component {
             <div className='flex mv3'>
               <label htmlFor='equation' className='w5' >Price equation</label>
               <div className='flex col'><input id='equation' name='equation' type='text' value={this.state.postTradeDetails.equation} onChange={this.onInputChange.bind(this)} placeholder='Kraken_API' className='w5' />
-                <small className='f6 fw3 mt3'>Trade price with current market value <span className='green'>{this.state.currentETHMarketValue} INR/ETH</span></small>
+                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.state.currentETHMarketValue} INR/ETH</span></small>
               </div>
 
               <span className='measure-narrow fw1 i pa0 me'>

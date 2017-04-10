@@ -23,12 +23,12 @@ class BuyOrder extends Component {
     var buyorders = this.props.buyorders;
     const BuyOrdersLoadingDisplay = () => (<div> loading </div>);
     return (
-      <div>
+      <table>
         <BuyOrderTradeDetailsHeader />
         <div>
           { buyorders.buyorders ? <BuyOrdersListContainer /> : <BuyOrdersLoadingDisplay />}
         </div>
-      </div>
+      </table>
     );
   }
 }
