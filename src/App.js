@@ -7,7 +7,6 @@ import logo from './images/logo.svg';
 // UI Components
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer';
 import Web3InitContainer from './web3/Web3InitContainer';
-import ProfileNotificationWallet from './profilenotificationwallet/layouts/ProfileNotificationWallet';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 
@@ -46,8 +45,8 @@ class App extends Component {
           { this.state.showNotifications && <Notifications close={this.removeNotifications} />}
           <div className='pure-g flex mxb cxc'>
             <div className='pure-u-1-4 brand'>
-              <Link to='/'>
-                <img className='brand' src={logo} alt='' />
+              <Link to='/dashboard'>
+                <img className='brand' src={logo} alt='Automt Ether Exchange' />
               </Link>
             </div>
             <div className='flex mxe cxc'>

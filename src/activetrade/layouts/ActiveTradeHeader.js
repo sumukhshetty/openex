@@ -1,24 +1,24 @@
-import React, { Component } from 'react'
-//TODO import HelpContainer
+import React, { Component } from 'react';
+// TODO import HelpContainer
 
 class ActiveTradeHeader extends Component {
-  render() {
-    return(
+  render () {
+    return (
       <thead>
         <tr>
-          <th>#</th>
-          <th>Created at</th>
-          <th>Info</th>
-          <th>Username</th>
-          <th>Ether</th>
-          <th>Amount</th>
-          <th>Status</th>
-          <th>Last Online</th>
-          <th>&nbsp;</th>
+          <th className='fb5 tc'>#</th>
+          <th className='fb15 tc'>Created at</th>
+          <th className='fb10 tc'>Info</th>
+          <th className='fb15 tc'>Username</th>
+          <th className='fb10 tc'>Ether</th>
+          <th className='fb10 tc'>Amount</th>
+          <th className='fb10 tc'>Status</th>
+          <th className='fb10 tc'>Last Online</th>
+          <th className='fb10 tc'>&nbsp;</th>
         </tr>
       </thead>
-    )
+    );
   }
 }
 
-export default ActiveTradeHeader
+export default ActiveTradeHeader;
