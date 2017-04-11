@@ -9,6 +9,7 @@ import buyOrderDetailReducer from './buyorderdetail/buyorderdetailreducer'
 import buyOrderReducer from './buyorders/buyOrderReducer'
 import activeEscrowListReducer from './activeescrowlist/activeescrowslistreducer'
 import adListReducer from './adlist/adlistreducer'
+import sellOrderReducer from './sellorders/sellOrderReducer'
 
 
 
@@ -22,7 +23,8 @@ const reducer = combineReducers({
   buyOrderDetail: buyOrderDetailReducer,
   buyorders: buyOrderReducer,
   activeTrades: activeEscrowListReducer,
-  activeAds: adListReducer
+  activeAds: adListReducer,
+  sellorders: sellOrderReducer,
 })
 
 export default reducer
