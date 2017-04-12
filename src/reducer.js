@@ -12,8 +12,6 @@ import sellOrderReducer from './sellorders/sellOrderReducer'
 import activeEscrowListReducer from './activeescrowlist/activeescrowslistreducer'
 import activeTradeReducer from './activeescrowlist/activetradereducer'
 import adListReducer from './adlist/adlistreducer'
-import sellOrderReducer from './sellorders/sellOrderReducer'
-
 
 
 const reducer = combineReducers({

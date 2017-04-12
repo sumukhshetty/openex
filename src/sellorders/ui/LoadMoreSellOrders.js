@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-=======
-// TODO import HelpContainer
->>>>>>> Add sell orders list and details prototype
 
 class LoadMoreSellOrders extends Component {
   render () {

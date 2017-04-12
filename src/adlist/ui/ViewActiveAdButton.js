@@ -11,7 +11,9 @@ class ViewActiveAdButton extends Component {
   }
 
   render() {
-    var orderType = (this.props.orderType === 'buy-ether') ? 'activebuyorder' : 'sellorderdetail';
+    console.log('view button orderType');
+    console.log(this.props.tradeType);
+    var orderType = (this.props.tradeType === "buy-ether") ? 'activebuyorder' : 'sellorderdetail';
     return(
       <td className='fb10 tc'>
         <button onClick={()=>browserHistory.push(orderType + '/' +this.props.orderId)}>Edit</button>
