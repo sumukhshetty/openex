@@ -55,9 +55,52 @@ class SellOrderDetail extends Component {
           }
         }
       );
+
       var availableFunds;
       if(this.props.sellOrderDetail.contractInfo) {
         availableFunds = <div>Available funds: {this.props.sellOrderDetail.contractInfo.availableFunds.toNumber()}</div>
+      }
+
+      var requestModule, requestTable;
+      if(sellOrder.sellerUid === this.props.uid) {
+        //seller is viewing, display requests list
+        var requestRows = [];
+        var requests = [];
+        if(sellOrder.requests) {
+          requests = sellOrder.requests;
+        } else {
+          requestRows = <div>No requests yet</div>
+        }
+        Object.entries(requests).forEach(
+          ([key, value]) => {
+              requestRows.push(<tr key={key}>
+                <td>{key}</td><td>{value.amount}</td>
+                </tr>)
+          });
+          requestTable = (
+            <table className='pure-table pure-table-horizontal'>
+              <thead>
+                <tr>
+                  <td>UID</td>
+                  <td>Amount</td>
+                </tr>
+              </thead>
+              <tbody>
+                {requestRows}
+              </tbody>
+            </table>
+          )
+
+      } else if(sellOrder.requests[this.props.uid]) {
+        //buyer is viewing, already has a request
+          requestModule = (<div>You have requested {sellOrder.requests[this.props.uid]} ether from this seller</div>)
+      } else {
+        //buyer is viewing, has no requests
+        requestModule = (<div>
+          <label>Request Ether</label>
+          <input id='amount' type='number' value={this.state.requestAmount} onChange={this.handleRequestAmountChange.bind(this)}/>
+          <button onClick={()=>this.props.requestEther(this.state.requestAmount, this.props.uid, this.props.params.orderId)}>Request</button>
+        </div>)
       }
       return(
         <div>
@@ -71,9 +114,8 @@ class SellOrderDetail extends Component {
         <button onClick={()=>this.props.createSellOrder(sellOrder.amount, sellOrder.sellerAddress, this.props.params.orderId, this.props.uid, sellOrder.sellerUid, this.props.web3.web3)}>Accept Order</button>
         <button onClick={()=>browserHistory.push('activesellorder/'+this.props.params.orderId)}>View activesellorder</button>
         {availableFunds}
-        <label>Request Ether</label>
-        <input id='amount' type='number' value={this.state.requestAmount} onChange={this.handleRequestAmountChange.bind(this)}/>
-        <button onClick={()=>this.props.requestEther(this.state.requestAmount, this.props.uid, this.props.params.orderId)}>Request</button>
+        {requestTable}
+        {requestModule}
         </div>
       )
     } else {
@@ -83,21 +125,7 @@ class SellOrderDetail extends Component {
         </div>
       )
     }
-  //   if(sellorder.length === 0) {
-  //     return(
-  //       <label>Loading...</label>
-  //     )
-  //   }
-  //   else {
-  //   return(
-  //     <div className="sellorders">
-  //       <label>Address: {sellorder[0]}</label>
-  //       <br/>
-  //       <label>Amount: {sellorder[1]}</label>
-  //     </div>
-  //   )
-  // }
-  }
+}
 }
 
 export default SellOrderDetail
