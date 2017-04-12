@@ -129,7 +129,7 @@ class PostTradeForm extends Component {
       );
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
       this.props.onPostTradeFormSubmit(
-        this.state.postTradeDetails,
+        _postTradeDetails,
         this.state.web3.web3,
         this.state
       );
