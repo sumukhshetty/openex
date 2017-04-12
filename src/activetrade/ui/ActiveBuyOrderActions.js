@@ -5,6 +5,7 @@ import factoryAddress from '../../contract_addresses/orderfactory.js'
 
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
+import * as orderHelpers from './../../util/orderHelpers'
 
 export const GET_BUY_ORDER = 'GET_BUY_ORDER'
 function getBuyOrder(buyOrderPayload) {
@@ -58,7 +59,7 @@ module.exports = {
     console.log('called fillEscrow [ActiveBuyOrderActions]');
   },
 
-  releaseEscrow: (contractAddress, orderId, web3) => (dispatch) => {
+  releaseEscrow: (contractAddress, orderId, web3, buyerUid, sellerUid) => (dispatch) => {
     console.log("releasEther");
     const order = contract(BuyOrderContract);
     order.setProvider(web3.currentProvider);
@@ -68,11 +69,17 @@ module.exports = {
     order.at(contractAddress)
     .then(function(_order) {
       orderInstance = _order;
-      return orderInstance.payoutToBuyer({from: coinbase});
+      //return orderInstance.payoutToBuyer({from: coinbase});
+      return "txhash"
     })
     .then(function(txHash) {
+      console.log(txHash)
       firebaseRef.database().ref('/buyorders/' + orderId + '/status')
       .set('Ether Released');
+
+    }).then(function(){
+      orderHelpers.removeOrderFromActiveEscrows(buyerUid, orderId)
+      orderHelpers.removeOrderFromActiveEscrows(sellerUid, orderId)
     })
   },
 
