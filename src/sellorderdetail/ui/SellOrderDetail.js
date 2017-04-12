@@ -11,7 +11,8 @@ class SellOrderDetail extends Component {
       web3: this.props.web3,
       sellOrderDetail: this.props.sellOrderDetail,
       params: this.props.params,
-      uid: this.props.uid
+      uid: this.props.uid,
+      requestAmount: 0
     }
   }
 
@@ -30,6 +31,9 @@ class SellOrderDetail extends Component {
   // createContract(amount, sellerAddress, web3) {
   //   this.props.createSellOrder(amount, sellerAddress, web3);
   // }
+  handleRequestAmountChange(event) {
+    this.setState({requestAmount: event.target.value});
+  }
 
   render() {
     console.log(this.props);
@@ -67,6 +71,9 @@ class SellOrderDetail extends Component {
         <button onClick={()=>this.props.createSellOrder(sellOrder.amount, sellOrder.sellerAddress, this.props.params.orderId, this.props.uid, sellOrder.sellerUid, this.props.web3.web3)}>Accept Order</button>
         <button onClick={()=>browserHistory.push('activesellorder/'+this.props.params.orderId)}>View activesellorder</button>
         {availableFunds}
+        <label>Request Ether</label>
+        <input id='amount' type='number' value={this.state.requestAmount} onChange={this.handleRequestAmountChange.bind(this)}/>
+        <button onClick={()=>this.props.requestEther(this.state.requestAmount, this.props.uid, this.props.params.orderId)}>Request</button>
         </div>
       )
     } else {
