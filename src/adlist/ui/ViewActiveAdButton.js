@@ -10,10 +10,11 @@ class ViewActiveAdButton extends Component {
     console.log(this.props);
   }
 
-  render () {
-    return (
+  render() {
+    var orderType = (this.props.orderType === 'buy-ether') ? 'activebuyorder' : 'sellorderdetail';
+    return(
       <td className='fb10 tc'>
-        <button onClick={() => browserHistory.push('activebuyorder/' + this.props.orderId)}>Edit</button>
+        <button onClick={()=>browserHistory.push(orderType + '/' +this.props.orderId)}>Edit</button>
         {/* <button class="pure-button pure-button-primary">View / Message</button> */}
         {/* above comment is just for styling reference for the link */}
       </td>

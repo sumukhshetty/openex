@@ -5,10 +5,10 @@ import factoryAddress from '../../contract_addresses/orderfactory.js'
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
 
-export const GET_BUY_ORDER = 'GET_BUY_ORDER'
+export const GET_SELL_ORDER = 'GET_SELL_ORDER'
 function getSellOrder(sellOrderPayload) {
   return {
-    type: GET_BUY_ORDER,
+    type: GET_SELL_ORDER,
     payload: sellOrderPayload
   }
 }

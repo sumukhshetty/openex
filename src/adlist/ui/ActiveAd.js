@@ -7,6 +7,7 @@ class ActiveAd extends Component {
   componentWillMount () {
     console.log(this.props.orderId);
   }
+
   render () {
     return (
       <tr>
@@ -18,7 +19,7 @@ class ActiveAd extends Component {
         <td className='fb10 tc'>10000</td>
         <td className='fb10 tc'>In Escrow</td>
         <td className='fb10 tc'><i className='icon'>greendot</i> Active</td>
-        <ViewActiveAdButton orderId={this.props.orderId} />
+        <ViewActiveAdButton orderId={this.props.orderId} tradeType={this.props.tradeType}/>
       </tr>
     );
   }

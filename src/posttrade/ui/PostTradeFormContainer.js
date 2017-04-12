@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onPostTradeFormSubmit: (tradeDetails, web3, state) => {
-      event.preventDefault();
+      //event.preventDefault();
 
       dispatch(postTrade(tradeDetails, web3, state))
     },

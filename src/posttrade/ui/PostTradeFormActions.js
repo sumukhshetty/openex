@@ -51,7 +51,7 @@ export function postTrade(postTradeDetails, web3, state) {
 
       var currentdate = new Date().toString()
       firebaseRef.database().ref("sellorders/" + postTradeDetails.orderId).set(postTradeDetails);
-      firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(postTradeDetails.orderId).set({value:true})
+      firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(postTradeDetails.orderId).set({tradeType: postTradeDetails.tradeType})
       firebaseRef.database().ref('/sellorders/' + postTradeDetails.orderId + '/contractTx')
       .set(txHash['tx']);
       firebaseRef.database().ref('/sellorders/' + postTradeDetails.orderId + '/contractAddress')
@@ -69,7 +69,7 @@ export function postTrade(postTradeDetails, web3, state) {
 export function buyEtherPostTrade(postTradeDetails, web3, state) {
   return function(dispatch){
     firebaseRef.database().ref("buyorders/" + postTradeDetails.orderId).set(postTradeDetails);
-    firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(postTradeDetails.orderId).set({value:true})
+    firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(postTradeDetails.orderId).set({tradeType: postTradeDetails.tradeType})
     dispatch(tradeCreated(postTradeDetails))
     browserHistory.push('/activebuyorder/' + postTradeDetails.orderId)
   }
