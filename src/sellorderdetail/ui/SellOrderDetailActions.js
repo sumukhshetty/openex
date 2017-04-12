@@ -25,6 +25,7 @@ module.exports = {
   clearSellOrderState: () => (dispatch) => {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
   },
+
   sellOrder: (orderId, web3) => (dispatch) => {
     var orderInfo = {};
     const order = contract(SellOrderContract);
@@ -50,6 +51,15 @@ module.exports = {
         orderInfo['availableFunds'] = availableFunds;
         dispatch(getOrderInfo(orderInfo))
       })
+  },
 
+  requestEtherFromSeller: (amount, uid, orderId) => (dispatch) => {
+    firebaseRef.database().ref('/sellorders/' + orderId + '/requests')
+    .set({
+      amount: amount,
+      uid: uid
+    })
   }
+
+
 }

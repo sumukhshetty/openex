@@ -3,6 +3,8 @@ import SellOrderDetail from './SellOrderDetail'
 import { sellOrder } from './SellOrderDetailActions'
 import { createSellOrderContract } from './SellOrderDetailActions'
 import { clearSellOrderState } from './SellOrderDetailActions'
+import { requestEtherFromSeller } from './SellOrderDetailActions'
+
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,8 +21,13 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentLoad: (orderId, web3) => {
       dispatch(sellOrder(orderId, web3))
     },
+
     clearSellOrder: () => {
       dispatch(clearSellOrderState());
+    },
+
+    requestEther: (amount, uid, orderId) => {
+      dispatch(requestEtherFromSeller(amount, uid, orderId));
     }
   }
 }
