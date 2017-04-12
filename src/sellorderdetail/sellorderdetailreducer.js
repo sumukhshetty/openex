@@ -1,5 +1,6 @@
 const initialState = {
-  sellOrder: null
+  sellOrder: null,
+  contractInfo: null
 }
 
 const sellOrderDetailReducer = (state = initialState, action) => {
@@ -14,6 +15,15 @@ const sellOrderDetailReducer = (state = initialState, action) => {
     console.log(action.payload);
     return Object.assign({}, state, {
       sellOrder: action.payload
+    })
+  }
+
+  if (action.type === 'GET_SELL_ORDER_CONTRACT')
+  {
+    console.log('in sellorder reducer');
+    console.log(action.payload);
+    return Object.assign({}, state, {
+      contractInfo: action.payload
     })
   }
 

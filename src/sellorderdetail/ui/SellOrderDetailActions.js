@@ -1,4 +1,4 @@
-import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
+import SellOrderContract from '../../../build/contracts/SellOrder.json'
 import { browserHistory } from 'react-router'
 import factoryAddress from '../../contract_addresses/orderfactory.js'
 
@@ -13,18 +13,43 @@ function getSellOrder(sellOrderPayload) {
   }
 }
 
+export const GET_SELL_ORDER_CONTRACT = 'GET_SELL_ORDER_CONTRACT'
+function getOrderInfo(sellOrderPayload) {
+  return {
+    type: GET_SELL_ORDER_CONTRACT,
+    payload: sellOrderPayload
+  }
+}
+
 module.exports = {
   clearSellOrderState: () => (dispatch) => {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
   },
-  sellOrder: (orderId) => (dispatch) => {
-    // firebaseRef.database().ref('sellorders')
-    // .orderByKey().equalTo(orderId)
+  sellOrder: (orderId, web3) => (dispatch) => {
+    var orderInfo = {};
+    const order = contract(SellOrderContract);
+    order.setProvider(web3.currentProvider);
+    var orderInstance;
+    var coinbase = web3.eth.coinbase;
     firebaseRef.database().ref('/sellorders/' + orderId)
-      .on("value", function(snapshot){
+      .once("value", function(snapshot){
         console.log('got sellorder by id');
         console.log(snapshot.val());
-        dispatch(getSellOrder(snapshot.val()))
+        dispatch(getSellOrder(snapshot.val()));
+        return snapshot;
       })
+      .then(function(snapshot) {
+        console.log('after returning address');
+        return order.at(snapshot.val()['contractAddress']);
+      })
+      .then(function(_order) {
+        orderInstance = _order;
+        return orderInstance.availableFunds();
+      })
+      .then(function(availableFunds) {
+        orderInfo['availableFunds'] = availableFunds;
+        dispatch(getOrderInfo(orderInfo))
+      })
+
   }
 }

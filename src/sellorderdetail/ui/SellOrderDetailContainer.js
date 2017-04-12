@@ -16,8 +16,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoad: (orderId) => {
-      dispatch(sellOrder(orderId))
+    onBeforeComponentLoad: (orderId, web3) => {
+      dispatch(sellOrder(orderId, web3))
     },
     clearSellOrder: () => {
       dispatch(clearSellOrderState());
