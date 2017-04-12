@@ -1,19 +1,12 @@
 import React, { Component } from 'react'
 
-import ActiveTradeInfo from '../layouts/ActiveTradeInfo'
-import ActiveTradeProgress from '../layouts/ActiveTradeProgress'
-import StepNote from '../layouts/StepNote';
-import BuyerStepNote from './BuyerStepNote';
-import SellerStepNote from './SellerStepNote';
+import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
+import Progress from '../../generic-components/tradeFlow/Progress'
 
-
-import MakePaymentButton from '../layouts/MakePaymentButton'
-import ChatMessages from '../layouts/ChatMessages'
-import NewChatMessage from '../layouts/NewChatMessage'
-import TradeFeedbackContainer from './../../tradefeedback/TradeFeedbackContainer'
-import ReleaseEther from './../../releaseether/ReleaseEther'
-import DisputeTrade from './../../disputetrade/DisputeTrade'
-import CancelTrade from './../../canceltrade/CancelTrade'
+import BuyerStepNote  from '../../generic-components/tradeFlow/StepNote';
+import SellerStepNote  from '../../generic-components/tradeFlow/StepNote';
+import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback';
+import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 
 class ActiveBuyOrder extends Component {
   constructor(props) {
@@ -28,17 +21,17 @@ class ActiveBuyOrder extends Component {
   }
 
   componentWillMount(){
-    console.log("activebuyorder: in component will mount");
-    console.log('uid: ' + this.props.uid);
-    this.props.onBeforeComponentLoad(this.props.params.orderId);
+    console.log("activebuyorder: in component will mount")
+    console.log('uid: ' + this.props.uid)
+    this.props.onBeforeComponentLoad(this.props.params.orderId)
   }
 
   componentWillUnmount() {
-    console.log('activebuyorder: in component will unmount');
+    console.log('activebuyorder: in component will unmount')
   }
 
   // createContract(amount, buyerAddress, web3) {
-  //   this.props.createBuyOrder(amount, buyerAddress, web3);
+  //   this.props.createBuyOrder(amount, buyerAddress, web3)
   // }
 
   render() {
@@ -71,21 +64,21 @@ class ActiveBuyOrder extends Component {
       ]
     }
 
-    var status = 'getting status....';
-    var buyOrder, tradeProgress, stepNote, makePaymentButton, viewerRole, releaseEther, tradeFeedback, sendEtherButton;
+    var status = 'getting status....'
+    var buyOrder, tradeProgress, stepNote, makePaymentButton, viewerRole, releaseEther, tradeFeedback, sendEtherButton
     if(this.props.buyOrderDetail.buyOrder) {
-      buyOrder = this.props.buyOrderDetail.buyOrder;
+      buyOrder = this.props.buyOrderDetail.buyOrder
 
-      console.log('buyerUid');
-      console.log(buyOrder.buyerUid);
-      console.log('sellerUid');
-      console.log(buyOrder.sellerUid);
-      console.log('user uid');
-      console.log(this.props.uid);
+      console.log('buyerUid')
+      console.log(buyOrder.buyerUid)
+      console.log('sellerUid')
+      console.log(buyOrder.sellerUid)
+      console.log('user uid')
+      console.log(this.props.uid)
       if(buyOrder.buyerUid === this.props.uid) {
-        viewerRole = 'buyer';
+        viewerRole = 'buyer'
       } else if (buyOrder.sellerUid === this.props.uid) {
-        viewerRole = 'seller';
+        viewerRole = 'seller'
       } else {
         return (
           <section className="activeTrade">
@@ -100,8 +93,8 @@ class ActiveBuyOrder extends Component {
         )
       }
 
-      status = buyOrder['status'];
-      tradeProgress = <ActiveTradeProgress progress_map={progress_maps[status]} />
+      status = buyOrder['status']
+      tradeProgress = <Progress progress_map={progress_maps[status]} />
 
       stepNote = (viewerRole === 'buyer') ? <BuyerStepNote step={status} contractAddress={buyOrder.contractAddress} /> :
                                             <SellerStepNote step={status} contractAddress={buyOrder.contractAddress} />
@@ -132,8 +125,7 @@ class ActiveBuyOrder extends Component {
               {releaseEther}
               {tradeFeedback}
               {/* <MakePaymentButton />
-              <ChatMessages />
-              <NewChatMessage />
+              <ChatBox />
               <ReleaseEther />
               <DisputeTrade />
               <TradeFeedbackContainer /> */}
