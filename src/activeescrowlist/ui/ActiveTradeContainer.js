@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     orderId: ownProps.orderId,
+    orderKey: ownProps.orderKey,
     activeTradeData: state.activeTradeData
   }
 }

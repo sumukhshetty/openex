@@ -7,8 +7,9 @@ class ActiveTrade extends Component {
   constructor(props){
     super(props)
     this.state ={
-      activeTradeDatra:this.props.activeTradeData,
-      orderId: this.props.orderId
+      activeTradeData:this.props.activeTradeData,
+      orderId: this.props.orderId,
+      orderKey: this.props.orderKey
     }
   }
 
@@ -17,19 +18,30 @@ class ActiveTrade extends Component {
     this.props.onBeforeComponentLoads(this.props.orderId);
   }
   render() {
-    return(
-        <tr>
-          <td>1238</td>
-          <td>10 Oct, 2017, 7:45 am</td>
-          <td>Online Sell</td>
-          <td>David Washington</td>
-          <td>5</td>
-          <td>10000</td>
-          <td>In Escrow</td>
-          <td><i className='icon'>greendot</i> Active</td>
-          <ViewActiveTradeButton orderId={this.props.orderId} />
-        </tr>
-    )
+
+    console.log('in render [ActiveTrade]' + this.props.orderId);
+    console.log(this.props.activeTradeData.activeTradeData[this.props.orderKey]);
+    if(this.props.activeTradeData.activeTradeData[this.props.orderKey]) {
+      var tradeDetails = this.props.activeTradeData.activeTradeData[this.props.orderKey];
+      var tradeType = (tradeDetails.tradeType === "buy-ether") ? 'Buy Order' : 'Sell Order'
+      return(
+          <tr>
+            <td>1238</td>
+            <td>{tradeDetails.lastUpated}</td>
+            <td>{tradeType}</td>
+            <td>David Washington</td>
+            <td>{tradeDetails.amount}</td>
+            <td>{tradeDetails.amount}</td>
+            <td>{tradeDetails.status}</td>
+            <td><i className='icon'>greendot</i> Active</td>
+            <ViewActiveTradeButton orderId={this.props.orderId} />
+          </tr>
+      )
+    } else {
+      return (
+        null
+      )
+    }
   }
 }
 

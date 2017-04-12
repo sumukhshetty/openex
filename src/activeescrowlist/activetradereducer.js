@@ -2,7 +2,7 @@ const initialState = {
   activeTradeData: []
 }
 
-const activeEscrowListReducer = (state = initialState, action) => {
+const activeTradeReducer = (state = initialState, action) => {
 
   if (action.type === 'GET_ACTIVE_TRADE')
   {

@@ -21,9 +21,12 @@ class ActiveEscrowList extends Component {
       var _activeTrades = this.props.activeTrades.activeTrades
       if(_activeTrades){
         var rows = [];
+        var i = 0;
         Object.entries(_activeTrades).forEach(
             ([key, value]) => {
-              rows.push(<ActiveTradeContainer orderId={key} key={key}/>)}
+              rows.push(<ActiveTradeContainer orderId={key} key={i} orderKey={i}/>)
+              i++;
+            }
         );
         return(
           <tbody>
