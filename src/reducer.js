@@ -27,7 +27,6 @@ const reducer = combineReducers({
   sellorders: sellOrderReducer,
   activeTrades: activeEscrowListReducer,
   activeAds: adListReducer,
-  sellorders: sellOrderReducer,
   activeTradeData: activeTradeReducer
 })
 

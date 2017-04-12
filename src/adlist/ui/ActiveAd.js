@@ -7,7 +7,7 @@ class ActiveAd extends Component {
   componentWillMount () {
     console.log(this.props.orderId);
   }
-
+  
   render () {
     return (
       <tr>
