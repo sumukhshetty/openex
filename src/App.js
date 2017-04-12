@@ -60,10 +60,10 @@ class App extends Component {
                 <Link to='/dashboard'>Dashboard</Link>
               </li>
               <li className='pure-menu-item'>
-                <Link to='/buyorders'>Buy</Link>
+                <Link to='/sellorders'>Buy</Link>
               </li>
               <li className='pure-menu-item'>
-                <Link to='/sellorders'>Sell</Link>
+                <Link to='/buyorders'>Sell</Link>
               </li>
               <li className='pure-menu-item'>
                 <Link to='/posttrade'>Post a Trade</Link>

@@ -33,4 +33,8 @@ class SellOrders extends Component {
   }
 }
 
+<<<<<<< HEAD
 export default SellOrders;
+=======
+export default SellOrder;
+>>>>>>> Add sell orders list and details prototype

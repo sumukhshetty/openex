@@ -42,12 +42,7 @@ export function postTrade(postTradeDetails, web3, state) {
     .then(function(_block) {
       console.log('got bloc');
       block = _block;
-      //SellOrder
-      if(postTradeDetails.tradeType === "sell-ether") {
-        return factoryInstance.createSellOrder({from: coinbase});
-      } else {
-        return factoryInstance.createBuyOrder(postTradeDetails.buyerAddress, postTradeDetails.amount, {from: web3.eth.coinbase});
-      }
+      return factoryInstance.createSellOrder({from: coinbase});
     })
     .then(function(txHash) {
       //add orderAddress to the list of this user's orders.
@@ -56,9 +51,13 @@ export function postTrade(postTradeDetails, web3, state) {
 
       var currentdate = new Date().toString()
       firebaseRef.database().ref("sellorders/" + postTradeDetails.orderId).set(postTradeDetails);
-      firebaseRef.database().ref("users/"+state.user.data.uid+"/activeEscrows/").child(postTradeDetails.orderId).set({value:true})
+      firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(postTradeDetails.orderId).set({value:true})
+      firebaseRef.database().ref('/sellorders/' + postTradeDetails.orderId + '/contractTx')
+      .set(txHash['tx']);
+      firebaseRef.database().ref('/sellorders/' + postTradeDetails.orderId + '/contractAddress')
+      .set(txHash['logs'][0]['args']['orderAddress']);
       dispatch(tradeCreated(postTradeDetails))
-      browserHistory.push('/orderslist')
+      browserHistory.push('/dashboard')
     })
     .catch(function (error) {
       console.log(error);

@@ -13,9 +13,10 @@ module.exports = {
   getActiveEscrows: (user) => (dispatch) => {
     firebaseRef.database()
       .ref('/users/'+user.data.uid+'/activeEscrows')
-      .on("value", function(snapshot){
+      .once("value", function(snapshot){
+        console.log('snapshot.val() [ActiveEscrowListActions]');
+        console.log(snapshot.val());
         dispatch(getActiveTrades(snapshot.val()))
       })
-    
   }
 }

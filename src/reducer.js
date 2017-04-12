@@ -6,7 +6,9 @@ import postTradeReducer from './posttrade/postTradeReducer'
 import ordersListReducer from './orderslist/orderslistreducer'
 import orderDetailReducer from './orderdetail/orderdetailreducer'
 import buyOrderDetailReducer from './buyorderdetail/buyorderdetailreducer'
+import sellOrderDetailReducer from './sellorderdetail/sellorderdetailreducer'
 import buyOrderReducer from './buyorders/buyOrderReducer'
+import sellOrderReducer from './sellorders/sellOrderReducer'
 import activeEscrowListReducer from './activeescrowlist/activeescrowslistreducer'
 import adListReducer from './adlist/adlistreducer'
 import sellOrderReducer from './sellorders/sellOrderReducer'
@@ -21,7 +23,9 @@ const reducer = combineReducers({
   ordersList: ordersListReducer,
   orderDetail: orderDetailReducer,
   buyOrderDetail: buyOrderDetailReducer,
+  sellOrderDetail: sellOrderDetailReducer,
   buyorders: buyOrderReducer,
+  sellorders: sellOrderReducer,
   activeTrades: activeEscrowListReducer,
   activeAds: adListReducer,
   sellorders: sellOrderReducer,
