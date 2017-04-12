@@ -73,6 +73,7 @@ class PostTradeForm extends Component {
   }
 
   onTradeTypeChange (event) {
+    var connectedAccount = this.props.web3.web3.eth.accounts[0];
     var _postTradeDetails = this.state.postTradeDetails;
     var _buyFormBool = this.state.buyFormBool;
     _postTradeDetails['tradeType'] = event.target.value;
@@ -81,7 +82,9 @@ class PostTradeForm extends Component {
         this.state.postTradeDetails, {
           tradeType: event.target.value,
           sellerUid: this.state.uid,
-          buyerUid: ''
+          buyerUid: '',
+          sellerAddress: connectedAccount,
+          buyerAddress: ''
         }
       );
       _buyFormBool = false;
@@ -90,7 +93,9 @@ class PostTradeForm extends Component {
       this.state.postTradeDetails, {
         tradeType: event.target.value,
         buyerUid: this.state.uid,
-        sellerUid: ''
+        sellerUid: '',
+        buyerAddress: connectedAccount,
+        sellerAddress: ''
       }
     );
       _buyFormBool = true;

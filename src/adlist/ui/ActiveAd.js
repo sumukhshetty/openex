@@ -18,7 +18,7 @@ class ActiveAd extends Component {
           <td>10000</td>
           <td>In Escrow</td>
           <td><i className='icon'>greendot</i> Active</td>
-          <ViewActiveAdButton orderId={this.props.orderId} />
+          <ViewActiveAdButton orderId={this.props.orderId} tradeType={this.props.tradeType}/>
         </tr>
     )
   }
