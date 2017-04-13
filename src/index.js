@@ -70,7 +70,6 @@ ReactDOM.render((
         <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
         <Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />
         <Route path='sellorderdetail/:orderId' component={UserIsAuthenticated(SellOrderDetail)} />
-        <Route path='activetrade/:orderId' component={UserIsAuthenticated(ReviewActiveTrade)} />
         <Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />
         <Route path='confirmation/:orderId' component={UserIsAuthenticated(Confirmation)} />
         <Route path='payment/:orderId' component={UserIsAuthenticated(Payment)} />
