@@ -23,10 +23,15 @@ export const SingleNotification = (props) => {
     <div className='bg-white pa2 mv3 flex col coal'>
       <div className='flex cxc mxb'>
         {icon}
-        <p className='b ma0 pa0'>{props.name}</p>
+        <p className='b ma0 pa0'>
+          {props.name}
+        </p>
         <small className='gray'>{props.time}</small>
       </div>
-      {props.message && <p className='gray'>{props.message}</p>}
+      {props.message &&
+       <p className='gray'>
+         {props.message}
+       </p>}
     </div>
   );
 };

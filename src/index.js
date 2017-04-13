@@ -21,9 +21,11 @@ import BuyOrders from './buyorders/layouts/BuyOrders';
 import SellOrders from './sellorders/layouts/SellOrders';
 
 import Help from './help/layouts/Help';
-import ReviewActiveTrade from './activetrade/layouts/ReviewActiveTrade';
+import Payment from './activetrade/layouts/Payment';
+import Confirmation from './activetrade/layouts/Confirmation';
+import Release from './activetrade/layouts/Release';
+import AllDone from './activetrade/layouts/AllDone';
 import ActiveBuyOrder from './activetrade/layouts/ActiveBuyOrder';
-
 import HTMLStyles from './css/HTMLStyles.js';
 import Static from './staticPages/Master/Static';
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder';
@@ -70,6 +72,10 @@ ReactDOM.render((
         <Route path='sellorderdetail/:orderId' component={UserIsAuthenticated(SellOrderDetail)} />
         <Route path='activetrade/:orderId' component={UserIsAuthenticated(ReviewActiveTrade)} />
         <Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />
+        <Route path='confirmation/:orderId' component={UserIsAuthenticated(Confirmation)} />
+        <Route path='payment/:orderId' component={UserIsAuthenticated(Payment)} />
+        <Route path='release/:orderId' component={UserIsAuthenticated(Release)} />
+        <Route path='allDone/:orderId' component={UserIsAuthenticated(AllDone)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // TODO import HelpContainer
 import ViewActiveAdButton from './ViewActiveAdButton';
-import { browserHistory } from 'react-router';
 
 class ActiveAd extends Component {
   componentWillMount () {
