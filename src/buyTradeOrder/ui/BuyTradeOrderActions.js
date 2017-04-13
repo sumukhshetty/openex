@@ -42,7 +42,8 @@ module.exports = {
   requestEtherFromSeller: (amount, uid, orderId) => (dispatch) => {
     firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + uid)
     .set({
-      amount: amount
+      amount: amount,
+      status: 'Awaiting Seller Confirmation'
     })
   }
 }
