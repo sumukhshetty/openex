@@ -69,8 +69,7 @@ module.exports = {
     order.at(contractAddress)
     .then(function(_order) {
       orderInstance = _order;
-      //return orderInstance.payoutToBuyer({from: coinbase});
-      return "txhash"
+      return orderInstance.payoutToBuyer({from: coinbase});
     })
     .then(function(txHash) {
       console.log(txHash)
@@ -78,8 +77,11 @@ module.exports = {
       .set('Ether Released');
 
     }).then(function(){
+      // TODO @qj catch the error if the index doesn't exist in firebase
       orderHelpers.removeOrderFromActiveEscrows(buyerUid, orderId)
       orderHelpers.removeOrderFromActiveEscrows(sellerUid, orderId)
+      orderHelpers.addOrderToCompletedTrades(buyerUid, orderId)
+      orderHelpers.addOrderToCompletedTrades(sellerUid, orderId)
     })
   },
 

@@ -2,9 +2,9 @@ import {firebaseRef} from './../index.js'
 
 module.exports = {
   removeOrderFromActiveEscrows: (uid, orderId) => {
-    console.log("removeOrderFromActiveEscrows")
-    console.log(uid)
-    console.log(orderId)
-    firebaseRef.database().ref('/user/'+uid+'/activeEscrows/'+orderId).remove()
+    firebaseRef.database().ref('/users/'+uid+'/activeEscrows/').child(orderId).remove()
+  },
+  addOrderToCompletedTrades: (uid, orderId)=> {
+    firebaseRef.database().ref("users/"+uid).child('completedTrades').child(orderId).set({value: 'true'})
   }
 }
