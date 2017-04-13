@@ -37,5 +37,12 @@ module.exports = {
           dispatch(getUserInfo(snapshot.val()))
         })
       })
+  },
+
+  requestEtherFromSeller: (amount, uid, orderId) => (dispatch) => {
+    firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + uid)
+    .set({
+      amount: amount
+    })
   }
 }

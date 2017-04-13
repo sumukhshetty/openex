@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import BuyTradeOrder from './BuyTradeOrder'
-import { sellOrder } from './BuyTradeOrderActions'
+import { sellOrder, requestEtherFromSeller } from './BuyTradeOrderActions'
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -17,6 +17,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (orderId) => {
       dispatch(sellOrder(orderId))
+    },
+
+    requestEther: (amount, uid, orderId) => {
+      dispatch(requestEtherFromSeller(amount, uid, orderId));
     }
   }
 }

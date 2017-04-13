@@ -8,6 +8,7 @@ export default class BuyTradeOrder extends Component {
     this.state = {
       user: this.props.user,
       sellOrderDetail: this.props.sellOrderDetail,
+      requestAmount: 0,
       method: 'UPI',
       buyingFrom: 'Victoria Padilla',
       rating: 4.5,
@@ -23,11 +24,24 @@ export default class BuyTradeOrder extends Component {
 
   handleTradeRequest (e) {
     e.preventDefault();
-    console.log('trade request handled');
+    this.props.requestEther(this.state.requestAmount, this.props.uid, this.props.params.orderId);
   }
 
-  handleConversion () {
+  handleConversion (amount) {
     console.log('conversion handled');
+    console.log(amount);
+  }
+
+  onEtherAmountChange(e) {
+    console.log('ether changed');
+    console.log(e.target.value);
+    this.setState({requestAmount: e.target.value});
+
+  }
+
+  onFiatAmountChange(e) {
+    console.log('fiat changed');
+    console.log(e.target.value);
   }
 
   componentWillMount(){
@@ -51,26 +65,26 @@ export default class BuyTradeOrder extends Component {
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Payment Method</td>
-                  <td>{this.state.method}</td>
+                  <td>{sellOrder.paymentMethod}</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>User</td>
-                  <td>{this.state.buyingFrom} ({this.state.rating}<Star className='dib v-mid pb1' />)</td>
+                  <td>{userInfo.username} ({this.state.rating}<Star className='dib v-mid pb1' />)</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Trade Limits</td>
-                  <td>{this.state.minLimit}- {this.state.maxLimit} {this.state.currency}</td>
+                  <td>{sellOrder.minTransactionLimit}- {sellOrder.maxTransactionLimit} {sellOrder.currency}</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Location</td>
-                  <td>{this.state.location}</td>
+                  <td>{sellOrder.location}</td>
                 </tr>
               </table>
             </div>
             <div className='w-50' >
               <h2 className='pv1 tc'>How much do you wish to buy?</h2>
-              <div className='flex mxc'><Converter handleTradeRequest={this.handleTradeRequest}
-                handleConversion={this.handleConversion} /></div>
+              <div className='flex mxc'><Converter handleTradeRequest={this.handleTradeRequest.bind(this)}
+                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>
             </div>
           </div>
           <div>
