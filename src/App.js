@@ -39,46 +39,52 @@ class App extends Component {
   }
 
   render () {
-    const OnlyAuthLinks = VisibleOnlyAuth(() =>
-      <div className='menu'>
-        <div className='container'>
-          { this.state.showNotifications && <Notifications close={this.removeNotifications} />}
-          <div className='pure-g flex mxb cxc'>
-            <div className='pure-u-1-4 brand'>
-              <Link to='/dashboard'>
+    const OnlyAuthLinks = VisibleOnlyAuth(() => {
+      return (
+        <div className='menu'>
+          <div className='w-75 center'>
+            {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
+            <div className='pure-g flex mxb cxc'>
+              <div className='pure-u-1-4 brand'>
+                <Link to='/dasboard'>
                 <img className='brand' src={logo} alt='Automt Ether Exchange' />
-              </Link>
+                </Link>
+              </div>
+              <div className='flex mxe cxc'>
+                <Bell action={this.showNotifications} />
+                <LogoutButtonContainer />
+              </div>
             </div>
-            <div className='flex mxe cxc'>
-              <Bell action={this.showNotifications} />
-              <LogoutButtonContainer />
-            </div>
+            <nav className='pure-menu pure-menu-horizontal'>
+              <ul className='flex mxb ma0 pa0'>
+                <li className='pure-menu-item'>
+                  <Link to='/dashboard'> Dashboard
+                  </Link>
+                </li>
+                <li className='pure-menu-item'>
+                  <Link to='/buyorders'> Buy
+                  </Link>
+                </li>
+                <li className='pure-menu-item'>
+                  <Link to='/sellorders'> Sell
+                  </Link>
+                </li>
+                <li className='pure-menu-item'>
+                  <Link to='/posttrade'> Post a Trade
+                  </Link>
+                </li>
+                <li className='pure-menu-item'>
+                  <Link to='/help'> Help
+                  </Link>
+                </li>
+              </ul>
+            </nav>
           </div>
-          <nav className='pure-menu pure-menu-horizontal'>
-            <ul className='flex mxb ma0 pa0'>
-              <li className='pure-menu-item'>
-                <Link to='/dashboard'>Dashboard</Link>
-              </li>
-              <li className='pure-menu-item'>
-                <Link to='/buyorders'>Buy</Link>
-              </li>
-              <li className='pure-menu-item'>
-                <Link to='/sellorders'>Sell</Link>
-              </li>
-              <li className='pure-menu-item'>
-                <Link to='/posttrade'>Post a Trade</Link>
-              </li>
-              <li className='pure-menu-item'>
-                <Link to='/help'>Help</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+        </div>);
+    }
     );
 
-    const OnlyGuestLinks = HiddenOnlyAuth(() =>
-      <Header />
+    const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />
     );
 
     return (
