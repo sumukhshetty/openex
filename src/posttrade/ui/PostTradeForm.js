@@ -42,7 +42,7 @@ class PostTradeForm extends Component {
       buyerAddress: connectedAccount,
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid,// Submitting a from without changing values leaves them as blank
-      paymentMethod: 'UPI'     // If defaults change, these must change as well.  
+      paymentMethod: 'UPI'     // If defaults change, these must change as well.
     }});
   }
 
@@ -50,7 +50,6 @@ class PostTradeForm extends Component {
     var _postTradeDetails = this.state.postTradeDetails;
     if (event.target.id === 'location') {
       _postTradeDetails['location'] = event.target.value;
-      // this.setState({ postTradeDetails: _postTradeDetails })
     } else if (event.target.id === 'margin') {
       _postTradeDetails['margin'] = event.target.value;
     } else if (event.target.id === 'equation') {
@@ -59,8 +58,6 @@ class PostTradeForm extends Component {
       _postTradeDetails['amount'] = event.target.value;
     } else if (event.target.id === 'bankInformation') {
       _postTradeDetails['bankInformation'] = event.target.value;
-    } else if (event.target.id === 'location') {
-      _postTradeDetails['location'] = event.target.value;
     } else if (event.target.id === 'minTransactionLimit') {
       _postTradeDetails['minTransactionLimit'] = event.target.value;
     } else if (event.target.id === 'maxTransactionLimit') {
@@ -173,7 +170,7 @@ class PostTradeForm extends Component {
 
             <div className='flex mv3'>
               <label htmlFor='location' className='w5' >Location</label>
-              <input id='location' name='location' type='text' valueProp={this.state.postTradeDetails.location} onChangeProp={this.onInputChange.bind(this)}
+              <input id='location' name='location' type='text' value={this.state.postTradeDetails.location} onChange={this.onInputChange.bind(this)}
                 placeholder='Enter a Location' className='w5 h-100' />
               <span className='measure-narrow fw1 i pa0 me'>For online trade you need to specify the country. For local trade, please specify a city, postal code or street name.</span>
             </div>
