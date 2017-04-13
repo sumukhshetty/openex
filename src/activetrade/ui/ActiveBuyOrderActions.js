@@ -3,8 +3,9 @@ import BuyOrderContract from '../../../build/contracts/BuyOrder.json';
 // import { browserHistory } from 'react-router'
 // import factoryAddress from '../../contract_addresses/orderfactory.js'
 
-const contract = require('truffle-contract');
-import { firebaseRef } from './../../index.js';
+const contract = require('truffle-contract')
+import {firebaseRef} from './../../index.js'
+import * as orderHelpers from './../../util/orderHelpers'
 
 export const GET_BUY_ORDER = 'GET_BUY_ORDER';
 function getBuyOrder (buyOrderPayload) {
@@ -57,22 +58,30 @@ module.exports = {
     console.log('called fillEscrow [ActiveBuyOrderActions]');
   },
 
-  releaseEscrow: (contractAddress, orderId, web3) => (dispatch) => {
-    console.log('releasEther');
+  releaseEscrow: (contractAddress, orderId, web3, buyerUid, sellerUid) => (dispatch) => {
+    console.log("releasEther");
     const order = contract(BuyOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
     var coinbase = web3.eth.coinbase;
 
     order.at(contractAddress)
-      .then(function (_order) {
-        orderInstance = _order;
-        return orderInstance.payoutToBuyer({from: coinbase});
-      })
-      .then(function (txHash) {
-        firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-          .set('Ether Released');
-      });
+    .then(function(_order) {
+      orderInstance = _order;
+      return orderInstance.payoutToBuyer({from: coinbase});
+    })
+    .then(function(txHash) {
+      console.log(txHash)
+      firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+      .set('Ether Released');
+
+    }).then(function(){
+      // TODO @qj catch the error if the index doesn't exist in firebase
+      orderHelpers.removeOrderFromActiveEscrows(buyerUid, orderId)
+      orderHelpers.removeOrderFromActiveEscrows(sellerUid, orderId)
+      orderHelpers.addOrderToCompletedTrades(buyerUid, orderId)
+      orderHelpers.addOrderToCompletedTrades(sellerUid, orderId)
+    })
   },
 
   paymentConfirmed: (orderId) => (dispatch) => {

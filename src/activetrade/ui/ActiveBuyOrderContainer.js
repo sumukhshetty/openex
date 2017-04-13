@@ -31,8 +31,8 @@ const mapDispatchToProps = (dispatch) => {
     sendEther: (contractAddress, orderId, web3) => {
       dispatch(fillEscrow(contractAddress, orderId, web3));
     },
-    releaseEther: (contractAddress, orderId, web3) => {
-      dispatch(releaseEscrow(contractAddress, orderId, web3))
+    releaseEther: (contractAddress, orderId, web3, buyerUid, sellerUid) => {
+      dispatch(releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))
     },
     confirmPayment: (orderId) => {
       dispatch(paymentConfirmed(orderId));

@@ -106,7 +106,7 @@ class ActiveBuyOrder extends Component {
         makePaymentButton = <button onClick={()=>this.props.confirmPayment(buyOrder.orderId)}>Confirm Payment</button>
 
       if(viewerRole === 'seller' && status === 'Payment Confirmed')
-        releaseEther = <button onClick={()=>this.props.releaseEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3)}>Release Ether</button>
+        releaseEther = <button onClick={()=>this.props.releaseEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3, buyOrder.buyerUid, buyOrder.sellerUid)}>Release Ether</button>
 
       if(status === 'Ether Released')
         tradeFeedback = <TradeFeedbackContainer />
