@@ -40,8 +40,9 @@ class PostTradeForm extends Component {
     this.setState({postTradeDetails: {
       amount: 0,
       buyerAddress: connectedAccount,
-      tradeType: 'buy-ether',  // NOTE Arseniy: Set this on mount because buy-ether is the checked tradeType on load.
-      buyerUid: this.props.uid // If the default trade type is change for whatever reason, tradeType and buyerUid must be changed as well.
+      tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
+      buyerUid: this.props.uid,// Submitting a from without changing values leaves them as blank
+      paymentMethod: 'UPI'     // If defaults change, these must change as well.  
     }});
   }
 
