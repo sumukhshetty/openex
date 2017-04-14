@@ -32,11 +32,9 @@ class ReviewActiveTrade extends Component {
               <StepNote step={step} />
               {step === 'Payment Confirmed' &&
                <div className='tc'>
-                 <Link to='/allDone/1'>
-                 <button>
+                 <button onClick={this.props.releaseEther}>
                    Release Ether
                  </button>
-                 </Link>
                </div>}
               <CancelTrade />
               <DisputeTrade type='buyer' />

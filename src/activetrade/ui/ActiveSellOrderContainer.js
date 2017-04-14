@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ActiveSellOrder from './ActiveSellOrder'
-import { sellOrder, confirmTradeAction } from './ActiveSellOrderActions'
+import { sellOrder, confirmTradeAction, confirmPaymentAction, releaseEtherAction } from './ActiveSellOrderActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -18,6 +18,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     confirmTrade: (contractAddress, buyerAddress, orderId, requestId, amount, web3) => {
       dispatch(confirmTradeAction(contractAddress, buyerAddress, orderId, requestId, amount, web3));
+    },
+    confirmPayment: (orderId, requestId) => {
+      dispatch(confirmPaymentAction(orderId, requestId));
+    },
+    releaseEther: (contractAddress, buyerAddress, orderId, requestId, web3) => {
+      dispatch(releaseEtherAction(contractAddress, buyerAddress, orderId, requestId, web3));
     }
   }
 }

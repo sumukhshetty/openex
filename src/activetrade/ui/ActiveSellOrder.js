@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
 import Confirmation from '../layouts/Confirmation.js'
+import Payment from '../layouts/Payment.js'
+import Release from '../layouts/Release.js'
 import Dot from '../../images/svgReactComponents/Dot.js';
 
 
@@ -32,6 +34,18 @@ class ActiveBuyOrder extends Component {
                             this.props.sellOrderDetail.sellOrder.orderId,
                             this.props.params.requestId,
                             this.props.sellOrderDetail.sellOrder.requests[this.props.params.requestId].amount,
+                            this.props.web3.web3);
+  }
+
+  confirmPayment() {
+    this.props.confirmPayment(this.props.sellOrderDetail.sellOrder.orderId, this.props.params.requestId);
+  }
+
+  releaseEther() {
+    this.props.releaseEther(this.props.sellOrderDetail.sellOrder.contractAddress,
+                            this.props.sellOrderDetail.sellOrder.requests[this.props.params.requestId].buyerAddress,
+                            this.props.sellOrderDetail.sellOrder.orderId,
+                            this.props.params.requestId,
                             this.props.web3.web3);
   }
 
@@ -102,7 +116,9 @@ class ActiveBuyOrder extends Component {
       status = request['status']
 
       var tradeFlowComponents = {
-        "Awaiting Seller Confirmation": <Confirmation viewerRole={viewerRole} confirmTrade={this.confirmTrade.bind(this)}/>
+        "Awaiting Seller Confirmation": <Confirmation viewerRole={viewerRole} confirmTrade={this.confirmTrade.bind(this)}/>,
+        "Awaiting Payment": <Payment viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}/>,
+        "Awaiting Release": <Release viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}/>
       }
 
       currentStep = tradeFlowComponents[status];

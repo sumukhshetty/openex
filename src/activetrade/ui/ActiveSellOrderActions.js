@@ -37,11 +37,40 @@ module.exports = {
     order.at(contractAddress)
       .then(function (_order) {
         orderInstance = _order;
-        return orderInstance.addOrder(buyerAddress, amount, {from: coinbase});
+        return orderInstance.addOrder(buyerAddress, web3.toWei(amount, 'ether'), {from: coinbase});
       })
       .then(function() {
         firebaseRef.database().ref('/sellorders/' + orderId +'/requests/'+requestId+'/status')
         .set('Awaiting Payment');
+      })
+      .catch(function(error) {
+        console.log('error in confirmTradeAction [ActiveSellOrderActions]');
+        console.log(error);
+      })
+  },
+
+  confirmPaymentAction: (orderId, requestId) => (dispatch) => {
+    firebaseRef.database().ref('/sellorders/' + orderId +'/requests/' + requestId +'/status')
+    .set('Awaiting Release');
+  },
+
+  releaseEtherAction: (contractAddress, buyerAddress, orderId, requestId, web3) => (dispatch) => {
+    var coinbase = web3.eth.coinbase;
+    const order = contract(SellOrderContract);
+    order.setProvider(web3.currentProvider);
+    var orderInstance;
+    order.at(contractAddress)
+      .then(function (_order) {
+        orderInstance = _order;
+        return orderInstance.completeOrder(buyerAddress, {from: coinbase});
+      })
+      .then(function (txHash) {
+        firebaseRef.database().ref('/sellorders/' + orderId +'/requests/'+requestId+'/status')
+        .set('All Done');
+      })
+      .catch(function (error) {
+        console.log('error in releaseEtherAction [ActiveSellOrderActions]');
+        console.log(error);
       })
   }
 
