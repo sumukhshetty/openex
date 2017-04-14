@@ -6,6 +6,7 @@ export default class BuyTradeOrder extends Component {
   constructor (props) {
     super(props);
     this.state = {
+      web3: this.props.web3,
       user: this.props.user,
       sellOrderDetail: this.props.sellOrderDetail,
       requestAmount: 0,
@@ -24,7 +25,7 @@ export default class BuyTradeOrder extends Component {
 
   handleTradeRequest (e) {
     e.preventDefault();
-    this.props.requestEther(this.state.requestAmount, this.props.uid, this.props.params.orderId);
+    this.props.requestEther(this.state.requestAmount, this.props.uid, this.props.params.orderId, this.props.web3.web3);
   }
 
   handleConversion (amount) {

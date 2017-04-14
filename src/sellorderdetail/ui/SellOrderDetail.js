@@ -93,7 +93,7 @@ class SellOrderDetail extends Component {
 
       } else if(sellOrder.requests[this.props.uid]) {
         //buyer is viewing, already has a request
-          requestModule = (<div>You have requested {sellOrder.requests[this.props.uid]} ether from this seller</div>)
+          requestModule = (<div>You have requested {sellOrder.requests[this.props.uid].amount} ether from this seller</div>)
       } else {
         //buyer is viewing, has no requests
         requestModule = (<div>

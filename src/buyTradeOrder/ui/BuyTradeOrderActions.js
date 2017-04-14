@@ -39,11 +39,18 @@ module.exports = {
       })
   },
 
-  requestEtherFromSeller: (amount, uid, orderId) => (dispatch) => {
+  requestEtherFromSeller: (amount, uid, orderId, web3) => (dispatch) => {
+    var coinbase = web3.eth.coinbase;
     firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + uid)
     .set({
       amount: amount,
+      buyerAddress: coinbase,
       status: 'Awaiting Seller Confirmation'
-    })
+    });
+    firebaseRef.database().ref('/users/' + uid+ '/activeEscrows/' + orderId)
+    .set({
+      tradeType: 'sell-ether'
+    });
+    browserHistory.push('activesellorder/'+orderId+'/'+uid);
   }
 }

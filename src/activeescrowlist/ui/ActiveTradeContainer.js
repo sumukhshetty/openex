@@ -7,15 +7,16 @@ const mapStateToProps = (state, ownProps) => {
     web3: state.web3,
     orderId: ownProps.orderId,
     orderKey: ownProps.orderKey,
+    tradeType: ownProps.tradeType,
     activeTradeData: state.activeTradeData
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoads: (orderId) => {
+    onBeforeComponentLoads: (orderId, tradeType) => {
 
-      dispatch(getActiveTrade(orderId))
+      dispatch(getActiveTrade(orderId, tradeType))
     },
   }
 }

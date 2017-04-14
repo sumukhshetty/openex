@@ -1,12 +1,10 @@
 import { connect } from 'react-redux'
-import BuyTradeOrder from './BuyTradeOrder'
-import { sellOrder, requestEtherFromSeller } from './BuyTradeOrderActions'
-
+import ActiveSellOrder from './ActiveSellOrder'
+import { sellOrder, confirmTradeAction } from './ActiveSellOrderActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    user: state.user,
     sellOrderDetail: state.sellOrderDetail,
     params: ownProps.params,
     uid: ownProps.uid
@@ -18,16 +16,15 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentLoad: (orderId) => {
       dispatch(sellOrder(orderId))
     },
-
-    requestEther: (amount, uid, orderId, web3) => {
-      dispatch(requestEtherFromSeller(amount, uid, orderId, web3));
+    confirmTrade: (contractAddress, buyerAddress, orderId, requestId, amount, web3) => {
+      dispatch(confirmTradeAction(contractAddress, buyerAddress, orderId, requestId, amount, web3));
     }
   }
 }
 
-const BuyTradeOrderContainer = connect(
+const ActiveSellOrderContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(BuyTradeOrder)
+)(ActiveSellOrder)
 
-export default BuyTradeOrderContainer
+export default ActiveSellOrderContainer

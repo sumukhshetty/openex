@@ -26,6 +26,7 @@ import Confirmation from './activetrade/layouts/Confirmation';
 import Release from './activetrade/layouts/Release';
 import AllDone from './activetrade/layouts/AllDone';
 import ActiveBuyOrder from './activetrade/layouts/ActiveBuyOrder';
+import ActiveSellOrder from './activetrade/layouts/ActiveSellOrder';
 import HTMLStyles from './css/HTMLStyles.js';
 import Static from './staticPages/Master/Static';
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder';
@@ -71,7 +72,7 @@ ReactDOM.render((
         <Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />
         <Route path='sellorderdetail/:orderId' component={UserIsAuthenticated(SellOrderDetail)} />
         <Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />
-        <Route path='confirmation/:orderId' component={UserIsAuthenticated(Confirmation)} />
+        <Route path='activesellorder/:orderId/:requestId' component={UserIsAuthenticated(ActiveSellOrder)} />
         <Route path='payment/:orderId' component={UserIsAuthenticated(Payment)} />
         <Route path='release/:orderId' component={UserIsAuthenticated(Release)} />
         <Route path='allDone/:orderId' component={UserIsAuthenticated(AllDone)} />

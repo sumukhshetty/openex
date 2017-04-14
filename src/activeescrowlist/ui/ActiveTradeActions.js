@@ -10,9 +10,10 @@ function getActiveTradeData(activeTradesPayload) {
 
 
 module.exports = {
-  getActiveTrade: (orderId) => (dispatch) => {
+  getActiveTrade: (orderId, tradeType) => (dispatch) => {
+    var url = tradeType === 'buy-ether' ? 'buyorders' : 'sellorders';
     firebaseRef.database()
-      .ref('/buyorders/'+orderId)
+      .ref(url+'/'+orderId)
       .once("value", function(snapshot){
         console.log('snapshot.val() [ActiveTradeActions]');
         console.log(snapshot.val());

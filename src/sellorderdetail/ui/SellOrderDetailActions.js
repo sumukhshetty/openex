@@ -57,7 +57,11 @@ module.exports = {
     firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + uid)
     .set({
       amount: amount
-    })
+    });
+    firebaseRef.database().ref('/users/' + uid+ '/activeEscrows/' + uid)
+    .set({
+      tradeType: 'sell-ether'
+    });
   }
 
 
