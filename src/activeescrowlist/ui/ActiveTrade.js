@@ -31,7 +31,7 @@ class ActiveTrade extends Component {
               <td>1238</td>
               <td>{tradeDetails.lastUpated}</td>
               <td>{tradeType}</td>
-              <td>David Washington</td>
+              <td>{tradeDetails.buyerUsername}</td>
               <td>{tradeDetails.amount}</td>
               <td>{tradeDetails.amount}</td>
               <td>{tradeDetails.status}</td>
@@ -48,7 +48,7 @@ class ActiveTrade extends Component {
                   <td>1238</td>
                   <td>{tradeDetails.lastUpated}</td>
                   <td>{tradeType}</td>
-                  <td>David Washington</td>
+                  <td>{tradeDetails.sellerUsername}</td>
                   <td>{value.amount}</td>
                   <td>{value.amount}</td>
                   <td>{value.status}</td>
