@@ -40,6 +40,7 @@ class PostTradeForm extends Component {
     this.setState({postTradeDetails: {
       amount: 0,
       buyerAddress: connectedAccount,
+      buyerUsername: this.props.user.data.displayName,
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid,// Submitting a from without changing values leaves them as blank
       paymentMethod: 'UPI'     // If defaults change, these must change as well.
@@ -82,7 +83,9 @@ class PostTradeForm extends Component {
           sellerUid: this.state.uid,
           buyerUid: '',
           sellerAddress: connectedAccount,
-          buyerAddress: ''
+          buyerAddress: '',
+          sellerUsername: this.props.user.data.displayName,
+          buyerUsername: ''
         }
       );
       _buyFormBool = false;
@@ -93,7 +96,9 @@ class PostTradeForm extends Component {
         buyerUid: this.state.uid,
         sellerUid: '',
         buyerAddress: connectedAccount,
-        sellerAddress: ''
+        sellerAddress: '',
+        buyerUsername: this.props.user.data.displayName,
+        sellerUsername: ''
       }
     );
       _buyFormBool = true;
@@ -119,7 +124,6 @@ class PostTradeForm extends Component {
   }
 
   handleSubmit (event) {
-    event.preventDefault();
     var now = new Date();
     var orderId = this.state.web3.web3.sha3(this.state.user.data.uid + '-' + now);
     var _postTradeDetails = Object.assign({},

@@ -37,18 +37,9 @@ export function postTrade(postTradeDetails, web3, state) {
     .then(function(_factory) {
       console.log('got factory contract');
       factoryInstance = _factory;
-      return web3.eth.getBlockNumber();
-    })
-    .then(function(_block) {
-      console.log('got bloc');
-      block = _block;
       return factoryInstance.createSellOrder({from: coinbase});
     })
     .then(function(txHash) {
-      //add orderAddress to the list of this user's orders.
-      console.log(orderAddress);
-      console.log("event was fired?")
-
       var currentdate = new Date().toString()
       firebaseRef.database().ref("sellorders/" + postTradeDetails.orderId).set(postTradeDetails);
       firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(postTradeDetails.orderId).set({tradeType: postTradeDetails.tradeType})
