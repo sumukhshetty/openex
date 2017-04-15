@@ -39,7 +39,7 @@ class ActiveTrade extends Component {
               <ViewActiveTradeButton orderId={this.props.orderId} tradeType={tradeDetails.tradeType} />
             </tr>
         )
-      } else if (tradeDetails.tradeType === 'sell-ether') {
+      } else if (tradeDetails.tradeType === 'sell-ether' && tradeDetails.requests) {
         var rows = [];
         Object.entries(tradeDetails.requests).forEach(
             ([key, value]) => {
@@ -59,6 +59,8 @@ class ActiveTrade extends Component {
             }
         );
         return <span>{rows}</span>;
+      } else {
+        return (null);
       }
     } else {
       return (

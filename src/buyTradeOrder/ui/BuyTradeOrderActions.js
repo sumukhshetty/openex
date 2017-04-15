@@ -52,7 +52,7 @@ module.exports = {
       status: 'Awaiting Seller Confirmation'
     })
     .then(function() {
-      browserHistory.push('activesellorder/'+orderId+'/'+uid);
+      browserHistory.push('dashboard');
     });
 
 
