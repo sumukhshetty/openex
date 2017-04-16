@@ -30,7 +30,7 @@ export default class BuyTradeOrder extends Component {
 
   render () {
     return (
-      <div className='w-100 bg-smoke vh-100'>
+      <div className='w-100 bg-smoke'>
         <div className='w-75 center pv3'>
           <h1 className='pv1'>Buy ether using {this.state.method} from {this.state.buyingFrom}</h1>
           <div className='flex mxb w-100 cxc'>

@@ -5,7 +5,7 @@ export default class AddEscrow extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      text: 'hello'
+      value: null
     };
   }
   render () {
