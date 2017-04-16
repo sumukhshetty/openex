@@ -6,8 +6,8 @@ import ActiveTradeHeader from './../../activetrade/layouts/ActiveTradeHeader';
 class ActiveEscrowList extends Component {
   render () {
     return (
-      <div>
-        <h2>Your active escrows</h2>
+      <div className='pt3'>
+        <p className='b'>Your Active Escrows</p>
         <table>
           <ActiveTradeHeader />
           <ActiveEscrowListContainer />
