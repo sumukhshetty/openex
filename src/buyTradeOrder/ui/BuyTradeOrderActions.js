@@ -39,17 +39,29 @@ module.exports = {
       })
   },
 
-  requestEtherFromSeller: (amount, uid, orderId, web3) => (dispatch) => {
+  availableBalance: (contractAddress, web3) => (dispatch) => {
+
+  },
+
+  requestEtherFromSeller: (amount, uid, orderId, contractAddress, web3) => (dispatch) => {
     var coinbase = web3.eth.coinbase;
-    firebaseRef.database().ref('/users/' + uid+ '/activeEscrows/' + orderId)
-    .set({
-      tradeType: 'sell-ether'
-    });
-    firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + uid)
-    .set({
+    var now = new Date();
+    var newRequest = firebaseRef.database().ref('/purchaserequests').push({
       amount: amount,
       buyerAddress: coinbase,
-      status: 'Awaiting Seller Confirmation'
+      buyerUid: uid,
+      createdAt: now,
+      lastUpated: now,
+      status: 'Awaiting Seller Confirmation',
+      contractAddress: contractAddress
+    });
+    firebaseRef.database().ref('/users/' + uid+ '/requests/' + newRequest.key)
+    .set({
+      orderId: orderId
+    });
+    firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + newRequest.key)
+    .set({
+      buyerUid: uid
     })
     .then(function() {
       browserHistory.push('dashboard');

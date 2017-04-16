@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import BuyTradeOrder from './BuyTradeOrder'
-import { sellOrder, requestEtherFromSeller } from './BuyTradeOrderActions'
+import { sellOrder, requestEtherFromSeller, availableBalance } from './BuyTradeOrderActions'
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,8 +19,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(sellOrder(orderId))
     },
 
-    requestEther: (amount, uid, orderId, web3) => {
-      dispatch(requestEtherFromSeller(amount, uid, orderId, web3));
+    requestEther: (amount, uid, orderId, contractAddress, web3) => {
+      dispatch(requestEtherFromSeller(amount, uid, orderId, contractAddress, web3));
+    },
+
+    getAvailableBalance: (contractAddress, web3) => {
+      dispatch(availableBalance(contractAddress, web3))
     }
   }
 }
