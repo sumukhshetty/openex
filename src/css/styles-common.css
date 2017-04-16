@@ -345,6 +345,12 @@ table {
   width: 100% !important;
 }
 
+th {
+  font-weight: normal;
+  font-size: small;
+}
+
+
 thead tr {
   display: flex;
   width: 100%;
