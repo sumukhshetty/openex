@@ -10,7 +10,7 @@ class ViewActiveTradeButton extends Component {
   }
 
   render() {
-    var url = this.props.tradeType === 'buy-ether' ? 'activebuyorder/' + this.props.orderId : 'activesellorder/' + this.props.orderId + '/' + this.props.requestId;
+    var url = this.props.tradeType === 'buy-ether' ? 'activebuyorder/' + this.props.orderId : 'activesellorder/' + this.props.orderId;
     return(
       <td>
         <button onClick={()=>browserHistory.push(url)}>View / Message</button>

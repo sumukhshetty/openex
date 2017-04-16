@@ -5,6 +5,7 @@ import { sellOrder, confirmTradeAction, confirmPaymentAction, releaseEtherAction
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    user: state.user,
     sellOrderDetail: state.sellOrderDetail,
     params: ownProps.params,
     uid: ownProps.uid
@@ -13,17 +14,17 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoad: (orderId) => {
-      dispatch(sellOrder(orderId))
+    onBeforeComponentLoad: (requestId) => {
+      dispatch(sellOrder(requestId))
     },
-    confirmTrade: (contractAddress, buyerAddress, orderId, requestId, amount, web3) => {
-      dispatch(confirmTradeAction(contractAddress, buyerAddress, orderId, requestId, amount, web3));
+    confirmTrade: (contractAddress, buyerAddress, requestId, amount, web3) => {
+      dispatch(confirmTradeAction(contractAddress, buyerAddress, requestId, amount, web3));
     },
-    confirmPayment: (orderId, requestId) => {
-      dispatch(confirmPaymentAction(orderId, requestId));
+    confirmPayment: (requestId) => {
+      dispatch(confirmPaymentAction(requestId));
     },
-    releaseEther: (contractAddress, buyerAddress, orderId, requestId, web3) => {
-      dispatch(releaseEtherAction(contractAddress, buyerAddress, orderId, requestId, web3));
+    releaseEther: (contractAddress, buyerAddress, requestId, web3) => {
+      dispatch(releaseEtherAction(contractAddress, buyerAddress, requestId, web3));
     }
   }
 }

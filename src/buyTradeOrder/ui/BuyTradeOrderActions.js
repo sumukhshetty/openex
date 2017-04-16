@@ -43,28 +43,35 @@ module.exports = {
 
   },
 
-  requestEtherFromSeller: (amount, uid, orderId, contractAddress, web3) => (dispatch) => {
+  requestEtherFromSeller: (amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, web3) => (dispatch) => {
     var coinbase = web3.eth.coinbase;
     var now = new Date();
     var newRequest = firebaseRef.database().ref('/purchaserequests').push({
       amount: amount,
       buyerAddress: coinbase,
       buyerUid: uid,
+      buyerUsername: buyerUsername,
+      sellerUid: sellerUid,
+      sellerUsername: sellerUsername,
       createdAt: now,
       lastUpated: now,
       status: 'Awaiting Seller Confirmation',
       contractAddress: contractAddress
     });
-    firebaseRef.database().ref('/users/' + uid+ '/requests/' + newRequest.key)
-    .set({
-      orderId: orderId
-    });
     firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + newRequest.key)
     .set({
       buyerUid: uid
+    });
+    firebaseRef.database().ref('/users/' + sellerUid+ '/activeTrades/' + newRequest.key)
+    .set({
+      tradeType: 'sell-ether'
+    });
+    firebaseRef.database().ref('/users/' + uid+ '/activeTrades/' + newRequest.key)
+    .set({
+      tradeType: 'sell-ether'
     })
     .then(function() {
-      browserHistory.push('dashboard');
+      browserHistory.push('dashboard/');
     });
 
 

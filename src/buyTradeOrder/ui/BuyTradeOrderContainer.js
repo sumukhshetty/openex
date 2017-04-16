@@ -19,8 +19,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(sellOrder(orderId))
     },
 
-    requestEther: (amount, uid, orderId, contractAddress, web3) => {
-      dispatch(requestEtherFromSeller(amount, uid, orderId, contractAddress, web3));
+    requestEther: (amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, web3) => {
+      dispatch(requestEtherFromSeller(amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, web3));
     },
 
     getAvailableBalance: (contractAddress, web3) => {

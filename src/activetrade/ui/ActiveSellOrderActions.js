@@ -20,16 +20,16 @@ module.exports = {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
   },
 
-  sellOrder: (orderId) => (dispatch) => {
+  sellOrder: (requestId) => (dispatch) => {
     // firebaseRef.database().ref('sellorders')
     // .orderByKey().equalTo(orderId)
-    firebaseRef.database().ref('/sellorders/' + orderId)
+    firebaseRef.database().ref('/purchaserequests/' + requestId)
       .on('value', function (snapshot) {
         dispatch(getSellOrder(snapshot.val()));
       });
   },
 
-  confirmTradeAction: (contractAddress, buyerAddress, orderId, requestId, amount, web3) => (dispatch) => {
+  confirmTradeAction: (contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
@@ -40,7 +40,7 @@ module.exports = {
         return orderInstance.addOrder(buyerAddress, web3.toWei(amount, 'ether'), {from: coinbase});
       })
       .then(function() {
-        firebaseRef.database().ref('/sellorders/' + orderId +'/requests/'+requestId+'/status')
+        firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
         .set('Awaiting Payment');
       })
       .catch(function(error) {
@@ -49,12 +49,12 @@ module.exports = {
       })
   },
 
-  confirmPaymentAction: (orderId, requestId) => (dispatch) => {
-    firebaseRef.database().ref('/sellorders/' + orderId +'/requests/' + requestId +'/status')
+  confirmPaymentAction: (requestId) => (dispatch) => {
+    firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
     .set('Awaiting Release');
   },
 
-  releaseEtherAction: (contractAddress, buyerAddress, orderId, requestId, web3) => (dispatch) => {
+  releaseEtherAction: (contractAddress, buyerAddress, requestId, web3) => (dispatch) => {
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
@@ -65,7 +65,7 @@ module.exports = {
         return orderInstance.completeOrder(buyerAddress, {from: coinbase});
       })
       .then(function (txHash) {
-        firebaseRef.database().ref('/sellorders/' + orderId +'/requests/'+requestId+'/status')
+        firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
         .set('All Done');
       })
       .catch(function (error) {

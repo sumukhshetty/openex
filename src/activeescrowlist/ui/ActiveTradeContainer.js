@@ -5,6 +5,7 @@ import { getActiveTrade } from './ActiveTradeActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    user: state.user,
     orderId: ownProps.orderId,
     orderKey: ownProps.orderKey,
     tradeType: ownProps.tradeType,

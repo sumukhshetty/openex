@@ -12,6 +12,7 @@ class ActiveBuyOrder extends Component {
 
     this.state = {
       web3: this.props.web3,
+      user: this.props.user,
       sellOrderDetail: this.props.sellOrderDetail,
       params: this.props.params,
       uid: this.props.uid
@@ -21,7 +22,7 @@ class ActiveBuyOrder extends Component {
   componentWillMount(){
     console.log("activesellorder: in component will mount")
     console.log('uid: ' + this.props.uid)
-    this.props.onBeforeComponentLoad(this.props.params.orderId)
+    this.props.onBeforeComponentLoad(this.props.params.requestId)
   }
 
   componentWillUnmount() {
@@ -30,21 +31,19 @@ class ActiveBuyOrder extends Component {
 
   confirmTrade() {
     this.props.confirmTrade(this.props.sellOrderDetail.sellOrder.contractAddress,
-                            this.props.sellOrderDetail.sellOrder.requests[this.props.params.requestId].buyerAddress,
-                            this.props.sellOrderDetail.sellOrder.orderId,
+                            this.props.sellOrderDetail.sellOrder.buyerAddress,
                             this.props.params.requestId,
-                            this.props.sellOrderDetail.sellOrder.requests[this.props.params.requestId].amount,
+                            this.props.sellOrderDetail.sellOrder.amount,
                             this.props.web3.web3);
   }
 
   confirmPayment() {
-    this.props.confirmPayment(this.props.sellOrderDetail.sellOrder.orderId, this.props.params.requestId);
+    this.props.confirmPayment(this.props.params.requestId);
   }
 
   releaseEther() {
     this.props.releaseEther(this.props.sellOrderDetail.sellOrder.contractAddress,
-                            this.props.sellOrderDetail.sellOrder.requests[this.props.params.requestId].buyerAddress,
-                            this.props.sellOrderDetail.sellOrder.orderId,
+                            this.props.sellOrderDetail.sellOrder.buyerAddress,
                             this.props.params.requestId,
                             this.props.web3.web3);
   }
@@ -86,19 +85,17 @@ class ActiveBuyOrder extends Component {
     var sellOrder, request, currentStep, viewerRole
     console.log(this.props);
     if(this.props.sellOrderDetail.sellOrder) {
-      sellOrder = this.props.sellOrderDetail.sellOrder
+      request = this.props.sellOrderDetail.sellOrder
 
-      console.log('sellerUid')
-      console.log(sellOrder.sellerUid)
+      console.log('buyerUid')
+      console.log(request.buyerUid)
       console.log('user uid')
       console.log(this.props.uid)
 
-      request = sellOrder.requests[this.props.params.requestId];
-
-      if(sellOrder.sellerUid === this.props.uid) {
-        viewerRole = 'seller'
-      } else if (this.props.params.requestId === this.props.uid) {
+      if(request.buyerUid === this.props.user.data.uid) {
         viewerRole = 'buyer'
+      } else if (request.sellerUid === this.props.user.data.uid) {
+        viewerRole = 'seller'
       } else {
         return (
           <section className="activeTrade">

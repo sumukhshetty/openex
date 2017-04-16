@@ -7,6 +7,7 @@ class ActiveTrade extends Component {
   constructor(props){
     super(props)
     this.state ={
+      user: this.props.user,
       activeTradeData:this.props.activeTradeData,
       orderId: this.props.orderId,
       orderKey: this.props.orderKey,
@@ -25,43 +26,54 @@ class ActiveTrade extends Component {
     if(this.props.activeTradeData.activeTradeData[this.props.orderKey]) {
       var tradeDetails = this.props.activeTradeData.activeTradeData[this.props.orderKey];
       var tradeType = (this.props.tradeType === "buy-ether") ? 'Buy Order' : 'Sell Order'
-      if(tradeDetails.tradeType === 'buy-ether') {
-        return(
+      var username;
+      if(tradeDetails.buyerUid === this.props.user.data.uid) {
+        username = tradeDetails.sellerUsername
+      } else {
+        username = tradeDetails.buyerUsername
+      }
+      return(
             <tr>
-              <td>1238</td>
-              <td>{tradeDetails.lastUpated}</td>
-              <td>{tradeType}</td>
-              <td>{tradeDetails.buyerUsername}</td>
-              <td>{tradeDetails.amount}</td>
-              <td>{tradeDetails.amount}</td>
-              <td>{tradeDetails.status}</td>
-              <td><i className='icon'>greendot</i> Active</td>
+              <td className='fb5 tc'>1238</td>
+              <td className='fb15 tc'>{tradeDetails.lastUpated}</td>
+              <td className='fb10 tc'>{tradeType}</td>
+              <td className='fb15 tc'>{username}</td>
+              <td className='fb10 tc'>{tradeDetails.amount}</td>
+              <td className='fb10 tc'>{tradeDetails.amount}</td>
+              <td className='fb10 tc'>{tradeDetails.status}</td>
+              <td className='fb10 tc'><i className='icon'>greendot</i> Active</td>
               <ViewActiveTradeButton orderId={this.props.orderId} tradeType={tradeDetails.tradeType} />
             </tr>
         )
-      } else if (tradeDetails.tradeType === 'sell-ether' && tradeDetails.requests) {
-        var rows = [];
-        Object.entries(tradeDetails.requests).forEach(
-            ([key, value]) => {
-              rows.push(
-                <tr>
-                  <td>1238</td>
-                  <td>{tradeDetails.lastUpated}</td>
-                  <td>{tradeType}</td>
-                  <td>{tradeDetails.sellerUsername}</td>
-                  <td>{value.amount}</td>
-                  <td>{value.amount}</td>
-                  <td>{value.status}</td>
-                  <td><i className='icon'>greendot</i> Active</td>
-                  <ViewActiveTradeButton orderId={this.props.orderId} tradeType={tradeDetails.tradeType} requestId={key}/>
-                </tr>
-              )
-            }
-        );
-        return <span>{rows}</span>;
-      } else {
-        return (null);
-      }
+      // if(this.props.tradeType === 'buy-ether') {
+      //   return(
+      //       <tr>
+      //         <td>1238</td>
+      //         <td>{tradeDetails.lastUpated}</td>
+      //         <td>{tradeType}</td>
+      //         <td>{username}</td>
+      //         <td>{tradeDetails.amount}</td>
+      //         <td>{tradeDetails.amount}</td>
+      //         <td>{tradeDetails.status}</td>
+      //         <td><i className='icon'>greendot</i> Active</td>
+      //         <ViewActiveTradeButton orderId={this.props.orderId} tradeType={tradeDetails.tradeType} />
+      //       </tr>
+      //   )
+      // } else if (this.props.tradeType === 'sell-ether') {
+      //   return(
+      //       <tr>
+      //         <td>1238</td>
+      //         <td>{tradeDetails.lastUpated}</td>
+      //         <td>{tradeType}</td>
+      //         <td>{username}</td>
+      //         <td>{tradeDetails.amount}</td>
+      //         <td>{tradeDetails.amount}</td>
+      //         <td>{tradeDetails.status}</td>
+      //         <td><i className='icon'>greendot</i> Active</td>
+      //         <ViewActiveTradeButton orderId={this.props.orderId} tradeType={tradeDetails.tradeType} />
+      //       </tr>
+      //   )
+      // }
     } else {
       return (
         null
