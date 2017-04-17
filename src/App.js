@@ -46,8 +46,8 @@ class App extends Component {
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc'>
               <div className='pure-u-1-4 brand'>
-                <Link to='/dasboard'>
-                <img className='brand' src={logo} alt='Automt Ether Exchange' />
+                <Link to='/dashboard'>
+                  <img className='brand' src={logo} alt='Automt Ether Exchange' />
                 </Link>
               </div>
               <div className='flex mxe cxc'>
@@ -88,7 +88,7 @@ class App extends Component {
     );
 
     return (
-      <section className='App'>
+      <section className='Site'>
         <OnlyGuestLinks />
         <Web3InitContainer />
         <OnlyAuthLinks />

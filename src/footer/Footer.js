@@ -1,32 +1,20 @@
-import React, { Component } from 'react'
-import Region from './Region'
-import Copyright from './Copyright'
-import FooterTable from './FooterTable'
+import React, { Component } from 'react';
+import Copyright from './Copyright';
+import FooterTable from './FooterTable';
 
 class Footer extends Component {
-  render() {
-    return(
-      <footer className="page-footer">
-        <div className="container">
-          <div className="pure-g">
-            <div className="pure-u-1-2">
-              <Region/>
-            </div>
-            <div className="pure-u-1-2">
-              <FooterTable/>
-            </div>
+  render () {
+    return (
+      <footer className='bg-white pv3'>
+        <div className='w-75 center'>
+          <div className='flex mxe'>
+            <FooterTable />
           </div>
-        </div>
-        <div className="container">
-          <div className="pure-g">
-            <div className="pure-u-1 copyright">
-              <Copyright/>
-            </div>
-          </div>
+          <Copyright />
         </div>
       </footer>
-    )
+    );
   }
 }
 
-export default Footer
+export default Footer;
