@@ -15,15 +15,18 @@ import PostTradeForm from './posttrade/layouts/PostTradeForm';
 import OrdersList from './orderslist/layouts/OrdersList';
 import OrderDetail from './orderdetail/layouts/OrderDetail';
 import BuyOrderDetail from './buyorderdetail/layouts/BuyOrderDetail';
+import SellOrderDetail from './sellorderdetail/layouts/SellOrderDetail';
 import Login from './user/layouts/login/Login';
 import BuyOrders from './buyorders/layouts/BuyOrders';
 import SellOrders from './sellorders/layouts/SellOrders';
+
 import Help from './help/layouts/Help';
 import Payment from './activetrade/layouts/Payment';
 import Confirmation from './activetrade/layouts/Confirmation';
 import Release from './activetrade/layouts/Release';
 import AllDone from './activetrade/layouts/AllDone';
 import ActiveBuyOrder from './activetrade/layouts/ActiveBuyOrder';
+import ActiveSellOrder from './activetrade/layouts/ActiveSellOrder';
 import HTMLStyles from './css/HTMLStyles.js';
 import Static from './staticPages/Master/Static';
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder';
@@ -67,11 +70,12 @@ ReactDOM.render((
         <Route path='orderdetail/:address' component={UserIsAuthenticated(OrderDetail)} />
         <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
         <Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />
-        <Route path='confirmation/:orderId' component={UserIsAuthenticated(Confirmation)} />
+        <Route path='sellorderdetail/:orderId' component={UserIsAuthenticated(SellOrderDetail)} />
+        <Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />
+        <Route path='activesellorder/:requestId' component={UserIsAuthenticated(ActiveSellOrder)} />
         <Route path='payment/:orderId' component={UserIsAuthenticated(Payment)} />
         <Route path='release/:orderId' component={UserIsAuthenticated(Release)} />
         <Route path='allDone/:orderId' component={UserIsAuthenticated(AllDone)} />
-        <Route path='activeBuyOrder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>

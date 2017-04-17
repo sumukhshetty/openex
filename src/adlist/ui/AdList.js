@@ -21,7 +21,7 @@ class AdList extends Component {
         var rows = [];
         Object.entries(_activeAds).forEach(
             ([key, value]) => {
-              rows.push(<ActiveAd orderId={key} key={key}/>)}
+              rows.push(<ActiveAd orderId={key} key={key} tradeType={value.tradeType}/>)}
         );
         return(
           <tbody>

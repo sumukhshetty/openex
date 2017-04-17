@@ -13,8 +13,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoads: (web3, state) => {
-      event.preventDefault();
-
       dispatch(getActiveEscrows(state.user))
     },
   }
