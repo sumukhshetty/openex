@@ -62,6 +62,6 @@ export function buyEtherPostTrade(postTradeDetails, web3, state) {
     firebaseRef.database().ref("buyorders/" + postTradeDetails.orderId).set(postTradeDetails);
     firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(postTradeDetails.orderId).set({tradeType: postTradeDetails.tradeType})
     dispatch(tradeCreated(postTradeDetails))
-    browserHistory.push('/activebuyorder/' + postTradeDetails.orderId)
+    browserHistory.push('/dashboard')
   }
 }
