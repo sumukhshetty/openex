@@ -85,7 +85,8 @@ class PostTradeForm extends Component {
           sellerAddress: connectedAccount,
           buyerAddress: '',
           sellerUsername: this.props.user.data.displayName,
-          buyerUsername: ''
+          buyerUsername: '',
+          availableBalance: 0
         }
       );
       _buyFormBool = false;
@@ -98,7 +99,8 @@ class PostTradeForm extends Component {
         buyerAddress: connectedAccount,
         sellerAddress: '',
         buyerUsername: this.props.user.data.displayName,
-        sellerUsername: ''
+        sellerUsername: '',
+        availableBalance: ''
       }
     );
       _buyFormBool = true;
@@ -124,6 +126,7 @@ class PostTradeForm extends Component {
   }
 
   handleSubmit (event) {
+    event.preventDefault();
     var now = new Date();
     var orderId = this.state.web3.web3.sha3(this.state.user.data.uid + '-' + now);
     var _postTradeDetails = Object.assign({},
