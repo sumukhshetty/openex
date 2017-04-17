@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class AdListEmptyState extends Component {
-  render() {
-    return(
-      <div>No active Escrows! Post a trade to get started!</div>
-    )
+  render () {
+    return (
+      <tr className='flex mxc'>No active Escrows! Post a trade to get started!</tr>
+    );
   }
 }
 
-export default AdListEmptyState
+export default AdListEmptyState;

@@ -6,12 +6,15 @@ import ActiveTradeHeader from './../../activetrade/layouts/ActiveTradeHeader';
 class AdList extends Component {
   render () {
     return (
-      <div>
-        <h2>Your advertisements</h2>
+      <div className='pt3'>
+        <p className='b'>Your advertisements</p>
         <table>
           <ActiveTradeHeader />
           <AdListContainer />
         </table>
+        <div className='flex mxe pv3'>
+          <button className='grow'>+ Create Advertisement</button>
+        </div>
       </div>
     );
   }

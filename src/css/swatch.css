@@ -64,6 +64,10 @@
   background-color: #D0011B;
 }
 
+.danger {
+  color: #D0011B;
+}
+
 .gradient,
 .gradient:hover {
   background: rgba(5,213,255,1);

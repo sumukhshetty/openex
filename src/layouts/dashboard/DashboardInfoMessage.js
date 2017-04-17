@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-//TODO import HelpContainer
+import React, { Component } from 'react';
+// TODO import HelpContainer
 
 class DashboardInfoMessage extends Component {
-  render() {
-    return(
-      <p className="lead">View and manage your current advertisements and contacts.</p>
-    )
+  render () {
+    return (
+      <p className='b pv3 measure-wide'>In these pages you can view and manage your current advertisements and contacts.</p>
+    );
   }
 }
 
-export default DashboardInfoMessage
+export default DashboardInfoMessage;

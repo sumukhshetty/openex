@@ -8,7 +8,7 @@ class ActiveTradeContainer extends Component {
   render () {
     return (
       <div>
-        <h2>Your active escrows</h2>
+        <p className='b'>Your active escrows</p>
         <table>
           <ActiveTradeHeader />
           <ActiveTrade />
