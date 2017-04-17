@@ -5,6 +5,7 @@ import SellOrdersListContainer from './SellOrdersListContainer';
 import SellOrderTradeDetailsHeader from './SellOrderTradeDetailsHeader';
 
 class SellOrders extends Component {
+
   constructor (props) {
     super(props);
 

@@ -35,13 +35,11 @@ class ReviewActiveTrade extends Component {
             <ChatBox/>
             <div className='w-50 ma3'>
               <StepNote step={step} />
-              {this.state.type == 'Seller' &&
+              {this.state.type == 'Seller' && this.props.viewerRole == "seller" &&
                <div className='tc'>
-                 <Link to='/payment/1'>
-                 <button>
+                 <button onClick={this.props.confirmTrade}>
                    Confirm Trade
                  </button>
-                 </Link>
                </div>}
               <CancelTrade />
             </div>

@@ -40,8 +40,10 @@ class PostTradeForm extends Component {
     this.setState({postTradeDetails: {
       amount: 0,
       buyerAddress: connectedAccount,
-      tradeType: 'buy-ether',  // NOTE Arseniy: Set this on mount because buy-ether is the checked tradeType on load.
-      buyerUid: this.props.uid // If the default trade type is change for whatever reason, tradeType and buyerUid must be changed as well.
+      buyerUsername: this.props.user.data.displayName,
+      tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
+      buyerUid: this.props.uid,// Submitting a from without changing values leaves them as blank
+      paymentMethod: 'UPI'     // If defaults change, these must change as well.
     }});
   }
 
@@ -49,7 +51,6 @@ class PostTradeForm extends Component {
     var _postTradeDetails = this.state.postTradeDetails;
     if (event.target.id === 'location') {
       _postTradeDetails['location'] = event.target.value;
-      // this.setState({ postTradeDetails: _postTradeDetails })
     } else if (event.target.id === 'margin') {
       _postTradeDetails['margin'] = event.target.value;
     } else if (event.target.id === 'equation') {
@@ -58,8 +59,6 @@ class PostTradeForm extends Component {
       _postTradeDetails['amount'] = event.target.value;
     } else if (event.target.id === 'bankInformation') {
       _postTradeDetails['bankInformation'] = event.target.value;
-    } else if (event.target.id === 'location') {
-      _postTradeDetails['location'] = event.target.value;
     } else if (event.target.id === 'minTransactionLimit') {
       _postTradeDetails['minTransactionLimit'] = event.target.value;
     } else if (event.target.id === 'maxTransactionLimit') {
@@ -73,6 +72,7 @@ class PostTradeForm extends Component {
   }
 
   onTradeTypeChange (event) {
+    var connectedAccount = this.props.web3.web3.eth.accounts[0];
     var _postTradeDetails = this.state.postTradeDetails;
     var _buyFormBool = this.state.buyFormBool;
     _postTradeDetails['tradeType'] = event.target.value;
@@ -81,7 +81,12 @@ class PostTradeForm extends Component {
         this.state.postTradeDetails, {
           tradeType: event.target.value,
           sellerUid: this.state.uid,
-          buyerUid: ''
+          buyerUid: '',
+          sellerAddress: connectedAccount,
+          buyerAddress: '',
+          sellerUsername: this.props.user.data.displayName,
+          buyerUsername: '',
+          availableBalance: 0
         }
       );
       _buyFormBool = false;
@@ -90,7 +95,12 @@ class PostTradeForm extends Component {
       this.state.postTradeDetails, {
         tradeType: event.target.value,
         buyerUid: this.state.uid,
-        sellerUid: ''
+        sellerUid: '',
+        buyerAddress: connectedAccount,
+        sellerAddress: '',
+        buyerUsername: this.props.user.data.displayName,
+        sellerUsername: '',
+        availableBalance: ''
       }
     );
       _buyFormBool = true;
@@ -129,7 +139,7 @@ class PostTradeForm extends Component {
       );
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
       this.props.onPostTradeFormSubmit(
-        this.state.postTradeDetails,
+        _postTradeDetails,
         this.state.web3.web3,
         this.state
       );
@@ -167,7 +177,7 @@ class PostTradeForm extends Component {
 
             <div className='flex mv3'>
               <label htmlFor='location' className='w5' >Location</label>
-              <input id='location' name='location' type='text' valueProp={this.state.postTradeDetails.location} onChangeProp={this.onInputChange.bind(this)}
+              <input id='location' name='location' type='text' value={this.state.postTradeDetails.location} onChange={this.onInputChange.bind(this)}
                 placeholder='Enter a Location' className='w5 h-100' />
               <span className='measure-narrow fw1 i pa0 me'>For online trade you need to specify the country. For local trade, please specify a city, postal code or street name.</span>
             </div>

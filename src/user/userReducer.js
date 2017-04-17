@@ -1,5 +1,6 @@
 const initialState = {
   data: null,
+  userInfo: null
 }
 
 const userReducer = (state = initialState, action) => {
@@ -14,6 +15,13 @@ const userReducer = (state = initialState, action) => {
   {
     return Object.assign({}, state, {
       data: null
+    })
+  }
+
+  if(action.type === 'GET_USER_INFO')
+  {
+    return Object.assign({}, state, {
+      userInfo: action.payload
     })
   }
 

@@ -52,8 +52,8 @@ module.exports = {
         firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
           .set(uid);
 
-        firebaseRef.database().ref('users/' + buyerUid).child('activeEscrows').child(orderId).set({value: 'true'});
-        firebaseRef.database().ref('users/' + uid).child('activeEscrows').child(orderId).set({value: 'true'});
+        firebaseRef.database().ref('users/' + buyerUid).child('activeEscrows').child(orderId).set({tradeType: 'buy-ether'});
+        firebaseRef.database().ref('users/' + uid).child('activeEscrows').child(orderId).set({tradeType: 'buy-ether'});
         firebaseRef.database().ref('users/' + buyerUid).child('advertisements').child(orderId).set(null);
 
       // TODO: update state of buyOrder in firebase
