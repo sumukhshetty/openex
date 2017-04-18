@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 
-import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
-import Progress from '../../generic-components/tradeFlow/Progress'
+import AwaitingEscrow from '../layouts/AwaitingEscrow.js'
+import InEscrow from '../layouts/InEscrow.js'
+import PaymentConfirmed from '../layouts/PaymentConfirmed.js'
+import EtherReleased from '../layouts/EtherReleased.js'
 
-import BuyerStepNote  from '../../generic-components/tradeFlow/StepNote';
-import SellerStepNote  from '../../generic-components/tradeFlow/StepNote';
-import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback';
-import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import Dot from '../../images/svgReactComponents/Dot.js';
 
 class ActiveBuyOrder extends Component {
@@ -34,6 +32,18 @@ class ActiveBuyOrder extends Component {
   // createContract(amount, buyerAddress, web3) {
   //   this.props.createBuyOrder(amount, buyerAddress, web3)
   // }
+
+  sendEther() {
+    this.props.sendEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.web3.web3);
+  }
+
+  confirmPayment() {
+    this.props.confirmPayment(this.props.buyOrderDetail.buyOrder.orderId);
+  }
+
+  releaseEther() {
+    this.props.releaseEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.web3.web3, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.buyOrderDetail.buyOrder.sellerUid)
+  }
 
   render() {
 
@@ -66,12 +76,12 @@ class ActiveBuyOrder extends Component {
         { status: 'completed', label: '', text: 'Escrow Sent' },
         { status: 'completed', label: '', text: 'Payment Confirmed' },
         { status: 'completed', label: '', text: 'Ether Released' },
-        { status: 'active', label: <Dot/>, text: 'All Done' }
+        { status: 'completed', label: '', text: 'All Done' }
       ]
     }
 
     var status = 'getting status....'
-    var buyOrder, tradeProgress, stepNote, makePaymentButton, viewerRole, releaseEther, tradeFeedback, sendEtherButton
+    var buyOrder, currentStep, viewerRole
     if(this.props.buyOrderDetail.buyOrder) {
       buyOrder = this.props.buyOrderDetail.buyOrder
 
@@ -100,47 +110,54 @@ class ActiveBuyOrder extends Component {
       }
 
       status = buyOrder['status']
-      tradeProgress = <Progress progress_map={progress_maps[status]} />
 
-      stepNote = (viewerRole === 'buyer') ? <BuyerStepNote step={status} contractAddress={buyOrder.contractAddress} /> :
-                                            <SellerStepNote step={status} contractAddress={buyOrder.contractAddress} />
+      var tradeFlowComponents = {
+        "Awaiting Escrow": <AwaitingEscrow step="Awaiting Escrow" progress_map={progress_maps['Awaiting Escrow']} viewerRole={viewerRole} contractAddress={buyOrder.contractAddress} sendEther={this.sendEther.bind(this)}/>,
+        "In Escrow": <InEscrow step="In Escrow" progress_map={progress_maps['In Escrow']} viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}/>,
+        "Payment Confirmed": <PaymentConfirmed step="Payment Confirmed" progress_map={progress_maps['Payment Confirmed']} viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}/>,
+        "Ether Released": <EtherReleased step="Ether Released" progress_map={progress_maps['Ether Released']} viewerRole={viewerRole} />,
+      }
 
-      if(viewerRole === 'seller' && status === 'Awaiting Escrow')
-        sendEtherButton = <button onClick={()=>this.props.sendEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3)}>Send Ether</button>
+      currentStep = tradeFlowComponents[status];
+      console.log('status:' + status);
+      console.log('currentStep: ' + currentStep);
 
-      if(viewerRole === 'buyer' && status === 'Escrow Sent')
-        makePaymentButton = <button onClick={()=>this.props.confirmPayment(buyOrder.orderId)}>Confirm Payment</button>
+      return(
+        <section className="activeTrade">
+                {currentStep}
+        </section>
+      )
 
-      if(viewerRole === 'seller' && status === 'Payment Confirmed')
-        releaseEther = <button onClick={()=>this.props.releaseEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3, buyOrder.buyerUid, buyOrder.sellerUid)}>Release Ether</button>
+      // tradeProgress = <Progress progress_map={progress_maps[status]} />
+      //
+      // stepNote = (viewerRole === 'buyer') ? <BuyerStepNote step={status} contractAddress={buyOrder.contractAddress} /> :
+      //                                       <SellerStepNote step={status} contractAddress={buyOrder.contractAddress} />
+      //
+      // if(viewerRole === 'seller' && status === 'Awaiting Escrow')
+      //   sendEtherButton = <button onClick={()=>this.props.sendEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3)}>Send Ether</button>
+      //
+      // if(viewerRole === 'buyer' && status === 'Escrow Sent')
+      //   makePaymentButton = <button onClick={()=>this.props.confirmPayment(buyOrder.orderId)}>Confirm Payment</button>
+      //
+      // if(viewerRole === 'seller' && status === 'Payment Confirmed')
+      //   releaseEther = <button onClick={()=>this.props.releaseEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3, buyOrder.buyerUid, buyOrder.sellerUid)}>Release Ether</button>
+      //
+      // if(status === 'Ether Released')
+      //   tradeFeedback = <TradeFeedbackContainer />
 
-      if(status === 'Ether Released')
-        tradeFeedback = <TradeFeedbackContainer />
     }
-
     return(
       <section className="activeTrade">
         <div className="container">
           <div className="pure-g">
             <div className="pure-u-1">
-              <ActiveTradeInfo />
-              {tradeProgress}
-              {stepNote}
-              {sendEtherButton}
-              {makePaymentButton}
-              {releaseEther}
-              {tradeFeedback}
-              {/* <MakePaymentButton />
-              <ChatBox />
-              <ReleaseEther />
-              <DisputeTrade />
-              <TradeFeedbackContainer /> */}
-              <CancelTrade />
+              {status}
             </div>
           </div>
         </div>
       </section>
     )
+
   }
 }
 

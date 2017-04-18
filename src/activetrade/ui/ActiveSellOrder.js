@@ -7,7 +7,7 @@ import AllDone from '../layouts/AllDone.js'
 import Dot from '../../images/svgReactComponents/Dot.js';
 
 
-class ActiveBuyOrder extends Component {
+class ActiveSellOrder extends Component {
   constructor(props) {
     super(props)
 
@@ -46,6 +46,8 @@ class ActiveBuyOrder extends Component {
     this.props.releaseEther(this.props.sellOrderDetail.sellOrder.contractAddress,
                             this.props.sellOrderDetail.sellOrder.buyerAddress,
                             this.props.params.requestId,
+                            this.props.sellOrderDetail.sellOrder.buyerUid,
+                            this.props.sellOrderDetail.sellOrder.sellerUid,
                             this.props.web3.web3);
   }
 
@@ -144,4 +146,4 @@ class ActiveBuyOrder extends Component {
   }
 }
 
-export default ActiveBuyOrder
+export default ActiveSellOrder
