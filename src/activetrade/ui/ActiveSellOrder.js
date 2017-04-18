@@ -72,14 +72,14 @@ class ActiveSellOrder extends Component {
       ],
       'Awaiting Release': [
         { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },
-        { status: 'completed', label: '', text: 'Awaiting Payment' },
+        { status: 'completed', label: '', text: 'Buyer Confirmed Payment' },
         { status: 'active', label: <Dot/>, text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
       ],
       'Ether Released': [
         { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },
-        { status: 'completed', label: '', text: 'Awaiting Payment' },
-        { status: 'completed', label: '', text: 'Awaiting Release' },
+        { status: 'completed', label: '', text: 'Buyer Confirmed Payment' },
+        { status: 'completed', label: '', text: 'Seller Released Ether' },
         { status: 'completed', label: '', text: 'All Done' }
       ]
     }
