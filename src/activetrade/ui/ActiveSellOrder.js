@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Confirmation from '../layouts/Confirmation.js'
 import Payment from '../layouts/Payment.js'
 import Release from '../layouts/Release.js'
+import AllDone from '../layouts/AllDone.js'
 import Dot from '../../images/svgReactComponents/Dot.js';
 
 
@@ -115,7 +116,8 @@ class ActiveBuyOrder extends Component {
       var tradeFlowComponents = {
         "Awaiting Seller Confirmation": <Confirmation viewerRole={viewerRole} confirmTrade={this.confirmTrade.bind(this)}/>,
         "Awaiting Payment": <Payment viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}/>,
-        "Awaiting Release": <Release viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}/>
+        "Awaiting Release": <Release viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}/>,
+        "All Done": <AllDone viewerRole={viewerRole} />
       }
 
       currentStep = tradeFlowComponents[status];

@@ -30,7 +30,7 @@ class ReviewActiveTrade extends Component {
             <ChatBox/>
             <div className='w-50 ma3'>
               <StepNote step={step} />
-              {step === 'Payment Confirmed' &&
+              {step === 'Payment Confirmed' && this.props.viewerRole === 'seller' &&
                <div className='tc'>
                  <button onClick={this.props.releaseEther}>
                    Release Ether
