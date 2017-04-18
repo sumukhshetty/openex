@@ -15,7 +15,7 @@ class SignUpForm extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault()
+    //event.preventDefault()
     this.props.onSignUpFormSubmit(this.state.signUpInfo,this.state.web3.web3)
 
   }
@@ -50,10 +50,10 @@ class SignUpForm extends Component {
   render () {
     return (
       <form action='#' className='pure-form' onSubmit={this.handleSubmit.bind(this)}>
-        <input id="email" name='email' type='email' placeholder='Email address' onChange={this.onInputChange.bind(this)} />
-        <input id="username" name='username' type='text' placeholder='Username' onChange={this.onInputChange.bind(this)} />
-        <input id="password" type="password" value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder="password" />
-        <select name='country' id='country' onChange={this.onInputChange.bind(this)} >
+        <input id="email" name='email' type='email' placeholder='Email address' onChange={this.onInputChange.bind(this)} required/>
+        <input id="username" name='username' type='text' placeholder='Username' onChange={this.onInputChange.bind(this)} required/>
+        <input id="password" type="password" value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder="password" required/>
+        <select name='country' id='country' onChange={this.onInputChange.bind(this)} required>
           <option value='--'>Select Country</option>
           <option value='AF'>Afghanistan</option>
           <option value='AL'>Albania</option>

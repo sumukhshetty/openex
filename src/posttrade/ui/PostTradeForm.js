@@ -126,7 +126,7 @@ class PostTradeForm extends Component {
   }
 
   handleSubmit (event) {
-    event.preventDefault();
+    //event.preventDefault();
     var now = new Date();
     var orderId = this.state.web3.web3.sha3(this.state.user.data.uid + '-' + now);
     var _postTradeDetails = Object.assign({},
@@ -165,10 +165,10 @@ class PostTradeForm extends Component {
             <div className='flex pa0 mv3'>
               <p className='w5'>I want to...</p>
               <div className='flex col'>
-                <label htmlFor='sellTradeType'> <input id='sellTradeType' name='tradeType' type='radio' value='sell-ether' onChange={this.onTradeTypeChange.bind(this)}
-                  className='mr2' />Sell Ether</label>
                 <label htmlFor='buyTradeType'><input id='buyTradeType' name='tradeType' type='radio' value='buy-ether' onChange={this.onTradeTypeChange.bind(this)}
                   className='mr2' defaultChecked='true' />Buy Ether</label>
+                <label htmlFor='sellTradeType'> <input id='sellTradeType' name='tradeType' type='radio' value='sell-ether' onChange={this.onTradeTypeChange.bind(this)}
+                  className='mr2' />Sell Ether</label>
               </div>
               <span className='measure-narrow fw1 i pa0 me'>
                 What kind of trade advertisement do you wish to create? If you wish to sell ether make sure you have ether in your Metamask wallet.
@@ -178,19 +178,19 @@ class PostTradeForm extends Component {
             <div className='flex mv3'>
               <label htmlFor='location' className='w5' >Location</label>
               <input id='location' name='location' type='text' value={this.state.postTradeDetails.location} onChange={this.onInputChange.bind(this)}
-                placeholder='Enter a Location' className='w5 h-100' />
+                placeholder='Enter a Location' className='w5 h-100' required/>
               <span className='measure-narrow fw1 i pa0 me'>For online trade you need to specify the country. For local trade, please specify a city, postal code or street name.</span>
             </div>
 
             <div className='flex mv3'>
               <label htmlFor='margin' className='w5' >Margin</label>
-              <input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5 h-100 percent' />
+              <input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5 h-100 percent' required/>
               <span className='measure-narrow fw1 i pa0 me'>Margin you want over the ether market price. Use a negative value for buying or selling under the market price to attract more contracts. For more complex pricing edit the price equation directly.</span>
             </div>
 
             <div className='flex mv3'>
               <label htmlFor='equation' className='w5' >Price equation</label>
-              <div className='flex col'><input id='equation' name='equation' type='text' value={this.state.postTradeDetails.equation} onChange={this.onInputChange.bind(this)} placeholder='Kraken_API' className='w5' />
+              <div className='flex col'><input id='equation' name='equation' type='text' value={this.state.postTradeDetails.equation} onChange={this.onInputChange.bind(this)} placeholder='Kraken_API' className='w5'/>
                 <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.state.currentETHMarketValue} INR/ETH</span></small>
               </div>
 
@@ -205,7 +205,7 @@ class PostTradeForm extends Component {
             <div className='flex mv3'>
               <label htmlFor='paymentMethod' className='w5'>Payment Method</label>
               <select id='paymentMethod' name='paymentMethod' onChange={this.onPaymentMethodChange.bind(this)}
-                className='w5'>
+                className='w5'required>
                 <option value='UPI'>UPI</option>
                 <option value='neft'>neft</option>
                 <option value='IMPS'>IMPS</option>
@@ -215,8 +215,7 @@ class PostTradeForm extends Component {
               </select>
             </div>
 
-            { (this.state.buyFormBool) ? <SellForm
-              onChangeProp={this.onInputChange.bind(this)} /> : <BuyForm
+            { (this.state.buyFormBool) ? <BuyForm
                 onChangeProp={this.onInputChange.bind(this)}
                 amount={this.state.postTradeDetails.amount}
                 paymentMethod={this.state.postTradeDetails.paymentMethod}
@@ -224,7 +223,8 @@ class PostTradeForm extends Component {
                 bankInformation={this.state.postTradeDetails.bankInformation}
                 minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
                 maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
-                termsOfTrade={this.state.postTradeDetails.termsOfTrade} />
+                termsOfTrade={this.state.postTradeDetails.termsOfTrade} /> : <SellForm
+              onChangeProp={this.onInputChange.bind(this)} />
             }
 
             <div className='flex mv3'>
