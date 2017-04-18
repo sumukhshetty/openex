@@ -11,7 +11,7 @@ export default (props) => (
         <label className='pv1 white flex cxc'>
           <img src={etherium} alt='etherium logo' className='pr3' /> Ether
         </label>
-        <input type='number' step='any' className='w3 pa2' onChange={props.onEtherAmountChange}/>
+        <input type='number' step='any' className='w3 pa2' value={props.amount} disabled />
       </div>
       <div className='flex mv3'>
         <div className='flex col mxc'>
@@ -28,9 +28,9 @@ export default (props) => (
         <label className='pv1 white flex cxc'>
           <UsaFlag className='pr3' /> USD
         </label>
-        <input type='number' className='w3 pa2' onChange={props.onFiatAmountChange}/>
+        <input type='number' className='w3 pa2' onChange={props.onFiatAmountChange} disabled />
       </div>
     </div>
-    <input type='submit' value='Send Trade Request' className='mt5' />
+    <input type='submit' value={'Sell '+props.amount+' Ether'} className='mt5' />
   </form>
 );

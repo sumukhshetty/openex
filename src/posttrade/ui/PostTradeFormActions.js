@@ -41,11 +41,12 @@ export function postTrade(postTradeDetails, web3, state) {
     })
     .then(function(txHash) {
       var currentdate = new Date().toString()
-      firebaseRef.database().ref("sellorders/" + postTradeDetails.orderId).set(postTradeDetails);
-      firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(postTradeDetails.orderId).set({tradeType: postTradeDetails.tradeType})
-      firebaseRef.database().ref('/sellorders/' + postTradeDetails.orderId + '/contractTx')
+      var newOrder = firebaseRef.database().ref("sellorders/").push(postTradeDetails);
+      firebaseRef.database().ref("sellorders/"+newOrder.key+'/orderId').set(newOrder.key);
+      firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
+      firebaseRef.database().ref('/sellorders/' + newOrder.key + '/contractTx')
       .set(txHash['tx']);
-      firebaseRef.database().ref('/sellorders/' + postTradeDetails.orderId + '/contractAddress')
+      firebaseRef.database().ref('/sellorders/' + newOrder.key + '/contractAddress')
       .set(txHash['logs'][0]['args']['orderAddress']);
       dispatch(tradeCreated(postTradeDetails))
       browserHistory.push('/dashboard')
@@ -59,8 +60,9 @@ export function postTrade(postTradeDetails, web3, state) {
 
 export function buyEtherPostTrade(postTradeDetails, web3, state) {
   return function(dispatch){
-    firebaseRef.database().ref("buyorders/" + postTradeDetails.orderId).set(postTradeDetails);
-    firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(postTradeDetails.orderId).set({tradeType: postTradeDetails.tradeType})
+    var newOrder = firebaseRef.database().ref("buyorders/").push(postTradeDetails);
+    firebaseRef.database().ref("buyorders/"+newOrder.key+'/orderId').set(newOrder.key);
+    firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
     dispatch(tradeCreated(postTradeDetails))
     browserHistory.push('/dashboard')
   }

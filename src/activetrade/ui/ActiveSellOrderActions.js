@@ -54,7 +54,7 @@ module.exports = {
     .set('Awaiting Release');
   },
 
-  releaseEtherAction: (contractAddress, buyerAddress, requestId, web3) => (dispatch) => {
+  releaseEtherAction: (contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
@@ -66,7 +66,27 @@ module.exports = {
       })
       .then(function (txHash) {
         firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
-        .set('All Done');
+        .set('All Done')
+        .then(function() {
+          orderHelpers.removeOrderFromActiveEscrows(buyerUid, requestId)
+          orderHelpers.removeOrderFromActiveEscrows(sellerUid, requestId)
+          orderHelpers.addOrderToCompletedTrades(buyerUid, requestId, 'sell-ether')
+          orderHelpers.addOrderToCompletedTrades(sellerUid, requestId, 'sell-ether')
+          // firebaseRef.database().ref('/purchaserequests/' + requestId)
+          // .once('value', function(snapshot) {
+          //
+          //   let orderId = firebaseRef.database().ref('/completedOrders').push(snapshot.val());
+          //   firebaseRef.database().ref('/purchaserequests/' + requestId).remove();
+          //   firebaseRef.database.ref('/users/'+snapshot.val()['buyerUid']+'/completedOrders/'+orderId.key)
+          //   .set({tradeType: 'sell-ether'});
+          //   firebaseRef.database.ref('/users/'+snapshot.val()['buyerUid']+'/activeTrades/'+requestId)
+          //   .remove();
+          //   firebaseRef.database.ref('/users/'+snapshot.val()['sellerUid']+'/completedOrders/'+orderId.key)
+          //   .set({tradeType: 'sell-ether'});
+          //   firebaseRef.database.ref('/users/'+snapshot.val()['sellerUid']+'/activeTrades/'+requestId)
+          //   .remove();
+          // })
+        });
       })
       .catch(function (error) {
         console.log('error in releaseEtherAction [ActiveSellOrderActions]');

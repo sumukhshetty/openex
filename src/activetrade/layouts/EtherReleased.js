@@ -3,13 +3,20 @@ import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress';
 import ChatBox from '../../generic-components/chatbox/ChatBox';
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade';
-import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade';
-import BuyerStepNote  from '../ui/BuyerStepNoteSell';
-import SellerStepNote  from '../ui/SellerStepNoteSell';
+import BuyerStepNote  from '../ui/BuyerStepNoteBuy';
+import SellerStepNote  from '../ui/SellerStepNoteBuy';
+
+import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback';
+
+
 import Dot from '../../images/svgReactComponents/Dot.js';
 import { Link } from 'react-router';
 
 class ReviewActiveTrade extends Component {
+
+  constructor (props) {
+    super(props);
+  }
 
   render () {
 
@@ -21,19 +28,7 @@ class ReviewActiveTrade extends Component {
           <div className='flex'>
             <ChatBox/>
             <div className='w-50 ma3'>
-              {this.props.viewerRole === 'buyer' &&
-              <BuyerStepNote step={this.props.step} />}
-              {this.props.viewerRole === 'seller' &&
-               <div>
-               <SellerStepNote step={this.props.step} />
-               <div className='tc'>
-                 <button onClick={this.props.releaseEther}>
-                   Release Ether
-                 </button>
-               </div>
-               </div>}
-              <CancelTrade />
-              <DisputeTrade type='buyer' />
+              <TradeFeedbackContainer />
             </div>
           </div>
         </div>

@@ -12,8 +12,8 @@ function getActiveTrades(activeTradesPayload) {
 module.exports = {
   getActiveEscrows: (user) => (dispatch) => {
     firebaseRef.database()
-      .ref('/users/'+user.data.uid+'/activeTrades')
-      .once("value", function(snapshot){
+      .ref('/users/'+user.data.uid+'/activeTrades').orderByKey()
+      .on("value", function(snapshot){
         console.log('snapshot.val() [ActiveEscrowListActions]');
         console.log(snapshot.val());
         dispatch(getActiveTrades(snapshot.val()))

@@ -3,10 +3,11 @@ import React, { Component } from 'react'
 import Confirmation from '../layouts/Confirmation.js'
 import Payment from '../layouts/Payment.js'
 import Release from '../layouts/Release.js'
+import AllDone from '../layouts/AllDone.js'
 import Dot from '../../images/svgReactComponents/Dot.js';
 
 
-class ActiveBuyOrder extends Component {
+class ActiveSellOrder extends Component {
   constructor(props) {
     super(props)
 
@@ -45,6 +46,8 @@ class ActiveBuyOrder extends Component {
     this.props.releaseEther(this.props.sellOrderDetail.sellOrder.contractAddress,
                             this.props.sellOrderDetail.sellOrder.buyerAddress,
                             this.props.params.requestId,
+                            this.props.sellOrderDetail.sellOrder.buyerUid,
+                            this.props.sellOrderDetail.sellOrder.sellerUid,
                             this.props.web3.web3);
   }
 
@@ -69,14 +72,14 @@ class ActiveBuyOrder extends Component {
       ],
       'Awaiting Release': [
         { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },
-        { status: 'completed', label: '', text: 'Awaiting Payment' },
+        { status: 'completed', label: '', text: 'Buyer Confirmed Payment' },
         { status: 'active', label: <Dot/>, text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
       ],
       'Ether Released': [
         { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },
-        { status: 'completed', label: '', text: 'Awaiting Payment' },
-        { status: 'completed', label: '', text: 'Awaiting Release' },
+        { status: 'completed', label: '', text: 'Buyer Confirmed Payment' },
+        { status: 'completed', label: '', text: 'Seller Released Ether' },
         { status: 'completed', label: '', text: 'All Done' }
       ]
     }
@@ -113,9 +116,10 @@ class ActiveBuyOrder extends Component {
       status = request['status']
 
       var tradeFlowComponents = {
-        "Awaiting Seller Confirmation": <Confirmation viewerRole={viewerRole} confirmTrade={this.confirmTrade.bind(this)}/>,
-        "Awaiting Payment": <Payment viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}/>,
-        "Awaiting Release": <Release viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}/>
+        "Awaiting Seller Confirmation": <Confirmation step={status} progress_map={progress_maps[status]} viewerRole={viewerRole} confirmTrade={this.confirmTrade.bind(this)}/>,
+        "Awaiting Payment": <Payment step={status} viewerRole={viewerRole} progress_map={progress_maps[status]} confirmPayment={this.confirmPayment.bind(this)}/>,
+        "Awaiting Release": <Release step={status} viewerRole={viewerRole} progress_map={progress_maps[status]} releaseEther={this.releaseEther.bind(this)}/>,
+        "All Done": <AllDone step={status} viewerRole={viewerRole} progress_map={progress_maps[status]} />
       }
 
       currentStep = tradeFlowComponents[status];
@@ -142,4 +146,4 @@ class ActiveBuyOrder extends Component {
   }
 }
 
-export default ActiveBuyOrder
+export default ActiveSellOrder

@@ -23,8 +23,8 @@ const mapDispatchToProps = (dispatch) => {
     confirmPayment: (requestId) => {
       dispatch(confirmPaymentAction(requestId));
     },
-    releaseEther: (contractAddress, buyerAddress, requestId, web3) => {
-      dispatch(releaseEtherAction(contractAddress, buyerAddress, requestId, web3));
+    releaseEther: (contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => {
+      dispatch(releaseEtherAction(contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3));
     }
   }
 }

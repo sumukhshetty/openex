@@ -10,7 +10,7 @@ class ActiveTrade extends Component {
       user: this.props.user,
       activeTradeData:this.props.activeTradeData,
       orderId: this.props.orderId,
-      orderKey: this.props.orderKey,
+      orderId: this.props.orderId,
       tradeType: this.props.tradeType
     }
   }
@@ -22,9 +22,9 @@ class ActiveTrade extends Component {
   render() {
 
     console.log('in render [ActiveTrade]' + this.props.orderId);
-    console.log(this.props.activeTradeData.activeTradeData[this.props.orderKey]);
-    if(this.props.activeTradeData.activeTradeData[this.props.orderKey]) {
-      var tradeDetails = this.props.activeTradeData.activeTradeData[this.props.orderKey];
+    console.log(this.props.activeTradeData.activeTradeData);
+    if(this.props.activeTradeData.activeTradeData[this.props.orderId]) {
+      var tradeDetails = this.props.activeTradeData.activeTradeData[this.props.orderId];
       var tradeType = (this.props.tradeType === "buy-ether") ? 'Buy Order' : 'Sell Order'
       var username;
       if(tradeDetails.buyerUid === this.props.user.data.uid) {

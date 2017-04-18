@@ -1,31 +1,46 @@
-import OrderFactoryContract from '../../../build/contracts/OrderFactory.json';
-// import { browserHistory } from 'react-router'
-import factoryAddress from '../../contract_addresses/orderfactory.js';
+import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
+import { browserHistory } from 'react-router'
+import factoryAddress from '../../contract_addresses/orderfactory.js'
 
-const contract = require('truffle-contract');
-import { firebaseRef } from './../../index.js';
+const contract = require('truffle-contract')
+import {firebaseRef} from './../../index.js'
 
-export const GET_BUY_ORDER = 'GET_BUY_ORDER';
-function getBuyOrder (buyOrderPayload) {
+export const GET_BUY_ORDER = 'GET_BUY_ORDER'
+function getBuyOrder(buyOrderPayload) {
   return {
     type: GET_BUY_ORDER,
     payload: buyOrderPayload
-  };
+  }
+}
+
+export const GET_USER_INFO = 'GET_USER_INFO'
+function getUserInfo(userPayload) {
+  return {
+    type: GET_USER_INFO,
+    payload: userPayload
+  }
 }
 
 module.exports = {
-  clearBuyOrderState: () => (dispatch) => {
-    dispatch({ type: 'CLEAR_BUY_ORDER'});
-  },
   buyOrder: (orderId) => (dispatch) => {
     // firebaseRef.database().ref('buyorders')
     // .orderByKey().equalTo(orderId)
     firebaseRef.database().ref('/buyorders/' + orderId)
-      .on('value', function (snapshot) {
+      .once("value", function(snapshot){
         console.log('got buyorder by id');
         console.log(snapshot.val());
-        dispatch(getBuyOrder(snapshot.val()));
-      });
+        dispatch(getBuyOrder(snapshot.val()))
+        firebaseRef.database().ref('/users/' + snapshot.val()['buyerUid'])
+        .once("value", function(snapshot) {
+          console.log('got user by id');
+          console.log(snapshot.val());
+          dispatch(getUserInfo(snapshot.val()))
+        })
+      })
+  },
+
+  availableBalance: (contractAddress, web3) => (dispatch) => {
+
   },
 
   createBuyOrderContract: (amount, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {
@@ -37,9 +52,11 @@ module.exports = {
 
     firebaseRef.database().ref('/buyorders/' + orderId + '/status')
       .set('locked');
+
     factory.at(factoryAddress.factoryAddress)
       .then(function (_factory) {
         factoryInstance = _factory;
+        console.log(buyerAddress);
         return factoryInstance.createBuyOrder(buyerAddress, web3.toWei(amount, 'ether'), {from: coinbase});
       })
       .then(function (txHash) {
@@ -50,20 +67,21 @@ module.exports = {
           .set(txHash['logs'][0]['args']['orderAddress']);
         // TODO: way to do this in one function?
         firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-          .set('Contract Created');
+          .set('Awaiting Escrow');
         firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
           .set(uid);
 
-        firebaseRef.database().ref('users/' + buyerUid).child('activeEscrows').child(orderId).set({tradeType: 'buy-ether'});
-        firebaseRef.database().ref('users/' + uid).child('activeEscrows').child(orderId).set({tradeType: 'buy-ether'});
+        firebaseRef.database().ref('users/' + buyerUid).child('activeTrades').child(orderId).set({tradeType: 'buy-ether'});
+        firebaseRef.database().ref('users/' + uid).child('activeTrades').child(orderId).set({tradeType: 'buy-ether'});
         firebaseRef.database().ref('users/' + buyerUid).child('advertisements').child(orderId).set(null);
 
-      // TODO: update state of buyOrder in firebase
-      // TODO: redirect to activetrade screen
+        browserHistory.push('/activebuyorder/' + orderId)
       })
       .catch(function(error) {
-        console.log('error createing buy order [BuyOrderDetailActions]');
+        console.log('error creating buy order [SellTradeOrderActions]');
         console.log(error);
+        firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+          .set('Initiated');
       });
   }
-};
+}

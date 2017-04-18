@@ -30,6 +30,7 @@ import ActiveSellOrder from './activetrade/layouts/ActiveSellOrder';
 import HTMLStyles from './css/HTMLStyles.js';
 import Static from './staticPages/Master/Static';
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder';
+import SellTradeOrder from './sellTradeOrder/layouts/SellTradeOrder';
 import User from './userScreen/layouts/UserScreen';
 
 // Redux Store
@@ -70,6 +71,7 @@ ReactDOM.render((
         <Route path='orderdetail/:address' component={UserIsAuthenticated(OrderDetail)} />
         <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
         <Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />
+        <Route path='sellTradeOrder/:orderId' component={UserIsAuthenticated(SellTradeOrder)} />
         <Route path='sellorderdetail/:orderId' component={UserIsAuthenticated(SellOrderDetail)} />
         <Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />
         <Route path='activesellorder/:requestId' component={UserIsAuthenticated(ActiveSellOrder)} />

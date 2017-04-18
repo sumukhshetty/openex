@@ -79,8 +79,8 @@ module.exports = {
       // TODO @qj catch the error if the index doesn't exist in firebase
       orderHelpers.removeOrderFromActiveEscrows(buyerUid, orderId)
       orderHelpers.removeOrderFromActiveEscrows(sellerUid, orderId)
-      orderHelpers.addOrderToCompletedTrades(buyerUid, orderId)
-      orderHelpers.addOrderToCompletedTrades(sellerUid, orderId)
+      orderHelpers.addOrderToCompletedTrades(buyerUid, orderId, 'buy-order')
+      orderHelpers.addOrderToCompletedTrades(sellerUid, orderId, 'buy-order')
     })
   },
 
