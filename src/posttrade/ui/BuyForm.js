@@ -21,7 +21,7 @@ export class BuyForm extends Component {
 
         <div className='flex mb3'>
           <label htmlFor='amount' className='w5'>Amount to buy</label>
-          <input id='amount' type='number' onChange={this.props.onChangeProp} value={this.props.amount} className='w5 h-100' />
+          <input id='amount' type='number' step='any' onChange={this.props.onChangeProp} value={this.props.amount} className='w5 h-100' />
           <div className='min-w-30 me'>
             <span className='fw1 i'>Amount in Ether</span>
           </div>

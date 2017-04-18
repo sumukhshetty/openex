@@ -128,11 +128,9 @@ class PostTradeForm extends Component {
   handleSubmit (event) {
     event.preventDefault();
     var now = new Date();
-    var orderId = this.state.web3.web3.sha3(this.state.user.data.uid + '-' + now);
     var _postTradeDetails = Object.assign({},
       this.state.postTradeDetails,
       {lastUpated: now.toUTCString(),
-        orderId: orderId,
         status: 'Initiated',
         active: true
       }

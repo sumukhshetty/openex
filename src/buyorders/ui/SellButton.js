@@ -12,7 +12,7 @@ class SellButton extends Component {
   render () {
     return (
       <td className='fb5'>
-        <button onClick={()=>browserHistory.push('buyorderdetail/'+this.props.orderId)}> Sell </button>
+        <button onClick={()=>browserHistory.push('sellTradeOrder/'+this.props.orderId)}> Sell </button>
       </td>
     );
   }

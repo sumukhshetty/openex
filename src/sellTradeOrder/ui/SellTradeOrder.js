@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import Converter from '../ui/Converter';
 import Star from '../../images/Star';
 
-export default class BuyTradeOrder extends Component {
+export default class SellTradeOrder extends Component {
   constructor (props) {
     super(props);
     this.state = {
       web3: this.props.web3,
       user: this.props.user,
-      sellOrderDetail: this.props.sellOrderDetail,
-      requestAmount: 0,
+      buyOrderDetail: this.props.buyOrderDetail,
       method: 'UPI',
-      buyingFrom: 'Victoria Padilla',
+      sellingTo: 'Victoria Padilla',
       rating: 4.5,
       price: 1203,
       minLimit: 1000,
@@ -20,12 +19,12 @@ export default class BuyTradeOrder extends Component {
       location: 'India'
     };
     this.handleConversion = this.handleConversion.bind(this);
-    this.handleTradeRequest = this.handleTradeRequest.bind(this);
+    this.acceptOrder = this.acceptOrder.bind(this);
   }
 
-  handleTradeRequest (e) {
+  acceptOrder (e) {
     e.preventDefault();
-    this.props.requestEther(this.state.requestAmount, this.props.uid, this.props.sellOrderDetail.sellOrder.sellerUid, this.props.user.data.displayName, this.props.sellOrderDetail.sellOrder.sellerUsername, this.props.params.orderId, this.props.sellOrderDetail.sellOrder.contractAddress, this.props.web3.web3);
+    this.props.acceptOrder(this.props.buyOrderDetail.buyOrder.amount, this.props.buyOrderDetail.buyOrder.buyerAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.user.data.uid, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.web3.web3);
   }
 
   handleConversion (amount) {
@@ -50,13 +49,13 @@ export default class BuyTradeOrder extends Component {
   }
 
   render () {
-    var sellOrder = this.props.sellOrderDetail.sellOrder;
+    var buyOrder = this.props.buyOrderDetail.buyOrder;
     var userInfo = this.props.user.userInfo;
-    if(sellOrder && userInfo) {
+    if(buyOrder && userInfo) {
     return (
       <div className='w-100 bg-smoke vh-100'>
         <div className='w-75 center pv3'>
-          <h1 className='pv1'>Buy ether using {sellOrder.paymentMethod} from {userInfo.username}</h1>
+          <h1 className='pv1'>Sell {buyOrder.amount} ether to {userInfo.username} using {buyOrder.paymentMethod}</h1>
           <div className='flex mxb w-100 cxc'>
             <div className='w-50'>
               <table className='lh-copy'>
@@ -66,7 +65,7 @@ export default class BuyTradeOrder extends Component {
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Payment Method</td>
-                  <td>{sellOrder.paymentMethod}</td>
+                  <td>{buyOrder.paymentMethod}</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>User</td>
@@ -74,17 +73,17 @@ export default class BuyTradeOrder extends Component {
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Trade Limits</td>
-                  <td>{sellOrder.minTransactionLimit}- {sellOrder.maxTransactionLimit} {sellOrder.currency}</td>
+                  <td>{buyOrder.minTransactionLimit}- {buyOrder.maxTransactionLimit} {buyOrder.currency}</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Location</td>
-                  <td>{sellOrder.location}</td>
+                  <td>{buyOrder.location}</td>
                 </tr>
               </table>
             </div>
             <div className='w-50' >
-              <h2 className='pv1 tc'>How much do you wish to buy?</h2>
-              <div className='flex mxc'><Converter onSubmit={this.handleTradeRequest.bind(this)}
+              {/* <h2 className='pv1 tc'>How much do you wish to buy?</h2> */}
+              <div className='flex mxc'><Converter amount={buyOrder.amount} onSubmit={this.acceptOrder.bind(this)}
                 onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>
             </div>
           </div>

@@ -7,6 +7,7 @@ import BuyerStepNote  from '../../generic-components/tradeFlow/StepNote';
 import SellerStepNote  from '../../generic-components/tradeFlow/StepNote';
 import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback';
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
+import Dot from '../../images/svgReactComponents/Dot.js';
 
 class ActiveBuyOrder extends Component {
   constructor(props) {
@@ -38,29 +39,34 @@ class ActiveBuyOrder extends Component {
 
     const progress_maps = {
       'Initiated': [
-        { status: '', label: '', text: 'Escrow' },
-        { status: '', label: '', text: 'Payment' },
-        { status: '', label: '', text: 'Ether Released' }
+        { status: '', label: <Dot/>, text: 'Awaiting Seller' },
+        { status: '', label: '', text: 'Awaiting Payment' },
+        { status: '', label: '', text: 'Awaiting Release' },
+        { status: '', label: '', text: 'All Done' }
       ],
-      'Contract Created': [
-        { status: 'active', label: '', text: 'Escrow' },
-        { status: '', label: '', text: 'Payment' },
-        { status: '', label: '', text: 'Ether Released' }
+      'Awaiting Escrow': [
+        { status: 'active', label: <Dot/>, text: 'Awaiting Escrow' },
+        { status: '', label: '', text: 'Awaiting Payment' },
+        { status: '', label: '', text: 'Awaiting Release' },
+        { status: '', label: '', text: 'All Done' }
       ],
       'In Escrow': [
-        { status: 'completed', label: '', text: 'Escrow' },
-        { status: 'active', label: '', text: 'Payment' },
-        { status: '', label: '', text: 'Ether Released' }
+        { status: 'completed', label: '', text: 'Escrow Sent' },
+        { status: 'active', label: <Dot/>, text: 'Awaiting Payment' },
+        { status: '', label: '', text: 'Awaiting Release' },
+        { status: '', label: '', text: 'All Done' }
       ],
       'Payment Confirmed': [
-        { status: 'completed', label: '', text: 'Escrow' },
-        { status: 'completed', label: '', text: 'Payment' },
-        { status: 'active', label: '', text: 'Ether Released' }
+        { status: 'completed', label: '', text: 'Escrow Sent' },
+        { status: 'completed', label: '', text: 'Payment Confirmed' },
+        { status: 'active', label: <Dot/>, text: 'Awaiting Release' },
+        { status: '', label: '', text: 'All Done' }
       ],
       'Ether Released': [
-        { status: 'completed', label: '', text: 'Escrow' },
-        { status: 'completed', label: '', text: 'Payment' },
-        { status: 'completed', label: '', text: 'Ether Released' }
+        { status: 'completed', label: '', text: 'Escrow Sent' },
+        { status: 'completed', label: '', text: 'Payment Confirmed' },
+        { status: 'completed', label: '', text: 'Ether Released' },
+        { status: 'active', label: <Dot/>, text: 'All Done' }
       ]
     }
 
