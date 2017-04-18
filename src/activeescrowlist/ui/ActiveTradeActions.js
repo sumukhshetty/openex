@@ -1,10 +1,11 @@
 import {firebaseRef} from './../../index.js'
 
 export const GET_ACTIVE_TRADE = 'GET_ACTIVE_TRADE'
-function getActiveTradeData(activeTradesPayload) {
+function getActiveTradeData(activeTradesPayload, id) {
   return {
     type: GET_ACTIVE_TRADE,
-    payload: activeTradesPayload
+    payload: activeTradesPayload,
+    id: id
   }
 }
 
@@ -14,10 +15,10 @@ module.exports = {
     var url = tradeType === 'buy-ether' ? 'buyorders' : 'purchaserequests';
     firebaseRef.database()
       .ref(url+'/'+orderId)
-      .on("value", function(snapshot){
+      .once("value", function(snapshot){
         console.log('snapshot.val() [ActiveTradeActions]');
         console.log(snapshot.val());
-        dispatch(getActiveTradeData(snapshot.val()))
+        dispatch(getActiveTradeData(snapshot.val(), orderId))
       })
   }
 }

@@ -105,10 +105,10 @@ class ActiveBuyOrder extends Component {
       stepNote = (viewerRole === 'buyer') ? <BuyerStepNote step={status} contractAddress={buyOrder.contractAddress} /> :
                                             <SellerStepNote step={status} contractAddress={buyOrder.contractAddress} />
 
-      if(viewerRole === 'seller' && status === 'Contract Created')
+      if(viewerRole === 'seller' && status === 'Awaiting Escrow')
         sendEtherButton = <button onClick={()=>this.props.sendEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3)}>Send Ether</button>
 
-      if(viewerRole === 'buyer' && status === 'In Escrow')
+      if(viewerRole === 'buyer' && status === 'Escrow Sent')
         makePaymentButton = <button onClick={()=>this.props.confirmPayment(buyOrder.orderId)}>Confirm Payment</button>
 
       if(viewerRole === 'seller' && status === 'Payment Confirmed')
