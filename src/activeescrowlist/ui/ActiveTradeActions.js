@@ -15,7 +15,7 @@ module.exports = {
     var url = tradeType === 'buy-ether' ? 'buyorders' : 'purchaserequests';
     firebaseRef.database()
       .ref(url+'/'+orderId)
-      .once("value", function(snapshot){
+      .on("value", function(snapshot){
         console.log('snapshot.val() [ActiveTradeActions]');
         console.log(snapshot.val());
         dispatch(getActiveTradeData(snapshot.val(), orderId))

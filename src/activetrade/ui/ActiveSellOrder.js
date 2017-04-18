@@ -116,10 +116,10 @@ class ActiveSellOrder extends Component {
       status = request['status']
 
       var tradeFlowComponents = {
-        "Awaiting Seller Confirmation": <Confirmation viewerRole={viewerRole} confirmTrade={this.confirmTrade.bind(this)}/>,
-        "Awaiting Payment": <Payment viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}/>,
-        "Awaiting Release": <Release viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}/>,
-        "All Done": <AllDone viewerRole={viewerRole} />
+        "Awaiting Seller Confirmation": <Confirmation step={status} progress_map={progress_maps[status]} viewerRole={viewerRole} confirmTrade={this.confirmTrade.bind(this)}/>,
+        "Awaiting Payment": <Payment step={status} viewerRole={viewerRole} progress_map={progress_maps[status]} confirmPayment={this.confirmPayment.bind(this)}/>,
+        "Awaiting Release": <Release step={status} viewerRole={viewerRole} progress_map={progress_maps[status]} releaseEther={this.releaseEther.bind(this)}/>,
+        "All Done": <AllDone step={status} viewerRole={viewerRole} progress_map={progress_maps[status]} />
       }
 
       currentStep = tradeFlowComponents[status];

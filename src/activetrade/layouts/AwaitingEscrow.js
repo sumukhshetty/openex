@@ -3,8 +3,8 @@ import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress';
 import ChatBox from '../../generic-components/chatbox/ChatBox';
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade';
-import BuyerStepNote  from '../ui/BuyerStepNote';
-import SellerStepNote  from '../ui/SellerStepNote';
+import BuyerStepNote  from '../ui/BuyerStepNoteBuy';
+import SellerStepNote  from '../ui/SellerStepNoteBuy';
 
 import Dot from '../../images/svgReactComponents/Dot.js';
 import { Link } from 'react-router';
