@@ -10,7 +10,6 @@ class ActiveTrade extends Component {
       user: this.props.user,
       activeTradeData:this.props.activeTradeData,
       orderId: this.props.orderId,
-      orderId: this.props.orderId,
       tradeType: this.props.tradeType
     }
   }
