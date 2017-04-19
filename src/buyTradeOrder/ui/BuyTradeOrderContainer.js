@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => {
     web3: state.web3,
     user: state.user,
     sellOrderDetail: state.sellOrderDetail,
+    sellOrderContract: state.sellOrderContract,
     params: ownProps.params,
     uid: ownProps.uid
   }
@@ -15,12 +16,12 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoad: (orderId) => {
-      dispatch(sellOrder(orderId))
+    onBeforeComponentLoad: (orderId, web3) => {
+      dispatch(sellOrder(orderId, web3))
     },
 
-    requestEther: (amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, web3) => {
-      dispatch(requestEtherFromSeller(amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, web3));
+    requestEther: (amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3) => {
+      dispatch(requestEtherFromSeller(amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3));
     },
 
     getAvailableBalance: (contractAddress, web3) => {
