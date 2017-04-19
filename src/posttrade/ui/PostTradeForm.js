@@ -126,7 +126,7 @@ class PostTradeForm extends Component {
   }
 
   handleSubmit (event) {
-    //event.preventDefault();
+    event.preventDefault();
     var now = new Date();
     var _postTradeDetails = Object.assign({},
       this.state.postTradeDetails,
