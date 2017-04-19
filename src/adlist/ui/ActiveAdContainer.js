@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ActiveAd from './ActiveAd'
-import { getAd, addEtherToContract } from './ActiveAdActions'
+import { getAd, addEtherToContract, resetSendEtherState } from './ActiveAdActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -9,7 +9,8 @@ const mapStateToProps = (state, ownProps) => {
     orderId: ownProps.orderId,
     orderKey: ownProps.orderKey,
     tradeType: ownProps.tradeType,
-    adData: state.adData
+    adData: state.adData,
+    sendEtherState: state.sendEtherState
   }
 }
 
@@ -22,6 +23,10 @@ const mapDispatchToProps = (dispatch) => {
 
     addEther: (amount, orderId, contractAddress, web3) => {
       dispatch(addEtherToContract(amount, orderId, contractAddress, web3))
+    },
+
+    resetEtherState: () => {
+      dispatch(resetSendEtherState());
     }
   }
 }

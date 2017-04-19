@@ -14,7 +14,7 @@ class ActiveAd extends Component {
       tradeType: this.props.tradeType,
       showEscrowModal: false,
       sendAmount: 0,
-      sendingEther: false
+      sendEtherState: this.props.sendEtherState
     }
   }
 
@@ -28,15 +28,15 @@ class ActiveAd extends Component {
   }
 
   removeEscrowModal (e) {
-    if (!this.state.sendingEther && e.target.classList.contains('bg-black-80')) {
+    if (this.props.sendEtherState !== 'sending' && e.target.classList.contains('bg-black-80')) {
       this.setState({showEscrowModal: false});
+      this.props.resetEtherState();
     }
   }
 
   handleEscrowRequest () {
     console.log('trade request handled');
     this.props.addEther(this.state.sendAmount, this.props.orderId, this.props.adData.adData[this.props.orderId].contractAddress, this.props.web3.web3);
-    this.setState({sendingEther: true});
   }
 
   onEtherAmountChange (e) {
@@ -60,7 +60,7 @@ class ActiveAd extends Component {
           <ViewActiveAdButton orderId={this.props.orderId} tradeType={this.props.tradeType}/>
           {this.props.tradeType === 'sell-ether' &&
           <div>
-          {this.state.showEscrowModal && <AddEscrowModal sendingEther={this.state.sendingEther} availableBalance={adDetails.availableBalance} close={this.removeEscrowModal.bind(this)} handleEscrowRequest={this.handleEscrowRequest.bind(this)} onEtherAmountChange={this.onEtherAmountChange.bind(this)} />}
+          {this.state.showEscrowModal && <AddEscrowModal sendEtherState={this.props.sendEtherState} close={this.removeEscrowModal.bind(this)} handleEscrowRequest={this.handleEscrowRequest.bind(this)} onEtherAmountChange={this.onEtherAmountChange.bind(this)} />}
           <td className='fb10 tc'>{adDetails.availableBalance} ETH</td>
           <button className='me grow' onClick={this.showEscrowModal.bind(this)}>+ Add Ether</button></div>}
         </tr>

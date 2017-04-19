@@ -13,6 +13,7 @@ import activeEscrowListReducer from './activeescrowlist/activeescrowslistreducer
 import activeTradeReducer from './activeescrowlist/activetradereducer'
 import adReducer from './adlist/adreducer'
 import adListReducer from './adlist/adlistreducer'
+import etherSendReducer from './adlist/sendetherreducer'
 
 
 const reducer = combineReducers({
@@ -29,7 +30,8 @@ const reducer = combineReducers({
   activeTrades: activeEscrowListReducer,
   activeAds: adListReducer,
   activeTradeData: activeTradeReducer,
-  adData: adReducer
+  adData: adReducer,
+  sendEtherState: etherSendReducer
 })
 
 export default reducer
