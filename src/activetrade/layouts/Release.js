@@ -4,39 +4,33 @@ import Progress from '../../generic-components/tradeFlow/Progress';
 import ChatBox from '../../generic-components/chatbox/ChatBox';
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade';
 import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade';
-import StepNote from '../../generic-components/tradeFlow/StepNote';
+import BuyerStepNote  from '../ui/BuyerStepNoteSell';
+import SellerStepNote  from '../ui/SellerStepNoteSell';
 import Dot from '../../images/svgReactComponents/Dot.js';
 import { Link } from 'react-router';
 
 class ReviewActiveTrade extends Component {
 
   render () {
-    const progress_map = [
-      { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },
-      { status: 'completed', label: '', text: 'Awaiting Payment' },
-      { status: 'active', label: <Dot/>, text: 'Awaiting Release' },
-      { status: '', label: '', text: 'All Done' }
-    ];
-
-    const step = 'Payment Confirmed';
-    // NOTE / TODO: above variables hold mock data
 
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
           <ActiveTradeInfo params={this.props.params} />
-          <Progress progress_map={progress_map} />
+          <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
             <ChatBox/>
             <div className='w-50 ma3'>
-              <StepNote step={step} />
-              {step === 'Payment Confirmed' &&
+              {this.props.viewerRole === 'buyer' &&
+              <BuyerStepNote step={this.props.step} />}
+              {this.props.viewerRole === 'seller' &&
+               <div>
+               <SellerStepNote step={this.props.step} />
                <div className='tc'>
-                 <Link to='/allDone/1'>
-                 <button>
+                 <button onClick={this.props.releaseEther}>
                    Release Ether
                  </button>
-                 </Link>
+               </div>
                </div>}
               <CancelTrade />
               <DisputeTrade type='buyer' />

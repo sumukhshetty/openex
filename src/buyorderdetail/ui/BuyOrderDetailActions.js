@@ -35,6 +35,8 @@ module.exports = {
     var coinbase = web3.eth.coinbase;
     // var block, orderAddress
 
+    firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+      .set('locked');
     factory.at(factoryAddress.factoryAddress)
       .then(function (_factory) {
         factoryInstance = _factory;
@@ -52,12 +54,16 @@ module.exports = {
         firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
           .set(uid);
 
-        firebaseRef.database().ref('users/' + buyerUid).child('activeEscrows').child(orderId).set({value: 'true'});
-        firebaseRef.database().ref('users/' + uid).child('activeEscrows').child(orderId).set({value: 'true'});
+        firebaseRef.database().ref('users/' + buyerUid).child('activeEscrows').child(orderId).set({tradeType: 'buy-ether'});
+        firebaseRef.database().ref('users/' + uid).child('activeEscrows').child(orderId).set({tradeType: 'buy-ether'});
         firebaseRef.database().ref('users/' + buyerUid).child('advertisements').child(orderId).set(null);
 
       // TODO: update state of buyOrder in firebase
       // TODO: redirect to activetrade screen
+      })
+      .catch(function(error) {
+        console.log('error createing buy order [BuyOrderDetailActions]');
+        console.log(error);
       });
   }
 };

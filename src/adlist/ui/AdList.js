@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import ActiveAd from './ActiveAd'
+import ActiveAdContainer from './ActiveAdContainer'
 import AdListEmptyState from './AdListEmptyState'
 
 class AdList extends Component {
@@ -21,7 +21,7 @@ class AdList extends Component {
         var rows = [];
         Object.entries(_activeAds).forEach(
             ([key, value]) => {
-              rows.push(<ActiveAd orderId={key} key={key}/>)}
+              rows.push(<ActiveAdContainer orderId={key} key={key} tradeType={value.tradeType}/>)}
         );
         return(
           <tbody>

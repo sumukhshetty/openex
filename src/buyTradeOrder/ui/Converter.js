@@ -5,13 +5,13 @@ import ConvertSymbol from '../../images/convert.png';
 import { Link } from 'react-router';
 
 export default (props) => (
-  <form className='w-75 flex col cxc' onSubmit={props.handleTradeRequest}>
+  <form className='w-75 flex col cxc' onSubmit={props.onSubmit}>
     <div className='gradient w-100 pv3 shadow-1 flex col cxc'>
       <div className='flex cxc mxb w5'>
         <label className='pv1 white flex cxc'>
           <img src={etherium} alt='etherium logo' className='pr3' /> Ether
         </label>
-        <input type='number' className='w3 pa2' />
+        <input type='number' step='any' className='w3 pa2' onChange={props.onEtherAmountChange}/>
       </div>
       <div className='flex mv3'>
         <div className='flex col mxc'>
@@ -28,11 +28,9 @@ export default (props) => (
         <label className='pv1 white flex cxc'>
           <UsaFlag className='pr3' /> USD
         </label>
-        <input type='number' className='w3 pa2' />
+        <input type='number' className='w3 pa2' onChange={props.onFiatAmountChange}/>
       </div>
     </div>
-    <Link to='/confirmation/1'>
     <input type='submit' value='Send Trade Request' className='mt5' />
-    </Link>
   </form>
 );

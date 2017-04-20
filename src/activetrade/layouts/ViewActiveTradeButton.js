@@ -10,9 +10,10 @@ class ViewActiveTradeButton extends Component {
   }
 
   render() {
+    var url = this.props.tradeType === 'buy-ether' ? 'activebuyorder/' + this.props.orderId : 'activesellorder/' + this.props.orderId;
     return(
       <td>
-        <button onClick={()=>browserHistory.push('activebuyorder/'+this.props.orderId)}>View / Message</button>
+        <button onClick={()=>browserHistory.push(url)}>View / Message</button>
         {/* <button class="pure-button pure-button-primary">View / Message</button> */}
         {/* above comment is just for styling reference for the link */}
       </td>

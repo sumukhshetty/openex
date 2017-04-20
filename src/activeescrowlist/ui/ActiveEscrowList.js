@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import ActiveTrade from './../../activetrade/layouts/ActiveTrade'
+import ActiveTradeContainer from './ActiveTradeContainer'
 import ActiveEscrowListEmptyState from './ActiveEscrowListEmptyState'
 
 class ActiveEscrowList extends Component {
@@ -16,12 +16,15 @@ class ActiveEscrowList extends Component {
   }
 
     render() {
+      console.log('render props');
+      console.log(this.props);
       var _activeTrades = this.props.activeTrades.activeTrades
       if(_activeTrades){
         var rows = [];
         Object.entries(_activeTrades).forEach(
             ([key, value]) => {
-              rows.push(<ActiveTrade orderId={key} key={key}/>)}
+              rows.push(<ActiveTradeContainer orderId={key} key={key} tradeType={value.tradeType}/>)
+            }
         );
         return(
           <tbody>
