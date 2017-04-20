@@ -1,18 +1,18 @@
-import React, { Component } from 'react'
-import tick from '../images/tick.svg'
+import React, { Component } from 'react';
+import tick from '../images/tick.svg';
 
 class WalletComponent extends Component {
-  render() {
-    return(
+  render () {
+    return (
       <div>
-        <div className="ethereum-wallet-id gradient">
+        <div className='ethereum-wallet-id gradient ftiny'>
           {/* Following gets replaced by actual wallet address for authenticated users */}
           {this.props.web3.eth.accounts[0]}
         </div>
-        <div className="check-mark"><img src={tick} alt="" /></div>
+        <div className='check-mark'><img src={tick} alt='' /></div>
       </div>
-    )
+    );
   }
 }
 
-export default WalletComponent
+export default WalletComponent;

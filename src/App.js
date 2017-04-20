@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js';
 
+import { firebaseRef } from './index';
+
 import logo from './images/logo.svg';
 
 // UI Components
@@ -44,7 +46,7 @@ class App extends Component {
         <div className='menu'>
           <div className='w-75 center'>
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
-            <div className='pure-g flex mxb cxc'>
+            <div className='pure-g flex mxb cxc '>
               <div className='pure-u-1-4 brand'>
                 <Link to='/dashboard'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
@@ -58,23 +60,23 @@ class App extends Component {
             <nav className='pure-menu pure-menu-horizontal'>
               <ul className='flex mxb ma0 pa0'>
                 <li className='pure-menu-item'>
-                  <Link to='/dashboard'> Dashboard
+                  <Link to='/dashboard' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Dashboard
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/buyorders'> Buy
+                  <Link to='/buyorders' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Buy
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/sellorders'> Sell
+                  <Link to='/sellorders' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Sell
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/posttrade'> Post a Trade
+                  <Link to='/posttrade' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Post a Trade
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/help'> Help
+                  <Link to='/help' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Help
                   </Link>
                 </li>
               </ul>
@@ -92,7 +94,7 @@ class App extends Component {
         <OnlyGuestLinks />
         <Web3InitContainer />
         <OnlyAuthLinks />
-        <main role='main'>
+        <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
           {this.props.children}
         </main>
         <Footer />

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
 import AdListContainer from './../ui/AdListContainer';
-import ActiveTradeHeader from './../../activetrade/layouts/ActiveTradeHeader';
+import ActiveAdHeader from '../ui/ActiveAdHeader';
 
 class AdList extends Component {
   render () {
     return (
       <div className='pt3'>
-        <p className='b'>Your advertisements</p>
+        <p className='b'>Your Advertisements</p>
         <table>
-          <ActiveTradeHeader />
+          <ActiveAdHeader />
           <AdListContainer />
         </table>
         <div className='flex mxe pv3'>
