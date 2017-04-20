@@ -5,7 +5,7 @@ import ConvertSymbol from '../../images/convert.png';
 import { Link } from 'react-router';
 
 export default (props) => (
-  <form className='w-75 flex col cxc' onSubmit={props.onSubmit}>
+  <form className='w-75 flex col cxc' onSubmit={props.handleTradeRequest}>
     <div className='gradient w-100 pv3 shadow-1 flex col cxc'>
       <div className='flex cxc mxb w5'>
         <label className='pv1 white flex cxc'>

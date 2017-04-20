@@ -107,27 +107,26 @@ module.exports = {
       lastUpated: now,
       status: 'Awaiting Seller Confirmation',
       contractAddress: contractAddress
+    }, function(err) {
+      firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + newRequest.key)
+      .set({
+        buyerUid: uid
+      });
+      firebaseRef.database().ref('/sellorders/' + orderId + '/pendingBalance')
+      .set(amount);
+      firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
+      .set(availableBalance - amount);
+      firebaseRef.database().ref('/users/' + sellerUid+ '/activeTrades/' + newRequest.key)
+      .set({
+        tradeType: 'sell-ether'
+      });
+      firebaseRef.database().ref('/users/' + uid+ '/activeTrades/' + newRequest.key)
+      .set({
+        tradeType: 'sell-ether'
+      })
+      .then(function() {
+        browserHistory.push('dashboard/');
+      });
     });
-    firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + newRequest.key)
-    .set({
-      buyerUid: uid
-    });
-    firebaseRef.database().ref('/sellorders/' + orderId + '/pendingBalance')
-    .set(amount);
-    firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
-    .set(availableBalance - amount);
-    firebaseRef.database().ref('/users/' + sellerUid+ '/activeTrades/' + newRequest.key)
-    .set({
-      tradeType: 'sell-ether'
-    });
-    firebaseRef.database().ref('/users/' + uid+ '/activeTrades/' + newRequest.key)
-    .set({
-      tradeType: 'sell-ether'
-    })
-    .then(function() {
-      browserHistory.push('dashboard/');
-    });
-
-
   }
 }
