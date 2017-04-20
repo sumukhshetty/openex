@@ -21,7 +21,7 @@ class HomeNav extends Component {
                 <li className="pure-menu-item"><a href="#support">Support</a></li>
 
                 <li className="pure-menu-item">
-                  <Link to="/login">Log in</Link>
+                  <Link to="/login" activeStyle={{ color: 'white', borderBottom: '2px solid white' }}>Log in</Link>
                 </li>
               </ul>
             </nav>

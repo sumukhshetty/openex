@@ -58,23 +58,23 @@ class App extends Component {
             <nav className='pure-menu pure-menu-horizontal'>
               <ul className='flex mxb ma0 pa0'>
                 <li className='pure-menu-item'>
-                  <Link to='/dashboard'> Dashboard
+                  <Link to='/dashboard' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Dashboard
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/buyorders'> Buy
+                  <Link to='/buyorders' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Buy
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/sellorders'> Sell
+                  <Link to='/sellorders' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Sell
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/posttrade'> Post a Trade
+                  <Link to='/posttrade' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Post a Trade
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/help'> Help
+                  <Link to='/help' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Help
                   </Link>
                 </li>
               </ul>
