@@ -16,8 +16,8 @@ module.exports = {
   },
   sellOrders: (user) => (dispatch) => {
     firebaseRef.database().ref('sellorders')
-    .orderByChild('status').equalTo('Initiated')
-      .once('value', function(snapshot){
+    .orderByChild('availableBalance').startAt(0.0001)
+      .on('value', function(snapshot){
         console.log(snapshot.val());
         dispatch(getSellOrders(snapshot.val()))
       })

@@ -86,7 +86,8 @@ class PostTradeForm extends Component {
           buyerAddress: '',
           sellerUsername: this.props.user.data.displayName,
           buyerUsername: '',
-          availableBalance: 0
+          availableBalance: 0,
+          pendingBalance: 0
         }
       );
       _buyFormBool = false;
@@ -100,7 +101,8 @@ class PostTradeForm extends Component {
         sellerAddress: '',
         buyerUsername: this.props.user.data.displayName,
         sellerUsername: '',
-        availableBalance: ''
+        availableBalance: '',
+        pendingBalance: ''
       }
     );
       _buyFormBool = true;
