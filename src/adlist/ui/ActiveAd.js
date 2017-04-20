@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 // TODO import HelpContainer
 import ViewActiveAdButton from './ViewActiveAdButton';
-import AddEscrowModal from '../../accountEther/ui/AddEscrowModal';
+import AddEscrowModal from './AddEscrowModal';
 
-class ActiveAd extends Component {
-  constructor(props){
-    super(props)
-    this.state ={
+export default class ActiveAd extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
       web3: this.props.web3,
       user: this.props.user,
-      adData:this.props.adData,
+      adData: this.props.adData,
       orderId: this.props.orderId,
       tradeType: this.props.tradeType,
       showEscrowModal: false,
       sendAmount: 0,
       sendEtherState: this.props.sendEtherState
-    }
+    };
   }
 
   componentWillMount () {
@@ -44,31 +44,34 @@ class ActiveAd extends Component {
   }
 
   render () {
-    if(this.props.adData.adData[this.props.orderId]) {
+    if (this.props.adData.adData[this.props.orderId]) {
       var adDetails = this.props.adData.adData[this.props.orderId];
-      var tradeType = (this.props.tradeType === "buy-ether") ? 'Buy Ad' : 'Sell Ad'
+      var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad';
+
       return (
-        <tr>
-          <td className='fb5 tc'>1238</td>
-          <td className='fb15 tc'>{adDetails.lastUpated}</td>
-          <td className='fb10 tc'>{tradeType}</td>
-          <td className='fb15 tc'>{this.props.user.data.displayName}</td>
-          <td className='fb10 tc'>{adDetails.amount}</td>
-          <td className='fb10 tc'>{adDetails.amount}</td>
-          <td className='fb10 tc'>{adDetails.status}</td>
-          <td className='fb10 tc'><i className='icon'>greendot</i> Active</td>
-          <ViewActiveAdButton orderId={this.props.orderId} tradeType={this.props.tradeType}/>
-          {this.props.tradeType === 'sell-ether' &&
-          <div>
-          {this.state.showEscrowModal && <AddEscrowModal sendEtherState={this.props.sendEtherState} close={this.removeEscrowModal.bind(this)} handleEscrowRequest={this.handleEscrowRequest.bind(this)} onEtherAmountChange={this.onEtherAmountChange.bind(this)} />}
-          <td className='fb10 tc'>{adDetails.availableBalance} ETH</td>
-          <button className='me grow' onClick={this.showEscrowModal.bind(this)}>+ Add Ether</button></div>}
+        <tr className='flex cxc'>
+          <td className='fb5 tc'><i>Fix me</i></td>
+          <td className='fb10 tc'>{adDetails.active ? <span className='green'>Live</span> : <span className='danger'>Disabled</span>}</td>
+          <td className='fb10 tc'>{adDetails.tradeType}</td>
+          <td className='fb10 tc'>{adDetails.availableBalance || 0}</td>
+          <td className='fb10 tc'>{adDetails.location}</td>
+          <td className='fb10 tc'>{adDetails.paymentMethod}</td>
+          <td className='fb10 tc'><i >Fix me</i></td>
+          <td className='fb10 tc'>{adDetails.minTransactionLimit} - {adDetails.maxTransactionLimit}</td>
+
+          <span className='me flex'>
+            {this.props.tradeType === 'sell-ether' &&
+            <div>
+              {this.state.showEscrowModal && <AddEscrowModal sendEtherState={this.props.sendEtherState} close={this.removeEscrowModal.bind(this)} handleEscrowRequest={this.handleEscrowRequest.bind(this)} onEtherAmountChange={this.onEtherAmountChange.bind(this)} />}
+
+              <button className=' grow mr3' onClick={this.showEscrowModal.bind(this)}>+ Add Ether</button></div>}
+            <ViewActiveAdButton orderId={this.props.orderId}
+              tradeType={this.props.tradeType} />
+          </span>
         </tr>
       );
-  } else {
-    return null;
-  }
+    } else {
+      return null;
+    }
   }
 }
-
-export default ActiveAd;

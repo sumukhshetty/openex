@@ -6,13 +6,14 @@ export default class ActiveAdHeader extends Component {
       <thead>
         <tr>
           <th className='fb5 tc'>#</th>
-          <th className='fb15 tc'>Status</th>
+          <th className='fb10 tc'>Status</th>
           <th className='fb10 tc'>Info</th>
-          <th className='fb15 tc'>Country</th>
-          <th className='fb15 tc'>Payment Method</th>
+          <th className='fb10 tc'> Balance</th>
+          <th className='fb10 tc'>Country</th>
+          <th className='fb10 tc'>Method</th>
           <th className='fb10 tc'>Price</th>
           <th className='fb10 tc'>Limits</th>
-          <th className='fb10 tc'>&nbsp;</th>
+          <th className='fb15 tc'>&nbsp;</th>
         </tr>
       </thead>
     );
