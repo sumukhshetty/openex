@@ -8,7 +8,7 @@ import TradeAdvertisementContainer from '../../tradeadvertisement/layouts/TradeA
 class Dashboard extends Component {
   render () {
     return (
-      <section className=' bg-smoke'>
+      <section className='bg-smoke'>
         <div className='w-75 center pv3'>
           <div>
             <div>

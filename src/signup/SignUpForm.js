@@ -1,58 +1,56 @@
 import React, { Component } from 'react';
 
 class SignUpForm extends Component {
-  constructor(props){
-    super(props)
+  constructor (props) {
+    super(props);
     this.state = {
       name: '',
       signUpInfo: {},
-      username:'',
-      country:'',
-      email:'',
-      password:'',
+      username: '',
+      country: '',
+      email: '',
+      password: '',
       web3: this.props.web3
-    }
+    };
   }
 
-  handleSubmit(event) {
-    event.preventDefault()
-    this.props.onSignUpFormSubmit(this.state.signUpInfo,this.state.web3.web3)
-
+  handleSubmit (event) {
+    event.preventDefault();
+    this.props.onSignUpFormSubmit(this.state.signUpInfo, this.state.web3.web3);
   }
-  onInputChange(event) {
-    var _signUpInfo = this.state.signUpInfo
-    if(event.target.id === "email"){
-      _signUpInfo = Object.assign({}, 
-        this.state.signUpInfo, {email:event.target.value}
-      )
+  onInputChange (event) {
+    var _signUpInfo = this.state.signUpInfo;
+    if (event.target.id === 'email') {
+      _signUpInfo = Object.assign({},
+        this.state.signUpInfo, {email: event.target.value}
+      );
     }
 
-    if(event.target.id === "country"){
-      _signUpInfo = Object.assign({}, 
-        this.state.signUpInfo, {country:event.target.value}
-      )
+    if (event.target.id === 'country') {
+      _signUpInfo = Object.assign({},
+        this.state.signUpInfo, {country: event.target.value}
+      );
     }
-    //TODO maybe hash the password
-    if(event.target.id === "password"){
-      _signUpInfo = Object.assign({}, 
-        this.state.signUpInfo, {password:event.target.value}
-      )
+    // TODO maybe hash the password
+    if (event.target.id === 'password') {
+      _signUpInfo = Object.assign({},
+        this.state.signUpInfo, {password: event.target.value}
+      );
     }
-    if(event.target.id === "username"){
-      _signUpInfo = Object.assign({}, 
-        this.state.signUpInfo, {username:event.target.value}
-      )
+    if (event.target.id === 'username') {
+      _signUpInfo = Object.assign({},
+        this.state.signUpInfo, {username: event.target.value}
+      );
     }
-    this.setState({ signUpInfo: _signUpInfo })
+    this.setState({ signUpInfo: _signUpInfo });
   }
-
 
   render () {
     return (
-      <form action='#' className='pure-form' onSubmit={this.handleSubmit.bind(this)}>
-        <input id="email" name='email' type='email' placeholder='Email address' onChange={this.onInputChange.bind(this)} />
-        <input id="username" name='username' type='text' placeholder='Username' onChange={this.onInputChange.bind(this)} />
-        <input id="password" type="password" value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder="password" />
+      <form action='#' className='pure-form pb3' onSubmit={this.handleSubmit.bind(this)}>
+        <input id='email' name='email' type='email' placeholder='Email address' onChange={this.onInputChange.bind(this)} />
+        <input id='username' name='username' type='text' placeholder='Username' onChange={this.onInputChange.bind(this)} />
+        <input id='password' type='password' value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder='password' />
         <select name='country' id='country' onChange={this.onInputChange.bind(this)} >
           <option value='--'>Select Country</option>
           <option value='AF'>Afghanistan</option>
@@ -306,7 +304,7 @@ class SignUpForm extends Component {
           <option value='AX'>Åland Islands</option>
 
         </select>
-        
+
         <button type='submit' className='pure-button pure-button-primary spaced-button gradient right'>
           Sign up &rarr;
         </button>

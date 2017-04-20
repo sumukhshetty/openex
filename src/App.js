@@ -92,7 +92,7 @@ class App extends Component {
         <OnlyGuestLinks />
         <Web3InitContainer />
         <OnlyAuthLinks />
-        <main role='main'>
+        <main role='main' className='bg-smoke'>
           {this.props.children}
         </main>
         <Footer />
