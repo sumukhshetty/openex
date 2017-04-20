@@ -14,11 +14,9 @@ class SignUpForm extends Component {
     };
   }
 
-
-  handleSubmit(event) {
-    //event.preventDefault()
-    this.props.onSignUpFormSubmit(this.state.signUpInfo,this.state.web3.web3)
-
+  handleSubmit (event) {
+    // event.preventDefault()
+    this.props.onSignUpFormSubmit(this.state.signUpInfo, this.state.web3.web3);
   }
   onInputChange (event) {
     var _signUpInfo = this.state.signUpInfo;
@@ -51,9 +49,9 @@ class SignUpForm extends Component {
     return (
 
       <form action='#' className='pure-form' onSubmit={this.handleSubmit.bind(this)}>
-        <input id="email" name='email' type='email' placeholder='Email address' onChange={this.onInputChange.bind(this)} required/>
-        <input id="username" name='username' type='text' placeholder='Username' onChange={this.onInputChange.bind(this)} required/>
-        <input id="password" type="password" value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder="password" required/>
+        <input id='email' name='email' type='email' placeholder='Email address' onChange={this.onInputChange.bind(this)} required />
+        <input id='username' name='username' type='text' placeholder='Username' onChange={this.onInputChange.bind(this)} required />
+        <input id='password' type='password' value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder='password' required />
         <select name='country' id='country' onChange={this.onInputChange.bind(this)} required>
 
           <option value='--'>Select Country</option>
@@ -309,7 +307,7 @@ class SignUpForm extends Component {
 
         </select>
 
-        <button type='submit' className='pure-button pure-button-primary spaced-button gradient right'>
+        <button type='submit' className='pure-button pure-button-primary spaced-button gradient right mb3'>
           Sign up &rarr;
         </button>
       </form>

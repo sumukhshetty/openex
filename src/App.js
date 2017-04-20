@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js';
 
+import { firebaseRef } from './index';
+
 import logo from './images/logo.svg';
 
 // UI Components
@@ -92,7 +94,7 @@ class App extends Component {
         <OnlyGuestLinks />
         <Web3InitContainer />
         <OnlyAuthLinks />
-        <main role='main' className='bg-smoke'>
+        <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
           {this.props.children}
         </main>
         <Footer />

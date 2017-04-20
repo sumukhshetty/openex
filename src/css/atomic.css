@@ -1365,10 +1365,3 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-
-/*active link styling for navbar*/
-
-.active {
-  color: red;
-  border-bottom: 2px solid white;
-}
