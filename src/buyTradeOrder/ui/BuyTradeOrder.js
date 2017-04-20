@@ -62,7 +62,7 @@ export default class BuyTradeOrder extends Component {
         if(availableBalance > 0) {
           requestComponent = <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to buy?</h2>
-            <div className='flex mxc'><Converter handleTradeRequest={this.handleTradeRequest.bind(this)}
+            <div className='flex mxc'><Converter maxEther={availableBalance} handleTradeRequest={this.handleTradeRequest.bind(this)}
               onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>
           </div>
         } else {
