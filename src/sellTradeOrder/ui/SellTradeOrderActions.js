@@ -26,7 +26,7 @@ module.exports = {
     // firebaseRef.database().ref('buyorders')
     // .orderByKey().equalTo(orderId)
     firebaseRef.database().ref('/buyorders/' + orderId)
-      .once("value", function(snapshot){
+      .on("value", function(snapshot){
         console.log('got buyorder by id');
         console.log(snapshot.val());
         dispatch(getBuyOrder(snapshot.val()))
@@ -37,6 +37,16 @@ module.exports = {
           dispatch(getUserInfo(snapshot.val()))
         })
       })
+  },
+
+  resetStatus: (status, orderId) => (dispatch) => {
+    console.log('called resetStatus');
+    if(status === 'locked') {
+      firebaseRef.database.ref('/buyorders/'+ orderId + '/status')
+        .set('Initiated');
+      firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
+        .set('');
+    }
   },
 
   availableBalance: (contractAddress, web3) => (dispatch) => {
@@ -52,6 +62,11 @@ module.exports = {
 
     firebaseRef.database().ref('/buyorders/' + orderId + '/status')
       .set('locked');
+    firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
+      .set(uid);
+    //TODO: [AK issue #100] A server call that will reset the status if after X amount of time the state is still locked.
+    //        This can probably be done using firebase functions
+
 
     factory.at(factoryAddress.factoryAddress)
       .then(function (_factory) {
@@ -68,8 +83,6 @@ module.exports = {
         // TODO: way to do this in one function?
         firebaseRef.database().ref('/buyorders/' + orderId + '/status')
           .set('Awaiting Escrow');
-        firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
-          .set(uid);
 
         firebaseRef.database().ref('users/' + buyerUid).child('activeTrades').child(orderId).set({tradeType: 'buy-ether'});
         firebaseRef.database().ref('users/' + uid).child('activeTrades').child(orderId).set({tradeType: 'buy-ether'});
@@ -82,6 +95,8 @@ module.exports = {
         console.log(error);
         firebaseRef.database().ref('/buyorders/' + orderId + '/status')
           .set('Initiated');
+          firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
+            .set('');
       });
   }
 }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import SellTradeOrder from './SellTradeOrder'
-import { buyOrder, createBuyOrderContract, availableBalance } from './SellTradeOrderActions'
+import { buyOrder, createBuyOrderContract, availableBalance, resetStatus } from './SellTradeOrderActions'
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -17,6 +17,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (orderId) => {
       dispatch(buyOrder(orderId))
+    },
+
+    onUnmount: (status, orderId) => (dispatch) => {
+      dispatch(resetStatus(status, orderId));
     },
 
     acceptOrder: (amount, buyerAddress, orderId, uid, buyerUid, web3) => {
