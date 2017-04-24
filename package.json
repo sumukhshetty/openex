@@ -54,6 +54,7 @@
     "babel-register": "^6.23.0",
     "firebase": "^3.7.1",
     "lodash": "^4.17.4",
+    "prop-types": "^15.5.8",
     "react": "^15.4.2",
     "react-browser-detection": "^1.0.2",
     "react-dom": "^15.4.2",
@@ -92,6 +93,9 @@
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     }
+  },
+  "standard": {
+    "parser": "babel-eslint"
   },
   "babel": {
     "presets": [

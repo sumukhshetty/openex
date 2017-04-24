@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-//import SignUpForm from './SignUpForm'
+// import SignUpForm from './SignUpForm'
 import { signUpUser } from './SignUpFormActions'
 import SignUpForm from './../../../signup/SignUpForm'
 
@@ -13,8 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSignUpFormSubmit: (name, web3) => {
-      event.preventDefault();
-
+      event.preventDefault()
       dispatch(signUpUser(name, web3))
     }
   }
