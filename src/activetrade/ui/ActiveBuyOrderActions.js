@@ -3,6 +3,7 @@ import BuyOrderContract from '../../../build/contracts/BuyOrder.json';
 // import { browserHistory } from 'react-router'
 // import factoryAddress from '../../contract_addresses/orderfactory.js'
 
+const request = require('request')
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
 import * as orderHelpers from './../../util/orderHelpers'
@@ -29,7 +30,7 @@ module.exports = {
       });
   },
 
-  fillEscrow: (contractAddress, orderId, web3) => (dispatch) => {
+  fillEscrow: (contractAddress, orderId, sellerUid, web3) => (dispatch) => {
     console.log('fillEscrow');
     var coinbase = web3.eth.coinbase;
     const order = contract(BuyOrderContract);
@@ -47,8 +48,25 @@ module.exports = {
         console.log(value); // TODO ak: this needs to grab the fee percentage from somewhere!!!
         web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function (err, address) {
           if (!err) {
-            firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-              .set('In Escrow');
+            request({
+                method: 'post',
+                body: {
+                  orderId: orderId,
+                  sellerUid: sellerUid
+                },
+                json: true,
+                url: 'https://us-central1-automteetherexchange.cloudfunctions.net/escrowFillled'
+              },
+              function(err, res, body) {
+                if (err) {
+                  console.error('error posting json: ', err)
+                  throw err
+                }
+                if(res.statusCode === 500) {
+                  console.error('Server responded with an error: ' + res.body.error);
+                  throw res.body.error
+                }
+              });
           } else {
             console.log(err);
           }
@@ -56,6 +74,12 @@ module.exports = {
       });
 
     console.log('called fillEscrow [ActiveBuyOrderActions]');
+  },
+
+  paymentConfirmed: (orderId) => (dispatch) => {
+    console.log('paymentConfirmed');
+    firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+      .set('Payment Confirmed');
   },
 
   releaseEscrow: (contractAddress, orderId, web3, buyerUid, sellerUid) => (dispatch) => {
@@ -72,22 +96,36 @@ module.exports = {
     })
     .then(function(txHash) {
       console.log(txHash)
-      firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-      .set('Ether Released');
+      request({
+          method: 'post',
+          body: {
+            orderId: orderId,
+            sellerUid: sellerUid,
+            buyerUid: buyerUid
+          },
+          json: true,
+          url: 'https://us-central1-automteetherexchange.cloudfunctions.net/etherReleased'
+        },
+        function(err, res, body) {
+          if (err) {
+            console.error('error posting json: ', err)
+            throw err
+          }
+          if(res.statusCode === 500) {
+            console.error('Server responded with an error: ' + res.body.error);
+            throw res.body.error
+          }
+        });
+      // firebaseRef.database().ref('/buyorders/' + orderId + '/status')
+      // .set('Ether Released');
 
     }).then(function(){
       // TODO @qj catch the error if the index doesn't exist in firebase
-      orderHelpers.removeOrderFromActiveEscrows(buyerUid, orderId)
-      orderHelpers.removeOrderFromActiveEscrows(sellerUid, orderId)
-      orderHelpers.addOrderToCompletedTrades(buyerUid, orderId, 'buy-order')
-      orderHelpers.addOrderToCompletedTrades(sellerUid, orderId, 'buy-order')
+      // orderHelpers.removeOrderFromActiveEscrows(buyerUid, orderId)
+      // orderHelpers.removeOrderFromActiveEscrows(sellerUid, orderId)
+      // orderHelpers.addOrderToCompletedTrades(buyerUid, orderId, 'buy-order')
+      // orderHelpers.addOrderToCompletedTrades(sellerUid, orderId, 'buy-order')
     })
-  },
-
-  paymentConfirmed: (orderId) => (dispatch) => {
-    console.log('paymentConfirmed');
-    firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-      .set('Payment Confirmed');
   }
 
 };

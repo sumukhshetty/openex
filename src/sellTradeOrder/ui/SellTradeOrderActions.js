@@ -50,10 +50,6 @@ module.exports = {
     }
   },
 
-  availableBalance: (contractAddress, web3) => (dispatch) => {
-
-  },
-
   createBuyOrderContract: (amount, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
@@ -102,8 +98,7 @@ module.exports = {
                   orderId: orderId,
                   contractTx: txHash['tx'],
                   contractAddress: txHash['logs'][0]['args']['orderAddress'],
-                  sellerUid: uid,
-                  withCredentials: false
+                  sellerUid: uid
                 },
                 json: true,
                 url: 'https://us-central1-automteetherexchange.cloudfunctions.net/buyOrderCreated'
@@ -121,31 +116,10 @@ module.exports = {
                   browserHistory.push('/activebuyorder/' + orderId)
                 }
               })
-            // firebaseRef.database().ref('/buyorders/' + orderId)
-            // .once('value', function(snapshot) {
-            //   if(snapshot.val()['sellerUid'] === uid && snapshot.val()['status'] === 'locked') {
-            //     firebaseRef.database().ref('/buyorders/' + orderId + '/contractTx')
-            //       .set(txHash['tx']);
-            //     firebaseRef.database().ref('/buyorders/' + orderId + '/contractAddress')
-            //       .set(txHash['logs'][0]['args']['orderAddress']);
-            //     firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-            //       .set('Awaiting Escrow');
-            //
-            //     firebaseRef.database().ref('users/' + buyerUid).child('activeTrades').child(orderId).set({tradeType: 'buy-ether'});
-            //     firebaseRef.database().ref('users/' + uid).child('activeTrades').child(orderId).set({tradeType: 'buy-ether'});
-            //     firebaseRef.database().ref('users/' + buyerUid).child('advertisements').child(orderId).set(null);
-            //
-            //     browserHistory.push('/activebuyorder/' + orderId)
-            //   }
-            // })
           })
           .catch(function(error) {
             console.log('error creating buy order [SellTradeOrderActions]');
             console.log(error);
-            // firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-            //   .set('Initiated');
-            //   firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
-            //     .set('');
           });
       }
     });

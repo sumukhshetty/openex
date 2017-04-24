@@ -72,3 +72,57 @@ exports.buyOrderCreated = functions.https.onRequest((req, res) => {
     })
   });
 });
+
+exports.escrowFillled = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    //TODO: AK would first need to confirm with web3 that the escrow was actualyfilled
+    admin.database().ref('/buyorders/' + req.body.orderId)
+    .once('value', function(snapshot) {
+      if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'Awaiting Escrow') {
+        admin.database().ref('/buyorders/' + req.body.orderId + '/status')
+          .set('In Escrow')
+        .then(function() {
+          res.status(200).send();
+        })
+        .catch(function(e) {
+          res.status(500).send({error: 'Error setting status: ' + e})
+        });
+      } else {
+        res.status(500).send({error: 'Access denied'});
+      }
+    })
+    .catch(function(e) {
+      res.status(500).send({error: 'Error querying db: ' + e});
+    });
+  })
+});
+
+exports.etherReleased = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    //TODO: AK would first need to confirm with web3 that the ether was sent
+    admin.database().ref('/buyorders/' + req.body.orderId)
+    .once('value', function(snapshot) {
+      if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'Payment Confirmed') {
+        admin.database().ref('/buyorders/' + req.body.orderId + '/status')
+          .set('Ether Released')
+        .then(function() {
+          admin.database().ref('/users/'+req.body.buyerUid+'/activeTrades/').child(req.body.orderId).remove()
+          admin.database().ref('/users/'+req.body.sellerUid+'/activeTrades/').child(req.body.orderId).remove()
+
+          admin.database().ref("users/"+req.body.buyerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-order'})
+          admin.database().ref("users/"+req.body.sellerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-order'})
+
+          res.status(200).send();
+        })
+        .catch(function(e) {
+          res.status(500).send({error: 'Error setting status: ' + e})
+        });
+      } else {
+        res.status(500).send({error: 'Access denied'});
+      }
+    })
+    .catch(function(e) {
+      res.status(500).send({error: 'Error querying db: ' + e});
+    });
+  })
+})
