@@ -40,16 +40,6 @@ module.exports = {
       })
   },
 
-  resetStatus: (status, orderId) => (dispatch) => {
-    console.log('called resetStatus');
-    if(status === 'locked') {
-      firebaseRef.database.ref('/buyorders/'+ orderId + '/status')
-        .set('Initiated');
-      firebaseRef.database().ref('/buyorders/' + orderId + '/sellerUid')
-        .set('');
-    }
-  },
-
   createBuyOrderContract: (amount, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);

@@ -48,10 +48,6 @@ export default class SellTradeOrder extends Component {
     this.props.onBeforeComponentLoad(this.props.params.orderId);
   }
 
-  componentWillUnmount() {
-    this.props.onUnmount(this.props.buyOrderDetail.buyOrder.status, this.props.buyOrderDetail.buyOrder.orderId);
-  }
-
   render () {
     var buyOrder = this.props.buyOrderDetail.buyOrder;
     var userInfo = this.props.user.userInfo;

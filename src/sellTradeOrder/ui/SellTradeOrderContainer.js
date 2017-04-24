@@ -19,10 +19,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(buyOrder(orderId))
     },
 
-    onUnmount: (status, orderId) => (dispatch) => {
-      dispatch(resetStatus(status, orderId));
-    },
-
     acceptOrder: (amount, buyerAddress, orderId, uid, buyerUid, web3) => {
       dispatch(createBuyOrderContract(amount, buyerAddress, orderId, uid, buyerUid, web3));
     },
