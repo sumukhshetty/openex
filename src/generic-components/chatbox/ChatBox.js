@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
-// import PropTypes from 'prop-types'
-import ChatMessage from './ChatMessages';
-import NewChatMessage from './NewChatMessage';
+import React from 'react'
+import PropTypes from 'prop-types'
+import ChatMessage from './ChatMessages'
+import NewChatMessage from './NewChatMessage'
 
 const ChatBox = ({props}) => (
   <div className='pa3 w-50 overflow-y-auto'>
@@ -11,9 +11,9 @@ const ChatBox = ({props}) => (
     <ChatMessage time='14:05 pm' you download />
     <NewChatMessage />
   </div>
-);
+)
 
-ChatBox.propTypes = {};
-ChatBox.defaultProps = {};
+ChatBox.propTypes = {}
+ChatBox.defaultProps = {}
 
-export default ChatBox;
+export default ChatBox

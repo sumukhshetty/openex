@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 // TODO import HelpContainer
-import ViewActiveAdButton from './ViewActiveAdButton';
-import AddEscrowModal from './AddEscrowModal';
+import ViewActiveAdButton from './ViewActiveAdButton'
+import AddEscrowModal from './AddEscrowModal'
 
 export default class ActiveAd extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       web3: this.props.web3,
       user: this.props.user,
@@ -15,7 +15,7 @@ export default class ActiveAd extends Component {
       showEscrowModal: false,
       sendAmount: 0,
       sendEtherState: this.props.sendEtherState
-    };
+    }
   }
 
   componentWillMount () {
@@ -23,28 +23,29 @@ export default class ActiveAd extends Component {
   }
 
   showEscrowModal () {
-    this.setState({showEscrowModal: true});
+    this.setState({showEscrowModal: true})
   }
 
   removeEscrowModal (e) {
     if (this.props.sendEtherState !== 'sending' && e.target.classList.contains('bg-black-80')) {
-      this.setState({showEscrowModal: false});
-      this.props.resetEtherState();
+      this.setState({showEscrowModal: false})
+      this.props.resetEtherState()
     }
   }
 
   handleEscrowRequest () {
-    console.log('trade request handled');
-    this.props.addEther(this.state.sendAmount, this.props.orderId, this.props.adData.adData[this.props.orderId].contractAddress, this.props.web3.web3);
+    console.log('trade request handled')
+    this.props.addEther(this.state.sendAmount, this.props.orderId, this.props.adData.adData[this.props.orderId].contractAddress, this.props.web3.web3)
   }
 
   onEtherAmountChange (e) {
-    this.setState({sendAmount: e.target.value});
+    this.setState({sendAmount: e.target.value})
   }
 
   render () {
     if (this.props.adData.adData[this.props.orderId]) {
-      var adDetails = this.props.adData.adData[this.props.orderId];
+      var adDetails = this.props.adData.adData[this.props.orderId]
+      var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad'
 
       return (
         <tr className='flex cxc'>
@@ -67,9 +68,9 @@ export default class ActiveAd extends Component {
               tradeType={this.props.tradeType} />
           </span>
         </tr>
-      );
+      )
     } else {
-      return null;
+      return null
     }
   }
 }

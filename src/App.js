@@ -1,43 +1,43 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
-import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js';
+import React, { Component } from 'react'
+import { Link } from 'react-router'
+import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
-import { firebaseRef } from './index';
+import { firebaseRef } from './index'
 
-import logo from './images/logo.svg';
+import logo from './images/logo.svg'
 
 // UI Components
-import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer';
-import Web3InitContainer from './web3/Web3InitContainer';
-import Header from './header/Header';
-import Footer from './footer/Footer';
+import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
+import Web3InitContainer from './web3/Web3InitContainer'
+import Header from './header/Header'
+import Footer from './footer/Footer'
 
 // Styles
-import './css/pure-min.css';
-import './css/styles-common.css';
-import './css/atomic.css';
-import './css/swatch.css';
+import './css/pure-min.css'
+import './css/styles-common.css'
+import './css/atomic.css'
+import './css/swatch.css'
 // import logo from './images/logo.svg'
 
-import Bell from './images/svgReactComponents/Bell';
-import Notifications from './notifications/NotificationsLayout';
+import Bell from './images/svgReactComponents/Bell'
+import Notifications from './notifications/NotificationsLayout'
 
 class App extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       showNotifications: false
-    };
-    this.removeNotifications = this.removeNotifications.bind(this);
-    this.showNotifications = this.showNotifications.bind(this);
+    }
+    this.removeNotifications = this.removeNotifications.bind(this)
+    this.showNotifications = this.showNotifications.bind(this)
   }
 
   showNotifications () {
-    this.setState({showNotifications: true});
+    this.setState({showNotifications: true})
   }
 
   removeNotifications () {
-    this.setState({showNotifications: false});
+    this.setState({showNotifications: false})
   }
 
   render () {
@@ -48,7 +48,7 @@ class App extends Component {
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
               <div className='pure-u-1-4 brand'>
-                <Link to='/dashboard'>
+                <Link to='/chat'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
                 </Link>
               </div>
@@ -82,12 +82,12 @@ class App extends Component {
               </ul>
             </nav>
           </div>
-        </div>);
+        </div>)
     }
-    );
+    )
 
     const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />
-    );
+    )
 
     return (
       <section className='Site'>
@@ -99,8 +99,8 @@ class App extends Component {
         </main>
         <Footer />
       </section>
-    );
+    )
   }
 }
 
-export default App;
+export default App
