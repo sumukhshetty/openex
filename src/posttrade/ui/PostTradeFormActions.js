@@ -40,7 +40,7 @@ export function postTrade(postTradeDetails, web3, state) {
       return factoryInstance.createSellOrder({from: coinbase});
     })
     .then(function(txHash) {
-      //var currentdate = new Date().toString()
+      // TODO @arseniy maybe we should move this to firebase cloud function to improve site performance      
       var newOrder = firebaseRef.database().ref("sellorders/").push(postTradeDetails);
       firebaseRef.database().ref("sellorders/"+newOrder.key+'/orderId').set(newOrder.key);
       firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
@@ -49,6 +49,7 @@ export function postTrade(postTradeDetails, web3, state) {
       firebaseRef.database().ref('/sellorders/' + newOrder.key + '/contractAddress')
       .set(txHash['logs'][0]['args']['orderAddress']);
       dispatch(tradeCreated(postTradeDetails))
+      console.log("about to push to dashboard")
       browserHistory.push('/dashboard')
     })
     .catch(function (error) {
