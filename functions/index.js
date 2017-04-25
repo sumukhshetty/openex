@@ -24,6 +24,7 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
   });
 
 //HTTPS requests
+
 //BuyOrder
 exports.acceptbuy = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
@@ -126,3 +127,22 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
     });
   })
 })
+
+//Sell order
+exports.postSellOrder = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try {
+      var newOrder = admin.database().ref("sellorders/").push(req.body.postTradeDetails);
+      admin.database().ref("sellorders/"+newOrder.key+'/orderId').set(newOrder.key);
+      admin.database().ref("users/"+req.body.sellerUid+"/advertisements/").child(newOrder.key).set({tradeType: req.body.postTradeDetails.tradeType})
+      admin.database().ref('/sellorders/' + newOrder.key + '/contractTx')
+      .set(req.body.contractTx);
+      admin.database().ref('/sellorders/' + newOrder.key + '/contractAddress')
+      .set(req.body.contractAddress);
+
+      res.status(200).send();
+    } catch(e) {
+      res.status(500).send({error: 'Error querying db: ' + e});
+    }
+  })
+});
