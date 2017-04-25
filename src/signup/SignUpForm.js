@@ -15,7 +15,7 @@ class SignUpForm extends Component {
   }
 
   handleSubmit (event) {
-    // event.preventDefault()
+    event.preventDefault()
     this.props.onSignUpFormSubmit(this.state.signUpInfo, this.state.web3.web3);
   }
   onInputChange (event) {
