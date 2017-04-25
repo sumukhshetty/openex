@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router'
 
 class FooterTable extends Component {
   render () {
@@ -35,7 +36,7 @@ class FooterTable extends Component {
                 <a href='#'>Cookies</a>
               </li>
               <li className='pure-menu-item'>
-                <a href='#'>Privacy &amp; Terms</a>
+                <a onClick={()=>browserHistory.push("termsofservice")}>Privacy &amp; Terms</a>
               </li>
             </ul>
           </nav>

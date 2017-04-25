@@ -32,6 +32,7 @@ import Static from './staticPages/Master/Static';
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder';
 import SellTradeOrder from './sellTradeOrder/layouts/SellTradeOrder';
 import User from './userScreen/layouts/UserScreen';
+import TermsOfService from './termsofservice/TermsOfService'
 
 // Redux Store
 import store from './store';
@@ -78,6 +79,7 @@ ReactDOM.render((
         <Route path='payment/:orderId' component={UserIsAuthenticated(Payment)} />
         <Route path='release/:orderId' component={UserIsAuthenticated(Release)} />
         <Route path='allDone/:orderId' component={UserIsAuthenticated(AllDone)} />
+        <Route path='termsofservice' component={UserIsAuthenticated(TermsOfService)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>
