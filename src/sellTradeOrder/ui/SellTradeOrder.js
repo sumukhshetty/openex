@@ -44,7 +44,7 @@ export default class SellTradeOrder extends Component {
     console.log(e.target.value);
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.props.onBeforeComponentLoad(this.props.params.orderId);
   }
 
@@ -83,8 +83,10 @@ export default class SellTradeOrder extends Component {
             </div>
             <div className='w-50' >
               {/* <h2 className='pv1 tc'>How much do you wish to buy?</h2> */}
-              <div className='flex mxc'><Converter amount={buyOrder.amount} onSubmit={this.acceptOrder.bind(this)}
-                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>
+              {buyOrder.status === 'Initiated' && <div className='flex mxc'><Converter amount={buyOrder.amount} onSubmit={this.acceptOrder.bind(this)}
+                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>}
+                {buyOrder.status !== 'Initiated' && buyOrder.sellerUid !== this.props.user.data.uid && <h2 className='pv1 tc'>Sorry, looks like this order was already accepted.</h2>}
+                {buyOrder.status !== 'Initiated' && buyOrder.sellerUid === this.props.user.data.uid && <h2 className='pv1 tc'>Please accept the MetaMask transaction.</h2>}
             </div>
           </div>
           <div>

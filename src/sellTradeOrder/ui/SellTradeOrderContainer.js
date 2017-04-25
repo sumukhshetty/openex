@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import SellTradeOrder from './SellTradeOrder'
-import { buyOrder, createBuyOrderContract, availableBalance } from './SellTradeOrderActions'
+import { buyOrder, createBuyOrderContract, availableBalance, resetStatus } from './SellTradeOrderActions'
 
 
 const mapStateToProps = (state, ownProps) => {
