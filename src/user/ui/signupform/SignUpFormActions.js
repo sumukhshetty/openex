@@ -37,6 +37,11 @@ export function signUpUser(signUpInfo, web3) {
       firebaseUser.updateProfile({
         displayName: username
       })
+      firebaseUser.sendEmailVerification().then(function(){
+        // Email sent
+      },function(error){
+        // An error happened
+      })
       dispatch(userSignedUp(firebaseUser))
 
     }).catch(function(error) {
