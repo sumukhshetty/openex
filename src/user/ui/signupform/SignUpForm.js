@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+
+// TODO @qj deprecate this component
 class SignUpForm extends Component {
   constructor(props) {
     super(props)
@@ -54,7 +56,6 @@ class SignUpForm extends Component {
           <span className="pure-form-message">This is a required field.</span>
 
           <br />
-
 
           <button type="submit" className="pure-button pure-button-primary">Sign Up</button>
         </fieldset>
