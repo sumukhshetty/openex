@@ -5,17 +5,9 @@ import ChatBox from '../../generic-components/chatbox/ChatBox';
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade';
 import BuyerStepNote  from '../ui/BuyerStepNoteSell';
 import SellerStepNote  from '../ui/SellerStepNoteSell';
-import Dot from '../../images/svgReactComponents/Dot.js';
-import { Link } from 'react-router';
 
-class ReviewActiveTrade extends Component {
-
-  constructor (props) {
-    super(props);
-  }
-
+class Payment extends Component {
   render () {
-
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
@@ -24,9 +16,9 @@ class ReviewActiveTrade extends Component {
           <div className='flex'>
             <ChatBox/>
             <div className='w-50 ma3'>
-              {this.props.viewerRole == "seller" &&
+              {this.props.viewerRole === "seller" &&
               <SellerStepNote step={this.props.step} />}
-              {this.props.viewerRole == "buyer" &&
+              {this.props.viewerRole === "buyer" &&
                <div>
                <BuyerStepNote step={this.props.step} />
                <div className='tc'>
@@ -44,4 +36,4 @@ class ReviewActiveTrade extends Component {
   }
 }
 
-export default ReviewActiveTrade;
+export default Payment;

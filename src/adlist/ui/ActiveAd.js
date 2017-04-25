@@ -19,7 +19,6 @@ export default class ActiveAd extends Component {
   }
 
   componentWillMount () {
-    console.log(this.props.orderId);
     this.props.onBeforeComponentLoads(this.props.orderId, this.props.tradeType);
   }
 
@@ -46,7 +45,6 @@ export default class ActiveAd extends Component {
   render () {
     if (this.props.adData.adData[this.props.orderId]) {
       var adDetails = this.props.adData.adData[this.props.orderId];
-      var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad';
 
       return (
         <tr className='flex cxc'>

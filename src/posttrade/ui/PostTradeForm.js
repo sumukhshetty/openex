@@ -3,7 +3,6 @@ import { BuyForm } from './BuyForm';
 import { SellForm } from './SellForm';
 import PostTradeInstructions from './PostTradeInstructions';
 // import {Input} from '../../components/Input';
-import { Link } from 'react-router';
 
 class PostTradeForm extends Component {
   constructor (props) {

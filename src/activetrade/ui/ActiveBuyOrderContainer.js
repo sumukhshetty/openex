@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import ActiveBuyOrder from './ActiveBuyOrder'
 import { buyOrder } from './ActiveBuyOrderActions'
-import { createBuyOrderContract } from './ActiveBuyOrderActions'
 import { clearBuyOrderState } from './ActiveBuyOrderActions'
 import { fillEscrow } from './ActiveBuyOrderActions'
 import { releaseEscrow } from './ActiveBuyOrderActions'

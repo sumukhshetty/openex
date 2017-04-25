@@ -2,22 +2,11 @@ import React, { Component } from 'react';
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo';
 import Progress from '../../generic-components/tradeFlow/Progress';
 import ChatBox from '../../generic-components/chatbox/ChatBox';
-import CancelTrade from '../../generic-components/tradeFlow/CancelTrade';
-import BuyerStepNote  from '../ui/BuyerStepNoteBuy';
-import SellerStepNote  from '../ui/SellerStepNoteBuy';
 
 import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback';
 
 
-import Dot from '../../images/svgReactComponents/Dot.js';
-import { Link } from 'react-router';
-
-class ReviewActiveTrade extends Component {
-
-  constructor (props) {
-    super(props);
-  }
-
+class EtherReleased extends Component {
   render () {
 
     return (
@@ -37,4 +26,4 @@ class ReviewActiveTrade extends Component {
   }
 }
 
-export default ReviewActiveTrade;
+export default EtherReleased;

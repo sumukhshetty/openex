@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 // TODO import HelpContainer
 
 class DisputeTrade extends Component {
-  constructor (props) {
-    super(props);
-  }
   render () {
     return (
       <div className='measure pv4'>

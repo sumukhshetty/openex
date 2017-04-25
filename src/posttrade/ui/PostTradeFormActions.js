@@ -31,7 +31,7 @@ export function postTrade(postTradeDetails, web3, state) {
 
     // Get current ethereum wallet. TODO: Wrap in try/catch.
     var coinbase = web3.eth.coinbase;
-    var block, orderAddress;
+    //var block, orderAddress;
 
     factory.at(factoryAddress.factoryAddress)
     .then(function(_factory) {
@@ -40,7 +40,7 @@ export function postTrade(postTradeDetails, web3, state) {
       return factoryInstance.createSellOrder({from: coinbase});
     })
     .then(function(txHash) {
-      var currentdate = new Date().toString()
+      //var currentdate = new Date().toString()
       var newOrder = firebaseRef.database().ref("sellorders/").push(postTradeDetails);
       firebaseRef.database().ref("sellorders/"+newOrder.key+'/orderId').set(newOrder.key);
       firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(newOrder.key).set({tradeType: postTradeDetails.tradeType})

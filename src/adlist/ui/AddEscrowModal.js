@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import etherium from '../../images/etherium.png';
 
 export default class AddEscrow extends Component {
-  constructor (props) {
-    super(props);
-  }
   render () {
     return (
       <div className='flex x absolute--fill fixed bg-black-80 z-1' onClick={this.props.close}>

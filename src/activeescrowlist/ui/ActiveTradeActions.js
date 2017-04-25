@@ -16,8 +16,6 @@ module.exports = {
     firebaseRef.database()
       .ref(url+'/'+orderId)
       .on("value", function(snapshot){
-        console.log('snapshot.val() [ActiveTradeActions]');
-        console.log(snapshot.val());
         dispatch(getActiveTradeData(snapshot.val(), orderId))
       })
   }

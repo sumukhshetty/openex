@@ -6,10 +6,8 @@ import CancelTrade from '../../generic-components/tradeFlow/CancelTrade';
 import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade';
 import BuyerStepNote  from '../ui/BuyerStepNoteSell';
 import SellerStepNote  from '../ui/SellerStepNoteSell';
-import Dot from '../../images/svgReactComponents/Dot.js';
-import { Link } from 'react-router';
 
-class ReviewActiveTrade extends Component {
+class Release extends Component {
 
   render () {
 
@@ -42,4 +40,4 @@ class ReviewActiveTrade extends Component {
   }
 }
 
-export default ReviewActiveTrade;
+export default Release;

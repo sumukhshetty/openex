@@ -22,7 +22,7 @@ import SellOrders from './sellorders/layouts/SellOrders';
 
 import Help from './help/layouts/Help';
 import Payment from './activetrade/layouts/Payment';
-import Confirmation from './activetrade/layouts/Confirmation';
+//import Confirmation from './activetrade/layouts/Confirmation';
 import Release from './activetrade/layouts/Release';
 import AllDone from './activetrade/layouts/AllDone';
 import ActiveBuyOrder from './activetrade/layouts/ActiveBuyOrder';

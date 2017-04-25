@@ -85,7 +85,7 @@ class ActiveSellOrder extends Component {
     }
 
     var status = 'getting status....'
-    var sellOrder, request, currentStep, viewerRole
+    var request, currentStep, viewerRole
     console.log(this.props);
     if(this.props.sellOrderDetail.sellOrder) {
       request = this.props.sellOrderDetail.sellOrder
