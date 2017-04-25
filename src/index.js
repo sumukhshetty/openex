@@ -90,6 +90,5 @@ ReactDOM.render((
 );
 
 setTimeout(function () {
-  store.dispatch(actions.startListeningToBuyOrders());
   store.dispatch(useractions.startListeningUserAuth());
 });

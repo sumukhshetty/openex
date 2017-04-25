@@ -17,7 +17,7 @@ module.exports = {
   buyOrders: (user) => (dispatch) => {
     firebaseRef.database().ref('buyorders')
     .orderByChild('status').equalTo('Initiated')
-      .once('value', function(snapshot){
+      .on('value', function(snapshot){
         console.log(snapshot.val());
         dispatch(getBuyOrders(snapshot.val()))
       })
