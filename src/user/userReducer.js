@@ -1,6 +1,7 @@
 const initialState = {
   data: null,
-  userInfo: null
+  userInfo: null,
+  error:null
 }
 
 const userReducer = (state = initialState, action) => {
@@ -17,7 +18,20 @@ const userReducer = (state = initialState, action) => {
       data: null
     })
   }
-
+  if (action.type === 'USER_SIGNED_UP_ERROR')
+  {
+    return Object.assign({}, state, {
+      data: null,
+      error: action.payload
+    })
+  }
+  if (action.type === 'USER_LOGGED_IN_ERROR')
+  {
+    return Object.assign({}, state, {
+      data: null,
+      error: action.payload
+    })
+  }  
   if(action.type === 'GET_USER_INFO')
   {
     return Object.assign({}, state, {
