@@ -15,10 +15,13 @@ module.exports = {
     email: null,
     displayName: null,
     photoURL: null
-  },
-  newMessage: '',
-  messages: {}
-
+  }
+  // ,
+  // chatrooms: {
+  //   id: {
+  //     messages: {}
+  //   }
+  // }
 /*    quotes: {
         hasreceiveddata: false,
         submittingnew: false,

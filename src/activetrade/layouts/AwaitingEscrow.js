@@ -6,7 +6,6 @@ import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteBuy'
 import SellerStepNote from '../ui/SellerStepNoteBuy'
 
-
 class AwaitingEscrow extends Component {
 
   render () {
@@ -16,7 +15,10 @@ class AwaitingEscrow extends Component {
           <ActiveTradeInfo params={this.props.params} />
           <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
-            <ChatBox />
+            <ChatBox
+              tradeId={this.props.tradeId}
+              sellerId={this.props.sellerId}
+              buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
               {this.props.viewerRole === "buyer" &&
                <BuyerStepNote step={this.props.step} contractAddress={this.props.contractAddress}/>}

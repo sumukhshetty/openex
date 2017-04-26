@@ -41,8 +41,6 @@ import * as firebase from 'firebase'
 import * as _firebaseconfig from './../secrets/firebaseconfig'
 import * as actions from './buyorders/ui/BuyOrdersActions'
 import * as useractions from './user/userActions'
-import { startListeningForUsers } from './chat/actions/users.js'
-import { startListeningForMessages } from './chat/actions/messages.js'
 
 // Config
 // import truffleConfig from './../truffle-config.js'
@@ -95,6 +93,4 @@ ReactDOM.render((
 
 setTimeout(function () {
   store.dispatch(useractions.startListeningUserAuth())
-  store.dispatch(startListeningForUsers())
-  store.dispatch(startListeningForMessages())
 })

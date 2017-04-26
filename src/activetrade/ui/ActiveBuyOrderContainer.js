@@ -6,16 +6,13 @@ import { fillEscrow } from './ActiveBuyOrderActions'
 import { releaseEscrow } from './ActiveBuyOrderActions'
 import { paymentConfirmed } from './ActiveBuyOrderActions'
 
-
-
-
-
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     buyOrderDetail: state.buyOrderDetail,
     params: ownProps.params,
-    uid: ownProps.uid
+    uid: ownProps.uid,
+    tradeId: ownProps.params.orderId
   }
 }
 
@@ -25,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(buyOrder(orderId))
     },
     clearBuyOrder: () => {
-      dispatch(clearBuyOrderState());
+      dispatch(clearBuyOrderState())
     },
     sendEther: (contractAddress, orderId, sellerUid, web3) => {
       dispatch(fillEscrow(contractAddress, orderId, sellerUid, web3));
@@ -34,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))
     },
     confirmPayment: (orderId) => {
-      dispatch(paymentConfirmed(orderId));
+      dispatch(paymentConfirmed(orderId))
     }
   }
 }

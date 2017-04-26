@@ -4,3 +4,10 @@ export const updateNewMessage = (content) => {
     content
   }
 }
+
+export const clearNewMessage = (content) => {
+  return {
+    type: 'CLEAR_NEW_MESSAGE',
+    content: ''
+  }
+}

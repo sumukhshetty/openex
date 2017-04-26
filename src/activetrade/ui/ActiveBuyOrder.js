@@ -5,10 +5,10 @@ import InEscrow from '../layouts/InEscrow.js'
 import PaymentConfirmed from '../layouts/PaymentConfirmed.js'
 import EtherReleased from '../layouts/EtherReleased.js'
 
-import Dot from '../../images/svgReactComponents/Dot.js';
+import Dot from '../../images/svgReactComponents/Dot.js'
 
 class ActiveBuyOrder extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -19,13 +19,13 @@ class ActiveBuyOrder extends Component {
     }
   }
 
-  componentWillMount(){
-    console.log("activebuyorder: in component will mount")
+  componentWillMount () {
+    console.log('activebuyorder: in component will mount')
     console.log('uid: ' + this.props.uid)
     this.props.onBeforeComponentLoad(this.props.params.orderId)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     console.log('activebuyorder: in component will unmount')
   }
 
@@ -33,43 +33,43 @@ class ActiveBuyOrder extends Component {
   //   this.props.createBuyOrder(amount, buyerAddress, web3)
   // }
 
+
   sendEther() {
     this.props.sendEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.uid, this.props.web3.web3);
   }
 
-  confirmPayment() {
-    this.props.confirmPayment(this.props.buyOrderDetail.buyOrder.orderId);
+  confirmPayment () {
+    this.props.confirmPayment(this.props.buyOrderDetail.buyOrder.orderId)
   }
 
-  releaseEther() {
+  releaseEther () {
     this.props.releaseEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.web3.web3, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.buyOrderDetail.buyOrder.sellerUid)
   }
 
-  render() {
-
+  render () {
     const progress_maps = {
       'Initiated': [
-        { status: '', label: <Dot/>, text: 'Awaiting Seller' },
+        { status: '', label: <Dot />, text: 'Awaiting Seller' },
         { status: '', label: '', text: 'Awaiting Payment' },
         { status: '', label: '', text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
       ],
       'Awaiting Escrow': [
-        { status: 'active', label: <Dot/>, text: 'Awaiting Escrow' },
+        { status: 'active', label: <Dot />, text: 'Awaiting Escrow' },
         { status: '', label: '', text: 'Awaiting Payment' },
         { status: '', label: '', text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
       ],
       'In Escrow': [
         { status: 'completed', label: '', text: 'Escrow Sent' },
-        { status: 'active', label: <Dot/>, text: 'Awaiting Payment' },
+        { status: 'active', label: <Dot />, text: 'Awaiting Payment' },
         { status: '', label: '', text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
       ],
       'Payment Confirmed': [
         { status: 'completed', label: '', text: 'Escrow Sent' },
         { status: 'completed', label: '', text: 'Payment Confirmed' },
-        { status: 'active', label: <Dot/>, text: 'Awaiting Release' },
+        { status: 'active', label: <Dot />, text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
       ],
       'Ether Released': [
@@ -82,7 +82,7 @@ class ActiveBuyOrder extends Component {
 
     var status = 'getting status....'
     var buyOrder, currentStep, viewerRole
-    if(this.props.buyOrderDetail.buyOrder) {
+    if (this.props.buyOrderDetail.buyOrder) {
       buyOrder = this.props.buyOrderDetail.buyOrder
 
       console.log('buyerUid')
@@ -91,16 +91,16 @@ class ActiveBuyOrder extends Component {
       console.log(buyOrder.sellerUid)
       console.log('user uid')
       console.log(this.props.uid)
-      if(buyOrder.buyerUid === this.props.uid) {
+      if (buyOrder.buyerUid === this.props.uid) {
         viewerRole = 'buyer'
       } else if (buyOrder.sellerUid === this.props.uid) {
         viewerRole = 'seller'
       } else {
         return (
-          <section className="activeTrade">
-            <div className="container">
-              <div className="pure-g">
-                <div className="pure-u-1">
+          <section className='activeTrade'>
+            <div className='container'>
+              <div className='pure-g'>
+                <div className='pure-u-1'>
                   Access Denied
                 </div>
               </div>
@@ -112,19 +112,49 @@ class ActiveBuyOrder extends Component {
       status = buyOrder['status']
 
       var tradeFlowComponents = {
-        "Awaiting Escrow": <AwaitingEscrow step="Awaiting Escrow" progress_map={progress_maps['Awaiting Escrow']} viewerRole={viewerRole} contractAddress={buyOrder.contractAddress} sendEther={this.sendEther.bind(this)}/>,
-        "In Escrow": <InEscrow step="In Escrow" progress_map={progress_maps['In Escrow']} viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}/>,
-        "Payment Confirmed": <PaymentConfirmed step="Payment Confirmed" progress_map={progress_maps['Payment Confirmed']} viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}/>,
-        "Ether Released": <EtherReleased step="Ether Released" progress_map={progress_maps['Ether Released']} viewerRole={viewerRole} />,
+        'Initiated': <AwaitingEscrow
+          step='Awaiting Escrow'
+          progress_map={progress_maps['Awaiting Escrow']}
+          viewerRole={viewerRole} contractAddress={buyOrder.contractAddress} sendEther={this.sendEther.bind(this)}
+          tradeId={this.props.params.orderId}
+          buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} />,
+
+        'Awaiting Escrow': <AwaitingEscrow
+          step='Awaiting Escrow'
+          progress_map={progress_maps['Awaiting Escrow']}
+          viewerRole={viewerRole} contractAddress={buyOrder.contractAddress} sendEther={this.sendEther.bind(this)}
+          tradeId={this.props.params.orderId}
+          buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} />,
+
+        'In Escrow': <InEscrow
+          step='In Escrow'
+          progress_map={progress_maps['In Escrow']} viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}
+          tradeId={this.props.params.orderId}
+          buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} />,
+        'Payment Confirmed': <PaymentConfirmed
+          step='Payment Confirmed'
+          progress_map={progress_maps['Payment Confirmed']} viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}
+          tradeId={this.props.params.orderId}
+          buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} />,
+        'Ether Released': <EtherReleased
+          step='Ether Released'
+          progress_map={progress_maps['Ether Released']} viewerRole={viewerRole}
+          tradeId={this.props.params.orderId}
+          buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} />
       }
 
-      currentStep = tradeFlowComponents[status];
-      console.log('status:' + status);
-      console.log('currentStep: ' + currentStep);
+      currentStep = tradeFlowComponents[status]
+      console.log('status:' + status)
+      console.log('currentStep: ' + currentStep)
 
-      return(
-        <section className="activeTrade">
-                {currentStep}
+      return (
+        <section className='activeTrade'>
+          {currentStep}
         </section>
       )
 
@@ -144,20 +174,18 @@ class ActiveBuyOrder extends Component {
       //
       // if(status === 'Ether Released')
       //   tradeFeedback = <TradeFeedbackContainer />
-
     }
-    return(
-      <section className="activeTrade">
-        <div className="container">
-          <div className="pure-g">
-            <div className="pure-u-1">
+    return (
+      <section className='activeTrade'>
+        <div className='container'>
+          <div className='pure-g'>
+            <div className='pure-u-1'>
               {status}
             </div>
           </div>
         </div>
       </section>
     )
-
   }
 }
 

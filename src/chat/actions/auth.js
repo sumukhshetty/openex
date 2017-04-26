@@ -10,16 +10,15 @@ const signedIn = (user) => {
   }
 }
 
-export const getUser = () => {
+export const getUser = (tradeId, buyerId, sellerId) => {
   return (dispatch) => {
-    firebaseRef.auth().onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(signedIn(user))
-        // check if chat with tradeNumber exist here
-        firebaseRef.database().ref('chatrooms').child('uniquetradeNumberGoesHere').set({'defineBuyerOrSellerTypeHere': user.uid})
-      }
-      // not sure what the else should be
-      // if no user is detected in the middle of a trade that is a massive problem. I'm not sure its teh chat modules responsibility to handle that. Maybe I could just through a bright red error?
+    dispatch(signedIn(firebaseRef.auth().currentUser))
+    firebaseRef.database()
+    .ref('chatrooms')
+    .child(tradeId)
+    .update({
+      'buyerUid': buyerId,
+      'sellerUid': sellerId
     })
   }
 }
