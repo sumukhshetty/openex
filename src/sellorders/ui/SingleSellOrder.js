@@ -5,6 +5,8 @@ import BuyButton from './BuyButton'
 import LastOnline from './LastOnline';
 import Trustworthiness from './Trustworthiness';
 
+const moment = require('moment')
+
 const SingleSellOrder = (props) => {
   return (
     <tr className='flex list bg-white pa3 ma2 gray'>
@@ -12,9 +14,9 @@ const SingleSellOrder = (props) => {
       <td className='fb10 tc' >{props.sellOrderData.paymentMethod}</td>
       <td className='fb15 tc' >{props.sellOrderData.amount} INR</td>
       <td className='fb5 tc' >{props.sellOrderData.maxTransactionLimit}</td>
-      <td className='fb15 tc' >10 Oct 2017</td>
-      <Trustworthiness trustLevel={'Perfect'} />
-      <LastOnline time={props.sellOrderData.lastUpated} />
+      {props.userData && <td className='fb15 tc' >{moment(props.userData.lastTransfer).fromNow() || '-'}</td>}
+      {props.userData && <Trustworthiness trustLevel={props.userData.trustworthiness} />}
+      {props.userData && <LastOnline time={props.userData.lastOnline} />}
       <BuyButton orderId={props.sellOrderData.orderId}/>
     </tr>
   );
