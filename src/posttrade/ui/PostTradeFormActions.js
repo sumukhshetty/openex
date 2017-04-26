@@ -3,6 +3,7 @@ import ContractDirectoryContract from '../../../build/contracts/ContractDirector
 import { browserHistory } from 'react-router'
 import factoryAddress from '../../contract_addresses/orderfactory.js'
 
+const request = require('request')
 const contract = require('truffle-contract')
 
 import {firebaseRef} from './../../index.js'
@@ -40,16 +41,41 @@ export function postTrade(postTradeDetails, web3, state) {
       return factoryInstance.createSellOrder({from: coinbase});
     })
     .then(function(txHash) {
-      //var currentdate = new Date().toString()
-      var newOrder = firebaseRef.database().ref("sellorders/").push(postTradeDetails);
-      firebaseRef.database().ref("sellorders/"+newOrder.key+'/orderId').set(newOrder.key);
-      firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
-      firebaseRef.database().ref('/sellorders/' + newOrder.key + '/contractTx')
-      .set(txHash['tx']);
-      firebaseRef.database().ref('/sellorders/' + newOrder.key + '/contractAddress')
-      .set(txHash['logs'][0]['args']['orderAddress']);
-      dispatch(tradeCreated(postTradeDetails))
-      browserHistory.push('/dashboard')
+      request({
+          method: 'post',
+          body: {
+            postTradeDetails: postTradeDetails,
+            sellerUid: state.user.data.uid,
+            contractTx: txHash['tx'],
+            contractAddress: txHash['logs'][0]['args']['orderAddress']
+          },
+          json: true,
+          url: 'https://us-central1-automteetherexchange.cloudfunctions.net/postSellOrder'
+        },
+        function(err, res, body) {
+          if (err) {
+            console.error('error posting json: ', err)
+            throw err
+          }
+          if(res.statusCode === 200) {
+            browserHistory.push('/dashboard')
+          }
+          if(res.statusCode === 500) {
+            console.error('Server responded with an error: ' + res.body.error);
+            throw res.body.error
+          }
+        });
+      // TODO @arseniy maybe we should move this to firebase cloud function to improve site performance
+      // var newOrder = firebaseRef.database().ref("sellorders/").push(postTradeDetails);
+      // firebaseRef.database().ref("sellorders/"+newOrder.key+'/orderId').set(newOrder.key);
+      // firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
+      // firebaseRef.database().ref('/sellorders/' + newOrder.key + '/contractTx')
+      // .set(txHash['tx']);
+      // firebaseRef.database().ref('/sellorders/' + newOrder.key + '/contractAddress')
+      // .set(txHash['logs'][0]['args']['orderAddress']);
+      // dispatch(tradeCreated(postTradeDetails))
+      // console.log("about to push to dashboard")
+      // browserHistory.push('/dashboard')
     })
     .catch(function (error) {
       console.log(error);

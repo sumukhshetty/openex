@@ -13,16 +13,10 @@ export class SellForm extends Component {
         </div>
         <div className='flex mb3'>
           <label htmlFor='bankInformation' className='w5'>Bank Information</label>
-          <input id='bankInformation' type='text' onChange={this.props.onChangeProp} value={this.props.bankInformation} className='w5' required/>
+          <textarea id='bankInformation' type='textArea' rows="4" onChange={this.props.onChangeProp} value={this.props.bankInformation} className='w5' required/>
           <div className='min-w-30 me'>
-            <span className='fw1 i'>Your Bank</span>
-          </div>
-        </div>
-        <div className='flex mb3'>
-          <label htmlFor='amount' className='w5'>Amount to Sell</label>
-          <input id='amount' type='number' step='0.00001' min='0.00001' onChange={this.props.onChangeProp} value={this.props.amount} className='w5' required/>
-          <div className='min-w-30 me'>
-            <span className='fw1 i'>Amount in Ether</span>
+            <span className='fw1 i'>Your Name <br/>CITI0000xxx <br/> mg road, bangalore <br/>
+Acc: 5223xxxxxx</span>
           </div>
         </div>
         <div className='flex mb3'>
