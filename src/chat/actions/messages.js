@@ -1,50 +1,47 @@
 import { firebaseRef } from '../../index.js'
 
-export const createMessage = ({content, uid}) => {
+export const createMessage = ({content, uid, tradeId}) => {
   return (dispatch) => {
     const message = {
       content,
       uid,
       timeStamp: Date.now()
     }
-    firebaseRef.database().ref('chats').push(message)
+    firebaseRef.database()
+    .ref('chatrooms')
+    .child(`${tradeId}/messages`)
+    .push(message)
   }
 }
 
-export const destroyMessage = (key) => {
+// when the data changes fire these actions in redux
+
+export const startListeningForMessages = (tradeId) => {
   return (dispatch) => {
-    firebaseRef.database().ref('chats').child(key).remove().then(() => {
-      dispatch(removeMessage(key))
-    })
+    firebaseRef.database()
+    .ref('chatrooms')
+    .child(`${tradeId}/messages`)
+    .on('child_added',
+    (snapshot) => {
+      dispatch(addMessage(snapshot.key, snapshot.val(), tradeId))
+    }
+  )
   }
 }
 
-// when the data changes fire these actiosn in redux
-
-export const startListeningForMessages = () => {
-  return (dispatch) => {
-    firebaseRef.database().ref('chats').on('child_added', (snapshot) => {
-      dispatch(addMessage(snapshot.key, snapshot.val()))
-    })
-    firebaseRef.database().ref('chats').on('child_removed', (snapshot) => {
-      dispatch(removeMessage(snapshot.key))
-    })
-  }
-}
-
-export const addMessage = (key = Date.now(), {content, uid}) => {
+export const addMessage = (key, message, tradeId) => {
   return {
     type: 'ADD_MESSAGE',
-    content,
+    content: message.content,
     key,
     timeStamp: Date.now(),
-    uid
+    uid: message.uid,
+    tradeId
   }
 }
 
-export const removeMessage = (key) => {
+export const clearMessagesFromState = () => {
   return {
-    type: 'REMOVE_MESSAGE',
-    key
+    type: 'CLEAR_MESSAGES_FROM_STATE'
   }
 }

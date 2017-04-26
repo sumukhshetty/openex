@@ -1,9 +1,10 @@
-import initialState from '../../initialstate.js'
 
-export default function newMessageReducer (state = initialState.newMessage, action) {
+export default function newMessageReducer (state = '', action) {
   switch (action.type) {
     case 'UPDATE_NEW_MESSAGE':
       return action.content
+    case 'CLEAR_NEW_MESSAGE':
+      return ''
     default:
       return state
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
-import ChatBox from '../../chat/components/ChatBox'
+import ChatBox from '../../chat/containers/ChatBox'
 import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback'
 
 class ReviewActiveTrade extends Component {
@@ -20,7 +20,10 @@ class ReviewActiveTrade extends Component {
           <ActiveTradeInfo params={this.props.params} />
           <Progress progress_map={progressMap} />
           <div className='flex'>
-            <ChatBox />
+            <ChatBox
+              tradeId={this.props.tradeId}
+              sellerId={this.props.sellerId}
+              buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
               <TradeFeedbackContainer />
             </div>
