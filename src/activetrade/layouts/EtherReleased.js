@@ -8,7 +8,6 @@ import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback'
 
-
 class EtherReleased extends Component {
   render () {
     return (
@@ -30,6 +29,5 @@ class EtherReleased extends Component {
     )
   }
 }
-
 
 export default EtherReleased;

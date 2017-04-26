@@ -33,7 +33,6 @@ class ActiveBuyOrder extends Component {
   //   this.props.createBuyOrder(amount, buyerAddress, web3)
   // }
 
-
   sendEther() {
     this.props.sendEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.uid, this.props.web3.web3);
   }

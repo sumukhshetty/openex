@@ -40,5 +40,4 @@ class PaymentConfirmed extends Component {
   }
 }
 
-
 export default PaymentConfirmed;

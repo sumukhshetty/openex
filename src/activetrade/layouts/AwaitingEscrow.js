@@ -40,5 +40,4 @@ class AwaitingEscrow extends Component {
   }
 }
 
-
 export default AwaitingEscrow;
