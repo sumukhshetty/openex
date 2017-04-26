@@ -8,6 +8,15 @@ function getSellOrders(sellOrdersPayload) {
   }
 }
 
+export const GET_USERS_INFO = 'GET_USERS_INFO'
+function getUsersInfo(userPayload, uid) {
+  return {
+    type: GET_USERS_INFO,
+    payload: userPayload,
+    id: uid
+  }
+}
+
 module.exports = {
   startListeningToSellOrders: () => (dispatch, getState) =>{
     firebaseRef.database().ref('sellorders').on("value", function(snapshot){
@@ -20,6 +29,13 @@ module.exports = {
       .on('value', function(snapshot){
         console.log(snapshot.val());
         dispatch(getSellOrders(snapshot.val()))
+        Object.entries(snapshot.val()).forEach(
+          ([key, value]) => {
+            firebaseRef.database().ref('users/' + value['sellerUid'])
+            .once('value', function(snapshot) {
+              dispatch(getUsersInfo(snapshot.val(), snapshot.key))
+            });
+          });
       })
   }
 }

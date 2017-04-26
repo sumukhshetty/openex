@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import AdListContainer from './../ui/AdListContainer';
 import ActiveAdHeader from '../ui/ActiveAdHeader';
+import { browserHistory } from 'react-router'
 
 class AdList extends Component {
   render () {
@@ -13,7 +14,7 @@ class AdList extends Component {
           <AdListContainer />
         </table>
         <div className='flex mxe pv3'>
-          <button className='grow'>+ Create Advertisement</button>
+          <button onClick={() => {browserHistory.push('posttrade')}} className='grow'>+ Create Advertisement</button>
         </div>
       </div>
     );

@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     sellorders: state.sellorders,
+    usersInfo: state.usersInfo,
     user: state.user
   }
 }

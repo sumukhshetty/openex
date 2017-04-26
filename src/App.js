@@ -9,6 +9,7 @@ import logo from './images/logo.svg';
 // UI Components
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer';
 import Web3InitContainer from './web3/Web3InitContainer';
+import UserPresenceContainer from './userpresence/UserPresenceContainer';
 import Header from './header/Header';
 import Footer from './footer/Footer';
 
@@ -94,6 +95,7 @@ class App extends Component {
         <OnlyGuestLinks />
         <Web3InitContainer />
         <OnlyAuthLinks />
+        {firebaseRef.auth().currentUser && <UserPresenceContainer />}
         <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
           {this.props.children}
         </main>

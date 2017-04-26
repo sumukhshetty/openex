@@ -72,6 +72,9 @@ module.exports = {
           orderHelpers.removeOrderFromActiveEscrows(sellerUid, requestId)
           orderHelpers.addOrderToCompletedTrades(buyerUid, requestId, 'sell-ether')
           orderHelpers.addOrderToCompletedTrades(sellerUid, requestId, 'sell-ether')
+
+          firebaseRef.database().ref("users/"+buyerUid+'/lastTransfer').set(firebaseRef.database.ServerValue.TIMESTAMP)
+          firebaseRef.database().ref("users/"+sellerUid+'/lastTransfer').set(firebaseRef.database.ServerValue.TIMESTAMP)
           // firebaseRef.database().ref('/purchaserequests/' + requestId)
           // .once('value', function(snapshot) {
           //
