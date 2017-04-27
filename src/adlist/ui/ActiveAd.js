@@ -47,7 +47,8 @@ export default class ActiveAd extends Component {
       var adDetails = this.props.adData.adData[this.props.orderId]
       var availableBalance
       if (adDetails.availableBalance) {
-        availableBalance = (adDetails.availableBalance % 1 !== 0) ? adDetails.availableBalance.toFixed(4) : adDetails.availableBalance
+        availableBalance = adDetails.availableBalance - adDetails.pendingBalance
+        availableBalance = (availableBalance % 1 !== 0) ? availableBalance.toFixed(4) : availableBalance
       }
       var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad'
 
