@@ -5,6 +5,7 @@ import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 import { firebaseRef } from './index'
 
 import logo from './images/logo.svg'
+import AutoLogoLight from './images/svgReactComponents/autoLogoLight.js'
 
 // UI Components
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
@@ -87,21 +88,33 @@ class App extends Component {
     }
     )
 
-    const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />
-    )
+    const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />)
 
-    return (
-      <section className='Site'>
-        <OnlyGuestLinks />
-        <Web3InitContainer />
-        <OnlyAuthLinks />
-        {firebaseRef.auth().currentUser && <UserPresenceContainer />}
-        <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
-          {this.props.children}
-        </main>
-        <Footer />
-      </section>
-    )
+    const isMobile = window.innerWidth <= 800
+    if (isMobile) {
+      return (
+        <div className='absolute absolute--fill gradient white'>
+          <div className='flex col x h-100'>
+            <AutoLogoLight />
+            <p>Sorry Guys!</p>
+            <p className='w5'>Mobile is not supported as of now.</p>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <section className='Site'>
+          <OnlyGuestLinks />
+          <Web3InitContainer />
+          <OnlyAuthLinks />
+          {firebaseRef.auth().currentUser && <UserPresenceContainer />}
+          <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
+            {this.props.children}
+          </main>
+          <Footer />
+        </section>
+      )
+    }
   }
 }
 

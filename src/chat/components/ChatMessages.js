@@ -31,6 +31,7 @@ const ChatMessage = (props) => (
       </div>}
     </div>
     <time className={`ftiny ${props.you ? `cs` : `ce`}`}>
+      {props.time}
       {moment(props.time).format('MMMM Do YYYY, h:mm:ss a')}
     </time>
   </div>
