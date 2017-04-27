@@ -44,7 +44,6 @@ export default class ActiveAd extends Component {
 
   render () {
     if (this.props.adData.adData[this.props.orderId]) {
-<<<<<<< HEAD
       var adDetails = this.props.adData.adData[this.props.orderId];
       var display_id
       if (adDetails.contractAddress){
@@ -52,16 +51,10 @@ export default class ActiveAd extends Component {
       } else {
         display_id = "-"
       }
-      var availableBalance;
-      if(adDetails.availableBalance) {
-        availableBalance = (adDetails.availableBalance % 1 != 0) ? adDetails.availableBalance.toFixed(4) : adDetails.availableBalance;
-=======
-      var adDetails = this.props.adData.adData[this.props.orderId]
       var availableBalance
       if (adDetails.availableBalance) {
         availableBalance = adDetails.availableBalance - adDetails.pendingBalance
         availableBalance = (availableBalance % 1 !== 0) ? availableBalance.toFixed(4) : availableBalance
->>>>>>> origin/master
       }
       var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad'
 
