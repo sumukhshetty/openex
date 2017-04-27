@@ -50,6 +50,10 @@ export default class BuyTradeOrder extends Component {
     this.props.onBeforeComponentLoad(this.props.params.orderId, this.props.web3.web3);
   }
 
+  componentWillUnmount() {
+    this.props.resetState();
+  }
+
   render () {
     var sellOrder = this.props.sellOrderDetail.sellOrder;
     var userInfo = this.props.user.userInfo;

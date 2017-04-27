@@ -1,4 +1,4 @@
-var C = require("../constants");
+var C = require('./constants')
 
 module.exports = {
 /*    feedback: [
@@ -6,16 +6,26 @@ module.exports = {
         {msg:"1) How to use Redux + Firebase",error:false},
         {msg:"2) How to use authentication in a Redux app",error:false},
         {msg:"3) How to have all UI state in Redux and none in the components",error:false}
-    ],*/
-    auth: {
-        currently: C.ANONYMOUS,
-        username: null,
-        uid: null
-    },
+    ], */
+  auth: {
+    currently: C.ANONYMOUS,
+    status: 'ANONYMOUS',
+    username: null,
+    uid: null,
+    email: null,
+    displayName: null,
+    photoURL: null
+  }
+  // ,
+  // chatrooms: {
+  //   id: {
+  //     messages: {}
+  //   }
+  // }
 /*    quotes: {
         hasreceiveddata: false,
         submittingnew: false,
         states: {}, // this will store per quote id if we're reading, editing or awaiting DB response
         data: {} // this will contain firebase data
-    }*/
-};
+    } */
+}
