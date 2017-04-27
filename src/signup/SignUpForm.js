@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class SignUpForm extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       name: '',
       signUpInfo: {},
@@ -11,52 +11,52 @@ class SignUpForm extends Component {
       email: '',
       password: '',
       web3: this.props.web3
-    };
+    }
   }
 
   handleSubmit (event) {
     event.preventDefault()
-    this.props.onSignUpFormSubmit(this.state.signUpInfo, this.state.web3.web3);
+    this.props.onSignUpFormSubmit(this.state.signUpInfo, this.state.web3.web3)
   }
   onInputChange (event) {
-    var _signUpInfo = this.state.signUpInfo;
+    var _signUpInfo = this.state.signUpInfo
     if (event.target.id === 'email') {
       _signUpInfo = Object.assign({},
         this.state.signUpInfo, {email: event.target.value}
-      );
+      )
     }
 
     if (event.target.id === 'country') {
       _signUpInfo = Object.assign({},
         this.state.signUpInfo, {country: event.target.value}
-      );
+      )
     }
     // TODO maybe hash the password
     if (event.target.id === 'password') {
       _signUpInfo = Object.assign({},
         this.state.signUpInfo, {password: event.target.value}
-      );
+      )
     }
     if (event.target.id === 'username') {
       _signUpInfo = Object.assign({},
         this.state.signUpInfo, {username: event.target.value}
-      );
+      )
     }
-    this.setState({ signUpInfo: _signUpInfo });
+    this.setState({ signUpInfo: _signUpInfo })
   }
 
   render () {
     var error_message
-    if (this.props.user.error){
+    if (this.props.user.error) {
       error_message = this.props.user.error.message
     }
     return (
 
       <form action='#' className='pure-form' onSubmit={this.handleSubmit.bind(this)}>
-        <input id='email' name='email' type='email' placeholder='Email address' onChange={this.onInputChange.bind(this)} required />
-        <input id='username' name='username' type='text' placeholder='Username' onChange={this.onInputChange.bind(this)} required />
-        <input id='password' type='password' value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder='password' required />
-        <select name='country' id='country' onChange={this.onInputChange.bind(this)} required>
+        <input className='mv1' id='email' name='email' type='email' placeholder='Email address' onChange={this.onInputChange.bind(this)} required />
+        <input className='mv1' id='username' name='username' type='text' placeholder='Username' onChange={this.onInputChange.bind(this)} required />
+        <input className='mv1' id='password' type='password' value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder='password' required />
+        <select className='mv1' name='country' id='country' onChange={this.onInputChange.bind(this)} required>
 
           <option value='--'>Select Country</option>
           <option value='AF'>Afghanistan</option>
@@ -310,13 +310,13 @@ class SignUpForm extends Component {
           <option value='AX'>Åland Islands</option>
 
         </select>
-        <div style={{color:"red"}}>{error_message}</div>
+        <div style={{color: 'red'}}>{error_message}</div>
         <button type='submit' className='pure-button pure-button-primary spaced-button gradient right mb3'>
           Sign up &rarr;
         </button>
       </form>
-    );
+    )
   }
 }
 
-export default SignUpForm;
+export default SignUpForm

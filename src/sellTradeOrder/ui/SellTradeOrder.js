@@ -50,7 +50,9 @@ export default class SellTradeOrder extends Component {
   }
 
   render () {
+    console.log("SellTradeOrder**")
     var buyOrder = this.props.buyOrderDetail.buyOrder;
+    console.log(buyOrder)
     var userInfo = this.props.user.userInfo;
     if(buyOrder && userInfo) {
     return (
@@ -95,9 +97,7 @@ export default class SellTradeOrder extends Component {
               <div className='w-50 mt5'>
                 <p className='b tc measure'>Terms of Trade</p>
                 <p className='pv1 measure'>
-                Create an ether trade advertisment if you plan to trade ether regularly. We recommend clicking on buy or sell if you want to trade quicker.
-                Creating an advertisement is FREE. Sellers have to pay gas fee for uploading a sell contract.
-                Before setting up your advertisemnt  please read though our terms of service and the online sale advertisement guide
+                {buyOrder.termsOfTrade}
             </p>
               </div>
             </div>

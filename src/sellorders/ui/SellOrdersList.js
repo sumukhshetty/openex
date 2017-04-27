@@ -4,7 +4,7 @@ import SingleSellOrder from './SingleSellOrder'
 import LoadMoreSellOrders from './LoadMoreSellOrders'
 
 class SellOrdersList extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -15,7 +15,6 @@ class SellOrdersList extends Component {
       sellorders: this.props.sellorders
     }
   }
-
 
   render(){
     var sellorders = this.props.sellorders.sellorders;
@@ -32,10 +31,10 @@ class SellOrdersList extends Component {
 
     return (
       <div>
-      {rows}
-      <div>
-      <LoadMoreSellOrders />
-      </div>
+        {rows}
+        <div>
+          <LoadMoreSellOrders />
+        </div>
       </div>)
   }
 }
