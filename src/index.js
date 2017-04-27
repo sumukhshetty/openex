@@ -33,6 +33,7 @@ import SellTradeOrder from './sellTradeOrder/layouts/SellTradeOrder'
 import User from './userScreen/layouts/UserScreen'
 import TermsOfService from './termsofservice/TermsOfService'
 import ResetPassword from './signup/ResetPassword'
+import ChatBox from './chat/containers/ChatBox'
 
 // Redux Store
 import store from './store'
@@ -81,6 +82,7 @@ ReactDOM.render((
         <Route path='allDone/:orderId' component={UserIsAuthenticated(AllDone)} />
         <Route path='termsofservice' component={UserIsAuthenticated(TermsOfService)} />
         <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} />
+        <Route path='chat' component={UserIsAuthenticated(ChatBox)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>

@@ -31,11 +31,17 @@ const userReducer = (state = initialState, action) => {
       data: null,
       error: action.payload
     })
-  }  
+  }
   if(action.type === 'GET_USER_INFO')
   {
     return Object.assign({}, state, {
       userInfo: action.payload
+    })
+  }
+  if(action.type === 'CLEAR_USER_INFO')
+  {
+    return Object.assign({}, state, {
+      userInfo: null
     })
   }
 

@@ -16,7 +16,9 @@ import adReducer from './adlist/adreducer'
 import adListReducer from './adlist/adlistreducer'
 import etherSendReducer from './adlist/sendetherreducer'
 import sellOrderContractReducer from './buyTradeOrder/sellOrderContractReducer'
-
+import chatAuthReducer from './chat/reducers/auth'
+import newMessageReducer from './chat/reducers/newMessage'
+import ChatMessageReducer from './chat/reducers/messages'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -35,7 +37,10 @@ const reducer = combineReducers({
   activeTradeData: activeTradeReducer,
   adData: adReducer,
   sendEtherState: etherSendReducer,
-  sellOrderContract: sellOrderContractReducer
+  sellOrderContract: sellOrderContractReducer,
+  chatAuth: chatAuthReducer,
+  newMessage: newMessageReducer,
+  chatMessages: ChatMessageReducer
 })
 
 export default reducer
