@@ -66,6 +66,7 @@ export default class BuyTradeOrder extends Component {
         if(availableBalance > 0) {
           requestComponent = <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to buy?</h2>
+            <h2 className='pv1 tc'>Available:{availableBalance}</h2>
             <div className='flex mxc'><Converter maxEther={availableBalance} handleTradeRequest={this.handleTradeRequest.bind(this)}
               onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>
           </div>
@@ -112,9 +113,7 @@ export default class BuyTradeOrder extends Component {
                 <div className='w-50 mt5'>
                   <p className='b tc measure'>Terms of Trade</p>
                   <p className='pv1 measure'>
-                  Create an ether trade advertisment if you plan to trade ether regularly. We recommend clicking on buy or sell if you want to trade quicker.
-                  Creating an advertisement is FREE. Sellers have to pay gas fee for uploading a sell contract.
-                  Before setting up your advertisemnt  please read though our terms of service and the online sale advertisement guide
+                  {sellOrder.termsOfTrade}
               </p>
                 </div>
               </div>

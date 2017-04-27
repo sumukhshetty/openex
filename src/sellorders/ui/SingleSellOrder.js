@@ -10,7 +10,7 @@ const moment = require('moment')
 const SingleSellOrder = (props) => {
   return (
     <tr className='flex list bg-white pa3 ma2 gray'>
-      <td className='fb20' >{props.sellOrderData.sellerUsername} - {props.sellOrderData.location}</td>
+      <td className='fb20' >1 {props.sellOrderData.sellerUsername} - {props.sellOrderData.location}</td>
       <td className='fb10 tc' >{props.sellOrderData.paymentMethod}</td>
       {/*TODO: get the price equation working*/}
       <td className='fb15 tc' >{props.sellOrderData.amount} INR</td>
