@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 export default class ActiveAdHeader extends Component {
   render () {
@@ -15,6 +15,6 @@ export default class ActiveAdHeader extends Component {
           <th className='fb15 tc'>&nbsp;</th>
         </tr>
       </thead>
-    );
+    )
   }
 }
