@@ -12,7 +12,7 @@ class AwaitingEscrow extends Component {
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
-          <ActiveTradeInfo params={this.props.params} />
+          <ActiveTradeInfo params={this.props.order} />
           <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
             <ChatBox

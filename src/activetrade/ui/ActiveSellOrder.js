@@ -119,25 +119,29 @@ class ActiveSellOrder extends Component {
           progress_map={progress_maps[status]}
           viewerRole={viewerRole} confirmTrade={this.confirmTrade.bind(this)} tradeId={this.props.params.orderId || this.props.params.requestId}
           buyerId={this.props.sellOrderDetail.sellOrder.buyerUid}
-          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} />,
+          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} 
+          order={this.props.sellOrderDetail.sellOrder} />,
         'Awaiting Payment': <Payment
           step={status}
           viewerRole={viewerRole}
           progress_map={progress_maps[status]} confirmPayment={this.confirmPayment.bind(this)} tradeId={this.props.params.orderId || this.props.params.requestId}
           buyerId={this.props.sellOrderDetail.sellOrder.buyerUid}
-          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} />,
+          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} 
+          order={this.props.sellOrderDetail.sellOrder} />,
         'Awaiting Release': <Release
           step={status}
           viewerRole={viewerRole}
           progress_map={progress_maps[status]} releaseEther={this.releaseEther.bind(this)} tradeId={this.props.params.orderId || this.props.params.requestId}
           buyerId={this.props.sellOrderDetail.sellOrder.buyerUid}
-          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} />,
+          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} 
+          order={this.props.sellOrderDetail.sellOrder} />,
         'All Done': <AllDone
           step={status}
           viewerRole={viewerRole}
           progress_map={progress_maps[status]} tradeId={this.props.params.orderId || this.props.params.requestId}
           buyerId={this.props.sellOrderDetail.sellOrder.buyerUid}
-          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} />
+          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} 
+          order={this.props.sellOrderDetail.sellOrder} />
       }
 
       currentStep = tradeFlowComponents[status]
