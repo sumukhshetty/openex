@@ -7,6 +7,7 @@ import BuyerStepNote from '../ui/BuyerStepNoteBuy'
 import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class PaymentConfirmed extends Component {
+
   render () {
     return (
       <section className='bg-smoke'>
@@ -26,6 +27,7 @@ class PaymentConfirmed extends Component {
                 <SellerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />
                 <div className='tc'>
                   <button onClick={this.props.releaseEther}>
+
                    Release Ether
                  </button>
                 </div>

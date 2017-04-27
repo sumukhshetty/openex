@@ -19,6 +19,10 @@ import SellOrderDetail from './sellorderdetail/layouts/SellOrderDetail'
 import Login from './user/layouts/login/Login'
 import BuyOrders from './buyorders/layouts/BuyOrders'
 import SellOrders from './sellorders/layouts/SellOrders'
+<<<<<<< HEAD
+=======
+
+>>>>>>> 55c45041646b86f725ff1a6524ba343d7e3f0973
 import Help from './help/layouts/Help'
 import Payment from './activetrade/layouts/Payment'
 import Release from './activetrade/layouts/Release'
@@ -32,6 +36,7 @@ import SellTradeOrder from './sellTradeOrder/layouts/SellTradeOrder'
 import User from './userScreen/layouts/UserScreen'
 import TermsOfService from './termsofservice/TermsOfService'
 import ResetPassword from './signup/ResetPassword'
+import ChatBox from './chat/containers/ChatBox'
 
 // Redux Store
 import store from './store'
@@ -80,6 +85,7 @@ ReactDOM.render((
         <Route path='allDone/:orderId' component={UserIsAuthenticated(AllDone)} />
         <Route path='termsofservice' component={UserIsAuthenticated(TermsOfService)} />
         <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} />
+        <Route path='chat' component={UserIsAuthenticated(ChatBox)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>

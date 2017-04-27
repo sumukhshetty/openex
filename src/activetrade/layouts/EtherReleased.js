@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
 import ChatBox from '../../chat/containers/ChatBox'
+import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
+import BuyerStepNote from '../ui/BuyerStepNoteBuy'
+import SellerStepNote from '../ui/SellerStepNoteBuy'
 import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback'
 
 class EtherReleased extends Component {

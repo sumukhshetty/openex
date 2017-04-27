@@ -21,6 +21,7 @@ class InEscrow extends Component {
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
+
                 <div>
                   <BuyerStepNote step={this.props.step} />
                   <div className='tc'>
@@ -32,6 +33,7 @@ class InEscrow extends Component {
               }
               {this.props.viewerRole === 'seller' &&
               <SellerStepNote step={this.props.step} />}
+
               <CancelTrade />
             </div>
           </div>

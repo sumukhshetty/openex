@@ -7,6 +7,9 @@ import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
 
+import Dot from '../../images/svgReactComponents/Dot.js'
+import { Link } from 'react-router'
+
 class Release extends Component {
 
   render () {

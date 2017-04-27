@@ -5,6 +5,8 @@ import ChatBox from '../../chat/containers/ChatBox'
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
+import Dot from '../../images/svgReactComponents/Dot.js'
+import { Link } from 'react-router'
 
 class Confirmation extends Component {
   render () {
@@ -28,6 +30,7 @@ class Confirmation extends Component {
                 <SellerStepNote step={this.props.step} />
                 <div className='tc'>
                   <button onClick={this.props.confirmTrade}>
+
                    Confirm Trade
                  </button>
                 </div>

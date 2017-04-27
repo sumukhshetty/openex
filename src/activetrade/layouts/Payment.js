@@ -5,6 +5,8 @@ import ChatBox from '../../chat/containers/ChatBox'
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
+import Dot from '../../images/svgReactComponents/Dot.js'
+import { Link } from 'react-router'
 
 class Payment extends Component {
   render () {
@@ -20,6 +22,7 @@ class Payment extends Component {
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'seller' &&
+
               <SellerStepNote step={this.props.step} />}
               {this.props.viewerRole === 'buyer' &&
               <div>
