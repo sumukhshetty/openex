@@ -20,8 +20,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(buyOrder(orderId))
     },
 
-    acceptOrder: (amount, buyerAddress, orderId, uid, buyerUid, web3) => {
-      dispatch(createBuyOrderContract(amount, buyerAddress, orderId, uid, buyerUid, web3));
+    acceptOrder: (amount, price, buyerAddress, orderId, uid, buyerUid, web3) => {
+      dispatch(createBuyOrderContract(amount, price, buyerAddress, orderId, uid, buyerUid, web3));
     },
 
     getAvailableBalance: (contractAddress, web3) => {

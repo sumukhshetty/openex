@@ -58,6 +58,8 @@ exports.buyOrderCreated = functions.https.onRequest((req, res) => {
           .set(req.body.contractAddress);
         admin.database().ref('/buyorders/' + req.body.orderId + '/status')
           .set('Awaiting Escrow');
+        admin.database().ref('/buyorders/' + req.body.orderId + '/price')
+          .set(req.body.price);
 
         admin.database().ref('users/' + snapshot.val()['buyerUid']).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
         admin.database().ref('users/' + req.body.sellerUid).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
