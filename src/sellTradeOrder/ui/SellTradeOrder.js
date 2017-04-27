@@ -7,6 +7,7 @@ export default class SellTradeOrder extends Component {
     super(props);
     this.state = {
       web3: this.props.web3,
+      etherPrices: this.props.etherPrices,
       user: this.props.user,
       buyOrderDetail: this.props.buyOrderDetail,
       method: 'UPI',
@@ -61,7 +62,7 @@ export default class SellTradeOrder extends Component {
               <table className='lh-copy'>
                 <tr>
                   <td className='w4 pv2'>Price</td>
-                  <td className='green'>{this.state.price} INR/ETH</td>
+                  <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] * buyOrder.margin : 'Getting price...'} INR/ETH</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Payment Method</td>

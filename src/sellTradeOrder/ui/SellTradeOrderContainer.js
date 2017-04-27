@@ -6,6 +6,7 @@ import { buyOrder, createBuyOrderContract, availableBalance, resetStatus } from 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    etherPrices: state.etherPrices,
     user: state.user,
     buyOrderDetail: state.buyOrderDetail,
     params: ownProps.params,
