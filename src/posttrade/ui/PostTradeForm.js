@@ -11,6 +11,7 @@ class PostTradeForm extends Component {
 
     this.state = {
       web3: this.props.web3,
+      etherPrices: this.props.etherPrices,
       postTradeDetails: {
         tradeType: '',
         amount: 0,
@@ -202,7 +203,7 @@ class PostTradeForm extends Component {
             <div className='flex mv3'>
               <label htmlFor='equation' className='w5' >Price equation</label>
               <div className='flex col'><input id='equation' name='equation' type='text' value={this.state.postTradeDetails.equation} onChange={this.onInputChange.bind(this)} placeholder='Kraken_API' className='w5'/>
-                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.state.currentETHMarketValue} INR/ETH</span></small>
+                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] : 'Getting price...'} INR/ETH</span></small>
               </div>
 
               <span className='measure-narrow fw1 i pa0 me'>
