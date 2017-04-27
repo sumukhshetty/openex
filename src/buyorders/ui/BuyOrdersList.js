@@ -1,31 +1,31 @@
-import React, { Component } from 'react';
-import * as _ from 'lodash';
-import UserBuyOrdersContainer from './UserBuyOrdersContainer';
-import LoadMoreBuyOrders from './LoadMoreBuyOrders';
-import SingleBuyOrder from './SingleBuyOrder';
+import React, { Component } from 'react'
+import * as _ from 'lodash'
+import UserBuyOrdersContainer from './UserBuyOrdersContainer'
+import LoadMoreBuyOrders from './LoadMoreBuyOrders'
+import SingleBuyOrder from './SingleBuyOrder'
 
 class BuyOrdersList extends Component {
   constructor (props) {
-    super(props);
+    super(props)
 
     this.state = {
       web3: this.props.web3,
       user: this.props.user,
       usersInfo: this.props.usersInfo,
       buyorders: this.props.buyorders
-    };
+    }
   }
 
   render () {
-    var buyorders = this.props.buyorders.buyorders;
-    var usersInfo = this.props.usersInfo.usersInfo;
-    var userData;
-    console.log('buyorders');
-    console.log(buyorders);
+    var buyorders = this.props.buyorders.buyorders
+    var usersInfo = this.props.usersInfo.usersInfo
+    var userData
+    // console.log('buyorders');
+    // console.log(buyorders);
     const rows = _.map(buyorders, function (buyOrderData, key) {
-      userData = (usersInfo) ? usersInfo[buyOrderData.buyerUid] : null;
-      return <SingleBuyOrder buyOrderData={buyOrderData} userData={userData} userId={key} key={key} />;
-    });
+      userData = (usersInfo) ? usersInfo[buyOrderData.buyerUid] : null
+      return <SingleBuyOrder buyOrderData={buyOrderData} userData={userData} userId={key} key={key} />
+    })
 
     return (
       <div>
@@ -33,8 +33,8 @@ class BuyOrdersList extends Component {
         <div>
           <LoadMoreBuyOrders />
         </div>
-      </div>);
+      </div>)
   }
 }
 
-export default BuyOrdersList;
+export default BuyOrdersList

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import BuyOrdersContainer from './../ui/BuyOrdersContainer';
+import React, { Component } from 'react'
+import BuyOrdersContainer from './../ui/BuyOrdersContainer'
 
 export default class BuyOrders extends Component {
   render () {
@@ -9,6 +9,6 @@ export default class BuyOrders extends Component {
           <BuyOrdersContainer />
         </div>
       </div>
-    );
+    )
   }
 }
