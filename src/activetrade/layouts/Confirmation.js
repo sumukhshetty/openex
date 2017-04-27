@@ -5,14 +5,8 @@ import ChatBox from '../../chat/containers/ChatBox'
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
-import Dot from '../../images/svgReactComponents/Dot.js'
-import { Link } from 'react-router'
 
-class ReviewActiveTrade extends Component {
-  constructor (props) {
-    super(props)
-  }
-
+class Confirmation extends Component {
   render () {
     // NOTE / TODO: above variables hold mock data
 
@@ -27,9 +21,9 @@ class ReviewActiveTrade extends Component {
               sellerId={this.props.sellerId}
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
-              {this.props.viewerRole == 'buyer' &&
+              {this.props.viewerRole === 'buyer' &&
               <BuyerStepNote step={this.props.step} />}
-              {this.props.viewerRole == 'seller' &&
+              {this.props.viewerRole === 'seller' &&
               <div>
                 <SellerStepNote step={this.props.step} />
                 <div className='tc'>
@@ -47,4 +41,4 @@ class ReviewActiveTrade extends Component {
   }
 }
 
-export default ReviewActiveTrade
+export default Confirmation

@@ -19,7 +19,6 @@ export default class ActiveAd extends Component {
   }
 
   componentWillMount () {
-    console.log(this.props.orderId)
     this.props.onBeforeComponentLoads(this.props.orderId, this.props.tradeType)
   }
 
@@ -46,17 +45,19 @@ export default class ActiveAd extends Component {
   render () {
     if (this.props.adData.adData[this.props.orderId]) {
       var adDetails = this.props.adData.adData[this.props.orderId]
-      var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad'
+      var availableBalance
+      if (adDetails.availableBalance) {
+        availableBalance = (adDetails.availableBalance % 1 !== 0) ? adDetails.availableBalance.toFixed(4) : adDetails.availableBalance
+      }
 
       return (
         <tr className='flex cxc'>
           <td className='fb5 tc'><i>Fix me</i></td>
           <td className='fb10 tc'>{adDetails.active ? <span className='green'>Live</span> : <span className='danger'>Disabled</span>}</td>
-          <td className='fb10 tc'>{adDetails.tradeType}</td>
-          <td className='fb10 tc'>{adDetails.availableBalance || 0}</td>
+          <td className='fb10 tc'>{adDetails.tradeType === 'sell-ether' ? 'Sell Online' : 'Buy Online'}</td>
+          <td className='fb10 tc'>{adDetails.tradeType === 'sell-ether' ? (availableBalance || 0) : '-'}</td>
           <td className='fb10 tc'>{adDetails.location}</td>
           <td className='fb10 tc'>{adDetails.paymentMethod}</td>
-          <td className='fb10 tc'><i >Fix me</i></td>
           <td className='fb10 tc'>{adDetails.minTransactionLimit} - {adDetails.maxTransactionLimit}</td>
 
           <span className='me flex'>

@@ -1,6 +1,3 @@
-import SellOrderContract from '../../../build/contracts/SellOrder.json';
-const contract = require('truffle-contract')
-
 import {firebaseRef} from './../../index.js'
 
 export const GET_AD = 'GET_AD'
@@ -27,8 +24,6 @@ module.exports = {
     firebaseRef.database()
       .ref(url+'/'+orderId)
       .on("value", function(snapshot){
-        console.log('snapshot.val() [ActiveAdActions]');
-        console.log(snapshot.val());
         dispatch(getAdData(snapshot.val(), orderId))
       })
   },
@@ -42,22 +37,6 @@ module.exports = {
     web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, address) {
       if(!err) {
         dispatch(sendEtherState('sent'));
-        // const order = contract(SellOrderContract);
-        // order.setProvider(web3.currentProvider);
-        // var orderInstance;
-        // order.at(contractAddress)
-        //   .then(function (_order) {
-        //     orderInstance = _order;
-        //     return orderInstance.availableFunds();
-        //   })
-        //   .then(function(balance) {
-        //     let newBalance = web3.fromWei(balance, 'ether').toNumber() + amount;
-        //     firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
-        //     .set(newBalance)
-        //     .then(function() {
-        //       dispatch(sendEtherState('sent'));
-        //     });
-        //   })
       } else {
         if(err.message.includes('MetaMask Tx Signature: User denied')) {
           console.log('ERROR: User denied transaction');

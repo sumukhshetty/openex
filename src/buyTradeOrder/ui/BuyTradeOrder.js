@@ -58,7 +58,7 @@ export default class BuyTradeOrder extends Component {
     </div>;
     if(sellOrder && userInfo) {
       var availableBalance = this.props.sellOrderContract.availableBalance;
-      if(typeof availableBalance != 'undefined') {
+      if(typeof availableBalance !== 'undefined') {
         if(availableBalance > 0) {
           requestComponent = <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to buy?</h2>

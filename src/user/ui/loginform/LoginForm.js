@@ -28,15 +28,14 @@ class LoginForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    // TODO do any other validation on the signup form here
-/*    if (this.state.name.length < 2)
-    {
-      return alert('Please fill in your name.')
-    }*/
     this.props.onLoginFormSubmit(this.state.loginInfo, this.props.web3.web3)
   }
 
   render() {
+    var error_message
+    if (this.props.user.error){
+      error_message = this.props.user.error.message
+    }
     return(
       <form className="pure-form pure-form-stacked" onSubmit={this.handleSubmit.bind(this)}>
         <fieldset>
@@ -51,7 +50,7 @@ class LoginForm extends Component {
 
           <br />
 
-
+          <div style={{color:"red"}}>{error_message}</div>
           <button type="submit" className="pure-button pure-button-primary">Login</button>
         </fieldset>
       </form>

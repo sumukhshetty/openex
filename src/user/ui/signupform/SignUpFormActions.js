@@ -9,6 +9,13 @@ function userSignedUp (user) {
   }
 }
 
+function userSignedUpError (error) {
+  return {
+    type: 'USER_SIGNED_UP_ERROR',
+    payload: error
+  }
+}
+
 export function signUpUser (signUpInfo, web3) {
   return function (dispatch) {
     const auth = firebaseRef.auth()
@@ -25,7 +32,6 @@ export function signUpUser (signUpInfo, web3) {
         'username': username,
         'isAdmin': false,
         'trustworthiness': 'unknown',
-        'lastTransfer': 'unknown',
         'verifiedIdentification': false,
         'verifiedPhoneNumber': false,
         'verifiedEmail': false,
@@ -35,11 +41,16 @@ export function signUpUser (signUpInfo, web3) {
       firebaseUser.updateProfile({
         displayName: username
       })
+      firebaseUser.sendEmailVerification().then(function () {
+        // Email sent
+      }, function (error) {
+        dispatch(userSignedUpError(error))
+      })
       dispatch(userSignedUp(firebaseUser))
     }).catch(function (error) {
       errormessage = error.message
-      console.log(errormessage)
-      // TODO handleAuthError
+      console.log(error)
+      dispatch(userSignedUpError(error))
     })
   }
 }

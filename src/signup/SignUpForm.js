@@ -15,7 +15,7 @@ class SignUpForm extends Component {
   }
 
   handleSubmit (event) {
-    // event.preventDefault()
+    event.preventDefault()
     this.props.onSignUpFormSubmit(this.state.signUpInfo, this.state.web3.web3);
   }
   onInputChange (event) {
@@ -46,6 +46,10 @@ class SignUpForm extends Component {
   }
 
   render () {
+    var error_message
+    if (this.props.user.error){
+      error_message = this.props.user.error.message
+    }
     return (
 
       <form action='#' className='pure-form' onSubmit={this.handleSubmit.bind(this)}>
@@ -306,7 +310,7 @@ class SignUpForm extends Component {
           <option value='AX'>Åland Islands</option>
 
         </select>
-
+        <div style={{color:"red"}}>{error_message}</div>
         <button type='submit' className='pure-button pure-button-primary spaced-button gradient right mb3'>
           Sign up &rarr;
         </button>

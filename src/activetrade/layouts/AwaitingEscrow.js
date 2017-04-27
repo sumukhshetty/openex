@@ -5,14 +5,8 @@ import ChatBox from '../../chat/containers/ChatBox'
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteBuy'
 import SellerStepNote from '../ui/SellerStepNoteBuy'
-import Dot from '../../images/svgReactComponents/Dot.js'
-import { Link } from 'react-router'
 
-class ReviewActiveTrade extends Component {
-
-  constructor (props) {
-    super(props)
-  }
+class AwaitingEscrow extends Component {
 
   render () {
     return (
@@ -26,9 +20,9 @@ class ReviewActiveTrade extends Component {
               sellerId={this.props.sellerId}
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
-              {this.props.viewerRole == 'buyer' &&
+              {this.props.viewerRole === 'buyer' &&
               <BuyerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />}
-              {this.props.viewerRole == 'seller' &&
+              {this.props.viewerRole === 'seller' &&
               <div>
                 <SellerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />
                 <div className='tc'>
@@ -46,4 +40,4 @@ class ReviewActiveTrade extends Component {
   }
 }
 
-export default ReviewActiveTrade
+export default AwaitingEscrow

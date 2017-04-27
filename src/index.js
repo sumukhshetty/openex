@@ -19,10 +19,8 @@ import SellOrderDetail from './sellorderdetail/layouts/SellOrderDetail'
 import Login from './user/layouts/login/Login'
 import BuyOrders from './buyorders/layouts/BuyOrders'
 import SellOrders from './sellorders/layouts/SellOrders'
-
 import Help from './help/layouts/Help'
 import Payment from './activetrade/layouts/Payment'
-// import Confirmation from './activetrade/layouts/Confirmation'
 import Release from './activetrade/layouts/Release'
 import AllDone from './activetrade/layouts/AllDone'
 import ActiveBuyOrder from './activetrade/layouts/ActiveBuyOrder'
@@ -32,7 +30,8 @@ import Static from './staticPages/Master/Static'
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder'
 import SellTradeOrder from './sellTradeOrder/layouts/SellTradeOrder'
 import User from './userScreen/layouts/UserScreen'
-import ChatBox from './chat/containers/ChatBox'
+import TermsOfService from './termsofservice/TermsOfService'
+import ResetPassword from './signup/ResetPassword'
 
 // Redux Store
 import store from './store'
@@ -79,7 +78,8 @@ ReactDOM.render((
         <Route path='payment/:orderId' component={UserIsAuthenticated(Payment)} />
         <Route path='release/:orderId' component={UserIsAuthenticated(Release)} />
         <Route path='allDone/:orderId' component={UserIsAuthenticated(AllDone)} />
-        <Route path='chat' component={UserIsAuthenticated(ChatBox)} />
+        <Route path='termsofservice' component={UserIsAuthenticated(TermsOfService)} />
+        <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>
@@ -90,6 +90,5 @@ ReactDOM.render((
 )
 
 setTimeout(function () {
-  store.dispatch(actions.startListeningToBuyOrders())
   store.dispatch(useractions.startListeningUserAuth())
 })

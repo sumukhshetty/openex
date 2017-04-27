@@ -83,15 +83,15 @@ class ActiveSellOrder extends Component {
     }
 
     var status = 'getting status....'
-    var sellOrder, request, currentStep, viewerRole
-    console.log(this.props)
+    var request, currentStep, viewerRole
+    // console.log(this.props)
     if (this.props.sellOrderDetail.sellOrder) {
       request = this.props.sellOrderDetail.sellOrder
 
-      console.log('buyerUid')
-      console.log(request.buyerUid)
-      console.log('user uid')
-      console.log(this.props.uid)
+      // console.log('buyerUid')
+      // console.log(request.buyerUid)
+      // console.log('user uid')
+      // console.log(this.props.uid)
 
       if (request.buyerUid === this.props.user.data.uid) {
         viewerRole = 'buyer'
@@ -141,8 +141,8 @@ class ActiveSellOrder extends Component {
       }
 
       currentStep = tradeFlowComponents[status]
-      console.log('status:' + status)
-      console.log('currentStep: ' + currentStep)
+      // console.log('status:' + status)
+      // console.log('currentStep: ' + currentStep)
 
       return (
         <section className='activeTrade'>

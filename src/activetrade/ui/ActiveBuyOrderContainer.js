@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import ActiveBuyOrder from './ActiveBuyOrder'
 import { buyOrder } from './ActiveBuyOrderActions'
-import { createBuyOrderContract } from './ActiveBuyOrderActions'
 import { clearBuyOrderState } from './ActiveBuyOrderActions'
 import { fillEscrow } from './ActiveBuyOrderActions'
 import { releaseEscrow } from './ActiveBuyOrderActions'
@@ -25,8 +24,8 @@ const mapDispatchToProps = (dispatch) => {
     clearBuyOrder: () => {
       dispatch(clearBuyOrderState())
     },
-    sendEther: (contractAddress, orderId, web3) => {
-      dispatch(fillEscrow(contractAddress, orderId, web3))
+    sendEther: (contractAddress, orderId, sellerUid, web3) => {
+      dispatch(fillEscrow(contractAddress, orderId, sellerUid, web3))
     },
     releaseEther: (contractAddress, orderId, web3, buyerUid, sellerUid) => {
       dispatch(releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))

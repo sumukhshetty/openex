@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { BuyForm } from './BuyForm';
 import { SellForm } from './SellForm';
 import PostTradeInstructions from './PostTradeInstructions';
+import MetaMaskWaitModal from './../../generic-components/metamaskmodal/MetaMaskWaitModal'
 // import {Input} from '../../components/Input';
-import { Link } from 'react-router';
 
 class PostTradeForm extends Component {
   constructor (props) {
@@ -31,7 +31,8 @@ class PostTradeForm extends Component {
       buyFormBool: false,
       user: this.props.user,
       uid: this.props.uid,
-      currentETHMarketValue: 1203
+      currentETHMarketValue: 1203,
+      showMetaMaskWaitModal: false
     };
   }
 
@@ -44,7 +45,14 @@ class PostTradeForm extends Component {
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid,// Submitting a from without changing values leaves them as blank
       paymentMethod: 'UPI'     // If defaults change, these must change as well.
-    }});
+    },
+    buyFormBool:true,
+    showMetaMaskWaitModal:false
+  });
+  }
+
+  showWaitModal () {
+    this.setState({showMetaMaskWaitModal: true});
   }
 
   onInputChange (event) {
@@ -138,11 +146,14 @@ class PostTradeForm extends Component {
       }
       );
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
+      this.showWaitModal()
       this.props.onPostTradeFormSubmit(
         _postTradeDetails,
         this.state.web3.web3,
         this.state
-      );
+      ).then(function(){
+        console.log("ok the thingy is gone")
+      });
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
       this.props.onBuyEtherFormSubmit(
@@ -225,6 +236,10 @@ class PostTradeForm extends Component {
                 maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
                 termsOfTrade={this.state.postTradeDetails.termsOfTrade} /> : <SellForm
               onChangeProp={this.onInputChange.bind(this)} />
+            }
+
+            {
+              (this.state.showMetaMaskWaitModal && <MetaMaskWaitModal/>)
             }
 
             <div className='flex mv3'>

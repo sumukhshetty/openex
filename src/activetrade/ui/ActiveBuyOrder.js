@@ -34,7 +34,7 @@ class ActiveBuyOrder extends Component {
   // }
 
   sendEther () {
-    this.props.sendEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.web3.web3)
+    this.props.sendEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.uid, this.props.web3.web3)
   }
 
   confirmPayment () {
@@ -84,12 +84,12 @@ class ActiveBuyOrder extends Component {
     if (this.props.buyOrderDetail.buyOrder) {
       buyOrder = this.props.buyOrderDetail.buyOrder
 
-      console.log('buyerUid')
-      console.log(buyOrder.buyerUid)
-      console.log('sellerUid')
-      console.log(buyOrder.sellerUid)
-      console.log('user uid')
-      console.log(this.props.uid)
+      // console.log('buyerUid')
+      // console.log(buyOrder.buyerUid)
+      // console.log('sellerUid')
+      // console.log(buyOrder.sellerUid)
+      // console.log('user uid')
+      // console.log(this.props.uid)
       if (buyOrder.buyerUid === this.props.uid) {
         viewerRole = 'buyer'
       } else if (buyOrder.sellerUid === this.props.uid) {
@@ -148,8 +148,8 @@ class ActiveBuyOrder extends Component {
       }
 
       currentStep = tradeFlowComponents[status]
-      console.log('status:' + status)
-      console.log('currentStep: ' + currentStep)
+      // console.log('status:' + status)
+      // console.log('currentStep: ' + currentStep)
 
       return (
         <section className='activeTrade'>

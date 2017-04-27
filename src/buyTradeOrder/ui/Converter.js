@@ -2,7 +2,6 @@ import React from 'react';
 import etherium from '../../images/etherium.png';
 import UsaFlag from '../../images/UsaFlag';
 import ConvertSymbol from '../../images/convert.png';
-import { Link } from 'react-router';
 
 export default (props) => (
   <form className='w-75 flex col cxc' onSubmit={props.handleTradeRequest}>

@@ -1,6 +1,4 @@
 import SellOrderContract from '../../../build/contracts/SellOrder.json'
-import { browserHistory } from 'react-router'
-import factoryAddress from '../../contract_addresses/orderfactory.js'
 
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
@@ -31,7 +29,6 @@ module.exports = {
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
-    var coinbase = web3.eth.coinbase;
     firebaseRef.database().ref('/sellorders/' + orderId)
       .once("value", function(snapshot){
         console.log('got sellorder by id');

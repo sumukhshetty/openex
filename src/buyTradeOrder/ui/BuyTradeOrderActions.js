@@ -1,6 +1,5 @@
 import SellOrderContract from '../../../build/contracts/SellOrder.json'
 import { browserHistory } from 'react-router'
-import factoryAddress from '../../contract_addresses/orderfactory.js'
 
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
@@ -31,7 +30,6 @@ function getBalance(balancePayload) {
 
 module.exports = {
   availableBalance: (orderId, contractAddress, availableBalance, pendingBalance, web3) => (dispatch) => {
-    var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
@@ -42,7 +40,7 @@ module.exports = {
       })
       .then(function(_availableBalance) {
         var contractBalance = web3.fromWei(_availableBalance, 'ether').toNumber();
-        if(contractBalance != (availableBalance+pendingBalance)) {
+        if(contractBalance !== (availableBalance+pendingBalance)) {
           firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
           .set(contractBalance-pendingBalance);
           dispatch(getBalance(contractBalance-pendingBalance))
@@ -63,7 +61,6 @@ module.exports = {
         // this.availableBalance(orderId, snapshot.val()['contractAddress'], snapshot.val()['availableBalance'], snapshot.val()['pendingBalance'], web3);
         let availableBalance = snapshot.val()['availableBalance'];
         let pendingBalance = snapshot.val()['pendingBalance'];
-        var coinbase = web3.eth.coinbase;
         const order = contract(SellOrderContract);
         order.setProvider(web3.currentProvider);
         var orderInstance;
@@ -74,7 +71,7 @@ module.exports = {
           })
           .then(function(_availableBalance) {
             var contractBalance = web3.fromWei(_availableBalance, 'ether').toNumber();
-            if(contractBalance != (availableBalance+pendingBalance)) {
+            if(contractBalance !== (availableBalance+pendingBalance)) {
               firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
               .set(contractBalance-pendingBalance);
               dispatch(getBalance(contractBalance-pendingBalance))

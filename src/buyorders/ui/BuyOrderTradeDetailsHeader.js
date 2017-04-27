@@ -8,7 +8,7 @@ class BuyOrderTradeDetailsHeader extends Component {
         <tr>
           <th className='fb20'>Username</th>
           <th className='fb10 tc'>Payment method</th>
-          <th className='fb15 tc'>Price/ether</th>
+          <th className='fb15 tc'>Amount</th>
           <th className='fb5 tc'>Limits</th>
           <th className='fb15 tc'>Last Transfer</th>
           <th className='fb15 tc'>Trustworthiness</th>

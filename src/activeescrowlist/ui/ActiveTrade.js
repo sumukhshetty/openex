@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 //TODO import HelpContainer
 import ViewActiveTradeButton from '../../activetrade/layouts/ViewActiveTradeButton'
-import { browserHistory } from 'react-router'
 
 class ActiveTrade extends Component {
   constructor(props){
@@ -15,13 +14,9 @@ class ActiveTrade extends Component {
   }
 
   componentWillMount(){
-    console.log(this.props.orderId)
     this.props.onBeforeComponentLoads(this.props.orderId, this.props.tradeType);
   }
   render() {
-
-    console.log('in render [ActiveTrade]' + this.props.orderId);
-    console.log(this.props.activeTradeData.activeTradeData);
     if(this.props.activeTradeData.activeTradeData[this.props.orderId]) {
       var tradeDetails = this.props.activeTradeData.activeTradeData[this.props.orderId];
       var tradeType = (this.props.tradeType === "buy-ether") ? 'Buy Order' : 'Sell Order'
@@ -44,35 +39,6 @@ class ActiveTrade extends Component {
               <ViewActiveTradeButton orderId={this.props.orderId} tradeType={tradeDetails.tradeType} />
             </tr>
         )
-      // if(this.props.tradeType === 'buy-ether') {
-      //   return(
-      //       <tr>
-      //         <td>1238</td>
-      //         <td>{tradeDetails.lastUpated}</td>
-      //         <td>{tradeType}</td>
-      //         <td>{username}</td>
-      //         <td>{tradeDetails.amount}</td>
-      //         <td>{tradeDetails.amount}</td>
-      //         <td>{tradeDetails.status}</td>
-      //         <td><i className='icon'>greendot</i> Active</td>
-      //         <ViewActiveTradeButton orderId={this.props.orderId} tradeType={tradeDetails.tradeType} />
-      //       </tr>
-      //   )
-      // } else if (this.props.tradeType === 'sell-ether') {
-      //   return(
-      //       <tr>
-      //         <td>1238</td>
-      //         <td>{tradeDetails.lastUpated}</td>
-      //         <td>{tradeType}</td>
-      //         <td>{username}</td>
-      //         <td>{tradeDetails.amount}</td>
-      //         <td>{tradeDetails.amount}</td>
-      //         <td>{tradeDetails.status}</td>
-      //         <td><i className='icon'>greendot</i> Active</td>
-      //         <ViewActiveTradeButton orderId={this.props.orderId} tradeType={tradeDetails.tradeType} />
-      //       </tr>
-      //   )
-      // }
     } else {
       return (
         null

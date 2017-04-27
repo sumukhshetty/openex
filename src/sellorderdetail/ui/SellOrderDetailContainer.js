@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import SellOrderDetail from './SellOrderDetail'
 import { sellOrder } from './SellOrderDetailActions'
-import { createSellOrderContract } from './SellOrderDetailActions'
 import { clearSellOrderState } from './SellOrderDetailActions'
 import { requestEtherFromSeller } from './SellOrderDetailActions'
 
