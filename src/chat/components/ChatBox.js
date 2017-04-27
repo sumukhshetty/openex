@@ -17,11 +17,23 @@ export default class ChatBox extends Component {
     this.props.clearMessagesFromState()
   }
 
+  componentDidUpdate (prevProps, prevState) {
+    this.scrollToBottom()
+  }
+
+  scrollToBottom () {
+    const {thing} = this.refs
+    thing.scrollTop = thing.scrollHeight - thing.clientHeight
+  }
+
   render () {
     const messages = this.props.chatMessages
     const you = this.props.chatAuth.uid
     return (
-      <div className='pa3 w-50 overflow-y-auto'>
+      <div
+        className='pa3 w-50 overflow-y-auto'
+        style={{height: '650px'}}
+        ref={`thing`} >
         {Object.keys(messages)
           .map((message, index) =>
           (

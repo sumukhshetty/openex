@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Other from '../../images/svgReactComponents/other.js'
 import You from '../../images/svgReactComponents/you.js'
 import stockPhoto from '../../images/downloadPhoto.png'
+const moment = require('moment')
 
 const ChatMessage = (props) => (
   <div className='flex col ma3'>
@@ -30,7 +31,7 @@ const ChatMessage = (props) => (
       </div>}
     </div>
     <time className={`ftiny ${props.you ? `cs` : `ce`}`}>
-      {(new Date(props.time)).toLocaleString()}
+      {moment(props.time).format('MMMM Do YYYY, h:mm:ss a')}
     </time>
   </div>
 )
