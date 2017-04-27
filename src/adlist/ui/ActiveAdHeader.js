@@ -5,7 +5,7 @@ export default class ActiveAdHeader extends Component {
     return (
       <thead>
         <tr>
-          <th className='fb5 tc'>#</th>
+          <th className='fb5 tc'>ID</th>
           <th className='fb10 tc'>Status</th>
           <th className='fb10 tc'>Info</th>
           <th className='fb10 tc'> Balance</th>

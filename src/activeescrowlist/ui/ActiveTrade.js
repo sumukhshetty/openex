@@ -19,6 +19,12 @@ class ActiveTrade extends Component {
   render() {
     if(this.props.activeTradeData.activeTradeData[this.props.orderId]) {
       var tradeDetails = this.props.activeTradeData.activeTradeData[this.props.orderId];
+      var display_id
+      if (tradeDetails.contractAddress){
+        display_id = tradeDetails.contractAddress.slice(2,6)
+      } else {
+        display_id = "-"
+      }
       var tradeType = (this.props.tradeType === "buy-ether") ? 'Buy Order' : 'Sell Order'
       var username;
       if(tradeDetails.buyerUid === this.props.user.data.uid) {
@@ -28,7 +34,7 @@ class ActiveTrade extends Component {
       }
       return(
             <tr>
-              <td className='fb5 tc'>1238</td>
+              <td className='fb5 tc'>{display_id}</td>
               <td className='fb15 tc'>{tradeDetails.lastUpated}</td>
               <td className='fb10 tc'>{tradeType}</td>
               <td className='fb15 tc'>{username}</td>
@@ -48,3 +54,4 @@ class ActiveTrade extends Component {
 }
 
 export default ActiveTrade
+

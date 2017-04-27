@@ -45,6 +45,12 @@ export default class ActiveAd extends Component {
   render () {
     if (this.props.adData.adData[this.props.orderId]) {
       var adDetails = this.props.adData.adData[this.props.orderId];
+      var display_id
+      if (adDetails.contractAddress){
+        display_id = adDetails.contractAddress.slice(2,6)
+      } else {
+        display_id = "-"
+      }
       var availableBalance;
       if(adDetails.availableBalance) {
         availableBalance = (adDetails.availableBalance % 1 != 0) ? adDetails.availableBalance.toFixed(4) : adDetails.availableBalance;
@@ -52,7 +58,7 @@ export default class ActiveAd extends Component {
 
       return (
         <tr className='flex cxc'>
-          <td className='fb5 tc'><i>Fix me</i></td>
+          <td className='fb5 tc'>{display_id}</td>
           <td className='fb10 tc'>{adDetails.active ? <span className='green'>Live</span> : <span className='danger'>Disabled</span>}</td>
           <td className='fb10 tc'>{adDetails.tradeType === 'sell-ether' ? 'Sell Online' : 'Buy Online'}</td>
           <td className='fb10 tc'>{adDetails.tradeType === 'sell-ether' ? (availableBalance || 0) : '-'}</td>
