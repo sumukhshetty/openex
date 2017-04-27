@@ -4,7 +4,7 @@ import SingleSellOrder from './SingleSellOrder'
 import LoadMoreSellOrders from './LoadMoreSellOrders'
 
 class SellOrdersList extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -15,24 +15,23 @@ class SellOrdersList extends Component {
     }
   }
 
-
-  render(){
-    var sellorders = this.props.sellorders.sellorders;
-    var usersInfo = this.props.usersInfo.usersInfo;
-    var userData;
-    console.log('sellorders');
-    console.log(sellorders);
-    const rows = _.map(sellorders,function(sellOrderData, key) {
-        userData = (usersInfo) ? usersInfo[sellOrderData.sellerUid] : null;
-        return <SingleSellOrder sellOrderData={sellOrderData} userData={userData} userId={key} key={key}/>
+  render () {
+    var sellorders = this.props.sellorders.sellorders
+    var usersInfo = this.props.usersInfo.usersInfo
+    var userData
+    console.log('sellorders')
+    console.log(sellorders)
+    const rows = _.map(sellorders, function (sellOrderData, key) {
+      userData = (usersInfo) ? usersInfo[sellOrderData.sellerUid] : null
+      return <SingleSellOrder sellOrderData={sellOrderData} userData={userData} userId={key} key={key} />
     })
 
     return (
       <div>
-      {rows}
-      <div>
-      <LoadMoreSellOrders />
-      </div>
+        {rows}
+        <div>
+          <LoadMoreSellOrders />
+        </div>
       </div>)
   }
 }

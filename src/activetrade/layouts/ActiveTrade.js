@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 // TODO import HelpContainer
-import ViewActiveTradeButton from './ViewActiveTradeButton';
+import ViewActiveTradeButton from './ViewActiveTradeButton'
 
 class ActiveTrade extends Component {
   // componentWillMount(){
@@ -8,7 +8,7 @@ class ActiveTrade extends Component {
   // }
   render () {
     return (
-      <tr>
+      <tr className='flex cxc'>
         <td className='fb20'>
           1238
         </td>
@@ -35,8 +35,8 @@ class ActiveTrade extends Component {
         </td>
         <ViewActiveTradeButton orderId={this.props.orderId} />
       </tr>
-    );
+    )
   }
 }
 
-export default ActiveTrade;
+export default ActiveTrade
