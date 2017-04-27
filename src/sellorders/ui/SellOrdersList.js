@@ -9,21 +9,24 @@ class SellOrdersList extends Component {
 
     this.state = {
       web3: this.props.web3,
+      etherPrices: this.props.etherPrices,
       user: this.props.user,
       usersInfo: this.props.usersInfo,
       sellorders: this.props.sellorders
     }
   }
 
-  render () {
-    var sellorders = this.props.sellorders.sellorders
-    var usersInfo = this.props.usersInfo.usersInfo
-    var userData
-    console.log('sellorders')
-    console.log(sellorders)
-    const rows = _.map(sellorders, function (sellOrderData, key) {
-      userData = (usersInfo) ? usersInfo[sellOrderData.sellerUid] : null
-      return <SingleSellOrder sellOrderData={sellOrderData} userData={userData} userId={key} key={key} />
+  render(){
+    var sellorders = this.props.sellorders.sellorders;
+    var usersInfo = this.props.usersInfo.usersInfo;
+    var etherPrices = this.props.etherPrices.etherPrices;
+    var userData, etherPrice;
+    console.log('sellorders');
+    console.log(sellorders);
+    const rows = _.map(sellorders,function(sellOrderData, key) {
+        userData = usersInfo ? usersInfo[sellOrderData.sellerUid] : null;
+        etherPrice = etherPrices ? etherPrices["INR"] : null;
+        return <SingleSellOrder sellOrderData={sellOrderData} etherPrice={etherPrice} userData={userData} userId={key} key={key}/>
     })
 
     return (

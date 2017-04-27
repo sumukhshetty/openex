@@ -7,6 +7,7 @@ export default class SellTradeOrder extends Component {
     super(props);
     this.state = {
       web3: this.props.web3,
+      etherPrices: this.props.etherPrices,
       user: this.props.user,
       buyOrderDetail: this.props.buyOrderDetail,
       method: 'UPI',
@@ -24,7 +25,7 @@ export default class SellTradeOrder extends Component {
 
   acceptOrder (e) {
     e.preventDefault();
-    this.props.acceptOrder(this.props.buyOrderDetail.buyOrder.amount, this.props.buyOrderDetail.buyOrder.buyerAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.user.data.uid, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.web3.web3);
+    this.props.acceptOrder(this.props.buyOrderDetail.buyOrder.amount, this.props.etherPrices.etherPrices["INR"], this.props.buyOrderDetail.buyOrder.buyerAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.user.data.uid, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.web3.web3);
   }
 
   handleConversion (amount) {
@@ -63,7 +64,7 @@ export default class SellTradeOrder extends Component {
               <table className='lh-copy'>
                 <tr>
                   <td className='w4 pv2'>Price</td>
-                  <td className='green'>{this.state.price} INR/ETH</td>
+                  <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] * buyOrder.margin : 'Getting price...'} INR/ETH</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Payment Method</td>

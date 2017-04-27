@@ -90,12 +90,13 @@ module.exports = {
 
 
 
-  requestEtherFromSeller: (amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3) => (dispatch) => {
+  requestEtherFromSeller: (amount, price, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3) => (dispatch) => {
     var coinbase = web3.eth.coinbase;
     var now = new Date();
     amount = Number(amount);
     var newRequest = firebaseRef.database().ref('/purchaserequests').push({
       amount: amount,
+      price: price,
       buyerAddress: coinbase,
       buyerUid: uid,
       buyerUsername: buyerUsername,

@@ -6,6 +6,7 @@ import { sellOrder, requestEtherFromSeller, availableBalance, resetBalance, rese
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    etherPrices: state.etherPrices,
     user: state.user,
     sellOrderDetail: state.sellOrderDetail,
     sellOrderContract: state.sellOrderContract,
@@ -20,8 +21,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(sellOrder(orderId, web3))
     },
 
-    requestEther: (amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3) => {
-      dispatch(requestEtherFromSeller(amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3));
+    requestEther: (amount, price, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3) => {
+      dispatch(requestEtherFromSeller(amount, price, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3));
     },
 
     getAvailableBalance: (contractAddress, web3) => {
