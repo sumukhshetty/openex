@@ -26,12 +26,12 @@ class SellOrders extends Component {
       <tr className='flex cxc mxc'>Buy Orders Loading...</tr>
     </tbody>)
     return (
-      <div>
+      <table>
         <SellOrderTradeDetailsHeader />
         <div>
           { sellorders.sellorders ? <SellOrdersListContainer /> : <SellOrdersLoadingDisplay />}
         </div>
-      </div>
+      </table>
     )
   }
 }
