@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import SignUpFormContainer from '../../ui/signupform/SignUpFormContainer';
-import UseChrome from '../../../layouts/unsupportedbrowser/UnsupportedBrowser';
+import React, { Component } from 'react'
+import SignUpFormContainer from '../../ui/signupform/SignUpFormContainer'
+import UseChrome from '../../../layouts/unsupportedbrowser/UnsupportedBrowser'
 
 class SignUp extends Component {
   render () {
-    const chrome = !/chrome/i.test(navigator.userAgent);
+    const chrome = !/chrome/i.test(navigator.userAgent)
     return (
       <main className='container'>
         {chrome && <UseChrome />}
@@ -16,8 +16,8 @@ class SignUp extends Component {
           </div>
         </div>
       </main>
-    );
+    )
   }
 }
 
-export default SignUp;
+export default SignUp

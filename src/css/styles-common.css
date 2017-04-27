@@ -376,7 +376,8 @@ input[type="radio"] {
 }
 
 input::placeholder,
-textarea::placeholder {
+textarea::placeholder,
+select {
   font-size: .75rem;
   font-style: italic;
   color: #9b9b9b;
