@@ -17,7 +17,7 @@ class ReviewActiveTrade extends Component {
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
-          <ActiveTradeInfo params={this.props.order} />
+          <ActiveTradeInfo params={this.props.order} viewerRole={this.props.viewerRole} />
           <Progress progress_map={progressMap} />
           <div className='flex'>
             <ChatBox

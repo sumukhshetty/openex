@@ -14,10 +14,21 @@ class ActiveTradeInfo extends Component {
     } else {
       display_id = "-"
     }
+
+    var action, action2, user;
+    if(this.props.viewerRole === 'seller') {
+      action = 'Selling'
+      action2 = 'Selling to'
+      user = _order.buyerUsername
+    } else {
+      action = 'Buying'
+      action2 = 'Buying from'
+      user = _order.sellerUsername
+    }
     return (
       <p className='flarge ma0 pt5 b measure-wide'>
-        Contract {display_id}: Buying {this.props.params.amount} ether for 2000000.00 INR with {_order.paymentMethod} payment. Buying from Victoria Padilla at the exchange
-        rate 2000 INR / ether.
+        Contract {display_id}: {action} {_order.amount} ether for {_order.amount * _order.price} INR with {_order.paymentMethod} payment. {action2} {user} at the exchange
+        rate {_order.price} INR / ether.
       </p>
     )
   }

@@ -16,6 +16,14 @@ function getBuyOrder (buyOrderPayload) {
   };
 }
 
+export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
+function sendEtherState(etherStatePayload) {
+  return {
+    type: ETHER_SEND_STATE,
+    payload: etherStatePayload
+  }
+}
+
 module.exports = {
   clearBuyOrderState: () => (dispatch) => {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
@@ -32,6 +40,7 @@ module.exports = {
 
   fillEscrow: (contractAddress, orderId, sellerUid, web3) => (dispatch) => {
     console.log('fillEscrow');
+    dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     const order = contract(BuyOrderContract);
     order.setProvider(web3.currentProvider);
@@ -68,12 +77,17 @@ module.exports = {
                 }
               });
           } else {
+            dispatch(sendEtherState('init'));
             console.log(err);
           }
         });
       });
 
     console.log('called fillEscrow [ActiveBuyOrderActions]');
+  },
+
+  resetSendEtherState: () => (dispatch) => {
+    dispatch(sendEtherState('init'));
   },
 
   paymentConfirmed: (orderId) => (dispatch) => {

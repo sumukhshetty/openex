@@ -1,37 +1,38 @@
 import { connect } from 'react-redux'
 import ActiveBuyOrder from './ActiveBuyOrder'
-import { buyOrder } from './ActiveBuyOrderActions'
-import { clearBuyOrderState } from './ActiveBuyOrderActions'
-import { fillEscrow } from './ActiveBuyOrderActions'
-import { releaseEscrow } from './ActiveBuyOrderActions'
-import { paymentConfirmed } from './ActiveBuyOrderActions'
+import * as actions from './ActiveBuyOrderActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     buyOrderDetail: state.buyOrderDetail,
+    sendEtherState: state.sendEtherState,
     params: ownProps.params,
     uid: ownProps.uid,
-    tradeId: ownProps.params.orderId
+    tradeId: ownProps.params.orderId,
+
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (orderId) => {
-      dispatch(buyOrder(orderId))
+      dispatch(actions.buyOrder(orderId))
     },
     clearBuyOrder: () => {
-      dispatch(clearBuyOrderState())
+      dispatch(actions.clearBuyOrderState())
     },
     sendEther: (contractAddress, orderId, sellerUid, web3) => {
-      dispatch(fillEscrow(contractAddress, orderId, sellerUid, web3))
+      dispatch(actions.fillEscrow(contractAddress, orderId, sellerUid, web3))
+    },
+    resetEtherState: () => {
+      dispatch(actions.resetSendEtherState());
     },
     releaseEther: (contractAddress, orderId, web3, buyerUid, sellerUid) => {
-      dispatch(releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))
+      dispatch(actions.releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))
     },
     confirmPayment: (orderId) => {
-      dispatch(paymentConfirmed(orderId))
+      dispatch(actions.paymentConfirmed(orderId))
     }
   }
 }
