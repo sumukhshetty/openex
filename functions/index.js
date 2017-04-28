@@ -17,6 +17,8 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
             .set('Initiated');
             admin.database().ref('/buyorders/'+orderId+'/sellerUid')
             .set('');
+            admin.database().ref('/buyorders/'+orderId+'/sellerUsername')
+            .set('');
           }
         })
       }, 40000)
@@ -35,6 +37,8 @@ exports.acceptbuy = functions.https.onRequest((req, res) => {
         .set('locked');
         admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUid')
         .set(req.body.sellerUid);
+        admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUsername')
+        .set(req.body.sellerUsername);
         res.status(200).send();
       } else {
         res.status(500).send({error: 'Status of order ' + req.body.orderId + ' is not Initiated'});
