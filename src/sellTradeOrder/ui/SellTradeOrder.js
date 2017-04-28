@@ -10,14 +10,7 @@ export default class SellTradeOrder extends Component {
       etherPrices: this.props.etherPrices,
       user: this.props.user,
       buyOrderDetail: this.props.buyOrderDetail,
-      method: 'UPI',
-      sellingTo: 'Victoria Padilla',
-      rating: 4.5,
-      price: 1203,
-      minLimit: 1000,
-      maxLimit: 200000,
-      currency: 'INR',
-      location: 'India'
+      rating: 4.5
     };
     this.handleConversion = this.handleConversion.bind(this);
     this.acceptOrder = this.acceptOrder.bind(this);
@@ -25,7 +18,7 @@ export default class SellTradeOrder extends Component {
 
   acceptOrder (e) {
     e.preventDefault();
-    this.props.acceptOrder(this.props.buyOrderDetail.buyOrder.amount, this.props.etherPrices.etherPrices["INR"], this.props.buyOrderDetail.buyOrder.buyerAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.user.data.uid, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.web3.web3);
+    this.props.acceptOrder(this.props.buyOrderDetail.buyOrder.amount, this.props.etherPrices.etherPrices["INR"], this.props.user.data.displayName, this.props.buyOrderDetail.buyOrder.buyerAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.user.data.uid, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.web3.web3);
   }
 
   handleConversion (amount) {

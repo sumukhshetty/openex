@@ -15,7 +15,8 @@ class ActiveBuyOrder extends Component {
       web3: this.props.web3,
       buyOrderDetail: this.props.buyOrderDetail,
       params: this.props.params,
-      uid: this.props.uid
+      uid: this.props.uid,
+      sendEtherState: this.props.sendEtherState
     }
   }
 
@@ -33,7 +34,12 @@ class ActiveBuyOrder extends Component {
   //   this.props.createBuyOrder(amount, buyerAddress, web3)
   // }
 
+  resetEtherState() {
+    this.props.resetEtherState();
+  }
+
   sendEther () {
+    this.setState({sendEtherLocked: true});
     this.props.sendEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.uid, this.props.web3.web3)
 
   }
@@ -118,16 +124,18 @@ class ActiveBuyOrder extends Component {
           viewerRole={viewerRole} contractAddress={buyOrder.contractAddress} sendEther={this.sendEther.bind(this)}
           tradeId={this.props.params.orderId}
           buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
-          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} 
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid}
           order={this.props.buyOrderDetail.buyOrder} />,
 
         'Awaiting Escrow': <AwaitingEscrow
           step='Awaiting Escrow'
           progress_map={progress_maps['Awaiting Escrow']}
           viewerRole={viewerRole} contractAddress={buyOrder.contractAddress} sendEther={this.sendEther.bind(this)}
+          sendEtherState={this.props.sendEtherState}
+          resetEtherState={this.resetEtherState.bind(this)}
           tradeId={this.props.params.orderId}
           buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
-          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} 
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid}
           order={this.props.buyOrderDetail.buyOrder} />,
 
         'In Escrow': <InEscrow
@@ -135,21 +143,21 @@ class ActiveBuyOrder extends Component {
           progress_map={progress_maps['In Escrow']} viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}
           tradeId={this.props.params.orderId}
           buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
-          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} 
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid}
           order={this.props.buyOrderDetail.buyOrder}/>,
         'Payment Confirmed': <PaymentConfirmed
           step='Payment Confirmed'
           progress_map={progress_maps['Payment Confirmed']} viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}
           tradeId={this.props.params.orderId}
           buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
-          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} 
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid}
           order={this.props.buyOrderDetail.buyOrder} />,
         'Ether Released': <EtherReleased
           step='Ether Released'
           progress_map={progress_maps['Ether Released']} viewerRole={viewerRole}
           tradeId={this.props.params.orderId}
           buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
-          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid} 
+          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid}
           order={this.props.buyOrderDetail.buyOrder} />
       }
 
