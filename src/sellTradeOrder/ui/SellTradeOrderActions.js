@@ -40,7 +40,7 @@ module.exports = {
       })
   },
 
-  createBuyOrderContract: (amount, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {
+  createBuyOrderContract: (amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
     var factoryInstance;
@@ -49,7 +49,8 @@ module.exports = {
 
     var postData = {
       orderId: orderId,
-      sellerUid: uid
+      sellerUid: uid,
+      sellerUsername: sellerUsername
     }
 
     var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/acceptbuy'
@@ -88,7 +89,8 @@ module.exports = {
                   orderId: orderId,
                   contractTx: txHash['tx'],
                   contractAddress: txHash['logs'][0]['args']['orderAddress'],
-                  sellerUid: uid
+                  sellerUid: uid,
+                  price: price
                 },
                 json: true,
                 url: 'https://us-central1-automteetherexchange.cloudfunctions.net/buyOrderCreated'

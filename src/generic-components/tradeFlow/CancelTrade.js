@@ -9,7 +9,7 @@ class CancelTrade extends Component {
           Resolve Trade Issues
         </p>
         <p>
-          Made a mistake with payment or want to try anouther seller? Never cancel if you already paid the seller.
+          Made a mistake with payment or want to try another seller? Never cancel if you already paid the seller.
         </p>
         <div className='tc'>
           <button className='bg-danger'>

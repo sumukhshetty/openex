@@ -10,6 +10,7 @@ import AutoLogoLight from './images/svgReactComponents/autoLogoLight.js'
 // UI Components
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import Web3InitContainer from './web3/Web3InitContainer'
+import EtherPriceContainer from './etherprice/EtherPriceContainer'
 import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
 import Footer from './footer/Footer'
@@ -90,6 +91,7 @@ class App extends Component {
 
     const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />)
 
+
     const isMobile = window.innerWidth <= 800
     if (isMobile) {
       return (
@@ -106,6 +108,7 @@ class App extends Component {
         <section className='Site'>
           <OnlyGuestLinks />
           <Web3InitContainer />
+          <EtherPriceContainer />
           <OnlyAuthLinks />
           {firebaseRef.auth().currentUser && <UserPresenceContainer />}
           <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>

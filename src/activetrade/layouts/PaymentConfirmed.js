@@ -2,17 +2,21 @@ import React, { Component } from 'react'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
 import ChatBox from '../../chat/containers/ChatBox'
-import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
+import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteBuy'
 import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class PaymentConfirmed extends Component {
 
+  componentDidUnmount() {
+    this.props.resetEtherState();
+  }
+
   render () {
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
-          <ActiveTradeInfo params={this.props.params} />
+          <ActiveTradeInfo params={this.props.order} viewerRole={this.props.viewerRole} />
           <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
             <ChatBox
@@ -26,13 +30,15 @@ class PaymentConfirmed extends Component {
               <div>
                 <SellerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />
                 <div className='tc'>
+                  {this.props.sendEtherState === 'init' &&
                   <button onClick={this.props.releaseEther}>
-
                    Release Ether
-                 </button>
+                 </button>}
+                 {this.props.sendEtherState === 'sending' &&
+                 <span>Please accept the transaction in MetaMask</span>}
                 </div>
               </div>}
-              <CancelTrade />
+              <DisputeTrade viewerRole={this.props.viewerRole}/>
             </div>
           </div>
         </div>
