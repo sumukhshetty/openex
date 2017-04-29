@@ -32,7 +32,6 @@ class PostTradeForm extends Component {
       buyFormBool: false,
       user: this.props.user,
       uid: this.props.uid,
-      currentETHMarketValue: 1203,
       showMetaMaskWaitModal: false
     };
   }
@@ -45,8 +44,8 @@ class PostTradeForm extends Component {
       buyerUsername: this.props.user.data.displayName,
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid,// Submitting a from without changing values leaves them as blank
-      paymentMethod: 'UPI',     // If defaults change, these must change as well.
-      margin: 1
+      paymentMethod: 'UPI',    // If defaults change, these must change as well.
+      margin: 0
     },
     buyFormBool:true,
     showMetaMaskWaitModal:false
@@ -140,11 +139,13 @@ class PostTradeForm extends Component {
   handleSubmit (event) {
     event.preventDefault();
     var now = new Date();
+    var margin = (1 + (this.state.postTradeDetails.margin * 0.01));
     var _postTradeDetails = Object.assign({},
       this.state.postTradeDetails,
       {lastUpated: now.toUTCString(),
         status: 'Initiated',
-        active: true
+        active: true,
+        margin: margin
       }
       );
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
@@ -198,7 +199,7 @@ class PostTradeForm extends Component {
             <div className='flex mv3'>
               <label htmlFor='margin' className='w5' >Margin</label>
               <div className='flex col'><input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5' required/>
-                <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] * this.state.postTradeDetails.margin : 'Getting price...'} INR/ETH</span></small>
+                <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrices.etherPrices ? (this.props.etherPrices.etherPrices["INR"] * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2) : 'Getting price...'} INR/ETH</span></small>
                 <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] : 'Getting price...'} INR/ETH</span></small>
               </div>
               {/* <input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5 h-100 percent' required/> */}
