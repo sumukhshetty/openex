@@ -8,6 +8,10 @@ import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class PaymentConfirmed extends Component {
 
+  componentDidUnmount() {
+    this.props.resetEtherState();
+  }
+
   render () {
     return (
       <section className='bg-smoke'>
@@ -26,13 +30,15 @@ class PaymentConfirmed extends Component {
               <div>
                 <SellerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />
                 <div className='tc'>
-                  {!this.props.sendEtherLocked &&
+                  {this.props.sendEtherState === 'init' &&
                   <button onClick={this.props.releaseEther}>
                    Release Ether
                  </button>}
+                 {this.props.sendEtherState === 'sending' &&
+                 <span>Please accept the transaction in MetaMask</span>}
                 </div>
               </div>}
-              <DisputeTrade />
+              <DisputeTrade viewerRole={this.props.viewerRole}/>
             </div>
           </div>
         </div>

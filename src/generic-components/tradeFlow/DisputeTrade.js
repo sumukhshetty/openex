@@ -8,7 +8,7 @@ class DisputeTrade extends Component {
         <p className='tc flarge b'>
           Resolve Trade Issues
         </p>
-        {this.props.type === 'buyer' ? (
+        {this.props.viewerRole === 'buyer' ? (
            <div>
              <p>
                If the seller does not respond or there is a disagreement regarding the terms of the trade, you can dispute the trade. Ether is held safe in escrow until the dispute
