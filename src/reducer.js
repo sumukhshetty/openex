@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux'
 import userReducer from './user/userReducer'
 import usersInfoReducer from './user/usersInfoReducer'
 import web3Reducer from './web3/web3Reducer'
+import etherPriceReducer from './etherprice/etherpricereducer'
 import postTradeReducer from './posttrade/postTradeReducer'
 import ordersListReducer from './orderslist/orderslistreducer'
 import orderDetailReducer from './orderdetail/orderdetailreducer'
@@ -40,7 +41,8 @@ const reducer = combineReducers({
   sellOrderContract: sellOrderContractReducer,
   chatAuth: chatAuthReducer,
   newMessage: newMessageReducer,
-  chatMessages: ChatMessageReducer
+  chatMessages: ChatMessageReducer,
+  etherPrices: etherPriceReducer
 })
 
 export default reducer

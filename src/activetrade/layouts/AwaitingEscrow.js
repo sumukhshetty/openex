@@ -8,11 +8,15 @@ import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class AwaitingEscrow extends Component {
 
+  componentDidUnmount() {
+    this.props.resetEtherState();
+  }
+
   render () {
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
-          <ActiveTradeInfo params={this.props.params} />
+          <ActiveTradeInfo params={this.props.order} viewerRole={this.props.viewerRole} />
           <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
             <ChatBox
@@ -26,9 +30,12 @@ class AwaitingEscrow extends Component {
               <div>
                 <SellerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />
                 <div className='tc'>
+                  {this.props.sendEtherState === 'init' &&
                   <button onClick={this.props.sendEther}>
                    Send Ether
-                 </button>
+                 </button>}
+                 {this.props.sendEtherState === 'sending' &&
+                 <span>Please accept the transaction in MetaMask</span>}
                 </div>
               </div>}
               <CancelTrade />

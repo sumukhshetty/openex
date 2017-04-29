@@ -7,18 +7,12 @@ export default class BuyTradeOrder extends Component {
     super(props);
     this.state = {
       web3: this.props.web3,
+      etherPrices: this.props.etherPrices,
       user: this.props.user,
       sellOrderDetail: this.props.sellOrderDetail,
       sellOrderContract: this.props.sellOrderContract,
       requestAmount: 0,
-      method: 'UPI',
-      buyingFrom: 'Victoria Padilla',
-      rating: 4.5,
-      price: 1203,
-      minLimit: 1000,
-      maxLimit: 200000,
-      currency: 'INR',
-      location: 'India'
+      rating: 4.5
     };
     this.handleConversion = this.handleConversion.bind(this);
     this.handleTradeRequest = this.handleTradeRequest.bind(this);
@@ -26,7 +20,7 @@ export default class BuyTradeOrder extends Component {
 
   handleTradeRequest (e) {
     e.preventDefault();
-    this.props.requestEther(this.state.requestAmount, this.props.uid, this.props.sellOrderDetail.sellOrder.sellerUid, this.props.user.data.displayName, this.props.sellOrderDetail.sellOrder.sellerUsername, this.props.params.orderId, this.props.sellOrderDetail.sellOrder.contractAddress, this.props.sellOrderDetail.sellOrder.availableBalance, this.props.web3.web3);
+    this.props.requestEther(this.state.requestAmount, this.props.etherPrices.etherPrices["INR"], this.props.uid, this.props.sellOrderDetail.sellOrder.sellerUid, this.props.user.data.displayName, this.props.sellOrderDetail.sellOrder.sellerUsername, this.props.params.orderId, this.props.sellOrderDetail.sellOrder.contractAddress, this.props.sellOrderDetail.sellOrder.availableBalance, this.props.web3.web3);
   }
 
   handleConversion (amount) {
@@ -86,7 +80,7 @@ export default class BuyTradeOrder extends Component {
                 <table className='lh-copy'>
                   <tr>
                     <td className='w4 pv2'>Price</td>
-                    <td className='green'>{this.state.price} INR/ETH</td>
+                    <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] * sellOrder.margin : 'Getting price...'} INR/ETH</td>
                   </tr>
                   <tr>
                     <td className='w4 pv2'>Payment Method</td>

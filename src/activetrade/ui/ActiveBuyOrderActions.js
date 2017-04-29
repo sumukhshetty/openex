@@ -16,6 +16,14 @@ function getBuyOrder (buyOrderPayload) {
   };
 }
 
+export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
+function sendEtherState(etherStatePayload) {
+  return {
+    type: ETHER_SEND_STATE,
+    payload: etherStatePayload
+  }
+}
+
 module.exports = {
   clearBuyOrderState: () => (dispatch) => {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
@@ -32,6 +40,7 @@ module.exports = {
 
   fillEscrow: (contractAddress, orderId, sellerUid, web3) => (dispatch) => {
     console.log('fillEscrow');
+    dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     const order = contract(BuyOrderContract);
     order.setProvider(web3.currentProvider);
@@ -44,7 +53,7 @@ module.exports = {
       .then(function (amount) {
         console.log('amount:' + amount);
         console.log(contractAddress);
-        var value = Number(amount) + Number(amount * 0.01);
+        var value = Number(amount) + Number(amount * 0.1);
         console.log(value); // TODO ak: this needs to grab the fee percentage from somewhere!!!
         web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function (err, address) {
           if (!err) {
@@ -68,12 +77,17 @@ module.exports = {
                 }
               });
           } else {
+            dispatch(sendEtherState('init'));
             console.log(err);
           }
         });
       });
 
     console.log('called fillEscrow [ActiveBuyOrderActions]');
+  },
+
+  resetSendEtherState: () => (dispatch) => {
+    dispatch(sendEtherState('init'));
   },
 
   paymentConfirmed: (orderId) => (dispatch) => {
@@ -84,6 +98,7 @@ module.exports = {
 
   releaseEscrow: (contractAddress, orderId, web3, buyerUid, sellerUid) => (dispatch) => {
     console.log("releasEther");
+    dispatch(sendEtherState('sending'));
     const order = contract(BuyOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
@@ -116,15 +131,10 @@ module.exports = {
             throw res.body.error
           }
         });
-      // firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-      // .set('Ether Released');
-
-    }).then(function(){
-      // TODO @qj catch the error if the index doesn't exist in firebase
-      // orderHelpers.removeOrderFromActiveEscrows(buyerUid, orderId)
-      // orderHelpers.removeOrderFromActiveEscrows(sellerUid, orderId)
-      // orderHelpers.addOrderToCompletedTrades(buyerUid, orderId, 'buy-order')
-      // orderHelpers.addOrderToCompletedTrades(sellerUid, orderId, 'buy-order')
+    })
+    .catch(function(err){
+      dispatch(sendEtherState('init'));
+      console.log(err);
     })
   }
 
