@@ -20,7 +20,24 @@ export default class BuyTradeOrder extends Component {
 
   handleTradeRequest (e) {
     e.preventDefault();
-    this.props.requestEther(this.state.requestAmount, this.props.etherPrices.etherPrices["INR"], this.props.uid, this.props.sellOrderDetail.sellOrder.sellerUid, this.props.user.data.displayName, this.props.sellOrderDetail.sellOrder.sellerUsername, this.props.params.orderId, this.props.sellOrderDetail.sellOrder.contractAddress, this.props.sellOrderDetail.sellOrder.availableBalance, this.props.web3.web3);
+
+    var _sellerUsername
+    if (this.props.sellOrderDetail.sellOrder.sellerUsername) {
+      _sellerUsername = this.props.sellOrderDetail.sellOrder.sellerUsername
+    } else {
+      _sellerUsername = "Anon"
+    }
+
+    this.props.requestEther(this.state.requestAmount, 
+      this.props.etherPrices.etherPrices["INR"], 
+      this.props.uid, 
+      this.props.sellOrderDetail.sellOrder.sellerUid, 
+      this.props.user.data.displayName, 
+      _sellerUsername, 
+      this.props.params.orderId, 
+      this.props.sellOrderDetail.sellOrder.contractAddress, 
+      this.props.sellOrderDetail.sellOrder.availableBalance, 
+      this.props.web3.web3);
   }
 
   handleConversion (amount) {
@@ -60,7 +77,7 @@ export default class BuyTradeOrder extends Component {
         if(availableBalance > 0) {
           requestComponent = <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to buy?</h2>
-            <h2 className='pv1 tc'>Available:{availableBalance}</h2>
+            <h2 className='pv1 tc'>Available:{availableBalance} Ether</h2>
             <div className='flex mxc'><Converter maxEther={availableBalance} handleTradeRequest={this.handleTradeRequest.bind(this)}
               onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>
           </div>
