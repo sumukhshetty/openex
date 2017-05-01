@@ -86,7 +86,7 @@ module.exports = {
     console.log('called fillEscrow [ActiveBuyOrderActions]');
   },
 
-  resetSendEtherState: () => (dispatch) => {
+  resetEtherState: () => (dispatch) => {
     dispatch(sendEtherState('init'));
   },
 
