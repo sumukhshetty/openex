@@ -8,7 +8,7 @@ import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class AwaitingEscrow extends Component {
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     this.props.resetEtherState();
   }
 
