@@ -39,7 +39,6 @@ class ActiveBuyOrder extends Component {
   }
 
   sendEther () {
-    this.setState({sendEtherLocked: true});
     this.props.sendEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.uid, this.props.web3.web3)
 
   }
@@ -141,13 +140,12 @@ class ActiveBuyOrder extends Component {
         'In Escrow': <InEscrow
           step='In Escrow'
           progress_map={progress_maps['In Escrow']} viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}
-          tradeId={this.props.params.orderId}
-          buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
-          sellerId={this.props.buyOrderDetail.buyOrder.sellerUid}
           order={this.props.buyOrderDetail.buyOrder}/>,
         'Payment Confirmed': <PaymentConfirmed
           step='Payment Confirmed'
           progress_map={progress_maps['Payment Confirmed']} viewerRole={viewerRole} releaseEther={this.releaseEther.bind(this)}
+          sendEtherState={this.props.sendEtherState}
+          resetEtherState={this.resetEtherState.bind(this)}
           tradeId={this.props.params.orderId}
           buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
           sellerId={this.props.buyOrderDetail.buyOrder.sellerUid}

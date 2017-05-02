@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ActiveSellOrder from './ActiveSellOrder'
-import { sellOrder, confirmTradeAction, confirmPaymentAction, releaseEtherAction } from './ActiveSellOrderActions'
+import * as actions from './ActiveSellOrderActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -8,23 +8,27 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user,
     sellOrderDetail: state.sellOrderDetail,
     params: ownProps.params,
-    uid: ownProps.uid
+    uid: ownProps.uid,
+    sendEtherState: state.sendEtherState
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (requestId) => {
-      dispatch(sellOrder(requestId))
+      dispatch(actions.sellOrder(requestId))
     },
     confirmTrade: (contractAddress, buyerAddress, requestId, amount, web3) => {
-      dispatch(confirmTradeAction(contractAddress, buyerAddress, requestId, amount, web3));
+      dispatch(actions.confirmTrade(contractAddress, buyerAddress, requestId, amount, web3));
     },
     confirmPayment: (requestId) => {
-      dispatch(confirmPaymentAction(requestId));
+      dispatch(actions.confirmPayment(requestId));
     },
     releaseEther: (contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => {
-      dispatch(releaseEtherAction(contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3));
+      dispatch(actions.releaseEther(contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3));
+    },
+    resetEtherState: () => {
+      dispatch(actions.resetEtherState())
     }
   }
 }

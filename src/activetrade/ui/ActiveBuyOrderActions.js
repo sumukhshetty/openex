@@ -86,7 +86,7 @@ module.exports = {
     console.log('called fillEscrow [ActiveBuyOrderActions]');
   },
 
-  resetSendEtherState: () => (dispatch) => {
+  resetEtherState: () => (dispatch) => {
     dispatch(sendEtherState('init'));
   },
 
@@ -98,6 +98,7 @@ module.exports = {
 
   releaseEscrow: (contractAddress, orderId, web3, buyerUid, sellerUid) => (dispatch) => {
     console.log("releasEther");
+    dispatch(sendEtherState('sending'));
     const order = contract(BuyOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
@@ -130,15 +131,10 @@ module.exports = {
             throw res.body.error
           }
         });
-      // firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-      // .set('Ether Released');
-
-    }).then(function(){
-      // TODO @qj catch the error if the index doesn't exist in firebase
-      // orderHelpers.removeOrderFromActiveEscrows(buyerUid, orderId)
-      // orderHelpers.removeOrderFromActiveEscrows(sellerUid, orderId)
-      // orderHelpers.addOrderToCompletedTrades(buyerUid, orderId, 'buy-order')
-      // orderHelpers.addOrderToCompletedTrades(sellerUid, orderId, 'buy-order')
+    })
+    .catch(function(err){
+      dispatch(sendEtherState('init'));
+      console.log(err);
     })
   }
 

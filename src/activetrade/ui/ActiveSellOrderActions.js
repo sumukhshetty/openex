@@ -15,6 +15,14 @@ function getSellOrder (sellOrderPayload) {
   };
 }
 
+export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
+function sendEtherState(etherStatePayload) {
+  return {
+    type: ETHER_SEND_STATE,
+    payload: etherStatePayload
+  }
+}
+
 module.exports = {
   clearSellOrderState: () => (dispatch) => {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
@@ -29,7 +37,8 @@ module.exports = {
       });
   },
 
-  confirmTradeAction: (contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
+  confirmTrade: (contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
+    dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
@@ -44,17 +53,19 @@ module.exports = {
         .set('Awaiting Payment');
       })
       .catch(function(error) {
+        dispatch(sendEtherState('init'));
         console.log('error in confirmTradeAction [ActiveSellOrderActions]');
         console.log(error);
       })
   },
 
-  confirmPaymentAction: (requestId) => (dispatch) => {
+  confirmPayment: (requestId) => (dispatch) => {
     firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
     .set('Awaiting Release');
   },
 
-  releaseEtherAction: (contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
+  releaseEther: (contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
+    dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
@@ -92,9 +103,14 @@ module.exports = {
         });
       })
       .catch(function (error) {
+        dispatch(sendEtherState('init'));
         console.log('error in releaseEtherAction [ActiveSellOrderActions]');
         console.log(error);
       })
-  }
+  },
+
+  resetSendEtherState: () => (dispatch) => {
+    dispatch(sendEtherState('init'));
+  },
 
 };

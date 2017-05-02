@@ -16,8 +16,17 @@ function tradeCreated(tradePayload) {
   }
 }
 
+export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
+function sendEtherState(etherStatePayload) {
+  return {
+    type: ETHER_SEND_STATE,
+    payload: etherStatePayload
+  }
+}
+
 export function postTrade(postTradeDetails, web3, state) {
   return function(dispatch) {
+    dispatch(sendEtherState('sending'));
     // Using truffle-contract we create the authentication object.
     // TODO check what kind of trade is being made and either get the contract
     // or make an entry in the firebase db
@@ -78,6 +87,7 @@ export function postTrade(postTradeDetails, web3, state) {
       // browserHistory.push('/dashboard')
     })
     .catch(function (error) {
+      dispatch(sendEtherState('init'));
       console.log(error);
     })
   }
@@ -86,10 +96,22 @@ export function postTrade(postTradeDetails, web3, state) {
 
 export function buyEtherPostTrade(postTradeDetails, web3, state) {
   return function(dispatch){
-    var newOrder = firebaseRef.database().ref("buyorders/").push(postTradeDetails);
-    firebaseRef.database().ref("buyorders/"+newOrder.key+'/orderId').set(newOrder.key);
-    firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
-    dispatch(tradeCreated(postTradeDetails))
-    browserHistory.push('/dashboard')
+    dispatch(sendEtherState('sending'));
+    try {
+      var newOrder = firebaseRef.database().ref("buyorders/").push(postTradeDetails);
+      firebaseRef.database().ref("buyorders/"+newOrder.key+'/orderId').set(newOrder.key);
+      firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
+      dispatch(tradeCreated(postTradeDetails))
+      browserHistory.push('/dashboard')
+    } catch(err) {
+      dispatch(sendEtherState('init'));
+      console.log(err);
+    }
+  }
+}
+
+export function resetEtherState() {
+  return function(dispatch) {
+    dispatch(sendEtherState('init'));
   }
 }
