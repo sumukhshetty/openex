@@ -155,3 +155,15 @@ exports.postSellOrder = functions.https.onRequest((req, res) => {
     }
   })
 });
+
+exports.fcmHelloWorld = functions.https.onRequest((req,res) => {
+  cors(req, res, () => {
+    try{
+    admin.messaging().sendToDevice(["dQt95qxIUaY:APA91bF3pndsx_XwxfhvjrLImxs6tb1EZlu0jVS5mbJnIjA7pN7IFdkQHqxzVsse1sCZUOGRUweM3Jb8pMk9LeBrGDu7ULn3Ld6Q7QQvldHijByO5huVZ1UJ_tFpVb9wUO1I4629Qws3"],
+      {notification:{title:"hello",body:"world Delhi"}})
+    res.status(200).send();
+    } catch(e){
+     res.status(500).send({error: '[fcmHelloWorld] Error : ' + e}); 
+    }
+  })
+})
