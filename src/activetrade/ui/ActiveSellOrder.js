@@ -15,7 +15,8 @@ class ActiveSellOrder extends Component {
       user: this.props.user,
       sellOrderDetail: this.props.sellOrderDetail,
       params: this.props.params,
-      uid: this.props.uid
+      uid: this.props.uid,
+      sendEtherState: this.props.sendEtherState
     }
   }
 
@@ -48,6 +49,10 @@ class ActiveSellOrder extends Component {
                             this.props.sellOrderDetail.sellOrder.buyerUid,
                             this.props.sellOrderDetail.sellOrder.sellerUid,
                             this.props.web3.web3)
+  }
+
+  resetEtherState() {
+    this.props.resetEtherState();
   }
 
   // createContract(amount, sellerAddress, web3) {
@@ -119,28 +124,32 @@ class ActiveSellOrder extends Component {
           progress_map={progress_maps[status]}
           viewerRole={viewerRole} confirmTrade={this.confirmTrade.bind(this)} tradeId={this.props.params.orderId || this.props.params.requestId}
           buyerId={this.props.sellOrderDetail.sellOrder.buyerUid}
-          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} 
+          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid}
+          sendEtherState={this.props.sendEtherState}
+          resetEtherState={this.resetEtherState.bind(this)}
           order={this.props.sellOrderDetail.sellOrder} />,
         'Awaiting Payment': <Payment
           step={status}
           viewerRole={viewerRole}
           progress_map={progress_maps[status]} confirmPayment={this.confirmPayment.bind(this)} tradeId={this.props.params.orderId || this.props.params.requestId}
           buyerId={this.props.sellOrderDetail.sellOrder.buyerUid}
-          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} 
+          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid}
           order={this.props.sellOrderDetail.sellOrder} />,
         'Awaiting Release': <Release
           step={status}
           viewerRole={viewerRole}
           progress_map={progress_maps[status]} releaseEther={this.releaseEther.bind(this)} tradeId={this.props.params.orderId || this.props.params.requestId}
           buyerId={this.props.sellOrderDetail.sellOrder.buyerUid}
-          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} 
+          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid}
+          sendEtherState={this.props.sendEtherState}
+          resetEtherState={this.resetEtherState.bind(this)}
           order={this.props.sellOrderDetail.sellOrder} />,
         'All Done': <AllDone
           step={status}
           viewerRole={viewerRole}
           progress_map={progress_maps[status]} tradeId={this.props.params.orderId || this.props.params.requestId}
           buyerId={this.props.sellOrderDetail.sellOrder.buyerUid}
-          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid} 
+          sellerId={this.props.sellOrderDetail.sellOrder.sellerUid}
           order={this.props.sellOrderDetail.sellOrder} />
       }
 

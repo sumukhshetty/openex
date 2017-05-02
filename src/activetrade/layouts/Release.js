@@ -30,13 +30,15 @@ class Release extends Component {
               <div>
                 <SellerStepNote step={this.props.step} />
                 <div className='tc'>
+                  {this.props.sendEtherState === 'init' &&
                   <button onClick={this.props.releaseEther}>
                    Release Ether
-                 </button>
+                 </button>}
+                 {this.props.sendEtherState === 'sending' &&
+                 <span>Please accept the transaction in MetaMask</span>}
                 </div>
               </div>}
-              <CancelTrade />
-              <DisputeTrade type='buyer' />
+              <DisputeTrade viewerRole={this.props.viewerRole} />
             </div>
           </div>
         </div>

@@ -32,7 +32,7 @@ class PostTradeForm extends Component {
       buyFormBool: false,
       user: this.props.user,
       uid: this.props.uid,
-      showMetaMaskWaitModal: false
+      sendEtherState: this.props.sendEtherState
     };
   }
 
@@ -50,6 +50,10 @@ class PostTradeForm extends Component {
     buyFormBool:true,
     showMetaMaskWaitModal:false
   });
+  }
+
+  componentWillUnmount() {
+    this.props.resetEtherState();
   }
 
   showWaitModal () {
@@ -154,9 +158,7 @@ class PostTradeForm extends Component {
         _postTradeDetails,
         this.state.web3.web3,
         this.state
-      ).then(function(){
-        console.log("ok the thingy is gone")
-      });
+      )
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
       this.props.onBuyEtherFormSubmit(
@@ -246,7 +248,7 @@ class PostTradeForm extends Component {
             }
 
             {
-              (this.state.showMetaMaskWaitModal && <MetaMaskWaitModal/>)
+              (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal/>)
             }
 
             <div className='flex mv3'>

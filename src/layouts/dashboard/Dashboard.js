@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DashboardInfoMessage from './DashboardInfoMessage';
 import ActiveEscrowList from './../../activeescrowlist/layouts/ActiveEscrowList';
 import AdList from './../../adlist/layouts/AdList';
+import CompletedTradeList from './../../completedtradeslist/layouts/CompletedTradeList';
 
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
@@ -37,6 +38,7 @@ class Dashboard extends Component {
               <DashboardInfoMessage />
               <ActiveEscrowList />
               <AdList />
+              <CompletedTradeList />
             </div>
           </div>
         </div>

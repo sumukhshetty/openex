@@ -89,8 +89,8 @@ module.exports = {
   },
 
 
-  // TODO : move this over to firebase functions
-  requestEtherFromSeller: (amount, price, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3) => (dispatch) => {
+
+  requestEtherFromSeller: (amount, price, order, buyerUid, buyerUsername, web3) => (dispatch) => {
     var coinbase = web3.eth.coinbase;
     var now = new Date();
     amount = Number(amount);
@@ -98,28 +98,30 @@ module.exports = {
       amount: amount,
       price: price,
       buyerAddress: coinbase,
-      buyerUid: uid,
+      buyerUid: buyerUid,
       buyerUsername: buyerUsername,
-      sellerUid: sellerUid,
-      sellerUsername: sellerUsername,
+      sellerUid: order.sellerUid,
+      sellerUsername: order.sellerUsername,
+      paymentMethod: order.paymentMethod,
+      bankInformation: order.bankInformation,
       createdAt: now,
       lastUpated: now,
       status: 'Awaiting Seller Confirmation',
-      contractAddress: contractAddress
+      contractAddress: order.contractAddress
     }, function(err) {
-      firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + newRequest.key)
+      firebaseRef.database().ref('/sellorders/' + order.orderId + '/requests/' + newRequest.key)
       .set({
-        buyerUid: uid
+        buyerUid: buyerUid
       });
-      firebaseRef.database().ref('/sellorders/' + orderId + '/pendingBalance')
+      firebaseRef.database().ref('/sellorders/' + order.orderId + '/pendingBalance')
       .set(amount);
-      firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
-      .set(availableBalance - amount);
-      firebaseRef.database().ref('/users/' + sellerUid+ '/activeTrades/' + newRequest.key)
+      firebaseRef.database().ref('/sellorders/' + order.orderId + '/availableBalance')
+      .set(order.availableBalance - amount);
+      firebaseRef.database().ref('/users/' + order.sellerUid+ '/activeTrades/' + newRequest.key)
       .set({
         tradeType: 'sell-ether'
       });
-      firebaseRef.database().ref('/users/' + uid+ '/activeTrades/' + newRequest.key)
+      firebaseRef.database().ref('/users/' + buyerUid + '/activeTrades/' + newRequest.key)
       .set({
         tradeType: 'sell-ether'
       })
