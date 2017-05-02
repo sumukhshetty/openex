@@ -20,7 +20,22 @@ export default class BuyTradeOrder extends Component {
 
   handleTradeRequest (e) {
     e.preventDefault();
-    this.props.requestEther(this.state.requestAmount, this.props.etherPrices.etherPrices["INR"], this.props.uid, this.props.sellOrderDetail.sellOrder.sellerUid, this.props.user.data.displayName, this.props.sellOrderDetail.sellOrder.sellerUsername, this.props.params.orderId, this.props.sellOrderDetail.sellOrder.contractAddress, this.props.sellOrderDetail.sellOrder.availableBalance, this.props.web3.web3);
+    var _sellerUsername
+    if (this.props.sellOrderDetail.sellOrder.sellerUsername) {
+      _sellerUsername = this.props.sellOrderDetail.sellOrder.sellerUsername
+    } else {
+      _sellerUsername = "Anon"
+    }
+    this.props.requestEther(this.state.requestAmount, 
+      this.props.etherPrices.etherPrices["INR"], 
+      this.props.uid, 
+      this.props.sellOrderDetail.sellOrder.sellerUid, 
+      this.props.user.data.displayName, 
+      _sellerUsername, 
+      this.props.params.orderId, 
+      this.props.sellOrderDetail.sellOrder.contractAddress, 
+      this.props.sellOrderDetail.sellOrder.availableBalance, 
+      this.props.web3.web3);
   }
 
   handleConversion (amount) {
