@@ -12,7 +12,7 @@ class Dashboard extends Component {
     console.log("Dashboard")
     console.log(firebaseMessaging)
     console.log(firebaseRef)
-/*    firebaseMessaging.requestPermission()
+    firebaseMessaging.requestPermission()
     .then(function() {
       console.log('Notification permission granted.');
       return firebaseMessaging.getToken()
@@ -21,12 +21,14 @@ class Dashboard extends Component {
       console.log(token)
       var user = firebaseRef.auth().currentUser
       console.log(user.uid)
-      //firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(token)
+      firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(token)
       //sendTokenToServer(token)
     })
     .catch(function(err) {
       console.log('Unable to get permission to notify.', err);
-    });*/
+      var user = firebaseRef.auth().currentUser
+      firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(null)
+    });
   }
 
   render () {
