@@ -159,7 +159,7 @@ exports.postSellOrder = functions.https.onRequest((req, res) => {
 exports.requestEther = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
-      var newRequest = firebaseRef.database().ref('/purchaserequests').push({
+      var newRequest = admin.database().ref('/purchaserequests').push({
         amount: req.body.postData.amount,
         price: req.body.postData.price,
         buyerAddress: req.body.postData.coinbase,
@@ -174,19 +174,19 @@ exports.requestEther = functions.https.onRequest((req, res) => {
         status: 'Awaiting Seller Confirmation',
         contractAddress: req.body.postData.contractAddress
       }, function(err) {
-        firebaseRef.database().ref('/sellorders/' + req.body.postData.orderId + '/requests/' + newRequest.key)
+        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/requests/' + newRequest.key)
         .set({
           buyerUid: req.body.postData.buyerUid
         });
-        firebaseRef.database().ref('/sellorders/' + req.body.postData.orderId + '/pendingBalance')
+        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/pendingBalance')
         .set(req.body.postData.amount);
-        firebaseRef.database().ref('/sellorders/' + req.body.postData.orderId + '/availableBalance')
+        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/availableBalance')
         .set(req.body.postData.availableBalance - req.body.postData.amount);
-        firebaseRef.database().ref('/users/' + req.body.postData.sellerUid+ '/activeTrades/' + newRequest.key)
+        admin.database().ref('/users/' + req.body.postData.sellerUid+ '/activeTrades/' + newRequest.key)
         .set({
           tradeType: 'sell-ether'
         });
-        firebaseRef.database().ref('/users/' + req.body.postData.buyerUid + '/activeTrades/' + newRequest.key)
+        admin.database().ref('/users/' + req.body.postData.buyerUid + '/activeTrades/' + newRequest.key)
         .set({
           tradeType: 'sell-ether'
         })
