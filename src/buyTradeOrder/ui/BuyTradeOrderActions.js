@@ -103,7 +103,7 @@ module.exports = {
     // a null value. In the fc function if the sellFcmToken is not null we'll send
     // a firebase cloud notification that a user has requested ether and send an email
     // using mailgun
-    firebaseRef.database().ref('/users/'+order.sellerUid+'/fcmToken/').on('value',function(snap){
+    firebaseRef.database().ref('/users/'+order.sellerUid+'/fcmToken/').once('value',function(snap){
       sellerFcmToken = snap.val()
       console.log("sellerFcmToken")
       console.log(sellerFcmToken)
