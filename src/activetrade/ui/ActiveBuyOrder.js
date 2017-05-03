@@ -13,6 +13,7 @@ class ActiveBuyOrder extends Component {
 
     this.state = {
       web3: this.props.web3,
+      user: this.props.user,
       buyOrderDetail: this.props.buyOrderDetail,
       params: this.props.params,
       uid: this.props.uid,
@@ -49,6 +50,10 @@ class ActiveBuyOrder extends Component {
 
   releaseEther () {
     this.props.releaseEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.web3.web3, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.buyOrderDetail.buyOrder.sellerUid)
+  }
+
+  cancelTrade () {
+    this.props.cancelTrade(this.props.buyOrderDetail.buyOrder.orderId, this.props.user.data.uid);
   }
 
   render () {
@@ -132,6 +137,7 @@ class ActiveBuyOrder extends Component {
           viewerRole={viewerRole} contractAddress={buyOrder.contractAddress} sendEther={this.sendEther.bind(this)}
           sendEtherState={this.props.sendEtherState}
           resetEtherState={this.resetEtherState.bind(this)}
+          cancelTrade={this.cancelTrade.bind(this)}
           tradeId={this.props.params.orderId}
           buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
           sellerId={this.props.buyOrderDetail.buyOrder.sellerUid}

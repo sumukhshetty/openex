@@ -90,7 +90,7 @@ module.exports = {
 
 
 
-  requestEtherFromSeller: (amount, price, order, buyerUid, buyerUsername, web3) => (dispatch) => {
+  requestEther: (amount, price, order, buyerUid, buyerUsername, web3) => (dispatch) => {
     var coinbase = web3.eth.coinbase;
     var now = new Date();
     amount = Number(amount);

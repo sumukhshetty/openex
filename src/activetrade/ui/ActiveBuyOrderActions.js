@@ -136,6 +136,14 @@ module.exports = {
       dispatch(sendEtherState('init'));
       console.log(err);
     })
+  },
+
+  cancelTrade: (orderId, uid) => (dispatch) => {
+    firebaseRef.database().ref('/buyorders/' + orderId + '/cancelled')
+    .set(uid)
+    .catch(function(err){
+      console.log(err);
+    })
   }
 
 };
