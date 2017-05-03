@@ -73,11 +73,15 @@ firebaseMessaging.requestPermission()
       console.log(token)
       var user = firebaseRef.auth().currentUser
       console.log(user.uid)
-      firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(token)
+      //firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(token) 
       //sendTokenToServer(token)
     })
     .catch(function(err) {
       console.log('Unable to get permission to notify.', err);
+      var user = firebaseRef.auth().currentUser
+     /* if (user.uid !== null){
+        firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(null) 
+      }*/
     });
 firebaseMessaging.onMessage(function(payload){
   //TODO: call on a function to load the notification in the bell icon and notifications ref

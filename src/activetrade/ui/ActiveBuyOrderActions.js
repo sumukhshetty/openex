@@ -6,7 +6,7 @@ import BuyOrderContract from '../../../build/contracts/BuyOrder.json';
 const request = require('request')
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
-import * as orderHelpers from './../../util/orderHelpers'
+//import * as orderHelpers from './../../util/orderHelpers'
 
 export const GET_BUY_ORDER = 'GET_BUY_ORDER';
 function getBuyOrder (buyOrderPayload) {

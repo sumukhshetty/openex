@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
-
+const request = require('request')
 export const GET_SELL_ORDER = 'GET_SELL_ORDER'
 function getSellOrder(sellOrderPayload) {
   return {
@@ -91,7 +91,67 @@ module.exports = {
 
 
   requestEther: (amount, price, order, buyerUid, buyerUsername, web3) => (dispatch) => {
+    //Start refactor
+    console.log("requestEther")
+    console.log(order.sellerUid)
     var coinbase = web3.eth.coinbase;
+    var now = new Date();
+    amount = Number(amount);
+    var sellerFcmToken;
+    // DEVELOPER NOTE:
+    // The fcmToken is set in Dashboard.componentWillMount and will either be a string or
+    // a null value. In the fc function if the sellFcmToken is not null we'll send
+    // a firebase cloud notification that a user has requested ether and send an email
+    // using mailgun
+    firebaseRef.database().ref('/users/'+order.sellerUid+'/fcmToken/').on('value',function(snap){
+      sellerFcmToken = snap.val()
+      console.log("sellerFcmToken")
+      console.log(sellerFcmToken)
+      // WARNING: Will the variables for the postData be available in this callback function?
+      var postData = {
+        amount: amount,
+        price: price,
+        buyerAddress: coinbase,
+        buyerUid: buyerUid,
+        buyerUsername: buyerUsername,
+        sellerUid: order.sellerUid,
+        sellerUsername: order.sellerUsername,
+        paymentMethod: order.paymentMethod,
+        bankInformation: order.bankInformation,
+        createdAt: now,
+        lastUpated: now,
+        status: 'Awaiting Seller Confirmation',
+        contractAddress: order.contractAddress,
+        sellerFcmToken: sellerFcmToken,
+        orderId: order.orderId
+      }
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/requestEther'
+      request({
+        method:'post',
+        body:{
+          postData: postData,
+        },
+        json:true,
+        url: url
+      },
+      function(err, res, body){
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          browserHistory.push('/dashboard')
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
+      })
+    })
+    console.log(sellerFcmToken)
+    //End refactor
+    /*var coinbase = web3.eth.coinbase;
     var now = new Date();
     amount = Number(amount);
     var newRequest = firebaseRef.database().ref('/purchaserequests').push({
@@ -128,7 +188,7 @@ module.exports = {
       .then(function() {
         browserHistory.push('dashboard/');
       });
-    });
+    });*/
   },
 
   resetBalance: () => (dispatch) => {
