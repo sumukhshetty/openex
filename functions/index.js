@@ -162,7 +162,7 @@ exports.requestEther = functions.https.onRequest((req, res) => {
       var newRequest = admin.database().ref('/purchaserequests').push({
         amount: req.body.postData.amount,
         price: req.body.postData.price,
-        buyerAddress: req.body.postData.coinbase,
+        buyerAddress: req.body.postData.buyerAddress,
         buyerUid: req.body.postData.buyerUid,
         buyerUsername: req.body.postData.buyerUsername,
         sellerUid: req.body.postData.sellerUid,
@@ -190,20 +190,19 @@ exports.requestEther = functions.https.onRequest((req, res) => {
         .set({
           tradeType: 'sell-ether'
         })
-        .then(function() {
-          admin.messaging().sendToDevice([req.body.postData.fcmToken],
-            {notification:
-              {
-                title:"New Ether Purchase Request"
-                body: req.body.postData.buyerUsername + "wants to buy some ether"
-              }})
-        });
+        var _bodyText = req.body.postData.buyerUsername + " wants to buy some ether"
+        admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
+          {notification:
+            {
+              title:"New Ether Purchase Request",
+              body: _bodyText
+            }})
+        // TODO @qj acll to mailgun api to send an email
         res.status(200).send()
       })
     } catch(e){
       res.status(500).send({error:'[requestEther] Error :' + e})
     }
-    admin.database().ref("")
   })
 })
 

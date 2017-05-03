@@ -91,9 +91,6 @@ module.exports = {
 
 
   requestEther: (amount, price, order, buyerUid, buyerUsername, web3) => (dispatch) => {
-    //Start refactor
-    console.log("requestEther")
-    console.log(order.sellerUid)
     var coinbase = web3.eth.coinbase;
     var now = new Date();
     amount = Number(amount);
@@ -105,9 +102,6 @@ module.exports = {
     // using mailgun
     firebaseRef.database().ref('/users/'+order.sellerUid+'/fcmToken/').once('value',function(snap){
       sellerFcmToken = snap.val()
-      console.log("sellerFcmToken")
-      console.log(sellerFcmToken)
-      // WARNING: Will the variables for the postData be available in this callback function?
       var postData = {
         amount: amount,
         price: price,
@@ -123,7 +117,8 @@ module.exports = {
         status: 'Awaiting Seller Confirmation',
         contractAddress: order.contractAddress,
         sellerFcmToken: sellerFcmToken,
-        orderId: order.orderId
+        orderId: order.orderId,
+        availableBalance: order.availableBalance
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/requestEther'
       request({
@@ -149,46 +144,6 @@ module.exports = {
         }
       })
     })
-    console.log(sellerFcmToken)
-    //End refactor
-    /*var coinbase = web3.eth.coinbase;
-    var now = new Date();
-    amount = Number(amount);
-    var newRequest = firebaseRef.database().ref('/purchaserequests').push({
-      amount: amount,
-      price: price,
-      buyerAddress: coinbase,
-      buyerUid: buyerUid,
-      buyerUsername: buyerUsername,
-      sellerUid: order.sellerUid,
-      sellerUsername: order.sellerUsername,
-      paymentMethod: order.paymentMethod,
-      bankInformation: order.bankInformation,
-      createdAt: now,
-      lastUpated: now,
-      status: 'Awaiting Seller Confirmation',
-      contractAddress: order.contractAddress
-    }, function(err) {
-      firebaseRef.database().ref('/sellorders/' + order.orderId + '/requests/' + newRequest.key)
-      .set({
-        buyerUid: buyerUid
-      });
-      firebaseRef.database().ref('/sellorders/' + order.orderId + '/pendingBalance')
-      .set(amount);
-      firebaseRef.database().ref('/sellorders/' + order.orderId + '/availableBalance')
-      .set(order.availableBalance - amount);
-      firebaseRef.database().ref('/users/' + order.sellerUid+ '/activeTrades/' + newRequest.key)
-      .set({
-        tradeType: 'sell-ether'
-      });
-      firebaseRef.database().ref('/users/' + buyerUid + '/activeTrades/' + newRequest.key)
-      .set({
-        tradeType: 'sell-ether'
-      })
-      .then(function() {
-        browserHistory.push('dashboard/');
-      });
-    });*/
   },
 
   resetBalance: () => (dispatch) => {

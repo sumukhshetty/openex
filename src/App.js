@@ -25,6 +25,8 @@ import './css/swatch.css'
 import Bell from './images/svgReactComponents/Bell'
 import Notifications from './notifications/NotificationsLayout'
 
+const request = require('request')
+
 class App extends Component {
   constructor (props) {
     super(props)
@@ -42,7 +44,30 @@ class App extends Component {
   removeNotifications () {
     this.setState({showNotifications: false})
   }
-
+  testFcm () {
+    console.log("testFcm")
+    var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/fcmHelloWorld'
+    request({
+      method:'post',
+      json:true,
+      url: url
+    },
+    function(err, res, body){
+      if (err) {
+        console.error('error posting json: ', err)
+        throw err
+      }
+      if(res.statusCode === 200) {
+        // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+        console.log("requestEther.200")
+        //browserHistory.push('/dashboard')
+      }
+      if(res.statusCode === 500) {
+        console.error('Server responded with an error: ' + res.body.error);
+        throw res.body.error
+      }
+    })
+  }
   render () {
     const OnlyAuthLinks = VisibleOnlyAuth(() => {
       return (
@@ -50,10 +75,11 @@ class App extends Component {
           <div className='w-75 center'>
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
-              <div className='pure-u-1-4 brand'>
-                <Link to='/dashboard'>
+              <div className='pure-u-1-4 brand' onClick={this.testFcm}>
+              <img className='brand' src={logo} alt='Automt Ether Exchange' />
+                {/*<Link to='/dashboard'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
-                </Link>
+                </Link>*/}
               </div>
               <div className='flex mxe cxc'>
                 <Bell action={this.showNotifications} />
