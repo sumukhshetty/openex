@@ -7,6 +7,8 @@ const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
 import * as orderHelpers from './../../util/orderHelpers'
 
+const request = require('request')
+
 export const GET_SELL_ORDER = 'GET_SELL_ORDER';
 function getSellOrder (sellOrderPayload) {
   return {
@@ -37,12 +39,42 @@ module.exports = {
       });
   },
 
-  confirmTrade: (contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
+  // TODO : move this to firebase function
+  confirmTrade: (sellOrder, contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
     dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
+    // get the fcmToken of the buyer
+    firebaseRef.database().ref('/users/'+ sellOrder.buyerUid + '/fcmToken/').once("value", function(snap){
+      var fcmToken = snap.val()
+      var postData = {
+        buyerFcmToken: fcmToken,
+        sellerUserName: sellOrder.sellerUserName
+      }
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmTrade'
+      request({
+        method:'post',
+        body:{postData:postData},
+        json:true,
+        url: url
+      },
+      function(err, res, body){
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          console.log("confirmTrade.200")
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
+      })
+    })
     order.at(contractAddress)
       .then(function (_order) {
         orderInstance = _order;

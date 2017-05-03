@@ -31,7 +31,8 @@ class ActiveSellOrder extends Component {
   }
 
   confirmTrade () {
-    this.props.confirmTrade(this.props.sellOrderDetail.sellOrder.contractAddress,
+    this.props.confirmTrade(this.props.sellOrderDetail.sellOrder,
+                            this.props.sellOrderDetail.sellOrder.contractAddress,
                             this.props.sellOrderDetail.sellOrder.buyerAddress,
                             this.props.params.requestId,
                             this.props.sellOrderDetail.sellOrder.amount,

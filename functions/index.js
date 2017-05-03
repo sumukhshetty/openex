@@ -217,3 +217,21 @@ exports.fcmHelloWorld = functions.https.onRequest((req,res) => {
     }
   })
 })
+
+exports.confirmTrade = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var _bodyText = req.body.postData.sellerUsername + "has confirmed the trade"
+      admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
+        {notification:
+          {
+            title:"New Trade Confirmation",
+            body: _bodyText
+        }})
+      // TODO send mailgun api email
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[confirmTrade] Error' + e})
+    }
+  })
+})
