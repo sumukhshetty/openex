@@ -22,11 +22,11 @@ const mapDispatchToProps = (dispatch) => {
     clearBuyOrder: () => {
       dispatch(actions.clearBuyOrderState())
     },
-    sendEther: (contractAddress, orderId, sellerUid, web3) => {
-      dispatch(actions.fillEscrow(contractAddress, orderId, sellerUid, web3))
+    sendEther: (buyOrder, contractAddress, orderId, sellerUid, web3) => {
+      dispatch(actions.fillEscrow(buyOrder, contractAddress, orderId, sellerUid, web3))
     },
     resetEtherState: () => {
-      dispatch(actions.resetSendEtherState());
+      dispatch(actions.resetEtherState());
     },
     releaseEther: (contractAddress, orderId, web3, buyerUid, sellerUid) => {
       dispatch(actions.releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))

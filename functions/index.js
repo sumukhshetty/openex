@@ -139,6 +139,17 @@ exports.escrowFillled = functions.https.onRequest((req, res) => {
         admin.database().ref('/buyorders/' + req.body.orderId + '/status')
           .set('In Escrow')
         .then(function() {
+          var _bodyText = req.body.sellerUsername + " has sent Ether to the Escrow Contract"
+          if(req.body.buyerFcmToken){
+            admin.messaging().sendToDevice([req.body.buyerFcmToken], 
+              {notification:
+                {
+                  title:"Ether sent to Escrow Contract",
+                  body: _bodyText
+                }
+              }
+            )
+          }
           res.status(200).send();
         })
         .catch(function(e) {
