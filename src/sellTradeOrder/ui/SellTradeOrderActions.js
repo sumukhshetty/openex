@@ -41,8 +41,6 @@ module.exports = {
   },
 
   createBuyOrderContract: (buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {
-    console.log("ui.createBuyOrderContract.createBuyOrderContract")
-    console.log(buyOrder)
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
     var factoryInstance;

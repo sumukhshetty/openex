@@ -9,9 +9,6 @@ import {firebaseRef} from './../../index.js'
 
 class Dashboard extends Component {
   componentWillMount () {
-    console.log("Dashboard")
-    console.log(firebaseMessaging)
-    console.log(firebaseRef)
     firebaseMessaging.getToken()
       .then(function(currentToken){
         var user = firebaseRef.auth().currentUser
@@ -26,25 +23,8 @@ class Dashboard extends Component {
           console.log('An error occurred while retrieving token. ', err);
           var user = firebaseRef.auth().currentUser
           firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(null)
-
       })
-/*    firebaseMessaging.requestPermission()
-    .then(function() {
-      console.log('Notification permission granted.');
-      return firebaseMessaging.getToken()
-    })
-    .then(function(token){
-      console.log(token)
-      var user = firebaseRef.auth().currentUser
-      console.log(user.uid)
-      //firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(token)
-      //sendTokenToServer(token)
-    })
-    .catch(function(err) {
-      console.log('Unable to get permission to notify.', err);
-      var user = firebaseRef.auth().currentUser
-      //firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(null)
-    });*/
+
   }
 
   render () {
