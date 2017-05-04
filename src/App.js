@@ -25,6 +25,8 @@ import './css/swatch.css'
 import Bell from './images/svgReactComponents/Bell'
 import Notifications from './notifications/NotificationsLayout'
 
+const request = require('request')
+
 class App extends Component {
   constructor (props) {
     super(props)

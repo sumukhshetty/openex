@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
-
+const request = require('request')
 export const GET_SELL_ORDER = 'GET_SELL_ORDER'
 function getSellOrder(sellOrderPayload) {
   return {
@@ -94,41 +94,56 @@ module.exports = {
     var coinbase = web3.eth.coinbase;
     var now = new Date();
     amount = Number(amount);
-    var newRequest = firebaseRef.database().ref('/purchaserequests').push({
-      amount: amount,
-      price: price,
-      buyerAddress: coinbase,
-      buyerUid: buyerUid,
-      buyerUsername: buyerUsername,
-      sellerUid: order.sellerUid,
-      sellerUsername: order.sellerUsername,
-      paymentMethod: order.paymentMethod,
-      bankInformation: order.bankInformation,
-      createdAt: now,
-      lastUpated: now,
-      status: 'Awaiting Seller Confirmation',
-      contractAddress: order.contractAddress
-    }, function(err) {
-      firebaseRef.database().ref('/sellorders/' + order.orderId + '/requests/' + newRequest.key)
-      .set({
-        buyerUid: buyerUid
-      });
-      firebaseRef.database().ref('/sellorders/' + order.orderId + '/pendingBalance')
-      .set(amount);
-      firebaseRef.database().ref('/sellorders/' + order.orderId + '/availableBalance')
-      .set(order.availableBalance - amount);
-      firebaseRef.database().ref('/users/' + order.sellerUid+ '/activeTrades/' + newRequest.key)
-      .set({
-        tradeType: 'sell-ether'
-      });
-      firebaseRef.database().ref('/users/' + buyerUid + '/activeTrades/' + newRequest.key)
-      .set({
-        tradeType: 'sell-ether'
+    var sellerFcmToken;
+    // DEVELOPER NOTE:
+    // The fcmToken is set in Dashboard.componentWillMount and will either be a string or
+    // a null value. In the fc function if the sellFcmToken is not null we'll send
+    // a firebase cloud notification that a user has requested ether and send an email
+    // using mailgun
+    firebaseRef.database().ref('/users/'+order.sellerUid+'/fcmToken/').once('value',function(snap){
+      sellerFcmToken = snap.val()
+      var postData = {
+        amount: amount,
+        price: price,
+        buyerAddress: coinbase,
+        buyerUid: buyerUid,
+        buyerUsername: buyerUsername,
+        sellerUid: order.sellerUid,
+        sellerUsername: order.sellerUsername,
+        paymentMethod: order.paymentMethod,
+        bankInformation: order.bankInformation,
+        createdAt: now,
+        lastUpated: now,
+        status: 'Awaiting Seller Confirmation',
+        contractAddress: order.contractAddress,
+        sellerFcmToken: sellerFcmToken,
+        orderId: order.orderId,
+        availableBalance: order.availableBalance
+      }
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/requestEther'
+      request({
+        method:'post',
+        body:{
+          postData: postData,
+        },
+        json:true,
+        url: url
+      },
+      function(err, res, body){
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          browserHistory.push('/dashboard')
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
       })
-      .then(function() {
-        browserHistory.push('dashboard/');
-      });
-    });
+    })
   },
 
   resetBalance: () => (dispatch) => {

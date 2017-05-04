@@ -2,10 +2,14 @@
 import SellOrderContract from '../../../build/contracts/SellOrder.json';
 // import { browserHistory } from 'react-router'
 // import factoryAddress from '../../contract_addresses/orderfactory.js'
+import {FIREBASE_TIMESTAMP} from './../../index.js'
+
 
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
 import * as orderHelpers from './../../util/orderHelpers'
+
+const request = require('request')
 
 export const GET_SELL_ORDER = 'GET_SELL_ORDER';
 function getSellOrder (sellOrderPayload) {
@@ -37,12 +41,45 @@ module.exports = {
       });
   },
 
-  confirmTrade: (contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
+
+  confirmTrade: (sellOrder, contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
+    console.log("ui.actions.confirmTrade")
     dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
+    // get the fcmToken of the buyer
+    firebaseRef.database().ref('/users/'+ sellOrder.buyerUid + '/fcmToken/').once("value", function(snap){
+      var fcmToken = snap.val()
+      var postData = {
+        buyerFcmToken: fcmToken,
+        sellerUsername: sellOrder.sellerUsername
+      }
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmTrade'
+      request({
+        method:'post',
+        body:{postData:postData},
+        json:true,
+        url: url
+      },
+      function(err, res, body){
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          console.log("confirmTrade.200")
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
+      })
+    }, function(error){
+      console.log("[confirmTrade]: ",error)
+    })
     order.at(contractAddress)
       .then(function (_order) {
         orderInstance = _order;
@@ -59,13 +96,73 @@ module.exports = {
       })
   },
 
-  confirmPayment: (requestId) => (dispatch) => {
+  confirmPayment: (sellOrder, requestId) => (dispatch) => {
+    firebaseRef.database().ref('/users/'+ sellOrder.sellerUid + '/fcmToken/').once("value", function(snap){
+      var fcmToken = snap.val()
+      var postData = {
+        sellerFcmToken: fcmToken,
+        buyerUsername: sellOrder.buyerUsername
+      }
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmPayment'
+      request({
+        method:'post',
+        body:{postData:postData},
+        json:true,
+        url: url
+      },
+      function(err, res, body){
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          console.log("confirmPayment.200")
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
+      })
+    }, function(error){
+      console.log("[confirmTrade]: ",error)
+    })
     firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
     .set('Awaiting Release');
   },
 
-  releaseEther: (contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
+  releaseEther: (sellOrder, contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
     dispatch(sendEtherState('sending'));
+    firebaseRef.database().ref('/users/'+ sellOrder.buyerUid + '/fcmToken/').once("value", function(snap){
+      var fcmToken = snap.val()
+      var postData = {
+        buyerFcmToken: fcmToken,
+        sellerUsername: sellOrder.sellerUsername
+      }
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/releaseEther'
+      request({
+        method:'post',
+        body:{postData:postData},
+        json:true,
+        url: url
+      },
+      function(err, res, body){
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          console.log("releaseEther.200")
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
+      })
+    }, function(error){
+      console.log("[releaseEther]: ",error)
+    })
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
@@ -84,22 +181,8 @@ module.exports = {
           orderHelpers.addOrderToCompletedTrades(buyerUid, requestId, 'sell-ether')
           orderHelpers.addOrderToCompletedTrades(sellerUid, requestId, 'sell-ether')
 
-          firebaseRef.database().ref("users/"+buyerUid+'/lastTransfer').set(firebaseRef.database.ServerValue.TIMESTAMP)
-          firebaseRef.database().ref("users/"+sellerUid+'/lastTransfer').set(firebaseRef.database.ServerValue.TIMESTAMP)
-          // firebaseRef.database().ref('/purchaserequests/' + requestId)
-          // .once('value', function(snapshot) {
-          //
-          //   let orderId = firebaseRef.database().ref('/completedOrders').push(snapshot.val());
-          //   firebaseRef.database().ref('/purchaserequests/' + requestId).remove();
-          //   firebaseRef.database.ref('/users/'+snapshot.val()['buyerUid']+'/completedOrders/'+orderId.key)
-          //   .set({tradeType: 'sell-ether'});
-          //   firebaseRef.database.ref('/users/'+snapshot.val()['buyerUid']+'/activeTrades/'+requestId)
-          //   .remove();
-          //   firebaseRef.database.ref('/users/'+snapshot.val()['sellerUid']+'/completedOrders/'+orderId.key)
-          //   .set({tradeType: 'sell-ether'});
-          //   firebaseRef.database.ref('/users/'+snapshot.val()['sellerUid']+'/activeTrades/'+requestId)
-          //   .remove();
-          // })
+          firebaseRef.database().ref("users/"+buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
+          firebaseRef.database().ref("users/"+sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
         });
       })
       .catch(function (error) {
@@ -109,7 +192,7 @@ module.exports = {
       })
   },
 
-  resetSendEtherState: () => (dispatch) => {
+  resetEtherState: () => (dispatch) => {
     dispatch(sendEtherState('init'));
   },
 

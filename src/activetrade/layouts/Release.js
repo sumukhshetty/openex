@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
 import ChatBox from '../../chat/containers/ChatBox'
-import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
 
-import Dot from '../../images/svgReactComponents/Dot.js'
+/*import Dot from '../../images/svgReactComponents/Dot.js'
 import { Link } from 'react-router'
-
+*/
 class Release extends Component {
 
   render () {
