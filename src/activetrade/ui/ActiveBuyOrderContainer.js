@@ -5,8 +5,10 @@ import * as actions from './ActiveBuyOrderActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    user: state.user,
     buyOrderDetail: state.buyOrderDetail,
     sendEtherState: state.sendEtherState,
+    cancelTradeState: state.cancelTradeState,
     params: ownProps.params,
     uid: ownProps.uid,
     tradeId: ownProps.params.orderId,
@@ -28,8 +30,20 @@ const mapDispatchToProps = (dispatch) => {
     resetEtherState: () => {
       dispatch(actions.resetEtherState());
     },
+    resetCancelState: () => {
+      dispatch(actions.resetCancelState());
+    },
     releaseEther: (buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid) => {
       dispatch(actions.releaseEscrow(buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid))
+    },
+    cancelTrade: (orderId, uid) => {
+      dispatch(actions.cancelTrade(orderId, uid));
+    },
+    cancelTradeEscrow: (orderId, contractAddress, uid, web3) => {
+      dispatch(actions.cancelTradeEscrow(orderId, contractAddress, uid, web3));
+    },
+    setCancelState: () => {
+      dispatch(actions.setCancelState());
     },
     confirmPayment: (buyOrder, orderId) => {
       dispatch(actions.paymentConfirmed(buyOrder, orderId))

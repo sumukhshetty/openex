@@ -9,6 +9,10 @@ import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class InEscrow extends Component {
 
+  componentWillUnmount() {
+    this.props.resetCancelState();
+  }
+
   render () {
     return (
       <section className='bg-smoke'>
@@ -37,7 +41,7 @@ class InEscrow extends Component {
               {this.props.viewerRole === 'seller' &&
               <DisputeTrade viewerRole={this.props.viewerRole}/>}
               {this.props.viewerRole === 'buyer' &&
-              <CancelTrade />}
+              <CancelTrade cancelTrade={this.props.cancelTrade}/>}
             </div>
           </div>
         </div>
