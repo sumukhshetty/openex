@@ -21,7 +21,7 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
             .set('');
           }
         })
-      }, 60000)
+      }, 40000)
     }
   });
 
@@ -60,6 +60,16 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
             //TODO: seller rep affected?
             //Send notification
           }
+        } else if(snap.val()['status'] === 'In Escrow') {
+          if(snap.val()['buyerUid'] === event.data.val()) {
+            admin.database().ref('/users/'+snap.val()['buyerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/users/'+snap.val()['sellerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/buyorders/'+event.params.orderId)
+            .remove();
+            //TODO: notification
+          }
         }
       })
     });
@@ -78,6 +88,17 @@ exports.acceptbuy = functions.https.onRequest((req, res) => {
         .set(req.body.sellerUid);
         admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUsername')
         .set(req.body.sellerUsername);
+        var _bodyText = req.body.sellerUsername + " has accepted your buy order"
+        if(req.body.buyerFcmToken){
+          admin.messaging().sendToDevice([req.body.buyerFcmToken],
+            {
+              notification:
+                {
+                  title:"New Seller Confirmation",
+                  body: _bodyText
+                }
+            })
+        }
         res.status(200).send();
       } else {
         res.status(500).send({error: 'Status of order ' + req.body.orderId + ' is not Initiated'});
@@ -128,6 +149,17 @@ exports.escrowFillled = functions.https.onRequest((req, res) => {
         admin.database().ref('/buyorders/' + req.body.orderId + '/status')
           .set('In Escrow')
         .then(function() {
+          var _bodyText = req.body.sellerUsername + " has sent Ether to the Escrow Contract"
+          if(req.body.buyerFcmToken){
+            admin.messaging().sendToDevice([req.body.buyerFcmToken],
+              {notification:
+                {
+                  title:"Ether sent to Escrow Contract",
+                  body: _bodyText
+                }
+              }
+            )
+          }
           res.status(200).send();
         })
         .catch(function(e) {
@@ -160,7 +192,15 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
 
           admin.database().ref("users/"+req.body.buyerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
           admin.database().ref("users/"+req.body.sellerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
-
+          var _bodyText = req.body.sellerUsername + " has released the Ether"
+          if (req.body.buyerFcmToken){
+          admin.messaging().sendToDevice([req.body.buyerFcmToken],
+            {notification:
+              {
+                title:"Ether Released",
+                body: _bodyText
+            }})
+          }
           res.status(200).send();
         })
         .catch(function(e) {
@@ -230,13 +270,15 @@ exports.requestEther = functions.https.onRequest((req, res) => {
           tradeType: 'sell-ether'
         })
         var _bodyText = req.body.postData.buyerUsername + " wants to buy some ether"
-        admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
-          {notification:
-            {
-              title:"New Ether Purchase Request",
-              body: _bodyText
-            }})
-        // TODO @qj acll to mailgun api to send an email
+        if(req.body.postData.sellerFcmToken) {
+          admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
+            {notification:
+              {
+                title:"New Ether Purchase Request",
+                body: _bodyText
+              }})
+        }
+        // TODO @qj call to mailgun api to send an email
         res.status(200).send()
       })
     } catch(e){
@@ -253,6 +295,72 @@ exports.fcmHelloWorld = functions.https.onRequest((req,res) => {
     res.status(200).send();
     } catch(e){
      res.status(500).send({error: '[fcmHelloWorld] Error : ' + e});
+    }
+  })
+})
+
+exports.confirmTrade = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var _bodyText = req.body.postData.sellerUsername + " has confirmed the trade"
+      if (req.body.postData.buyerFcmToken){
+      admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
+        {notification:
+          {
+            title:"New Trade Confirmation",
+            body: _bodyText
+        }})
+      } else {
+        console.log("no buyerFcmToken")
+      }
+      // TODO send mailgun api email
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[confirmTrade] Error' + e})
+    }
+  })
+})
+
+exports.confirmPayment = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var _bodyText = req.body.postData.buyerUsername + " has confirmed the payment"
+      if (req.body.postData.sellerFcmToken){
+      admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
+        {notification:
+          {
+            title:"New Payment Confirmation",
+            body: _bodyText
+        }})
+      } else {
+        console.log("no sellerFcmToken")
+      }
+      // TODO send mailgun api email
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[confirmPayment] Error' + e})
+    }
+  })
+})
+
+exports.releaseEther = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var _bodyText = req.body.postData.sellerUsername + " has released the Ether"
+      if (req.body.postData.buyerFcmToken){
+      admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
+        {notification:
+          {
+            title:"Ether Released",
+            body: _bodyText
+        }})
+      } else {
+        console.log("no buyerFcmToken")
+      }
+      // TODO send mailgun api email
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[releaseEther] Error' + e})
     }
   })
 })

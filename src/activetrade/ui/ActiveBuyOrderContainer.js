@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user,
     buyOrderDetail: state.buyOrderDetail,
     sendEtherState: state.sendEtherState,
+    cancelTradeState: state.cancelTradeState,
     params: ownProps.params,
     uid: ownProps.uid,
     tradeId: ownProps.params.orderId,
@@ -29,6 +30,9 @@ const mapDispatchToProps = (dispatch) => {
     resetEtherState: () => {
       dispatch(actions.resetEtherState());
     },
+    resetCancelState: () => {
+      dispatch(actions.resetCancelState());
+    },
     releaseEther: (contractAddress, orderId, web3, buyerUid, sellerUid) => {
       dispatch(actions.releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))
     },
@@ -37,6 +41,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     cancelTrade: (orderId, uid) => {
       dispatch(actions.cancelTrade(orderId, uid));
+    },
+    cancelTradeEscrow: (orderId, contractAddress, uid, web3) => {
+      dispatch(actions.cancelTradeEscrow(orderId, contractAddress, uid, web3));
+    },
+    setCancelState: () => {
+      dispatch(actions.setCancelState());
     }
   }
 }

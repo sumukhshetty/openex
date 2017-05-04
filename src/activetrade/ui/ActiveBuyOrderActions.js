@@ -1,6 +1,6 @@
 // import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
 import BuyOrderContract from '../../../build/contracts/BuyOrder.json';
-// import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 // import factoryAddress from '../../contract_addresses/orderfactory.js'
 
 const request = require('request')
@@ -21,6 +21,14 @@ function sendEtherState(etherStatePayload) {
   return {
     type: ETHER_SEND_STATE,
     payload: etherStatePayload
+  }
+}
+
+export const CANCEL_TRADE_STATE = 'CANCEL_TRADE_STATE'
+function cancelTradeState(cancelStatePayload) {
+  return {
+    type: CANCEL_TRADE_STATE,
+    payload: cancelStatePayload
   }
 }
 
@@ -90,6 +98,14 @@ module.exports = {
     dispatch(sendEtherState('init'));
   },
 
+  resetCancelState: () => (dispatch) => {
+    dispatch(cancelTradeState('init'));
+  },
+
+  setCancelState: () => (dispatch) => {
+    dispatch(cancelTradeState('cancelling'));
+  },
+
   paymentConfirmed: (orderId) => (dispatch) => {
     console.log('paymentConfirmed');
     firebaseRef.database().ref('/buyorders/' + orderId + '/status')
@@ -139,8 +155,36 @@ module.exports = {
   },
 
   cancelTrade: (orderId, uid) => (dispatch) => {
+    dispatch(cancelTradeState('confirmed'));
     firebaseRef.database().ref('/buyorders/' + orderId + '/cancelled')
     .set(uid)
+    .then(function() {
+      browserHistory.push('/dashboard');
+    })
+    .catch(function(err){
+      console.log(err);
+    })
+  },
+
+  cancelTradeEscrow: (orderId, contractAddress, uid, web3) => (dispatch) => {
+    dispatch(cancelTradeState('confirmed'));
+    const order = contract(BuyOrderContract);
+    order.setProvider(web3.currentProvider);
+    var orderInstance;
+    var coinbase = web3.eth.coinbase;
+
+    order.at(contractAddress)
+    .then(function(_order) {
+      orderInstance = _order;
+      return orderInstance.refundToSeller({from: coinbase});
+    })
+    .then(function(tx) {
+      firebaseRef.database().ref('/buyorders/' + orderId + '/cancelled')
+      .set(uid)
+      .then(function() {
+        browserHistory.push('/dashboard');
+      })
+    })
     .catch(function(err){
       console.log(err);
     })
