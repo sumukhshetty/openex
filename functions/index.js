@@ -302,3 +302,25 @@ exports.confirmPayment = functions.https.onRequest((req, res) => {
     }
   })
 })
+
+exports.releaseEther = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var _bodyText = req.body.postData.sellerUsername + " has released the Ether"
+      if (req.body.postData.buyerFcmToken){
+      admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
+        {notification:
+          {
+            title:"Ether Released",
+            body: _bodyText
+        }})        
+      } else {
+        console.log("no buyerFcmToken")
+      }
+      // TODO send mailgun api email
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[releaseEther] Error' + e})
+    }
+  })
+})

@@ -129,8 +129,38 @@ module.exports = {
     .set('Awaiting Release');
   },
 
-  releaseEther: (contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
+  releaseEther: (sellOrder, contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
     dispatch(sendEtherState('sending'));
+    firebaseRef.database().ref('/users/'+ sellOrder.buyerUid + '/fcmToken/').once("value", function(snap){
+      var fcmToken = snap.val()
+      var postData = {
+        buyerFcmToken: fcmToken,
+        sellerUsername: sellOrder.sellerUsername
+      }
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/releaseEther'
+      request({
+        method:'post',
+        body:{postData:postData},
+        json:true,
+        url: url
+      },
+      function(err, res, body){
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          console.log("releaseEther.200")
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
+      })
+    }, function(error){
+      console.log("[releaseEther]: ",error)
+    })
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
@@ -151,20 +181,6 @@ module.exports = {
 
           firebaseRef.database().ref("users/"+buyerUid+'/lastTransfer').set(firebaseRef.database.ServerValue.TIMESTAMP)
           firebaseRef.database().ref("users/"+sellerUid+'/lastTransfer').set(firebaseRef.database.ServerValue.TIMESTAMP)
-          // firebaseRef.database().ref('/purchaserequests/' + requestId)
-          // .once('value', function(snapshot) {
-          //
-          //   let orderId = firebaseRef.database().ref('/completedOrders').push(snapshot.val());
-          //   firebaseRef.database().ref('/purchaserequests/' + requestId).remove();
-          //   firebaseRef.database.ref('/users/'+snapshot.val()['buyerUid']+'/completedOrders/'+orderId.key)
-          //   .set({tradeType: 'sell-ether'});
-          //   firebaseRef.database.ref('/users/'+snapshot.val()['buyerUid']+'/activeTrades/'+requestId)
-          //   .remove();
-          //   firebaseRef.database.ref('/users/'+snapshot.val()['sellerUid']+'/completedOrders/'+orderId.key)
-          //   .set({tradeType: 'sell-ether'});
-          //   firebaseRef.database.ref('/users/'+snapshot.val()['sellerUid']+'/activeTrades/'+requestId)
-          //   .remove();
-          // })
         });
       })
       .catch(function (error) {

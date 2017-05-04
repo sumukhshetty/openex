@@ -44,7 +44,8 @@ class ActiveSellOrder extends Component {
   }
 
   releaseEther () {
-    this.props.releaseEther(this.props.sellOrderDetail.sellOrder.contractAddress,
+    this.props.releaseEther(this.props.sellOrderDetail.sellOrder,
+                            this.props.sellOrderDetail.sellOrder.contractAddress,
                             this.props.sellOrderDetail.sellOrder.buyerAddress,
                             this.props.params.requestId,
                             this.props.sellOrderDetail.sellOrder.buyerUid,
