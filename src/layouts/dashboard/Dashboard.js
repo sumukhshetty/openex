@@ -9,6 +9,31 @@ import {firebaseRef} from './../../index.js'
 
 class Dashboard extends Component {
   componentWillMount () {
+    firebaseMessaging.onTokenRefresh(function() {
+      firebaseMessaging.getToken()
+    .then(function(refreshedToken) {
+      console.log('Token refreshed.');
+      var user = firebaseRef.auth().currentUser
+      if(refreshedToken){
+        firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(refreshedToken)
+      } else{
+        firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(null)
+        //TODO updateUIForPushPermissionRequired
+        }
+      // Indicate that the new Instance ID token has not yet been sent to the
+      // app server.
+      //setTokenSentToServer(false);
+      // Send Instance ID token to app server.
+      //sendTokenToServer(refreshedToken);
+      // ...
+    })
+    .catch(function(err) {
+      console.log('Unable to retrieve refreshed token ', err);
+      var user = firebaseRef.auth().currentUser
+      firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(null)
+      //showToken('Unable to retrieve refreshed token ', err);
+    });
+    });
     firebaseMessaging.getToken()
       .then(function(currentToken){
         var user = firebaseRef.auth().currentUser
