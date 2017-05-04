@@ -38,6 +38,12 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
             .remove();
             admin.database().ref('/buyorders/'+event.params.orderId)
             .remove();
+            admin.database().ref('/users/'+snap.val()['sellerUid']+'/cancelledContract/')
+            .push({
+              contractAddress: snap.val()['contractAddress'],
+              inEscrow: false
+            })
+            .remove();
             //TODO: AK I'm pretty sure calling self destruct on a contract is free, so do it from here.
             // Need to add that function to BuyOrder contract.
             //TODO: buyer rep affected?
@@ -68,6 +74,11 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
             .remove();
             admin.database().ref('/buyorders/'+event.params.orderId)
             .remove();
+            admin.database().ref('/users/'+snap.val()['sellerUid']+'/cancelledContract/')
+            .push({
+              contractAddress: snap.val()['contractAddress'],
+              inEscrow: true
+            })
             //TODO: notification
           }
         }
@@ -151,7 +162,7 @@ exports.escrowFillled = functions.https.onRequest((req, res) => {
         .then(function() {
           var _bodyText = req.body.sellerUsername + " has sent Ether to the Escrow Contract"
           if(req.body.buyerFcmToken){
-            admin.messaging().sendToDevice([req.body.buyerFcmToken], 
+            admin.messaging().sendToDevice([req.body.buyerFcmToken],
               {notification:
                 {
                   title:"Ether sent to Escrow Contract",
@@ -294,7 +305,7 @@ exports.fcmHelloWorld = functions.https.onRequest((req,res) => {
       {notification:{title:"hello",body:"world Delhi"}})
     res.status(200).send();
     } catch(e){
-     res.status(500).send({error: '[fcmHelloWorld] Error : ' + e}); 
+     res.status(500).send({error: '[fcmHelloWorld] Error : ' + e});
     }
   })
 })
@@ -309,7 +320,7 @@ exports.confirmTrade = functions.https.onRequest((req, res) => {
           {
             title:"New Trade Confirmation",
             body: _bodyText
-        }})        
+        }})
       } else {
         console.log("no buyerFcmToken")
       }
@@ -331,7 +342,7 @@ exports.confirmPayment = functions.https.onRequest((req, res) => {
           {
             title:"New Payment Confirmation",
             body: _bodyText
-        }})        
+        }})
       } else {
         console.log("no sellerFcmToken")
       }
@@ -353,7 +364,7 @@ exports.releaseEther = functions.https.onRequest((req, res) => {
           {
             title:"Ether Released",
             body: _bodyText
-        }})        
+        }})
       } else {
         console.log("no buyerFcmToken")
       }

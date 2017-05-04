@@ -55,9 +55,9 @@ class ActiveBuyOrder extends Component {
   sendEther () {
     this.props.sendEther(
       this.props.buyOrderDetail.buyOrder,
-      this.props.buyOrderDetail.buyOrder.contractAddress, 
+      this.props.buyOrderDetail.buyOrder.contractAddress,
       this.props.buyOrderDetail.buyOrder.orderId,
-      this.props.uid, 
+      this.props.uid,
       this.props.web3.web3)
   }
 
@@ -78,12 +78,9 @@ class ActiveBuyOrder extends Component {
     if(this.props.cancelTradeState === 'init') {
       this.props.setCancelState();
     } else if (this.props.cancelTradeState === 'cancelling') {
-      if(this.props.buyOrderDetail.buyOrder.status === 'Awaiting Escrow') {
+      if(this.props.buyOrderDetail.buyOrder.status === 'Awaiting Escrow' || this.props.buyOrderDetail.buyOrder.status === 'In Escrow') {
         this.props.cancelTrade(this.props.buyOrderDetail.buyOrder.orderId, this.props.user.data.uid);
-      } else if(this.props.buyOrderDetail.buyOrder.status === 'In Escrow') {
-        this.props.cancelTradeEscrow(this.props.buyOrderDetail.buyOrder.orderId, this.props.buyOrderDetail.buyOrder.contractAddress, this.props.user.data.uid, this.props.web3.web3);
       }
-
     }
   }
 

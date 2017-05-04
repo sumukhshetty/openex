@@ -39,9 +39,6 @@ const mapDispatchToProps = (dispatch) => {
     cancelTrade: (orderId, uid) => {
       dispatch(actions.cancelTrade(orderId, uid));
     },
-    cancelTradeEscrow: (orderId, contractAddress, uid, web3) => {
-      dispatch(actions.cancelTradeEscrow(orderId, contractAddress, uid, web3));
-    },
     setCancelState: () => {
       dispatch(actions.setCancelState());
     },

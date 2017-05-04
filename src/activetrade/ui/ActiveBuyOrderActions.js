@@ -115,7 +115,7 @@ module.exports = {
   setCancelState: () => (dispatch) => {
     dispatch(cancelTradeState('cancelling'));
   },
-    
+
   paymentConfirmed: (buyOrder, orderId) => (dispatch) => {
     console.log('paymentConfirmed');
     firebaseRef.database().ref('/users/'+ buyOrder.sellerUid + '/fcmToken/').once("value", function(snap){
@@ -207,30 +207,6 @@ module.exports = {
     .set(uid)
     .then(function() {
       browserHistory.push('/dashboard');
-    })
-    .catch(function(err){
-      console.log(err);
-    })
-  },
-
-  cancelTradeEscrow: (orderId, contractAddress, uid, web3) => (dispatch) => {
-    dispatch(cancelTradeState('confirmed'));
-    const order = contract(BuyOrderContract);
-    order.setProvider(web3.currentProvider);
-    var orderInstance;
-    var coinbase = web3.eth.coinbase;
-
-    order.at(contractAddress)
-    .then(function(_order) {
-      orderInstance = _order;
-      return orderInstance.refundToSeller({from: coinbase});
-    })
-    .then(function(tx) {
-      firebaseRef.database().ref('/buyorders/' + orderId + '/cancelled')
-      .set(uid)
-      .then(function() {
-        browserHistory.push('/dashboard');
-      })
     })
     .catch(function(err){
       console.log(err);
