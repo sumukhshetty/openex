@@ -25,6 +25,45 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
     }
   });
 
+  exports.cancelBuyOrder = functions.database.ref('buyorders/{orderId}/cancelled')
+    .onWrite(event => {
+      admin.database().ref('/buyorders/'+event.params.orderId)
+      .once('value', function(snap) {
+        if(snap.val()['status'] === 'Awaiting Escrow') {
+          if(snap.val()['buyerUid'] === event.data.val()) {
+            //Buyer cancels
+            admin.database().ref('/users/'+snap.val()['buyerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/users/'+snap.val()['sellerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/buyorders/'+event.params.orderId)
+            .remove();
+            //TODO: AK I'm pretty sure calling self destruct on a contract is free, so do it from here.
+            // Need to add that function to BuyOrder contract.
+            //TODO: buyer rep affected?
+            //Send notification
+          } else if (snap.val()['sellerUid'] === event.data.val()) {
+            //Seller cancels
+            admin.database().ref('/users/'+snap.val()['buyerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/users/'+snap.val()['sellerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('users/' + snap.val()['buyerUid'] + '/advertisements/' + event.params.orderId)
+            .set({tradeType: 'buy-ether'})
+            admin.database().ref('/buyorders/'+event.params.orderId+'/status')
+            .set('Initiated');
+            admin.database().ref('/buyorders/'+event.params.orderId+'/sellerUid')
+            .set('');
+            admin.database().ref('/buyorders/'+event.params.orderId+'/sellerUsername')
+            .set('');
+            //TODO: selfdestruct contract
+            //TODO: seller rep affected?
+            //Send notification
+          }
+        }
+      })
+    });
+
 //HTTPS requests
 
 //BuyOrder
@@ -191,13 +230,15 @@ exports.requestEther = functions.https.onRequest((req, res) => {
           tradeType: 'sell-ether'
         })
         var _bodyText = req.body.postData.buyerUsername + " wants to buy some ether"
-        admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
-          {notification:
-            {
-              title:"New Ether Purchase Request",
-              body: _bodyText
-            }})
-        // TODO @qj acll to mailgun api to send an email
+        if(req.body.postData.sellerFcmToken) {
+          admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
+            {notification:
+              {
+                title:"New Ether Purchase Request",
+                body: _bodyText
+              }})
+        }
+        // TODO @qj call to mailgun api to send an email
         res.status(200).send()
       })
     } catch(e){
@@ -221,17 +262,43 @@ exports.fcmHelloWorld = functions.https.onRequest((req,res) => {
 exports.confirmTrade = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
-      var _bodyText = req.body.postData.sellerUsername + "has confirmed the trade"
+      var _bodyText = req.body.postData.sellerUsername + " has confirmed the trade"
+      if (req.body.postData.buyerFcmToken){
       admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
         {notification:
           {
             title:"New Trade Confirmation",
             body: _bodyText
-        }})
+        }})        
+      } else {
+        console.log("no buyerFcmToken")
+      }
       // TODO send mailgun api email
       res.status(200).send()
     } catch(e) {
       res.status(500).send({error:'[confirmTrade] Error' + e})
+    }
+  })
+})
+
+exports.confirmPayment = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var _bodyText = req.body.postData.buyerUsername + " has confirmed the payment"
+      if (req.body.postData.sellerFcmToken){
+      admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
+        {notification:
+          {
+            title:"New Payment Confirmation",
+            body: _bodyText
+        }})        
+      } else {
+        console.log("no sellerFcmToken")
+      }
+      // TODO send mailgun api email
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[confirmPayment] Error' + e})
     }
   })
 })

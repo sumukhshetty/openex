@@ -40,7 +40,7 @@ class ActiveSellOrder extends Component {
   }
 
   confirmPayment () {
-    this.props.confirmPayment(this.props.params.requestId)
+    this.props.confirmPayment(this.props.sellOrderDetail.sellOrder, this.props.params.requestId)
   }
 
   releaseEther () {

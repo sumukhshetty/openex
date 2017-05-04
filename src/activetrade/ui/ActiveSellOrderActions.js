@@ -39,8 +39,9 @@ module.exports = {
       });
   },
 
-  // TODO : move this to firebase function
+
   confirmTrade: (sellOrder, contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
+    console.log("ui.actions.confirmTrade")
     dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
@@ -51,7 +52,7 @@ module.exports = {
       var fcmToken = snap.val()
       var postData = {
         buyerFcmToken: fcmToken,
-        sellerUserName: sellOrder.sellerUserName
+        sellerUsername: sellOrder.sellerUsername
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmTrade'
       request({
@@ -74,6 +75,8 @@ module.exports = {
           throw res.body.error
         }
       })
+    }, function(error){
+      console.log("[confirmTrade]: ",error)
     })
     order.at(contractAddress)
       .then(function (_order) {
@@ -91,7 +94,37 @@ module.exports = {
       })
   },
 
-  confirmPayment: (requestId) => (dispatch) => {
+  confirmPayment: (sellOrder, requestId) => (dispatch) => {
+    firebaseRef.database().ref('/users/'+ sellOrder.sellerUid + '/fcmToken/').once("value", function(snap){
+      var fcmToken = snap.val()
+      var postData = {
+        sellerFcmToken: fcmToken,
+        buyerUsername: sellOrder.buyerUsername
+      }
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmPayment'
+      request({
+        method:'post',
+        body:{postData:postData},
+        json:true,
+        url: url
+      },
+      function(err, res, body){
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          console.log("confirmPayment.200")
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
+      })
+    }, function(error){
+      console.log("[confirmTrade]: ",error)
+    })
     firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
     .set('Awaiting Release');
   },
@@ -141,7 +174,7 @@ module.exports = {
       })
   },
 
-  resetSendEtherState: () => (dispatch) => {
+  resetEtherState: () => (dispatch) => {
     dispatch(sendEtherState('init'));
   },
 
