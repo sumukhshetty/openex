@@ -48,11 +48,16 @@ class ActiveBuyOrder extends Component {
   }
 
   confirmPayment () {
-    this.props.confirmPayment(this.props.buyOrderDetail.buyOrder.orderId)
+    this.props.confirmPayment(this.props.buyOrderDetail.buyOrder, this.props.buyOrderDetail.buyOrder.orderId)
   }
 
   releaseEther () {
-    this.props.releaseEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.web3.web3, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.buyOrderDetail.buyOrder.sellerUid)
+    this.props.releaseEther(this.props.buyOrderDetail.buyOrder,
+      this.props.buyOrderDetail.buyOrder.contractAddress,
+      this.props.buyOrderDetail.buyOrder.orderId,
+      this.props.web3.web3,
+      this.props.buyOrderDetail.buyOrder.buyerUid,
+      this.props.buyOrderDetail.buyOrder.sellerUid)
   }
 
   render () {

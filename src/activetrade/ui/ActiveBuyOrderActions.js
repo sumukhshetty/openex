@@ -100,13 +100,41 @@ module.exports = {
     dispatch(sendEtherState('init'));
   },
 
-  paymentConfirmed: (orderId) => (dispatch) => {
+  paymentConfirmed: (buyOrder, orderId) => (dispatch) => {
     console.log('paymentConfirmed');
+    firebaseRef.database().ref('/users/'+ buyOrder.sellerUid + '/fcmToken/').once("value", function(snap){
+      var fcmToken = snap.val()
+      var postData = {
+        sellerFcmToken: fcmToken,
+        buyerUsername: buyOrder.buyerUsername
+      }
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmPayment'
+      request({
+        method:'post',
+        body:{postData:postData},
+        json:true,
+        url: url
+      },
+      function(err, res, body){
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          console.log("paymentConfirmed.200")
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
+      })
+    })
     firebaseRef.database().ref('/buyorders/' + orderId + '/status')
       .set('Payment Confirmed');
   },
 
-  releaseEscrow: (contractAddress, orderId, web3, buyerUid, sellerUid) => (dispatch) => {
+  releaseEscrow: (buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid,) => (dispatch) => {
     console.log("releasEther");
     dispatch(sendEtherState('sending'));
     const order = contract(BuyOrderContract);
@@ -121,26 +149,35 @@ module.exports = {
     })
     .then(function(txHash) {
       console.log(txHash)
-      request({
-          method: 'post',
-          body: {
-            orderId: orderId,
-            sellerUid: sellerUid,
-            buyerUid: buyerUid
+      firebaseRef.database().ref('/users/'+ buyOrder.buyerUid + '/fcmToken/').once("value", function(snap){
+        var fcmToken = snap.val()
+        request({
+            method: 'post',
+            body: {
+              orderId: orderId,
+              sellerUid: sellerUid,
+              buyerUid: buyerUid,
+              buyerFcmToken: fcmToken,
+              sellerUsername: buyOrder.sellerUsername
+            },
+            json: true,
+            url: 'https://us-central1-automteetherexchange.cloudfunctions.net/etherReleased'
           },
-          json: true,
-          url: 'https://us-central1-automteetherexchange.cloudfunctions.net/etherReleased'
-        },
-        function(err, res, body) {
-          if (err) {
-            console.error('error posting json: ', err)
-            throw err
-          }
-          if(res.statusCode === 500) {
-            console.error('Server responded with an error: ' + res.body.error);
-            throw res.body.error
-          }
-        });
+          function(err, res, body) {
+            if (err) {
+              console.error('error posting json: ', err)
+              throw err
+            }
+            if(res.statusCode === 200) {
+              // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+              console.log("releaseEscrow.200")
+            }
+            if(res.statusCode === 500) {
+              console.error('Server responded with an error: ' + res.body.error);
+              throw res.body.error
+            }
+          });
+      })
     })
     .catch(function(err){
       dispatch(sendEtherState('init'));

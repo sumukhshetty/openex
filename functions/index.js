@@ -182,7 +182,15 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
 
           admin.database().ref("users/"+req.body.buyerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
           admin.database().ref("users/"+req.body.sellerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
-
+          var _bodyText = req.body.sellerUsername + " has released the Ether"
+          if (req.body.buyerFcmToken){
+          admin.messaging().sendToDevice([req.body.buyerFcmToken],
+            {notification:
+              {
+                title:"Ether Released",
+                body: _bodyText
+            }})
+          }
           res.status(200).send();
         })
         .catch(function(e) {

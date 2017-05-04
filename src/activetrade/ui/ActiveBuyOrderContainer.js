@@ -28,11 +28,11 @@ const mapDispatchToProps = (dispatch) => {
     resetEtherState: () => {
       dispatch(actions.resetEtherState());
     },
-    releaseEther: (contractAddress, orderId, web3, buyerUid, sellerUid) => {
-      dispatch(actions.releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))
+    releaseEther: (buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid) => {
+      dispatch(actions.releaseEscrow(buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid))
     },
-    confirmPayment: (orderId) => {
-      dispatch(actions.paymentConfirmed(orderId))
+    confirmPayment: (buyOrder, orderId) => {
+      dispatch(actions.paymentConfirmed(buyOrder, orderId))
     }
   }
 }
