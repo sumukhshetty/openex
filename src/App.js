@@ -55,7 +55,7 @@ class App extends Component {
               <div className='pure-u-1-4 brand'>
                 <Link to='/dashboard'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
-                </Link>*
+                </Link>
               </div>
               <div className='flex mxe cxc'>
                 <Bell action={this.showNotifications} />
