@@ -78,6 +78,17 @@ exports.acceptbuy = functions.https.onRequest((req, res) => {
         .set(req.body.sellerUid);
         admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUsername')
         .set(req.body.sellerUsername);
+        var _bodyText = req.body.sellerUsername + " has accepted your buy order"
+        if(req.body.buyerFcmToken){
+          admin.messaging().sendToDevice([req.body.buyerFcmToken],
+            {
+              notification:
+                {
+                  title:"New Seller Confirmation",
+                  body: _bodyText
+                }
+            })
+        }
         res.status(200).send();
       } else {
         res.status(500).send({error: 'Status of order ' + req.body.orderId + ' is not Initiated'});

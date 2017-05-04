@@ -56,14 +56,14 @@ export var firebaseRef = firebase.initializeApp(config)
 export var firebaseMessaging = firebase.messaging();
 const history = syncHistoryWithStore(browserHistory, store)
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('../firebase-messaging-sw.js')
+/*if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../public/firebase-messaging-sw.js')
   .then(function(registration) {
     console.log('Registration successful, scope is:', registration.scope);
   }).catch(function(err) {
     console.log('Service worker registration failed, error:', err);
   });
-}
+}*/
 firebaseMessaging.requestPermission()
     .then(function() {
       console.log('Notification permission granted.');
@@ -71,22 +71,16 @@ firebaseMessaging.requestPermission()
     })
     .then(function(token){
       console.log(token)
-      var user = firebaseRef.auth().currentUser
-      console.log(user.uid)
-      //firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(token) 
-      //sendTokenToServer(token)
     })
     .catch(function(err) {
       console.log('Unable to get permission to notify.', err);
-      var user = firebaseRef.auth().currentUser
-     /* if (user.uid !== null){
-        firebaseRef.database().ref("/users/"+user.uid+"/fcmToken/").set(null) 
-      }*/
     });
 firebaseMessaging.onMessage(function(payload){
   //TODO: call on a function to load the notification in the bell icon and notifications ref
   console.log('onMessage: ',payload)
 });
+
+export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP;
 
 ReactDOM.render((
   <Provider store={store}>

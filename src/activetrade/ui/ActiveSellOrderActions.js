@@ -2,6 +2,8 @@
 import SellOrderContract from '../../../build/contracts/SellOrder.json';
 // import { browserHistory } from 'react-router'
 // import factoryAddress from '../../contract_addresses/orderfactory.js'
+import {FIREBASE_TIMESTAMP} from './../../index.js'
+
 
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
@@ -179,8 +181,8 @@ module.exports = {
           orderHelpers.addOrderToCompletedTrades(buyerUid, requestId, 'sell-ether')
           orderHelpers.addOrderToCompletedTrades(sellerUid, requestId, 'sell-ether')
 
-          firebaseRef.database().ref("users/"+buyerUid+'/lastTransfer').set(firebaseRef.database.ServerValue.TIMESTAMP)
-          firebaseRef.database().ref("users/"+sellerUid+'/lastTransfer').set(firebaseRef.database.ServerValue.TIMESTAMP)
+          firebaseRef.database().ref("users/"+buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
+          firebaseRef.database().ref("users/"+sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
         });
       })
       .catch(function (error) {
