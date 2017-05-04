@@ -25,6 +25,45 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
     }
   });
 
+  exports.cancelBuyOrder = functions.database.ref('buyorders/{orderId}/cancelled')
+    .onWrite(event => {
+      admin.database().ref('/buyorders/'+event.params.orderId)
+      .once('value', function(snap) {
+        if(snap.val()['status'] === 'Awaiting Escrow') {
+          if(snap.val()['buyerUid'] === event.data.val()) {
+            //Buyer cancels
+            admin.database().ref('/users/'+snap.val()['buyerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/users/'+snap.val()['sellerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/buyorders/'+event.params.orderId)
+            .remove();
+            //TODO: AK I'm pretty sure calling self destruct on a contract is free, so do it from here.
+            // Need to add that function to BuyOrder contract.
+            //TODO: buyer rep affected?
+            //Send notification
+          } else if (snap.val()['sellerUid'] === event.data.val()) {
+            //Seller cancels
+            admin.database().ref('/users/'+snap.val()['buyerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/users/'+snap.val()['sellerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('users/' + snap.val()['buyerUid'] + '/advertisements/' + event.params.orderId)
+            .set({tradeType: 'buy-ether'})
+            admin.database().ref('/buyorders/'+event.params.orderId+'/status')
+            .set('Initiated');
+            admin.database().ref('/buyorders/'+event.params.orderId+'/sellerUid')
+            .set('');
+            admin.database().ref('/buyorders/'+event.params.orderId+'/sellerUsername')
+            .set('');
+            //TODO: selfdestruct contract
+            //TODO: seller rep affected?
+            //Send notification
+          }
+        }
+      })
+    });
+
 //HTTPS requests
 
 //BuyOrder
@@ -39,6 +78,17 @@ exports.acceptbuy = functions.https.onRequest((req, res) => {
         .set(req.body.sellerUid);
         admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUsername')
         .set(req.body.sellerUsername);
+        var _bodyText = req.body.sellerUsername + " has accepted your buy order"
+        if(req.body.buyerFcmToken){
+          admin.messaging().sendToDevice([req.body.buyerFcmToken],
+            {
+              notification:
+                {
+                  title:"New Seller Confirmation",
+                  body: _bodyText
+                }
+            })
+        }
         res.status(200).send();
       } else {
         res.status(500).send({error: 'Status of order ' + req.body.orderId + ' is not Initiated'});
@@ -89,6 +139,17 @@ exports.escrowFillled = functions.https.onRequest((req, res) => {
         admin.database().ref('/buyorders/' + req.body.orderId + '/status')
           .set('In Escrow')
         .then(function() {
+          var _bodyText = req.body.sellerUsername + " has sent Ether to the Escrow Contract"
+          if(req.body.buyerFcmToken){
+            admin.messaging().sendToDevice([req.body.buyerFcmToken], 
+              {notification:
+                {
+                  title:"Ether sent to Escrow Contract",
+                  body: _bodyText
+                }
+              }
+            )
+          }
           res.status(200).send();
         })
         .catch(function(e) {
@@ -121,7 +182,15 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
 
           admin.database().ref("users/"+req.body.buyerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
           admin.database().ref("users/"+req.body.sellerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
-
+          var _bodyText = req.body.sellerUsername + " has released the Ether"
+          if (req.body.buyerFcmToken){
+          admin.messaging().sendToDevice([req.body.buyerFcmToken],
+            {notification:
+              {
+                title:"Ether Released",
+                body: _bodyText
+            }})
+          }
           res.status(200).send();
         })
         .catch(function(e) {
@@ -155,3 +224,133 @@ exports.postSellOrder = functions.https.onRequest((req, res) => {
     }
   })
 });
+
+exports.requestEther = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var newRequest = admin.database().ref('/purchaserequests').push({
+        amount: req.body.postData.amount,
+        price: req.body.postData.price,
+        buyerAddress: req.body.postData.buyerAddress,
+        buyerUid: req.body.postData.buyerUid,
+        buyerUsername: req.body.postData.buyerUsername,
+        sellerUid: req.body.postData.sellerUid,
+        sellerUsername: req.body.postData.sellerUsername,
+        paymentMethod: req.body.postData.paymentMethod,
+        bankInformation: req.body.postData.bankInformation,
+        createdAt: req.body.postData.createdAt,
+        lastUpated: req.body.postData.lastUpated,
+        status: 'Awaiting Seller Confirmation',
+        contractAddress: req.body.postData.contractAddress
+      }, function(err) {
+        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/requests/' + newRequest.key)
+        .set({
+          buyerUid: req.body.postData.buyerUid
+        });
+        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/pendingBalance')
+        .set(req.body.postData.amount);
+        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/availableBalance')
+        .set(req.body.postData.availableBalance - req.body.postData.amount);
+        admin.database().ref('/users/' + req.body.postData.sellerUid+ '/activeTrades/' + newRequest.key)
+        .set({
+          tradeType: 'sell-ether'
+        });
+        admin.database().ref('/users/' + req.body.postData.buyerUid + '/activeTrades/' + newRequest.key)
+        .set({
+          tradeType: 'sell-ether'
+        })
+        var _bodyText = req.body.postData.buyerUsername + " wants to buy some ether"
+        if(req.body.postData.sellerFcmToken) {
+          admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
+            {notification:
+              {
+                title:"New Ether Purchase Request",
+                body: _bodyText
+              }})
+        }
+        // TODO @qj call to mailgun api to send an email
+        res.status(200).send()
+      })
+    } catch(e){
+      res.status(500).send({error:'[requestEther] Error :' + e})
+    }
+  })
+})
+
+exports.fcmHelloWorld = functions.https.onRequest((req,res) => {
+  cors(req, res, () => {
+    try{
+    admin.messaging().sendToDevice(["dQt95qxIUaY:APA91bF3pndsx_XwxfhvjrLImxs6tb1EZlu0jVS5mbJnIjA7pN7IFdkQHqxzVsse1sCZUOGRUweM3Jb8pMk9LeBrGDu7ULn3Ld6Q7QQvldHijByO5huVZ1UJ_tFpVb9wUO1I4629Qws3"],
+      {notification:{title:"hello",body:"world Delhi"}})
+    res.status(200).send();
+    } catch(e){
+     res.status(500).send({error: '[fcmHelloWorld] Error : ' + e}); 
+    }
+  })
+})
+
+exports.confirmTrade = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var _bodyText = req.body.postData.sellerUsername + " has confirmed the trade"
+      if (req.body.postData.buyerFcmToken){
+      admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
+        {notification:
+          {
+            title:"New Trade Confirmation",
+            body: _bodyText
+        }})        
+      } else {
+        console.log("no buyerFcmToken")
+      }
+      // TODO send mailgun api email
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[confirmTrade] Error' + e})
+    }
+  })
+})
+
+exports.confirmPayment = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var _bodyText = req.body.postData.buyerUsername + " has confirmed the payment"
+      if (req.body.postData.sellerFcmToken){
+      admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
+        {notification:
+          {
+            title:"New Payment Confirmation",
+            body: _bodyText
+        }})        
+      } else {
+        console.log("no sellerFcmToken")
+      }
+      // TODO send mailgun api email
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[confirmPayment] Error' + e})
+    }
+  })
+})
+
+exports.releaseEther = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var _bodyText = req.body.postData.sellerUsername + " has released the Ether"
+      if (req.body.postData.buyerFcmToken){
+      admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
+        {notification:
+          {
+            title:"Ether Released",
+            body: _bodyText
+        }})        
+      } else {
+        console.log("no buyerFcmToken")
+      }
+      // TODO send mailgun api email
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[releaseEther] Error' + e})
+    }
+  })
+})

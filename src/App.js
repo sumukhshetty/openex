@@ -25,6 +25,8 @@ import './css/swatch.css'
 import Bell from './images/svgReactComponents/Bell'
 import Notifications from './notifications/NotificationsLayout'
 
+const request = require('request')
+
 class App extends Component {
   constructor (props) {
     super(props)
@@ -53,7 +55,7 @@ class App extends Component {
               <div className='pure-u-1-4 brand'>
                 <Link to='/dashboard'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
-                </Link>
+                </Link>*
               </div>
               <div className='flex mxe cxc'>
                 <Bell action={this.showNotifications} />

@@ -18,14 +18,14 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentLoad: (requestId) => {
       dispatch(actions.sellOrder(requestId))
     },
-    confirmTrade: (contractAddress, buyerAddress, requestId, amount, web3) => {
-      dispatch(actions.confirmTrade(contractAddress, buyerAddress, requestId, amount, web3));
+    confirmTrade: (sellOrder, contractAddress, buyerAddress, requestId, amount, web3) => {
+      dispatch(actions.confirmTrade(sellOrder, contractAddress, buyerAddress, requestId, amount, web3));
     },
-    confirmPayment: (requestId) => {
-      dispatch(actions.confirmPayment(requestId));
+    confirmPayment: (sellOrder, requestId) => {
+      dispatch(actions.confirmPayment(sellOrder, requestId));
     },
-    releaseEther: (contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => {
-      dispatch(actions.releaseEther(contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3));
+    releaseEther: (sellOrder, contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => {
+      dispatch(actions.releaseEther(sellOrder, contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3));
     },
     resetEtherState: () => {
       dispatch(actions.resetEtherState())
