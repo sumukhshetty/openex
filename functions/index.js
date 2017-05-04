@@ -60,6 +60,16 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
             //TODO: seller rep affected?
             //Send notification
           }
+        } else if(snap.val()['status'] === 'In Escrow') {
+          if(snap.val()['buyerUid'] === event.data.val()) {
+            admin.database().ref('/users/'+snap.val()['buyerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/users/'+snap.val()['sellerUid']+'/activeTrades/' + event.params.orderId)
+            .remove();
+            admin.database().ref('/buyorders/'+event.params.orderId)
+            .remove();
+            //TODO: notification
+          }
         }
       })
     });

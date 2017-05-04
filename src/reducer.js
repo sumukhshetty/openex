@@ -17,6 +17,7 @@ import activeTradeReducer from './activeescrowlist/activetradereducer'
 import adReducer from './adlist/adreducer'
 import adListReducer from './adlist/adlistreducer'
 import etherSendReducer from './adlist/sendetherreducer'
+import cancelTradeReducer from './activetrade/cancelTradeReducer'
 import sellOrderContractReducer from './buyTradeOrder/sellOrderContractReducer'
 import chatAuthReducer from './chat/reducers/auth'
 import newMessageReducer from './chat/reducers/newMessage'
@@ -40,6 +41,7 @@ const reducer = combineReducers({
   activeTradeData: activeTradeReducer,
   adData: adReducer,
   sendEtherState: etherSendReducer,
+  cancelTradeState: cancelTradeReducer,
   sellOrderContract: sellOrderContractReducer,
   chatAuth: chatAuthReducer,
   newMessage: newMessageReducer,

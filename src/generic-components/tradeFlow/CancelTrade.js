@@ -12,7 +12,7 @@ class CancelTrade extends Component {
           Made a mistake with payment or want to try another seller? Never cancel if you already paid the seller.
         </p>
         <div className='tc'>
-          <button className='bg-danger'>
+          <button className='bg-danger' onClick={this.props.cancelTrade}>
             Cancel Trade
           </button>
         </div>
