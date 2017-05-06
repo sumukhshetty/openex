@@ -66,14 +66,34 @@ module.exports = {
         web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function (err, address) {
           if (!err) {
             firebaseRef.database().ref('/users/'+ buyOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-              var fcmToken = snap.val()
+              var buyerfcmToken = snap.val()
+              var _body = buyOrder.sellerUsername + " has sent Ether to the Escrow Contract"
+              var notificationData = {
+                "title": "Ether sent to Escrow Contract",
+                "body": _body,
+                "email": true, // TODO get this from user's preferences
+                "fcm": true, // TODO get this from user's preferences
+                "recipientToken": buyerfcmToken,
+                "senderUsername": buyOrder.sellerUsername,
+                "orderId": orderId,
+                "seen": false,
+                "createdAt": Date.now()
+              }
+
+              try{
+                var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+                firebaseRef.database().ref('/users/'+buyOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+
+              } catch(e){
+                console.log("[createBuyOrderContract]",e)
+              }
               request({
                   method: 'post',
                   body: {
                     orderId: orderId,
                     sellerUid: sellerUid,
                     sellerUsername: buyOrder.sellerUsername,
-                    buyerFcmToken: fcmToken
+                    buyerFcmToken: buyerfcmToken
                   },
                   json: true,
                   url: 'https://us-central1-automteetherexchange.cloudfunctions.net/escrowFillled'
@@ -119,9 +139,30 @@ module.exports = {
   paymentConfirmed: (buyOrder, orderId) => (dispatch) => {
     console.log('paymentConfirmed');
     firebaseRef.database().ref('/users/'+ buyOrder.sellerUid + '/fcmToken/').once("value", function(snap){
-      var fcmToken = snap.val()
+      var sellerfcmToken = snap.val()
+
+      var _body = buyOrder.buyerUsername + " has confirmed the payment"
+      var notificationData = {
+        "title": "New Payment Confirmation",
+        "body": _body,
+        "email": true,
+        "fcm": true,
+        "recipientToken": sellerfcmToken,
+        "senderUsername": buyOrder.buyerUsername,
+        "orderId": orderId,
+        "seen": false,
+        "createdAt": Date.now()
+      }
+
+      try{
+        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+        firebaseRef.database().ref('/users/'+buyOrder.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+      } catch(e){
+        console.log("[paymentConfirmed]",e)
+      }
+
       var postData = {
-        sellerFcmToken: fcmToken,
+        sellerFcmToken: sellerfcmToken,
         buyerUsername: buyOrder.buyerUsername
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmPayment'
@@ -166,14 +207,35 @@ module.exports = {
     .then(function(txHash) {
       console.log(txHash)
       firebaseRef.database().ref('/users/'+ buyOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-        var fcmToken = snap.val()
+        var buyerfcmToken = snap.val()
+        var _body = buyOrder.sellerUsername + " has released the Ether"
+        var notificationData = {
+          "title": "New Seller Confirmation",
+          "body": _body,
+          "email": true,
+          "fcm": true,
+          "recipientToken": buyerfcmToken,
+          "senderUsername": buyOrder.sellerUsername,
+          "orderId": orderId,
+          "seen": false,
+          "createdAt": Date.now()
+        }
+
+        try{
+          var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+          firebaseRef.database().ref('/users/'+buyOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+        } catch(e){
+          console.log("[releaseEscrow]",e)
+        }
+
+
+
         request({
             method: 'post',
             body: {
               orderId: orderId,
               sellerUid: sellerUid,
               buyerUid: buyerUid,
-              buyerFcmToken: fcmToken,
               sellerUsername: buyOrder.sellerUsername
             },
             json: true,

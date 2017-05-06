@@ -6,7 +6,6 @@ const cors = require('cors')({origin: true});
 
 exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid}/notifications/{notificationUid}')
   .onWrite(event=>{
-    console.log(event.params)
     let notificationUid = event.params.notificationUid
     admin.database().ref('/notifications/'+ notificationUid).once('value', function(snap){
       let notifcationData = snap.val()
@@ -181,7 +180,7 @@ exports.escrowFillled = functions.https.onRequest((req, res) => {
         admin.database().ref('/buyorders/' + req.body.orderId + '/status')
           .set('In Escrow')
         .then(function() {
-          var _bodyText = req.body.sellerUsername + " has sent Ether to the Escrow Contract"
+          /*var _bodyText = req.body.sellerUsername + " has sent Ether to the Escrow Contract"
           if(req.body.buyerFcmToken){
             admin.messaging().sendToDevice([req.body.buyerFcmToken],
               {notification:
@@ -191,7 +190,7 @@ exports.escrowFillled = functions.https.onRequest((req, res) => {
                 }
               }
             )
-          }
+          }*/
           res.status(200).send();
         })
         .catch(function(e) {
@@ -224,7 +223,7 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
 
           admin.database().ref("users/"+req.body.buyerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
           admin.database().ref("users/"+req.body.sellerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
-          var _bodyText = req.body.sellerUsername + " has released the Ether"
+/*          var _bodyText = req.body.sellerUsername + " has released the Ether"
           if (req.body.buyerFcmToken){
           admin.messaging().sendToDevice([req.body.buyerFcmToken],
             {notification:
@@ -232,7 +231,7 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
                 title:"Ether Released",
                 body: _bodyText
             }})
-          }
+          }*/
           res.status(200).send();
         })
         .catch(function(e) {
@@ -301,7 +300,7 @@ exports.requestEther = functions.https.onRequest((req, res) => {
         .set({
           tradeType: 'sell-ether'
         })
-        var _bodyText = req.body.postData.buyerUsername + " wants to buy some ether"
+/*        var _bodyText = req.body.postData.buyerUsername + " wants to buy some ether"
         if(req.body.postData.sellerFcmToken) {
           admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
             {notification:
@@ -309,8 +308,7 @@ exports.requestEther = functions.https.onRequest((req, res) => {
                 title:"New Ether Purchase Request",
                 body: _bodyText
               }})
-        }
-        // TODO @qj call to mailgun api to send an email
+        }*/
         res.status(200).send()
       })
     } catch(e){
@@ -319,23 +317,11 @@ exports.requestEther = functions.https.onRequest((req, res) => {
   })
 })
 
-exports.fcmHelloWorld = functions.https.onRequest((req,res) => {
-  cors(req, res, () => {
-    try{
-    admin.messaging().sendToDevice(["dQt95qxIUaY:APA91bF3pndsx_XwxfhvjrLImxs6tb1EZlu0jVS5mbJnIjA7pN7IFdkQHqxzVsse1sCZUOGRUweM3Jb8pMk9LeBrGDu7ULn3Ld6Q7QQvldHijByO5huVZ1UJ_tFpVb9wUO1I4629Qws3"],
-      {notification:{title:"hello",body:"world Delhi"}})
-    res.status(200).send();
-    } catch(e){
-     res.status(500).send({error: '[fcmHelloWorld] Error : ' + e});
-    }
-  })
-})
-
 exports.confirmTrade = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
       var _bodyText = req.body.postData.sellerUsername + " has confirmed the trade"
-      if (req.body.postData.buyerFcmToken){
+/*      if (req.body.postData.buyerFcmToken){
       admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
         {notification:
           {
@@ -344,7 +330,7 @@ exports.confirmTrade = functions.https.onRequest((req, res) => {
         }})
       } else {
         console.log("no buyerFcmToken")
-      }
+      }*/
       // TODO send mailgun api email
       res.status(200).send()
     } catch(e) {
@@ -357,7 +343,7 @@ exports.confirmPayment = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
       var _bodyText = req.body.postData.buyerUsername + " has confirmed the payment"
-      if (req.body.postData.sellerFcmToken){
+/*      if (req.body.postData.sellerFcmToken){
       admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
         {notification:
           {
@@ -366,7 +352,7 @@ exports.confirmPayment = functions.https.onRequest((req, res) => {
         }})
       } else {
         console.log("no sellerFcmToken")
-      }
+      }*/
       // TODO send mailgun api email
       res.status(200).send()
     } catch(e) {
@@ -379,7 +365,7 @@ exports.releaseEther = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
       var _bodyText = req.body.postData.sellerUsername + " has released the Ether"
-      if (req.body.postData.buyerFcmToken){
+/*      if (req.body.postData.buyerFcmToken){
       admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
         {notification:
           {
@@ -388,7 +374,7 @@ exports.releaseEther = functions.https.onRequest((req, res) => {
         }})
       } else {
         console.log("no buyerFcmToken")
-      }
+      }*/
       // TODO send mailgun api email
       res.status(200).send()
     } catch(e) {

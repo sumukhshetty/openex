@@ -51,9 +51,31 @@ module.exports = {
     var orderInstance;
     // get the fcmToken of the buyer
     firebaseRef.database().ref('/users/'+ sellOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-      var fcmToken = snap.val()
+      var buyerfcmToken = snap.val()
+      var _body = sellOrder.sellerUsername + " has confirmed the trade"
+      var notificationData = {
+        "title": "New Trade Confirmation",
+        "body": _body,
+        "email": true,
+        "fcm": true,
+        "recipientToken": buyerfcmToken,
+        "senderUsername": sellOrder.sellerUsername,
+        "orderId": sellOrder.orderId,
+        "seen": false,
+        "createdAt": Date.now()
+      }
+
+      try{
+        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+        firebaseRef.database().ref('/users/'+sellOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+
+      } catch(e){
+        console.log("[createBuyOrderContract]",e)
+      }
+
+
       var postData = {
-        buyerFcmToken: fcmToken,
+        buyerFcmToken: buyerfcmToken,
         sellerUsername: sellOrder.sellerUsername
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmTrade'
@@ -98,9 +120,32 @@ module.exports = {
 
   confirmPayment: (sellOrder, requestId) => (dispatch) => {
     firebaseRef.database().ref('/users/'+ sellOrder.sellerUid + '/fcmToken/').once("value", function(snap){
-      var fcmToken = snap.val()
+      var sellerfcmToken = snap.val()
+
+      var _body = sellOrder.buyerUsername + " has confirmed the payment"
+      var notificationData = {
+        "title": "New Payment Confirmation",
+        "body": _body,
+        "email": true,
+        "fcm": true,
+        "recipientToken": sellerfcmToken,
+        "senderUsername": sellOrder.buyerUsername,
+        "orderId": sellOrder.orderId,
+        "seen": false,
+        "createdAt": Date.now()
+      }
+
+      try{
+        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+        firebaseRef.database().ref('/users/'+sellOrder.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+      } catch(e){
+        console.log("[confirmPayment]",e)
+      }
+
+
+
       var postData = {
-        sellerFcmToken: fcmToken,
+        sellerFcmToken: sellerfcmToken,
         buyerUsername: sellOrder.buyerUsername
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmPayment'
@@ -134,9 +179,31 @@ module.exports = {
   releaseEther: (sellOrder, contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
     dispatch(sendEtherState('sending'));
     firebaseRef.database().ref('/users/'+ sellOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-      var fcmToken = snap.val()
+
+      var buyerfcmToken = snap.val()
+      var _body = sellOrder.sellerUsername + " has released the Ether"
+      var notificationData = {
+        "title": "New Seller Confirmation",
+        "body": _body,
+        "email": true,
+        "fcm": true,
+        "recipientToken": buyerfcmToken,
+        "senderUsername": sellOrder.sellerUsername,
+        "orderId": sellOrder.orderId,
+        "seen": false,
+        "createdAt": Date.now()
+      }
+
+      try{
+        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+        firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+
+      } catch(e){
+        console.log("[createBuyOrderContract]",e)
+      }
+
+
       var postData = {
-        buyerFcmToken: fcmToken,
         sellerUsername: sellOrder.sellerUsername
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/releaseEther'

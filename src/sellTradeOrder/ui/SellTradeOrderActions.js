@@ -64,7 +64,7 @@ module.exports = {
 
       try{
         var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-        firebaseRef.database().ref('/users/'+uid+'/notifications/'+newNotifcation.key).set({vaule:true})
+        firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
 
       } catch(e){
         console.log("[createBuyOrderContract]",e)
@@ -74,7 +74,6 @@ module.exports = {
         orderId: orderId,
         sellerUid: uid,
         sellerUsername: sellerUsername,
-        buyerFcmToken: buyerfcmToken
       }
 
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/acceptbuy'
