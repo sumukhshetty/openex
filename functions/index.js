@@ -4,25 +4,64 @@ admin.initializeApp(functions.config().firebase);
 
 const cors = require('cors')({origin: true});
 
+//Maligun
+var mgApiKey = "key-3d2bd1463fc87e2aff2224f96c1df70a"
+var domain = "mg.automte.com"
+var mailgun= require('mailgun-js')({apiKey: mgApiKey, domain:domain})
+
+exports.mailgunHelloWorld = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try {
+      var data = {
+        from: 'Excited User <me@mg.automte.com>',
+        to: 'quijanoflores@gmail.com',
+        subject: 'Hello',
+        text: 'Testing some Mailgun awesomness!'
+      }
+      mailgun.messages().send(data, function (error, body) {
+      console.log(body);
+      })
+      res.status(200).send()
+    } catch (error){
+      console.log("[mailgunHelloWorld]", error)
+    }
+  })
+})
+
 exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid}/notifications/{notificationUid}')
   .onWrite(event=>{
     let notificationUid = event.params.notificationUid
     admin.database().ref('/notifications/'+ notificationUid).once('value', function(snap){
       let notifcationData = snap.val()
       console.log(notifcationData)
-      // TODO add in email functionality
+
       // TODO add in check to not send fcm and emails more than once if any value is written on the index
-      if(notifcationData.recipientToken){
-            admin.messaging().sendToDevice([notifcationData.recipientToken],
-              {
-                notification:
-                  {
-                    title:notifcationData.title,
-                    body: notifcationData.body
-                  }
-              })
-      } else {
-        console.log("no token")
+      if(notifcationData.fcm){
+        if(notifcationData.recipientToken){
+          admin.messaging().sendToDevice([notifcationData.recipientToken],
+            {
+              notification:
+                {
+                  title:notifcationData.title,
+                  body: notifcationData.body
+                }
+            })
+        } else {
+          console.log("no token")
+        }
+      }
+      if(notifcationData.email){
+        if(notifcationData.verifiedEmail){
+          var emaildata = {
+            from: 'Automte Notifications <no-reply@mg.automte.com>',
+            to: notifcationData.recipientEmail,
+            subject: notifcationData.title,
+            text: notifcationData.body
+          }
+          mailgun.messages().send(data, function(error, body){
+            console.log(body);
+          })
+        }
       }
     })
   })
