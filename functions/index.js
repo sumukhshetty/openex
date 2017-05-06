@@ -60,7 +60,6 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
               contractAddress: snap.val()['contractAddress'],
               inEscrow: false
             })
-            .remove();
             //TODO: AK I'm pretty sure calling self destruct on a contract is free, so do it from here.
             // Need to add that function to BuyOrder contract.
             //TODO: buyer rep affected?
@@ -73,12 +72,21 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
             .remove();
             admin.database().ref('users/' + snap.val()['buyerUid'] + '/advertisements/' + event.params.orderId)
             .set({tradeType: 'buy-ether'})
-            admin.database().ref('/buyorders/'+event.params.orderId+'/status')
-            .set('Initiated');
+            admin.database().ref('/users/'+snap.val()['sellerUid']+'/cancelledContract/')
+            .push({
+              contractAddress: snap.val()['contractAddress'],
+              inEscrow: false
+            })
             admin.database().ref('/buyorders/'+event.params.orderId+'/sellerUid')
             .set('');
             admin.database().ref('/buyorders/'+event.params.orderId+'/sellerUsername')
             .set('');
+            admin.database().ref('/buyorders/'+event.params.orderId+'/status')
+            .set('Initiated')
+            .then(function() {
+              admin.database().ref('/buyorders/'+event.params.orderId+'/cancelled')
+              .remove();
+            });
             //TODO: selfdestruct contract
             //TODO: seller rep affected?
             //Send notification
