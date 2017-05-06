@@ -4,21 +4,28 @@ admin.initializeApp(functions.config().firebase);
 
 const cors = require('cors')({origin: true});
 
-exports.notificationPostProcesing = functions.database.ref('/notifications')
+exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid}/notifications/{notificationUid}')
   .onWrite(event=>{
-    console.log(event)
-    if(event.params.recipientToken){
-          admin.messaging().sendToDevice([event.params.recipientToken],
-            {
-              notification:
-                {
-                  title:event.params.title,
-                  body: event.params.body
-                }
-            })
-    } else {
-      console.log("no token")
-    }
+    console.log(event.params)
+    let notificationUid = event.params.notificationUid
+    admin.database().ref('/notifications/'+ notificationUid).once('value', function(snap){
+      let notifcationData = snap.val()
+      console.log(notifcationData)
+      // TODO add in email functionality
+      // TODO add in check to not send fcm and emails more than once if any value is written on the index
+      if(notifcationData.recipientToken){
+            admin.messaging().sendToDevice([notifcationData.recipientToken],
+              {
+                notification:
+                  {
+                    title:notifcationData.title,
+                    body: notifcationData.body
+                  }
+              })
+      } else {
+        console.log("no token")
+      }
+    })
   })
 
 //Realtime database triggers
@@ -124,17 +131,6 @@ exports.acceptbuy = functions.https.onRequest((req, res) => {
         .set(req.body.sellerUid);
         admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUsername')
         .set(req.body.sellerUsername);
-        var _bodyText = req.body.sellerUsername + " has accepted your buy order"
-        if(req.body.buyerFcmToken){
-          admin.messaging().sendToDevice([req.body.buyerFcmToken],
-            {
-              notification:
-                {
-                  title:"New Seller Confirmation",
-                  body: _bodyText
-                }
-            })
-        }
         res.status(200).send();
       } else {
         res.status(500).send({error: 'Status of order ' + req.body.orderId + ' is not Initiated'});

@@ -48,9 +48,7 @@ module.exports = {
     var coinbase = web3.eth.coinbase;
     // var block, orderAddress
     firebaseRef.database().ref('/users/'+ buyOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-      console.log("got the token")
       var buyerfcmToken = snap.val()
-      console.log(buyerfcmToken)
       var _body = sellerUsername + " has accepted your buy order"
       var notificationData = {
         "title": "New Seller Confirmation",
@@ -65,8 +63,9 @@ module.exports = {
       }
 
       try{
-        console.log("about to crete the sales order")
-        firebaseRef.database().ref("/notifications/").push(notificationData)
+        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+        firebaseRef.database().ref('/users/'+uid+'/notifications/'+newNotifcation.key).set({vaule:true})
+
       } catch(e){
         console.log("[createBuyOrderContract]",e)
       }
@@ -77,7 +76,7 @@ module.exports = {
         sellerUsername: sellerUsername,
         buyerFcmToken: buyerfcmToken
       }
-      // TODO remove admin messaging from the acceptbuy firebase function
+
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/acceptbuy'
       var options = {
         method: 'post',
@@ -85,7 +84,7 @@ module.exports = {
         json: true,
         url: url
       }
-/*      request(options, function (err, res, body) {
+      request(options, function (err, res, body) {
         if (err) {
           console.error('error posting json: ', err)
           throw err
@@ -137,7 +136,7 @@ module.exports = {
             });
         }
       });
-      */
+      
     })
   }
 }
