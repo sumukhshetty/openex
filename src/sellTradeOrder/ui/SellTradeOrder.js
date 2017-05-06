@@ -17,6 +17,7 @@ export default class SellTradeOrder extends Component {
   }
 
   acceptOrder (e) {
+    console.log("acceptOrder")
     e.preventDefault();
     this.props.acceptOrder(this.props.buyOrderDetail.buyOrder, 
       this.props.buyOrderDetail.buyOrder.amount, 

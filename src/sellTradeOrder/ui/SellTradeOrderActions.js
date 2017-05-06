@@ -41,19 +41,43 @@ module.exports = {
   },
 
   createBuyOrderContract: (buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {
+    console.log("createBuyOrderContract")
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
     var factoryInstance;
     var coinbase = web3.eth.coinbase;
     // var block, orderAddress
     firebaseRef.database().ref('/users/'+ buyOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-      var fcmToken = snap.val()
+      console.log("got the token")
+      var buyerfcmToken = snap.val()
+      console.log(buyerfcmToken)
+      var _body = sellerUsername + " has accepted your buy order"
+      var notificationData = {
+        "title": "New Seller Confirmation",
+        "body": _body,
+        "email": true,
+        "fcm": true,
+        "recipientToken": buyerfcmToken,
+        "senderUsername": sellerUsername,
+        "orderId": orderId,
+        "seen": false,
+        "createdAt": Date.now()
+      }
+
+      try{
+        console.log("about to crete the sales order")
+        firebaseRef.database().ref("/notifications/").push(notificationData)
+      } catch(e){
+        console.log("[createBuyOrderContract]",e)
+      }
+
       var postData = {
         orderId: orderId,
         sellerUid: uid,
         sellerUsername: sellerUsername,
-        buyerFcmToken: fcmToken
+        buyerFcmToken: buyerfcmToken
       }
+      // TODO remove admin messaging from the acceptbuy firebase function
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/acceptbuy'
       var options = {
         method: 'post',
@@ -61,7 +85,7 @@ module.exports = {
         json: true,
         url: url
       }
-      request(options, function (err, res, body) {
+/*      request(options, function (err, res, body) {
         if (err) {
           console.error('error posting json: ', err)
           throw err
@@ -113,7 +137,7 @@ module.exports = {
             });
         }
       });
-      
+      */
     })
   }
 }

@@ -4,6 +4,23 @@ admin.initializeApp(functions.config().firebase);
 
 const cors = require('cors')({origin: true});
 
+exports.notificationPostProcesing = functions.database.ref('/notifications')
+  .onWrite(event=>{
+    console.log(event)
+    if(event.params.recipientToken){
+          admin.messaging().sendToDevice([event.params.recipientToken],
+            {
+              notification:
+                {
+                  title:event.params.title,
+                  body: event.params.body
+                }
+            })
+    } else {
+      console.log("no token")
+    }
+  })
+
 //Realtime database triggers
 exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/status')
   .onWrite(event => {
