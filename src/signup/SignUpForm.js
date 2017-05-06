@@ -58,7 +58,7 @@ class SignUpForm extends Component {
         <input className='mv1' id='password' type='password' value={this.state.signUpInfo.password} onChange={this.onInputChange.bind(this)} placeholder='password' required />
         <select className='mv1' name='country' id='country' onChange={this.onInputChange.bind(this)} required>
 
-          <option value='--'>Select Country</option>
+          <option value=''>Select Country</option>
           <option value='AF'>Afghanistan</option>
           <option value='AL'>Albania</option>
           <option value='DZ'>Algeria</option>
