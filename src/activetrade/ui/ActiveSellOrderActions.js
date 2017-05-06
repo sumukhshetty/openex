@@ -68,11 +68,9 @@ module.exports = {
       try{
         var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
         firebaseRef.database().ref('/users/'+sellOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
-
       } catch(e){
         console.log("[createBuyOrderContract]",e)
       }
-
 
       var postData = {
         buyerFcmToken: buyerfcmToken,
@@ -183,7 +181,7 @@ module.exports = {
       var buyerfcmToken = snap.val()
       var _body = sellOrder.sellerUsername + " has released the Ether"
       var notificationData = {
-        "title": "New Seller Confirmation",
+        "title": "Ether released from escrow",
         "body": _body,
         "email": true,
         "fcm": true,
