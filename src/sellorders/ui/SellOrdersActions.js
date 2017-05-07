@@ -24,18 +24,26 @@ module.exports = {
     })
   },
   sellOrders: (user) => (dispatch) => {
-    firebaseRef.database().ref('sellorders')
-    .orderByChild('availableBalance').startAt(0.0001)
-      .on('value', function(snapshot){
-        console.log(snapshot.val());
-        dispatch(getSellOrders(snapshot.val()))
-        Object.entries(snapshot.val()).forEach(
-          ([key, value]) => {
-            firebaseRef.database().ref('users/' + value['sellerUid'])
-            .once('value', function(snapshot) {
-              dispatch(getUsersInfo(snapshot.val(), snapshot.key))
-            });
-          });
-      })
+    firebaseRef.database().ref('users/'+user.data.uid).once('value', function(snap){
+      var userData = snap.val()
+      try{
+        firebaseRef.database().ref('sellorders/'+userData.country)
+        .orderByChild('availableBalance').startAt(0.0001)
+          .on('value', function(snapshot){
+            console.log(snapshot.val());
+            dispatch(getSellOrders(snapshot.val()))
+            Object.entries(snapshot.val()).forEach(
+              ([key, value]) => {
+                firebaseRef.database().ref('users/' + value['sellerUid'])
+                .once('value', function(snapshot) {
+                  dispatch(getUsersInfo(snapshot.val(), snapshot.key))
+                });
+              });
+          })
+
+      } catch(e) {
+        console.log("[SellOrderActions.sellOrders]", e)
+      }
+    })
   }
 }
