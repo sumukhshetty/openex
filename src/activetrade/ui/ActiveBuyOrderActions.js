@@ -65,15 +65,38 @@ module.exports = {
         console.log(value); // TODO ak: this needs to grab the fee percentage from somewhere!!!
         web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function (err, address) {
           if (!err) {
-            firebaseRef.database().ref('/users/'+ buyOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-              var fcmToken = snap.val()
+            firebaseRef.database().ref('/users/'+ buyOrder.buyerUid).once("value", function(snap){
+              var buyerUserData = snap.val()
+              //var buyerfcmToken = snap.val()
+              var _body = buyOrder.sellerUsername + " has sent Ether to the Escrow Contract"
+              var _fcmToken
+              if(buyerUserData.fcmToken){
+                _fcmToken = buyerUserData.fcmToken
+              } else {
+                _fcmToken = null
+              }
+              var notificationData = {
+                "title": "Ether sent to Escrow Contract",
+                "body": _body,
+                "type": "fillEscrow",
+                "email": true, // TODO get this from user's preferences
+                "fcm": true, // TODO get this from user's preferences
+                "recipientToken": _fcmToken,
+                "recipientEmail": buyerUserData.email,
+                "verifiedEmail": buyerUserData.verifiedEmail,                
+                "senderUsername": buyOrder.sellerUsername,
+                "orderId": orderId,
+                "seen": false,
+                "createdAt": Date.now()
+              }
+
               request({
                   method: 'post',
                   body: {
                     orderId: orderId,
                     sellerUid: sellerUid,
                     sellerUsername: buyOrder.sellerUsername,
-                    buyerFcmToken: fcmToken
+                    buyerFcmToken: buyerUserData.fcmToken
                   },
                   json: true,
                   url: 'https://us-central1-automteetherexchange.cloudfunctions.net/escrowFillled'
@@ -84,6 +107,13 @@ module.exports = {
                     throw err
                   }
                   if(res.statusCode === 200) {
+                    try{
+                      var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+                      firebaseRef.database().ref('/users/'+buyOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+
+                    } catch(e){
+                      console.log("[createBuyOrderContract]",e)
+                    }
                     // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
                     console.log("fillEscrow.200")
                   }
@@ -118,10 +148,35 @@ module.exports = {
 
   paymentConfirmed: (buyOrder, orderId) => (dispatch) => {
     console.log('paymentConfirmed');
-    firebaseRef.database().ref('/users/'+ buyOrder.sellerUid + '/fcmToken/').once("value", function(snap){
-      var fcmToken = snap.val()
+    firebaseRef.database().ref('/users/'+ buyOrder.sellerUid).once("value", function(snap){
+      var sellerUserData = snap.val()
+      //var sellerfcmToken = snap.val()
+
+      var _body = buyOrder.buyerUsername + " has confirmed the payment"
+      var _fcmToken
+      if(sellerUserData.fcmToken){
+        _fcmToken = sellerUserData.fcmToken
+      } else {
+        _fcmToken = null
+      }
+      var notificationData = {
+        "title": "New Payment Confirmation",
+        "body": _body,
+        "type": "paymentConfirmed",
+        "email": true,
+        "fcm": true,
+        "recipientToken": _fcmToken,
+        "recipientEmail": sellerUserData.email,
+        "verifiedEmail": sellerUserData.verifiedEmail,
+        "senderUsername": buyOrder.buyerUsername,
+        "orderId": orderId,
+        "seen": false,
+        "createdAt": Date.now()
+      }
+
+
       var postData = {
-        sellerFcmToken: fcmToken,
+        sellerFcmToken: sellerUserData.fcmToken,
         buyerUsername: buyOrder.buyerUsername
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmPayment'
@@ -138,6 +193,12 @@ module.exports = {
         }
         if(res.statusCode === 200) {
           // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          try{
+            var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+            firebaseRef.database().ref('/users/'+buyOrder.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+          } catch(e){
+            console.log("[paymentConfirmed]",e)
+          }
           console.log("paymentConfirmed.200")
         }
         if(res.statusCode === 500) {
@@ -165,15 +226,37 @@ module.exports = {
     })
     .then(function(txHash) {
       console.log(txHash)
-      firebaseRef.database().ref('/users/'+ buyOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-        var fcmToken = snap.val()
+      firebaseRef.database().ref('/users/'+ buyOrder.buyerUid).once("value", function(snap){
+        var buyerUserData = snap.val()
+        //var buyerfcmToken = snap.val()
+        var _body = buyOrder.sellerUsername + " has released the Ether"
+        var _fcmToken
+        if(buyerUserData.fcmToken){
+          _fcmToken = buyerUserData.fcmToken
+        } else {
+          _fcmToken = null
+        }
+        var notificationData = {
+          "title": "Ether Released from Escrow",
+          "body": _body,
+          "type": "seller-trade-confirmation",
+          "email": true,
+          "fcm": true,
+          "recipientToken": _fcmToken,
+          "recipientEmail": buyerUserData.email,
+          "verifiedEmail": buyerUserData.verifiedEmail,
+          "senderUsername": buyOrder.sellerUsername,
+          "orderId": orderId,
+          "seen": false,
+          "createdAt": Date.now()
+        }
+
         request({
             method: 'post',
             body: {
               orderId: orderId,
               sellerUid: sellerUid,
               buyerUid: buyerUid,
-              buyerFcmToken: fcmToken,
               sellerUsername: buyOrder.sellerUsername
             },
             json: true,
@@ -186,6 +269,12 @@ module.exports = {
             }
             if(res.statusCode === 200) {
               // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+            try{
+              var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+              firebaseRef.database().ref('/users/'+buyOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+            } catch(e){
+              console.log("[releaseEscrow]",e)
+            }
               console.log("releaseEscrow.200")
             }
             if(res.statusCode === 500) {

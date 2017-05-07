@@ -21,6 +21,7 @@ import BuyOrders from './buyorders/layouts/BuyOrders'
 import SellOrders from './sellorders/layouts/SellOrders'
 
 import Help from './help/layouts/Help'
+import HelpConfirmation from './help/layouts/HelpConfirmation'
 import Payment from './activetrade/layouts/Payment'
 import Release from './activetrade/layouts/Release'
 import AllDone from './activetrade/layouts/AllDone'
@@ -110,6 +111,7 @@ ReactDOM.render((
         <Route path='sellorders' component={UserIsAuthenticated(BuyOrders)} />
         <Route path='buyorders' component={UserIsAuthenticated(SellOrders)} />
         <Route path='help' component={UserIsAuthenticated(Help)} />
+        <Route path='help/confirmation' component={UserIsAuthenticated(HelpConfirmation)} />
         <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />
         <Route path='orderslist' component={UserIsAuthenticated(OrdersList)} />
         <Route path='user' component={UserIsAuthenticated(User)} />

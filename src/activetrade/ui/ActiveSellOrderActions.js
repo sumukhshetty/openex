@@ -44,16 +44,41 @@ module.exports = {
 
   confirmTrade: (sellOrder, contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
     console.log("ui.actions.confirmTrade")
+    console.log(sellOrder)
     dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
     // get the fcmToken of the buyer
-    firebaseRef.database().ref('/users/'+ sellOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-      var fcmToken = snap.val()
+    firebaseRef.database().ref('/users/'+ sellOrder.buyerUid).once("value", function(snap){
+      var buyerUserData = snap.val()
+
+      var _fcmToken
+      if(buyerUserData.fcmToken){
+        _fcmToken = buyerUserData.fcmToken
+      } else {
+        _fcmToken = null
+      }
+      var _body = sellOrder.sellerUsername + " has confirmed the trade"
+      var notificationData = {
+        "title": "New Trade Confirmation",
+        "body": _body,
+        "type": "confirmTrade",
+        "email": true,
+        "fcm": true,
+        "recipientToken": _fcmToken,
+        "recipientEmail": buyerUserData.email,
+        "verifiedEmail": buyerUserData.verifiedEmail,
+        "senderUsername": sellOrder.sellerUsername,
+        //"orderId": sellOrder.orderId,
+        "seen": false,
+        "createdAt": Date.now()
+      }
+
+
       var postData = {
-        buyerFcmToken: fcmToken,
+        buyerFcmToken: buyerUserData.fcmToken,
         sellerUsername: sellOrder.sellerUsername
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmTrade'
@@ -70,6 +95,12 @@ module.exports = {
         }
         if(res.statusCode === 200) {
           // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          try{
+            var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+            firebaseRef.database().ref('/users/'+sellOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+          } catch(e){
+            console.log("[createBuyOrderContract]",e)
+          }
           console.log("confirmTrade.200")
         }
         if(res.statusCode === 500) {
@@ -80,9 +111,11 @@ module.exports = {
     }, function(error){
       console.log("[confirmTrade]: ",error)
     })
+    // TOOD refactor so this happens before the notification goes out
     order.at(contractAddress)
       .then(function (_order) {
         orderInstance = _order;
+        console.log("about to add order to the contract")
         return orderInstance.addOrder(buyerAddress, web3.toWei(amount, 'ether'), {from: coinbase});
       })
       .then(function() {
@@ -97,10 +130,37 @@ module.exports = {
   },
 
   confirmPayment: (sellOrder, requestId) => (dispatch) => {
-    firebaseRef.database().ref('/users/'+ sellOrder.sellerUid + '/fcmToken/').once("value", function(snap){
-      var fcmToken = snap.val()
+    firebaseRef.database().ref('/users/'+ sellOrder.sellerUid).once("value", function(snap){
+      var sellerUserData = snap.val()
+
+      var _fcmToken
+      if(sellerUserData.fcmToken){
+        _fcmToken = sellerUserData.fcmToken
+      } else {
+        _fcmToken = null
+      }
+
+      var _body = sellOrder.buyerUsername + " has confirmed the payment"
+      var notificationData = {
+        "title": "New Payment Confirmation",
+        "body": _body,
+        "type": "confirmPayment",
+        "email": true,
+        "fcm": true,
+        "recipientToken": _fcmToken,
+        "recipientEmail": sellerUserData.email,
+        "verifiedEmail": sellerUserData.verifiedEmail,
+        "senderUsername": sellOrder.buyerUsername,
+        "orderId": sellOrder.orderId,
+        "seen": false,
+        "createdAt": Date.now()
+      }
+
+
+
+
       var postData = {
-        sellerFcmToken: fcmToken,
+        sellerFcmToken: sellerUserData.fcmToken,
         buyerUsername: sellOrder.buyerUsername
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmPayment'
@@ -117,6 +177,12 @@ module.exports = {
         }
         if(res.statusCode === 200) {
           // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+        try{
+          var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+          firebaseRef.database().ref('/users/'+sellOrder.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+        } catch(e){
+          console.log("[confirmPayment]",e)
+        }
           console.log("confirmPayment.200")
         }
         if(res.statusCode === 500) {
@@ -133,10 +199,35 @@ module.exports = {
 
   releaseEther: (sellOrder, contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
     dispatch(sendEtherState('sending'));
-    firebaseRef.database().ref('/users/'+ sellOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-      var fcmToken = snap.val()
+    firebaseRef.database().ref('/users/'+ sellOrder.buyerUid).once("value", function(snap){
+      var buyerUserData = snap.val()
+
+      var _fcmToken
+      if(buyerUserData.fcmToken){
+        _fcmToken = buyerUserData.fcmToken
+      } else {
+        _fcmToken = null
+      }
+
+      var _body = sellOrder.sellerUsername + " has released the Ether"
+      var notificationData = {
+        "title": "Ether released from escrow",
+        "body": _body,
+        "tyep": "releaseEther",
+        "email": true,
+        "fcm": true,
+        "recipientToken": buyerUserData.fcmToken,
+        "recipientEmail": buyerUserData.email,
+        "verifiedEmail": buyerUserData.verifiedEmail,
+        "senderUsername": sellOrder.sellerUsername,
+        //"orderId": sellOrder.orderId,
+        "seen": false,
+        "createdAt": Date.now()
+      }
+
+
+
       var postData = {
-        buyerFcmToken: fcmToken,
         sellerUsername: sellOrder.sellerUsername
       }
       var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/releaseEther'
@@ -152,6 +243,13 @@ module.exports = {
           throw err
         }
         if(res.statusCode === 200) {
+          try{
+            var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+            firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+
+          } catch(e){
+            console.log("[createBuyOrderContract]",e)
+          }
           // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
           console.log("releaseEther.200")
         }

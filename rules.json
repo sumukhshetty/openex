@@ -31,6 +31,10 @@
     "users": {
       ".read": "auth != null",
       ".write": "auth != null"
+    },
+    "notifications": {
+      ".read": "auth != null",
+      ".write": "auth != null"
     }
   }
 }
