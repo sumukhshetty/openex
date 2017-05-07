@@ -219,17 +219,6 @@ exports.escrowFillled = functions.https.onRequest((req, res) => {
         admin.database().ref('/buyorders/' + req.body.orderId + '/status')
           .set('In Escrow')
         .then(function() {
-          /*var _bodyText = req.body.sellerUsername + " has sent Ether to the Escrow Contract"
-          if(req.body.buyerFcmToken){
-            admin.messaging().sendToDevice([req.body.buyerFcmToken],
-              {notification:
-                {
-                  title:"Ether sent to Escrow Contract",
-                  body: _bodyText
-                }
-              }
-            )
-          }*/
           res.status(200).send();
         })
         .catch(function(e) {
@@ -262,15 +251,6 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
 
           admin.database().ref("users/"+req.body.buyerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
           admin.database().ref("users/"+req.body.sellerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
-/*          var _bodyText = req.body.sellerUsername + " has released the Ether"
-          if (req.body.buyerFcmToken){
-          admin.messaging().sendToDevice([req.body.buyerFcmToken],
-            {notification:
-              {
-                title:"Ether Released",
-                body: _bodyText
-            }})
-          }*/
           res.status(200).send();
         })
         .catch(function(e) {
@@ -339,15 +319,6 @@ exports.requestEther = functions.https.onRequest((req, res) => {
         .set({
           tradeType: 'sell-ether'
         })
-/*        var _bodyText = req.body.postData.buyerUsername + " wants to buy some ether"
-        if(req.body.postData.sellerFcmToken) {
-          admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
-            {notification:
-              {
-                title:"New Ether Purchase Request",
-                body: _bodyText
-              }})
-        }*/
         res.status(200).send()
       })
     } catch(e){
@@ -359,18 +330,6 @@ exports.requestEther = functions.https.onRequest((req, res) => {
 exports.confirmTrade = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
-      var _bodyText = req.body.postData.sellerUsername + " has confirmed the trade"
-/*      if (req.body.postData.buyerFcmToken){
-      admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
-        {notification:
-          {
-            title:"New Trade Confirmation",
-            body: _bodyText
-        }})
-      } else {
-        console.log("no buyerFcmToken")
-      }*/
-      // TODO send mailgun api email
       res.status(200).send()
     } catch(e) {
       res.status(500).send({error:'[confirmTrade] Error' + e})
@@ -381,18 +340,6 @@ exports.confirmTrade = functions.https.onRequest((req, res) => {
 exports.confirmPayment = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
-      var _bodyText = req.body.postData.buyerUsername + " has confirmed the payment"
-/*      if (req.body.postData.sellerFcmToken){
-      admin.messaging().sendToDevice([req.body.postData.sellerFcmToken],
-        {notification:
-          {
-            title:"New Payment Confirmation",
-            body: _bodyText
-        }})
-      } else {
-        console.log("no sellerFcmToken")
-      }*/
-      // TODO send mailgun api email
       res.status(200).send()
     } catch(e) {
       res.status(500).send({error:'[confirmPayment] Error' + e})
@@ -403,21 +350,32 @@ exports.confirmPayment = functions.https.onRequest((req, res) => {
 exports.releaseEther = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
-      var _bodyText = req.body.postData.sellerUsername + " has released the Ether"
-/*      if (req.body.postData.buyerFcmToken){
-      admin.messaging().sendToDevice([req.body.postData.buyerFcmToken],
-        {notification:
-          {
-            title:"Ether Released",
-            body: _bodyText
-        }})
-      } else {
-        console.log("no buyerFcmToken")
-      }*/
-      // TODO send mailgun api email
       res.status(200).send()
     } catch(e) {
       res.status(500).send({error:'[releaseEther] Error' + e})
+    }
+  })
+})
+
+// Help Form
+exports.helpForm = functions.https.onRequest((req, res) => {
+  cors(req, res, ()=>{
+    try{
+      console.log(req.body.postData)
+      var _subject = 'helpForm: ' + req.body.postData.topic
+      var _text = req.body.postData.email + " says: " + req.body.postData.message
+      var emaildata = {
+        from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
+        to: 'quijano@automte.com',
+        subject: _subject,
+        text: _text
+      }
+      mailgun.messages().send(emaildata, function(error, body){
+        console.log(body);
+      })
+      res.status(200).send()
+    } catch(e){
+      res.status(500).send({error:'[helpForm] Error' + e})
     }
   })
 })
