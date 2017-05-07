@@ -53,12 +53,12 @@ exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid
       if(notifcationData.email){
         if(notifcationData.verifiedEmail){
           var emaildata = {
-            from: 'Automte Notifications <no-reply@mg.automte.com>',
+            from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
             to: notifcationData.recipientEmail,
             subject: notifcationData.title,
             text: notifcationData.body
           }
-          mailgun.messages().send(data, function(error, body){
+          mailgun.messages().send(emaildata, function(error, body){
             console.log(body);
           })
         }

@@ -41,34 +41,40 @@ module.exports = {
   },
 
   createBuyOrderContract: (buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {
+    // TODO code review and refactor
     console.log("createBuyOrderContract")
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
     var factoryInstance;
     var coinbase = web3.eth.coinbase;
     // var block, orderAddress
-    firebaseRef.database().ref('/users/'+ buyOrder.buyerUid + '/fcmToken/').once("value", function(snap){
-      var buyerfcmToken = snap.val()
-      var _body = sellerUsername + " has accepted your buy order"
+    firebaseRef.database().ref('/users/'+ buyOrder.buyerUid).once("value", function(snap){
+      console.log("createBuyOrderContract")
+      var buyerUserData = snap.val()
+      console.log(buyerUserData)
+      var _body = sellerUsername + " has confirmed your buy order"
+      console.log(buyerUserData.fcmToken)
+      var _fcmToken
+      if(buyerUserData.fcmToken){
+        _fcmToken = buyerUserData.fcmToken
+      } else {
+        _fcmToken = null
+      }
       var notificationData = {
         "title": "New Seller Confirmation",
         "body": _body,
+        "type": "accept-buy-order",
         "email": true,
         "fcm": true,
-        "recipientToken": buyerfcmToken,
+        "recipientToken": _fcmToken,
+        "recipientEmail": buyerUserData.email,
+        "verifiedEmail": buyerUserData.verifiedEmail,
         "senderUsername": sellerUsername,
         "orderId": orderId,
         "seen": false,
         "createdAt": Date.now()
       }
 
-      try{
-        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-        firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
-
-      } catch(e){
-        console.log("[createBuyOrderContract]",e)
-      }
 
       var postData = {
         orderId: orderId,
@@ -95,6 +101,8 @@ module.exports = {
           throw res.body.error
         }
         if(statusCode === 200) {
+          console.log("ok got the 200")
+          // TODO change this to a reducer - sometimes the user can wait for a really long time to get this
           factory.at(factoryAddress.factoryAddress)
             .then(function (_factory) {
               factoryInstance = _factory;
@@ -102,6 +110,7 @@ module.exports = {
               return factoryInstance.createBuyOrder(buyerAddress, web3.toWei(amount, 'ether'), {from: coinbase});
             })
             .then(function (txHash) {
+              console.log("ok got the hash")
               console.log(txHash);
               request({
                   method: 'post',
@@ -125,6 +134,13 @@ module.exports = {
                     throw res.body.error
                   }
                   if(res.statusCode === 200) {
+                    try{
+                      var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+                      firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+
+                    } catch(e){
+                      console.log("[createBuyOrderContract]",e)
+                    }
                     browserHistory.push('/activebuyorder/' + orderId)
                   }
                 })

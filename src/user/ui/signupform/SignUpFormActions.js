@@ -34,8 +34,8 @@ export function signUpUser (signUpInfo, web3) {
         'trustworthiness': 'unknown',
         'verifiedIdentification': false,
         'verifiedPhoneNumber': false,
-        'verifiedEmail': false,
-        'numberOfTrades': 0
+        'verifiedEmail': true,
+        'numberOfTrades': 0,
       }
       firebaseRef.database().ref('users/' + userid).set(userdata)
       firebaseUser.updateProfile({

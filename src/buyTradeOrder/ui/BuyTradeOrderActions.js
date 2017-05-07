@@ -102,15 +102,18 @@ module.exports = {
     // a null value. In the fc function if the sellFcmToken is not null we'll send
     // a firebase cloud notification that a user has requested ether and send an email
     // using mailgun
-    firebaseRef.database().ref('/users/'+order.sellerUid+'/fcmToken/').once('value',function(snap){
-      var sellerfcmToken = snap.val()
+    firebaseRef.database().ref('/users/'+order.sellerUid).once('value',function(snap){
+      var sellerUserData = snap.val()
       var _body = buyerUsername + " wants to buy some ether!"
       var notificationData = {
         "title": "New Ether Purchase Request",
         "body": _body,
         "email": true,
+        "type": "requestEther",
         "fcm": true,
-        "recipientToken": sellerfcmToken,
+        "recipientToken": sellerUserData.fcmToken,
+        "recipientEmail": sellerUserData.email,
+        "verifiedEmail": sellerUserData.verifiedEmail,
         "senderUsername": buyerUsername,
         "orderId": order.orderId,
         "seen": false,
@@ -122,7 +125,7 @@ module.exports = {
         firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
 
       } catch(e){
-        console.log("[createBuyOrderContract]",e)
+        console.log("[requestEther]",e)
       }
 
       var postData = {
