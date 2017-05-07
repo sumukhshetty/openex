@@ -105,13 +105,19 @@ module.exports = {
     firebaseRef.database().ref('/users/'+order.sellerUid).once('value',function(snap){
       var sellerUserData = snap.val()
       var _body = buyerUsername + " wants to buy some ether!"
+      var _fcmToken
+      if(sellerUserData.fcmToken){
+        _fcmToken = sellerUserData.fcmToken
+      } else {
+        _fcmToken = null
+      }
       var notificationData = {
         "title": "New Ether Purchase Request",
         "body": _body,
         "email": true,
         "type": "requestEther",
         "fcm": true,
-        "recipientToken": sellerUserData.fcmToken,
+        "recipientToken": _fcmToken,
         "recipientEmail": sellerUserData.email,
         "verifiedEmail": sellerUserData.verifiedEmail,
         "senderUsername": buyerUsername,
@@ -120,13 +126,6 @@ module.exports = {
         "createdAt": Date.now()
       }
 
-      try{
-        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-        firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
-
-      } catch(e){
-        console.log("[requestEther]",e)
-      }
 
       var postData = {
         amount: amount,
@@ -160,7 +159,16 @@ module.exports = {
           throw err
         }
         if(res.statusCode === 200) {
+          try{
+            var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+            firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+
+          } catch(e){
+            console.log("[requestEther]",e)
+          }
+          console.log("requestEther.200")
           // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          //browserHistory.push('/activesellorder/'+order.orderId)
           browserHistory.push('/dashboard')
         }
         if(res.statusCode === 500) {

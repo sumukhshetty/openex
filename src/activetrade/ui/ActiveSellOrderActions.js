@@ -44,6 +44,7 @@ module.exports = {
 
   confirmTrade: (sellOrder, contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
     console.log("ui.actions.confirmTrade")
+    console.log(sellOrder)
     dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     const order = contract(SellOrderContract);
@@ -53,6 +54,12 @@ module.exports = {
     firebaseRef.database().ref('/users/'+ sellOrder.buyerUid).once("value", function(snap){
       var buyerUserData = snap.val()
 
+      var _fcmToken
+      if(buyerUserData.fcmToken){
+        _fcmToken = buyerUserData.fcmToken
+      } else {
+        _fcmToken = null
+      }
       var _body = sellOrder.sellerUsername + " has confirmed the trade"
       var notificationData = {
         "title": "New Trade Confirmation",
@@ -60,21 +67,15 @@ module.exports = {
         "type": "confirmTrade",
         "email": true,
         "fcm": true,
-        "recipientToken": buyerUserData.fcmToken,
+        "recipientToken": _fcmToken,
         "recipientEmail": buyerUserData.email,
         "verifiedEmail": buyerUserData.verifiedEmail,
         "senderUsername": sellOrder.sellerUsername,
-        "orderId": sellOrder.orderId,
+        //"orderId": sellOrder.orderId,
         "seen": false,
         "createdAt": Date.now()
       }
 
-      try{
-        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-        firebaseRef.database().ref('/users/'+sellOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
-      } catch(e){
-        console.log("[createBuyOrderContract]",e)
-      }
 
       var postData = {
         buyerFcmToken: buyerUserData.fcmToken,
@@ -94,6 +95,12 @@ module.exports = {
         }
         if(res.statusCode === 200) {
           // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+          try{
+            var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+            firebaseRef.database().ref('/users/'+sellOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+          } catch(e){
+            console.log("[createBuyOrderContract]",e)
+          }
           console.log("confirmTrade.200")
         }
         if(res.statusCode === 500) {
@@ -104,9 +111,11 @@ module.exports = {
     }, function(error){
       console.log("[confirmTrade]: ",error)
     })
+    // TOOD refactor so this happens before the notification goes out
     order.at(contractAddress)
       .then(function (_order) {
         orderInstance = _order;
+        console.log("about to add order to the contract")
         return orderInstance.addOrder(buyerAddress, web3.toWei(amount, 'ether'), {from: coinbase});
       })
       .then(function() {
@@ -124,6 +133,13 @@ module.exports = {
     firebaseRef.database().ref('/users/'+ sellOrder.sellerUid).once("value", function(snap){
       var sellerUserData = snap.val()
 
+      var _fcmToken
+      if(sellerUserData.fcmToken){
+        _fcmToken = sellerUserData.fcmToken
+      } else {
+        _fcmToken = null
+      }
+
       var _body = sellOrder.buyerUsername + " has confirmed the payment"
       var notificationData = {
         "title": "New Payment Confirmation",
@@ -131,7 +147,7 @@ module.exports = {
         "type": "confirmPayment",
         "email": true,
         "fcm": true,
-        "recipientToken": sellerUserData.fcmToken,
+        "recipientToken": _fcmToken,
         "recipientEmail": sellerUserData.email,
         "verifiedEmail": sellerUserData.verifiedEmail,
         "senderUsername": sellOrder.buyerUsername,
@@ -140,12 +156,6 @@ module.exports = {
         "createdAt": Date.now()
       }
 
-      try{
-        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-        firebaseRef.database().ref('/users/'+sellOrder.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
-      } catch(e){
-        console.log("[confirmPayment]",e)
-      }
 
 
 
@@ -167,6 +177,12 @@ module.exports = {
         }
         if(res.statusCode === 200) {
           // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+        try{
+          var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+          firebaseRef.database().ref('/users/'+sellOrder.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+        } catch(e){
+          console.log("[confirmPayment]",e)
+        }
           console.log("confirmPayment.200")
         }
         if(res.statusCode === 500) {
@@ -186,6 +202,13 @@ module.exports = {
     firebaseRef.database().ref('/users/'+ sellOrder.buyerUid).once("value", function(snap){
       var buyerUserData = snap.val()
 
+      var _fcmToken
+      if(buyerUserData.fcmToken){
+        _fcmToken = buyerUserData.fcmToken
+      } else {
+        _fcmToken = null
+      }
+
       var _body = sellOrder.sellerUsername + " has released the Ether"
       var notificationData = {
         "title": "Ether released from escrow",
@@ -197,18 +220,11 @@ module.exports = {
         "recipientEmail": buyerUserData.email,
         "verifiedEmail": buyerUserData.verifiedEmail,
         "senderUsername": sellOrder.sellerUsername,
-        "orderId": sellOrder.orderId,
+        //"orderId": sellOrder.orderId,
         "seen": false,
         "createdAt": Date.now()
       }
 
-      try{
-        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-        firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
-
-      } catch(e){
-        console.log("[createBuyOrderContract]",e)
-      }
 
 
       var postData = {
@@ -227,6 +243,13 @@ module.exports = {
           throw err
         }
         if(res.statusCode === 200) {
+          try{
+            var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
+            firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+
+          } catch(e){
+            console.log("[createBuyOrderContract]",e)
+          }
           // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
           console.log("releaseEther.200")
         }
