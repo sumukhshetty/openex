@@ -273,7 +273,7 @@ exports.postSellOrder = functions.https.onRequest((req, res) => {
       admin.database().ref("users/"+req.body.sellerUid).once("value", function(snap){
         var userData = snap.val()
         var newOrder = admin.database().ref("sellorders/"+userData.country).push(req.body.postTradeDetails);
-        admin.database().ref("sellorders/"+newOrder.key+'/orderId').set(newOrder.key);
+        admin.database().ref("sellorders/"+userData.country+'/'+newOrder.key+'/orderId').set(newOrder.key);
         admin.database().ref("users/"+req.body.sellerUid+"/advertisements/").child(newOrder.key).set({tradeType: req.body.postTradeDetails.tradeType})
         admin.database().ref('/sellorders/' + newOrder.key + '/contractTx')
         .set(req.body.contractTx);
