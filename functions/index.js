@@ -306,42 +306,45 @@ exports.postSellOrder = functions.https.onRequest((req, res) => {
 exports.requestEther = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
-      var newRequest = admin.database().ref('/purchaserequests').push({
-        amount: req.body.postData.amount,
-        price: req.body.postData.price,
-        buyerAddress: req.body.postData.buyerAddress,
-        buyerUid: req.body.postData.buyerUid,
-        buyerUsername: req.body.postData.buyerUsername,
-        sellerUid: req.body.postData.sellerUid,
-        sellerUsername: req.body.postData.sellerUsername,
-        paymentMethod: req.body.postData.paymentMethod,
-        bankInformation: req.body.postData.bankInformation,
-        createdAt: req.body.postData.createdAt,
-        lastUpated: req.body.postData.lastUpated,
-        status: 'Awaiting Seller Confirmation',
-        contractAddress: req.body.postData.contractAddress
-      }, function(err) {
-        admin.database().ref('/users/'+req.body.postData.sellerUid).once("value", function(snap){
-          var userData = snap.val()
-          admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/requests/' + newRequest.key)
+      admin.database().ref('/users/'+req.body.postData.sellerUid).once("value", function(snap){
+        var userData = snap.val()
+        var newRequest = admin.database().ref('/purchaserequests/'+userData.country).push({
+          amount: req.body.postData.amount,
+          price: req.body.postData.price,
+          buyerAddress: req.body.postData.buyerAddress,
+          buyerUid: req.body.postData.buyerUid,
+          buyerUsername: req.body.postData.buyerUsername,
+          sellerUid: req.body.postData.sellerUid,
+          sellerUsername: req.body.postData.sellerUsername,
+          paymentMethod: req.body.postData.paymentMethod,
+          bankInformation: req.body.postData.bankInformation,
+          createdAt: req.body.postData.createdAt,
+          lastUpated: req.body.postData.lastUpated,
+          status: 'Awaiting Seller Confirmation',
+          contractAddress: req.body.postData.contractAddress
+        }, function(err) {
+          admin.database().ref('/users/'+req.body.postData.sellerUid).once("value", function(snap){
+            var userData = snap.val()
+            admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/requests/' + newRequest.key)
+            .set({
+              buyerUid: req.body.postData.buyerUid
+            });
+            admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/pendingBalance')
+            .set(req.body.postData.amount);
+            admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/availableBalance')
+            .set(req.body.postData.availableBalance - req.body.postData.amount);
+            
+          })
+          admin.database().ref('/users/' + req.body.postData.sellerUid+ '/activeTrades/' + newRequest.key)
           .set({
-            buyerUid: req.body.postData.buyerUid
+            tradeType: 'sell-ether'
           });
-          admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/pendingBalance')
-          .set(req.body.postData.amount);
-          admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/availableBalance')
-          .set(req.body.postData.availableBalance - req.body.postData.amount);
-          
+          admin.database().ref('/users/' + req.body.postData.buyerUid + '/activeTrades/' + newRequest.key)
+          .set({
+            tradeType: 'sell-ether'
+          })
+          res.status(200).send()
         })
-        admin.database().ref('/users/' + req.body.postData.sellerUid+ '/activeTrades/' + newRequest.key)
-        .set({
-          tradeType: 'sell-ether'
-        });
-        admin.database().ref('/users/' + req.body.postData.buyerUid + '/activeTrades/' + newRequest.key)
-        .set({
-          tradeType: 'sell-ether'
-        })
-        res.status(200).send()
       })
     } catch(e){
       res.status(500).send({error:'[requestEther] Error :' + e})

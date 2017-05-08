@@ -33,10 +33,14 @@ module.exports = {
   },
 
   sellOrder: (requestId) => (dispatch) => {
-    firebaseRef.database().ref('/purchaserequests/' + requestId)
-      .on('value', function (snapshot) {
-        dispatch(getSellOrder(snapshot.val()));
-      });
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()
+      firebaseRef.database().ref('/purchaserequests/' + userData.country + '/' + requestId)
+        .on('value', function (snapshot) {
+          dispatch(getSellOrder(snapshot.val()));
+        });
+      
+    })
   },
 
 
@@ -117,8 +121,12 @@ module.exports = {
         return orderInstance.addOrder(buyerAddress, web3.toWei(amount, 'ether'), {from: coinbase});
       })
       .then(function() {
-        firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
-        .set('Awaiting Payment');
+
+        firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+          var userData = snap.val()  
+          firebaseRef.database().ref('/purchaserequests/' + userData.country + '/' + requestId +'/status')
+          .set('Awaiting Payment');
+        })
       })
       .catch(function(error) {
         dispatch(sendEtherState('init'));
@@ -191,8 +199,12 @@ module.exports = {
     }, function(error){
       console.log("[confirmTrade]: ",error)
     })
-    firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
-    .set('Awaiting Release');
+
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()  
+      firebaseRef.database().ref('/purchaserequests/'+userData.country+'/'+requestId+'/status')
+      .set('Awaiting Release');
+    })
   },
 
   releaseEther: (sellOrder, contractAddress, buyerAddress, requestId, buyerUid, sellerUid, web3) => (dispatch) => {
@@ -269,17 +281,20 @@ module.exports = {
         return orderInstance.completeOrder(buyerAddress, {from: coinbase});
       })
       .then(function (txHash) {
-        firebaseRef.database().ref('/purchaserequests/' + requestId +'/status')
-        .set('All Done')
-        .then(function() {
-          orderHelpers.removeOrderFromActiveEscrows(buyerUid, requestId)
-          orderHelpers.removeOrderFromActiveEscrows(sellerUid, requestId)
-          orderHelpers.addOrderToCompletedTrades(buyerUid, requestId, 'sell-ether')
-          orderHelpers.addOrderToCompletedTrades(sellerUid, requestId, 'sell-ether')
+        firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+          var userData = snap.val()  
+          firebaseRef.database().ref('/purchaserequests/'+userData.country+'/'+requestId +'/status')
+          .set('All Done')
+          .then(function() {
+            orderHelpers.removeOrderFromActiveEscrows(buyerUid, requestId)
+            orderHelpers.removeOrderFromActiveEscrows(sellerUid, requestId)
+            orderHelpers.addOrderToCompletedTrades(buyerUid, requestId, 'sell-ether')
+            orderHelpers.addOrderToCompletedTrades(sellerUid, requestId, 'sell-ether')
 
-          firebaseRef.database().ref("users/"+buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
-          firebaseRef.database().ref("users/"+sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
-        });
+            firebaseRef.database().ref("users/"+buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
+            firebaseRef.database().ref("users/"+sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
+          });
+        })
       })
       .catch(function (error) {
         dispatch(sendEtherState('init'));
