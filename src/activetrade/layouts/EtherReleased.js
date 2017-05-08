@@ -5,7 +5,7 @@ import ChatBox from '../../chat/containers/ChatBox'
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteBuy'
 import SellerStepNote from '../ui/SellerStepNoteBuy'
-import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback'
+import TradeFeedback from '../../generic-components/tradeFlow/TradeFeedback'
 
 class EtherReleased extends Component {
   render () {
@@ -20,7 +20,7 @@ class EtherReleased extends Component {
               sellerId={this.props.sellerId}
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
-              <TradeFeedbackContainer />
+              <TradeFeedback sellerId={this.props.sellerId} buyerId={this.props.buyerId} orderId={this.props.tradeId}/>
             </div>
           </div>
         </div>

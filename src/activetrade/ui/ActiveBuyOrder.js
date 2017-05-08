@@ -127,12 +127,6 @@ class ActiveBuyOrder extends Component {
     if (this.props.buyOrderDetail.buyOrder) {
       buyOrder = this.props.buyOrderDetail.buyOrder
 
-      // console.log('buyerUid')
-      // console.log(buyOrder.buyerUid)
-      // console.log('sellerUid')
-      // console.log(buyOrder.sellerUid)
-      // console.log('user uid')
-      // console.log(this.props.uid)
       if (buyOrder.buyerUid === this.props.uid) {
         viewerRole = 'buyer'
       } else if (buyOrder.sellerUid === this.props.uid) {
@@ -201,8 +195,6 @@ class ActiveBuyOrder extends Component {
       }
 
       currentStep = tradeFlowComponents[status]
-      // console.log('status:' + status)
-      // console.log('currentStep: ' + currentStep)
 
       return (
         <section className='activeTrade'>
@@ -211,22 +203,6 @@ class ActiveBuyOrder extends Component {
         </section>
       )
 
-      // tradeProgress = <Progress progress_map={progress_maps[status]} />
-      //
-      // stepNote = (viewerRole === 'buyer') ? <BuyerStepNote step={status} contractAddress={buyOrder.contractAddress} /> :
-      //                                       <SellerStepNote step={status} contractAddress={buyOrder.contractAddress} />
-      //
-      // if(viewerRole === 'seller' && status === 'Awaiting Escrow')
-      //   sendEtherButton = <button onClick={()=>this.props.sendEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3)}>Send Ether</button>
-      //
-      // if(viewerRole === 'buyer' && status === 'Escrow Sent')
-      //   makePaymentButton = <button onClick={()=>this.props.confirmPayment(buyOrder.orderId)}>Confirm Payment</button>
-      //
-      // if(viewerRole === 'seller' && status === 'Payment Confirmed')
-      //   releaseEther = <button onClick={()=>this.props.releaseEther(buyOrder.contractAddress, buyOrder.orderId, this.props.web3.web3, buyOrder.buyerUid, buyOrder.sellerUid)}>Release Ether</button>
-      //
-      // if(status === 'Ether Released')
-      //   tradeFeedback = <TradeFeedbackContainer />
     }
     return (
       <section className='activeTrade'>
