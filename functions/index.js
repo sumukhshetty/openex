@@ -166,11 +166,11 @@ exports.acceptbuy = functions.https.onRequest((req, res) => {
       admin.database().ref('/buyorders/'+ userData.country + '/' +req.body.orderId+'/status')
       .once('value', function(snapshot) {
         if(snapshot.val() === 'Initiated') {
-          admin.database().ref('/buyorders/'+req.body.orderId+'/status')
+          admin.database().ref('/buyorders/' + userData.country + '/' +req.body.orderId+'/status')
           .set('locked');
-          admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUid')
+          admin.database().ref('/buyorders/' + userData.country + '/' +req.body.orderId+'/sellerUid')
           .set(req.body.sellerUid);
-          admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUsername')
+          admin.database().ref('/buyorders/' + userData.country + '/' +req.body.orderId+'/sellerUsername')
           .set(req.body.sellerUsername);
           res.status(200).send();
         } else {
@@ -259,8 +259,8 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
             admin.database().ref('/users/'+req.body.buyerUid+'/activeTrades/').child(req.body.orderId).remove()
             admin.database().ref('/users/'+req.body.sellerUid+'/activeTrades/').child(req.body.orderId).remove()
 
-            admin.database().ref("users/"+req.body.buyerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-order'})
-            admin.database().ref("users/"+req.body.sellerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-order'})
+            admin.database().ref("users/"+req.body.buyerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-ether'})
+            admin.database().ref("users/"+req.body.sellerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-ether'})
 
             admin.database().ref("users/"+req.body.buyerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
             admin.database().ref("users/"+req.body.sellerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
