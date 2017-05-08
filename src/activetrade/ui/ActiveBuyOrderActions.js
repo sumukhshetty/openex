@@ -38,7 +38,7 @@ module.exports = {
   },
 
   buyOrder: (orderId) => (dispatch) => {
-    firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once(function(snap){
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
       var userData = snap.val()  
       firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId)
         .on('value', function (snapshot) {
@@ -198,7 +198,7 @@ module.exports = {
             var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
             firebaseRef.database().ref('/users/'+buyOrder.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
             //TODO decide if we move this db call into functions
-            firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once(function(snap){
+            firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
               var userData = snap.val()
               firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId + '/status')
                 .set('Payment Confirmed');
@@ -297,7 +297,7 @@ module.exports = {
 
   cancelTrade: (orderId, uid) => (dispatch) => {
     dispatch(cancelTradeState('confirmed'));
-    firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once(function(snap){
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
       var userData = snap.val()  
       firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId + '/cancelled')
       .set(uid)

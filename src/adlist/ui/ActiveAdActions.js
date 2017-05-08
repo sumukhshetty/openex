@@ -38,7 +38,7 @@ module.exports = {
     web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, address) {
       if(!err) {
         dispatch(sendEtherState('sent'));
-        firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once(function(snap){
+        firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
           var userData = snap.val()
           firebaseRef.database().ref('/sellorders/' + userData.country+ '/' + orderId + '/availableBalance')
           .once('value', function(snap) {

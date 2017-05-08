@@ -89,7 +89,7 @@ export function buyEtherPostTrade(postTradeDetails, web3, state) {
     try {
       firebaseRef.database().ref("users/"+state.user.data.uid).once("value", function(snap){
         var userData = snap.val()
-        var newOrder = firebaseRef.database().ref('/buyorders/'+userData.country).push(postTradeDetails);
+        var newOrder = firebaseRef.database().ref('/buyorders/' + userData.country).push(postTradeDetails);
         console.log(state.user.data.uid)
         firebaseRef.database().ref('/buyorders/'+userData.country+"/"+newOrder.key+'/orderId').set(newOrder.key);
         firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(newOrder.key).set({tradeType: postTradeDetails.tradeType})

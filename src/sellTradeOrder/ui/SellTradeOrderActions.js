@@ -26,10 +26,10 @@ module.exports = {
   buyOrder: (orderId) => (dispatch) => {
     console.log("SellTradeOrderActions.buyOrder")
     console.log(firebaseRef.auth().currentUser.uid)
-    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once(function(snap){
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
       var userData = snap.val()  
       console.log(userData)
-      /*firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId)
+      firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId)
         .on("value", function(snapshot){
           console.log('got buyorder by id');
           console.log(snapshot.val());
@@ -40,7 +40,7 @@ module.exports = {
             console.log(snapshot.val());
             dispatch(getUserInfo(snapshot.val()))
           })
-        })*/
+        })
     })
   },
 
