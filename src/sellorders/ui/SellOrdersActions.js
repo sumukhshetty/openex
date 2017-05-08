@@ -31,7 +31,7 @@ module.exports = {
       console.log(userData)
       try{
         firebaseRef.database().ref('sellorders/'+userData.country)
-        .orderByChild('availableBalance')//.startAt(0.0001)
+        .orderByChild('availableBalance').startAt(0.0001)
           .on('value', function(snapshot){
             console.log(snapshot.val());
             dispatch(getSellOrders(snapshot.val()))
