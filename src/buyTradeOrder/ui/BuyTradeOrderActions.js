@@ -41,8 +41,11 @@ module.exports = {
       .then(function(_availableBalance) {
         var contractBalance = web3.fromWei(_availableBalance, 'ether').toNumber();
         if(contractBalance !== (availableBalance+pendingBalance)) {
-          firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
-          .set(contractBalance-pendingBalance);
+          firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+            var userData = snap.val()
+            firebaseRef.database().ref('/sellorders/' + userData.country+ '/' + orderId + '/availableBalance')
+            .set(contractBalance-pendingBalance);
+          })
           dispatch(getBalance(contractBalance-pendingBalance))
         } else {
           dispatch(getBalance(availableBalance));
@@ -51,41 +54,44 @@ module.exports = {
   },
 
   sellOrder: (orderId, web3) => (dispatch) => {
-    // firebaseRef.database().ref('buyorders')
-    // .orderByKey().equalTo(orderId)
-    firebaseRef.database().ref('/sellorders/' + orderId)
-      .once("value", function(snapshot){
-        console.log('got sellorder by id');
-        console.log(snapshot.val());
-        dispatch(getSellOrder(snapshot.val()))
-        // this.availableBalance(orderId, snapshot.val()['contractAddress'], snapshot.val()['availableBalance'], snapshot.val()['pendingBalance'], web3);
-        let availableBalance = snapshot.val()['availableBalance'];
-        let pendingBalance = snapshot.val()['pendingBalance'];
-        const order = contract(SellOrderContract);
-        order.setProvider(web3.currentProvider);
-        var orderInstance;
-        order.at(snapshot.val()['contractAddress'])
-          .then(function (_order) {
-            orderInstance = _order;
-            return orderInstance.availableFunds();
-          })
-          .then(function(_availableBalance) {
-            var contractBalance = web3.fromWei(_availableBalance, 'ether').toNumber();
-            if(contractBalance !== (availableBalance+pendingBalance)) {
-              firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
-              .set(contractBalance-pendingBalance);
-              dispatch(getBalance(contractBalance-pendingBalance))
-            } else {
-              dispatch(getBalance(availableBalance));
-            }
-          })
-        firebaseRef.database().ref('/users/' + snapshot.val()['sellerUid'])
-        .once("value", function(snapshot) {
-          console.log('got user by id');
+
+    firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()
+      firebaseRef.database().ref('/sellorders/' + userData.country + '/' + orderId)
+        .once("value", function(snapshot){
+          console.log('got sellorder by id');
           console.log(snapshot.val());
-          dispatch(getUserInfo(snapshot.val()))
+          dispatch(getSellOrder(snapshot.val()))
+          // this.availableBalance(orderId, snapshot.val()['contractAddress'], snapshot.val()['availableBalance'], snapshot.val()['pendingBalance'], web3);
+          let availableBalance = snapshot.val()['availableBalance'];
+          let pendingBalance = snapshot.val()['pendingBalance'];
+          const order = contract(SellOrderContract);
+          order.setProvider(web3.currentProvider);
+          var orderInstance;
+          order.at(snapshot.val()['contractAddress'])
+            .then(function (_order) {
+              orderInstance = _order;
+              return orderInstance.availableFunds();
+            })
+            .then(function(_availableBalance) {
+              var contractBalance = web3.fromWei(_availableBalance, 'ether').toNumber();
+              if(contractBalance !== (availableBalance+pendingBalance)) {
+                firebaseRef.database().ref('/sellorders/' + userData.country + '/' + orderId + '/availableBalance')
+                .set(contractBalance-pendingBalance);
+                dispatch(getBalance(contractBalance-pendingBalance))
+              } else {
+                dispatch(getBalance(availableBalance));
+              }
+            })
+          firebaseRef.database().ref('/users/' + snapshot.val()['sellerUid'])
+          .once("value", function(snapshot) {
+            console.log('got user by id');
+            console.log(snapshot.val());
+            dispatch(getUserInfo(snapshot.val()))
+          })
         })
-      })
+      
+    })
   },
 
 

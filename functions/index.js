@@ -306,14 +306,18 @@ exports.requestEther = functions.https.onRequest((req, res) => {
         status: 'Awaiting Seller Confirmation',
         contractAddress: req.body.postData.contractAddress
       }, function(err) {
-        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/requests/' + newRequest.key)
-        .set({
-          buyerUid: req.body.postData.buyerUid
-        });
-        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/pendingBalance')
-        .set(req.body.postData.amount);
-        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/availableBalance')
-        .set(req.body.postData.availableBalance - req.body.postData.amount);
+        admin.database().ref('users/'+req.body.postData.sellerUid).once("value", function(snap){
+          var userData = snap.val()
+          admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/requests/' + newRequest.key)
+          .set({
+            buyerUid: req.body.postData.buyerUid
+          });
+          admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/pendingBalance')
+          .set(req.body.postData.amount);
+          admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/availableBalance')
+          .set(req.body.postData.availableBalance - req.body.postData.amount);
+          
+        })
         admin.database().ref('/users/' + req.body.postData.sellerUid+ '/activeTrades/' + newRequest.key)
         .set({
           tradeType: 'sell-ether'

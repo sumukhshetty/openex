@@ -19,7 +19,7 @@ function getUsersInfo(userPayload, uid) {
 
 module.exports = {
   startListeningToSellOrders: () => (dispatch, getState) =>{
-    firebaseRef.database().ref('sellorders').on("value", function(snapshot){
+    firebaseRef.database().ref('/sellorders').on("value", function(snapshot){
       dispatch({ type: "RECEIVE_SELL_ORDERS_DATA", payload: snapshot.val() });
     })
   },
@@ -30,7 +30,7 @@ module.exports = {
       var userData = snap.val()
       console.log(userData)
       try{
-        firebaseRef.database().ref('sellorders/'+userData.country)
+        firebaseRef.database().ref('/sellorders/'+userData.country)
         .orderByChild('availableBalance').startAt(0.0001)
           .on('value', function(snapshot){
             console.log(snapshot.val());

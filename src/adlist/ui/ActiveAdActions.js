@@ -38,14 +38,18 @@ module.exports = {
     web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, address) {
       if(!err) {
         dispatch(sendEtherState('sent'));
-        firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
-        .once('value', function(snap) {
-          console.log('amount: ' + amount);
-          console.log('typeof amount: ' + typeof amount);
-          console.log('snap.val(): ' + snap.val());
-          console.log('typeof snap.val(): ' + typeof snap.val());
-          firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
-          .set(snap.val() + amount);
+        firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once(function(snap){
+          var userData = snap.val()
+          firebaseRef.database().ref('/sellorders/' + userData.country+ '/' + orderId + '/availableBalance')
+          .once('value', function(snap) {
+            console.log('amount: ' + amount);
+            console.log('typeof amount: ' + typeof amount);
+            console.log('snap.val(): ' + snap.val());
+            console.log('typeof snap.val(): ' + typeof snap.val());
+            firebaseRef.database().ref('/sellorders/' + userData.country+ '/' + orderId + '/availableBalance')
+            .set(snap.val() + amount);
+          })
+          
         })
       } else {
         if(err.message.includes('MetaMask Tx Signature: User denied')) {

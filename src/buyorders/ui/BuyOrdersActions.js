@@ -20,7 +20,7 @@ function getUsersInfo(userPayload, uid) {
 module.exports = {
   startListeningToBuyOrders: () => (dispatch, getState) =>{
     console.log("buyordersactions.startListeningToBuyOrders")
-    firebaseRef.database().ref('buyorders').on("value", function(snapshot){
+    firebaseRef.database().ref('/buyorders').on("value", function(snapshot){
       dispatch({ type: "RECEIVE_BUY_ORDERS_DATA", payload: snapshot.val() });
     })
   },
@@ -28,7 +28,7 @@ module.exports = {
     firebaseRef.database().ref('users/'+user.data.uid).once('value', function(snap){
       var userData = snap.val()
       try{
-        firebaseRef.database().ref('buyorders/'+userData.country)
+        firebaseRef.database().ref('/buyorders/'+userData.country)
         .orderByChild('status').equalTo('Initiated')
           .on('value', function(snapshot){
             dispatch(getBuyOrders(snapshot.val()))

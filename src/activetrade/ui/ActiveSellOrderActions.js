@@ -33,8 +33,6 @@ module.exports = {
   },
 
   sellOrder: (requestId) => (dispatch) => {
-    // firebaseRef.database().ref('sellorders')
-    // .orderByKey().equalTo(orderId)
     firebaseRef.database().ref('/purchaserequests/' + requestId)
       .on('value', function (snapshot) {
         dispatch(getSellOrder(snapshot.val()));
