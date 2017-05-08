@@ -1,6 +1,3 @@
-import SellOrderContract from '../../../build/contracts/SellOrder.json';
-const contract = require('truffle-contract')
-
 import {firebaseRef} from './../../index.js'
 
 export const GET_AD = 'GET_AD'
@@ -24,13 +21,14 @@ function sendEtherState(etherStatePayload) {
 module.exports = {
   getAd: (orderId, tradeType) => (dispatch) => {
     var url = tradeType === 'buy-ether' ? 'buyorders' : 'sellorders';
-    firebaseRef.database()
-      .ref(url+'/'+orderId)
-      .on("value", function(snapshot){
-        console.log('snapshot.val() [ActiveAdActions]');
-        console.log(snapshot.val());
-        dispatch(getAdData(snapshot.val(), orderId))
-      })
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()
+      firebaseRef.database()
+        .ref(url+'/'+userData.country+'/'+orderId)
+        .on("value", function(snapshot){
+          dispatch(getAdData(snapshot.val(), orderId))
+        })
+    })
   },
 
   addEtherToContract: (amount, orderId, contractAddress, web3) => (dispatch) => {
@@ -38,26 +36,24 @@ module.exports = {
     console.log('contract address: ' + contractAddress);
     dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
+    amount = Number(amount);
     let value = web3.toWei(amount, 'ether');
     web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, address) {
       if(!err) {
         dispatch(sendEtherState('sent'));
-        // const order = contract(SellOrderContract);
-        // order.setProvider(web3.currentProvider);
-        // var orderInstance;
-        // order.at(contractAddress)
-        //   .then(function (_order) {
-        //     orderInstance = _order;
-        //     return orderInstance.availableFunds();
-        //   })
-        //   .then(function(balance) {
-        //     let newBalance = web3.fromWei(balance, 'ether').toNumber() + amount;
-        //     firebaseRef.database().ref('/sellorders/' + orderId + '/availableBalance')
-        //     .set(newBalance)
-        //     .then(function() {
-        //       dispatch(sendEtherState('sent'));
-        //     });
-        //   })
+        firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+          var userData = snap.val()
+          firebaseRef.database().ref('/sellorders/' + userData.country+ '/' + orderId + '/availableBalance')
+          .once('value', function(snap) {
+            console.log('amount: ' + amount);
+            console.log('typeof amount: ' + typeof amount);
+            console.log('snap.val(): ' + snap.val());
+            console.log('typeof snap.val(): ' + typeof snap.val());
+            firebaseRef.database().ref('/sellorders/' + userData.country+ '/' + orderId + '/availableBalance')
+            .set(snap.val() + amount);
+          })
+          
+        })
       } else {
         if(err.message.includes('MetaMask Tx Signature: User denied')) {
           console.log('ERROR: User denied transaction');

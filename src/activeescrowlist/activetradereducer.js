@@ -3,15 +3,12 @@ const initialState = {
 }
 
 const activeTradeReducer = (state = initialState, action) => {
-
-  if (action.type === 'GET_ACTIVE_TRADE')
-  {
+  if (action.type === 'GET_ACTIVE_TRADE') {
     return {
       activeTradeData: {...state.activeTradeData,
-                        [action.id]: action.payload}
+        [action.id]: action.payload}
     }
   }
-
   return state
 }
 

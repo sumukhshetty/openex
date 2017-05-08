@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import BuyTradeOrder from './BuyTradeOrder'
-import { sellOrder, requestEtherFromSeller, availableBalance } from './BuyTradeOrderActions'
+import * as actions from './BuyTradeOrderActions'
 
 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    etherPrices: state.etherPrices,
     user: state.user,
     sellOrderDetail: state.sellOrderDetail,
     sellOrderContract: state.sellOrderContract,
@@ -17,15 +18,21 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (orderId, web3) => {
-      dispatch(sellOrder(orderId, web3))
+      dispatch(actions.sellOrder(orderId, web3))
     },
 
-    requestEther: (amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3) => {
-      dispatch(requestEtherFromSeller(amount, uid, sellerUid, buyerUsername, sellerUsername, orderId, contractAddress, availableBalance, web3));
+    requestEther: (amount, price, order, buyerUid, buyerUsername, web3) => {
+      dispatch(actions.requestEther(amount, price, order, buyerUid, buyerUsername, web3));
     },
 
     getAvailableBalance: (contractAddress, web3) => {
-      dispatch(availableBalance(contractAddress, web3))
+      dispatch(actions.getAvailableBalance(contractAddress, web3))
+    },
+
+    resetState: () => {
+      dispatch(actions.resetSellOrder())
+      dispatch(actions.resetBalance())
+      dispatch(actions.resetUserInfo())
     }
   }
 }

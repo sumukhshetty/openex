@@ -1,41 +1,49 @@
 import { connect } from 'react-redux'
 import ActiveBuyOrder from './ActiveBuyOrder'
-import { buyOrder } from './ActiveBuyOrderActions'
-import { createBuyOrderContract } from './ActiveBuyOrderActions'
-import { clearBuyOrderState } from './ActiveBuyOrderActions'
-import { fillEscrow } from './ActiveBuyOrderActions'
-import { releaseEscrow } from './ActiveBuyOrderActions'
-import { paymentConfirmed } from './ActiveBuyOrderActions'
-
-
-
-
+import * as actions from './ActiveBuyOrderActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    user: state.user,
     buyOrderDetail: state.buyOrderDetail,
+    sendEtherState: state.sendEtherState,
+    cancelTradeState: state.cancelTradeState,
     params: ownProps.params,
-    uid: ownProps.uid
+    uid: ownProps.uid,
+    tradeId: ownProps.params.orderId,
+
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (orderId) => {
-      dispatch(buyOrder(orderId))
+      dispatch(actions.buyOrder(orderId))
     },
     clearBuyOrder: () => {
-      dispatch(clearBuyOrderState());
+      dispatch(actions.clearBuyOrderState())
     },
-    sendEther: (contractAddress, orderId, web3) => {
-      dispatch(fillEscrow(contractAddress, orderId, web3));
+    sendEther: (buyOrder, contractAddress, orderId, sellerUid, web3) => {
+      dispatch(actions.fillEscrow(buyOrder, contractAddress, orderId, sellerUid, web3))
     },
-    releaseEther: (contractAddress, orderId, web3, buyerUid, sellerUid) => {
-      dispatch(releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))
+    resetEtherState: () => {
+      dispatch(actions.resetEtherState());
     },
-    confirmPayment: (orderId) => {
-      dispatch(paymentConfirmed(orderId));
+    resetCancelState: () => {
+      dispatch(actions.resetCancelState());
+    },
+    releaseEther: (buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid) => {
+      dispatch(actions.releaseEscrow(buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid))
+    },
+    cancelTrade: (orderId, uid) => {
+      dispatch(actions.cancelTrade(orderId, uid));
+    },
+    setCancelState: () => {
+      dispatch(actions.setCancelState());
+    },
+    confirmPayment: (buyOrder, orderId) => {
+      dispatch(actions.paymentConfirmed(buyOrder, orderId))
     }
   }
 }

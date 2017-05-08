@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
+import { browserHistory } from 'react-router'
 
 class Help extends Component {
+
   render() {
     return(
+      
       <footer>
-        <a href="#">Forgot Password?</a>
+        <a onClick={()=>browserHistory.push('password/reset')}>Forgot Password?</a>
       </footer>
     )
   }

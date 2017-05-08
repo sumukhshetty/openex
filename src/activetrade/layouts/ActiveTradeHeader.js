@@ -6,7 +6,7 @@ class ActiveTradeHeader extends Component {
     return (
       <thead>
         <tr>
-          <th className='fb5 tc'>#</th>
+          <th className='fb5 tc'>ID</th>
           <th className='fb15 tc'>Created at</th>
           <th className='fb10 tc'>Info</th>
           <th className='fb15 tc'>Username</th>

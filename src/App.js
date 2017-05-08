@@ -1,43 +1,76 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
-import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js';
+import React, { Component } from 'react'
+import { Link } from 'react-router'
+import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
-import { firebaseRef } from './index';
+import { firebaseRef } from './index'
 
-import logo from './images/logo.svg';
+import logo from './images/logo.svg'
+import AutoLogoLight from './images/svgReactComponents/autoLogoLight.js'
 
 // UI Components
-import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer';
-import Web3InitContainer from './web3/Web3InitContainer';
-import Header from './header/Header';
-import Footer from './footer/Footer';
+import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
+import Web3InitContainer from './web3/Web3InitContainer'
+import EtherPriceContainer from './etherprice/EtherPriceContainer'
+import UserPresenceContainer from './userpresence/UserPresenceContainer'
+import Header from './header/Header'
+import Footer from './footer/Footer'
 
 // Styles
-import './css/pure-min.css';
-import './css/styles-common.css';
-import './css/atomic.css';
-import './css/swatch.css';
+import './css/pure-min.css'
+import './css/styles-common.css'
+import './css/atomic.css'
+import './css/swatch.css'
 // import logo from './images/logo.svg'
 
-import Bell from './images/svgReactComponents/Bell';
-import Notifications from './notifications/NotificationsLayout';
+import Bell from './images/svgReactComponents/Bell'
+import Notifications from './notifications/NotificationsLayout'
+
+const request = require('request')
 
 class App extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       showNotifications: false
-    };
-    this.removeNotifications = this.removeNotifications.bind(this);
-    this.showNotifications = this.showNotifications.bind(this);
+    }
+    this.removeNotifications = this.removeNotifications.bind(this)
+    this.showNotifications = this.showNotifications.bind(this)
   }
 
   showNotifications () {
-    this.setState({showNotifications: true});
+    this.setState({showNotifications: true})
   }
 
   removeNotifications () {
-    this.setState({showNotifications: false});
+    this.setState({showNotifications: false})
+  }
+
+  testNotify(){
+    console.log("testNotify")
+    try{
+      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/mailgunHelloWorld'
+      request({
+          method: 'post',
+          json: true,
+          url: url
+        },
+        function(err, res, body) {
+          if (err) {
+            console.error('error posting json: ', err)
+            throw err
+          }
+          if(res.statusCode === 200) {
+            console.log("testNotify.200")
+            //browserHistory.push('/dashboard')
+          }
+          if(res.statusCode === 500) {
+            console.error('Server responded with an error: ' + res.body.error);
+            throw res.body.error
+          }
+        });
+    } catch(e){
+      console.log("[testNotify]",e)
+    }
   }
 
   render () {
@@ -47,10 +80,11 @@ class App extends Component {
           <div className='w-75 center'>
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
-              <div className='pure-u-1-4 brand'>
-                <Link to='/dashboard'>
+              <div className='pure-u-1-4 brand' onClick={this.testNotify}>
+              <img className='brand' src={logo} alt='Automt Ether Exchange' />
+                {/*<Link to='/dashboard'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
-                </Link>
+                </Link>*/}
               </div>
               <div className='flex mxe cxc'>
                 <Bell action={this.showNotifications} />
@@ -82,25 +116,40 @@ class App extends Component {
               </ul>
             </nav>
           </div>
-        </div>);
+        </div>)
     }
-    );
+    )
 
-    const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />
-    );
+    const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />)
 
-    return (
-      <section className='Site'>
-        <OnlyGuestLinks />
-        <Web3InitContainer />
-        <OnlyAuthLinks />
-        <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
-          {this.props.children}
-        </main>
-        <Footer />
-      </section>
-    );
+
+    const isMobile = window.innerWidth <= 800
+    if (isMobile) {
+      return (
+        <div className='absolute absolute--fill gradient white'>
+          <div className='flex col x h-100'>
+            <AutoLogoLight />
+            <p>Sorry Guys!</p>
+            <p className='w5'>Mobile is not supported as of now.</p>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <section className='Site'>
+          <OnlyGuestLinks />
+          <Web3InitContainer />
+          <EtherPriceContainer />
+          <OnlyAuthLinks />
+          {firebaseRef.auth().currentUser && <UserPresenceContainer />}
+          <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
+            {this.props.children}
+          </main>
+          <Footer />
+        </section>
+      )
+    }
   }
 }
 
-export default App;
+export default App

@@ -12,6 +12,7 @@ class TradeFeedback extends Component {
 
   handleSubmit (e) {
     e.preventDefault();
+    console.log(e)
   }
   clickStar(e){
     console.log(e);
@@ -25,12 +26,12 @@ class TradeFeedback extends Component {
         <div className='flex col cxc' >
         <form onSubmit={this.handleSubmit} onClick={this.clickStar}>
           <div className='rating'>
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+            <span value="1">☆</span><span value="2">☆</span><span value="3">☆</span><span value="4">☆</span><span value="5">☆</span>
           </div>
         </form>
+        </div>
         <TrustButton />
         <BlockButton />
-        </div>
       </div>
     );
   }

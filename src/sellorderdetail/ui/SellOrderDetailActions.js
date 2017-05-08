@@ -1,6 +1,4 @@
 import SellOrderContract from '../../../build/contracts/SellOrder.json'
-import { browserHistory } from 'react-router'
-import factoryAddress from '../../contract_addresses/orderfactory.js'
 
 const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
@@ -31,34 +29,40 @@ module.exports = {
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
-    var coinbase = web3.eth.coinbase;
-    firebaseRef.database().ref('/sellorders/' + orderId)
-      .once("value", function(snapshot){
-        console.log('got sellorder by id');
-        console.log(snapshot.val());
-        dispatch(getSellOrder(snapshot.val()));
-        return snapshot;
-      })
-      .then(function(snapshot) {
-        console.log('after returning address');
-        return order.at(snapshot.val()['contractAddress']);
-      })
-      .then(function(_order) {
-        orderInstance = _order;
-        return orderInstance.availableFunds();
-      })
-      .then(function(availableFunds) {
-        orderInfo['availableFunds'] = availableFunds;
-        dispatch(getOrderInfo(orderInfo))
-      })
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()
+      firebaseRef.database().ref('/sellorders/' + userData.country + '/' + orderId)
+        .once("value", function(snapshot){
+          console.log('got sellorder by id');
+          console.log(snapshot.val());
+          dispatch(getSellOrder(snapshot.val()));
+          return snapshot;
+        })
+        .then(function(snapshot) {
+          console.log('after returning address');
+          return order.at(snapshot.val()['contractAddress']);
+        })
+        .then(function(_order) {
+          orderInstance = _order;
+          return orderInstance.availableFunds();
+        })
+        .then(function(availableFunds) {
+          orderInfo['availableFunds'] = availableFunds;
+          dispatch(getOrderInfo(orderInfo))
+        })
+    })
   },
 
   requestEtherFromSeller: (amount, uid, orderId) => (dispatch) => {
-    firebaseRef.database().ref('/sellorders/' + orderId + '/requests/' + uid)
-    .set({
-      amount: amount
-    });
-    firebaseRef.database().ref('/users/' + uid+ '/activeEscrows/' + uid)
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()  
+      firebaseRef.database().ref('/sellorders/' + userData.country + '/' + orderId + '/requests/' + uid)
+      .set({
+        amount: amount
+      });
+      
+    })
+    firebaseRef.database().ref('/users/' + uid+ '/activeEscrows/' + orderId)
     .set({
       tradeType: 'sell-ether'
     });

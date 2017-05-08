@@ -6,7 +6,7 @@ class TradeAdvertisementHeader extends Component {
     return(
       <thead>
         <tr>
-          <th>#</th>
+          <th>ID</th>
           <th>Status</th>
           <th>Info</th>
           <th>Country</th>

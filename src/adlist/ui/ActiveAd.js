@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 // TODO import HelpContainer
-import ViewActiveAdButton from './ViewActiveAdButton';
-import AddEscrowModal from './AddEscrowModal';
+import ViewActiveAdButton from './ViewActiveAdButton'
+import AddEscrowModal from './AddEscrowModal'
 
 export default class ActiveAd extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       web3: this.props.web3,
       user: this.props.user,
@@ -15,48 +15,57 @@ export default class ActiveAd extends Component {
       showEscrowModal: false,
       sendAmount: 0,
       sendEtherState: this.props.sendEtherState
-    };
+    }
   }
 
   componentWillMount () {
-    console.log(this.props.orderId);
-    this.props.onBeforeComponentLoads(this.props.orderId, this.props.tradeType);
+    this.props.onBeforeComponentLoads(this.props.orderId, this.props.tradeType)
   }
 
   showEscrowModal () {
-    this.setState({showEscrowModal: true});
+    this.setState({showEscrowModal: true})
   }
 
   removeEscrowModal (e) {
     if (this.props.sendEtherState !== 'sending' && e.target.classList.contains('bg-black-80')) {
-      this.setState({showEscrowModal: false});
-      this.props.resetEtherState();
+      this.setState({showEscrowModal: false})
+      this.props.resetEtherState()
     }
   }
 
   handleEscrowRequest () {
-    console.log('trade request handled');
-    this.props.addEther(this.state.sendAmount, this.props.orderId, this.props.adData.adData[this.props.orderId].contractAddress, this.props.web3.web3);
+    console.log('trade request handled')
+    this.props.addEther(this.state.sendAmount, this.props.orderId, this.props.adData.adData[this.props.orderId].contractAddress, this.props.web3.web3)
   }
 
   onEtherAmountChange (e) {
-    this.setState({sendAmount: e.target.value});
+    this.setState({sendAmount: e.target.value})
   }
 
   render () {
     if (this.props.adData.adData[this.props.orderId]) {
       var adDetails = this.props.adData.adData[this.props.orderId];
-      var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad';
+      var display_id
+      if (adDetails.contractAddress){
+        display_id = adDetails.contractAddress.slice(2,6)
+      } else {
+        display_id = "-"
+      }
+      var availableBalance
+      if (adDetails.availableBalance) {
+        availableBalance = adDetails.availableBalance - adDetails.pendingBalance
+        availableBalance = (availableBalance % 1 !== 0) ? availableBalance.toFixed(4) : availableBalance
+      }
+      var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad'
 
       return (
         <tr className='flex cxc'>
-          <td className='fb5 tc'><i>Fix me</i></td>
+          <td className='fb5 tc'>{display_id}</td>
           <td className='fb10 tc'>{adDetails.active ? <span className='green'>Live</span> : <span className='danger'>Disabled</span>}</td>
-          <td className='fb10 tc'>{adDetails.tradeType}</td>
-          <td className='fb10 tc'>{adDetails.availableBalance || 0}</td>
+          <td className='fb10 tc'>{adDetails.tradeType === 'sell-ether' ? 'Sell Online' : 'Buy Online'}</td>
+          <td className='fb10 tc'>{adDetails.tradeType === 'sell-ether' ? (availableBalance || 0) : '-'}</td>
           <td className='fb10 tc'>{adDetails.location}</td>
           <td className='fb10 tc'>{adDetails.paymentMethod}</td>
-          <td className='fb10 tc'><i >Fix me</i></td>
           <td className='fb10 tc'>{adDetails.minTransactionLimit} - {adDetails.maxTransactionLimit}</td>
 
           <span className='me flex'>
@@ -69,9 +78,9 @@ export default class ActiveAd extends Component {
               tradeType={this.props.tradeType} />
           </span>
         </tr>
-      );
+      )
     } else {
-      return null;
+      return null
     }
   }
 }

@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 // TODO import HelpContainer
 
 class DisputeTrade extends Component {
-  constructor (props) {
-    super(props);
-  }
   render () {
     return (
       <div className='measure pv4'>
         <p className='tc flarge b'>
           Resolve Trade Issues
         </p>
-        {this.props.type === 'buyer' ? (
+        {this.props.viewerRole === 'buyer' ? (
            <div>
              <p>
                If the seller does not respond or there is a disagreement regarding the terms of the trade, you can dispute the trade. Ether is held safe in escrow until the dispute

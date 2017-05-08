@@ -10,6 +10,10 @@ const sellOrderContractReducer = (state = initialState, action) => {
     })
   }
 
+  if (action.type === 'CLEAR_BALANCE')
+  {
+    return initialState
+  }
   return state
 }
 

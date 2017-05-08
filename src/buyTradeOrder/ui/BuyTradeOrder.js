@@ -7,18 +7,12 @@ export default class BuyTradeOrder extends Component {
     super(props);
     this.state = {
       web3: this.props.web3,
+      etherPrices: this.props.etherPrices,
       user: this.props.user,
       sellOrderDetail: this.props.sellOrderDetail,
       sellOrderContract: this.props.sellOrderContract,
       requestAmount: 0,
-      method: 'UPI',
-      buyingFrom: 'Victoria Padilla',
-      rating: 4.5,
-      price: 1203,
-      minLimit: 1000,
-      maxLimit: 200000,
-      currency: 'INR',
-      location: 'India'
+      rating: 4.5
     };
     this.handleConversion = this.handleConversion.bind(this);
     this.handleTradeRequest = this.handleTradeRequest.bind(this);
@@ -26,7 +20,12 @@ export default class BuyTradeOrder extends Component {
 
   handleTradeRequest (e) {
     e.preventDefault();
-    this.props.requestEther(this.state.requestAmount, this.props.uid, this.props.sellOrderDetail.sellOrder.sellerUid, this.props.user.data.displayName, this.props.sellOrderDetail.sellOrder.sellerUsername, this.props.params.orderId, this.props.sellOrderDetail.sellOrder.contractAddress, this.props.sellOrderDetail.sellOrder.availableBalance, this.props.web3.web3);
+    this.props.requestEther(this.state.requestAmount,
+                            this.props.etherPrices.etherPrices["INR"],
+                            this.props.sellOrderDetail.sellOrder,
+                            this.props.user.data.uid,
+                            this.props.user.data.displayName,
+                            this.props.web3.web3);
   }
 
   handleConversion (amount) {
@@ -50,6 +49,10 @@ export default class BuyTradeOrder extends Component {
     this.props.onBeforeComponentLoad(this.props.params.orderId, this.props.web3.web3);
   }
 
+  componentWillUnmount() {
+    this.props.resetState();
+  }
+
   render () {
     var sellOrder = this.props.sellOrderDetail.sellOrder;
     var userInfo = this.props.user.userInfo;
@@ -58,10 +61,11 @@ export default class BuyTradeOrder extends Component {
     </div>;
     if(sellOrder && userInfo) {
       var availableBalance = this.props.sellOrderContract.availableBalance;
-      if(typeof availableBalance != 'undefined') {
+      if(typeof availableBalance !== 'undefined') {
         if(availableBalance > 0) {
           requestComponent = <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to buy?</h2>
+            <h2 className='pv1 tc'>Available:{availableBalance} Ether</h2>
             <div className='flex mxc'><Converter maxEther={availableBalance} handleTradeRequest={this.handleTradeRequest.bind(this)}
               onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>
           </div>
@@ -81,7 +85,7 @@ export default class BuyTradeOrder extends Component {
                 <table className='lh-copy'>
                   <tr>
                     <td className='w4 pv2'>Price</td>
-                    <td className='green'>{this.state.price} INR/ETH</td>
+                    <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] * sellOrder.margin : 'Getting price...'} INR/ETH</td>
                   </tr>
                   <tr>
                     <td className='w4 pv2'>Payment Method</td>
@@ -108,9 +112,7 @@ export default class BuyTradeOrder extends Component {
                 <div className='w-50 mt5'>
                   <p className='b tc measure'>Terms of Trade</p>
                   <p className='pv1 measure'>
-                  Create an ether trade advertisment if you plan to trade ether regularly. We recommend clicking on buy or sell if you want to trade quicker.
-                  Creating an advertisement is FREE. Sellers have to pay gas fee for uploading a sell contract.
-                  Before setting up your advertisemnt  please read though our terms of service and the online sale advertisement guide
+                  {sellOrder.termsOfTrade}
               </p>
                 </div>
               </div>

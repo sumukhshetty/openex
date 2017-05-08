@@ -7,24 +7,27 @@ export default class SellTradeOrder extends Component {
     super(props);
     this.state = {
       web3: this.props.web3,
+      etherPrices: this.props.etherPrices,
       user: this.props.user,
       buyOrderDetail: this.props.buyOrderDetail,
-      method: 'UPI',
-      sellingTo: 'Victoria Padilla',
-      rating: 4.5,
-      price: 1203,
-      minLimit: 1000,
-      maxLimit: 200000,
-      currency: 'INR',
-      location: 'India'
+      rating: 4.5
     };
     this.handleConversion = this.handleConversion.bind(this);
     this.acceptOrder = this.acceptOrder.bind(this);
   }
 
   acceptOrder (e) {
+    console.log("acceptOrder")
     e.preventDefault();
-    this.props.acceptOrder(this.props.buyOrderDetail.buyOrder.amount, this.props.buyOrderDetail.buyOrder.buyerAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.user.data.uid, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.web3.web3);
+    this.props.acceptOrder(this.props.buyOrderDetail.buyOrder, 
+      this.props.buyOrderDetail.buyOrder.amount, 
+      this.props.etherPrices.etherPrices["INR"], 
+      this.props.user.data.displayName, 
+      this.props.buyOrderDetail.buyOrder.buyerAddress, 
+      this.props.buyOrderDetail.buyOrder.orderId, 
+      this.props.user.data.uid, 
+      this.props.buyOrderDetail.buyOrder.buyerUid, 
+      this.props.web3.web3);
   }
 
   handleConversion (amount) {
@@ -44,12 +47,14 @@ export default class SellTradeOrder extends Component {
     console.log(e.target.value);
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.props.onBeforeComponentLoad(this.props.params.orderId);
   }
 
   render () {
+    console.log("SellTradeOrder**")
     var buyOrder = this.props.buyOrderDetail.buyOrder;
+    console.log(buyOrder)
     var userInfo = this.props.user.userInfo;
     if(buyOrder && userInfo) {
     return (
@@ -61,7 +66,7 @@ export default class SellTradeOrder extends Component {
               <table className='lh-copy'>
                 <tr>
                   <td className='w4 pv2'>Price</td>
-                  <td className='green'>{this.state.price} INR/ETH</td>
+                  <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] * buyOrder.margin : 'Getting price...'} INR/ETH</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Payment Method</td>
@@ -83,8 +88,10 @@ export default class SellTradeOrder extends Component {
             </div>
             <div className='w-50' >
               {/* <h2 className='pv1 tc'>How much do you wish to buy?</h2> */}
-              <div className='flex mxc'><Converter amount={buyOrder.amount} onSubmit={this.acceptOrder.bind(this)}
-                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>
+              {buyOrder.status === 'Initiated' && <div className='flex mxc'><Converter amount={buyOrder.amount} onSubmit={this.acceptOrder.bind(this)}
+                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>}
+                {buyOrder.status !== 'Initiated' && buyOrder.sellerUid !== this.props.user.data.uid && <h2 className='pv1 tc'>Sorry, looks like this order was already accepted.</h2>}
+                {buyOrder.status !== 'Initiated' && buyOrder.sellerUid === this.props.user.data.uid && <h2 className='pv1 tc'>Please accept the MetaMask transaction.</h2>}
             </div>
           </div>
           <div>
@@ -92,9 +99,7 @@ export default class SellTradeOrder extends Component {
               <div className='w-50 mt5'>
                 <p className='b tc measure'>Terms of Trade</p>
                 <p className='pv1 measure'>
-                Create an ether trade advertisment if you plan to trade ether regularly. We recommend clicking on buy or sell if you want to trade quicker.
-                Creating an advertisement is FREE. Sellers have to pay gas fee for uploading a sell contract.
-                Before setting up your advertisemnt  please read though our terms of service and the online sale advertisement guide
+                {buyOrder.termsOfTrade}
             </p>
               </div>
             </div>

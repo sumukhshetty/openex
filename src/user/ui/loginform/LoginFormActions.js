@@ -9,7 +9,12 @@ function userLoggedIn(user) {
     payload: user
   }
 }
-
+function userLoggedInError(error){
+  return {
+    type: "USER_LOGGED_IN_ERROR",
+    payload: error
+  }
+}
 
 export function loginUser(loginInfo, web3) {
   return function(dispatch) {
@@ -24,7 +29,7 @@ export function loginUser(loginInfo, web3) {
     }).catch(function(error) {
       errormessage = error.message;
       console.log(errormessage)
-      //TODO handleAuthError
+      dispatch(userLoggedInError(error))
     });
 
   }

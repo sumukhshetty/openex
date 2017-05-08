@@ -5,7 +5,9 @@ import { sellOrders } from './SellOrdersActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    etherPrices: state.etherPrices,
     sellorders: state.sellorders,
+    usersInfo: state.usersInfo,
     user: state.user
   }
 }
