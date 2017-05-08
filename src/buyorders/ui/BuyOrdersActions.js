@@ -25,6 +25,7 @@ module.exports = {
     })
   },
   buyOrders: (user) => (dispatch) => {
+    console.log("BuyOrdersActions.buyOrders")
     firebaseRef.database().ref('users/'+user.data.uid).once('value', function(snap){
       var userData = snap.val()
       try{

@@ -18,7 +18,7 @@ module.exports = {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
   },
   buyOrder: (orderId) => (dispatch) => {
-    firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once(function(snap){
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once(function(snap){
       var userData = snap.val()  
       firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId)
         .on('value', function (snapshot) {
@@ -35,7 +35,7 @@ module.exports = {
     var factoryInstance;
     var coinbase = web3.eth.coinbase;
     // var block, orderAddress
-    firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once(function(snap){
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once(function(snap){
       var userData = snap.val()  
       firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId + '/status')
         .set('locked');

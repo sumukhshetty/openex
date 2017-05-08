@@ -24,9 +24,12 @@ function getUserInfo(userPayload) {
 
 module.exports = {
   buyOrder: (orderId) => (dispatch) => {
-    firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once(function(snap){
+    console.log("SellTradeOrderActions.buyOrder")
+    console.log(firebaseRef.auth().currentUser.uid)
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once(function(snap){
       var userData = snap.val()  
-      firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId)
+      console.log(userData)
+      /*firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId)
         .on("value", function(snapshot){
           console.log('got buyorder by id');
           console.log(snapshot.val());
@@ -37,7 +40,7 @@ module.exports = {
             console.log(snapshot.val());
             dispatch(getUserInfo(snapshot.val()))
           })
-        })
+        })*/
     })
   },
 

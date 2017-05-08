@@ -41,7 +41,7 @@ module.exports = {
       .then(function(_availableBalance) {
         var contractBalance = web3.fromWei(_availableBalance, 'ether').toNumber();
         if(contractBalance !== (availableBalance+pendingBalance)) {
-          firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+          firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
             var userData = snap.val()
             firebaseRef.database().ref('/sellorders/' + userData.country+ '/' + orderId + '/availableBalance')
             .set(contractBalance-pendingBalance);
@@ -55,7 +55,7 @@ module.exports = {
 
   sellOrder: (orderId, web3) => (dispatch) => {
 
-    firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
       var userData = snap.val()
       firebaseRef.database().ref('/sellorders/' + userData.country + '/' + orderId)
         .once("value", function(snapshot){

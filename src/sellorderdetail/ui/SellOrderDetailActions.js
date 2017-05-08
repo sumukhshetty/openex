@@ -29,7 +29,7 @@ module.exports = {
     const order = contract(SellOrderContract);
     order.setProvider(web3.currentProvider);
     var orderInstance;
-    firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once(function(snap){
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once(function(snap){
       var userData = snap.val()
       firebaseRef.database().ref('/sellorders/' + userData.country + '/' + orderId)
         .once("value", function(snapshot){
@@ -54,7 +54,7 @@ module.exports = {
   },
 
   requestEtherFromSeller: (amount, uid, orderId) => (dispatch) => {
-    firebaseRef.database().ref('/users'+firebaseRef.auth().currentUser.uid).once(function(snap){
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once(function(snap){
       var userData = snap.val()  
       firebaseRef.database().ref('/sellorders/' + userData.country + '/' + orderId + '/requests/' + uid)
       .set({
