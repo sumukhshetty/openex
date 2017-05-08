@@ -24,11 +24,14 @@ module.exports = {
     })
   },
   sellOrders: (user) => (dispatch) => {
+    console.log("sellOrders")
+    console.log(user.data.uid)
     firebaseRef.database().ref('users/'+user.data.uid).once('value', function(snap){
       var userData = snap.val()
+      console.log(userData)
       try{
         firebaseRef.database().ref('sellorders/'+userData.country)
-        .orderByChild('availableBalance').startAt(0.0001)
+        .orderByChild('availableBalance')//.startAt(0.0001)
           .on('value', function(snapshot){
             console.log(snapshot.val());
             dispatch(getSellOrders(snapshot.val()))
