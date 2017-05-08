@@ -1,5 +1,6 @@
 import {firebaseRef} from './../../../index.js'
-// import { browserHistory } from 'react-router'
+
+const currencies = require('country-currency')
 
 export const USER_SIGNED_UP = 'USER_SIGNED_UP'
 function userSignedUp (user) {
@@ -25,10 +26,18 @@ export function signUpUser (signUpInfo, web3) {
     var country = signUpInfo.country
     const pass = signUpInfo.password
     var errormessage = ''
+    var currency
+    try {
+      currency = currencies.byCountry().get(country)
+    } catch(e){
+      currency = 'USD'
+    }
+
     auth.createUserWithEmailAndPassword(email, pass).then(function (firebaseUser) {
       userid = firebaseUser.uid
       var userdata = {'email': email,
         'country': country,
+        'currency': currency,
         'username': username,
         'isAdmin': false,
         'trustworthiness': 'unknown',
