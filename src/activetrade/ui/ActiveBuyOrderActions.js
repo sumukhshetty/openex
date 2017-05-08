@@ -38,12 +38,13 @@ module.exports = {
   },
 
   buyOrder: (orderId) => (dispatch) => {
-    // firebaseRef.database().ref('buyorders')
-    // .orderByKey().equalTo(orderId)
-    firebaseRef.database().ref('/buyorders/' + orderId)
-      .on('value', function (snapshot) {
-        dispatch(getBuyOrder(snapshot.val()));
-      });
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()  
+      firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId)
+        .on('value', function (snapshot) {
+          dispatch(getBuyOrder(snapshot.val()));
+        });
+    })
   },
 
   fillEscrow: (buyOrder, contractAddress, orderId, sellerUid, web3) => (dispatch) => {
@@ -196,6 +197,12 @@ module.exports = {
           try{
             var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
             firebaseRef.database().ref('/users/'+buyOrder.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+            //TODO decide if we move this db call into functions
+            firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+              var userData = snap.val()
+              firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId + '/status')
+                .set('Payment Confirmed');
+            })
           } catch(e){
             console.log("[paymentConfirmed]",e)
           }
@@ -207,8 +214,6 @@ module.exports = {
         }
       })
     })
-    firebaseRef.database().ref('/buyorders/' + orderId + '/status')
-      .set('Payment Confirmed');
   },
 
   releaseEscrow: (buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid,) => (dispatch) => {
@@ -292,13 +297,16 @@ module.exports = {
 
   cancelTrade: (orderId, uid) => (dispatch) => {
     dispatch(cancelTradeState('confirmed'));
-    firebaseRef.database().ref('/buyorders/' + orderId + '/cancelled')
-    .set(uid)
-    .then(function() {
-      browserHistory.push('/dashboard');
-    })
-    .catch(function(err){
-      console.log(err);
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()  
+      firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId + '/cancelled')
+      .set(uid)
+      .then(function() {
+        browserHistory.push('/dashboard');
+      })
+      .catch(function(err){
+        console.log(err);
+      })
     })
   }
 

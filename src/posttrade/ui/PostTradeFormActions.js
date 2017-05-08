@@ -74,17 +74,6 @@ export function postTrade(postTradeDetails, web3, state) {
             throw res.body.error
           }
         });
-      // TODO @arseniy maybe we should move this to firebase cloud function to improve site performance
-      // var newOrder = firebaseRef.database().ref("sellorders/").push(postTradeDetails);
-      // firebaseRef.database().ref("sellorders/"+newOrder.key+'/orderId').set(newOrder.key);
-      // firebaseRef.database().ref("users/"+state.user.data.uid+"/advertisements/").child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
-      // firebaseRef.database().ref('/sellorders/' + newOrder.key + '/contractTx')
-      // .set(txHash['tx']);
-      // firebaseRef.database().ref('/sellorders/' + newOrder.key + '/contractAddress')
-      // .set(txHash['logs'][0]['args']['orderAddress']);
-      // dispatch(tradeCreated(postTradeDetails))
-      // console.log("about to push to dashboard")
-      // browserHistory.push('/dashboard')
     })
     .catch(function (error) {
       dispatch(sendEtherState('init'));
@@ -98,9 +87,14 @@ export function buyEtherPostTrade(postTradeDetails, web3, state) {
   return function(dispatch){
     dispatch(sendEtherState('sending'));
     try {
-      var newOrder = firebaseRef.database().ref("buyorders/").push(postTradeDetails);
-      firebaseRef.database().ref("buyorders/"+newOrder.key+'/orderId').set(newOrder.key);
-      firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
+      firebaseRef.database().ref("users/"+state.user.data.uid).once("value", function(snap){
+        var userData = snap.val()
+        var newOrder = firebaseRef.database().ref('/buyorders/' + userData.country).push(postTradeDetails);
+        console.log(state.user.data.uid)
+        firebaseRef.database().ref('/buyorders/'+userData.country+"/"+newOrder.key+'/orderId').set(newOrder.key);
+        firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
+        
+      })
       dispatch(tradeCreated(postTradeDetails))
       browserHistory.push('/dashboard')
     } catch(err) {

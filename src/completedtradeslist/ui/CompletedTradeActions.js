@@ -13,10 +13,13 @@ function getTradeData(completedTradesPayload, id) {
 module.exports = {
   getCompletedTrade: (orderId, tradeType) => (dispatch) => {
     var url = tradeType === 'buy-ether' ? 'buyorders' : 'purchaserequests';
-    firebaseRef.database()
-      .ref(url+'/'+orderId)
-      .on("value", function(snapshot){
-        dispatch(getTradeData(snapshot.val(), orderId))
-      })
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()
+      firebaseRef.database()
+        .ref(url+'/'+userData.country+'/'+orderId)
+        .on("value", function(snapshot){
+          dispatch(getTradeData(snapshot.val(), orderId))
+        })
+    })
   }
 }

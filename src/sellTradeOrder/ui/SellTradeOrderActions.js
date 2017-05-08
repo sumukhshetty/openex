@@ -24,20 +24,24 @@ function getUserInfo(userPayload) {
 
 module.exports = {
   buyOrder: (orderId) => (dispatch) => {
-    // firebaseRef.database().ref('buyorders')
-    // .orderByKey().equalTo(orderId)
-    firebaseRef.database().ref('/buyorders/' + orderId)
-      .on("value", function(snapshot){
-        console.log('got buyorder by id');
-        console.log(snapshot.val());
-        dispatch(getBuyOrder(snapshot.val()))
-        firebaseRef.database().ref('/users/' + snapshot.val()['buyerUid'])
-        .once("value", function(snapshot) {
-          console.log('got user by id');
+    console.log("SellTradeOrderActions.buyOrder")
+    console.log(firebaseRef.auth().currentUser.uid)
+    firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
+      var userData = snap.val()  
+      console.log(userData)
+      firebaseRef.database().ref('/buyorders/' + userData.country + '/' + orderId)
+        .on("value", function(snapshot){
+          console.log('got buyorder by id');
           console.log(snapshot.val());
-          dispatch(getUserInfo(snapshot.val()))
+          dispatch(getBuyOrder(snapshot.val()))
+          firebaseRef.database().ref('/users/' + snapshot.val()['buyerUid'])
+          .once("value", function(snapshot) {
+            console.log('got user by id');
+            console.log(snapshot.val());
+            dispatch(getUserInfo(snapshot.val()))
+          })
         })
-      })
+    })
   },
 
   createBuyOrderContract: (buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => (dispatch) => {

@@ -67,19 +67,20 @@ exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid
   })
 
 //Realtime database triggers
-exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/status')
+exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{countryCode}/{orderId}/status')
   .onWrite(event => {
     let orderId = event.params.orderId;
+    let countryCode = event.params.countryCode;
     if(event.data.val() === 'locked') {
       setTimeout(function() {
-        admin.database().ref('/buyorders/'+orderId+'/status')
+        admin.database().ref('/buyorders/'+countryCode+'/'+orderId+'/status')
         .once('value', function(snapshot) {
           if(snapshot.val() === 'locked') {
-            admin.database().ref('/buyorders/'+orderId+'/status')
+            admin.database().ref('/buyorders/'+countryCode+'/'+orderId+'/status')
             .set('Initiated');
-            admin.database().ref('/buyorders/'+orderId+'/sellerUid')
+            admin.database().ref('/buyorders/'+countryCode+'/'+orderId+'/sellerUid')
             .set('');
-            admin.database().ref('/buyorders/'+orderId+'/sellerUsername')
+            admin.database().ref('/buyorders/'+countryCode+'/'+orderId+'/sellerUsername')
             .set('');
           }
         })
@@ -160,22 +161,25 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{orderId}/sta
 //BuyOrder
 exports.acceptbuy = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
-    admin.database().ref('/buyorders/'+req.body.orderId+'/status')
-    .once('value', function(snapshot) {
-      if(snapshot.val() === 'Initiated') {
-        admin.database().ref('/buyorders/'+req.body.orderId+'/status')
-        .set('locked');
-        admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUid')
-        .set(req.body.sellerUid);
-        admin.database().ref('/buyorders/'+req.body.orderId+'/sellerUsername')
-        .set(req.body.sellerUsername);
-        res.status(200).send();
-      } else {
-        res.status(500).send({error: 'Status of order ' + req.body.orderId + ' is not Initiated'});
-      }
-    })
-    .catch(function(e) {
-      res.status(500).send({error: 'Error in firebase query: ' + e});
+    admin.database().ref('/users/'+req.body.sellerUid).once("value", function(snap){
+      var userData = snap.val()
+      admin.database().ref('/buyorders/'+ userData.country + '/' +req.body.orderId+'/status')
+      .once('value', function(snapshot) {
+        if(snapshot.val() === 'Initiated') {
+          admin.database().ref('/buyorders/' + userData.country + '/' +req.body.orderId+'/status')
+          .set('locked');
+          admin.database().ref('/buyorders/' + userData.country + '/' +req.body.orderId+'/sellerUid')
+          .set(req.body.sellerUid);
+          admin.database().ref('/buyorders/' + userData.country + '/' +req.body.orderId+'/sellerUsername')
+          .set(req.body.sellerUsername);
+          res.status(200).send();
+        } else {
+          res.status(500).send({error: 'Status of order ' + req.body.orderId + ' is not Initiated'});
+        }
+      })
+      .catch(function(e) {
+        res.status(500).send({error: 'Error in firebase query: ' + e});
+      })
     })
   });
 });
@@ -183,29 +187,33 @@ exports.acceptbuy = functions.https.onRequest((req, res) => {
 exports.buyOrderCreated = functions.https.onRequest((req, res) => {
   //TODO: AK This function needs to actually query web3, will need to upgrade plan for that.
   cors(req, res, () => {
-    admin.database().ref('/buyorders/' + req.body.orderId)
-    .once('value', function(snapshot) {
-      if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'locked') {
-        admin.database().ref('/buyorders/' + req.body.orderId + '/contractTx')
-          .set(req.body.contractTx);
-        admin.database().ref('/buyorders/' + req.body.orderId + '/contractAddress')
-          .set(req.body.contractAddress);
-        admin.database().ref('/buyorders/' + req.body.orderId + '/status')
-          .set('Awaiting Escrow');
-        admin.database().ref('/buyorders/' + req.body.orderId + '/price')
-          .set(req.body.price);
+    admin.database().ref('/users/'+req.body.sellerUid).once("value", function(snap){
+      var userData = snap.val()
+      admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId)
+      .once('value', function(snapshot) {
+        if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'locked') {
+          admin.database().ref('/buyorders/'+ userData.country + '/' + req.body.orderId + '/contractTx')
+            .set(req.body.contractTx);
+          admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/contractAddress')
+            .set(req.body.contractAddress);
+          admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/status')
+            .set('Awaiting Escrow');
+          admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/price')
+            .set(req.body.price);
 
-        admin.database().ref('users/' + snapshot.val()['buyerUid']).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
-        admin.database().ref('users/' + req.body.sellerUid).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
-        admin.database().ref('users/' + snapshot.val()['buyerUid']).child('advertisements').child(req.body.orderId).set(null);
+          admin.database().ref('users/' + snapshot.val()['buyerUid']).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
+          admin.database().ref('users/' + req.body.sellerUid).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
+          admin.database().ref('users/' + snapshot.val()['buyerUid']).child('advertisements').child(req.body.orderId).set(null);
 
-        res.status(200).send();
-      } else {
-        res.status(500).send({error: 'Access denied to ' + req.body.orderId + ' is not Initiated'});
-      }
-    })
-    .catch(function(e) {
-      res.status(500).send({error: 'Error in firebase query: ' + e});
+          res.status(200).send();
+        } else {
+          res.status(500).send({error: 'Access denied to ' + req.body.orderId + ' is not Initiated'});
+        }
+      })
+      .catch(function(e) {
+        res.status(500).send({error: 'Error in firebase query: ' + e});
+      })
+      
     })
   });
 });
@@ -213,56 +221,63 @@ exports.buyOrderCreated = functions.https.onRequest((req, res) => {
 exports.escrowFillled = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     //TODO: AK would first need to confirm with web3 that the escrow was actualyfilled
-    admin.database().ref('/buyorders/' + req.body.orderId)
-    .once('value', function(snapshot) {
-      if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'Awaiting Escrow') {
-        admin.database().ref('/buyorders/' + req.body.orderId + '/status')
-          .set('In Escrow')
-        .then(function() {
-          res.status(200).send();
-        })
-        .catch(function(e) {
-          res.status(500).send({error: 'Error setting status: ' + e})
-        });
-      } else {
-        res.status(500).send({error: 'Access denied'});
-      }
+    admin.database().ref('/users/' + req.body.sellerUid).once("value", function(snap){
+      var userData = snap.val()
+      admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId)
+      .once('value', function(snapshot) {
+        if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'Awaiting Escrow') {
+          admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/status')
+            .set('In Escrow')
+          .then(function() {
+            res.status(200).send();
+          })
+          .catch(function(e) {
+            res.status(500).send({error: 'Error setting status: ' + e})
+          });
+        } else {
+          res.status(500).send({error: 'Access denied'});
+        }
+      })
+      .catch(function(e) {
+        res.status(500).send({error: 'Error querying db: ' + e});
+      });
     })
-    .catch(function(e) {
-      res.status(500).send({error: 'Error querying db: ' + e});
-    });
   })
 });
 
 exports.etherReleased = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     //TODO: AK would first need to confirm with web3 that the ether was sent
-    admin.database().ref('/buyorders/' + req.body.orderId)
-    .once('value', function(snapshot) {
-      if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'Payment Confirmed') {
-        admin.database().ref('/buyorders/' + req.body.orderId + '/status')
-          .set('Ether Released')
-        .then(function() {
-          admin.database().ref('/users/'+req.body.buyerUid+'/activeTrades/').child(req.body.orderId).remove()
-          admin.database().ref('/users/'+req.body.sellerUid+'/activeTrades/').child(req.body.orderId).remove()
+    admin.database().ref('/users/' + req.body.sellerUid).once("value", function(snap){
+      var userData = snap.val()
+      admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId)
+      .once('value', function(snapshot) {
+        if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'Payment Confirmed') {
+          admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/status')
+            .set('Ether Released')
+          .then(function() {
+            admin.database().ref('/users/'+req.body.buyerUid+'/activeTrades/').child(req.body.orderId).remove()
+            admin.database().ref('/users/'+req.body.sellerUid+'/activeTrades/').child(req.body.orderId).remove()
 
-          admin.database().ref("users/"+req.body.buyerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-order'})
-          admin.database().ref("users/"+req.body.sellerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-order'})
+            admin.database().ref("users/"+req.body.buyerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-ether'})
+            admin.database().ref("users/"+req.body.sellerUid).child('completedTrades').child(req.body.orderId).set({tradeType: 'buy-ether'})
 
-          admin.database().ref("users/"+req.body.buyerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
-          admin.database().ref("users/"+req.body.sellerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
-          res.status(200).send();
-        })
-        .catch(function(e) {
-          res.status(500).send({error: 'Error setting status: ' + e})
-        });
-      } else {
-        res.status(500).send({error: 'Access denied'});
-      }
+            admin.database().ref("users/"+req.body.buyerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
+            admin.database().ref("users/"+req.body.sellerUid+'/lastTransfer').set(admin.database.ServerValue.TIMESTAMP)
+            res.status(200).send();
+          })
+          .catch(function(e) {
+            res.status(500).send({error: 'Error setting status: ' + e})
+          });
+        } else {
+          res.status(500).send({error: 'Access denied'});
+        }
+      })
+      .catch(function(e) {
+        res.status(500).send({error: 'Error querying db: ' + e});
+      });
+      
     })
-    .catch(function(e) {
-      res.status(500).send({error: 'Error querying db: ' + e});
-    });
   })
 })
 
@@ -270,13 +285,16 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
 exports.postSellOrder = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try {
-      var newOrder = admin.database().ref("sellorders/").push(req.body.postTradeDetails);
-      admin.database().ref("sellorders/"+newOrder.key+'/orderId').set(newOrder.key);
-      admin.database().ref("users/"+req.body.sellerUid+"/advertisements/").child(newOrder.key).set({tradeType: req.body.postTradeDetails.tradeType})
-      admin.database().ref('/sellorders/' + newOrder.key + '/contractTx')
-      .set(req.body.contractTx);
-      admin.database().ref('/sellorders/' + newOrder.key + '/contractAddress')
-      .set(req.body.contractAddress);
+      admin.database().ref("/users/"+req.body.sellerUid).once("value", function(snap){
+        var userData = snap.val()
+        var newOrder = admin.database().ref("sellorders/"+userData.country).push(req.body.postTradeDetails);
+        admin.database().ref("sellorders/"+userData.country+'/'+newOrder.key+'/orderId').set(newOrder.key);
+        admin.database().ref("users/"+req.body.sellerUid+"/advertisements/").child(newOrder.key).set({tradeType: req.body.postTradeDetails.tradeType})
+        admin.database().ref('/sellorders/'+userData.country+'/' + newOrder.key + '/contractTx')
+        .set(req.body.contractTx);
+        admin.database().ref('/sellorders/'+userData.country+'/'+ newOrder.key + '/contractAddress')
+        .set(req.body.contractAddress);
+      })
 
       res.status(200).send();
     } catch(e) {
@@ -288,38 +306,45 @@ exports.postSellOrder = functions.https.onRequest((req, res) => {
 exports.requestEther = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{
-      var newRequest = admin.database().ref('/purchaserequests').push({
-        amount: req.body.postData.amount,
-        price: req.body.postData.price,
-        buyerAddress: req.body.postData.buyerAddress,
-        buyerUid: req.body.postData.buyerUid,
-        buyerUsername: req.body.postData.buyerUsername,
-        sellerUid: req.body.postData.sellerUid,
-        sellerUsername: req.body.postData.sellerUsername,
-        paymentMethod: req.body.postData.paymentMethod,
-        bankInformation: req.body.postData.bankInformation,
-        createdAt: req.body.postData.createdAt,
-        lastUpated: req.body.postData.lastUpated,
-        status: 'Awaiting Seller Confirmation',
-        contractAddress: req.body.postData.contractAddress
-      }, function(err) {
-        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/requests/' + newRequest.key)
-        .set({
-          buyerUid: req.body.postData.buyerUid
-        });
-        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/pendingBalance')
-        .set(req.body.postData.amount);
-        admin.database().ref('/sellorders/' + req.body.postData.orderId + '/availableBalance')
-        .set(req.body.postData.availableBalance - req.body.postData.amount);
-        admin.database().ref('/users/' + req.body.postData.sellerUid+ '/activeTrades/' + newRequest.key)
-        .set({
-          tradeType: 'sell-ether'
-        });
-        admin.database().ref('/users/' + req.body.postData.buyerUid + '/activeTrades/' + newRequest.key)
-        .set({
-          tradeType: 'sell-ether'
+      admin.database().ref('/users/'+req.body.postData.sellerUid).once("value", function(snap){
+        var userData = snap.val()
+        var newRequest = admin.database().ref('/purchaserequests/'+userData.country).push({
+          amount: req.body.postData.amount,
+          price: req.body.postData.price,
+          buyerAddress: req.body.postData.buyerAddress,
+          buyerUid: req.body.postData.buyerUid,
+          buyerUsername: req.body.postData.buyerUsername,
+          sellerUid: req.body.postData.sellerUid,
+          sellerUsername: req.body.postData.sellerUsername,
+          paymentMethod: req.body.postData.paymentMethod,
+          bankInformation: req.body.postData.bankInformation,
+          createdAt: req.body.postData.createdAt,
+          lastUpated: req.body.postData.lastUpated,
+          status: 'Awaiting Seller Confirmation',
+          contractAddress: req.body.postData.contractAddress
+        }, function(err) {
+          admin.database().ref('/users/'+req.body.postData.sellerUid).once("value", function(snap){
+            var userData = snap.val()
+            admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/requests/' + newRequest.key)
+            .set({
+              buyerUid: req.body.postData.buyerUid
+            });
+            admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/pendingBalance')
+            .set(req.body.postData.amount);
+            admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/availableBalance')
+            .set(req.body.postData.availableBalance - req.body.postData.amount);
+            
+          })
+          admin.database().ref('/users/' + req.body.postData.sellerUid+ '/activeTrades/' + newRequest.key)
+          .set({
+            tradeType: 'sell-ether'
+          });
+          admin.database().ref('/users/' + req.body.postData.buyerUid + '/activeTrades/' + newRequest.key)
+          .set({
+            tradeType: 'sell-ether'
+          })
+          res.status(200).send()
         })
-        res.status(200).send()
       })
     } catch(e){
       res.status(500).send({error:'[requestEther] Error :' + e})
