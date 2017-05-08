@@ -21,7 +21,7 @@ export default class BuyTradeOrder extends Component {
   handleTradeRequest (e) {
     e.preventDefault();
     this.props.requestEther(this.state.requestAmount,
-                            this.props.etherPrices.etherPrices["INR"],
+                            this.props.etherPrices.etherPrices,
                             this.props.sellOrderDetail.sellOrder,
                             this.props.user.data.uid,
                             this.props.user.data.displayName,
@@ -85,7 +85,7 @@ export default class BuyTradeOrder extends Component {
                 <table className='lh-copy'>
                   <tr>
                     <td className='w4 pv2'>Price</td>
-                    <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] * sellOrder.margin : 'Getting price...'} INR/ETH</td>
+                    <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices * sellOrder.margin : 'Getting price...'} INR/ETH</td>
                   </tr>
                   <tr>
                     <td className='w4 pv2'>Payment Method</td>

@@ -21,7 +21,7 @@ export default class SellTradeOrder extends Component {
     e.preventDefault();
     this.props.acceptOrder(this.props.buyOrderDetail.buyOrder, 
       this.props.buyOrderDetail.buyOrder.amount, 
-      this.props.etherPrices.etherPrices["INR"], 
+      this.props.etherPrices.etherPrices, 
       this.props.user.data.displayName, 
       this.props.buyOrderDetail.buyOrder.buyerAddress, 
       this.props.buyOrderDetail.buyOrder.orderId, 
@@ -66,7 +66,7 @@ export default class SellTradeOrder extends Component {
               <table className='lh-copy'>
                 <tr>
                   <td className='w4 pv2'>Price</td>
-                  <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] * buyOrder.margin : 'Getting price...'} INR/ETH</td>
+                  <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices * buyOrder.margin : 'Getting price...'} INR/ETH</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Payment Method</td>

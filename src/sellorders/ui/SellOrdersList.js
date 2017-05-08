@@ -27,7 +27,7 @@ class SellOrdersList extends Component {
     const rows = _.map(sellorders,function(sellOrderData, key) {
         if(sellOrderData.sellerUid !== uid) {
           userData = usersInfo ? usersInfo[sellOrderData.sellerUid] : null;
-          etherPrice = etherPrices ? etherPrices["INR"] : null;
+          etherPrice = etherPrices ? etherPrices : null;
           return <SingleSellOrder sellOrderData={sellOrderData} etherPrice={etherPrice} userData={userData} userId={key} key={key}/>
         }
     })
