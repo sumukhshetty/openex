@@ -7,7 +7,7 @@ export default class BuyTradeOrder extends Component {
     super(props);
     this.state = {
       web3: this.props.web3,
-      etherPrices: this.props.etherPrices,
+      etherPrice: this.props.etherPrice,
       user: this.props.user,
       sellOrderDetail: this.props.sellOrderDetail,
       sellOrderContract: this.props.sellOrderContract,
@@ -21,7 +21,7 @@ export default class BuyTradeOrder extends Component {
   handleTradeRequest (e) {
     e.preventDefault();
     this.props.requestEther(this.state.requestAmount,
-                            this.props.etherPrices.etherPrices,
+                            this.props.etherPrice,
                             this.props.sellOrderDetail.sellOrder,
                             this.props.user.data.uid,
                             this.props.user.data.displayName,
@@ -85,7 +85,7 @@ export default class BuyTradeOrder extends Component {
                 <table className='lh-copy'>
                   <tr>
                     <td className='w4 pv2'>Price</td>
-                    <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices * sellOrder.margin : 'Getting price...'} INR/ETH</td>
+                    <td className='green'>{this.props.etherPrice.etherPrice ? (this.props.etherPrice.etherPrice * sellOrder.margin).toFixed(2) : 'Getting price...'} {this.props.user.currency}/ETH</td>
                   </tr>
                   <tr>
                     <td className='w4 pv2'>Payment Method</td>

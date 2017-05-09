@@ -3,10 +3,11 @@ import {firebaseRef} from './../../../index.js'
 const currencies = require('country-currency')
 
 export const USER_SIGNED_UP = 'USER_SIGNED_UP'
-function userSignedUp (user) {
+function userSignedUp (user, currency) {
   return {
     type: USER_SIGNED_UP,
-    payload: user
+    payload: user,
+    currency: currency
   }
 }
 
@@ -55,7 +56,7 @@ export function signUpUser (signUpInfo, web3) {
       }, function (error) {
         dispatch(userSignedUpError(error))
       })
-      dispatch(userSignedUp(firebaseUser))
+      dispatch(userSignedUp(firebaseUser, currency))
     }).catch(function (error) {
       errormessage = error.message
       console.log(error)

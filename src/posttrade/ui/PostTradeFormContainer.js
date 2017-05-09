@@ -6,7 +6,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     user: state.user,
-    etherPrices: state.etherPrices,
+    etherPrice: state.etherPrice,
     uid: ownProps.uid,
     sendEtherState: state.sendEtherState
   }
