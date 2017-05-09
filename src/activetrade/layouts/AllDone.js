@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
 import ChatBox from '../../chat/containers/ChatBox'
-import TradeFeedback from '../../generic-components/tradeFlow/TradeFeedback'
+import TradeFeedback from './../../tradefeedback/layouts/TradeFeedback'
 
 class AllDone extends Component {
 
@@ -25,7 +25,7 @@ class AllDone extends Component {
               sellerId={this.props.sellerId}
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
-              <TradeFeedback sellerId={this.props.sellerId} buyerId={this.props.buyerId}/>
+              <TradeFeedback sellerId={this.props.sellerId} buyerId={this.props.buyerId} orderId={this.props.tradeId}/>
             </div>
           </div>
         </div>

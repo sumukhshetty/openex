@@ -5,7 +5,7 @@ import ChatBox from '../../chat/containers/ChatBox'
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteBuy'
 import SellerStepNote from '../ui/SellerStepNoteBuy'
-import TradeFeedback from '../../generic-components/tradeFlow/TradeFeedback'
+import TradeFeedback from './../../tradefeedback/layouts/TradeFeedback'
 
 class EtherReleased extends Component {
   render () {

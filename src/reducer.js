@@ -22,6 +22,7 @@ import sellOrderContractReducer from './buyTradeOrder/sellOrderContractReducer'
 import chatAuthReducer from './chat/reducers/auth'
 import newMessageReducer from './chat/reducers/newMessage'
 import ChatMessageReducer from './chat/reducers/messages'
+import tradeFeedbackReducer from './tradefeedback/tradeFeedbackReducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -46,7 +47,8 @@ const reducer = combineReducers({
   chatAuth: chatAuthReducer,
   newMessage: newMessageReducer,
   chatMessages: ChatMessageReducer,
-  etherPrices: etherPriceReducer
+  etherPrices: etherPriceReducer,
+  tradeFeedback: tradeFeedbackReducer
 })
 
 export default reducer
