@@ -3,6 +3,8 @@ import Trustworthiness from '../../generic-components/tables/Trustworthiness';
 import LastOnline from '../../generic-components/tables/LastOnline';
 import Header from '../../generic-components/tables/Header';
 
+const moment = require('moment')
+
 export default class UserScreen extends Component {
   constructor (props) {
     super(props);
@@ -91,10 +93,10 @@ export default class UserScreen extends Component {
                     <td className='w4 pv2'>Confirmed Trades</td>
                     <td className='pl3'>{this.props.userScreen.data.numberOfTrades.toString()}</td>
                   </tr>
-                  {/*<tr className='w-50'>
+                  <tr className='w-50'>
                     <td className='w4 pv2'>Traded with</td>
                     <td className='pl3'>with {this.state.partners} different partners</td>
-                  </tr>*/}
+                  </tr>
                   <tr className='w-50'>
                     <td className='w4 pv2'>Feedback Score</td>
                     <td className='pl3'>{this.props.userScreen.data.avgFeedback}</td>
@@ -105,11 +107,11 @@ export default class UserScreen extends Component {
                   </tr>
                   <tr className='w-50'>
                     <td className='w4 pv2'>Account Created</td>
-                    <td className='pl3'>{this.props.userScreen.data.accountCreated.toString()} ago</td>
+                    <td className='pl3'>{moment(this.props.userScreen.data.accountCreated).fromNow()}</td>
                   </tr>
                   <tr className='w-50'>
                     <td className='w4 pv2'>Last Seen</td>
-                    <td className='pl3'>{this.props.userScreen.data.lastOnline.toString()} ago</td>
+                    <td className='pl3'>{moment(this.props.userScreen.data.lastOnline).fromNow()}</td>
                   </tr> 
 {/*                  <tr className='w-50'>
                     <td className='w4 pv2'>Language</td>

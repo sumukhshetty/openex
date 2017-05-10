@@ -49,6 +49,7 @@ const reducer = combineReducers({
   chatMessages: ChatMessageReducer,
   etherPrices: etherPriceReducer,
   userScreen: userScreenReducer
+
 })
 
 export default reducer
