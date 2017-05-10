@@ -45,7 +45,8 @@ class PostTradeForm extends Component {
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid,// Submitting a from without changing values leaves them as blank
       paymentMethod: 'UPI',    // If defaults change, these must change as well.
-      margin: 0
+      margin: 0,
+      currency: this.props.user.currency
     },
     buyFormBool:true,
     showMetaMaskWaitModal:false
@@ -237,6 +238,7 @@ class PostTradeForm extends Component {
 
             { (this.state.buyFormBool) ? <BuyForm
                 onChangeProp={this.onInputChange.bind(this)}
+                currency={this.props.user.currency}
                 amount={this.state.postTradeDetails.amount}
                 paymentMethod={this.state.postTradeDetails.paymentMethod}
                 onCurrencyChange={this.onCurrencyChange.bind(this)}
@@ -244,7 +246,8 @@ class PostTradeForm extends Component {
                 minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
                 maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
                 termsOfTrade={this.state.postTradeDetails.termsOfTrade} /> : <SellForm
-              onChangeProp={this.onInputChange.bind(this)} />
+              onChangeProp={this.onInputChange.bind(this)}
+              currency={this.props.user.currency} />
             }
 
             {

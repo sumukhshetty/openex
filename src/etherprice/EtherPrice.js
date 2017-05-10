@@ -15,7 +15,9 @@ class EtherPrice extends Component {
 
   render() {
     if(this.props.user.data) {
-      this.getEtherPrice();
+      setInterval(() => {
+        this.getEtherPrice();
+      }, 30000)
     }
     return(
     <span></span>

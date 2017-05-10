@@ -12,6 +12,8 @@ export default class BuyTradeOrder extends Component {
       sellOrderDetail: this.props.sellOrderDetail,
       sellOrderContract: this.props.sellOrderContract,
       requestAmount: 0,
+      etherAmount: 0,
+      fiatAmount: 0,
       rating: 4.5
     };
     this.handleConversion = this.handleConversion.bind(this);
@@ -21,7 +23,7 @@ export default class BuyTradeOrder extends Component {
   handleTradeRequest (e) {
     e.preventDefault();
     this.props.requestEther(this.state.requestAmount,
-                            this.props.etherPrice,
+                            this.props.etherPrice.etherPrice,
                             this.props.sellOrderDetail.sellOrder,
                             this.props.user.data.uid,
                             this.props.user.data.displayName,
@@ -33,10 +35,19 @@ export default class BuyTradeOrder extends Component {
     console.log(amount);
   }
 
-  onEtherAmountChange(e) {
-    console.log('ether changed');
-    console.log(e.target.value);
-    this.setState({requestAmount: e.target.value});
+  onAmountChange(e) {
+    if(e.target.id === 'etherAmount') {
+      console.log('ether changed');
+      console.log(e.target.value);
+      this.setState({etherAmount: e.target.value});
+      this.setState({fiatAmount: (e.target.value * (this.props.etherPrice.etherPrice * this.props.sellOrderDetail.sellOrder.margin).toFixed(2)).toFixed(2)})
+    } else if(e.target.id === 'fiatAmount') {
+      console.log('fiat changed');
+      console.log(e.target.value);
+      this.setState({fiatAmount: e.target.value});
+      this.setState({etherAmount: (e.target.value / (this.props.etherPrice.etherPrice * this.props.sellOrderDetail.sellOrder.margin).toFixed(2)).toFixed(2)})
+    }
+
 
   }
 
@@ -60,6 +71,7 @@ export default class BuyTradeOrder extends Component {
       <h2 className='pv1 tc'>Getting balance...</h2>
     </div>;
     if(sellOrder && userInfo) {
+      var price = this.props.etherPrice ? (this.props.etherPrice.etherPrice * sellOrder.margin).toFixed(2) : null;
       var availableBalance = this.props.sellOrderContract.availableBalance;
       if(typeof availableBalance !== 'undefined') {
         if(availableBalance > 0) {
@@ -67,7 +79,7 @@ export default class BuyTradeOrder extends Component {
             <h2 className='pv1 tc'>How much do you wish to buy?</h2>
             <h2 className='pv1 tc'>Available:{availableBalance} Ether</h2>
             <div className='flex mxc'><Converter maxEther={availableBalance} handleTradeRequest={this.handleTradeRequest.bind(this)}
-              onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>
+              onAmountChange={this.onAmountChange.bind(this)} currency={this.props.user.currency} price={price} country={userInfo.country} etherAmount={this.state.etherAmount} fiatAmount={this.state.fiatAmount} /></div>
           </div>
         } else {
           requestComponent = <div className='w-50' >
