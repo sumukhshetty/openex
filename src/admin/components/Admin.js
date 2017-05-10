@@ -1,17 +1,66 @@
 import React, { Component } from 'react'
-import ActiveEscrowList from './../../activeescrowlist/layouts/ActiveEscrowList'
+import { firebaseRef } from '../../index.js'
 
 export default class Admin extends Component {
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      disputes: {}
+    }
+  }
+
+  componentDidMount () {
+    firebaseRef.database()
+      .ref('/disputes')
+      .once('value')
+      .then(snap => {
+        this.setState({ disputes: snap.val() })
+      })
+  }
+
   render () {
+    const Disputes = Object.keys(this.state.disputes).map((dispute, index) =>
+      <tr className='flex cxc' key={index}>
+        <td className='fb5 tc'>{this.state.disputes[dispute].id}</td>
+        <td className='fb20 tc'>{new Date(this.state.disputes[dispute].time).toDateString()}</td>
+        <td className='fb10 tc'>{this.state.disputes[dispute].seller.name}</td>
+        <td className='fb15 tc'>{this.state.disputes[dispute].buyer.name}</td>
+        <td className='fb10 tc'>{this.state.disputes[dispute].ether}</td>
+        <td className='fb10 tc'>{this.state.disputes[dispute].amount}</td>
+        <td className='fb10 tc danger'> {this.state.disputes[dispute].status}</td>
+        <td className='me'>
+          <button>View / Message</button>
+        </td>
+      </tr>
+        )
+
     return (
       <section className='bg-smoke'>
         <div className='w-75 center pv3'>
           <div>
             <div>
               <p className='b pv3 measure-wide'>ADMIN</p>
-              <ActiveEscrowList />
-
+              <div className='pt3'>
+                <p className='b'>Your Active Escrows</p>
+                <table>
+                  <thead>
+                    <tr>
+                      <th className='fb5 tc'>#</th>
+                      <th className='fb20 tc'>Created at</th>
+                      <th className='fb10 tc'>Seller</th>
+                      <th className='fb15 tc'>Buyer</th>
+                      <th className='fb10 tc'>Ether</th>
+                      <th className='fb10 tc'>Amount</th>
+                      <th className='fb10 tc'>Status</th>
+                      <th className='fb10 tc'>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Disputes}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
