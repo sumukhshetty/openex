@@ -226,7 +226,7 @@ module.exports = {
         "tyep": "releaseEther",
         "email": true,
         "fcm": true,
-        "recipientToken": buyerUserData.fcmToken,
+        "recipientToken": _fcmToken,
         "recipientEmail": buyerUserData.email,
         "verifiedEmail": buyerUserData.verifiedEmail,
         "senderUsername": sellOrder.sellerUsername,
