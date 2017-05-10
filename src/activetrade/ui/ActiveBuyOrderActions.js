@@ -279,6 +279,11 @@ module.exports = {
               firebaseRef.database().ref('/users/'+buyOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
               firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid+ '/numberOfTrades').once("value", function(snap){
                 var numberOfTrades = snap.val()
+                if (numberOfTrades===0){
+                  var firstTradeTimeStamp = new Date()
+                  firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid+ '/firstTradeTimeStamp')
+                .set(firstTradeTimeStamp);  
+                }
                 firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid+ '/numberOfTrades')
                 .set(numberOfTrades+1);
               })
