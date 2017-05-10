@@ -35,12 +35,13 @@ import User from './userScreen/layouts/UserScreen'
 import TermsOfService from './termsofservice/TermsOfService'
 import ResetPassword from './signup/ResetPassword'
 import ChatBox from './chat/containers/ChatBox'
+import Admin from './admin/components/Admin'
 
 // Redux Store
 import store from './store'
 import * as firebase from 'firebase'
 import * as _firebaseconfig from './../secrets/firebaseconfig'
-//import * as actions from './buyorders/ui/BuyOrdersActions'
+// import * as actions from './buyorders/ui/BuyOrdersActions'
 import * as useractions from './user/userActions'
 
 // Config
@@ -54,50 +55,50 @@ var config = {
   messagingSenderId: _firebaseconfig._messagingSenderId
 }
 export var firebaseRef = firebase.initializeApp(config)
-export var firebaseMessaging = firebase.messaging();
+export var firebaseMessaging = firebase.messaging()
 const history = syncHistoryWithStore(browserHistory, store)
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('../firebase-messaging-sw.js')
-  .then(function(registration) {
-    console.log('Registration successful, scope is:', registration.scope);
-  }).catch(function(err) {
-    console.log('Service worker registration failed, error:', err);
-  });
+  .then(function (registration) {
+    console.log('Registration successful, scope is:', registration.scope)
+  }).catch(function (err) {
+    console.log('Service worker registration failed, error:', err)
+  })
 }
 firebaseMessaging.requestPermission()
-    .then(function() {
-      console.log('Notification permission granted.');
+    .then(function () {
+      console.log('Notification permission granted.')
       return firebaseMessaging.getToken()
     })
-    .then(function(token){
+    .then(function (token) {
       console.log(token)
     })
-    .catch(function(err) {
-      console.log('Unable to get permission to notify.', err);
-    });
-firebaseMessaging.onTokenRefresh(function() {
+    .catch(function (err) {
+      console.log('Unable to get permission to notify.', err)
+    })
+firebaseMessaging.onTokenRefresh(function () {
   firebaseMessaging.getToken()
-  .then(function(refreshedToken) {
-    console.log('Token refreshed.');
+  .then(function (refreshedToken) {
+    console.log('Token refreshed.')
     // Indicate that the new Instance ID token has not yet been sent to the
     // app server.
-    //setTokenSentToServer(false);
+    // setTokenSentToServer(false);
     // Send Instance ID token to app server.
-    //sendTokenToServer(refreshedToken);
+    // sendTokenToServer(refreshedToken);
     // ...
   })
-  .catch(function(err) {
-    console.log('Unable to retrieve refreshed token ', err);
-    //showToken('Unable to retrieve refreshed token ', err);
-  });
-});
-firebaseMessaging.onMessage(function(payload){
-  //TODO: call on a function to load the notification in the bell icon and notifications ref
-  console.log('onMessage: ',payload)
-});
+  .catch(function (err) {
+    console.log('Unable to retrieve refreshed token ', err)
+    // showToken('Unable to retrieve refreshed token ', err);
+  })
+})
+firebaseMessaging.onMessage(function (payload) {
+  // TODO: call on a function to load the notification in the bell icon and notifications ref
+  console.log('onMessage: ', payload)
+})
 
-export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP;
+export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
 
 ReactDOM.render((
   <Provider store={store}>
@@ -105,6 +106,7 @@ ReactDOM.render((
       <Route path='/' component={App}>
         <IndexRoute component={Home} />
         <Route path='dashboard' component={UserIsAuthenticated(Dashboard)} />
+        <Route path='admin' component={UserIsAuthenticated(Admin)} />
         <Route path='signup' component={UserIsNotAuthenticated(SignUp)} />
         <Route path='login' component={UserIsNotAuthenticated(Login)} />
         <Route path='profile' component={UserIsAuthenticated(Profile)} />
