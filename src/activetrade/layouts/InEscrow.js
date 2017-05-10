@@ -9,8 +9,8 @@ import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class InEscrow extends Component {
 
-  componentWillUnmount() {
-    this.props.resetCancelState();
+  componentWillUnmount () {
+    this.props.resetCancelState()
   }
 
   render () {
@@ -28,20 +28,27 @@ class InEscrow extends Component {
               {this.props.viewerRole === 'buyer' &&
 
                 <div>
-                  <BuyerStepNote step={this.props.step} order={this.props.order}/>
+                  <BuyerStepNote step={this.props.step} order={this.props.order} />
                   <div className='tc'>
                     <button onClick={this.props.confirmPayment}>
-                   Confirm Payment
-                 </button>
+                      Confirm Payment
+                    </button>
                   </div>
                 </div>
               }
               {this.props.viewerRole === 'seller' &&
-              <SellerStepNote step={this.props.step} />}
+                <SellerStepNote step={this.props.step} />}
               {this.props.viewerRole === 'seller' &&
-              <DisputeTrade viewerRole={this.props.viewerRole}/>}
+                <DisputeTrade
+                  viewerRole={this.props.viewerRole}
+                  tradeId={this.props.tradeId}
+                  sellerId={this.props.order.sellerUid}
+                  buyerId={this.props.order.buyerUid}
+                  buyerUsername={this.props.order.buyerUsername}
+                  sellerUsername={this.props.order.sellerUsername}
+                  amount={this.props.order.amount} />}
               {this.props.viewerRole === 'buyer' &&
-              <CancelTrade cancelTrade={this.props.cancelTrade}/>}
+              <CancelTrade cancelTrade={this.props.cancelTrade} />}
             </div>
           </div>
         </div>

@@ -8,8 +8,8 @@ import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class PaymentConfirmed extends Component {
 
-  componentWillUnmount() {
-    this.props.resetEtherState();
+  componentWillUnmount () {
+    this.props.resetEtherState()
   }
 
   render () {
@@ -25,20 +25,27 @@ class PaymentConfirmed extends Component {
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
-              <BuyerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />}
+                <BuyerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />}
               {this.props.viewerRole === 'seller' &&
-              <div>
-                <SellerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />
-                <div className='tc'>
-                  {this.props.sendEtherState === 'init' &&
-                  <button onClick={this.props.releaseEther}>
-                   Release Ether
-                 </button>}
-                 {this.props.sendEtherState === 'sending' &&
-                 <span>Please accept the transaction in MetaMask</span>}
-                </div>
-              </div>}
-              <DisputeTrade viewerRole={this.props.viewerRole}/>
+                <div>
+                  <SellerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />
+                  <div className='tc'>
+                    {this.props.sendEtherState === 'init' &&
+                      <button onClick={this.props.releaseEther}>
+                        Release Ether
+                      </button>}
+                    {this.props.sendEtherState === 'sending' &&
+                      <span>Please accept the transaction in MetaMask</span>}
+                  </div>
+                </div>}
+              <DisputeTrade
+                viewerRole={this.props.viewerRole}
+                tradeId={this.props.tradeId}
+                sellerId={this.props.order.sellerUid}
+                buyerId={this.props.order.buyerUid}
+                buyerUsername={this.props.order.buyerUsername}
+                sellerUsername={this.props.order.sellerUsername}
+                amount={this.props.order.amount} />
             </div>
           </div>
         </div>

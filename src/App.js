@@ -45,34 +45,6 @@ class App extends Component {
     this.setState({showNotifications: false})
   }
 
-  testNotify () {
-    console.log('testNotify')
-    try {
-      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/mailgunHelloWorld'
-      request({
-        method: 'post',
-        json: true,
-        url: url
-      },
-        function (err, res, body) {
-          if (err) {
-            console.error('error posting json: ', err)
-            throw err
-          }
-          if (res.statusCode === 200) {
-            console.log('testNotify.200')
-            // browserHistory.push('/dashboard')
-          }
-          if (res.statusCode === 500) {
-            console.error('Server responded with an error: ' + res.body.error)
-            throw res.body.error
-          }
-        })
-    } catch (e) {
-      console.log('[testNotify]', e)
-    }
-  }
-
   render () {
     const OnlyAuthLinks = VisibleOnlyAuth(() => {
       return (

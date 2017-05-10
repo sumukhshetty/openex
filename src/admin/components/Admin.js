@@ -20,6 +20,11 @@ export default class Admin extends Component {
   }
 
   render () {
+    // const Loading = () => (
+    //   <tr className='flex cxc mxc'>
+    //     <td>Disputed Trades Loading...</td>
+    //   </tr>)
+
     const Disputes = Object.keys(this.state.disputes).map((dispute, index) =>
       <tr className='flex cxc' key={index}>
         <td className='fb5 tc'>{this.state.disputes[dispute].id}</td>
@@ -40,7 +45,7 @@ export default class Admin extends Component {
         <div className='w-75 center pv3'>
           <div>
             <div>
-              <p className='b pv3 measure-wide'>ADMIN</p>
+              <p className='b pv3 measure-wide'>Welcome to the Admin Dashboard</p>
               <div className='pt3'>
                 <p className='b'>Your Active Escrows</p>
                 <table>
@@ -57,7 +62,7 @@ export default class Admin extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {Disputes}
+                    { Disputes }
                   </tbody>
                 </table>
               </div>

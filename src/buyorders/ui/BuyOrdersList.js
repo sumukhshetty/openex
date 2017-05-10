@@ -19,12 +19,12 @@ class BuyOrdersList extends Component {
   render () {
     var buyorders = this.props.buyorders.buyorders
     var usersInfo = this.props.usersInfo.usersInfo
-    var uid = this.props.user.data.uid;
+    var uid = this.props.user.data.uid
     var userData
     // console.log('buyorders');
     // console.log(buyorders);
     const rows = _.map(buyorders, function (buyOrderData, key) {
-      if(buyOrderData.buyerUid !== uid) {
+      if (buyOrderData.buyerUid !== uid) {
         userData = (usersInfo) ? usersInfo[buyOrderData.buyerUid] : null
         return <SingleBuyOrder buyOrderData={buyOrderData} userData={userData} userId={key} key={key} />
       }
