@@ -277,6 +277,11 @@ module.exports = {
             try{
               var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
               firebaseRef.database().ref('/users/'+buyOrder.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+              firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid+ '/numberOfTrades').once("value", function(snap){
+                var numberOfTrades = snap.val()
+                firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid+ '/numberOfTrades')
+                .set(numberOfTrades+1);
+              })
             } catch(e){
               console.log("[releaseEscrow]",e)
             }
