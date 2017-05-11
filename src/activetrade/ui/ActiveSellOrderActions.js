@@ -256,9 +256,19 @@ module.exports = {
           try{
             var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
             firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
-            firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid+ '/numberOfTrades').once("value", function(snap){
+            firebaseRef.database().ref('/users/'+buyerUid+ '/numberOfTrades').once("value", function(snap){
               var numberOfTrades = snap.val()
-              firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid+ '/numberOfTrades')
+              if(numberOfTrades===0){
+                var firstPurchase = new Date()
+                firebaseRef.database().ref('/users/'+buyerUid+ '/firstPurchase')
+              .set(firstPurchase);  
+              }
+              firebaseRef.database().ref('/users/'+buyerUid+ '/numberOfTrades')
+              .set(numberOfTrades+1);
+            })
+            firebaseRef.database().ref('/users/'+sellerUid+ '/numberOfTrades').once("value", function(snap){
+              var numberOfTrades = snap.val()
+              firebaseRef.database().ref('/users/'+sellerUid+ '/numberOfTrades')
               .set(numberOfTrades+1);
             })
           } catch(e){
