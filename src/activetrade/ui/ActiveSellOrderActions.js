@@ -266,10 +266,19 @@ module.exports = {
               firebaseRef.database().ref('/users/'+buyerUid+ '/numberOfTrades')
               .set(numberOfTrades+1);
             })
+
+            firebaseRef.database().ref('users/'+buyerUid+'/tradeVolume').once("value", function(snap){
+              var tradeVolume = snap.val()
+              firebaseRef.database().ref('/users/'+buyerUid+'/tradeVolume').set(tradeVolume+sellOrder.amount)
+            })
             firebaseRef.database().ref('/users/'+sellerUid+ '/numberOfTrades').once("value", function(snap){
               var numberOfTrades = snap.val()
               firebaseRef.database().ref('/users/'+sellerUid+ '/numberOfTrades')
               .set(numberOfTrades+1);
+            })
+            firebaseRef.database().ref('users/'+sellerUid+'/tradeVolume').once("value", function(snap){
+              var tradeVolume = snap.val()
+              firebaseRef.database().ref('/users/'+sellerUid+'/tradeVolume').set(tradeVolume+sellOrder.amount)
             })
           } catch(e){
             console.log("[createBuyOrderContract]",e)
