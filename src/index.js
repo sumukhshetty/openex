@@ -31,7 +31,7 @@ import HTMLStyles from './css/HTMLStyles.js'
 import Static from './staticPages/Master/Static'
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder'
 import SellTradeOrder from './sellTradeOrder/layouts/SellTradeOrder'
-import User from './userScreen/layouts/UserScreen'
+import UserScreen from './userScreen/layouts/UserScreen'
 import TermsOfService from './termsofservice/TermsOfService'
 import ResetPassword from './signup/ResetPassword'
 import ChatBox from './chat/containers/ChatBox'
@@ -116,7 +116,7 @@ ReactDOM.render((
         <Route path='help/confirmation' component={UserIsAuthenticated(HelpConfirmation)} />
         <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />
         <Route path='orderslist' component={UserIsAuthenticated(OrdersList)} />
-        <Route path='user' component={UserIsAuthenticated(User)} />
+        <Route path='user/:userUid' component={UserIsAuthenticated(UserScreen)} />
         <Route path='orderdetail/:address' component={UserIsAuthenticated(OrderDetail)} />
         <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
         <Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />

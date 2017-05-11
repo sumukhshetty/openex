@@ -1,6 +1,6 @@
 import React from 'react';
 import etherium from '../../images/etherium.png';
-import UsaFlag from '../../images/UsaFlag';
+import Flag from '../../images/Flag';
 import ConvertSymbol from '../../images/convert.png';
 
 export default (props) => (
@@ -11,7 +11,7 @@ export default (props) => (
           <img src={etherium} alt='etherium logo' className='pr3' /> Ether
         </label>
         {/* TODO: [AK] maximum should be calculated and validated elsewhere */}
-        <input type='number' step='any' className='w3 pa2' min='0.000001' max={props.maxEther - (props.maxEther * 0.1)} onChange={props.onEtherAmountChange}/>
+        <input id='etherAmount' type='number' value={props.etherAmount} step='any' className='w3 pa2' min='0.000001' max={props.maxEther - (props.maxEther * 0.1)} onChange={props.onAmountChange}/>
       </div>
       <div className='flex mv3'>
         <div className='flex col mxc'>
@@ -26,9 +26,9 @@ export default (props) => (
       </div>
       <div className='flex cxc mxb w5'>
         <label className='pv1 white flex cxc'>
-          <UsaFlag className='pr3' /> USD
+          <Flag country={props.country} className='pr3' /> {props.currency}
         </label>
-        <input type='number' className='w3 pa2' onChange={props.onFiatAmountChange}/>
+        <input id='fiatAmount' type='number' value={props.fiatAmount} className='w3 pa2' onChange={props.onAmountChange}/>
       </div>
     </div>
     <input type='submit' value='Send Trade Request' className='mt5' />

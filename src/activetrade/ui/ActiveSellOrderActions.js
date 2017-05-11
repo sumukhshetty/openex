@@ -226,7 +226,7 @@ module.exports = {
         "tyep": "releaseEther",
         "email": true,
         "fcm": true,
-        "recipientToken": buyerUserData.fcmToken,
+        "recipientToken": _fcmToken,
         "recipientEmail": buyerUserData.email,
         "verifiedEmail": buyerUserData.verifiedEmail,
         "senderUsername": sellOrder.sellerUsername,
@@ -256,7 +256,21 @@ module.exports = {
           try{
             var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
             firebaseRef.database().ref('/users/'+buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
-
+            firebaseRef.database().ref('/users/'+buyerUid+ '/numberOfTrades').once("value", function(snap){
+              var numberOfTrades = snap.val()
+              if(numberOfTrades===0){
+                var firstPurchase = new Date()
+                firebaseRef.database().ref('/users/'+buyerUid+ '/firstPurchase')
+              .set(firstPurchase);  
+              }
+              firebaseRef.database().ref('/users/'+buyerUid+ '/numberOfTrades')
+              .set(numberOfTrades+1);
+            })
+            firebaseRef.database().ref('/users/'+sellerUid+ '/numberOfTrades').once("value", function(snap){
+              var numberOfTrades = snap.val()
+              firebaseRef.database().ref('/users/'+sellerUid+ '/numberOfTrades')
+              .set(numberOfTrades+1);
+            })
           } catch(e){
             console.log("[createBuyOrderContract]",e)
           }

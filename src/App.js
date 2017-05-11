@@ -53,7 +53,6 @@ class App extends Component {
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
               <div className='pure-u-1-4 brand' onClick={this.testNotify}>
-                {/* <img className='brand' src={logo} alt='Automt Ether Exchange' /> */}
                 <Link to='/admin'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
                 </Link>
