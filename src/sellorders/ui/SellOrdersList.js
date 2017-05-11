@@ -19,7 +19,7 @@ class SellOrdersList extends Component {
   render(){
     var sellorders = this.props.sellorders.sellorders;
     var usersInfo = this.props.usersInfo.usersInfo;
-    var etherPrice = this.props.etherPrice.etherPrice;
+    var etherPrice = this.props.etherPrice.data;
     var currency = this.props.user.currency;
     var uid = this.props.user.data.uid;
     var userData, etherPrice;

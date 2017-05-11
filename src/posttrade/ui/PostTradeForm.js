@@ -202,8 +202,8 @@ class PostTradeForm extends Component {
             <div className='flex mv3'>
               <label htmlFor='margin' className='w5' >Margin</label>
               <div className='flex col'><input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5' required/>
-                <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice.etherPrice ? (this.props.etherPrice.etherPrice * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
-                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice.etherPrice ? this.props.etherPrice.etherPrice : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
+                <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice ? (this.props.etherPrice.data * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
+                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice.data : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
               </div>
               {/* <input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5 h-100 percent' required/> */}
               <span className='measure-narrow fw1 i pa0 me'>Margin you want over the ether market price. Use a negative value for buying or selling under the market price to attract more contracts. For more complex pricing edit the price equation directly.</span>

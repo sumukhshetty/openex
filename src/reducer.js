@@ -47,7 +47,7 @@ const reducer = combineReducers({
   chatAuth: chatAuthReducer,
   newMessage: newMessageReducer,
   chatMessages: ChatMessageReducer,
-  etherPrices: etherPriceReducer,
+  etherPrice: etherPriceReducer,
   userScreen: userScreenReducer
 
 })
