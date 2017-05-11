@@ -57,7 +57,7 @@ export default class SellTradeOrder extends Component {
     console.log(buyOrder)
     var userInfo = this.props.user.userInfo;
     if(buyOrder && userInfo) {
-    var price = this.props.etherPrice ? (this.props.etherPrice.etherPrice * buyOrder.margin).toFixed(2) : null;
+    var price = this.props.etherPrice ? (this.props.etherPrice.data * buyOrder.margin).toFixed(2) : null;
     return (
       <div className='w-100 bg-smoke vh-100'>
         <div className='w-75 center pv3'>

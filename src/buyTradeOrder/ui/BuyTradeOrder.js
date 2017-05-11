@@ -23,7 +23,7 @@ export default class BuyTradeOrder extends Component {
   handleTradeRequest (e) {
     e.preventDefault();
     this.props.requestEther(this.state.requestAmount,
-                            this.props.etherPrice.etherPrice,
+                            this.props.etherPrice.data,
                             this.props.sellOrderDetail.sellOrder,
                             this.props.user.data.uid,
                             this.props.user.data.displayName,
@@ -40,12 +40,12 @@ export default class BuyTradeOrder extends Component {
       console.log('ether changed');
       console.log(e.target.value);
       this.setState({etherAmount: e.target.value});
-      this.setState({fiatAmount: (e.target.value * (this.props.etherPrice.etherPrice * this.props.sellOrderDetail.sellOrder.margin).toFixed(2)).toFixed(2)})
+      this.setState({fiatAmount: (e.target.value * (this.props.etherPrice.data * this.props.sellOrderDetail.sellOrder.margin).toFixed(2)).toFixed(2)})
     } else if(e.target.id === 'fiatAmount') {
       console.log('fiat changed');
       console.log(e.target.value);
       this.setState({fiatAmount: e.target.value});
-      this.setState({etherAmount: (e.target.value / (this.props.etherPrice.etherPrice * this.props.sellOrderDetail.sellOrder.margin).toFixed(2)).toFixed(2)})
+      this.setState({etherAmount: (e.target.value / (this.props.etherPrice.data * this.props.sellOrderDetail.sellOrder.margin).toFixed(2)).toFixed(2)})
     }
 
 
@@ -71,7 +71,7 @@ export default class BuyTradeOrder extends Component {
       <h2 className='pv1 tc'>Getting balance...</h2>
     </div>;
     if(sellOrder && userInfo) {
-      var price = this.props.etherPrice ? (this.props.etherPrice.etherPrice * sellOrder.margin).toFixed(2) : null;
+      var price = this.props.etherPrice ? (this.props.etherPrice.data * sellOrder.margin).toFixed(2) : null;
       var availableBalance = this.props.sellOrderContract.availableBalance;
       if(typeof availableBalance !== 'undefined') {
         if(availableBalance > 0) {
@@ -97,7 +97,7 @@ export default class BuyTradeOrder extends Component {
                 <table className='lh-copy'>
                   <tr>
                     <td className='w4 pv2'>Price</td>
-                    <td className='green'>{this.props.etherPrice.etherPrice ? (this.props.etherPrice.etherPrice * sellOrder.margin).toFixed(2) : 'Getting price...'} {this.props.user.currency}/ETH</td>
+                    <td className='green'>{this.props.etherPrice.data ? (this.props.etherPrice.data * sellOrder.margin).toFixed(2) : 'Getting price...'} {this.props.user.currency}/ETH</td>
                   </tr>
                   <tr>
                     <td className='w4 pv2'>Payment Method</td>
