@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { firebaseRef } from '../../index.js'
+import { browserHistory } from 'react-router'
 
 export default class Admin extends Component {
 
@@ -25,6 +26,12 @@ export default class Admin extends Component {
     //     <td>Disputed Trades Loading...</td>
     //   </tr>)
 
+    console.log(this.state.disputes)
+
+    const url = this.props.tradeType === 'buy-ether' ? 'activebuyorder/' + this.props.orderId : 'activesellorder/' + this.props.orderId
+
+    // this.state.disputes[dispute].tradeId
+
     const Disputes = Object.keys(this.state.disputes).map((dispute, index) =>
       <tr className='flex cxc' key={index}>
         <td className='fb5 tc'>{this.state.disputes[dispute].id}</td>
@@ -35,7 +42,9 @@ export default class Admin extends Component {
         <td className='fb10 tc'>{this.state.disputes[dispute].amount}</td>
         <td className='fb10 tc danger'> {this.state.disputes[dispute].status}</td>
         <td className='me'>
-          <button>View / Message</button>
+          <button onClick={() => browserHistory.push(
+          this.state.disputes[dispute].tradeType === 'buy-ether' ? 'activebuyorder/' + this.state.disputes[dispute].tradeId : 'activesellorder/' + this.state.disputes[dispute].tradeId)}>
+          View / Message</button>
         </td>
       </tr>
         )
@@ -47,7 +56,6 @@ export default class Admin extends Component {
             <div>
               <p className='b pv3 measure-wide'>Welcome to the Admin Dashboard</p>
               <div className='pt3'>
-                <p className='b'>Your Active Escrows</p>
                 <table>
                   <thead>
                     <tr>

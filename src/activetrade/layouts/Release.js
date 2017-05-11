@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
 import ChatBox from '../../chat/containers/ChatBox'
-import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade'
+import DisputeTrade from '../../admin/disputeContainer'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
 
@@ -37,11 +37,8 @@ class Release extends Component {
               <DisputeTrade
                 viewerRole={this.props.viewerRole}
                 tradeId={this.props.tradeId}
-                sellerId={this.props.order.sellerUid}
-                buyerId={this.props.order.buyerUid}
-                buyerUsername={this.props.order.buyerUsername}
-                sellerUsername={this.props.order.sellerUsername}
-                amount={this.props.order.amount} />
+                order={this.props.order}
+              />
             </div>
           </div>
         </div>

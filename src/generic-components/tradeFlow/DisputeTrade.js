@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { firebaseRef } from '../../index.js'
+import { browserHistory } from 'react-router'
 
 class DisputeTrade extends Component {
 
@@ -14,18 +15,19 @@ class DisputeTrade extends Component {
       .push({
         time: +new Date(),
         status: 'Disputed',
-        amount: this.props.amount,
+        amount: this.props.order.amount,
         tradeId: this.props.tradeId,
+        tradeType: this.props.activeTrades.activeTrades[this.props.tradeId].tradeType,
         seller: {
-          uid: this.props.sellerId,
-          name: this.props.sellerUsername},
+          uid: this.props.order.sellerUid,
+          name: this.props.order.sellerUsername},
         buyer: {
-          uid: this.props.buyerId,
-          name: this.props.buyerUsername},
+          uid: this.props.order.buyerUid,
+          name: this.props.order.buyerUsername},
         ether: 'fix me',
         id: 'fix me',
         raisedBy: firebaseRef.auth().currentUser.uid
-      }).then(() => console.log('disputed'))
+      }).then(() => browserHistory.push('/dashboard'))
   }
 
   render () {

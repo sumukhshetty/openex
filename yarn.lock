@@ -1719,6 +1719,10 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
+"country-currency@git+https://github.com/srcagency/country-currencies.git":
+  version "1.0.0"
+  resolved "git+https://github.com/srcagency/country-currencies.git#4cf17d42346c969c7fcac45fe876e0052f0ae0f9"
+
 cpr@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/cpr/-/cpr-0.4.3.tgz#0a23e4b6ec23f3b8cc7a405ecb5cfdc778f7de25"

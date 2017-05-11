@@ -8,9 +8,9 @@ import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class AwaitingEscrow extends Component {
 
-  componentWillUnmount() {
-    this.props.resetCancelState();
-    this.props.resetEtherState();
+  componentWillUnmount () {
+    this.props.resetCancelState()
+    this.props.resetEtherState()
   }
 
   render () {
@@ -26,20 +26,20 @@ class AwaitingEscrow extends Component {
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
-              <BuyerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />}
+                <BuyerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />}
               {this.props.viewerRole === 'seller' &&
-              <div>
-                <SellerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />
-                <div className='tc'>
-                  {this.props.sendEtherState === 'init' &&
-                  <button onClick={this.props.sendEther}>
-                   Send Ether
-                 </button>}
-                 {this.props.sendEtherState === 'sending' &&
-                 <span>Please accept the transaction in MetaMask</span>}
-                </div>
-              </div>}
-              <CancelTrade cancelTrade={this.props.cancelTrade}/>
+                <div>
+                  <SellerStepNote step={this.props.step} contractAddress={this.props.contractAddress} />
+                  <div className='tc'>
+                    {this.props.sendEtherState === 'init' &&
+                      <button onClick={this.props.sendEther}>
+                        Send Ether
+                      </button>}
+                    {this.props.sendEtherState === 'sending' &&
+                      <span>Please accept the transaction in MetaMask</span>}
+                  </div>
+                </div>}
+              <CancelTrade cancelTrade={this.props.cancelTrade} />
             </div>
           </div>
         </div>
