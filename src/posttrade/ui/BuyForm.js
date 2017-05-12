@@ -6,10 +6,11 @@ export class BuyForm extends Component {
       <div>
         <div className='flex mb3'>
           <label htmlFor='currency' className='w5'>Currency</label>
-          <select id='currency' onChange={this.props.onCurrencyChange}className='w5' required>
+          <input id='currency' value={this.props.currency} className='w5 h-100' disabled required/>
+          {/* <select id='currency' onChange={this.props.onCurrencyChange}className='w5' required>
             <option value='INR'>INR</option>
             <option value='USD'>USD</option>
-          </select>
+          </select> */}
         </div>
 
         {this.props.paymentMethod === 'neft'

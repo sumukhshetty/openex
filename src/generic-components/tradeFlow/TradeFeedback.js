@@ -10,6 +10,7 @@ class TradeFeedback extends Component {
 
   handleSubmit (e) {
     e.preventDefault();
+    console.log(e)
   }
   render () {
     return (
@@ -19,21 +20,21 @@ class TradeFeedback extends Component {
         </p>
         <form className='flex col cxc' onSubmit={this.handleSubmit}>
           <div className='rating'>
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-          </div>
-          <div className='flex cxc bg-blue w5 white br2 pa2 mt4 grow pointer'>
-            <Star size={50} className='mh2' />
-            <p>
-              Trust Victoira Padilla
-            </p>
-          </div>
-          <div className='flex cxc bg-danger w5 white br2 pa2 mt4 grow pointer'>
-            <Block className='mh2' />
-            <p>
-              Block Victoira Padilla
-            </p>
+            <span value="1">☆</span><span value="2">☆</span><span value="3">☆</span><span value="4">☆</span><span value="5">☆</span>
           </div>
         </form>
+        <div className='flex cxc bg-blue w5 white br2 pa2 mt4 grow pointer'>
+          <Star size={50} className='mh2' />
+          <p>
+            Trust Victoira Padilla
+          </p>
+        </div>
+        <div className='flex cxc bg-danger w5 white br2 pa2 mt4 grow pointer'>
+          <Block className='mh2' />
+          <p>
+            Block Victoira Padilla
+          </p>
+        </div>
       </div>
     );
   }

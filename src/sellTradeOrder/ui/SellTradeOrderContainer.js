@@ -6,7 +6,7 @@ import { buyOrder, createBuyOrderContract, availableBalance, resetStatus } from 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    etherPrices: state.etherPrices,
+    etherPrice: state.etherPrice,
     user: state.user,
     buyOrderDetail: state.buyOrderDetail,
     params: ownProps.params,
@@ -20,8 +20,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(buyOrder(orderId))
     },
 
-    acceptOrder: (amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => {
-      dispatch(createBuyOrderContract(amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3));
+    acceptOrder: (buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => {
+      dispatch(createBuyOrderContract(buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3));
     },
 
     getAvailableBalance: (contractAddress, web3) => {

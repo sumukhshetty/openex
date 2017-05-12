@@ -21,6 +21,7 @@ import BuyOrders from './buyorders/layouts/BuyOrders'
 import SellOrders from './sellorders/layouts/SellOrders'
 
 import Help from './help/layouts/Help'
+import HelpConfirmation from './help/layouts/HelpConfirmation'
 import Payment from './activetrade/layouts/Payment'
 import Release from './activetrade/layouts/Release'
 import AllDone from './activetrade/layouts/AllDone'
@@ -30,7 +31,7 @@ import HTMLStyles from './css/HTMLStyles.js'
 import Static from './staticPages/Master/Static'
 import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder'
 import SellTradeOrder from './sellTradeOrder/layouts/SellTradeOrder'
-import User from './userScreen/layouts/UserScreen'
+import UserScreen from './userScreen/layouts/UserScreen'
 import TermsOfService from './termsofservice/TermsOfService'
 import ResetPassword from './signup/ResetPassword'
 import ChatBox from './chat/containers/ChatBox'
@@ -39,7 +40,7 @@ import ChatBox from './chat/containers/ChatBox'
 import store from './store'
 import * as firebase from 'firebase'
 import * as _firebaseconfig from './../secrets/firebaseconfig'
-import * as actions from './buyorders/ui/BuyOrdersActions'
+//import * as actions from './buyorders/ui/BuyOrdersActions'
 import * as useractions from './user/userActions'
 
 // Config
@@ -53,7 +54,50 @@ var config = {
   messagingSenderId: _firebaseconfig._messagingSenderId
 }
 export var firebaseRef = firebase.initializeApp(config)
+export var firebaseMessaging = firebase.messaging();
 const history = syncHistoryWithStore(browserHistory, store)
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../firebase-messaging-sw.js')
+  .then(function(registration) {
+    console.log('Registration successful, scope is:', registration.scope);
+  }).catch(function(err) {
+    console.log('Service worker registration failed, error:', err);
+  });
+}
+firebaseMessaging.requestPermission()
+    .then(function() {
+      console.log('Notification permission granted.');
+      return firebaseMessaging.getToken()
+    })
+    .then(function(token){
+      console.log(token)
+    })
+    .catch(function(err) {
+      console.log('Unable to get permission to notify.', err);
+    });
+firebaseMessaging.onTokenRefresh(function() {
+  firebaseMessaging.getToken()
+  .then(function(refreshedToken) {
+    console.log('Token refreshed.');
+    // Indicate that the new Instance ID token has not yet been sent to the
+    // app server.
+    //setTokenSentToServer(false);
+    // Send Instance ID token to app server.
+    //sendTokenToServer(refreshedToken);
+    // ...
+  })
+  .catch(function(err) {
+    console.log('Unable to retrieve refreshed token ', err);
+    //showToken('Unable to retrieve refreshed token ', err);
+  });
+});
+firebaseMessaging.onMessage(function(payload){
+  //TODO: call on a function to load the notification in the bell icon and notifications ref
+  console.log('onMessage: ',payload)
+});
+
+export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP;
 
 ReactDOM.render((
   <Provider store={store}>
@@ -67,9 +111,10 @@ ReactDOM.render((
         <Route path='sellorders' component={UserIsAuthenticated(BuyOrders)} />
         <Route path='buyorders' component={UserIsAuthenticated(SellOrders)} />
         <Route path='help' component={UserIsAuthenticated(Help)} />
+        <Route path='help/confirmation' component={UserIsAuthenticated(HelpConfirmation)} />
         <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />
         <Route path='orderslist' component={UserIsAuthenticated(OrdersList)} />
-        <Route path='user' component={UserIsAuthenticated(User)} />
+        <Route path='user/:userUid' component={UserIsAuthenticated(UserScreen)} />
         <Route path='orderdetail/:address' component={UserIsAuthenticated(OrderDetail)} />
         <Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />
         <Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />

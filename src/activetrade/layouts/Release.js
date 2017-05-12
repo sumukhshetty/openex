@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
 import ChatBox from '../../chat/containers/ChatBox'
-import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
 
-import Dot from '../../images/svgReactComponents/Dot.js'
+/*import Dot from '../../images/svgReactComponents/Dot.js'
 import { Link } from 'react-router'
-
+*/
 class Release extends Component {
 
   render () {
@@ -30,13 +29,15 @@ class Release extends Component {
               <div>
                 <SellerStepNote step={this.props.step} />
                 <div className='tc'>
+                  {this.props.sendEtherState === 'init' &&
                   <button onClick={this.props.releaseEther}>
                    Release Ether
-                 </button>
+                 </button>}
+                 {this.props.sendEtherState === 'sending' &&
+                 <span>Please accept the transaction in MetaMask</span>}
                 </div>
               </div>}
-              <CancelTrade />
-              <DisputeTrade type='buyer' />
+              <DisputeTrade viewerRole={this.props.viewerRole} />
             </div>
           </div>
         </div>

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import HelpFormInstructions from './HelpFormInstructions';
+import { browserHistory } from 'react-router'
+
+var request = require('request')
 
 class HelpForm extends Component {
   constructor (props) {
@@ -29,7 +32,32 @@ class HelpForm extends Component {
 
   handleSubmit (event) {
     event.preventDefault();
-    console.log(this.state.helpFormDetails);
+    var postData = {
+      "email": this.state.helpFormDetails.email,
+      "message": this.state.helpFormDetails.message,
+      "topic": this.state.helpFormDetails.topic,
+    }
+    request({
+      method:'post',
+      body:{postData:postData},
+      json:true,
+      url: 'https://us-central1-automteetherexchange.cloudfunctions.net/helpForm'
+    },
+    function(err, res, body){
+      if (err) {
+        console.error('error posting json: ', err)
+        throw err
+      }
+      if(res.statusCode === 200) {
+        // DESIGNER NOTE: Is this the best place to send the user to, maybe some kind of confirmation screen
+        console.log("confirmTrade.200")
+        browserHistory.push('/help/confirmation')
+      }
+      if(res.statusCode === 500) {
+        console.error('Server responded with an error: ' + res.body.error);
+        throw res.body.error
+      }
+    })    
   }
 
   render () {
@@ -50,7 +78,7 @@ class HelpForm extends Component {
                 type='email'
                 value={this.state.helpFormDetails.email} onChange={this.onInputChange.bind(this)}
                 placeholder='Enter your Email'
-                className='w5 h-100' />
+                className='w5 h-100' required/>
               <span className='measure-narrow fw1 i pa0 me'>What is the email address you prefer to use for further communication.</span>
             </div>
 
@@ -62,7 +90,7 @@ class HelpForm extends Component {
                 type='text'
                 value={this.state.helpFormDetails.topic} onChange={this.onInputChange.bind(this)}
                 className='w5 h-100'
-                placeholder='Transaction stuck in escrow' />
+                placeholder='Transaction stuck in escrow' required/>
               <div className='min-w-30 me'>
                 <span className='fw1 i'>What is the problem that your facing ?</span>
               </div>
@@ -71,7 +99,7 @@ class HelpForm extends Component {
             <div className='flex mb3'>
               <label htmlFor='message' className='w5'>Message</label>
               <textarea id='message' type='textArea' onChange={this.onInputChange.bind(this)} value={this.state.helpFormDetails.message}
-                className='w5' placeholder='Issues realted to specific transactions should have txid' rows='6' />
+                className='w5' placeholder='Issues realted to specific transactions should have txid' rows='6' required/>
               <span className='measure-narrow fw1 i pa0 me'>Please elaborate on the problem so that support can resolve the  issue at the earliest.</span>
             </div>
 

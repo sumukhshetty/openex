@@ -1,6 +1,6 @@
 import React from 'react';
 import etherium from '../../images/etherium.png';
-import UsaFlag from '../../images/UsaFlag';
+import Flag from '../../images/Flag';
 import ConvertSymbol from '../../images/convert.png';
 
 export default (props) => (
@@ -25,9 +25,9 @@ export default (props) => (
       </div>
       <div className='flex cxc mxb w5'>
         <label className='pv1 white flex cxc'>
-          <UsaFlag className='pr3' /> USD
+          <Flag country={props.country} className='pr3' /> {props.currency}
         </label>
-        <input type='number' className='w3 pa2' onChange={props.onFiatAmountChange} disabled />
+        <input type='number' className='w3 pa2' onChange={props.onFiatAmountChange} value={(props.price * props.amount).toFixed(2)} disabled />
       </div>
     </div>
     <input type='submit' value={'Sell '+props.amount+' Ether'} className='mt5' />

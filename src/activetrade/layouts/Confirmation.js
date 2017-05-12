@@ -5,10 +5,15 @@ import ChatBox from '../../chat/containers/ChatBox'
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
-import Dot from '../../images/svgReactComponents/Dot.js'
-import { Link } from 'react-router'
+//import Dot from '../../images/svgReactComponents/Dot.js'
+//import { Link } from 'react-router'
 
 class Confirmation extends Component {
+
+  componentWillUnmount() {
+    this.props.resetEtherState();
+  }
+
   render () {
     // NOTE / TODO: above variables hold mock data
     return (
@@ -28,10 +33,12 @@ class Confirmation extends Component {
               <div>
                 <SellerStepNote step={this.props.step} />
                 <div className='tc'>
+                  {this.props.sendEtherState === 'init' &&
                   <button onClick={this.props.confirmTrade}>
-
                    Confirm Trade
-                 </button>
+                 </button>}
+                 {this.props.sendEtherState === 'sending' &&
+                 <span>Please accept the transaction in MetaMask</span>}
                 </div>
               </div>}
               <CancelTrade />

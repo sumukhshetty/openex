@@ -19,23 +19,32 @@ function getUsersInfo(userPayload, uid) {
 
 module.exports = {
   startListeningToBuyOrders: () => (dispatch, getState) =>{
-    firebaseRef.database().ref('buyorders').on("value", function(snapshot){
+    console.log("buyordersactions.startListeningToBuyOrders")
+    firebaseRef.database().ref('/buyorders').on("value", function(snapshot){
       dispatch({ type: "RECEIVE_BUY_ORDERS_DATA", payload: snapshot.val() });
     })
   },
   buyOrders: (user) => (dispatch) => {
-    firebaseRef.database().ref('buyorders')
-    .orderByChild('status').equalTo('Initiated')
-      .on('value', function(snapshot){
-        console.log(snapshot.val());
-        dispatch(getBuyOrders(snapshot.val()))
-        Object.entries(snapshot.val()).forEach(
-          ([key, value]) => {
-            firebaseRef.database().ref('users/' + value['buyerUid'])
-            .once('value', function(snapshot) {
-              dispatch(getUsersInfo(snapshot.val(), snapshot.key))
-            });
-          });
-      })
+    console.log("BuyOrdersActions.buyOrders")
+    firebaseRef.database().ref('users/'+user.data.uid).once('value', function(snap){
+      var userData = snap.val()
+      try{
+        firebaseRef.database().ref('/buyorders/'+userData.country)
+        .orderByChild('status').equalTo('Initiated')
+          .on('value', function(snapshot){
+            dispatch(getBuyOrders(snapshot.val()))
+            Object.entries(snapshot.val()).forEach(
+              ([key, value]) => {
+                firebaseRef.database().ref('users/' + value['buyerUid'])
+                .once('value', function(snapshot) {
+                  dispatch(getUsersInfo(snapshot.val(), snapshot.key))
+                });
+              });
+          })
+      } catch(e){
+        console.log("[buyordersactions.buyOrders]",e)
+      }
+      
+    })
   }
 }

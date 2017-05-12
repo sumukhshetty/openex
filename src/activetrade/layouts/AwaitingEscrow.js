@@ -8,7 +8,8 @@ import SellerStepNote from '../ui/SellerStepNoteBuy'
 
 class AwaitingEscrow extends Component {
 
-  componentDidUnmount() {
+  componentWillUnmount() {
+    this.props.resetCancelState();
     this.props.resetEtherState();
   }
 
@@ -38,7 +39,7 @@ class AwaitingEscrow extends Component {
                  <span>Please accept the transaction in MetaMask</span>}
                 </div>
               </div>}
-              <CancelTrade />
+              <CancelTrade cancelTrade={this.props.cancelTrade}/>
             </div>
           </div>
         </div>

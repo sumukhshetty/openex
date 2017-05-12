@@ -9,7 +9,7 @@ class PostTradeForm extends Component {
     super(props)
     this.state = {
       web3: this.props.web3,
-      etherPrices: this.props.etherPrices,
+      etherPrice: this.props.etherPrice,
       postTradeDetails: {
         tradeType: '',
         amount: 0,
@@ -29,8 +29,8 @@ class PostTradeForm extends Component {
       buyFormBool: false,
       user: this.props.user,
       uid: this.props.uid,
-      showMetaMaskWaitModal: false
-    }
+      sendEtherState: this.props.sendEtherState
+    };
   }
 
   componentWillMount () {
@@ -42,11 +42,16 @@ class PostTradeForm extends Component {
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid, // Submitting a from without changing values leaves them as blank
       paymentMethod: 'UPI',    // If defaults change, these must change as well.
-      margin: 0
+      margin: 0,
+      currency: this.props.user.currency
     },
       buyFormBool: true,
       showMetaMaskWaitModal: false
     })
+  }
+
+  componentWillUnmount() {
+    this.props.resetEtherState();
   }
 
   showWaitModal () {
@@ -151,9 +156,7 @@ class PostTradeForm extends Component {
         _postTradeDetails,
         this.state.web3.web3,
         this.state
-      ).then(function () {
-        console.log('ok the thingy is gone')
-      })
+      )
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
       this.props.onBuyEtherFormSubmit(
@@ -210,9 +213,9 @@ class PostTradeForm extends Component {
 
             <div className='flex mv3'>
               <label htmlFor='margin' className='w5' >Margin</label>
-              <div className='flex col'><input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5' required />
-                <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrices.etherPrices ? (this.props.etherPrices.etherPrices['INR'] * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2) : 'Getting price...'} INR/ETH</span></small>
-                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices['INR'] : 'Getting price...'} INR/ETH</span></small>
+              <div className='flex col'><input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5' required/>
+                <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice ? (this.props.etherPrice.data * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
+                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice.data : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
               </div>
               {/* <input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5 h-100 percent' required/> */}
               <span className='measure-narrow fw1 i pa0 me'>Margin you want over the ether market price. Use a negative value for buying or selling under the market price to attract more contracts. For more complex pricing edit the price equation directly.</span>
@@ -221,7 +224,7 @@ class PostTradeForm extends Component {
             {/* <div className='flex mv3'>
               <label htmlFor='equation' className='w5' >Price equation</label>
               <div className='flex col'><input id='equation' name='equation' type='text' value={this.state.postTradeDetails.equation} onChange={this.onInputChange.bind(this)} placeholder='Kraken_API' className='w5'/>
-                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] : 'Getting price...'} INR/ETH</span></small>
+                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice : 'Getting price...'} INR/ETH</span></small>
               </div>
 
               <span className='measure-narrow fw1 i pa0 me'>
@@ -259,18 +262,20 @@ class PostTradeForm extends Component {
                 currency={this.state.postTradeDetails.currency} />
               : <SellForm
                 onChangeProp={this.onInputChange.bind(this)}
+                currency={this.props.user.currency}
                 amount={this.state.postTradeDetails.amount}
                 paymentMethod={this.state.postTradeDetails.paymentMethod}
                 onCurrencyChange={this.onCurrencyChange.bind(this)}
                 bankInformation={this.state.postTradeDetails.bankInformation}
                 minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
                 maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
-                termsOfTrade={this.state.postTradeDetails.termsOfTrade}
-                currency={this.state.postTradeDetails.currency} />
+                termsOfTrade={this.state.postTradeDetails.termsOfTrade} /> : <SellForm
+              onChangeProp={this.onInputChange.bind(this)}
+              currency={this.props.user.currency} />
             }
 
             {
-              (this.state.showMetaMaskWaitModal && <MetaMaskWaitModal />)
+              (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal/>)
             }
 
             <div className='flex mv3'>

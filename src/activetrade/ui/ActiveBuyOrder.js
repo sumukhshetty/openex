@@ -4,6 +4,8 @@ import AwaitingEscrow from '../layouts/AwaitingEscrow.js'
 import InEscrow from '../layouts/InEscrow.js'
 import PaymentConfirmed from '../layouts/PaymentConfirmed.js'
 import EtherReleased from '../layouts/EtherReleased.js'
+import CancelTradeConfirmModal from './../../generic-components/metamaskmodal/CancelTradeConfirmModal'
+
 
 import Dot from '../../images/svgReactComponents/Dot.js'
 
@@ -13,10 +15,12 @@ class ActiveBuyOrder extends Component {
 
     this.state = {
       web3: this.props.web3,
+      user: this.props.user,
       buyOrderDetail: this.props.buyOrderDetail,
       params: this.props.params,
       uid: this.props.uid,
-      sendEtherState: this.props.sendEtherState
+      sendEtherState: this.props.sendEtherState,
+      cancelTradeState: this.props.cancelTradeState
     }
   }
 
@@ -38,17 +42,50 @@ class ActiveBuyOrder extends Component {
     this.props.resetEtherState();
   }
 
-  sendEther () {
-    this.props.sendEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.uid, this.props.web3.web3)
+  resetCancelState() {
+    this.props.resetCancelState();
+  }
 
+  removeCancelModal (e) {
+    if (this.props.cancelTradeState !== 'confirmed' && e.target.classList.contains('bg-black-80')) {
+      this.props.resetCancelState()
+    }
+  }
+
+  sendEther () {
+    this.props.sendEther(
+      this.props.buyOrderDetail.buyOrder,
+      this.props.buyOrderDetail.buyOrder.contractAddress,
+      this.props.buyOrderDetail.buyOrder.orderId,
+      this.props.uid,
+      this.props.web3.web3)
   }
 
   confirmPayment () {
-    this.props.confirmPayment(this.props.buyOrderDetail.buyOrder.orderId)
+    this.props.confirmPayment(this.props.buyOrderDetail.buyOrder, this.props.buyOrderDetail.buyOrder.orderId)
   }
 
   releaseEther () {
-    this.props.releaseEther(this.props.buyOrderDetail.buyOrder.contractAddress, this.props.buyOrderDetail.buyOrder.orderId, this.props.web3.web3, this.props.buyOrderDetail.buyOrder.buyerUid, this.props.buyOrderDetail.buyOrder.sellerUid)
+    this.props.releaseEther(this.props.buyOrderDetail.buyOrder,
+      this.props.buyOrderDetail.buyOrder.contractAddress,
+      this.props.buyOrderDetail.buyOrder.orderId,
+      this.props.web3.web3,
+      this.props.buyOrderDetail.buyOrder.buyerUid,
+      this.props.buyOrderDetail.buyOrder.sellerUid)
+  }
+
+  cancelTrade () {
+    if(this.props.cancelTradeState === 'init') {
+      this.props.setCancelState();
+    } else if (this.props.cancelTradeState === 'cancelling') {
+      if(this.props.buyOrderDetail.buyOrder.status === 'Awaiting Escrow' || this.props.buyOrderDetail.buyOrder.status === 'In Escrow') {
+        this.props.cancelTrade(this.props.buyOrderDetail.buyOrder.orderId, this.props.user.data.uid);
+      }
+    }
+  }
+
+  cancelTradeEscrow () {
+
   }
 
   render () {
@@ -132,6 +169,8 @@ class ActiveBuyOrder extends Component {
           viewerRole={viewerRole} contractAddress={buyOrder.contractAddress} sendEther={this.sendEther.bind(this)}
           sendEtherState={this.props.sendEtherState}
           resetEtherState={this.resetEtherState.bind(this)}
+          resetCancelState={this.resetCancelState.bind(this)}
+          cancelTrade={this.cancelTrade.bind(this)}
           tradeId={this.props.params.orderId}
           buyerId={this.props.buyOrderDetail.buyOrder.buyerUid}
           sellerId={this.props.buyOrderDetail.buyOrder.sellerUid}
@@ -140,6 +179,8 @@ class ActiveBuyOrder extends Component {
         'In Escrow': <InEscrow
           step='In Escrow'
           progress_map={progress_maps['In Escrow']} viewerRole={viewerRole} confirmPayment={this.confirmPayment.bind(this)}
+          resetCancelState={this.resetCancelState.bind(this)}
+          cancelTrade={this.cancelTrade.bind(this)}
           order={this.props.buyOrderDetail.buyOrder}/>,
         'Payment Confirmed': <PaymentConfirmed
           step='Payment Confirmed'
@@ -166,6 +207,7 @@ class ActiveBuyOrder extends Component {
       return (
         <section className='activeTrade'>
           {currentStep}
+          {this.props.cancelTradeState === 'cancelling' && <CancelTradeConfirmModal close={this.removeCancelModal.bind(this)} cancelTrade={this.cancelTrade.bind(this)}/>}
         </section>
       )
 

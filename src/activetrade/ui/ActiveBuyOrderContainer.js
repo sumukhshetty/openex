@@ -5,8 +5,10 @@ import * as actions from './ActiveBuyOrderActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    user: state.user,
     buyOrderDetail: state.buyOrderDetail,
     sendEtherState: state.sendEtherState,
+    cancelTradeState: state.cancelTradeState,
     params: ownProps.params,
     uid: ownProps.uid,
     tradeId: ownProps.params.orderId,
@@ -22,17 +24,26 @@ const mapDispatchToProps = (dispatch) => {
     clearBuyOrder: () => {
       dispatch(actions.clearBuyOrderState())
     },
-    sendEther: (contractAddress, orderId, sellerUid, web3) => {
-      dispatch(actions.fillEscrow(contractAddress, orderId, sellerUid, web3))
+    sendEther: (buyOrder, contractAddress, orderId, sellerUid, web3) => {
+      dispatch(actions.fillEscrow(buyOrder, contractAddress, orderId, sellerUid, web3))
     },
     resetEtherState: () => {
-      dispatch(actions.resetSendEtherState());
+      dispatch(actions.resetEtherState());
     },
-    releaseEther: (contractAddress, orderId, web3, buyerUid, sellerUid) => {
-      dispatch(actions.releaseEscrow(contractAddress, orderId, web3, buyerUid, sellerUid))
+    resetCancelState: () => {
+      dispatch(actions.resetCancelState());
     },
-    confirmPayment: (orderId) => {
-      dispatch(actions.paymentConfirmed(orderId))
+    releaseEther: (buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid) => {
+      dispatch(actions.releaseEscrow(buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid))
+    },
+    cancelTrade: (orderId, uid) => {
+      dispatch(actions.cancelTrade(orderId, uid));
+    },
+    setCancelState: () => {
+      dispatch(actions.setCancelState());
+    },
+    confirmPayment: (buyOrder, orderId) => {
+      dispatch(actions.paymentConfirmed(buyOrder, orderId))
     }
   }
 }

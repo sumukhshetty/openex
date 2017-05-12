@@ -25,6 +25,8 @@ import './css/swatch.css'
 import Bell from './images/svgReactComponents/Bell'
 import Notifications from './notifications/NotificationsLayout'
 
+const request = require('request')
+
 class App extends Component {
   constructor (props) {
     super(props)
@@ -43,6 +45,7 @@ class App extends Component {
     this.setState({showNotifications: false})
   }
 
+
   render () {
     const OnlyAuthLinks = VisibleOnlyAuth(() => {
       return (
@@ -50,8 +53,8 @@ class App extends Component {
           <div className='w-75 center'>
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
-              <div className='pure-u-1-4 brand'>
-                <Link to='/dashboard'>
+              <div className='pure-u-1-4 brand' onClick={this.testNotify}>
+                <Link to='/user/XOmC5tKjc2eRIaJiZSuLU0SJMzg1'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
                 </Link>
               </div>

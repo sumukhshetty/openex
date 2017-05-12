@@ -4,14 +4,14 @@ import { getEtherPrice } from './EtherPriceActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-
+    user: state.user
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onEtherPriceComponentLoad: (toSymbols) => {
-      dispatch(getEtherPrice(toSymbols))
+    onEtherPriceComponentLoad: (uid) => {
+      dispatch(getEtherPrice(uid))
     }
   }
 }

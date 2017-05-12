@@ -6,6 +6,9 @@
         ".write": "auth != null",
         "status": {
           ".validate": "(data.val() == null && newData.val() == 'Initiated') || (data.val() == 'In Escrow' && newData.val() == 'Payment Confirmed' && auth.uid == data.parent().child('buyerUid').val())"
+        },
+        "cancelled": {
+          ".validate": "(auth.uid == data.parent().child('buyerUid').val() || auth.uid == data.parent().child('sellerUid').val()) && auth.uid == newData.val()"
         }
       }
     },
@@ -26,6 +29,10 @@
       ".write": "auth != null"
     },
     "users": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "notifications": {
       ".read": "auth != null",
       ".write": "auth != null"
     }
