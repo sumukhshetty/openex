@@ -6,7 +6,7 @@ export default (props) => {
       <desc>Created with Sketch.</desc>
       <defs />
       <g id='Mockups' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
-        <circle id='Oval-4' fill='#E07C89' cx='69.5' cy='69.5' r='69.5' />
+        <circle id='Oval-4' fill='#D0011B' cx='69.5' cy='69.5' r='69.5' />
       </g>
     </svg>
   )
