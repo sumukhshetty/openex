@@ -27,6 +27,7 @@ export default class ChatBox extends Component {
   render () {
     const messages = this.props.chatMessages
     const you = this.props.chatAuth.uid
+
     return (
       <div
         className='pa3 w-50 overflow-y-auto'
@@ -40,10 +41,11 @@ export default class ChatBox extends Component {
                 message={messages[message].content}
                 time={messages[message].timeStamp}
                 you={messages[message].uid === you}
+                arbiter={messages[message].uid !== this.props.sellerId && messages[message].uid !== this.props.buyerId}
                 download={messages[message].download}
-            />
+              />
+            )
           )
-        )
         }
         {this.props.chatAuth.status === 'ANONYMOUS' && <Loading />}
         {this.props.chatAuth.status === 'SIGNED_IN' && <NewChatMessage

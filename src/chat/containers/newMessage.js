@@ -18,7 +18,6 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(updateNewMessage(e.target.value))
     },
     handleSubmit (e, content, uid, tradeId, download) {
-      console.log(download)
       e.preventDefault()
       dispatch(createMessage({
         content,

@@ -2,13 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Other from '../../images/svgReactComponents/other.js'
 import You from '../../images/svgReactComponents/you.js'
+import Arbiter from '../../images/svgReactComponents/Arbiter.js'
 import stockPhoto from '../../images/downloadPhoto.png'
 const moment = require('moment')
 
 const ChatMessage = (props) => (
   <div className='flex col ma3'>
     <div className={`flex cxc ${props.you ? null : `reverse`}`}>
-      {props.you ? <You /> : <Other />}
+      {props.arbiter ? <You /> : props.you ? <You /> : <Other />}
       {props.download ?
         <div className={`pa2 br2 flex ${props.you ? `bg-white` : `bg-blue white`}`}>
           <img
@@ -25,10 +26,11 @@ const ChatMessage = (props) => (
             </a>
           </div>
         </div> :
-        <div className={`pa2 br2 o ${props.you ? `bg-white` : `bg-blue white`}`}>
+        <div className={`pa2 br2 o ${props.arbiter ? `bg-danger white` : props.you ? `bg-white` : `bg-blue white`}`}>
           {props.message}
         </div>}
     </div>
+    {console.log(props.arbiter)}
     <time className={`ph4 mt1 ftiny ${props.you ? `cs` : `ce`}`}>
 
       {moment(props.time).format('MMMM Do YYYY, h:mm:ss a')}
