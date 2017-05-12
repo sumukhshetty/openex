@@ -9,29 +9,28 @@ const ChatMessage = (props) => (
   <div className='flex col ma3'>
     <div className={`flex cxc ${props.you ? null : `reverse`}`}>
       {props.you ? <You /> : <Other />}
-      {props.download &&
-      <div className={`pa2 br2 flex ${props.you ? `bg-white` : `bg-blue white`}`}>
-        <img
-          src={stockPhoto}
-          alt='download preview'
-          className='mh2'
-          width='125px' />
-        <div className='flex col pa0 ma0'>
-          <p>
-             BigRoom.png
-           </p>
-          <p className='fsmall pointer blue'>
-             Download
-           </p>
-        </div>
-      </div>}
-      {props.message &&
-      <div className={`pa2 br2 ${props.you ? `bg-white` : `bg-blue white`}`}>
-        {props.message}
-      </div>}
+      {props.download ?
+        <div className={`pa2 br2 flex ${props.you ? `bg-white` : `bg-blue white`}`}>
+          <img
+            src={props.message}
+            alt='Download Preview'
+            className='mh2'
+            height='100px'
+            width='auto' />
+          <div className='flex col mxe pb1 ma0'>
+            <a href={props.message}
+              className='fsmall pointer blue'
+              download>
+              Download
+            </a>
+          </div>
+        </div> :
+        <div className={`pa2 br2 o ${props.you ? `bg-white` : `bg-blue white`}`}>
+          {props.message}
+        </div>}
     </div>
-    <time className={`ftiny ${props.you ? `cs` : `ce`}`}>
-      {props.time}
+    <time className={`ph4 mt1 ftiny ${props.you ? `cs` : `ce`}`}>
+
       {moment(props.time).format('MMMM Do YYYY, h:mm:ss a')}
     </time>
   </div>

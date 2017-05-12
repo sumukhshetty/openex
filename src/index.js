@@ -56,6 +56,7 @@ var config = {
 }
 export var firebaseRef = firebase.initializeApp(config)
 export var firebaseMessaging = firebase.messaging()
+export const firebaseStorage = firebase.storage()
 const history = syncHistoryWithStore(browserHistory, store)
 
 if ('serviceWorker' in navigator) {

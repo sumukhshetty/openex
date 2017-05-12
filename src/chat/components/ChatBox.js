@@ -8,8 +8,6 @@ export default class ChatBox extends Component {
 
   componentDidMount () {
     this.props.getUser(this.props.tradeId, this.props.buyerId, this.props.sellerId)
-    // maybe this need to be getChat if teh user is already available (liek between pages on the same chatAuth)
-
     this.props.startListeningForMessages(this.props.tradeId)
   }
 
@@ -36,12 +34,13 @@ export default class ChatBox extends Component {
         ref={`thing`} >
         {Object.keys(messages)
           .map((message, index) =>
-          (
-            <ChatMessage
-              key={index}
-              message={messages[message].content}
-              time={messages[message].timeStamp}
-              you={messages[message].uid === you}
+            (
+              <ChatMessage
+                key={index}
+                message={messages[message].content}
+                time={messages[message].timeStamp}
+                you={messages[message].uid === you}
+                download={messages[message].download}
             />
           )
         )

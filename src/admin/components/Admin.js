@@ -26,12 +26,6 @@ export default class Admin extends Component {
     //     <td>Disputed Trades Loading...</td>
     //   </tr>)
 
-    console.log(this.state.disputes)
-
-    const url = this.props.tradeType === 'buy-ether' ? 'activebuyorder/' + this.props.orderId : 'activesellorder/' + this.props.orderId
-
-    // this.state.disputes[dispute].tradeId
-
     const Disputes = Object.keys(this.state.disputes).map((dispute, index) =>
       <tr className='flex cxc' key={index}>
         <td className='fb5 tc'>{this.state.disputes[dispute].id}</td>

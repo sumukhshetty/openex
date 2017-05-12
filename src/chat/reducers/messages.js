@@ -6,7 +6,8 @@ export default function messagesReducer (state = {}, action) {
         [action.key]: {
           content: action.content,
           timeStamp: action.timeStamp,
-          uid: action.uid
+          uid: action.uid,
+          download: action.download
         }
       }
     case 'CLEAR_MESSAGES_FROM_STATE':
