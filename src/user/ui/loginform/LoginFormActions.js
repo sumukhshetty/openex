@@ -10,6 +10,14 @@ function userLoggedIn(user, currency) {
     currency: currency
   }
 }
+
+function userProfile(userProfile) {
+  return {
+    type: 'GET_USER_PROFILE',
+    payload: userProfile
+  }
+}
+
 function userLoggedInError(error){
   return {
     type: "USER_LOGGED_IN_ERROR",
@@ -26,6 +34,10 @@ export function loginUser(loginInfo, web3) {
     const pass = loginInfo.password;
     var errormessage = '';
     auth.signInWithEmailAndPassword(email, pass).then(function(firebaseUser) {
+      firebaseRef.database().ref('/users/'+firebaseUser.uid).on('value',function(snap){
+        dispatch(userProfile(snap.val()))
+      })
+    //TODO combine the two reducers - currency is in the
       firebaseRef.database().ref('/users/'+firebaseUser.uid+'/currency')
       .once('value', function(snap) {
         dispatch(userLoggedIn(firebaseUser, snap.val()))
