@@ -65,37 +65,7 @@ if ('serviceWorker' in navigator) {
     console.log('Service worker registration failed, error:', err);
   });
 }
-firebaseMessaging.requestPermission()
-    .then(function() {
-      console.log('Notification permission granted.');
-      return firebaseMessaging.getToken()
-    })
-    .then(function(token){
-      console.log(token)
-    })
-    .catch(function(err) {
-      console.log('Unable to get permission to notify.', err);
-    });
-firebaseMessaging.onTokenRefresh(function() {
-  firebaseMessaging.getToken()
-  .then(function(refreshedToken) {
-    console.log('Token refreshed.');
-    // Indicate that the new Instance ID token has not yet been sent to the
-    // app server.
-    //setTokenSentToServer(false);
-    // Send Instance ID token to app server.
-    //sendTokenToServer(refreshedToken);
-    // ...
-  })
-  .catch(function(err) {
-    console.log('Unable to retrieve refreshed token ', err);
-    //showToken('Unable to retrieve refreshed token ', err);
-  });
-});
-firebaseMessaging.onMessage(function(payload){
-  //TODO: call on a function to load the notification in the bell icon and notifications ref
-  console.log('onMessage: ',payload)
-});
+
 
 export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP;
 
