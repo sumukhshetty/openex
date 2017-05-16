@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
-import { BuyForm } from './BuyForm';
-import { SellForm } from './SellForm';
-import PostTradeInstructions from './PostTradeInstructions';
+import React, { Component } from 'react'
+import { BuyForm } from './BuyForm'
+import { SellForm } from './SellForm'
+import PostTradeInstructions from './PostTradeInstructions'
 import MetaMaskWaitModal from './../../generic-components/metamaskmodal/MetaMaskWaitModal'
-// import {Input} from '../../components/Input';
 
 class PostTradeForm extends Component {
   constructor (props) {
-    super(props);
-
+    super(props)
     this.state = {
       web3: this.props.web3,
       etherPrice: this.props.etherPrice,
@@ -16,7 +14,6 @@ class PostTradeForm extends Component {
         tradeType: '',
         amount: 0,
         location: '',
-        // TODO check this ( who wrote this? Please tag your name so we know whos to do it is')
         buyerAddress: '',
         buyerUid: '',
         sellerAddress: '',
@@ -37,20 +34,20 @@ class PostTradeForm extends Component {
   }
 
   componentWillMount () {
-    var connectedAccount = this.props.web3.web3.eth.accounts[0];
+    var connectedAccount = this.props.web3.web3.eth.accounts[0]
     this.setState({postTradeDetails: {
       amount: 0,
       buyerAddress: connectedAccount,
       buyerUsername: this.props.user.data.displayName,
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
-      buyerUid: this.props.uid,// Submitting a from without changing values leaves them as blank
+      buyerUid: this.props.uid, // Submitting a from without changing values leaves them as blank
       paymentMethod: 'UPI',    // If defaults change, these must change as well.
       margin: 0,
       currency: this.props.user.currency
     },
-    buyFormBool:true,
-    showMetaMaskWaitModal:false
-  });
+      buyFormBool: true,
+      showMetaMaskWaitModal: false
+    })
   }
 
   componentWillUnmount() {
@@ -58,38 +55,38 @@ class PostTradeForm extends Component {
   }
 
   showWaitModal () {
-    this.setState({showMetaMaskWaitModal: true});
+    this.setState({showMetaMaskWaitModal: true})
   }
 
   onInputChange (event) {
-    var _postTradeDetails = this.state.postTradeDetails;
+    var _postTradeDetails = this.state.postTradeDetails
     if (event.target.id === 'location') {
-      _postTradeDetails['location'] = event.target.value;
+      _postTradeDetails['location'] = event.target.value
     } else if (event.target.id === 'margin') {
-      _postTradeDetails['margin'] = event.target.value;
+      _postTradeDetails['margin'] = event.target.value
     } else if (event.target.id === 'equation') {
-      _postTradeDetails['equation'] = event.target.value;
+      _postTradeDetails['equation'] = event.target.value
     } else if (event.target.id === 'amount') {
-      _postTradeDetails['amount'] = event.target.value;
+      _postTradeDetails['amount'] = event.target.value
     } else if (event.target.id === 'bankInformation') {
-      _postTradeDetails['bankInformation'] = event.target.value;
+      _postTradeDetails['bankInformation'] = event.target.value
     } else if (event.target.id === 'minTransactionLimit') {
-      _postTradeDetails['minTransactionLimit'] = event.target.value;
+      _postTradeDetails['minTransactionLimit'] = event.target.value
     } else if (event.target.id === 'maxTransactionLimit') {
-      _postTradeDetails['maxTransactionLimit'] = event.target.value;
+      _postTradeDetails['maxTransactionLimit'] = event.target.value
     } else if (event.target.id === 'restrictTo') {
-      _postTradeDetails['restrictTo'] = event.target.value;
+      _postTradeDetails['restrictTo'] = event.target.value
     } else if (event.target.id === 'termsOfTrade') {
-      _postTradeDetails['termsOfTrade'] = event.target.value;
+      _postTradeDetails['termsOfTrade'] = event.target.value
     }
-    this.setState({ postTradeDetails: _postTradeDetails });
+    this.setState({ postTradeDetails: _postTradeDetails })
   }
 
   onTradeTypeChange (event) {
-    var connectedAccount = this.props.web3.web3.eth.accounts[0];
-    var _postTradeDetails = this.state.postTradeDetails;
-    var _buyFormBool = this.state.buyFormBool;
-    _postTradeDetails['tradeType'] = event.target.value;
+    var connectedAccount = this.props.web3.web3.eth.accounts[0]
+    var _postTradeDetails = this.state.postTradeDetails
+    var _buyFormBool = this.state.buyFormBool
+    _postTradeDetails['tradeType'] = event.target.value
     if (_postTradeDetails['tradeType'] === 'sell-ether') {
       _postTradeDetails = Object.assign({},
         this.state.postTradeDetails, {
@@ -103,8 +100,8 @@ class PostTradeForm extends Component {
           availableBalance: 0,
           pendingBalance: 0
         }
-      );
-      _buyFormBool = false;
+      )
+      _buyFormBool = false
     } else {
       _postTradeDetails = Object.assign({},
       this.state.postTradeDetails, {
@@ -118,33 +115,33 @@ class PostTradeForm extends Component {
         availableBalance: '',
         pendingBalance: ''
       }
-    );
-      _buyFormBool = true;
+    )
+      _buyFormBool = true
     }
 
-    this.setState({ postTradeDetails: _postTradeDetails, buyFormBool: _buyFormBool });
+    this.setState({ postTradeDetails: _postTradeDetails, buyFormBool: _buyFormBool })
   }
 
   onPaymentMethodChange (event) {
     var _postTradeDetails = Object.assign({},
       this.state.postTradeDetails,
       {paymentMethod: event.target.value}
-      );
-    this.setState({postTradeDetails: _postTradeDetails});
+      )
+    this.setState({postTradeDetails: _postTradeDetails})
   }
 
   onCurrencyChange (event) {
     var _postTradeDetails = Object.assign({},
       this.state.postTradeDetails,
       {currency: event.target.value}
-      );
-    this.setState({postTradeDetails: _postTradeDetails});
+      )
+    this.setState({postTradeDetails: _postTradeDetails})
   }
 
   handleSubmit (event) {
-    event.preventDefault();
-    var now = new Date();
-    var margin = (1 + (this.state.postTradeDetails.margin * 0.01));
+    event.preventDefault()
+    var now = new Date()
+    var margin = (1 + (this.state.postTradeDetails.margin * 0.01))
     var _postTradeDetails = Object.assign({},
       this.state.postTradeDetails,
       {lastUpated: now.toUTCString(),
@@ -152,7 +149,7 @@ class PostTradeForm extends Component {
         active: true,
         margin: margin
       }
-      );
+      )
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
       this.showWaitModal()
       this.props.onPostTradeFormSubmit(
@@ -166,7 +163,7 @@ class PostTradeForm extends Component {
         _postTradeDetails,
         this.state.web3.web3,
         this.state
-        );
+        )
     }
   }
 
@@ -195,9 +192,24 @@ class PostTradeForm extends Component {
             <div className='flex mv3'>
               <label htmlFor='location' className='w5' >Location</label>
               <input id='location' name='location' type='text' value={this.state.postTradeDetails.location} onChange={this.onInputChange.bind(this)}
-                placeholder='Enter a Location' className='w5 h-100' required/>
+                placeholder='Enter a Location' className='w5 h-100' required />
               <span className='measure-narrow fw1 i pa0 me'>For online trade you need to specify the country. For local trade, please specify a city, postal code or street name.</span>
             </div>
+
+            {this.state.buyFormBool
+            && <div className='flex mb3'>
+              <label
+                htmlFor='buyerAddress'
+                className='w5'>Buyer Address</label>
+              <textarea
+                id='buyerAddress'
+                type='textArea'
+                rows='4'
+                value={this.state.postTradeDetails.buyerAddress}
+                className='w5'
+                disabled />
+              </div>
+            }
 
             <div className='flex mv3'>
               <label htmlFor='margin' className='w5' >Margin</label>
@@ -236,7 +248,19 @@ class PostTradeForm extends Component {
               </select>
             </div>
 
-            { (this.state.buyFormBool) ? <BuyForm
+            {
+              (this.state.buyFormBool)
+              ? <BuyForm
+                onChangeProp={this.onInputChange.bind(this)}
+                amount={this.state.postTradeDetails.amount}
+                paymentMethod={this.state.postTradeDetails.paymentMethod}
+                onCurrencyChange={this.onCurrencyChange.bind(this)}
+                bankInformation={this.state.postTradeDetails.bankInformation}
+                minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
+                maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
+                termsOfTrade={this.state.postTradeDetails.termsOfTrade}
+                currency={this.state.postTradeDetails.currency} />
+              : <SellForm
                 onChangeProp={this.onInputChange.bind(this)}
                 currency={this.props.user.currency}
                 amount={this.state.postTradeDetails.amount}
@@ -265,8 +289,8 @@ class PostTradeForm extends Component {
           </fieldset>
         </form>
       </div>
-    );
+    )
   }
 }
 
-export default PostTradeForm;
+export default PostTradeForm
