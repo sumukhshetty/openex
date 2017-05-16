@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import ProductShortDescription from './ProductShortDescription'
 import SignUpContainer from './../../signup/SignUpContainer'
 import MetaMask from './../../signup/MetaMask'
+import Features from './Features'
 
 import truffleConfig from './../../../truffle-config.js'
 
@@ -30,13 +31,14 @@ class HomeMain extends Component {
         // user does not have a browser based wallet? What happens
         // if the Web3 object cannot be initialized with the httpProvider
         // given from the loction in the truffle-config file?
+        // dev haiku
       this.web3Provided = new Web3(new Web3.providers.HttpProvider(web3Location))
     }
   }
   render () {
     var web3 = this.web3Provided
     return (
-      <div className='pure-g'>
+      <div>
         <div className='pure-u-2-3'>
           <ProductShortDescription />
         </div>
@@ -46,6 +48,7 @@ class HomeMain extends Component {
             ? <SignUpContainer web3={web3} />
             : <MetaMask />}
         </div>
+        <Features />
       </div>
     )
   }
