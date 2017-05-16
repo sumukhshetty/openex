@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 const Star = (props) => {
   return (
@@ -29,7 +29,7 @@ const Star = (props) => {
             </mask>
             <use
               id='star1'
-              stroke='#F8E81C'
+              stroke='gold'
               strokeWidth='0.5'
               fill={props.colour}
               xlinkHref='#path-1' />
@@ -37,17 +37,17 @@ const Star = (props) => {
         </g>
       </g>
     </svg>
-  );
-};
+  )
+}
 
 Star.propTypes = {
   size: PropTypes.number.isRequired,
   colour: PropTypes.string.isRequired
-};
+}
 
 Star.defaultProps = {
   size: 16,
   colour: '#F8E81C'
-};
+}
 
-export default Star;
+export default Star
