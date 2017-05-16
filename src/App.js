@@ -45,7 +45,6 @@ class App extends Component {
     this.setState({showNotifications: false})
   }
 
-
   render () {
     const OnlyAuthLinks = VisibleOnlyAuth(() => {
       return (
@@ -54,7 +53,7 @@ class App extends Component {
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
               <div className='pure-u-1-4 brand' onClick={this.testNotify}>
-                <Link to='/user/XOmC5tKjc2eRIaJiZSuLU0SJMzg1'>
+                <Link to='/dashboard'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
                 </Link>
               </div>
@@ -93,7 +92,6 @@ class App extends Component {
     )
 
     const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />)
-
 
     const isMobile = window.innerWidth <= 800
     if (isMobile) {

@@ -10,25 +10,25 @@ const ChatMessage = (props) => (
     <div className={`flex cxc ${props.you ? null : `reverse`}`}>
       {props.you ? <You /> : <Other />}
       {props.download &&
-      <div className={`pa2 br2 flex ${props.you ? `bg-white` : `bg-blue white`}`}>
-        <img
-          src={stockPhoto}
-          alt='download preview'
-          className='mh2'
-          width='125px' />
-        <div className='flex col pa0 ma0'>
-          <p>
-             BigRoom.png
-           </p>
-          <p className='fsmall pointer blue'>
-             Download
-           </p>
-        </div>
-      </div>}
+        <div className={`pa2 br2 flex ${props.you ? `bg-white` : `bg-blue white`}`}>
+          <img
+            src={stockPhoto}
+            alt='download preview'
+            className='mh2'
+            width='125px' />
+          <div className='flex col pa0 ma0'>
+            <p>
+              BigRoom.png
+            </p>
+            <p className='fsmall pointer blue'>
+              Download
+            </p>
+          </div>
+        </div>}
       {props.message &&
-      <div className={`pa2 br2 ${props.you ? `bg-white` : `bg-blue white`}`}>
-        {props.message}
-      </div>}
+        <div className={`pa2 br2 ${props.you ? `bg-white` : `bg-blue white`}`}>
+          {props.message}
+        </div>}
     </div>
     <time className={`ftiny ${props.you ? `cs` : `ce`}`}>
       {props.time}

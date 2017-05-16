@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import HomeMain from './HomeMain';
-import BrowserDetection from 'react-browser-detection';
+import React, { Component } from 'react'
+import HomeMain from './HomeMain'
+import BrowserDetection from 'react-browser-detection'
+import Process from './Process'
+import UnsupportedBrowser from './../unsupportedbrowser/UnsupportedBrowser'
+import Testimonials from './Testimonials'
+import Subscribe from './Subscribe'
 
-import UnsupportedBrowser from './../unsupportedbrowser/UnsupportedBrowser';
 const browserHandler = {
   chrome: () => <HomeMain />,
   default: (browser) => <UnsupportedBrowser />
-};
+}
 
 class Home extends Component {
   render () {
@@ -17,9 +20,12 @@ class Home extends Component {
             {browserHandler}
           </BrowserDetection>
         </div>
+        <Process />
+        <Testimonials />
+        <Subscribe />
       </section>
-    );
+    )
   }
 }
 
-export default Home;
+export default Home
