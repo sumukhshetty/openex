@@ -23,6 +23,7 @@ import chatAuthReducer from './chat/reducers/auth'
 import newMessageReducer from './chat/reducers/newMessage'
 import ChatMessageReducer from './chat/reducers/messages'
 import userScreenReducer from './userScreen/userScreenReducer'
+import enableNotificationsReducer from './enablenotifications/enablenotificationsreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -48,7 +49,8 @@ const reducer = combineReducers({
   newMessage: newMessageReducer,
   chatMessages: ChatMessageReducer,
   etherPrice: etherPriceReducer,
-  userScreen: userScreenReducer
+  userScreen: userScreenReducer,
+  enableNotifications: enableNotificationsReducer
 
 })
 

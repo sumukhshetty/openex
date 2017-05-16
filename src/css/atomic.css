@@ -24,12 +24,21 @@
   background: url("../images/percentAppend.png") 100% !important;
   background-repeat: no-repeat !important;
   background-size: auto 100% !important;
+  background-color: white !important;
 }
 
 .inr {
   background: url("../images/inrAppend.png") 100% !important;
   background-repeat: no-repeat !important;
   background-size: auto 100% !important;
+  background-color: white !important;
+}
+
+.usd {
+  background: url("../images/usdAppend.png") 100% !important;
+  background-repeat: no-repeat !important;
+  background-size: auto 100% !important;
+  background-color: white !important;
 }
 
 /* Variables */
