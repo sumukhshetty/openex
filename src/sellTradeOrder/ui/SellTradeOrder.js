@@ -7,7 +7,7 @@ export default class SellTradeOrder extends Component {
     super(props);
     this.state = {
       web3: this.props.web3,
-      etherPrices: this.props.etherPrices,
+      etherPrice: this.props.etherPrice,
       user: this.props.user,
       buyOrderDetail: this.props.buyOrderDetail,
       rating: 4.5
@@ -19,14 +19,14 @@ export default class SellTradeOrder extends Component {
   acceptOrder (e) {
     console.log("acceptOrder")
     e.preventDefault();
-    this.props.acceptOrder(this.props.buyOrderDetail.buyOrder, 
-      this.props.buyOrderDetail.buyOrder.amount, 
-      this.props.etherPrices.etherPrices["INR"], 
-      this.props.user.data.displayName, 
-      this.props.buyOrderDetail.buyOrder.buyerAddress, 
-      this.props.buyOrderDetail.buyOrder.orderId, 
-      this.props.user.data.uid, 
-      this.props.buyOrderDetail.buyOrder.buyerUid, 
+    this.props.acceptOrder(this.props.buyOrderDetail.buyOrder,
+      this.props.buyOrderDetail.buyOrder.amount,
+      this.props.etherPrice,
+      this.props.user.data.displayName,
+      this.props.buyOrderDetail.buyOrder.buyerAddress,
+      this.props.buyOrderDetail.buyOrder.orderId,
+      this.props.user.data.uid,
+      this.props.buyOrderDetail.buyOrder.buyerUid,
       this.props.web3.web3);
   }
 
@@ -57,6 +57,7 @@ export default class SellTradeOrder extends Component {
     console.log(buyOrder)
     var userInfo = this.props.user.userInfo;
     if(buyOrder && userInfo) {
+    var price = this.props.etherPrice ? (this.props.etherPrice.data * buyOrder.margin).toFixed(2) : null;
     return (
       <div className='w-100 bg-smoke vh-100'>
         <div className='w-75 center pv3'>
@@ -66,7 +67,7 @@ export default class SellTradeOrder extends Component {
               <table className='lh-copy'>
                 <tr>
                   <td className='w4 pv2'>Price</td>
-                  <td className='green'>{this.props.etherPrices.etherPrices ? this.props.etherPrices.etherPrices["INR"] * buyOrder.margin : 'Getting price...'} INR/ETH</td>
+                  <td className='green'>{price ? price : 'Getting price...'} {this.props.user.currency + '/ETH'}</td>
                 </tr>
                 <tr>
                   <td className='w4 pv2'>Payment Method</td>
@@ -89,7 +90,7 @@ export default class SellTradeOrder extends Component {
             <div className='w-50' >
               {/* <h2 className='pv1 tc'>How much do you wish to buy?</h2> */}
               {buyOrder.status === 'Initiated' && <div className='flex mxc'><Converter amount={buyOrder.amount} onSubmit={this.acceptOrder.bind(this)}
-                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange}/></div>}
+                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange} currency={this.props.user.currency} price={price} country={userInfo.country}/></div>}
                 {buyOrder.status !== 'Initiated' && buyOrder.sellerUid !== this.props.user.data.uid && <h2 className='pv1 tc'>Sorry, looks like this order was already accepted.</h2>}
                 {buyOrder.status !== 'Initiated' && buyOrder.sellerUid === this.props.user.data.uid && <h2 className='pv1 tc'>Please accept the MetaMask transaction.</h2>}
             </div>

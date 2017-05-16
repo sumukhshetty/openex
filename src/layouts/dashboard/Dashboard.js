@@ -3,6 +3,7 @@ import DashboardInfoMessage from './DashboardInfoMessage';
 import ActiveEscrowList from './../../activeescrowlist/layouts/ActiveEscrowList';
 import AdList from './../../adlist/layouts/AdList';
 import CompletedTradeList from './../../completedtradeslist/layouts/CompletedTradeList';
+import EnableNotifications from './../../enablenotifications/layouts/EnableNotifications'
 
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
@@ -58,6 +59,7 @@ class Dashboard extends Component {
         <div className='w-75 center pv3'>
           <div>
             <div>
+              <EnableNotifications />
               <DashboardInfoMessage />
               <ActiveEscrowList />
               <AdList />

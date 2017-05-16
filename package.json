@@ -52,6 +52,7 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "babel-register": "^6.23.0",
+    "country-currency": "git+https://github.com/srcagency/country-currencies.git",
     "firebase": "^3.7.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",

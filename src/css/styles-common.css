@@ -305,9 +305,9 @@ button.right {
   float: right;
 }
 
-main[role="main"] section.home {
+/*main[role="main"] section.home {
   margin-bottom: 10rem;
-}
+}*/
 
 .dashboard,
 .activeTrade {

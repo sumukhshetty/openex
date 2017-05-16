@@ -6,7 +6,7 @@ import * as actions from './BuyTradeOrderActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    etherPrices: state.etherPrices,
+    etherPrice: state.etherPrice,
     user: state.user,
     sellOrderDetail: state.sellOrderDetail,
     sellOrderContract: state.sellOrderContract,

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 
 class FooterTable extends Component {
@@ -12,7 +12,6 @@ class FooterTable extends Component {
               <li><h3>About Us</h3></li>
               <li className='pure-menu-item'><a href='#'>Blog</a></li>
               <li className='pure-menu-item'><a href='#'>About</a></li>
-              <li className='pure-menu-item'><a href='#'>Branding</a></li>
               <li className='pure-menu-item'><a href='#'>News</a></li>
               <li className='pure-menu-item'><a href='#'>Jobs</a></li>
             </ul>
@@ -33,10 +32,7 @@ class FooterTable extends Component {
                 <a href='#'>Copyright</a>
               </li>
               <li className='pure-menu-item'>
-                <a href='#'>Cookies</a>
-              </li>
-              <li className='pure-menu-item'>
-                <a onClick={()=>browserHistory.push("termsofservice")}>Privacy &amp; Terms</a>
+                <a onClick={() => browserHistory.push('termsofservice')}>Privacy &amp; Terms</a>
               </li>
             </ul>
           </nav>
@@ -46,17 +42,16 @@ class FooterTable extends Component {
           <nav className='pure-menu'>
             <ul className='pure-menu-list'>
               <li><h3>Community</h3></li>
-              <li className='pure-menu-item'><a href='#'>Referrals</a></li>
+              <li className='pure-menu-item'><a href='#'>Reddit</a></li>
               <li className='pure-menu-item'><a href='#'>Forum</a></li>
               <li className='pure-menu-item'><a href='#'>Twitter</a></li>
               <li className='pure-menu-item'><a href='#'>Slack</a></li>
-              <li className='pure-menu-item'><a href='#'>Github</a></li>
             </ul>
           </nav>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default FooterTable;
+export default FooterTable

@@ -45,34 +45,6 @@ class App extends Component {
     this.setState({showNotifications: false})
   }
 
-  testNotify(){
-    console.log("testNotify")
-    try{
-      var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/mailgunHelloWorld'
-      request({
-          method: 'post',
-          json: true,
-          url: url
-        },
-        function(err, res, body) {
-          if (err) {
-            console.error('error posting json: ', err)
-            throw err
-          }
-          if(res.statusCode === 200) {
-            console.log("testNotify.200")
-            //browserHistory.push('/dashboard')
-          }
-          if(res.statusCode === 500) {
-            console.error('Server responded with an error: ' + res.body.error);
-            throw res.body.error
-          }
-        });
-    } catch(e){
-      console.log("[testNotify]",e)
-    }
-  }
-
   render () {
     const OnlyAuthLinks = VisibleOnlyAuth(() => {
       return (
@@ -81,10 +53,9 @@ class App extends Component {
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
               <div className='pure-u-1-4 brand' onClick={this.testNotify}>
-              <img className='brand' src={logo} alt='Automt Ether Exchange' />
-                {/*<Link to='/dashboard'>
+                <Link to='/dashboard'>
                   <img className='brand' src={logo} alt='Automt Ether Exchange' />
-                </Link>*/}
+                </Link>
               </div>
               <div className='flex mxe cxc'>
                 <Bell action={this.showNotifications} />
@@ -121,7 +92,6 @@ class App extends Component {
     )
 
     const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />)
-
 
     const isMobile = window.innerWidth <= 800
     if (isMobile) {
