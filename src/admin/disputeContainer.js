@@ -1,16 +1,17 @@
 import { connect } from 'react-redux'
-import Dispute from '../generic-components/tradeFlow/DisputeTrade'
+import DisputeTrade from '../generic-components/tradeFlow/DisputeTrade'
 
 const mapStateToProps = (state, props) => {
   return {
     activeTrades: state.activeTrades,
     viewerRole: props.viewerRole,
     tradeId: props.tradeId,
-    order: props.order
+    order: props.order,
+    user: state.user
   }
 }
 
 const DisputeContainer = connect(
-  mapStateToProps)(Dispute)
+  mapStateToProps)(DisputeTrade)
 
 export default DisputeContainer

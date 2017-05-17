@@ -25,7 +25,8 @@ export default class Admin extends Component {
     //   <tr className='flex cxc mxc'>
     //     <td>Disputed Trades Loading...</td>
     //   </tr>)
-
+    console.log("components.Admin")
+    console.log(this.props)
     const Disputes = Object.keys(this.state.disputes).map((dispute, index) =>
       <tr className='flex cxc' key={index}>
         <td className='fb5 tc'>{this.state.disputes[dispute].id}</td>
