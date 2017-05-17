@@ -1448,6 +1448,10 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
+classnames@^2.2.3:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
+
 clean-css@4.0.x:
   version "4.0.10"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.0.10.tgz#6be448d6ba8c767654ebe11f158b97a887cb713f"
@@ -4861,6 +4865,10 @@ object-assign@4.1.0, object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.0.tgz#7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0"
 
+object-assign@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
+
 object-inspect@~1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.2.2.tgz#c82115e4fcc888aea14d64c22e4f17f6a70d5e5a"
@@ -5528,6 +5536,13 @@ rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-addons-pure-render-mixin@^15.4.2:
+  version "15.5.2"
+  resolved "https://registry.yarnpkg.com/react-addons-pure-render-mixin/-/react-addons-pure-render-mixin-15.5.2.tgz#ebb846aeb2fd771336c232822923108f87d5bff2"
+  dependencies:
+    fbjs "^0.8.4"
+    object-assign "^4.1.0"
+
 react-browser-detection@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-browser-detection/-/react-browser-detection-1.0.2.tgz#3ae164d463eb2825d3955a0fba3cb79c209f78bf"
@@ -5654,14 +5669,14 @@ readline2@^1.0.1:
     is-fullwidth-code-point "^1.0.0"
     mute-stream "0.0.5"
 
-recompose@^0.23.4:
-  version "0.23.4"
-  resolved "https://registry.yarnpkg.com/recompose/-/recompose-0.23.4.tgz#af09e4e08424effa449c9b793037166f7b30644a"
+rebass@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/rebass/-/rebass-0.3.4.tgz#88a16c6b6cf52e3b3e8d5a54fe42994bd04a4bf7"
   dependencies:
-    change-emitter "^0.1.2"
-    fbjs "^0.8.1"
-    hoist-non-react-statics "^1.0.0"
-    symbol-observable "^1.0.4"
+    classnames "^2.2.3"
+    object-assign "^4.1.1"
+    react-addons-pure-render-mixin "^15.4.2"
+
 
 recursive-readdir@2.1.0:
   version "2.1.0"

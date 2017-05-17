@@ -476,27 +476,3 @@ tbody tr {
   color: #757575;
   background-color: white;
 }
-
-/*this is for the trade feedback stars*/
-.rating {
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  color: gold;
-}
-.rating > span {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
-  font-size: 3rem
-}
-.rating > span:hover,
-.rating > span:hover ~ span {
-  color: transparent;
-}
-.rating > span:hover:before,
-.rating > span:hover ~ span:before {
-   content: "\2605";
-   position: absolute;
-   left: 0;
-   color: gold;
-}

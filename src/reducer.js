@@ -22,6 +22,7 @@ import sellOrderContractReducer from './buyTradeOrder/sellOrderContractReducer'
 import chatAuthReducer from './chat/reducers/auth'
 import newMessageReducer from './chat/reducers/newMessage'
 import ChatMessageReducer from './chat/reducers/messages'
+import tradeFeedbackReducer from './tradefeedback/tradeFeedbackReducer'
 import userScreenReducer from './userScreen/userScreenReducer'
 import enableNotificationsReducer from './enablenotifications/enablenotificationsreducer'
 
@@ -48,10 +49,10 @@ const reducer = combineReducers({
   chatAuth: chatAuthReducer,
   newMessage: newMessageReducer,
   chatMessages: ChatMessageReducer,
+  tradeFeedback: tradeFeedbackReducer,
   etherPrice: etherPriceReducer,
   userScreen: userScreenReducer,
   enableNotifications: enableNotificationsReducer
-
 })
 
 export default reducer
