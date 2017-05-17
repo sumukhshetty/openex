@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Admin from '../components/Admin'
+import Admin from '../ui/Admin'
 
 const mapStateToProps = (state, props) => {
   return {

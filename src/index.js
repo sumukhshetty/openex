@@ -35,7 +35,6 @@ import UserScreen from './userScreen/layouts/UserScreen'
 import TermsOfService from './termsofservice/TermsOfService'
 import ResetPassword from './signup/ResetPassword'
 import ChatBox from './chat/containers/ChatBox'
-//import Admin from './admin/components/Admin'
 import Admin from './admin/layouts/Admin'
 
 // Redux Store
