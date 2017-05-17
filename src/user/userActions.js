@@ -11,10 +11,20 @@ function userLoggedIn(user, currency) {
   }
 }
 
+function userProfile(userProfile) {
+  return {
+    type: 'GET_USER_PROFILE',
+    payload: userProfile
+  }
+}
+
 module.exports = {
   startListeningUserAuth: () => (dispatch, getState) =>{
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
+        firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
+        dispatch(userProfile(snap.val()))
+        })
         firebaseRef.database().ref('/users/'+user.uid+'/currency')
         .once('value', function(snap) {
           dispatch(userLoggedIn(user, snap.val()))

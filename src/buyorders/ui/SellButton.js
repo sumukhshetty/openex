@@ -13,8 +13,6 @@ class SellButton extends Component {
     console.log(this.props.orderId)
   }
   render () {
-    console.log("SellButton.render")
-    console.log(this.props.orderId)
     return (
       <td className='fb5'>
         <button onClick={()=>browserHistory.push('sellTradeOrder/'+this.props.orderId)}> Sell </button>
