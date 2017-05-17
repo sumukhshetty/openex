@@ -30,7 +30,7 @@ class PostTradeForm extends Component {
       user: this.props.user,
       uid: this.props.uid,
       sendEtherState: this.props.sendEtherState
-    };
+    }
   }
 
   componentWillMount () {
@@ -50,8 +50,8 @@ class PostTradeForm extends Component {
     })
   }
 
-  componentWillUnmount() {
-    this.props.resetEtherState();
+  componentWillUnmount () {
+    this.props.resetEtherState()
   }
 
   showWaitModal () {
@@ -197,23 +197,23 @@ class PostTradeForm extends Component {
             </div>
 
             {this.state.buyFormBool
-            && <div className='flex mb3'>
-              <label
-                htmlFor='buyerAddress'
-                className='w5'>Buyer Address</label>
-              <textarea
-                id='buyerAddress'
-                type='textArea'
-                rows='4'
-                value={this.state.postTradeDetails.buyerAddress}
-                className='w5'
-                disabled />
+              && <div className='flex mb3'>
+                <label
+                  htmlFor='buyerAddress'
+                  className='w5'>Buyer Address</label>
+                <textarea
+                  id='buyerAddress'
+                  type='textArea'
+                  rows='4'
+                  value={this.state.postTradeDetails.buyerAddress}
+                  className='w5'
+                  disabled />
               </div>
             }
 
             <div className='flex mv3'>
               <label htmlFor='margin' className='w5' >Margin</label>
-              <div className='flex col'><input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5' required/>
+              <div className='flex col'><input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='w5' required />
                 <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice ? (this.props.etherPrice.data * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
                 <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice.data : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
               </div>
@@ -250,16 +250,16 @@ class PostTradeForm extends Component {
 
             {
               (this.state.buyFormBool)
-              ? <BuyForm
-                onChangeProp={this.onInputChange.bind(this)}
-                amount={this.state.postTradeDetails.amount}
-                paymentMethod={this.state.postTradeDetails.paymentMethod}
-                onCurrencyChange={this.onCurrencyChange.bind(this)}
-                bankInformation={this.state.postTradeDetails.bankInformation}
-                minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
-                maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
-                termsOfTrade={this.state.postTradeDetails.termsOfTrade}
-                currency={this.state.postTradeDetails.currency} />
+                ? <BuyForm
+                  onChangeProp={this.onInputChange.bind(this)}
+                  amount={this.state.postTradeDetails.amount}
+                  paymentMethod={this.state.postTradeDetails.paymentMethod}
+                  onCurrencyChange={this.onCurrencyChange.bind(this)}
+                  bankInformation={this.state.postTradeDetails.bankInformation}
+                  minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
+                  maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
+                  termsOfTrade={this.state.postTradeDetails.termsOfTrade}
+                  currency={this.state.postTradeDetails.currency} />
               : <SellForm
                 onChangeProp={this.onInputChange.bind(this)}
                 currency={this.props.user.currency}
@@ -273,7 +273,7 @@ class PostTradeForm extends Component {
             }
 
             {
-              (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal/>)
+              (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal />)
             }
 
             <div className='flex mv3'>

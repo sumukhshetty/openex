@@ -27,8 +27,6 @@ function userLoggedInError(error){
 
 export function loginUser(loginInfo, web3) {
   return function(dispatch) {
-    // Using truffle-contract we create the authentication object.
-    // Get current ethereum wallet.
     const auth = firebaseRef.auth()
     var email = loginInfo.email;
     const pass = loginInfo.password;
@@ -37,7 +35,6 @@ export function loginUser(loginInfo, web3) {
       firebaseRef.database().ref('/users/'+firebaseUser.uid).on('value',function(snap){
         dispatch(userProfile(snap.val()))
       })
-    //TODO combine the two reducers - currency is in the
       firebaseRef.database().ref('/users/'+firebaseUser.uid+'/currency')
       .once('value', function(snap) {
         dispatch(userLoggedIn(firebaseUser, snap.val()))

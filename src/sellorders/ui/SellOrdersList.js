@@ -23,8 +23,6 @@ class SellOrdersList extends Component {
     var currency = this.props.user.currency;
     var uid = this.props.user.data.uid;
     var userData, etherPrice;
-    console.log('sellorders');
-    console.log(sellorders);
     const rows = _.map(sellorders,function(sellOrderData, key) {
         if(sellOrderData.sellerUid !== uid) {
           userData = usersInfo ? usersInfo[sellOrderData.sellerUid] : null;

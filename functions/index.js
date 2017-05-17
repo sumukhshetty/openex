@@ -84,7 +84,7 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{countryCode}
             .set('');
           }
         })
-      }, 40000)
+      }, 1200000)
     }
   });
 
@@ -213,7 +213,7 @@ exports.buyOrderCreated = functions.https.onRequest((req, res) => {
       .catch(function(e) {
         res.status(500).send({error: 'Error in firebase query: ' + e});
       })
-      
+
     })
   });
 });
@@ -276,7 +276,7 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
       .catch(function(e) {
         res.status(500).send({error: 'Error querying db: ' + e});
       });
-      
+
     })
   })
 })
@@ -333,7 +333,7 @@ exports.requestEther = functions.https.onRequest((req, res) => {
             .set(req.body.postData.amount);
             admin.database().ref('/sellorders/' + userData.country + '/' + req.body.postData.orderId + '/availableBalance')
             .set(req.body.postData.availableBalance - req.body.postData.amount);
-            
+
           })
           admin.database().ref('/users/' + req.body.postData.sellerUid+ '/activeTrades/' + newRequest.key)
           .set({

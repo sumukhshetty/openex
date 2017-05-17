@@ -326,9 +326,9 @@ button.right {
   float: right;
 }
 
-main[role="main"] section.home {
+/*main[role="main"] section.home {
   margin-bottom: 10rem;
-}
+}*/
 
 .dashboard,
 .activeTrade {
@@ -496,28 +496,4 @@ tbody tr {
   padding: .5rem;
   color: #757575;
   background-color: white;
-}
-
-/*this is for the trade feedback stars*/
-.rating {
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  color: gold;
-}
-.rating > span {
-  display: inline-block;
-  position: relative;
-  width: 1.1em;
-  font-size: 3rem
-}
-.rating > span:hover,
-.rating > span:hover ~ span {
-  color: transparent;
-}
-.rating > span:hover:before,
-.rating > span:hover ~ span:before {
-   content: "\2605";
-   position: absolute;
-   left: 0;
-   color: gold;
 }

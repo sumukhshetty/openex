@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
 import ChatBox from '../../chat/containers/ChatBox'
-import TradeFeedbackContainer from '../../generic-components/tradeFlow/TradeFeedback'
+import TradeFeedback from './../../tradefeedback/layouts/TradeFeedback'
 
-class ReviewActiveTrade extends Component {
+class AllDone extends Component {
 
   render () {
     const progressMap = [
@@ -25,7 +25,7 @@ class ReviewActiveTrade extends Component {
               sellerId={this.props.sellerId}
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
-              <TradeFeedbackContainer />
+              <TradeFeedback sellerId={this.props.sellerId} buyerId={this.props.buyerId} orderId={this.props.tradeId}/>
             </div>
           </div>
         </div>
@@ -34,4 +34,4 @@ class ReviewActiveTrade extends Component {
   }
 }
 
-export default ReviewActiveTrade
+export default AllDone

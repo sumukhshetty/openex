@@ -82,6 +82,14 @@
   display: -ms-inline-flexbox;
   display: inline-flex;
 }
+
+.dn {
+  display: none;
+}
+
+.db {
+  display: block;
+}
 /* 1. Fix for Chrome 44 bug.
  * https://code.google.com/p/chromium/issues/detail?id=506893 */
 .auto {

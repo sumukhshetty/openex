@@ -35,6 +35,10 @@
     "notifications": {
       ".read": "auth != null",
       ".write": "auth != null"
+    },
+    "traderating": {
+      ".read": "auth != null",
+      ".write": "auth != null"
     }
   }
 }
