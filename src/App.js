@@ -115,7 +115,7 @@ class App extends Component {
           <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
             {this.props.children}
           </main>
-          <Footer />
+          
         </section>
       )
     }
