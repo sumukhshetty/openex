@@ -285,6 +285,12 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
 exports.postSellOrder = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try {
+      // ISSUE-231: the user profile will be passed as a prop so we don't have to do
+      // two firebase calls to get the country. The sellorders will be changed to
+      // selltradeadvertisements 
+      //
+      // req.body.country instead of userData.country
+      // req.body.sellTradeAdvertisementDetails
       admin.database().ref("/users/"+req.body.sellerUid).once("value", function(snap){
         var userData = snap.val()
         var newOrder = admin.database().ref("sellorders/"+userData.country).push(req.body.postTradeDetails);
