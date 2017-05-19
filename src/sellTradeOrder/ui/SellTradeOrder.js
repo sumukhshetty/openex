@@ -21,7 +21,7 @@ export default class SellTradeOrder extends Component {
     e.preventDefault();
     this.props.acceptOrder(this.props.buyOrderDetail.buyOrder,
       this.props.buyOrderDetail.buyOrder.amount,
-      this.props.etherPrice,
+      this.props.etherPrice.data,
       this.props.user.data.displayName,
       this.props.buyOrderDetail.buyOrder.buyerAddress,
       this.props.buyOrderDetail.buyOrder.orderId,
