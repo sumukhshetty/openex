@@ -25,7 +25,7 @@ module.exports = {
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
         dispatch(userProfile(snap.val()))
         })
-        // ISSUE-231 remove currency from the dispatch because its already in the userProfile
+        // ISSUE-231-1 remove currency from the dispatch because its already in the userProfile
         firebaseRef.database().ref('/users/'+user.uid+'/currency')
         .once('value', function(snap) {
           dispatch(userLoggedIn(user, snap.val()))

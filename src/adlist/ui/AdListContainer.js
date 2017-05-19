@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    // ISSUE-231-6 just pass the user instead of state
     onBeforeComponentLoads: (web3, state) => {
       dispatch(getAds(state.user))
     },

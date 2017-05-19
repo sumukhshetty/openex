@@ -7,6 +7,8 @@ export default class ActiveAd extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      // ISSUE-231-14: remove web3, user, adData, orderId, tradeType
+      // we get them from the props
       web3: this.props.web3,
       user: this.props.user,
       adData: this.props.adData,
@@ -19,6 +21,7 @@ export default class ActiveAd extends Component {
   }
 
   componentWillMount () {
+    // ISSUE-231-15: orderId changes to tradeAdvertisementId
     this.props.onBeforeComponentLoads(this.props.orderId, this.props.tradeType)
   }
 
@@ -35,6 +38,7 @@ export default class ActiveAd extends Component {
 
   handleEscrowRequest () {
     console.log('trade request handled')
+    // ISSUE-231-16: orderId changes to tradeAdvertisementId
     this.props.addEther(this.state.sendAmount, this.props.orderId, this.props.adData.adData[this.props.orderId].contractAddress, this.props.web3.web3)
   }
 
@@ -43,7 +47,9 @@ export default class ActiveAd extends Component {
   }
 
   render () {
+    // ISSUE-231-17: orderId changes to tradeAdvertisementId
     if (this.props.adData.adData[this.props.orderId]) {
+      // ISSUE-231-18: orderId changes to tradeAdvertisementId
       var adDetails = this.props.adData.adData[this.props.orderId];
       var display_id
       if (adDetails.contractAddress){
@@ -51,6 +57,7 @@ export default class ActiveAd extends Component {
       } else {
         display_id = "-"
       }
+      // ISSUE-231-18: get the available balance from the contract
       var availableBalance
       if (adDetails.availableBalance) {
         availableBalance = adDetails.availableBalance - adDetails.pendingBalance

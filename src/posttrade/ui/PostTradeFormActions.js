@@ -30,6 +30,11 @@ export function postTrade(postTradeDetails, web3, state) {
     // Using truffle-contract we create the authentication object.
     // TODO check what kind of trade is being made and either get the contract
     // or make an entry in the firebase db
+
+    // ISSUE-231-3 this would become the orderBookFactory
+    // this should be taken from the redux store in an onBeforeComponentLoads
+    // the UI component will then get this from props. This function should be
+    // renamed to createSellTradeAdvertisement
     const factory = contract(OrderFactoryContract);
     factory.setProvider(web3.currentProvider);
 
@@ -84,6 +89,10 @@ export function postTrade(postTradeDetails, web3, state) {
 
 
 export function buyEtherPostTrade(postTradeDetails, web3, state) {
+  // ISSUE-231-5: creating a buyorder should be moved over to buyTradeAdvertisement, postTradeDetails 
+  // should be changed to postBuyTradeAdvertisement, web3 is not used, pass in the user instead of the state
+  // userData.country should be be taken from user.profile.country, tradeCreated should be changed to 
+  // buyTradeAdvertisementCreated, sendEtherState stays the same
   return function(dispatch){
     dispatch(sendEtherState('sending'));
     try {

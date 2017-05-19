@@ -1,3 +1,4 @@
+// ISSUE-231-8: activeAds should be changed to data
 const initialState = {
   activeAds: null
 }

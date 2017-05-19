@@ -285,7 +285,7 @@ exports.etherReleased = functions.https.onRequest((req, res) => {
 exports.postSellOrder = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try {
-      // ISSUE-231: the user profile will be passed as a prop so we don't have to do
+      // ISSUE-231-4: the user profile will be passed as a prop so we don't have to do
       // two firebase calls to get the country. The sellorders will be changed to
       // selltradeadvertisements 
       //
