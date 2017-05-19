@@ -11,8 +11,8 @@ class FooterTable extends Component {
             <ul className='pure-menu-list'>
               <li><h3>About Us</h3></li>
               <li className='pure-menu-item'><a href='#'>Blog</a></li>
-              <li className='pure-menu-item'><a href='#'>About</a></li>
-              <li className='pure-menu-item'><a href='#'>News</a></li>
+              <li className='pure-menu-item'><a href='#'>Who Are We</a></li>
+              <li className='pure-menu-item'><a href='#'>Media Coverage</a></li>
               <li className='pure-menu-item'><a href='#'>Jobs</a></li>
             </ul>
           </nav>
@@ -23,13 +23,10 @@ class FooterTable extends Component {
             <ul className='pure-menu-list'>
               <li><h3>Support</h3></li>
               <li className='pure-menu-item'>
-                <a href='#'>Help Center</a>
+                <a href='#'>User Guide</a>
               </li>
               <li className='pure-menu-item'>
                 <a href='#'>Contact Us</a>
-              </li>
-              <li className='pure-menu-item'>
-                <a href='#'>Copyright</a>
               </li>
               <li className='pure-menu-item'>
                 <a onClick={() => browserHistory.push('termsofservice')}>Privacy &amp; Terms</a>
@@ -44,7 +41,6 @@ class FooterTable extends Component {
               <li><h3>Community</h3></li>
               <li className='pure-menu-item'><a href='#'>Reddit</a></li>
               <li className='pure-menu-item'><a href='#'>Forum</a></li>
-              <li className='pure-menu-item'><a href='#'>Twitter</a></li>
               <li className='pure-menu-item'><a href='#'>Slack</a></li>
             </ul>
           </nav>
