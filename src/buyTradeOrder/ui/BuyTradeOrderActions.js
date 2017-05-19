@@ -90,7 +90,7 @@ module.exports = {
             dispatch(getUserInfo(snapshot.val()))
           })
         })
-      
+
     })
   },
 
@@ -142,7 +142,6 @@ module.exports = {
         sellerUid: order.sellerUid,
         sellerUsername: order.sellerUsername,
         paymentMethod: order.paymentMethod,
-        bankInformation: order.bankInformation,
         createdAt: now,
         lastUpated: now,
         status: 'Awaiting Seller Confirmation',
