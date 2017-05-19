@@ -24,9 +24,24 @@
   background-color: #f5f5f5;
 }
 
+.bg-gray {
+  background-color: #E5E5E5 !important;
+}
 
-.bg-blue {
+.bg-gray {
   background-color: rgba(0,126,229,1);
+}
+
+.b--blue {
+  border-color: #4C92C2;
+}
+
+.bl--gray {
+  border-left-color: #CCC !important
+}
+
+.br--white {
+  border-right-color: white !important
 }
 
 .bg-white {
