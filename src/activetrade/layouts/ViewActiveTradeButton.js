@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 
-//TODO import HelpContainer
 
 class ViewActiveTradeButton extends Component {
-  // TODO @qjflores get trade data from firebase
 
+  // ISSUE-231-39: Change the url from activebuyorder and activesellorder to activetrade,
+  // change the orderId to purchaseRequestId
   render() {
     var url = this.props.tradeType === 'buy-ether' ? 'activebuyorder/' + this.props.orderId : 'activesellorder/' + this.props.orderId;
     return(

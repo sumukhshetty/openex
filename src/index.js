@@ -90,6 +90,8 @@ ReactDOM.render((
         <Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />
         <Route path='sellTradeOrder/:orderId' component={UserIsAuthenticated(SellTradeOrder)} />
         <Route path='sellorderdetail/:orderId' component={UserIsAuthenticated(SellOrderDetail)} />
+      {/* ISSUE-231-25: buyTradeAdvertisement should be changed to buytradeadvertisement, orderId changed to tradeAdvertisementId */}
+      {/* ISSUE-231-40: activebuyorder should be changed to buytradeadvertisement, orderId changed to tradeAdvertisementId */}
         <Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />
         <Route path='activesellorder/:requestId' component={UserIsAuthenticated(ActiveSellOrder)} />
         <Route path='payment/:orderId' component={UserIsAuthenticated(Payment)} />

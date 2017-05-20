@@ -1,3 +1,4 @@
+// ISSUE-231-60: change name of file to BuyTradeAdverisementContainer
 import { connect } from 'react-redux'
 import BuyTradeOrder from './BuyTradeOrder'
 import * as actions from './BuyTradeOrderActions'

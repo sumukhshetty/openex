@@ -1,8 +1,9 @@
+// ISSUE-231-41: This component should be changed to ActiveTradeRow, there should be an layouts/activeTradeRow
 import React, { Component } from 'react'
-// TODO import HelpContainer
 import ViewActiveTradeButton from '../../activetrade/layouts/ViewActiveTradeButton'
 
 class ActiveTrade extends Component {
+  // ISSUE-231-30: the constructor is removed
   constructor (props) {
     super(props)
     this.state = {
@@ -12,12 +13,17 @@ class ActiveTrade extends Component {
       tradeType: this.props.tradeType
     }
   }
-
+  // ISSUE-231-31: orderId is changed to purchaseRequestId
   componentWillMount () {
     this.props.onBeforeComponentLoads(this.props.orderId, this.props.tradeType)
   }
   render () {
+    // ISSUE-231-34: This ActiveTradeComponent should be given the data
+    // of the purchaseRequest as a prop - all of the activeTradeData
+    // should be replaced with a purchaseRequest obj
+    // ISSUE-231-32: orderId is changed to purchaseRequestId
     if (this.props.activeTradeData.activeTradeData[this.props.orderId]) {
+      // ISSUE-231-33: orderId is changed to purchaseRequestId
       var tradeDetails = this.props.activeTradeData.activeTradeData[this.props.orderId]
       var display_id
       if (tradeDetails.contractAddress) {

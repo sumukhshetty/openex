@@ -9,6 +9,7 @@ function getActiveTrades (activeTradesPayload) {
 }
 
 module.exports = {
+  // ISSUE-231-26: this should be called in userActions
   getActiveEscrows: (user) => (dispatch) => {
     firebaseRef.database()
       .ref('/users/' + user.data.uid + '/activeTrades').orderByKey()

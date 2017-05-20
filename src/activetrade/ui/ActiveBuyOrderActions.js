@@ -1,3 +1,6 @@
+// ISSUE-231-45: we're deleting this file since all purchaserequests will
+// be mamanged by the activeTrade component
+
 // import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
 import BuyOrderContract from '../../../build/contracts/BuyOrder.json';
 import { browserHistory } from 'react-router'

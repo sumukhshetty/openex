@@ -1,3 +1,5 @@
+// ISSUE-231-38: delete this file
+
 import React, { Component } from 'react';
 // import ActiveTradeContainer from './../ui/ActiveTradeContainer'
 import ActiveTradeHeader from './ActiveTradeHeader';

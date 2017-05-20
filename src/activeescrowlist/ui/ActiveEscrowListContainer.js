@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    // ISSUE-231-25: just pass the user and not the state
     onBeforeComponentLoads: (web3, state) => {
       dispatch(getActiveEscrows(state.user))
     },

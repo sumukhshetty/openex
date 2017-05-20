@@ -61,6 +61,7 @@ class Dashboard extends Component {
             <div>
               <EnableNotifications />
               <DashboardInfoMessage />
+              {/* ISSUE-231-28: The ActiveEscrowList component will be renamed to activeTradeList*/}
               <ActiveEscrowList />
               <AdList />
               <CompletedTradeList />

@@ -1,3 +1,4 @@
+//ISSUE-231-41: delete this file
 import React, { Component } from 'react'
 // TODO import HelpContainer
 import ViewActiveTradeButton from './ViewActiveTradeButton'

@@ -1,3 +1,5 @@
+// ISSUE-231-48: move this to the activetrade directory
+
 const initialState = {
   activeTradeData: {}
 }

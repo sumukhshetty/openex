@@ -4,6 +4,7 @@ import { getActiveTrade } from './ActiveTradeActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    // ISSUE-231-28: get rid of web3, orderKey, orderId should be changed to purchaseRequestId
     web3: state.web3,
     user: state.user,
     orderId: ownProps.orderId,
@@ -15,6 +16,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    // ISSUE-231-29: orderId should be changed to purchaseRequestId
     onBeforeComponentLoads: (orderId, tradeType) => {
 
       dispatch(getActiveTrade(orderId, tradeType))

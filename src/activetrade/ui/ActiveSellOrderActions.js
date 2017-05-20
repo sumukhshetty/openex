@@ -1,3 +1,4 @@
+// ISSUE-231-48: Change this file from ActiveSellOrderActions to ActiveTradeActions
 // import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
 import SellOrderContract from '../../../build/contracts/SellOrder.json';
 // import { browserHistory } from 'react-router'
@@ -12,6 +13,7 @@ import * as orderHelpers from './../../util/orderHelpers'
 const request = require('request')
 
 export const GET_SELL_ORDER = 'GET_SELL_ORDER';
+// ISSUE-231-49: Change this file from getSellOrder to getPurchaseRequest
 function getSellOrder (sellOrderPayload) {
   return {
     type: GET_SELL_ORDER,
@@ -31,7 +33,7 @@ module.exports = {
   clearSellOrderState: () => (dispatch) => {
     dispatch({ type: 'CLEAR_BUY_ORDER'});
   },
-
+  // ISSUE-231-50: Change this file from getSellOrder to getPurchaseRequest, change sellOrder to purchaseRequest
   sellOrder: (requestId) => (dispatch) => {
     firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
       var userData = snap.val()
@@ -43,7 +45,7 @@ module.exports = {
     })
   },
 
-
+  // ISSUE-231-51: move this out af the ActiveTradeActions and into ConfirmTradeActions
   confirmTrade: (sellOrder, contractAddress, buyerAddress, requestId, amount, web3) => (dispatch) => {
     console.log("ui.actions.confirmTrade")
     console.log(sellOrder)

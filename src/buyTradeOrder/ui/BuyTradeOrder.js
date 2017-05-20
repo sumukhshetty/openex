@@ -1,3 +1,5 @@
+// ISSUE-231-60: change name of file to BuyTradeAdverisement
+
 import React, { Component } from 'react';
 import Converter from '../ui/Converter';
 import Star from '../../images/Star';

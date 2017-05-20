@@ -63,6 +63,7 @@ export default class ActiveAd extends Component {
         availableBalance = adDetails.availableBalance - adDetails.pendingBalance
         availableBalance = (availableBalance % 1 !== 0) ? availableBalance.toFixed(4) : availableBalance
       }
+      // ISSUE-231-20: we can get rid of tradeType with using adDetails.tradeType
       var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad'
 
       return (
@@ -81,6 +82,7 @@ export default class ActiveAd extends Component {
               {this.state.showEscrowModal && <AddEscrowModal sendEtherState={this.props.sendEtherState} close={this.removeEscrowModal.bind(this)} handleEscrowRequest={this.handleEscrowRequest.bind(this)} onEtherAmountChange={this.onEtherAmountChange.bind(this)} />}
 
               <button className=' grow mr3' onClick={this.showEscrowModal.bind(this)}>+ Add Ether</button></div>}
+            {/* ISSUE-231-19: orderId changes to tradeAdvertisementId*/}
             <ViewActiveAdButton orderId={this.props.orderId}
               tradeType={this.props.tradeType} />
           </span>

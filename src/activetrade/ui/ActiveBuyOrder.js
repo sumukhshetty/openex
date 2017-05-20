@@ -1,3 +1,6 @@
+// ISSUE-231-44: we're deleting this file since all purchaserequests will
+// be mamanged by the activeTrade component
+
 import React, { Component } from 'react'
 
 import AwaitingEscrow from '../layouts/AwaitingEscrow.js'

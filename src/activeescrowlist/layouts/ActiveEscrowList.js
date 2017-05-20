@@ -1,3 +1,4 @@
+// ISSUE-231-27: This entire component should be renamed to activeTradeList
 import React, { Component } from 'react';
 
 import ActiveEscrowListContainer from './../ui/ActiveEscrowListContainer';

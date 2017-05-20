@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
     },
 
     addEther: (amount, orderId, contractAddress, web3) => {
-      // ISSUE-231-12: orderId changes to tradeAdvertisementId
+      // ISSUE-231-13tradeAdvertisementIdtradeAdvertisementId: orderId changes to tradeAdvertisementId
       dispatch(addEtherToContract(amount, orderId, contractAddress, web3))
     },
 

@@ -1,3 +1,4 @@
+// ISSUE-231-53: change file name from ActiveSellOrder to ActiveTradeOrder
 import React, { Component } from 'react'
 
 import Confirmation from '../layouts/Confirmation.js'
@@ -7,6 +8,7 @@ import AllDone from '../layouts/AllDone.js'
 import Dot from '../../images/svgReactComponents/Dot.js'
 
 class ActiveSellOrder extends Component {
+  // ISSUE-231-46: remove this constructor
   constructor (props) {
     super(props)
 
@@ -28,6 +30,7 @@ class ActiveSellOrder extends Component {
 
   componentWillUnmount () {
     console.log('activesellorder: in component will unmount')
+    // ISSUE-231-47: call on an action to remove the request data from activetrade in the store
   }
 
   confirmTrade () {

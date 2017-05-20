@@ -1,3 +1,5 @@
+// ISSUE-231-57: this changes to BuyTradeAdvertisementActions to BuyTradeAdvertisementActions
+
 import SellOrderContract from '../../../build/contracts/SellOrder.json'
 import { browserHistory } from 'react-router'
 
@@ -5,6 +7,7 @@ const contract = require('truffle-contract')
 import {firebaseRef} from './../../index.js'
 const request = require('request')
 export const GET_SELL_ORDER = 'GET_SELL_ORDER'
+
 function getSellOrder(sellOrderPayload) {
   return {
     type: GET_SELL_ORDER,
@@ -57,6 +60,7 @@ module.exports = {
 
     firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
       var userData = snap.val()
+      // ISSUE-231-61: sellorders becomes purchaserequests
       firebaseRef.database().ref('/sellorders/' + userData.country + '/' + orderId)
         .once("value", function(snapshot){
           console.log('got sellorder by id');
