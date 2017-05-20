@@ -23,14 +23,15 @@ module.exports = {
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
-        dispatch(userProfile(snap.val()))
-        })
-        // ISSUE-231-1 remove currency from the dispatch because its already in the userProfile
-        firebaseRef.database().ref('/users/'+user.uid+'/currency')
-        .once('value', function(snap) {
-          dispatch(userLoggedIn(user, snap.val()))
+          dispatch(userProfile(snap.val()))
+          dispatch(userLoggedIn(user))
           return browserHistory.push('/dashboard')
         })
+        // ISSUE-231-1 remove currency from the dispatch because its already in the userProfile
+        /*firebaseRef.database().ref('/users/'+user.uid+'/currency')
+        .once('value', function(snap) {
+          return browserHistory.push('/dashboard')
+        })*/
       } else {
         dispatch({ type: "USER_LOGGED_OUT"});
         return browserHistory.push('/')
