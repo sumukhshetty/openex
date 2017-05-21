@@ -1,3 +1,4 @@
+// ISSUE-231-68: We don't really need this reducer to store anything
 const initialState = {
   data: null
 }

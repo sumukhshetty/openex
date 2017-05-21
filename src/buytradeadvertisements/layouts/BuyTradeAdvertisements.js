@@ -1,14 +1,14 @@
-// ISSUE-231-70: Replace BuyOrders with buyTradeAdvertisements
+// ISSUE-231-70: This replaces buyorders
 
 import React, { Component } from 'react'
-import BuyOrdersContainer from './../ui/BuyOrdersContainer'
+import BuyTradeAdvertisementContainer from './../ui/BuyTradeAdvertisementContainer'
 
 export default class BuyOrders extends Component {
   render () {
     return (
       <div className='w-100 bg-smoke'>
         <div className='w-75 center'>
-          <BuyOrdersContainer />
+          <BuyTradeAdvertisementContainer />
         </div>
       </div>
     )

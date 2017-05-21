@@ -9,6 +9,46 @@ var mgApiKey = "key-3d2bd1463fc87e2aff2224f96c1df70a"
 var domain = "mg.automte.com"
 var mailgun= require('mailgun-js')({apiKey: mgApiKey, domain:domain})
 
+exports.createBuyTradeAdvertisement = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try{
+      var newAdvertisement = admin.database().ref('/buytradeadvertisements/'+ req.body.user.profile.country)
+        .push(req.body.postTradeDetails, function(error){
+          admin.database().ref('/users/' + req.body.user.data.uid + '/advertisements/' + 
+            newAdvertisement.key + '/tradetype').set('buy-ether')
+        })
+
+    } catch (error) {
+      console.log(error)
+    }
+  })
+})
+
+exports.createSellTradeAdvertisement = function.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try {
+      var newAdvertisement = admin.database().ref('/selltradeadvertisements/'+ req.body.user.profile.country)
+        .push(req.body.postTradeDetails, function(err){
+          admin.database().ref('/users/'+req.body.user.data.uid+'/advertisements/' +
+              newAdvertisement.key + '/tradetype').set('sell-ether')
+        })
+    } catch (error)
+  })
+})
+
+exports.sellerCreatesPurchaseRequest = function.https.onRequest((req, res) => {
+  cors(req, res, ()=>{
+    try {
+      var newRequest = admin.database().ref(/purchaserequests/ req.body.user.profile.country)
+        .push(req.body.purchaseRequestData, function(err){
+          admin.database().ref(/users/+ req.body.user.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
+          admin.database().ref(/users/+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})   
+        })
+
+    } catch(error)
+  })
+})
+
 exports.mailgunHelloWorld = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try {

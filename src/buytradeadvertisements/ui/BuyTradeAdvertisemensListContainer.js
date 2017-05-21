@@ -1,12 +1,11 @@
-//ISSUE-231-71: DELETE this file
 import { connect } from 'react-redux'
-import UserBuyOrders from './UserBuyOrders'
+import BuyTradeAdvertisementsList from './BuyTradeAdvertisementsList'
 import { buyOrders } from './BuyOrdersActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    buyorders: state.buyorders,
+    buytradeadvertisements: state.buytradeadvertisements,
     user: state.user,
     usersInfo: state.usersInfo
   }
@@ -15,15 +14,15 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (user) => {
-
-      dispatch(buyOrders(user))
+      console.log("buytradeadvertisementsList.onBeforeComponentLoad")
+      //dispatch(buyOrders(user))
     }
   }
 }
 
-const UserBuyOrdersContainer = connect(
+const BuyTradeAdvertisementsListContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserBuyOrders)
+)(BuyTradeAdvertisementsList)
 
-export default UserBuyOrdersContainer
+export default BuyTradeAdvertisementsListContainer

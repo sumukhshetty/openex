@@ -14,10 +14,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPostTradeFormSubmit: (tradeDetails, web3, state) => {
+    onCreateSellTradeAdvertisementFormSubmit: (tradeDetails, web3, user) => {
       //event.preventDefault();
 
-      dispatch(actions.postTrade(tradeDetails, web3, state))
+      dispatch(actions.userCreatesSellTradeAdvertisement(tradeDetails, web3, user))
     },
     onBuyEtherFormSubmit: (tradeDetails, web3, state) => {
       event.preventDefault();

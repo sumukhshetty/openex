@@ -1,3 +1,4 @@
+// ISSUE-231-71: Delete this file
 import React, { Component } from 'react';
 import * as _ from 'lodash';
 import SingleBuyOrder from './SingleBuyOrder';

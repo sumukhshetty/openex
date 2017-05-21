@@ -8,6 +8,119 @@ const contract = require('truffle-contract')
 
 import {firebaseRef} from './../../index.js'
 
+// New
+export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
+function sendEtherState(etherStatePayload) {
+  return {
+    type: ETHER_SEND_STATE,
+    payload: etherStatePayload
+  }
+}
+
+export const CREATE_BUY_TRADE_ADVERTISEMENT = 'BUY_TRADE_ADVERTISEMENT'
+function createBuyTradeAdvertisement(buyTradeAdvertisementPayload){
+  return {
+    type: CREATE_BUY_TRADE_ADVERTISEMENT,
+    payload: buyTradeAdvertisementPayload
+  }
+}
+
+export function userCreatesBuyTradeAdvertisement(postTradeDetails, web3, state){
+  return function(dispatch){
+    request({
+      method: 'post',
+      body: {
+        postTradeDetails: postTradeDetails,
+        sellerUid: state.user.data.uid,
+        contractTx: txHash['tx'],
+        // change this to sellOrderBook
+        contractAddress: txHash['logs'][0]['args']['orderAddress'] 
+      },
+      json: true,
+      url: 'https://us-central1-automteetherexchange.cloudfunctions.net/createBuyTradeAdvertisement'
+    },
+    function(err, res, body) {
+      if (err) {
+        console.error('error posting json: ', err)
+        throw err
+      }
+      if(res.statusCode === 200) {
+        browserHistory.push('/dashboard')
+      }
+      if(res.statusCode === 500) {
+        console.error('Server responded with an error: ' + res.body.error);
+        throw res.body.error
+      }
+    });
+    dispatch(createBuyTradeAdvertisement(postTradeDetails))
+  }
+}
+
+export const CREATE_SELL_TRADE_ADVERTISEMENT = 'CREATE_SELL_TRADE_ADVERTISEMENT'
+function createSellTradeAdvertisement(sellTradeAdvertisementPayload){
+  return {
+    type: CREATE_SELL_TRADE_ADVERTISEMENT,
+    payload: sellTradeAdvertisementPayload
+  }
+}
+
+export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
+  return function(dispatch){
+    dispatch(sendEtherState('sending'));
+    // ISSUE-231 - new - we change the orderFactoryContract to the orderBookFactoryContract
+    const factory = contract(OrderFactoryContract);
+    factory.setProvider(web3.currentProvider);
+    // Declaring this for later so we can chain functions on Authentication.
+    var factoryInstance;
+
+    // Get current ethereum wallet. TODO: Wrap in try/catch.
+    var coinbase = web3.eth.coinbase;
+
+    factory.at(factoryAddress.factoryAddress)
+      .then(function(_factory) {
+        console.log('got factory contract');
+        factoryInstance = _factory;
+        // this should change to createSellOrderBook({from:coinbase})
+        return factoryInstance.createSellOrder({from: coinbase});
+      })
+      .then(function(txHash) {
+        request({
+            method: 'post',
+            body: {
+              tradeDetails: tradeDetails,
+              sellerUid: user.data.uid,
+              contractTx: txHash['tx'],
+              // change this to sellOrderBook
+              contractAddress: txHash['logs'][0]['args']['orderAddress'] 
+            },
+            json: true,
+            url: 'https://us-central1-automteetherexchange.cloudfunctions.net/createSellTradeAdvertisement'
+          },
+          function(err, res, body) {
+            if (err) {
+              console.error('error posting json: ', err)
+              throw err
+            }
+            if(res.statusCode === 200) {
+              browserHistory.push('/dashboard')
+            }
+            if(res.statusCode === 500) {
+              console.error('Server responded with an error: ' + res.body.error);
+              throw res.body.error
+            }
+          });
+      })
+      .catch(function (error) {
+        dispatch(sendEtherState('init'));
+        console.log(error);
+      })
+
+    })
+    dispatch(createSellTradeAdvertisement(postTradeDetails))
+  }
+}
+
+// this is being deprecated
 export const POST_TRADE = 'POST_TRADE'
 function tradeCreated(tradePayload) {
   return {
@@ -24,6 +137,7 @@ function sendEtherState(etherStatePayload) {
   }
 }
 
+// This creating a sell order and will be replaced with createSellTradeAdvertisement
 export function postTrade(postTradeDetails, web3, state) {
   return function(dispatch) {
     dispatch(sendEtherState('sending'));
