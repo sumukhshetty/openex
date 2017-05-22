@@ -7,8 +7,8 @@ export default (props) => {
 
       <desc>Created with Sketch.</desc>
       <defs />
-      <g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
-        <g id='Home' transform='translate(-1013.000000, -1502.000000)' fill-rule='nonzero'>
+      <g id='Page-1' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
+        <g id='Home' transform='translate(-1013.000000, -1502.000000)' fillRule='nonzero'>
           <g id='Group' transform='translate(1013.000000, 1502.000000)'>
             <polygon id='Shape' fill='#343434' points='35.9890594 0 35.2029656 2.6882494 35.2029656 80.6950216 35.9890594 81.484518 71.9783719 60.0809592' />
             <polygon id='Shape' fill='#8C8C8C' points='35.9893125 0 0 60.0809592 35.9893125 81.484801 35.9893125 43.6226475' />
