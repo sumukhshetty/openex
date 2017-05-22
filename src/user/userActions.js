@@ -31,6 +31,13 @@ function getBuyTradeAdvertisements(buyTradeAdvertisements){
   }
 }
 
+function getSellTradeAdvertisements(sellTradeAdvertisements){
+  return {
+    type: 'GET_SELL_TRADE_ADVERTISEMENTS',
+    payload: sellTradeAdvertisements
+  }
+}
+
 module.exports = {
   startListeningUserAuth: () => (dispatch, getState) =>{
     firebaseRef.auth().onAuthStateChanged(function(user){
@@ -44,6 +51,9 @@ module.exports = {
         })
         firebaseRef.database().ref('/users').once('value', function(snap){
           dispatch(users(snap.val()))
+        })
+        firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).on('value', function(snap){
+          dispatch(getSellTradeAdvertisements(snap.val()))
         })
           return browserHistory.push('/dashboard')
         })

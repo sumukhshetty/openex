@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import * as _ from 'lodash'
 
-import BuyOrdersListContainer from './BuyOrdersListContainer'
-import BuyOrderTradeDetailsHeader from './BuyOrderTradeDetailsHeader'
+import BuyTradeAdvertisemensListContainer from './BuyTradeAdvertisemensListContainer'
+import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
 
 class BuyTradeAdvertisements extends Component {
 

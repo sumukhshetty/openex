@@ -37,6 +37,8 @@ import ResetPassword from './signup/ResetPassword'
 import ChatBox from './chat/containers/ChatBox'
 
 import BuyTradeAdvertisement from './buytradeadvertisement/BuyTradeAdvertisement'
+import BuyTradeAdvertisements from './buytradeadvertisements/BuyTradeAdvertisements'
+import SellTradeAdvertisements from './selltradeadvertisements/SellTradeAdvertisements'
 
 // Redux Store
 import store from './store'
@@ -80,10 +82,12 @@ ReactDOM.render((
         <Route path='signup' component={UserIsNotAuthenticated(SignUp)} />
         <Route path='login' component={UserIsNotAuthenticated(Login)} />
         <Route path='profile' component={UserIsAuthenticated(Profile)} />
-      {/* ISSUE-231: delete sellorders, replace with sellether*/}
+      {/* ISSUE-231: delete sellorders, replace with sellether,BuyTradeAdvertisements*/}
         <Route path='sellorders' component={UserIsAuthenticated(BuyOrders)} />
-        <Route path='sellether' component={UserIsAuthenticated(BuyTradeAdvertisements)}
+        <Route path='sellether' component={UserIsAuthenticated(BuyTradeAdvertisements)}/>
+      {/* ISSUE-231: delete buyorders, replace with buyether,SellTradeAdvertisements*/}
         <Route path='buyorders' component={UserIsAuthenticated(SellOrders)} />
+        <Route path='buyether' component={UserIsAuthenticated(SellTradeAdvertisements)} />
         <Route path='help' component={UserIsAuthenticated(Help)} />
         <Route path='help/confirmation' component={UserIsAuthenticated(HelpConfirmation)} />
         <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />

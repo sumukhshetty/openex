@@ -30,6 +30,7 @@ import buyTradeAdvertisementsReducer from './buytradeadvertisements/buytradeadve
 import buyTradeAdvertisementReducer from './buytradeadvertisement/buytradeadvertisementreducer'
 import usersReducer from './user/usersreducer'
 import buyerReducer from './buytradeadvertisement/buyerreducer'
+import sellTradeadvertisementsReducer from './selltradeadvertisements/selltradeadvertisementsreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -49,7 +50,9 @@ const reducer = combineReducers({
 // ISSUE-231-71: delete buyorders, replace with buyTradeAdvertisementsReducer
   buyorders: buyOrderReducer,
   buytradeadvertisements: buyTradeAdvertisementsReducer,
+// ISSUE-231-73: delete sellorders, replace with sellTradeadvertisementsReducer
   sellorders: sellOrderReducer,
+  selltradeadvertisements: sellTradeadvertisementsReducer,
   activeTrades: activeEscrowListReducer,
   completedTrades: completedTradeListReducer,
   activeAds: adListReducer,

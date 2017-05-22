@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import BuyTradeAdvertisements from './BuyTradeAdvertisements'
+import SellTradeAdvertisements from './SellTradeAdvertisements'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    buytradeadvertisements: state.buytradeadvertisements,
+    selltradeadvertisements: state.selltradeadvertisements,
     user: state.user
   }
 }
@@ -12,15 +12,15 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (user) => {
-      console.log("buytradeadvertisements.onBeforeComponentLoad")
+      console.log("selltradeadvertisements.onBeforeComponentLoad")
       //dispatch(buyOrders(user))
     }
   }
 }
 
-const BuyTradeAdvertisementsContainer = connect(
+const SellTradeAdvertisementsContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(BuyTradeAdvertisements)
+)(SellTradeAdvertisements)
 
-export default BuyTradeAdvertisementsContainer
+export default SellTradeAdvertisementsContainer

@@ -6,26 +6,26 @@ import LastOnline from './LastOnline'
 import Trustworthiness from './Trustworthiness'
 const moment = require('moment')
 
-const SingleBuyTradeAdvertisment = (props) => {
+const BuyTradeAdvertismentRow = (props) => {
   return (
     <tbody className='flex'>
-      {props.buyTradeAdvertisementData && props.userData &&
+      {props.buyTradeAdvertisementData && props.buyer &&
       <tr className='flex cxc'>
         <td className='fb20' >{props.buyTradeAdvertisementData.buyerUsername} - {props.buyTradeAdvertisementData.location}</td>
         <td className='fb10 tc' >{props.buyTradeAdvertisementData.paymentMethod}</td>
         <td className='fb15 tc' >{props.buyTradeAdvertisementData.amount}</td>
         <td className='fb5 tc' >{props.buyTradeAdvertisementData.minTransactionLimit} - {props.buyTradeAdvertisementData.maxTransactionLimit}</td>
-        <td className='fb15 tc' >{moment(props.userData.lastTransfer).fromNow() || '-'}</td>
-        <Trustworthiness trustLevel={props.userData.trustworthiness} />
-        <LastOnline time={props.userData.lastOnline} />
+        <td className='fb15 tc' >{moment(props.buyer.lastTransfer).fromNow() || '-'}</td>
+        <Trustworthiness trustLevel={props.buyer.trustworthiness} />
+        <LastOnline time={props.buyer.lastOnline} />
         <SellButton buyTradeAdvertisementId={props.buyTradeAdvertisementData.advertisementId} />
       </tr>}
     </tbody>
   )
 }
 
-SingleBuyTradeAdvertis.propTypes = {
+BuyTradeAdvertismentRow.propTypes = {
   buyTradeAdvertisementData: PropTypes.object.isRequired
 }
 
-export default SingleBuyTradeAdvertisment
+export default BuyTradeAdvertismentRow
