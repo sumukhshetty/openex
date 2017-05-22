@@ -31,6 +31,6 @@ export default (props) => (
         <input id='fiatAmount' type='number' value={props.fiatAmount} className='w3 pa2' onChange={props.onAmountChange}/>
       </div>
     </div>
-    <input type='submit' value='Send Trade Request' className='mt5' />
+    {props.price && <input type='submit' value='Send Trade Request' className='mt5' />}
   </form>
 );
