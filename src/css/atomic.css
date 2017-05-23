@@ -9,6 +9,9 @@
   height: 1px;
 }
 
+.z--1 {
+  z-index: -1;
+}
 /*font*/
 
 .lato {

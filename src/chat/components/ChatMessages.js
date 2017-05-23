@@ -2,36 +2,37 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Other from '../../images/svgReactComponents/other.js'
 import You from '../../images/svgReactComponents/you.js'
+import Arbiter from '../../images/svgReactComponents/Arbiter.js'
 import stockPhoto from '../../images/downloadPhoto.png'
 const moment = require('moment')
 
 const ChatMessage = (props) => (
   <div className='flex col ma3'>
     <div className={`flex cxc ${props.you ? null : `reverse`}`}>
-      {props.you ? <You /> : <Other />}
-      {props.download &&
+      {props.arbiter ? <Arbiter /> : props.you ? <You /> : <Other />}
+      {props.download ?
         <div className={`pa2 br2 flex ${props.you ? `bg-white` : `bg-blue white`}`}>
           <img
-            src={stockPhoto}
-            alt='download preview'
+            src={props.message}
+            alt='Download Preview'
             className='mh2'
-            width='125px' />
-          <div className='flex col pa0 ma0'>
-            <p>
-              BigRoom.png
-            </p>
-            <p className='fsmall pointer blue'>
+            height='100px'
+            width='auto' />
+          <div className='flex col mxe pb1 ma0'>
+            <a href={props.message}
+              className='fsmall pointer blue'
+              download>
               Download
-            </p>
+            </a>
           </div>
-        </div>}
-      {props.message &&
-        <div className={`pa2 br2 ${props.you ? `bg-white` : `bg-blue white`}`}>
+        </div> :
+        <div className={`pa2 br2 o ${props.arbiter ? `bg-danger white` : props.you ? `bg-white` : `bg-blue white`}`}>
           {props.message}
         </div>}
     </div>
-    <time className={`ftiny ${props.you ? `cs` : `ce`}`}>
-      {props.time}
+
+    <time className={`ph4 mt1 ftiny ${props.you ? `cs` : `ce`}`}>
+
       {moment(props.time).format('MMMM Do YYYY, h:mm:ss a')}
     </time>
   </div>

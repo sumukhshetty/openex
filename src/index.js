@@ -35,12 +35,13 @@ import UserScreen from './userScreen/layouts/UserScreen'
 import TermsOfService from './termsofservice/TermsOfService'
 import ResetPassword from './signup/ResetPassword'
 import ChatBox from './chat/containers/ChatBox'
+import Admin from './admin/layouts/Admin'
 
 // Redux Store
 import store from './store'
 import * as firebase from 'firebase'
 import * as _firebaseconfig from './../secrets/firebaseconfig'
-//import * as actions from './buyorders/ui/BuyOrdersActions'
+// import * as actions from './buyorders/ui/BuyOrdersActions'
 import * as useractions from './user/userActions'
 
 // Config
@@ -54,20 +55,20 @@ var config = {
   messagingSenderId: _firebaseconfig._messagingSenderId
 }
 export var firebaseRef = firebase.initializeApp(config)
-export var firebaseMessaging = firebase.messaging();
+export var firebaseMessaging = firebase.messaging()
+export const firebaseStorage = firebase.storage()
 const history = syncHistoryWithStore(browserHistory, store)
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('../firebase-messaging-sw.js')
-  .then(function(registration) {
-    console.log('Registration successful, scope is:', registration.scope);
-  }).catch(function(err) {
-    console.log('Service worker registration failed, error:', err);
-  });
+  .then(function (registration) {
+    console.log('Registration successful, scope is:', registration.scope)
+  }).catch(function (err) {
+    console.log('Service worker registration failed, error:', err)
+  })
 }
 
-
-export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP;
+export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
 
 ReactDOM.render((
   <Provider store={store}>
@@ -75,6 +76,7 @@ ReactDOM.render((
       <Route path='/' component={App}>
         <IndexRoute component={Home} />
         <Route path='dashboard' component={UserIsAuthenticated(Dashboard)} />
+        <Route path='admin' component={UserIsAuthenticated(Admin)} />
         <Route path='signup' component={UserIsNotAuthenticated(SignUp)} />
         <Route path='login' component={UserIsNotAuthenticated(Login)} />
         <Route path='profile' component={UserIsAuthenticated(Profile)} />
