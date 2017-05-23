@@ -6,8 +6,24 @@ import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade'
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteBuy'
 import SellerStepNote from '../ui/SellerStepNoteBuy'
+import AdminStep from '../ui/AdminStepNote'
+import {firebaseRef} from '../../index.js'
 
 class InEscrow extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      admin: null
+    }
+  }
+
+  componentDidMount () {
+    firebaseRef.database().ref(`/users/${firebaseRef.auth().currentUser.uid}/isAdmin`).once('value').then(snap => this.setState({
+      admin: snap.val()
+    })
+  )
+  }
 
   componentWillUnmount () {
     this.props.resetCancelState()
@@ -24,28 +40,30 @@ class InEscrow extends Component {
               tradeId={this.props.order.orderId}
               sellerId={this.props.order.sellerUid}
               buyerId={this.props.order.buyerUid} />
-            <div className='w-50 ma3'>
-              {this.props.viewerRole === 'buyer' &&
+            {this.state.admin
+              ? <AdminStep />
+              : <div className='w-50 ma3'>
+                {this.props.viewerRole === 'buyer' &&
 
-                <div>
-                  <BuyerStepNote step={this.props.step} order={this.props.order} />
-                  <div className='tc'>
-                    <button onClick={this.props.confirmPayment}>
-                      Confirm Payment
-                    </button>
+                  <div>
+                    <BuyerStepNote step={this.props.step} order={this.props.order} />
+                    <div className='tc'>
+                      <button onClick={this.props.confirmPayment}>
+                        Confirm Payment
+                      </button>
+                    </div>
                   </div>
-                </div>
-              }
-              {this.props.viewerRole === 'seller' &&
-                <SellerStepNote step={this.props.step} />}
-              {this.props.viewerRole === 'seller' &&
-                <DisputeTrade
-                  viewerRole={this.props.viewerRole}
-                  tradeId={this.props.tradeId}
-                  order={this.props.order} />}
-              {this.props.viewerRole === 'buyer' &&
-              <CancelTrade cancelTrade={this.props.cancelTrade} />}
-            </div>
+                }
+                {this.props.viewerRole === 'seller' &&
+                  <SellerStepNote step={this.props.step} />}
+                {this.props.viewerRole === 'seller' &&
+                  <DisputeTrade
+                    viewerRole={this.props.viewerRole}
+                    tradeId={this.props.tradeId}
+                    order={this.props.order} />}
+                {this.props.viewerRole === 'buyer' &&
+                  <CancelTrade cancelTrade={this.props.cancelTrade} />}
+              </div>}
           </div>
         </div>
       </section>
