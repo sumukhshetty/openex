@@ -38,6 +38,20 @@ function getSellTradeAdvertisements(sellTradeAdvertisements){
   }
 }
 
+function getActiveTrades (activeTradesPayload) {
+  return {
+    type: 'GET_ACTIVE_TRADES',
+    payload: activeTradesPayload
+  };
+}
+
+function getPurchaseRequests (purchaseRequestsPayload) {
+  return {
+    type: 'GET_PURCHASE_REQUESTS',
+    payload: purchaseRequestsPayload
+  };
+}
+
 module.exports = {
   startListeningUserAuth: () => (dispatch, getState) =>{
     firebaseRef.auth().onAuthStateChanged(function(user){
@@ -46,15 +60,23 @@ module.exports = {
           var userProfile = snap.val())
           dispatch(userProfile(userProfile))
           dispatch(userLoggedIn(user))
-        firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
-          dispatch(getBuyTradeAdvertisements(snap.val()))
-        })
-        firebaseRef.database().ref('/users').once('value', function(snap){
-          dispatch(users(snap.val()))
-        })
-        firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).on('value', function(snap){
-          dispatch(getSellTradeAdvertisements(snap.val()))
-        })
+
+          firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
+            dispatch(getBuyTradeAdvertisements(snap.val()))
+          })
+          firebaseRef.database().ref('/users').once('value', function(snap){
+            dispatch(users(snap.val()))
+          })
+          firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).on('value', function(snap){
+            dispatch(getSellTradeAdvertisements(snap.val()))
+          })
+          // you get the activeTrades from userProfile and save on a database call
+          firebaseRef.database().ref('/users/'+ user.uid+'/activeTrades/').on('value', function(snap){
+            dispatch(getActiveTrades(snap.val()))
+          })
+          firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
+            dispatch(getPurchaseRequests(snap.val()))
+          })
           return browserHistory.push('/dashboard')
         })
         // ISSUE-231-1 remove currency from the dispatch because its already in the userProfile

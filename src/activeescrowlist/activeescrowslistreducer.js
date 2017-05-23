@@ -1,3 +1,4 @@
+//delete this file
 const initialState = {
   activeTrades: null
 }

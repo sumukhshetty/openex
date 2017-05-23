@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import * as _ from 'lodash'
 
-import BuyTradeAdvertisemensListContainer from './BuyTradeAdvertisemensListContainer'
+import BuyTradeAdvertisementsListContainer from './BuyTradeAdvertisementsListContainer'
 import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
 
 class BuyTradeAdvertisements extends Component {
@@ -21,7 +21,7 @@ class BuyTradeAdvertisements extends Component {
       <table>
         <BuyTradeAdvertisementsHeader />
         <div>
-          { this.props.buyorder ? <BuyTradeAdvertisemensListContainer /> : <BuyTradeAdvertisementLoadingDisplay />}
+          { this.props.buyorder ? <BuyTradeAdvertisementsListContainer /> : <BuyTradeAdvertisementLoadingDisplay />}
         </div>
       </table>
     )

@@ -7,6 +7,7 @@ import AwaitingEscrow from '../layouts/AwaitingEscrow.js'
 import InEscrow from '../layouts/InEscrow.js'
 import PaymentConfirmed from '../layouts/PaymentConfirmed.js'
 import EtherReleased from '../layouts/EtherReleased.js'
+
 import CancelTradeConfirmModal from './../../generic-components/metamaskmodal/CancelTradeConfirmModal'
 
 

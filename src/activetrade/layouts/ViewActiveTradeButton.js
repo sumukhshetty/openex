@@ -1,3 +1,4 @@
+// ISSUE-231-85: DELETE THIS FILE its been moved to activetrades/layouts/ViewActiveTradeButton
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 

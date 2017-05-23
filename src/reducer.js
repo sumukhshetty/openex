@@ -33,7 +33,9 @@ import buyerReducer from './buytradeadvertisement/buyerreducer'
 import sellTradeadvertisementsReducer from './selltradeadvertisements/selltradeadvertisementsreducer'
 import sellTradeadvertisementReducer from './selltradeadvertisement/selltradeadvertisementreducer'
 import sellerReducer from './selltradeadvertisement/sellerreducer'
-
+import activeTradesReducer from './activetrades/activetradesreducer'
+import purchaseRequestsReducer from './purchaserequests/purchaseRequestsReducer'
+import activeTradeReducer from './activetrade/activetradereducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -44,8 +46,10 @@ const reducer = combineReducers({
   web3: web3Reducer,
 // ISSUE-231-67: We don't really need to store the postatrade reducer its 
   postTrade: postTradeReducer,
+// ISSUE-231-84: get rid of all orders
   ordersList: ordersListReducer,
   orderDetail: orderDetailReducer,
+// ISSUE-231-84: the buyOrderDetail is being replaced with activetrade
   buyOrderDetail: buyOrderDetailReducer,
 // ISSUE-231-72: delete sellOrderDetail, replace with buyTradeAdvertisement
   sellOrderDetail: sellOrderDetailReducer,
@@ -57,9 +61,12 @@ const reducer = combineReducers({
   sellorders: sellOrderReducer,
   selltradeadvertisements: sellTradeadvertisementsReducer,
   selltradeadvertisement: sellTradeadvertisementReducer,
+// ISSUE-231-81: delete activeTrades, relpace with activetrades
   activeTrades: activeEscrowListReducer,
+  activetrades: activeTradesReducer,
   completedTrades: completedTradeListReducer,
   activeAds: adListReducer,
+// ISSUE-231-83: replace activeTradeData for activetrade
   activeTradeData: activeTradeReducer,
   adData: adReducer,
   sendEtherState: etherSendReducer,
@@ -74,7 +81,10 @@ const reducer = combineReducers({
   enableNotifications: enableNotificationsReducer,
   // ISSUE-231-76: add a buyer object to the store
   buyer: buyerReducer,
-  seller: sellerReducer
+  seller: sellerReducer,
+  purchaserequests: purchaseRequestsReducer,
+  activetrade: activeTradeReducer
+
 })
 
 export default reducer

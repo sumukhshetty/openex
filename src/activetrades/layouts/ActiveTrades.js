@@ -1,0 +1,21 @@
+// ISSUE-231-27: This entire component should be renamed to activeTradeList
+import React, { Component } from 'react';
+
+import ActiveTradesContainer from './../ui/ActiveTradesContainer';
+import ActiveTradeHeader from './ActiveTradeHeader';
+
+class ActiveTrades extends Component {
+  render () {
+    return (
+      <div className='pt3'>
+        <p className='b'>Your Active Escrows</p>
+        <table>
+          <ActiveTradeHeader />
+          <ActiveTradesContainer />
+        </table>
+      </div>
+    );
+  }
+}
+
+export default ActiveTrades;

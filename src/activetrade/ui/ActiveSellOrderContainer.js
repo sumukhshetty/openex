@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (requestId) => {
-    {/* ISSUE-231-56: change actions.sellOrder to action.purchaseRequest*/}
+    {/* ISSUE-231-56: change actions.sellOrder to action.activeTrade*/}
       dispatch(actions.sellOrder(requestId))
     },
     {/* ISSUE-231-55: add a onComponentWillDismount and dispatch the store that the active trade is null*/}
