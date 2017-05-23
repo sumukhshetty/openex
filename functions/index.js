@@ -32,20 +32,39 @@ exports.createSellTradeAdvertisement = function.https.onRequest((req, res) => {
           admin.database().ref('/users/'+req.body.user.data.uid+'/advertisements/' +
               newAdvertisement.key + '/tradetype').set('sell-ether')
         })
-    } catch (error)
+    } catch (error){
+      console.log(error)
+    }
   })
 })
 
 exports.sellerCreatesPurchaseRequest = function.https.onRequest((req, res) => {
   cors(req, res, ()=>{
     try {
-      var newRequest = admin.database().ref(/purchaserequests/ req.body.user.profile.country)
+      var newRequest = admin.database().ref(/purchaserequests/ + req.body.user.profile.country)
         .push(req.body.purchaseRequestData, function(err){
           admin.database().ref(/users/+ req.body.user.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
           admin.database().ref(/users/+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})   
         })
 
-    } catch(error)
+    } catch(error){
+      console.log(error)
+    }
+  })
+})
+
+exports.buyerCreatesPurchaseRequest = function.https.onRequest((req, res) => {
+  cors(req, res, ()=>{
+    try {
+      var newRequest = admin.database().ref('/purchaserequests/' + req.body.buyer.profile.country)
+        .push(req.body.purchaseRequestData, function(err){
+          admin.database().ref('/users/' + req.body.seller.data.uid + '/activetrades/' + newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
+          admin.database().ref(/users/+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
+        })
+    }  catch(error){
+      console.log(error)
+    }
+
   })
 })
 

@@ -45,17 +45,17 @@ function getUserInfo(userPayload) {
 
 module.exports = {
   buyTradeAdvertisement: (buyTradeAdvertisements, buyTradeAdvertisementId, users) => (dispatch) => {
-    dispatch(setBuyTradeAdvertisement(buyTradeAdvertisements.data[buyTradeAdvertisementId]))
-    dispatch(setBuyer(buyerInfo(users[buyTradeAdvertisements.data[buyTradeAdvertisementId].buyerUid])))
+    var buyAdvertisement = buyTradeAdvertisements.data[buyTradeAdvertisementId]
+    dispatch(setBuyTradeAdvertisement(buyAdvertisement))
+    dispatch(setBuyer(users[buyAdvertisement.buyerUid]))
   },
-
   sellerCreatesPurchaseRequest: (user, buyer, buyTradeAdvertisementId, buyTradeAdvertisement) => (dispatch) => {
     var sellerUsername = user.proflie.username
     var postData = {
-      buyTradeAdvertisement: buyTradeAdvertisement,
       buyTradeAdvertisementId: buyTradeAdvertisementId,
-      sellerUid: user.data.uid,
-      sellerUsername: sellerUsername,
+      buyTradeAdvertisement: buyTradeAdvertisement,
+      buyer: buyer,
+      seller: user
     }
     var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/sellerCreatesPurchaseRequest'
     var options = {

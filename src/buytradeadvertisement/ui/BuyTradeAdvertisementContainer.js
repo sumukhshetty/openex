@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import BuyTradeAdvertisement from './BuyTradeAdvertisement'
-//import { buyOrder, createBuyOrderContract, availableBalance, resetStatus } from './SellTradeOrderActions'
 import {buyTradeAdvertisement, sellerCreatesPurchaseRequest, clearBuyer, clearBuyTradeAdvertisement} from './BuyTradeAdvertisementActions'
 
 

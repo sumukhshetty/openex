@@ -31,6 +31,9 @@ import buyTradeAdvertisementReducer from './buytradeadvertisement/buytradeadvert
 import usersReducer from './user/usersreducer'
 import buyerReducer from './buytradeadvertisement/buyerreducer'
 import sellTradeadvertisementsReducer from './selltradeadvertisements/selltradeadvertisementsreducer'
+import sellTradeadvertisementReducer from './selltradeadvertisement/selltradeadvertisementreducer'
+import sellerReducer from './selltradeadvertisement/sellerreducer'
+
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -53,6 +56,7 @@ const reducer = combineReducers({
 // ISSUE-231-73: delete sellorders, replace with sellTradeadvertisementsReducer
   sellorders: sellOrderReducer,
   selltradeadvertisements: sellTradeadvertisementsReducer,
+  selltradeadvertisement: sellTradeadvertisementReducer,
   activeTrades: activeEscrowListReducer,
   completedTrades: completedTradeListReducer,
   activeAds: adListReducer,
@@ -69,7 +73,8 @@ const reducer = combineReducers({
   userScreen: userScreenReducer,
   enableNotifications: enableNotificationsReducer,
   // ISSUE-231-76: add a buyer object to the store
-  buyer: buyerReducer
+  buyer: buyerReducer,
+  seller: sellerReducer
 })
 
 export default reducer

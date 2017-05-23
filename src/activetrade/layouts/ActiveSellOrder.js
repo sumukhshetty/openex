@@ -1,3 +1,4 @@
+// ISSUE-231-80: THIS becomes ActiveTrade
 import React, { Component } from 'react'
 import ActiveSellOrderContainer from './../ui/ActiveSellOrderContainer'
 
