@@ -1,11 +1,12 @@
 import { firebaseRef } from '../../index.js'
 
-export const createMessage = ({content, uid, tradeId}) => {
+export const createMessage = ({content, uid, tradeId, download}) => {
   return (dispatch) => {
     const message = {
       content,
       uid,
-      timeStamp: Date.now()
+      timeStamp: Date.now(),
+      download
     }
     firebaseRef.database()
     .ref('chatrooms')
@@ -38,7 +39,6 @@ export const startListeningForMessages = (tradeId) => {
   )
   }
 }
-
 
 export const clearMessagesFromState = () => {
   return {

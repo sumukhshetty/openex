@@ -1,9 +1,9 @@
 // ISSUE-231-38: delete this file
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 // import ActiveTradeContainer from './../ui/ActiveTradeContainer'
-import ActiveTradeHeader from './ActiveTradeHeader';
-import ActiveTrade from './ActiveTrade';
+import ActiveTradeHeader from './ActiveTradeHeader'
+import ActiveTrade from './ActiveTrade'
 
 // TODO @qjflores deprecate this component
 class ActiveTradeContainer extends Component {
@@ -16,8 +16,8 @@ class ActiveTradeContainer extends Component {
           <ActiveTrade />
         </table>
       </div>
-    );
+    )
   }
 }
 
-export default ActiveTradeContainer;
+export default ActiveTradeContainer

@@ -4,6 +4,11 @@ admin.initializeApp(functions.config().firebase);
 
 const cors = require('cors')({origin: true});
 
+const SolidityCoder = require("web3/lib/solidity/coder.js");
+const Web3 = require("web3");
+const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/QmKbFq9RrJ0qz6zqSRPO'));
+const infura = web3.currentProvider;
+
 //Maligun
 var mgApiKey = "key-3d2bd1463fc87e2aff2224f96c1df70a"
 var domain = "mg.automte.com"
@@ -143,7 +148,7 @@ exports.lockedBuyOrderTimeout = functions.database.ref('/buyorders/{countryCode}
             .set('');
           }
         })
-      }, 1200000)
+      }, 120000)
     }
   });
 
@@ -246,34 +251,55 @@ exports.acceptbuy = functions.https.onRequest((req, res) => {
 exports.buyOrderCreated = functions.https.onRequest((req, res) => {
   //TODO: AK This function needs to actually query web3, will need to upgrade plan for that.
   cors(req, res, () => {
-    admin.database().ref('/users/'+req.body.sellerUid).once("value", function(snap){
-      var userData = snap.val()
-      admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId)
-      .once('value', function(snapshot) {
-        if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'locked') {
-          admin.database().ref('/buyorders/'+ userData.country + '/' + req.body.orderId + '/contractTx')
-            .set(req.body.contractTx);
-          admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/contractAddress')
-            .set(req.body.contractAddress);
-          admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/status')
-            .set('Awaiting Escrow');
-          admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/price')
-            .set(req.body.price);
+    infura.sendAsync({
+      jsonrpc: "2.0",
+      method: "eth_getTransactionReceipt",
+      id: 1,
+      params: [req.body.contractTx]
+    }, function(err, result) {
+      if(err) {
+        throw err;
+      }
+      if(result.result.logs[0].address !==  '0x20936d2f75958dca4cbe0ce505bd5cbb457de4d9') {
+        res.status(500).send({error: 'Tx did not originate from our order factory. Tx address: ' + result.result.logs[0].address});
+        throw 'Tx did not originate from our order factory';
+      }
+      var data = SolidityCoder.decodeParams(["address", "address", "string"], result.result.logs[0].data.replace("0x", ""));
+      if(data[2] !== 'buy') {
+        res.status(500).send({error: 'Not a buy order'});
+        throw 'Not a buy order';
+      }
+      // this is your callback
+      admin.database().ref('/users/'+req.body.sellerUid).once("value", function(snap){
+        var userData = snap.val()
+        admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId)
+        .once('value', function(snapshot) {
+          if(snapshot.val()['sellerUid'] === req.body.sellerUid && snapshot.val()['status'] === 'locked') {
+            admin.database().ref('/buyorders/'+ userData.country + '/' + req.body.orderId + '/contractTx')
+              .set(req.body.contractTx);
+            admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/contractAddress')
+              .set(req.body.contractAddress);
+            admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/status')
+              .set('Awaiting Escrow');
+            admin.database().ref('/buyorders/' + userData.country + '/' + req.body.orderId + '/price')
+              .set(req.body.price);
 
-          admin.database().ref('users/' + snapshot.val()['buyerUid']).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
-          admin.database().ref('users/' + req.body.sellerUid).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
-          admin.database().ref('users/' + snapshot.val()['buyerUid']).child('advertisements').child(req.body.orderId).set(null);
+            admin.database().ref('users/' + snapshot.val()['buyerUid']).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
+            admin.database().ref('users/' + req.body.sellerUid).child('activeTrades').child(req.body.orderId).set({tradeType: 'buy-ether'});
+            admin.database().ref('users/' + snapshot.val()['buyerUid']).child('advertisements').child(req.body.orderId).set(null);
 
-          res.status(200).send();
-        } else {
-          res.status(500).send({error: 'Access denied to ' + req.body.orderId + ' is not Initiated'});
-        }
+            res.status(200).send();
+          } else {
+            res.status(500).send({error: 'Access denied to ' + req.body.orderId + ' is not Initiated'});
+          }
+        })
+        .catch(function(e) {
+          res.status(500).send({error: 'Error in firebase query: ' + e});
+        })
+
       })
-      .catch(function(e) {
-        res.status(500).send({error: 'Error in firebase query: ' + e});
-      })
+    });
 
-    })
   });
 });
 
@@ -382,7 +408,6 @@ exports.requestEther = functions.https.onRequest((req, res) => {
           sellerUid: req.body.postData.sellerUid,
           sellerUsername: req.body.postData.sellerUsername,
           paymentMethod: req.body.postData.paymentMethod,
-          bankInformation: req.body.postData.bankInformation,
           createdAt: req.body.postData.createdAt,
           lastUpated: req.body.postData.lastUpated,
           status: 'Awaiting Seller Confirmation',

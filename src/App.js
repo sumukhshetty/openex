@@ -23,6 +23,7 @@ import './css/swatch.css'
 
 import Bell from './images/svgReactComponents/Bell'
 import Notifications from './notifications/NotificationsLayout'
+import {default as Toast} from 'react-notify-toast'
 
 
 class App extends Component {
@@ -105,6 +106,7 @@ class App extends Component {
     } else {
       return (
         <section className='Site'>
+          <Toast />
           <OnlyGuestLinks />
           <Web3InitContainer />
           <EtherPriceContainer />

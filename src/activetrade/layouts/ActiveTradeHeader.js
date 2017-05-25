@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 // TODO import HelpContainer
 
 class ActiveTradeHeader extends Component {
@@ -17,8 +17,8 @@ class ActiveTradeHeader extends Component {
           <th className='fb10 tc'>&nbsp;</th>
         </tr>
       </thead>
-    );
+    )
   }
 }
 
-export default ActiveTradeHeader;
+export default ActiveTradeHeader

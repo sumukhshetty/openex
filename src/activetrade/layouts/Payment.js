@@ -6,8 +6,28 @@ import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
 
+import AdminStep from '../ui/AdminStepNote'
+import {firebaseRef} from '../../index.js'
+
+
 class Payment extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      admin: null
+    }
+  }
+
+  componentDidMount () {
+    firebaseRef.database().ref(`/users/${firebaseRef.auth().currentUser.uid}/isAdmin`).once('value').then(snap => this.setState({
+      admin: snap.val()
+    })
+  )
+  }
+
   render () {
+    console.log(this.props)
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
@@ -15,28 +35,34 @@ class Payment extends Component {
           <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
             <ChatBox
-              tradeId={this.props.purchaseRequestId}
-              sellerId={this.props.seller.data.uid}
-              buyerId={this.props.buyer.data.uid} />
-            <div className='w-50 ma3'>
-              {this.props.viewerRole === 'buyer' &&
+              tradeId={this.props.tradeId}
+              sellerId={this.props.sellerId}
+              buyerId={this.props.buyerId}
+              amount={this.props.amount} />
+            {this.state.admin
+              ? <AdminStep />
+              : <div className='w-50 ma3'>
+                {this.props.viewerRole === 'buyer' &&
 
-                <div>
-                  <BuyerStepNote step={this.props.step} activetrade={this.props.activetrade}/>
-                  <div className='tc'>
-                    <button onClick={this.props.confirmPayment}>
-                   Confirm Payment
-                 </button>
+                  <div>
+                    <BuyerStepNote step={this.props.step} activetrade={this.props.activetrade} />
+                    <div className='tc'>
+                      <button onClick={this.props.confirmPayment}>
+                        Confirm Payment
+                      </button>
+                    </div>
+                    <DisputeTrade viewerRole={this.props.viewerRole} activetrade={this.props.activetrade} raiseDispute={this.props.buyerRaisesDispute}/>
                   </div>
-                  <DisputeTrade viewerRole={this.props.viewerRole} raiseDispute={this.props.buyerRaisesDispute}/>
-                </div>
-              }
-              {this.props.viewerRole === 'seller' &&
-              <div>
-              <SellerStepNote step={this.props.step} />
-              <DisputeTrade viewerRole={this.props.viewerRole} raiseDispute={this.props.sellerRaisesDispute}/>
+                }
+                {this.props.viewerRole === 'seller' &&
+                  <div>
+                    <SellerStepNote step={this.props.step} />
+                    <DisputeTrade
+                      viewerRole={this.props.viewerRole}
+                      tradeId={this.props.purchaseRequestId}
+                      activetrade={this.props.activetrade} />
+                  </div>}
               </div>}
-            </div>
           </div>
         </div>
       </section>

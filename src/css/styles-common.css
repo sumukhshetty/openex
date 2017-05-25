@@ -17,6 +17,27 @@ html * {
 
 /*.Site and main (above and below) ensure taht teh footer is always on teh bottom of teh page regardless of teh amount of content*/
 
+.file-input{
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+}
+.file-input > * {
+  pointer-events: none;
+}
+.file-input > input[type="file"]{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: all;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+}
+
 main {
   -webkit-box-flex: 1;
       -ms-flex: 1;

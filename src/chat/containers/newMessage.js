@@ -17,14 +17,16 @@ const mapDispatchToProps = (dispatch, props) => {
     handleChange (e) {
       dispatch(updateNewMessage(e.target.value))
     },
-    handleSubmit (e, content, uid) {
+    handleSubmit (e, content, uid, tradeId, download) {
       e.preventDefault()
       dispatch(createMessage({
         content,
         uid,
-        tradeId: props.tradeId }))
+        tradeId: props.tradeId,
+        download}))
       dispatch(clearNewMessage())
     }
+
   }
 }
 
