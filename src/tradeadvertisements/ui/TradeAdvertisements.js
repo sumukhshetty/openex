@@ -8,9 +8,6 @@ import TradeAdvertisementsEmptyState from './../layouts/TradeAdvertisementsEmpty
 class TradeAdvertisements extends Component {
 
     render() {
-      console.log("TradeAdvertisements.render")
-      console.log(this.props.tradeadvertisements.data)
-      console.log(this.props.buytradeadvertisements)
       // ISSUE-231-9: this.props.activeAds.activeAds should be changed to this.props.activeAds.data
       var tradeadvertisements = this.props.tradeadvertisements.data
       if(tradeadvertisements){
@@ -19,8 +16,6 @@ class TradeAdvertisements extends Component {
         try{
           Object.entries(tradeadvertisements.buyether).forEach(
               ([key, value]) => {
-                console.log(key,value)
-                console.log(this.props.buytradeadvertisements.data[key])
                 buyrows.push(<TradeAdvertisementsRowContainer tradeAdvertisement={this.props.buytradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='buy-ether'/>)
               }
           );
@@ -28,24 +23,14 @@ class TradeAdvertisements extends Component {
           console.log(error)
         }
         try{
-          Object.entries(tradeadvertisements.data.sellether).forEach(
+          console.log("trying to get the sell advertisements")
+          Object.entries(tradeadvertisements.sellether).forEach(
               ([key, value]) => {
                 sellrows.push(<TradeAdvertisementsRowContainer tradeAdvertisement={this.props.selltradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='sell-ether'/>)}
           )
         } catch (error) {
-
+          console.log(error)
         }
-/*        if (tradeadvertisements.data.buyether){
-          Object.entries(tradeadvertisements.data.buyether).forEach(
-              ([key, value]) => {
-                buyrows.push(<TradeAdvertisementsRowContainer tradeAdvertisement={this.props.buytradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='buy-ether'/>)}
-          );
-        }
-        if (tradeadvertisements.data.sellether)
-        Object.entries(tradeadvertisements.data.sellether).forEach(
-            ([key, value]) => {
-              sellrows.push(<TradeAdvertisementsRowContainer tradeAdvertisement={this.props.selltradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='sell-ether'/>)}
-        );*/
         return(
           <tbody>
           {buyrows}

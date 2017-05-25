@@ -276,10 +276,10 @@ class PostTradeForm extends Component {
                   minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
                   maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
                   termsOfTrade={this.state.postTradeDetails.termsOfTrade}
-                  currency={this.state.postTradeDetails.currency} />
+                  currency={this.state.user.profile.currency} />
               : <SellForm
                 onChangeProp={this.onInputChange.bind(this)}
-                currency={this.props.user.currency}
+                currency={this.props.user.profile.currency}
                 amount={this.state.postTradeDetails.amount}
                 paymentMethod={this.state.postTradeDetails.paymentMethod}
                 onCurrencyChange={this.onCurrencyChange.bind(this)}
