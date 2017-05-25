@@ -98,7 +98,7 @@ ReactDOM.render((
         {/*<Route path='orderdetail/:address' component={UserIsAuthenticated(OrderDetail)} />*/}
         {/*<Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />*/}
       {/*ISSUE-231-75: delete buyTradeOrder, replace with selltradeadvertisement/:sellTradeAdvertisementId*/}
-        <Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />
+        {/*<Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />*/}
         <Route path='selltradeadvertisement/:sellTradeAdvertisementId' component={UserIsAuthenticated(SellTradeAdvertisement)} />
       {/*ISSUE-231-75: delete sellTradeOrder, replace with buytradeadvertisement/:buyTradeAdvertisementId*/}
         {/*<Route path='sellTradeOrder/:orderId' component={UserIsAuthenticated(SellTradeOrder)} />*/}

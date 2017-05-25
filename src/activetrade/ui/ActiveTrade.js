@@ -32,16 +32,13 @@ class ActiveTrade extends Component {
     this.props.sellerReleasesEther(this.props.seller, this.props.activetrade, this.props.purchaseRequestId)
   }
   sellerCancelsTrade () {
-    tihs.props.sellerCancelsTrade(this.props.seller, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.sellerCancelsTrade(this.props.seller, this.props.activetrade, this.props.purchaseRequestId)
   }
   buyerCancelsTrade () {
     this.props.buyerCancelsTrade(this.props.buyer, this.props.activetrade, this.props.purchaseRequestId)
   }
   buyerRaisesDispute () {
     this.props.buyerRaisesDispute(this.props.buyer, this.props.activetrade, this.props.purchaseRequestId)
-  }
-  sellerRaisesDispute () {
-    this.props.sellerRaisesDispute(this.props.seller, this.props.activetrade, this.props.purchaseRequestId)
   }
   sellerRaisesDispute () {
     this.props.sellerRaisesDispute(this.props.seller, this.props.activetrade, this.props.purchaseRequestId)
@@ -109,12 +106,12 @@ class ActiveTrade extends Component {
           activeTrade={activetrade}
           confirmTrade={this.sellerConfirmsTrade.bind(this)} 
           buyer={this.props.buyer}
-          buyerCancelsTrade = {this.buyerCancelsTrade.bind(this)}
+          buyerCancelsTrade={this.buyerCancelsTrade.bind(this)}
           progress_map={progress_maps[status]}
           purchaseRequestId={this.props.purchaseRequestId}
           resetEtherState={this.resetEtherState.bind(this)}
           seller={this.props.seller}
-          sellerCancelsTrade = {this.sellerCancelsTrade.bind(this)}
+          sellerCancelsTrade={this.sellerCancelsTrade.bind(this)}
           sendEtherState={this.props.sendEtherState}
           step={status}
           viewerRole={viewerRole} 

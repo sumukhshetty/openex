@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import CompletedTradeRowContainer from './CompletedTradeRowContainer';
+import CompletedTradesRowContainer from './CompletedTradesRowContainer';
 import CompletedTradesEmptyState from './../layouts/CompletedTradesEmptyState';
 
 class CompletedTrades extends Component {
@@ -11,7 +11,7 @@ class CompletedTrades extends Component {
       var rows = [];
       Object.entries(completedTrades).forEach(
             ([key, value]) => {
-              rows.push(<CompletedTradeRowContainer purchaseRequestId={key} key={key} tradeType={value.tradeType} />);
+              rows.push(<CompletedTradesRowContainer purchaseRequestId={key} key={key} tradeType={value.tradeType} />);
             }
         );
       return (

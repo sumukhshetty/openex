@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import BuyTradeAdvertisementsList from './BuyTradeAdvertisementsList'
-import { buyOrders } from './BuyOrdersActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {

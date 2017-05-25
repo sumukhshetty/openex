@@ -98,7 +98,6 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
       dispatch(sendEtherState('init'));
       console.log(error);
     })
-    })
   }
 }
 
@@ -111,7 +110,6 @@ function tradeCreated(tradePayload) {
   }
 }
 
-export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
 function sendEtherState(etherStatePayload) {
   return {
     type: ETHER_SEND_STATE,

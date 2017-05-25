@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-// TODO import HelpContainer
-import ViewActiveAdButton from './ViewActiveAdButton'
 import EditTradeAdvertisementButton from './../layouts/EditTradeAdvertisementButton'
 import AddEtherModal from './../layouts/AddEtherModal'
 

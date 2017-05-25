@@ -1,6 +1,3 @@
-import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
-import { browserHistory } from 'react-router'
-
 const request = require('request')
 import {firebaseRef} from './../../index.js'
 
@@ -41,8 +38,7 @@ module.exports = {
     dispatch(setSellTradeAdvertisement(sellAdvertisement))
     dispatch(setSeller(users[sellAdvertisement.sellerUid]))
   },
-  buyerCreatesPurchaseRequest: (sellTradeAdvertisement, seller, buyer) => (dispatch) => {
-    var buyerUsername = buyer.profile.username
+  buyerCreatesPurchaseRequest: (sellTradeAdvertisement, sellTradeAdvertisementId, seller, buyer) => (dispatch) => {
     var postData = {
       sellTradeAdvertisementId: sellTradeAdvertisementId,
       sellTradeAdvertisement: sellTradeAdvertisement,
@@ -85,7 +81,7 @@ module.exports = {
           "recipientEmail": seller.profile.email,
           "verifiedEmail": seller.profile.verifiedEmail,
           "senderUsername": buyer.profile.username,
-          "selltradeadvertisement": selltradeadvertisement
+          "selltradeadvertisement": sellTradeAdvertisement,
           "seen": false,
           "createdAt": Date.now()
         }

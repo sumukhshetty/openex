@@ -24,23 +24,22 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentWillUnmount: ()=>{
       dispatch(clearBuyTradeAdvertisement())
       dispatch(clearBuyer())
-    }
+    },
     createPurchaseRequest:(user, buyTradeAdvertisement)=>{
       dispatch(sellerCreatesPurchaseRequest(user, buyTradeAdvertisement))
     },
-    acceptOrder: (buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => {
+/*    acceptOrder: (buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => {
       dispatch(createBuyOrderContract(buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3));
-    },
-
-    getAvailableBalance: (contractAddress, web3) => {
+    },*/
+/*    getAvailableBalance: (contractAddress, web3) => {
       dispatch(availableBalance(contractAddress, web3))
-    }
+    }*/
   }
 }
 
-const SellTradeOrderContainer = connect(
+const BuyTradeAdvertisementContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SellTradeOrder)
+)(BuyTradeAdvertisement)
 
-export default SellTradeOrderContainer
+export default BuyTradeAdvertisementContainer

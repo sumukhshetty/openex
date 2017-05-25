@@ -79,7 +79,7 @@ module.exports = {
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
-          var userProfile = snap.val())
+          var userProfile = snap.val()
           dispatch(userProfile(userProfile))
           dispatch(getActiveTrades(userProfile['activeTrades']))
           dispatch(getDisputedTrades(userProfile['disputedTrades']))

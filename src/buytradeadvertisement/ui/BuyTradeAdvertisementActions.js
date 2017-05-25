@@ -1,4 +1,3 @@
-import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
 import { browserHistory } from 'react-router'
 
 const request = require('request')
@@ -49,7 +48,8 @@ module.exports = {
     dispatch(setBuyTradeAdvertisement(buyAdvertisement))
     dispatch(setBuyer(users[buyAdvertisement.buyerUid]))
   },
-  sellerCreatesPurchaseRequest: (seller, buyer, amount, buyTradeAdvertisementId, buyTradeAdvertisement) => (dispatch) => {
+  sellerCreatesPurchaseRequest: (seller, buyer, amount, buyTradeAdvertisementId, buyTradeAdvertisement, web3) => (dispatch) => {
+    var coinbase = web3.eth.coinbase;
     var sellerUsername = seller.proflie.username
     var postData = {
       amount: amount,
@@ -63,7 +63,7 @@ module.exports = {
       price: buyTradeAdvertisement.price,
       sellerAddress: coinbase,
       sellerUid: seller.profile.uid,
-      sellerUsername: seller.profile.username
+      sellerUsername: seller.profile.username,
       sellrequesttime: new Date(),
       status: 'Initiated'
     }
@@ -89,11 +89,12 @@ module.exports = {
         console.log("ok got the 200")
         var _body = seller.proflie.username + " has confirmed your buy order"
         var _fcmToken
-        if(buyerUserData.fcmToken){
+        if(buyer.profile.fcmToken){
           _fcmToken = buyer.fcmToken
         } else {
           _fcmToken = null
         }
+        var purchaseRequestId = 'TODO'
         var notificationData = {
           "title": "New Seller Confirmation",
           "body": _body,
@@ -115,7 +116,7 @@ module.exports = {
       }
     });
   },
-  clearState: () => (dispatch) {
+  clearState: () => (dispatch) =>{
     dispatch(clearBuyer())
     dispatch(clearBuyTradeAdvertisement())
   }

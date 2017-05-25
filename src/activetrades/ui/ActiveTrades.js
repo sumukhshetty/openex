@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import * as _ from 'lodash'
 
 import ActiveTradesListContainer from './ActiveTradesListContainer'
-import ActiveTradesHeader from '../layouts/ActiveTradesHeader'
+import ActiveTradesHeader from './../layouts/ActiveTradesHeader'
 
 class ActiveTrades extends Component {
 

@@ -1,14 +1,10 @@
-const request = require('request')
-
-import { browserHistory } from 'react-router'
-
 import {firebaseRef, FIREBASE_TIMESTAMP} from './../../index.js'
 import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 
 
 function setActiveTrade(purchaseRequestPayload){
   return {
-    type: 'SET_ACTIVE_TRADE'
+    type: 'SET_ACTIVE_TRADE',
     payload: purchaseRequestPayload
   }
 }
@@ -49,13 +45,6 @@ function clearActiveTrade(){
   }
 }
 
-export const GET_USER_INFO = 'GET_USER_INFO'
-function getUserInfo(userPayload) {
-  return {
-    type: GET_USER_INFO,
-    payload: userPayload
-  }
-}
 
 module.exports = {
   activeTrade: (purchaseRequests, purchaseRequestId, users) => (dispatch) => {
@@ -76,7 +65,7 @@ module.exports = {
   sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("activetrade.ui.sellerReleasesEther")
     // TODO web3 stuff with sellOrderBookContract
-    firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+requestId +'/status')
+    firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId +'/status')
           .set('All Done')
           .then(function() {
             purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
@@ -91,7 +80,7 @@ module.exports = {
   },
   sellerCancelsTrade:(seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerCancelsTrade")
-    firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+requestId +'/status')
+    firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId +'/status')
           .set('Sell Cancels Trade')
           .then(function() {
             purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
@@ -175,7 +164,7 @@ module.exports = {
         firebaseRef.database().ref("users/" + purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
       });
   },
-  clearState: () => (dispatch) {
+  clearState: () => (dispatch) => {
     dispatch(clearBuyer())
     dispatch(clearSeller())
     dispatch(clearActiveTrade())

@@ -7,13 +7,12 @@ class BuyTradeAdvertisementsList extends Component {
   render () {
     console.log("buytradeadvertisements.ui.BuyTradeAdvertisementsList.render")
     var buytradeadvertisements = this.props.buytradeadvertisements
-    var usersInfo = this.props.usersInfo.usersInfo
     var uid = this.props.user.data.uid;
     var userData, buyer
     const rows = _.map(buytradeadvertisements, function (buyTradeAdvertisementData, key) {
       console.log(buyTradeAdvertisementData, key)
       if(buyTradeAdvertisementData.buyerUid !== uid) {
-        buyer = users[buyTradeAdvertisementData.buyerUid]
+        buyer = this.props.users[buyTradeAdvertisementData.buyerUid]
         //userData = (usersInfo) ? usersInfo[buyTradeAdvertisementData.buyerUid] : null
         return <BuyTradeAdvertisementRow buyTradeAdvertisementData={buyTradeAdvertisementData} buyTradeAdvertisementId={key} userData={userData} buyer={buyer} userId={key} key={key} />
       }

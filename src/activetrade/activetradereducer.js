@@ -8,10 +8,12 @@ const activeTradeReducer = (state = initialState, action) => {
   if (action.type === 'GET_ACTIVE_TRADE') {
     return {
       data: action.payload
+    }
   }
   if (action.type === 'CLEAR_ACTIVE_TRADE') {
     return {
       data: null
+   }
   }
   return state
 }

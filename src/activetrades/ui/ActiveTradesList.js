@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import ActiveTradeContainer from './ActiveTradeContainer';
-import ActiveEscrowListEmptyState from './ActiveEscrowListEmptyState';
 import ActiveTradesRow from './ActiveTradesRow'
+import ActiveTradesListEmptyState from './../layouts/ActiveTradesListEmptyState'
 
 class ActiveTradesList extends Component {
 
@@ -21,9 +20,6 @@ class ActiveTradesList extends Component {
       var rows = [];
       Object.entries(_activeTrades).forEach(
             ([key, value]) => {
-            {/* ISSUE-231-36: this should be layouts.ActiveTrade - all the css should be done there,
-              instead of passing the orderId, pass in the entire purchaseRequest obj
-            */}
               rows.push(<ActiveTradesRow purchaseRequest={this.props.purchaserequests[key]} purchaseRequestId={key} key={key} tradeType={value.tradeType} />);
             }
         );

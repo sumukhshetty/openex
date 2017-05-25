@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import ActiveAd from './ActiveAd'
-import { getAd, addEtherToContract, resetSendEtherState } from './TradeAdvertisementRowActions'
+import TradeAdvertisementsRow from './TradeAdvertisementsRow'
+import { getAd, addEtherToContract, resetSendEtherState } from './TradeAdvertisementsRowActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -32,9 +32,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const TradeAdvertisementRowContainer = connect(
+const TradeAdvertisementsRowContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(TradeAdvertisementRow)
+)(TradeAdvertisementsRow)
 
-export default TradeAdvertisementRowContainer
+export default TradeAdvertisementsRowContainer

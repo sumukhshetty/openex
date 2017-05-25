@@ -45,7 +45,6 @@ export default class SellTradeAdvertisement extends Component {
   render () {
     console.log("SellTradeAdvetisement")
     var sellTradeAdvertisement = this.props.selltradeadvertisement
-    var buyOrder = this.props.buyOrderDetail.buyOrder;
     var seller = this.props.seller
 
     if(sellTradeAdvertisement && seller) {
@@ -53,7 +52,7 @@ export default class SellTradeAdvertisement extends Component {
     return (
       <div className='w-100 bg-smoke vh-100'>
         <div className='w-75 center pv3'>
-          <h1 className='pv1'>Sell {sellTradeAdvertisement.amount} ether to {buyer.username} using {sellTradeAdvertisement.paymentMethod}</h1>
+          <h1 className='pv1'>Sell {sellTradeAdvertisement.amount} ether to {seller.profile.username} using {sellTradeAdvertisement.paymentMethod}</h1>
           <div className='flex mxb w-100 cxc'>
             <div className='w-50'>
               <table className='lh-copy'>
@@ -82,7 +81,7 @@ export default class SellTradeAdvertisement extends Component {
             <div className='w-50' >
               {/* <h2 className='pv1 tc'>How much do you wish to buy?</h2> */}
               {sellTradeAdvertisement.status === 'Initiated' && <div className='flex mxc'><Converter amount={sellTradeAdvertisement.amount} onSubmit={this.createPurchaseRequest.bind(this)}
-                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange} currency={this.props.user.currency} price={price} country={userInfo.country}/></div>}
+                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange} currency={this.props.user.currency} price={price} country={seller.country}/></div>}
                 {sellTradeAdvertisement.status !== 'Initiated' && sellTradeAdvertisement.sellerUid !== this.props.user.data.uid && <h2 className='pv1 tc'>Sorry, looks like this order was already accepted.</h2>}
                 {sellTradeAdvertisement.status !== 'Initiated' && sellTradeAdvertisement.sellerUid === this.props.user.data.uid && <h2 className='pv1 tc'>Please accept the MetaMask transaction.</h2>}
             </div>

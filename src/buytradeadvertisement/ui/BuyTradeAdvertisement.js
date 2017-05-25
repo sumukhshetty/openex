@@ -79,7 +79,7 @@ export default class BuyTradeAdvertisement extends Component {
             <div className='w-50' >
               {/* <h2 className='pv1 tc'>How much do you wish to buy?</h2> */}
               {buyTradeAdvertisement.status === 'Initiated' && <div className='flex mxc'><Converter amount={buyTradeAdvertisement.amount} onSubmit={this.sellerCreatesPurchaseRequest.bind(this)}
-                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange} currency={this.props.user.currency} price={price} country={userInfo.country}/></div>}
+                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange} currency={this.props.user.currency} price={price} country={buyer.profile.country}/></div>}
                 {buyTradeAdvertisement.status !== 'Initiated' && buyTradeAdvertisement.sellerUid !== this.props.user.data.uid && <h2 className='pv1 tc'>Sorry, looks like this order was already accepted.</h2>}
                 {buyTradeAdvertisement.status !== 'Initiated' && buyTradeAdvertisement.sellerUid === this.props.user.data.uid && <h2 className='pv1 tc'>Please accept the MetaMask transaction.</h2>}
             </div>

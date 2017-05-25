@@ -3,7 +3,7 @@ import DashboardInfoMessage from './DashboardInfoMessage';
 // ISSUE-231-82: Deprcate ActiveEscrowList for ActiveTrades
 //import ActiveEscrowList from './../../activeescrowlist/layouts/ActiveEscrowList';
 import ActiveTrades from './../../activetrades/layouts/ActiveTrades';
-import TradeAdvertisements from './../../tradeadvertisemnts/layouts/TradeAdvertisements'
+import TradeAdvertisements from './../../tradeadvertisements/layouts/TradeAdvertisements'
 //import AdList from './../../adlist/layouts/AdList';
 //import CompletedTradeList from './../../completedtradeslist/layouts/CompletedTradeList';
 import EnableNotifications from './../../enablenotifications/layouts/EnableNotifications'

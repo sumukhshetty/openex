@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 import ActiveTradesContainer from './../ui/ActiveTradesContainer';
-import ActiveTradeHeader from './ActiveTradeHeader';
+import ActiveTradesHeader from './ActiveTradesHeader';
 
 class ActiveTrades extends Component {
   render () {
@@ -10,7 +10,7 @@ class ActiveTrades extends Component {
       <div className='pt3'>
         <p className='b'>Your Active Escrows</p>
         <table>
-          <ActiveTradeHeader />
+          <ActiveTradesHeader />
           <ActiveTradesContainer />
         </table>
       </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import TradeAdvertisementRow from './TradeAdvertisementRowContainer'
+import TradeAdvertisementsRowContainer from './TradeAdvertisementsRowContainer'
 import TradeAdvertisementsEmptyState from './../layouts/TradeAdvertisementsEmptyState'
 //import ActiveAdContainer from './ActiveAdContainer'
 //import AdListEmptyState from './AdListEmptyState'
@@ -15,11 +15,11 @@ class TradeAdvertisements extends Component {
         var sellrows = [];
         Object.entries(tradeadvertisements.data.buyether).forEach(
             ([key, value]) => {
-              buyrows.push(<TradeAdvertisementRowContainer tradeAdvertisement={this.props.buytradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='buy-ether'/>)}
+              buyrows.push(<TradeAdvertisementsRowContainer tradeAdvertisement={this.props.buytradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='buy-ether'/>)}
         );
         Object.entries(tradeadvertisements.data.sellether).forEach(
             ([key, value]) => {
-              sellrows.push(<TradeAdvertisementRowContainer tradeAdvertisement={this.props.selltradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='sell-ether'/>)}
+              sellrows.push(<TradeAdvertisementsRowContainer tradeAdvertisement={this.props.selltradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='sell-ether'/>)}
         );
         return(
           <tbody>

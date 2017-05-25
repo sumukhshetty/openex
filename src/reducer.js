@@ -34,11 +34,11 @@ import sellTradeadvertisementsReducer from './selltradeadvertisements/selltradea
 import sellTradeadvertisementReducer from './selltradeadvertisement/selltradeadvertisementreducer'
 import sellerReducer from './selltradeadvertisement/sellerreducer'
 import activeTradesReducer from './activetrades/activetradesreducer'
-import purchaseRequestsReducer from './purchaserequests/purchaseRequestsReducer'
+import purchaseRequestsReducer from './purchaserequests/purchaserequestsreducer'
 import activeTradeReducer from './activetrade/activetradereducer'
 import disputedTradesReducer from './disputedtrades/disputedtradesreducer'
 import completedTradesReducer from './completedtrades/completedtradesreducer'
-import tradeAdvertisementsReducer from './tradeadvertisements/tradeAdvertisementsReducer'
+import tradeAdvertisementsReducer from './tradeadvertisements/tradeadvertisementsreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -68,12 +68,12 @@ const reducer = combineReducers({
   //activeTrades: activeEscrowListReducer,
   activetrades: activeTradesReducer,
   completedtrades: completedTradesReducer,
-  activeAds: adListReducer,
+  //activeAds: adListReducer,
 // ISSUE-231-83: replace activeTradeData for activetrade
   //activeTradeData: activeTradeReducer,
   //adData: adReducer,
   sendEtherState: etherSendReducer,
-  cancelTradeState: cancelTradeReducer,
+  //cancelTradeState: cancelTradeReducer,
   //sellOrderContract: sellOrderContractReducer,
   chatAuth: chatAuthReducer,
   newMessage: newMessageReducer,

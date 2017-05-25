@@ -14,7 +14,7 @@ class SellTradeAdvertisementsList extends Component {
     var uid = this.props.user.data.uid;
     var userData, etherPrice, seller;
     const rows = _.map(selltradeadvertisements,function(sellTradeAdvertisement, key) {
-        console.log(selltradeadvertisement)
+        console.log(sellTradeAdvertisement)
         console.log(key)
         if(sellTradeAdvertisement.sellerUid !== uid) {
           seller = this.props.users[sellTradeAdvertisement.sellerUid]

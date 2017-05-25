@@ -25,18 +25,22 @@ class Confirmation extends Component {
               buyerId={this.props.buyer.data.uid} />
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
+              <div>
               <BuyerStepNote step={this.props.step} />
               <CancelTrade cancelTrade={this.props.buyerCancelsTrade} />
+              </div>
             }
               {this.props.viewerRole === 'seller' &&
               <div>
                 <SellerStepNote step={this.props.step} />
                 <div className='tc'>
                   {this.props.sendEtherState === 'init' &&
+                  <div>
                   <button onClick={this.props.confirmTrade}>
                    Confirm Trade
                  </button>
                 <CancelTrade cancelTrade={this.props.sellerCancelsTrade}/>
+                </div>
                }
                  {this.props.sendEtherState === 'sending' &&
                  <span>Please accept the transaction in MetaMask</span>}
