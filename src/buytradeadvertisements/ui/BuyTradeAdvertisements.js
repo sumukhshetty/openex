@@ -5,12 +5,6 @@ import BuyTradeAdvertisementsListContainer from './BuyTradeAdvertisementsListCon
 import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
 
 class BuyTradeAdvertisements extends Component {
-
-  componentWillMount () {
-    console.log("ui.BuyTradeAdvertisements.componentWillMount")
-    this.props.onBeforeComponentLoad(this.props.user)
-  }
-
   render () {
     const BuyTradeAdvertisementLoadingDisplay = () => (
       <tbody className='flex'>
@@ -21,7 +15,7 @@ class BuyTradeAdvertisements extends Component {
       <table>
         <BuyTradeAdvertisementsHeader />
         <div>
-          { this.props.buyorder ? <BuyTradeAdvertisementsListContainer /> : <BuyTradeAdvertisementLoadingDisplay />}
+          { this.props.buytradeadvertisements ? <BuyTradeAdvertisementsListContainer /> : <BuyTradeAdvertisementLoadingDisplay />}
         </div>
       </table>
     )
