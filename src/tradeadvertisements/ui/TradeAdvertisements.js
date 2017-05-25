@@ -8,7 +8,6 @@ import TradeAdvertisementsEmptyState from './../layouts/TradeAdvertisementsEmpty
 class TradeAdvertisements extends Component {
 
     render() {
-      // ISSUE-231-9: this.props.activeAds.activeAds should be changed to this.props.activeAds.data
       var tradeadvertisements = this.props.tradeadvertisements.data
       if(tradeadvertisements){
         var buyrows = [];
@@ -20,16 +19,15 @@ class TradeAdvertisements extends Component {
               }
           );
         } catch(error){
-          console.log(error)
+          //console.log(error)
         }
         try{
-          console.log("trying to get the sell advertisements")
           Object.entries(tradeadvertisements.sellether).forEach(
               ([key, value]) => {
                 sellrows.push(<TradeAdvertisementsRowContainer tradeAdvertisement={this.props.selltradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='sell-ether'/>)}
           )
         } catch (error) {
-          console.log(error)
+          //console.log(error)
         }
         return(
           <tbody>

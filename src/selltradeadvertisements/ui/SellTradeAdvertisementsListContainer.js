@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     selltradeadvertisements: state.selltradeadvertisements,
     user: state.user,
     users: state.users,
-    usersInfo: state.usersInfo
+    etherPrice: state.etherPrice
   }
 }
 

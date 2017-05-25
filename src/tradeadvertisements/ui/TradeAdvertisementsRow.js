@@ -36,8 +36,6 @@ export default class TradeAdvertisementsRow extends Component {
   }
 
   render () {
-    console.log("TradeAdvertisementsRow")
-    console.log(this.props.tradeadvertisement)
     if (this.props.tradeadvertisement) {
       var tradeAdvertisement = this.props.tradeadvertisement;
       var display_id

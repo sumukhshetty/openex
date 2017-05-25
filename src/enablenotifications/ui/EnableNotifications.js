@@ -15,8 +15,6 @@ export default class EnableNotifications extends Component {
   }
 
   render () {
-    console.log("EnableNotifications")
-    console.log(this.props)
     try{
       if(this.props.user.profile.shownotificationrequest){
         return (
