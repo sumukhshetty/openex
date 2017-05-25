@@ -1,25 +1,25 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import userReducer from './user/userReducer'
-import usersInfoReducer from './user/usersInfoReducer'
+//import usersInfoReducer from './user/usersInfoReducer'
 import web3Reducer from './web3/web3Reducer'
 import etherPriceReducer from './etherprice/etherpricereducer'
 // ISSUE-231-67: We don't really need to store the postatrade reducer its 
 import postTradeReducer from './posttrade/postTradeReducer'
-import ordersListReducer from './orderslist/orderslistreducer'
-import orderDetailReducer from './orderdetail/orderdetailreducer'
-import buyOrderDetailReducer from './buyorderdetail/buyorderdetailreducer'
-import sellOrderDetailReducer from './sellorderdetail/sellorderdetailreducer'
-import buyOrderReducer from './buyorders/buyOrderReducer'
-import sellOrderReducer from './sellorders/sellOrderReducer'
-import activeEscrowListReducer from './activeescrowlist/activeescrowslistreducer'
-import completedTradeListReducer from './completedtradeslist/completedtradelistreducer'
-import activeTradeReducer from './activeescrowlist/activetradereducer'
-import adReducer from './adlist/adreducer'
-import adListReducer from './adlist/adlistreducer'
+//import ordersListReducer from './orderslist/orderslistreducer'
+//import orderDetailReducer from './orderdetail/orderdetailreducer'
+//import buyOrderDetailReducer from './buyorderdetail/buyorderdetailreducer'
+//import sellOrderDetailReducer from './sellorderdetail/sellorderdetailreducer'
+//import buyOrderReducer from './buyorders/buyOrderReducer'
+//import sellOrderReducer from './sellorders/sellOrderReducer'
+//import activeEscrowListReducer from './activeescrowlist/activeescrowslistreducer'
+//import completedTradeListReducer from './completedtradeslist/completedtradelistreducer'
+//import activeTradeReducer from './activeescrowlist/activetradereducer'
+//import adReducer from './adlist/adreducer'
+//import adListReducer from './adlist/adlistreducer'
 import etherSendReducer from './adlist/sendetherreducer'
-import cancelTradeReducer from './activetrade/cancelTradeReducer'
-import sellOrderContractReducer from './buyTradeOrder/sellOrderContractReducer'
+//import cancelTradeReducer from './activetrade/cancelTradeReducer'
+//import sellOrderContractReducer from './buyTradeOrder/sellOrderContractReducer'
 import chatAuthReducer from './chat/reducers/auth'
 import newMessageReducer from './chat/reducers/newMessage'
 import ChatMessageReducer from './chat/reducers/messages'
@@ -38,42 +38,43 @@ import purchaseRequestsReducer from './purchaserequests/purchaseRequestsReducer'
 import activeTradeReducer from './activetrade/activetradereducer'
 import disputedTradesReducer from './disputedtrades/disputedtradesreducer'
 import completedTradesReducer from './completedtrades/completedtradesreducer'
+import tradeAdvertisementsReducer from './tradeadvertisements/tradeAdvertisementsReducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
   user: userReducer,
   //ISSUE-231-71: delete userInfo, it will be replaced by users, buyer, seller
-  usersInfo: usersInfoReducer,
+  //usersInfo: usersInfoReducer,
   users: usersReducer,
   web3: web3Reducer,
 // ISSUE-231-67: We don't really need to store the postatrade reducer its 
   postTrade: postTradeReducer,
 // ISSUE-231-84: get rid of all orders
-  ordersList: ordersListReducer,
-  orderDetail: orderDetailReducer,
+  //ordersList: ordersListReducer,
+  //orderDetail: orderDetailReducer,
 // ISSUE-231-84: the buyOrderDetail is being replaced with activetrade
-  buyOrderDetail: buyOrderDetailReducer,
+  //buyOrderDetail: buyOrderDetailReducer,
 // ISSUE-231-72: delete sellOrderDetail, replace with buyTradeAdvertisement
-  sellOrderDetail: sellOrderDetailReducer,
+  //sellOrderDetail: sellOrderDetailReducer,
   buytradeadvertisement: buyTradeAdvertisementReducer,
 // ISSUE-231-71: delete buyorders, replace with buyTradeAdvertisementsReducer
-  buyorders: buyOrderReducer,
+  //buyorders: buyOrderReducer,
   buytradeadvertisements: buyTradeAdvertisementsReducer,
 // ISSUE-231-73: delete sellorders, replace with sellTradeadvertisementsReducer
-  sellorders: sellOrderReducer,
+  //sellorders: sellOrderReducer,
   selltradeadvertisements: sellTradeadvertisementsReducer,
   selltradeadvertisement: sellTradeadvertisementReducer,
 // ISSUE-231-81: delete activeTrades, relpace with activetrades
   //activeTrades: activeEscrowListReducer,
   activetrades: activeTradesReducer,
-  completedtrades: completedTradeListReducer,
+  completedtrades: completedTradesReducer,
   activeAds: adListReducer,
 // ISSUE-231-83: replace activeTradeData for activetrade
-  activeTradeData: activeTradeReducer,
-  adData: adReducer,
+  //activeTradeData: activeTradeReducer,
+  //adData: adReducer,
   sendEtherState: etherSendReducer,
   cancelTradeState: cancelTradeReducer,
-  sellOrderContract: sellOrderContractReducer,
+  //sellOrderContract: sellOrderContractReducer,
   chatAuth: chatAuthReducer,
   newMessage: newMessageReducer,
   chatMessages: ChatMessageReducer,
@@ -86,7 +87,8 @@ const reducer = combineReducers({
   seller: sellerReducer,
   purchaserequests: purchaseRequestsReducer,
   activetrade: activeTradeReducer,
-  disputedtrades: disputedTradesReducer
+  disputedtrades: disputedTradesReducer,
+  tradeadvertisements: tradeAdvertisementsReducer
 
 })
 

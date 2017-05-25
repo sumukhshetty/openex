@@ -67,6 +67,13 @@ function getPurchaseRequests (purchaseRequestsPayload) {
   };
 }
 
+function getTradeAdvertisements (tradeAdvertisementsPayload) {
+  return {
+    type: 'GET_TRADE_ADVERTISEMENTS',
+    payload: tradeAdvertisementsPayload
+  };
+}
+
 module.exports = {
   startListeningUserAuth: () => (dispatch, getState) =>{
     firebaseRef.auth().onAuthStateChanged(function(user){
@@ -74,20 +81,23 @@ module.exports = {
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
           var userProfile = snap.val())
           dispatch(userProfile(userProfile))
+          dispatch(getActiveTrades(userProfile['activeTrades']))
+          dispatch(getDisputedTrades(userProfile['disputedTrades']))
+          dispatch(getTradeAdvertisements(userProfile['advertisements']))
+          dispatch(getCompletedTrades(userProfile['completedTrades']))
           dispatch(userLoggedIn(user))
-
           firebaseRef.database().ref('/users').on('value', function(snap){
             dispatch(users(snap.val()))
           })
-          firebaseRef.database().ref('/users/'+ user.uid+'/activeTrades/').on('value', function(snap){
+/*          firebaseRef.database().ref('/users/'+ user.uid+'/activeTrades/').on('value', function(snap){
             dispatch(getActiveTrades(snap.val()))
-          })
-          firebaseRef.database().ref('/users/'+ user.uid+'/disputedTrades/').on('value', function(snap){
+          })*/
+/*          firebaseRef.database().ref('/users/'+ user.uid+'/disputedTrades/').on('value', function(snap){
             dispatch(getDisputedTrades(snap.val()))
           })
           firebaseRef.database().ref('/users/'+ user.uid+'/completedTrades/').on('value', function(snap){
             dispatch(getCompletedTrades(snap.val()))
-          })
+          })*/
           firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
             dispatch(getBuyTradeAdvertisements(snap.val()))
           })

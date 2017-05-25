@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import DashboardInfoMessage from './DashboardInfoMessage';
 // ISSUE-231-82: Deprcate ActiveEscrowList for ActiveTrades
-import ActiveEscrowList from './../../activeescrowlist/layouts/ActiveEscrowList';
+//import ActiveEscrowList from './../../activeescrowlist/layouts/ActiveEscrowList';
 import ActiveTrades from './../../activetrades/layouts/ActiveTrades';
-import AdList from './../../adlist/layouts/AdList';
-import CompletedTradeList from './../../completedtradeslist/layouts/CompletedTradeList';
+import TradeAdvertisements from './../../tradeadvertisemnts/layouts/TradeAdvertisements'
+//import AdList from './../../adlist/layouts/AdList';
+//import CompletedTradeList from './../../completedtradeslist/layouts/CompletedTradeList';
 import EnableNotifications from './../../enablenotifications/layouts/EnableNotifications'
+import CompletedTrades from './../../completedtrades/layouts/CompletedTrades'
 
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
@@ -64,10 +66,12 @@ class Dashboard extends Component {
               <EnableNotifications />
               <DashboardInfoMessage />
               {/* ISSUE-231-28: The ActiveEscrowList component will be renamed to ActiveTrades*/}
-              <ActiveEscrowList />
+              {/*<ActiveEscrowList />*/}
               <ActiveTrades />
-              <AdList />
-              <CompletedTradeList />
+              {/*<AdList />*/}
+              <TradeAdvertisements />
+              {/*<CompletedTradeList />*/}
+              <CompletedTrades />
             </div>
           </div>
         </div>

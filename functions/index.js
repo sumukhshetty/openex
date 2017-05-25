@@ -14,7 +14,7 @@ exports.createBuyTradeAdvertisement = functions.https.onRequest((req, res) => {
     try{
       var newAdvertisement = admin.database().ref('/buytradeadvertisements/'+ req.body.user.profile.country)
         .push(req.body.postTradeDetails, function(error){
-          admin.database().ref('/users/' + req.body.user.data.uid + '/advertisements/' + 
+          admin.database().ref('/users/' + req.body.user.data.uid + '/advertisements/buyether/' + 
             newAdvertisement.key + '/tradetype').set('buy-ether')
         })
 
@@ -29,7 +29,7 @@ exports.createSellTradeAdvertisement = function.https.onRequest((req, res) => {
     try {
       var newAdvertisement = admin.database().ref('/selltradeadvertisements/'+ req.body.user.profile.country)
         .push(req.body.postTradeDetails, function(err){
-          admin.database().ref('/users/'+req.body.user.data.uid+'/advertisements/' +
+          admin.database().ref('/users/'+req.body.user.data.uid+'/advertisements/sellether/' +
               newAdvertisement.key + '/tradetype').set('sell-ether')
         })
     } catch (error){
