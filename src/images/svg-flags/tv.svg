@@ -8,10 +8,10 @@
 <use id="rats" xlink:href="#star" transform="rotate(36)"/>
 </defs>
 <rect width="1200" height="600" fill="#00247d"/>
-<path d="M0,0 600,300M0,300 600,0" stroke="#fff" stroke-width="60"/>
-<path d="M0,0 600,300M0,300 600,0" stroke="#cf142b" stroke-width="40" clip-path="url(#c)"/>
-<path d="M300,0V400M0,150H700" stroke="#fff" stroke-width="100"/>
-<path d="M300,0V400M0,150H700" stroke="#cf142b" stroke-width="60"/>
+<path d="M0,0 600,300M0,300 600,0" stroke="#fff" strokeWidth="60"/>
+<path d="M0,0 600,300M0,300 600,0" stroke="#cf142b" strokeWidth="40" clip-path="url(#c)"/>
+<path d="M300,0V400M0,150H700" stroke="#fff" strokeWidth="100"/>
+<path d="M300,0V400M0,150H700" stroke="#cf142b" strokeWidth="60"/>
 <path d="M0,300H600V0H1200V600H0z" fill="#5b97b1"/>
 <use xlink:href="#star" x="645.3396" y="540.9936"/>
 <use xlink:href="#rats" x="788.0256" y="504.516"/>

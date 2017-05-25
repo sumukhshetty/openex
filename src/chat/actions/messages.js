@@ -14,6 +14,16 @@ export const createMessage = ({content, uid, tradeId}) => {
   }
 }
 
+export const addMessage = (key, message, tradeId) => {
+  return {
+    type: 'ADD_MESSAGE',
+    content: message.content,
+    key,
+    timeStamp: Date.now(),
+    uid: message.uid,
+    tradeId
+  }
+}
 // when the data changes fire these actions in redux
 
 export const startListeningForMessages = (tradeId) => {
@@ -29,16 +39,6 @@ export const startListeningForMessages = (tradeId) => {
   }
 }
 
-export const addMessage = (key, message, tradeId) => {
-  return {
-    type: 'ADD_MESSAGE',
-    content: message.content,
-    key,
-    timeStamp: Date.now(),
-    uid: message.uid,
-    tradeId
-  }
-}
 
 export const clearMessagesFromState = () => {
   return {

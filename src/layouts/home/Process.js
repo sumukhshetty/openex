@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Cart from '../../images/svgReactComponents/cart'
 import Shop from '../../images/svgReactComponents/shop'
 import Ether from '../../images/svgReactComponents/ether'
@@ -25,7 +24,6 @@ const Process = ({props}) => (
     <div className='flex mxc wrap' />
   </div>)
 
-Process.propTypes = {}
 Process.defaultProps = {}
 
 export default Process

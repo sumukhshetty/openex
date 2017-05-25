@@ -1,6 +1,5 @@
-import React, {
-  PropTypes
-} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'
 
 const LastOnline = (props) => {
   const time = Math.floor((new Date() - Date.parse(props.time)) / (1000 * 60 * 60));

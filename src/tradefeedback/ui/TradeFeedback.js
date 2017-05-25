@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Star from '../../images/Star.js'
-import Block from '../../images/svgReactComponents/Block.js'
+//import Star from '../../images/Star.js'
+//import Block from '../../images/svgReactComponents/Block.js'
 import TrustButton from './../../trust/layouts/TrustButton'
 import BlockButton from './../../block/layouts/BlockButton'
 import {firebaseRef} from './../../index.js'
@@ -19,7 +19,6 @@ class TradeFeedback extends Component {
 
   clickStar (rating) {
     var rater = firebaseRef.auth().currentUser.uid
-    var ratee
     switch (rater) {
       case (this.props.sellerId):
         console.log('the rater is the seller and the ratee is the buyer ' + rating)

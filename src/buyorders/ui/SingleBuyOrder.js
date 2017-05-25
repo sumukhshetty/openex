@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import * as _ from 'lodash'
 import SellButton from './SellButton'
 

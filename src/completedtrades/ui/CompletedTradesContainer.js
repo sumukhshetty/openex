@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import CompletedTrades from './CompletedTrades'
-import { getCompletedTrades } from './CompletedTradesActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     user: state.user,
     completedtrades: state.completedtrades,
+    purchaserequesets: state.purchaserequesets
   }
 }
 

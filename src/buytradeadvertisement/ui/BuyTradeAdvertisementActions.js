@@ -34,13 +34,6 @@ function clearBuyTradeAdvertisement(){
   }
 }
 
-export const GET_USER_INFO = 'GET_USER_INFO'
-function getUserInfo(userPayload) {
-  return {
-    type: GET_USER_INFO,
-    payload: userPayload
-  }
-}
 
 module.exports = {
   buyTradeAdvertisement: (buyTradeAdvertisements, buyTradeAdvertisementId, users) => (dispatch) => {
@@ -50,7 +43,6 @@ module.exports = {
   },
   sellerCreatesPurchaseRequest: (seller, buyer, amount, buyTradeAdvertisementId, buyTradeAdvertisement, web3) => (dispatch) => {
     var coinbase = web3.eth.coinbase;
-    var sellerUsername = seller.proflie.username
     var postData = {
       amount: amount,
       //bankInformation: buyTradeAdvertisement.bankInformation, //this should be taken from the sellTradeAdvertisement when the seller confirms a trade
@@ -79,7 +71,6 @@ module.exports = {
         console.error('error posting json: ', err)
         throw err
       }
-      var headers = res.headers
       var statusCode = res.statusCode
       if(statusCode === 500) {
         console.error('Server responded with an error: ' + res.body.error);

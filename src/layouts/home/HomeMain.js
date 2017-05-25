@@ -12,7 +12,6 @@ var web3Location = `http://${truffleConfig.networks.development.host}:${truffleC
 class HomeMain extends Component {
   constructor (props) {
     super(props)
-    this.web3Provided
     this.web3Initialize.bind(this)
   }
 

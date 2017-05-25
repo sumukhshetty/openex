@@ -4,11 +4,6 @@ import ActiveTradesRow from './ActiveTradesRow'
 import ActiveTradesListEmptyState from './../layouts/ActiveTradesListEmptyState'
 
 class ActiveTradesList extends Component {
-
-  componentWillMount () {
-    this.props.onBeforeComponentLoads(this.props.web3, this.props);
-  }
-
   render () {
       // console.log('render props');
       // console.log(this.props);

@@ -14,7 +14,7 @@ export default (props) => {
           <feColorMatrix values='0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.140766531 0' type='matrix' in='shadowBlurOuter1' />
         </filter>
       </defs>
-      <g id='Mockups' stroke='none' strokeWidth='1' fill='none' fill-rule='evenodd'>
+      <g id='Mockups' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
         <g id='-' transform='translate(-243.000000, -98.000000)'>
           <g id='convert' transform='translate(249.000000, 102.000000)'>
             <g id='Oval'>

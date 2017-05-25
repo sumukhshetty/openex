@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import TradeAdvertisementsRow from './TradeAdvertisementsRow'
-import { getAd, addEtherToContract, resetSendEtherState } from './TradeAdvertisementsRowActions'
+import { addEtherToContract, resetSendEtherState } from './TradeAdvertisementsRowActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {

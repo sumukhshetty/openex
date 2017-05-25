@@ -6,7 +6,7 @@ export default (props) => {
     <svg width='131px' height='111px' viewBox='0 0 131 111' version='1.1' xmlns='http://www.w3.org/2000/svg'>
       <desc>Created with Sketch.</desc>
       <defs />
-      <g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
+      <g id='Page-1' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
         <g id='Home' transform='translate(-654.000000, -1505.000000)'>
           <g id='Group-7' transform='translate(0.000000, 1285.000000)'>
             <g id='cart' transform='translate(654.000000, 220.000000)'>

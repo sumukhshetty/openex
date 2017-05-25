@@ -50,7 +50,6 @@ export default class ActiveAd extends Component {
         availableBalance = tradeAdvertisement.availableBalance - tradeAdvertisement.pendingBalance
         availableBalance = (availableBalance % 1 !== 0) ? availableBalance.toFixed(4) : availableBalance
       }
-      var tradeType = (this.props.tradeType === 'buy-ether') ? 'Buy Ad' : 'Sell Ad'
 
       return (
         <tr className='flex cxc'>

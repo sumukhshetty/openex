@@ -1,5 +1,4 @@
 import React, { Component} from 'react'
-import PropTypes from 'prop-types'
 import face from '../../images/face1.png'
 
 const Review = ({testimonial, name, bio, active}) =>

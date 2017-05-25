@@ -57,7 +57,6 @@ module.exports = {
         console.error('error posting json: ', err)
         throw err
       }
-      var headers = res.headers
       var statusCode = res.statusCode
       if(statusCode === 500) {
         console.error('Server responded with an error: ' + res.body.error);

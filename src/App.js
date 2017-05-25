@@ -13,7 +13,6 @@ import Web3InitContainer from './web3/Web3InitContainer'
 import EtherPriceContainer from './etherprice/EtherPriceContainer'
 import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
-import Footer from './footer/Footer'
 
 // Styles
 import './css/pure-min.css'
@@ -25,7 +24,6 @@ import './css/swatch.css'
 import Bell from './images/svgReactComponents/Bell'
 import Notifications from './notifications/NotificationsLayout'
 
-const request = require('request')
 
 class App extends Component {
   constructor (props) {

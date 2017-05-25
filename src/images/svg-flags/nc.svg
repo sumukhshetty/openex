@@ -4,8 +4,8 @@
 <rect fill="#009543" width="900" height="450"/>
 <rect fill="#ed4135" width="900" height="300"/>
 <rect fill="#0035ad" width="900" height="150"/>
-<circle stroke="#000" stroke-width="5" fill="#fae600" cx="300" cy="225" r="147.48"/>
-<path stroke="#000" stroke-width="6" d="M275,247h50 M275,210h50 M300,78V330"/>
+<circle stroke="#000" strokeWidth="5" fill="#fae600" cx="300" cy="225" r="147.48"/>
+<path stroke="#000" strokeWidth="6" d="M275,247h50 M275,210h50 M300,78V330"/>
 <path d="M240.62,360.419
 	C300.811,384.999,357.228,361.929,357.228,361.929
 	C357.228,361.929,335.931,338.881,325.014,329.882

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Community from '../../images/svgReactComponents/Community'
 import Lock from '../../images/svgReactComponents/Lock'
 import Clock from '../../images/svgReactComponents/Clock'
@@ -53,7 +52,6 @@ const Features = ({props}) => (
 
   )
 
-Features.propTypes = {}
 Features.defaultProps = {}
 
 export default Features

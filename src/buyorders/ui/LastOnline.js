@@ -1,6 +1,5 @@
-import React, {
-  PropTypes
-} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'
 
 const moment = require('moment');
 
@@ -15,9 +14,9 @@ const LastOnline = (props) => {
   );
 };
 
-// LastOnline.propTypes = {
-//   time: PropTypes.string.isRequired
-// };
+LastOnline.propTypes = {
+  time: PropTypes.string.isRequired
+};
 LastOnline.defaultProps = {};
 
 export default LastOnline;

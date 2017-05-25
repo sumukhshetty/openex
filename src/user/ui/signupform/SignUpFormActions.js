@@ -26,7 +26,6 @@ export function signUpUser (signUpInfo, web3) {
     var username = signUpInfo.username
     var country = signUpInfo.country
     const pass = signUpInfo.password
-    var errormessage = ''
     var currency
     try {
       currency = currencies.byCountry().get(country)
@@ -63,7 +62,6 @@ export function signUpUser (signUpInfo, web3) {
       })
       dispatch(userSignedUp(firebaseUser, currency))
     }).catch(function (error) {
-      errormessage = error.message
       console.log(error)
       dispatch(userSignedUpError(error))
     })

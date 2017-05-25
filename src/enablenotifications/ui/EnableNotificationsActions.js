@@ -1,20 +1,20 @@
 import {firebaseRef, firebaseMessaging} from './../../index.js'
 
-export const ENABLE_NOTIFICATIONS = 'ENABLE_NOTIFICATIONS'
+/*export const ENABLE_NOTIFICATIONS = 'ENABLE_NOTIFICATIONS'
 function enableNotifications(enableNotificationPayload) {
   return {
     type: ENABLE_NOTIFICATIONS,
     payload: enableNotificationPayload
   }
-}
+}*/
 
-export const DONT_SHOW_AGAINN = 'DONT_SHOW_AGAINN'
+/*export const DONT_SHOW_AGAINN = 'DONT_SHOW_AGAINN'
 function dontShowAgain(enableNotificationPayload) {
   return {
     type: DONT_SHOW_AGAINN,
     payload: enableNotificationPayload
   }
-}
+}*/
 
 module.exports = {
   onBeforeComponentLoad: (user) => (dispatch) => {

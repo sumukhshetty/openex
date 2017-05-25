@@ -1,5 +1,5 @@
 import React from 'react'
-import PaperClip from '../../images/svgReactComponents/PaperClip.js'
+//import PaperClip from '../../images/svgReactComponents/PaperClip.js'
 
 const NewChatMessage = (props) => (
   <form className='flex cxc bg-white br2' onSubmit={(e) => props.handleSubmit(e, props.newMessage, props.auth.uid, props.tradeId)}>

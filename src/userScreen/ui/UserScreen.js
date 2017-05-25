@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import Trustworthiness from '../../generic-components/tables/Trustworthiness';
-import LastOnline from '../../generic-components/tables/LastOnline';
-import Header from '../../generic-components/tables/Header';
 
 const moment = require('moment')
 
@@ -64,18 +61,6 @@ export default class UserScreen extends Component {
   render () {
     console.log("ui.UserScreen.render")
     console.log(this.props)
-    const rows = this.state.activeTrades.map(trade =>
-      <tr className='flex cxc list bg-white pa3 mv2 gray'>
-        <td className='fb20' >{trade.name} - {trade.currency}</td>
-        <td className='fb10 tc' >{trade.paymentMethod}</td>
-        <td className='fb15 tc' >{trade.price} INR</td>
-        <td className='fb5 tc' >{trade.minTransactionLimit} - {trade.maxTransactionLimit}</td>
-        <td className='fb15 tc' >{trade.lastTransfer}</td>
-        <Trustworthiness trustLevel={'Sufficent'} />
-        <LastOnline time={trade.lastOnline} />
-        <button>{trade.buyOrSell}</button>
-      </tr>);
-
     if(this.props.userScreen.data){
       return (
         <div className='w-100 bg-smoke'>
@@ -139,13 +124,7 @@ export default class UserScreen extends Component {
             <div>
               <div>
                 <div className='mt5'>
-{/*                  <h2>Active Trade Advertisements</h2>
-                  <table className='w-100'>
-                    <Header />
-                    <tbody>
-                      {rows}
-                    </tbody>
-                  </table>*/}
+
                 </div>
               </div>
             </div>

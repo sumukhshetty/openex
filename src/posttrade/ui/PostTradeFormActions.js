@@ -110,13 +110,6 @@ function tradeCreated(tradePayload) {
   }
 }
 
-function sendEtherState(etherStatePayload) {
-  return {
-    type: ETHER_SEND_STATE,
-    payload: etherStatePayload
-  }
-}
-
 // This creating a sell order and will be replaced with createSellTradeAdvertisement
 export function postTrade(postTradeDetails, web3, state) {
   return function(dispatch) {

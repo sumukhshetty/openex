@@ -7,12 +7,11 @@ class SellTradeAdvertisementsList extends Component {
   render(){
     console.log("ui.SellTradeAdvertisementsList")
     var selltradeadvertisements = this.props.selltradeadvertisements
-    var sellorders = this.props.sellorders.sellorders;
     var usersInfo = this.props.usersInfo.usersInfo;
     var etherPrice = this.props.etherPrice.data;
     var currency = this.props.user.currency;
     var uid = this.props.user.data.uid;
-    var userData, etherPrice, seller;
+    var userData, seller;
     const rows = _.map(selltradeadvertisements,function(sellTradeAdvertisement, key) {
         console.log(sellTradeAdvertisement)
         console.log(key)

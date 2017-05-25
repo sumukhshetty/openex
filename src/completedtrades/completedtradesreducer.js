@@ -2,7 +2,7 @@ const initialState = {
   data: null
 }
 
-const completedTradeReducer = (state = initialState, action) => {
+const completedTradesReducer = (state = initialState, action) => {
   if (action.type === 'GET_COMPLETED_TRADES')
   {
     return Object.assign({}, state, {
@@ -13,4 +13,4 @@ const completedTradeReducer = (state = initialState, action) => {
   return state
 }
 
-export default completedTradeReducer
+export default completedTradesReducer
