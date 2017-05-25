@@ -8,7 +8,7 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user,
     tradeAdvertisementId: ownProps.tradeAdvertisementId,
     tradeType: ownProps.tradeType,
-    tradeAdvertisement: ownProps.tradeAdvertisement,
+    tradeadvertisement: ownProps.tradeAdvertisement,
     sendEtherState: state.sendEtherState
   }
 }

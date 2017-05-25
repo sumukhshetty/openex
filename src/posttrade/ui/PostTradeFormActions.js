@@ -25,9 +25,15 @@ function createBuyTradeAdvertisement(buyTradeAdvertisementPayload){
   }
 }
 
-export function userCreatesBuyTradeAdvertisement(postTradeDetails, web3, user){
+export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
-    request({
+    console.log("PostTradFormActions.userCreatesBuyTradeAdvertisement")
+    var newAdvertisement = firebaseRef.database().ref('/buytradeadvertisements/'+ user.profile.country)
+      .push(tradeDetails, function(error){
+        firebaseRef.database().ref('/users/' + user.data.uid + '/advertisements/buyether/' + 
+          newAdvertisement.key + '/tradetype').set('buy-ether')
+      })
+/*    request({
       method: 'post',
       body: {
         postTradeDetails: postTradeDetails,
@@ -52,7 +58,7 @@ export function userCreatesBuyTradeAdvertisement(postTradeDetails, web3, user){
         console.error('Server responded with an error: ' + res.body.error);
         throw res.body.error
       }
-    });
+    });*/
   }
 }
 
@@ -68,7 +74,12 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
     dispatch(sendEtherState('sending'));
     // ISSUE-231 - new - we change the orderFactoryContract to the orderBookFactoryContract
-    request({
+    var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
+      .push(tradeDetails, function(err){
+        firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
+            newAdvertisement.key + '/tradetype').set('sell-ether')
+      })
+/*    request({
       method: 'post',
       body: {
         tradeDetails: tradeDetails,
@@ -97,7 +108,7 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
     .catch(function (error) {
       dispatch(sendEtherState('init'));
       console.log(error);
-    })
+    })*/
   }
 }
 

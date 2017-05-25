@@ -14,6 +14,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    userCreatesBuyTradeAdvertisement: (tradeDetails, web3, user) =>{
+      dispatch(actions.userCreatesBuyTradeAdvertisement(tradeDetails, web3, user))
+    },
     onCreateSellTradeAdvertisementFormSubmit: (tradeDetails, web3, user) => {
       //event.preventDefault();
 

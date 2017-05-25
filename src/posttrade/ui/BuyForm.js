@@ -16,6 +16,7 @@ export class BuyForm extends Component {
         {this.props.paymentMethod === 'neft'
           || this.props.paymentMethod === 'IMPS'
           || this.props.paymentMethod === 'RTGS'
+          || this.props.paymentMethod === 'National Bank'
             ? <div className='flex mb3'>
               <label htmlFor='bankInformation' className='w5'>Bank Information</label>
               <textarea id='bankInformation' type='textArea' rows='4' onChange={this.props.onChangeProp} value={this.props.bankInformation} className='w5' required />

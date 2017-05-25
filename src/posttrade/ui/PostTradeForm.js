@@ -41,9 +41,9 @@ class PostTradeForm extends Component {
       buyerUsername: this.props.user.data.displayName,
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid, // Submitting a from without changing values leaves them as blank
-      paymentMethod: 'UPI',    // If defaults change, these must change as well.
+      paymentMethod: 'National Bank',    // If defaults change, these must change as well.
       margin: 0,
-      currency: this.props.user.currency
+      currency: this.props.user.profile.currency
     },
       buyFormBool: true,
       showMetaMaskWaitModal: false
@@ -142,14 +142,24 @@ class PostTradeForm extends Component {
     event.preventDefault()
     var now = new Date()
     var margin = (1 + (this.state.postTradeDetails.margin * 0.01))
+    var price
+    if (this.props.etherPrice.data){
+      price =(this.props.etherPrice.data * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2)
+    } else {
+      price = '-'
+    }
+
     var _postTradeDetails = Object.assign({},
       this.state.postTradeDetails,
       {lastUpated: now.toUTCString(),
         status: 'Initiated',
         active: true,
-        margin: margin
+        margin: margin,
+        price: price
       }
       )
+    console.log("handleSubmit")
+    console.log(_postTradeDetails)
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
       this.showWaitModal()
 /*      this.props.onPostTradeFormSubmit(
@@ -157,17 +167,13 @@ class PostTradeForm extends Component {
         this.state.web3.web3,
         this.state
       )*/
-      this.props.userCreatesSellTradeAdvertisement(
+      this.props.onCreateSellTradeAdvertisementFormSubmit(
         _postTradeDetails, 
         this.props.web3.web3, 
         this.props.user)
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
-      /*this.props.onBuyEtherFormSubmit(
-        _postTradeDetails,
-        this.state.web3.web3,
-        this.state
-        )*/
+      console.log('buy-ether')
       this.props.userCreatesBuyTradeAdvertisement(
         _postTradeDetails,
         this.props.web3.web3,
@@ -228,8 +234,8 @@ class PostTradeForm extends Component {
                     required />
                   <button className='ftiny br0 bg-gray bl--gray b--blue ba gray'>%</button>
                 </div>
-                <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice ? (this.props.etherPrice.data * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
-                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice.data : 'Getting price...'} {this.props.user.currency + '/ETH'}</span></small>
+                <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice ? (this.props.etherPrice.data * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</span></small>
+                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice.data : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</span></small>
               </div>
 
               <span className='measure-narrow fw1 i pa0 me'>Margin you want over the ether market price. Use a negative value for buying or selling under the market price to attract more contracts. For more complex pricing edit the price equation directly.</span>
@@ -253,12 +259,9 @@ class PostTradeForm extends Component {
               <label htmlFor='paymentMethod' className='w5'>Payment Method</label>
               <select id='paymentMethod' name='paymentMethod' onChange={this.onPaymentMethodChange.bind(this)}
                 className='w5'required>
-                <option value='UPI'>UPI</option>
-                <option value='neft'>neft</option>
-                <option value='IMPS'>IMPS</option>
+                <option value='National Bank'>National Bank</option>
                 <option value='cash'>cash</option>
-                <option value='payTm'>payTm</option>
-                <option value='RTGS'>RTGS</option>
+                <option value='mobile'>mobile</option>
               </select>
             </div>
 

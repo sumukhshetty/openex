@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import EditTradeAdvertisementButton from './../layouts/EditTradeAdvertisementButton'
 import AddEtherModal from './../layouts/AddEtherModal'
 
-export default class ActiveAd extends Component {
+export default class TradeAdvertisementsRow extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -36,6 +36,8 @@ export default class ActiveAd extends Component {
   }
 
   render () {
+    console.log("TradeAdvertisementsRow")
+    console.log(this.props.tradeadvertisement)
     if (this.props.tradeadvertisement) {
       var tradeAdvertisement = this.props.tradeadvertisement;
       var display_id

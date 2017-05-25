@@ -39,6 +39,19 @@
     "traderating": {
       ".read": "auth != null",
       ".write": "auth != null"
+    },
+    "disputes": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "buytradeadvertisements": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "selltradeadvertisements": {
+      ".read": "auth != null",
+      ".write": "auth != null"
     }
+
   }
 }
