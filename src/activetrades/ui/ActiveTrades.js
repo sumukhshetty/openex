@@ -19,7 +19,6 @@ class ActiveTrades extends Component {
       )
     return (
       <table>
-        <ActiveTradesHeader />
         <div>
           { this.props.activetrades ? <ActiveTradesListContainer /> : <ActiveTradesLoadingDisplay />}
         </div>

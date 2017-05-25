@@ -10,8 +10,7 @@ class TradeAdvertisements extends Component {
     render() {
       console.log("TradeAdvertisements.render")
       // ISSUE-231-9: this.props.activeAds.activeAds should be changed to this.props.activeAds.data
-      var tradeadvertisements = this.props.tradeadvertisements
-      console.log(tradeadvertisements)
+      var tradeadvertisements = this.props.tradeadvertisements.data
       if(tradeadvertisements){
         var buyrows = [];
         var sellrows = [];

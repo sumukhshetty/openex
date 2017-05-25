@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import ViewCompletedTradeButton from '../layouts/ViewCompletedTradeButton'
 
-class CompletedTradeRow extends Component {
+class CompletedTradesRow extends Component {
 
   render () {
-    console.log("CompletedTradeRow.render")
+    console.log("CompletedTradesRow.render")
     console.log(this.props.purchaserequests)
     if (this.props.purchaserequests.data[this.props.purchaseRequestId]) {
       var purchaseRequest = this.props.purchaserequests.data[this.props.purchaseRequestId]
@@ -42,4 +42,4 @@ class CompletedTradeRow extends Component {
   }
 }
 
-export default CompletedTradeRow
+export default CompletedTradesRow

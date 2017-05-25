@@ -6,6 +6,7 @@ import CompletedTradesEmptyState from './../layouts/CompletedTradesEmptyState';
 class CompletedTrades extends Component {
 
   render () {
+    console.log('completedtrades.ui.CompletedTrades')
     var completedTrades = this.props.completedtrades.data;
     if (completedTrades) {
       var rows = [];

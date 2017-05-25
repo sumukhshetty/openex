@@ -10,7 +10,7 @@ class ActiveTradesList extends Component {
       // ISSUE-231-37: The activeTrades are just a list of keys and values for purchase request objects
       // when you need to get purchase request as an activeTrade then you use the key and get it from
       // purchaserequsests[purchaseRequestId]
-    var _activeTrades = this.props.activetrades;
+    var _activeTrades = this.props.activetrades.data;
     if (_activeTrades) {
       var rows = [];
       Object.entries(_activeTrades).forEach(

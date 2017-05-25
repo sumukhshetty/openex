@@ -5,6 +5,7 @@ import CompletedTradesHeader from './CompletedTradesHeader';
 
 class CompletedTrades extends Component {
   render () {
+    console.log('completedtrades.layouts.CompletedTrades')
     return (
       <div className='pt3'>
         <p className='b'>Your Completed Trades</p>
