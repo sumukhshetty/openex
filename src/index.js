@@ -25,7 +25,7 @@ import HelpConfirmation from './help/layouts/HelpConfirmation'
 import Payment from './activetrade/layouts/Payment'
 import Release from './activetrade/layouts/Release'
 import AllDone from './activetrade/layouts/AllDone'
-import ActiveBuyOrder from './activetrade/layouts/ActiveBuyOrder'
+//import ActiveBuyOrder from './activetrade/layouts/ActiveBuyOrder'
 import ActiveSellOrder from './activetrade/layouts/ActiveSellOrder'
 import HTMLStyles from './css/HTMLStyles.js'
 import Static from './staticPages/Master/Static'
@@ -36,10 +36,12 @@ import TermsOfService from './termsofservice/TermsOfService'
 import ResetPassword from './signup/ResetPassword'
 import ChatBox from './chat/containers/ChatBox'
 
-import BuyTradeAdvertisement from './buytradeadvertisement/BuyTradeAdvertisement'
-import BuyTradeAdvertisements from './buytradeadvertisements/BuyTradeAdvertisements'
-import SellTradeAdvertisements from './selltradeadvertisements/SellTradeAdvertisements'
+import BuyTradeAdvertisement from './buytradeadvertisement/layouts/BuyTradeAdvertisement'
+import BuyTradeAdvertisements from './buytradeadvertisements/layouts/BuyTradeAdvertisements'
+import SellTradeAdvertisement from './selltradeadvertisement/layouts/SellTradeAdvertisement'
+import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTradeAdvertisements'
 
+import ActiveTrade from './activetrade/layouts/ActiveTrade'
 // Redux Store
 import store from './store'
 import * as firebase from 'firebase'
@@ -104,7 +106,7 @@ ReactDOM.render((
         <Route path='sellorderdetail/:orderId' component={UserIsAuthenticated(SellOrderDetail)} />
       {/* ISSUE-231-25: buyTradeAdvertisement should be changed to buytradeadvertisement, orderId changed to tradeAdvertisementId */}
       {/* ISSUE-231-40: activebuyorder should be changed to activeTrade, orderId changed to purchaseRequestId */}
-        <Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />
+        {/*<Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />*/}
       {/* ISSUE-231-40: activesellorder should be changed to activeTrade, orderId changed to purchaseRequestId */}
         <Route path='activesellorder/:requestId' component={UserIsAuthenticated(ActiveSellOrder)} />
         <Route path='activetrade/:purchaseRequestId' component={UserIsAuthenticated(ActiveTrade)} />

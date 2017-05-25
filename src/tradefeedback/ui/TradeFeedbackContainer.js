@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     web3: state.web3,
     user: state.user,
     tradeFeedback: state.tradeFeedback,
-    orderId: ownProps.orderId,
+    purchaseRequestId: ownProps.purchaseRequestId,
     buyerId: ownProps.buyerId,
     sellerId: ownProps.sellerId
   }
@@ -15,8 +15,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoad: (user, orderId) => {
-      dispatch(tradeFeedback(user, orderId))
+    onBeforeComponentLoad: (user, purchaseRequestId) => {
+      dispatch(tradeFeedback(user, purchaseRequestId))
     },
     updateRating: (rating) =>{
      dispatch(updateRating(rating)) 

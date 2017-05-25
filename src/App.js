@@ -52,9 +52,9 @@ class App extends Component {
           <div className='w-75 center'>
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
-              <div className='pure-u-1-4 brand' onClick={this.testNotify}>
+              <div className='pure-u-1-4 brand' >
                 <Link to='/dashboard'>
-                  <img className='brand' src={logo} alt='Automt Ether Exchange' />
+                  <img className='brand' src={logo} alt='Automte Ether Exchange' />
                 </Link>
               </div>
               <div className='flex mxe cxc'>
@@ -69,11 +69,11 @@ class App extends Component {
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/buyorders' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Buy
+                  <Link to='/buyether' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Buy
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/sellorders' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Sell
+                  <Link to='/sellether' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Sell
                   </Link>
                 </li>
                 <li className='pure-menu-item'>

@@ -25,16 +25,16 @@ function createBuyTradeAdvertisement(buyTradeAdvertisementPayload){
   }
 }
 
-export function userCreatesBuyTradeAdvertisement(postTradeDetails, web3, state){
+export function userCreatesBuyTradeAdvertisement(postTradeDetails, web3, user){
   return function(dispatch){
     request({
       method: 'post',
       body: {
         postTradeDetails: postTradeDetails,
-        sellerUid: state.user.data.uid,
-        contractTx: txHash['tx'],
-        // change this to sellOrderBook
-        contractAddress: txHash['logs'][0]['args']['orderAddress'] 
+        sellerUid: user.data.uid,
+        // contractTx: txHash['tx'],
+        // TODO change this to sellOrderBook
+        //contractAddress: txHash['logs'][0]['args']['orderAddress'] 
       },
       json: true,
       url: 'https://us-central1-automteetherexchange.cloudfunctions.net/createBuyTradeAdvertisement'
@@ -45,6 +45,7 @@ export function userCreatesBuyTradeAdvertisement(postTradeDetails, web3, state){
         throw err
       }
       if(res.statusCode === 200) {
+        dispatch(createBuyTradeAdvertisement(postTradeDetails))
         browserHistory.push('/dashboard')
       }
       if(res.statusCode === 500) {
@@ -52,7 +53,6 @@ export function userCreatesBuyTradeAdvertisement(postTradeDetails, web3, state){
         throw res.body.error
       }
     });
-    dispatch(createBuyTradeAdvertisement(postTradeDetails))
   }
 }
 
@@ -68,55 +68,37 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
     dispatch(sendEtherState('sending'));
     // ISSUE-231 - new - we change the orderFactoryContract to the orderBookFactoryContract
-    const factory = contract(OrderFactoryContract);
-    factory.setProvider(web3.currentProvider);
-    // Declaring this for later so we can chain functions on Authentication.
-    var factoryInstance;
-
-    // Get current ethereum wallet. TODO: Wrap in try/catch.
-    var coinbase = web3.eth.coinbase;
-
-    factory.at(factoryAddress.factoryAddress)
-      .then(function(_factory) {
-        console.log('got factory contract');
-        factoryInstance = _factory;
-        // this should change to createSellOrderBook({from:coinbase})
-        return factoryInstance.createSellOrder({from: coinbase});
-      })
-      .then(function(txHash) {
-        request({
-            method: 'post',
-            body: {
-              tradeDetails: tradeDetails,
-              sellerUid: user.data.uid,
-              contractTx: txHash['tx'],
-              // change this to sellOrderBook
-              contractAddress: txHash['logs'][0]['args']['orderAddress'] 
-            },
-            json: true,
-            url: 'https://us-central1-automteetherexchange.cloudfunctions.net/createSellTradeAdvertisement'
-          },
-          function(err, res, body) {
-            if (err) {
-              console.error('error posting json: ', err)
-              throw err
-            }
-            if(res.statusCode === 200) {
-              browserHistory.push('/dashboard')
-            }
-            if(res.statusCode === 500) {
-              console.error('Server responded with an error: ' + res.body.error);
-              throw res.body.error
-            }
-          });
-      })
-      .catch(function (error) {
-        dispatch(sendEtherState('init'));
-        console.log(error);
-      })
-
+    request({
+      method: 'post',
+      body: {
+        tradeDetails: tradeDetails,
+        sellerUid: user.data.uid,
+        //contractTx: txHash['tx'],
+        // change this to sellOrderBook
+        //contractAddress: txHash['logs'][0]['args']['orderAddress'] 
+      },
+      json: true,
+      url: 'https://us-central1-automteetherexchange.cloudfunctions.net/createSellTradeAdvertisement'
+      },
+      function(err, res, body) {
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          dispatch(createSellTradeAdvertisement(tradeDetails))
+          browserHistory.push('/dashboard')
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+      }
     })
-    dispatch(createSellTradeAdvertisement(postTradeDetails))
+    .catch(function (error) {
+      dispatch(sendEtherState('init'));
+      console.log(error);
+    })
+    })
   }
 }
 

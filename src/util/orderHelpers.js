@@ -1,3 +1,5 @@
+// delete this file
+
 import {firebaseRef} from './../index.js'
 
 module.exports = {

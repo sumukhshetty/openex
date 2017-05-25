@@ -1,6 +1,3 @@
-// ISSUE-231-46: we're deleting this file since all purchaserequests will
-// be mamanged by the activeTrade component
-
 import { connect } from 'react-redux'
 import ActiveTrade from './ActiveTrade'
 import * as actions from './ActiveTradeActions'

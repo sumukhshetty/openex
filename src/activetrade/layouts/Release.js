@@ -15,11 +15,11 @@ class Release extends Component {
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
-          <ActiveTradeInfo params={this.props.order} viewerRole={this.props.viewerRole} />
+          <ActiveTradeInfo activetrade={this.props.activetrade} viewerRole={this.props.viewerRole} />
           <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
             <ChatBox
-              tradeId={this.props.tradeId}
+              tradeId={this.props.purchaseRequestId}
               sellerId={this.props.sellerId}
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>

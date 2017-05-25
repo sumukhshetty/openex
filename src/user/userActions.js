@@ -45,6 +45,21 @@ function getActiveTrades (activeTradesPayload) {
   };
 }
 
+function getCompletedTrades (completedTradesPayload) {
+  return {
+    type: 'GET_COMPLETED_TRADES',
+    payload: completedTradesPayload
+  }
+}
+
+function getDisputedTrades (disputedTradesPayload) {
+  return {
+    type: 'GET_DISPUTED_TRADES',
+    payload: disputedTradesPayload
+  }
+}
+
+
 function getPurchaseRequests (purchaseRequestsPayload) {
   return {
     type: 'GET_PURCHASE_REQUESTS',
@@ -61,29 +76,29 @@ module.exports = {
           dispatch(userProfile(userProfile))
           dispatch(userLoggedIn(user))
 
+          firebaseRef.database().ref('/users').on('value', function(snap){
+            dispatch(users(snap.val()))
+          })
+          firebaseRef.database().ref('/users/'+ user.uid+'/activeTrades/').on('value', function(snap){
+            dispatch(getActiveTrades(snap.val()))
+          })
+          firebaseRef.database().ref('/users/'+ user.uid+'/disputedTrades/').on('value', function(snap){
+            dispatch(getDisputedTrades(snap.val()))
+          })
+          firebaseRef.database().ref('/users/'+ user.uid+'/completedTrades/').on('value', function(snap){
+            dispatch(getCompletedTrades(snap.val()))
+          })
           firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
             dispatch(getBuyTradeAdvertisements(snap.val()))
           })
-          firebaseRef.database().ref('/users').once('value', function(snap){
-            dispatch(users(snap.val()))
-          })
           firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).on('value', function(snap){
             dispatch(getSellTradeAdvertisements(snap.val()))
-          })
-          // you get the activeTrades from userProfile and save on a database call
-          firebaseRef.database().ref('/users/'+ user.uid+'/activeTrades/').on('value', function(snap){
-            dispatch(getActiveTrades(snap.val()))
           })
           firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
             dispatch(getPurchaseRequests(snap.val()))
           })
           return browserHistory.push('/dashboard')
         })
-        // ISSUE-231-1 remove currency from the dispatch because its already in the userProfile
-        /*firebaseRef.database().ref('/users/'+user.uid+'/currency')
-        .once('value', function(snap) {
-          return browserHistory.push('/dashboard')
-        })*/
       } else {
         dispatch({ type: "USER_LOGGED_OUT"});
         return browserHistory.push('/')

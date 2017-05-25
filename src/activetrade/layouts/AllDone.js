@@ -17,15 +17,15 @@ class AllDone extends Component {
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
-          <ActiveTradeInfo params={this.props.order} viewerRole={this.props.viewerRole} />
+          <ActiveTradeInfo activetrade={this.props.activetrade} viewerRole={this.props.viewerRole} />
           <Progress progress_map={progressMap} />
           <div className='flex'>
             <ChatBox
-              tradeId={this.props.tradeId}
+              tradeId={this.props.purchaseRequestId}
               sellerId={this.props.sellerId}
               buyerId={this.props.buyerId} />
             <div className='w-50 ma3'>
-              <TradeFeedback sellerId={this.props.sellerId} buyerId={this.props.buyerId} orderId={this.props.tradeId}/>
+              <TradeFeedback sellerId={this.props.seller.data.uid} buyerId={this.props.buyer.data.uid} purchaseRequestId={this.props.purchaseRequestId}/>
             </div>
           </div>
         </div>

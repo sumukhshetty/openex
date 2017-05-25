@@ -36,6 +36,8 @@ import sellerReducer from './selltradeadvertisement/sellerreducer'
 import activeTradesReducer from './activetrades/activetradesreducer'
 import purchaseRequestsReducer from './purchaserequests/purchaseRequestsReducer'
 import activeTradeReducer from './activetrade/activetradereducer'
+import disputedTradesReducer from './disputedtrades/disputedtradesreducer'
+import completedTradesReducer from './completedtrades/completedtradesreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -62,9 +64,9 @@ const reducer = combineReducers({
   selltradeadvertisements: sellTradeadvertisementsReducer,
   selltradeadvertisement: sellTradeadvertisementReducer,
 // ISSUE-231-81: delete activeTrades, relpace with activetrades
-  activeTrades: activeEscrowListReducer,
+  //activeTrades: activeEscrowListReducer,
   activetrades: activeTradesReducer,
-  completedTrades: completedTradeListReducer,
+  completedtrades: completedTradeListReducer,
   activeAds: adListReducer,
 // ISSUE-231-83: replace activeTradeData for activetrade
   activeTradeData: activeTradeReducer,
@@ -83,7 +85,8 @@ const reducer = combineReducers({
   buyer: buyerReducer,
   seller: sellerReducer,
   purchaserequests: purchaseRequestsReducer,
-  activetrade: activeTradeReducer
+  activetrade: activeTradeReducer,
+  disputedtrades: disputedTradesReducer
 
 })
 

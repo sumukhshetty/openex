@@ -49,13 +49,23 @@ module.exports = {
     dispatch(setBuyTradeAdvertisement(buyAdvertisement))
     dispatch(setBuyer(users[buyAdvertisement.buyerUid]))
   },
-  sellerCreatesPurchaseRequest: (user, buyer, buyTradeAdvertisementId, buyTradeAdvertisement) => (dispatch) => {
-    var sellerUsername = user.proflie.username
+  sellerCreatesPurchaseRequest: (seller, buyer, amount, buyTradeAdvertisementId, buyTradeAdvertisement) => (dispatch) => {
+    var sellerUsername = seller.proflie.username
     var postData = {
-      buyTradeAdvertisementId: buyTradeAdvertisementId,
-      buyTradeAdvertisement: buyTradeAdvertisement,
+      amount: amount,
+      //bankInformation: buyTradeAdvertisement.bankInformation, //this should be taken from the sellTradeAdvertisement when the seller confirms a trade
+      buyerAddress: buyTradeAdvertisement.buyerAddress,
+      buyerUsername: buyer.profile.username,
+      buyerUid: buyTradeAdvertisement.buyerUid,
+      tradeAdvertisementId: buyTradeAdvertisementId,
       buyer: buyer,
-      seller: user
+      //paymentMethod: buyTradeAdvertisement.paymentMethod, //this should be taken from the sellTradeAdvertisement when the seller confirms a trade
+      price: buyTradeAdvertisement.price,
+      sellerAddress: coinbase,
+      sellerUid: seller.profile.uid,
+      sellerUsername: seller.profile.username
+      sellrequesttime: new Date(),
+      status: 'Initiated'
     }
     var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/sellerCreatesPurchaseRequest'
     var options = {
@@ -77,7 +87,7 @@ module.exports = {
       }
       if(statusCode === 200) {
         console.log("ok got the 200")
-        var _body = sellerUsername + " has confirmed your buy order"
+        var _body = seller.proflie.username + " has confirmed your buy order"
         var _fcmToken
         if(buyerUserData.fcmToken){
           _fcmToken = buyer.fcmToken
@@ -93,7 +103,7 @@ module.exports = {
           "recipientToken": _fcmToken,
           "recipientEmail": buyer.email,
           "verifiedEmail": buyer.verifiedEmail,
-          "senderUsername": sellerUsername,
+          "senderUsername": seller.proflie.username,
           // TODO get the purchaseRequestId from the res.body
           "purchaseRequestId": purchaseRequestId,
           "seen": false,
@@ -101,6 +111,7 @@ module.exports = {
         }
         var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
         firebaseRef.database().ref('/users/'+buyer.data.uid+'/notifications/'+newNotifcation.key).set({vaule:true}) 
+        browserHistory.push('/activetrade/' +  res.purchaseRequestId)
       }
     });
   },

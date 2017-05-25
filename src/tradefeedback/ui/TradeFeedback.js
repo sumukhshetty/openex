@@ -13,15 +13,9 @@ class TradeFeedback extends Component {
   }
 
   componentWillMount () {
-    // console.log('TradeFeedback.componentWillMount')
-    // console.log(this.props)
-    // console.log(this.state)
-    // console.log(this.props.user.data.uid)
-    this.props.onBeforeComponentLoad(this.props.user.data, this.props.orderId)
+    this.props.onBeforeComponentLoad(this.props.user.data, this.props.purchaseRequestId)
   }
-  componentWillUpdate (nextProps, nextState) {
 
-  }
 
   clickStar (rating) {
     var rater = firebaseRef.auth().currentUser.uid
@@ -29,12 +23,12 @@ class TradeFeedback extends Component {
     switch (rater) {
       case (this.props.sellerId):
         console.log('the rater is the seller and the ratee is the buyer ' + rating)
-        firebaseRef.database().ref('/traderating/' + this.props.buyerId + '/' + this.props.orderId).set({value: rating})
+        firebaseRef.database().ref('/traderating/' + this.props.buyerId + '/' + this.props.purchaseRequestId).set({value: rating})
         break
 
       case (this.props.buyerId):
         console.log('the rater is the buyer and they ratee the seller ' + rating)
-        firebaseRef.database().ref('/traderating/' + this.props.sellerId + '/' + this.props.orderId).set({value: rating})
+        firebaseRef.database().ref('/traderating/' + this.props.sellerId + '/' + this.props.purchaseRequestId).set({value: rating})
 
     }
     if (!this.props.tradeFeedback.data) {

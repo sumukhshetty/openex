@@ -9,11 +9,11 @@ function getTradeFeedback (tradeFeedbackPayload) {
 }
 
 module.exports = {
-  tradeFeedback: (user, orderId) => (dispatch) => {
+  tradeFeedback: (user, purchaseRequestId) => (dispatch) => {
     // console.log("TradeFeedbackActions.tradeFeedback")
     // console.log(user)
-    // console.log(orderId)
-    firebaseRef.database().ref('/traderating/' + user.uid + '/' + orderId).once('value', function (snap) {
+    // console.log(purchaseRequestId)
+    firebaseRef.database().ref('/traderating/' + user.uid + '/' + purchaseRequestId).once('value', function (snap) {
       // console.log("!@#")
       var tradeFeedbackRating = snap.val()
       // console.log(tradeFeedbackRating.value)

@@ -152,18 +152,26 @@ class PostTradeForm extends Component {
       )
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
       this.showWaitModal()
-      this.props.onPostTradeFormSubmit(
+/*      this.props.onPostTradeFormSubmit(
         _postTradeDetails,
         this.state.web3.web3,
         this.state
-      )
+      )*/
+      this.props.userCreatesSellTradeAdvertisement(
+        _postTradeDetails, 
+        this.props.web3.web3, 
+        this.props.user)
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
-      this.props.onBuyEtherFormSubmit(
+      /*this.props.onBuyEtherFormSubmit(
         _postTradeDetails,
         this.state.web3.web3,
         this.state
-        )
+        )*/
+      this.props.userCreatesBuyTradeAdvertisement(
+        _postTradeDetails,
+        this.props.web3.web3,
+        this.props.user)
     }
   }
 

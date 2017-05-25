@@ -1,14 +1,14 @@
 // ISSUE-231-70: This replaces buyorders
 
 import React, { Component } from 'react'
-import BuyTradeAdvertisementContainer from './../ui/BuyTradeAdvertisementContainer'
+import BuyTradeAdvertisementsContainer from './../ui/BuyTradeAdvertisementsContainer'
 
-export default class BuyOrders extends Component {
+export default class BuyTradeAdvertisements extends Component {
   render () {
     return (
       <div className='w-100 bg-smoke'>
         <div className='w-75 center'>
-          <BuyTradeAdvertisementContainer />
+          <BuyTradeAdvertisementsContainer />
         </div>
       </div>
     )
