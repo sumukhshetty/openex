@@ -70,7 +70,15 @@ module.exports = {
         sellerconfirmtime: now.toUTCString(),
         status: 'Awaiting Payment'
       })
-    firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId).set(updatedPurchaseRequest);
+    console.log(updatedPurchaseRequest)
+    var updatedRef = firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+    .set(updatedPurchaseRequest, function(error){
+      if(error){
+        console.log(error)
+      } else {
+        dispatch(setActiveTrade(updatedPurchaseRequest))
+      }
+    });
   },
   buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
     var now = new Date()
@@ -80,7 +88,14 @@ module.exports = {
         lastUpdated: now.toUTCString(),
         status: 'Awaiting Release'
       })
-    firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+ purchaseRequestId).set(updatedPurchaseRequest);
+    firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+ purchaseRequestId)
+      .set(updatedPurchaseRequest, function(error){
+        if(error){
+          console.log(error)
+        } else {
+          dispatch(setActiveTrade(updatedPurchaseRequest))
+        }
+      });
   },
   sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     var now = new Date()
@@ -101,6 +116,7 @@ module.exports = {
 
             firebaseRef.database().ref("users/"+purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
             firebaseRef.database().ref("users/"+purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
+            dispatch(setActiveTrade(updatedPurchaseRequest))
           });
 
   },
@@ -124,6 +140,7 @@ module.exports = {
 
             firebaseRef.database().ref("users/"+purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
             firebaseRef.database().ref("users/"+purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
+            dispatch(setActiveTrade(updatedPurchaseRequest))
           });
   },
   buyerCancelsTrade:(buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -144,6 +161,7 @@ module.exports = {
 
             firebaseRef.database().ref("users/"+purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
             firebaseRef.database().ref("users/"+purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
+            dispatch(setActiveTrade(updatedPurchaseRequest))
           });
   },
   sellerRaisesDispute: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {

@@ -61,6 +61,7 @@ function getDisputedTrades (disputedTradesPayload) {
 
 
 function getPurchaseRequests (purchaseRequestsPayload) {
+  console.log("userActions.getPurchaseRequests")
   return {
     type: 'GET_PURCHASE_REQUESTS',
     payload: purchaseRequestsPayload
@@ -97,6 +98,7 @@ module.exports = {
             dispatch(getSellTradeAdvertisements(snap.val()))
           })
           firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
+            console.log('change in purchaserequests')
             dispatch(getPurchaseRequests(snap.val()))
           })
           return browserHistory.push('/dashboard')

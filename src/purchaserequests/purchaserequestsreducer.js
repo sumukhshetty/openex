@@ -5,6 +5,7 @@ const initialState = {
 const purchaseRequestsReducer = (state = initialState, action) => {
   if (action.type === 'GET_PURCHASE_REQUESTS')
   {
+    console.log('purchaseRequestsReducer.GET_PURCHASE_REQUESTS')
     return Object.assign({}, state, {
       data: action.payload
     })

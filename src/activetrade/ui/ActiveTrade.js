@@ -16,6 +16,7 @@ class ActiveTrade extends Component {
   }
 
   componentWillUnmount () {
+    console.log("ui.ActiveTrade.componentWillUnmount")
     this.props.clearState()
   }
 
