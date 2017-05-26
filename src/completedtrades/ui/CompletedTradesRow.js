@@ -4,7 +4,7 @@ import ViewCompletedTradeButton from '../layouts/ViewCompletedTradeButton'
 class CompletedTradesRow extends Component {
 
   render () {
-    if (this.props.purchaserequests.data[this.props.purchaseRequestId]) {
+    if (this.props.purchaserequests.data) {
       var purchaseRequest = this.props.purchaserequests.data[this.props.purchaseRequestId]
       var display_id
       if (purchaseRequest.contractAddress) {
