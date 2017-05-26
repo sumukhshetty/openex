@@ -82,10 +82,10 @@ module.exports = {
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
           var userProfile = snap.val()
           dispatch(getUserProfile(userProfile))
-          dispatch(getActiveTrades(userProfile['activeTrades']))
-          dispatch(getDisputedTrades(userProfile['disputedTrades']))
+          dispatch(getActiveTrades(userProfile['activetrades']))
+          dispatch(getDisputedTrades(userProfile['disputedtrades']))
           dispatch(getTradeAdvertisements(userProfile['advertisements']))
-          dispatch(getCompletedTrades(userProfile['completedTrades']))
+          dispatch(getCompletedTrades(userProfile['completedtrades']))
           dispatch(userLoggedIn(user))
           firebaseRef.database().ref('/users').on('value', function(snap){
             dispatch(users(snap.val()))
@@ -106,6 +106,8 @@ module.exports = {
             dispatch(getSellTradeAdvertisements(snap.val()))
           })
           firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
+            console.log("purchaserequests")
+            console.log(snap.val())
             dispatch(getPurchaseRequests(snap.val()))
           })
           return browserHistory.push('/dashboard')

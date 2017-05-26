@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+/*const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (user) => {
       console.log("activetradessList.onBeforeComponentLoad")
@@ -19,10 +19,10 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-
+*/
 const ActiveTradesListContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  //mapDispatchToProps
 )(ActiveTradesList)
 
 export default ActiveTradesListContainer

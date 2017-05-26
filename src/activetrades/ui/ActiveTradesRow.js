@@ -12,9 +12,11 @@ class ActiveTradeRow extends Component {
     // of the purchaseRequest as a prop - all of the activeTradeData
     // should be replaced with a purchaseRequest obj
     // ISSUE-231-32: orderId is changed to purchaseRequestId
+    console.log("ActiveTradesRow.render")
     if (this.props.purchaseRequest) {
       // ISSUE-231-33: orderId is changed to purchaseRequestId
       var purchaseRequest = this.props.purchaseRequest
+      console.log(purchaseRequest)
       var display_id
       if (purchaseRequest.contractAddress) {
         display_id = purchaseRequest.contractAddress.slice(2, 6)
@@ -31,11 +33,11 @@ class ActiveTradeRow extends Component {
       return (
         <tr className='flex cxc'>
           <td className='fb5 tc'>{display_id}</td>
-          <td className='fb15 tc'>{purchaseRequest.lastUpated}</td>
+          <td className='fb15 tc'>{purchaseRequest.lastUpdated}</td>
           <td className='fb10 tc'>{tradeType}</td>
           <td className='fb15 tc'>{username}</td>
-          <td className='fb10 tc'>{purchaseRequest.amount}</td>
-          <td className='fb10 tc'>{purchaseRequest.amount}</td>
+          <td className='fb10 tc'>{purchaseRequest.etherAmount}</td>
+          <td className='fb10 tc'>{purchaseRequest.fiatAmount}</td>
           <td className='fb10 tc'>{purchaseRequest.status}</td>
           <td className='fb10 tc'><i className='icon'>greendot</i> Active</td>
           <ViewActiveTradeButton purchaseRequest={purchaseRequest} purchaseRequestId={this.props.purchaseRequestId} tradeType={purchaseRequest.tradeAdvertisementType} />

@@ -8,7 +8,8 @@ class ActiveTrades extends Component {
 
   componentWillMount () {
     console.log("ui.ActiveTrades.componentWillMount")
-    this.props.onBeforeComponentLoad(this.props.user)
+    console.log(this.props)
+    //this.props.onBeforeComponentLoad(this.props.user)
   }
 
   render () {
