@@ -23,25 +23,25 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users))
     },
     sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerConfirmsTrade(purchaseRequest, seller))
+      dispatch(actions.sellerConfirmsTrade(seller, purchaseRequest, purchaseRequestId))
     },
     buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.buyerConfirmsPayment(purchaseRequest, buyer))
+      dispatch(actions.buyerConfirmsPayment(buyer, purchaseRequest, purchaseRequestId))
     },
     sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerReleasesEther(purchaseRequest, seller))
+      dispatch(actions.sellerReleasesEther(seller, purchaseRequest, purchaseRequestId))
     },
     sellerCancelsTrade: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerCancelsTrade(purchaseRequest, seller))
+      dispatch(actions.sellerCancelsTrade(seller, purchaseRequest, purchaseRequestId))
     },
     buyerCancelsTrade: (buyer, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.buyerCancelsTrade(purchaseRequest, buyer))
+      dispatch(actions.buyerCancelsTrade(buyer, purchaseRequest, purchaseRequestId))
     },
     buyerRaisesDispute: (buyer, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.buyerRaisesDispute(purchaseRequest, buyer))
+      dispatch(actions.buyerRaisesDispute(buyer, purchaseRequest, purchaseRequestId))
     },
     sellerRaisesDispute: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerRaisesDispute(purchaseRequest, seller))
+      dispatch(actions.sellerRaisesDispute(seller, purchaseRequest, purchaseRequestId))
     },
     arbiterVotesForSeller: (seller, arbiter, purchaseRequest, purchaseRequestId)=>{
       dispatch(actions.arbiterVotesForSeller(seller, arbiter, purchaseRequest, purchaseRequestId))

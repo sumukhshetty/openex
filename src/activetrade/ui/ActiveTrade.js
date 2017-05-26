@@ -21,35 +21,35 @@ class ActiveTrade extends Component {
 
   sellerConfirmsTrade () {
     // TODO web3 stuff
-    this.props.sellerConfirmsTrade(this.props.seller, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   buyerConfirmsPayment () {
-    this.props.buyerConfirmsPayment(this.props.buyer, this.props.activetrade, this.props.purchaseRequestId) 
+    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId) 
   }
 
   sellerReleasesEther () {
     // TODO web3 stuff
-    this.props.sellerReleasesEther(this.props.seller, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.sellerReleasesEther(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   sellerCancelsTrade () {
-    this.props.sellerCancelsTrade(this.props.seller, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.sellerCancelsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   buyerCancelsTrade () {
-    this.props.buyerCancelsTrade(this.props.buyer, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.buyerCancelsTrade(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   buyerRaisesDispute () {
-    this.props.buyerRaisesDispute(this.props.buyer, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.buyerRaisesDispute(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   sellerRaisesDispute () {
-    this.props.sellerRaisesDispute(this.props.seller, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.sellerRaisesDispute(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   arbiterVotesForSeller () {
     // TODO web3 stuff
-    this.props.arbiterVotesForSeller(this.props.seller, this.props.arbiter, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.arbiterVotesForSeller(this.props.seller.data, this.props.arbiter, this.props.activetrade, this.props.purchaseRequestId)
   }
   arbiterVotesForBuyer () {
     // TODO web3 stuff
-    this.props.arbiterVotesForBuyer(this.props.buyer, this.props.arbiter, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.arbiterVotesForBuyer(this.props.buyer.data, this.props.arbiter.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   resetEtherState() {
