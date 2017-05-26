@@ -5,7 +5,7 @@ class EditTradeAdvertisementButton extends Component {
   render() {
     return(
       <td className='fb10 tc'>
-        <button onClick={()=>browserHistory.push('/edittradeadvertisement/' +this.props.tradeAdvertisementId)}>Edit</button>
+        <button onClick={()=>browserHistory.push('/edittradeadvertisement/' +this.props.tradeType+'/'+this.props.tradeAdvertisementId)}>Edit</button>
 
       </td>
     );

@@ -98,7 +98,6 @@ module.exports = {
             dispatch(getSellTradeAdvertisements(snap.val()))
           })
           firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
-            console.log('change in purchaserequests')
             dispatch(getPurchaseRequests(snap.val()))
           })
           return browserHistory.push('/dashboard')

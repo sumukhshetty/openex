@@ -67,7 +67,7 @@ export default class TradeAdvertisementsRow extends Component {
               {this.state.showEscrowModal && <AddEtherModal sendEtherState={this.props.sendEtherState} close={this.removeEscrowModal.bind(this)} handleEscrowRequest={this.handleEscrowRequest.bind(this)} onEtherAmountChange={this.onEtherAmountChange.bind(this)} />}
 
               <button className=' grow mr3' onClick={this.showEscrowModal.bind(this)}>+ Add Ether</button></div>}
-            <EditTradeAdvertisementButton tradeAdvertisementId={this.props.tradeAdvertisementId}/>
+            <EditTradeAdvertisementButton tradeAdvertisementId={this.props.tradeAdvertisementId} tradeType={this.props.tradeType}/>
           </span>
         </tr>
       )

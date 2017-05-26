@@ -41,6 +41,7 @@ import BuyTradeAdvertisement from './buytradeadvertisement/layouts/BuyTradeAdver
 import BuyTradeAdvertisements from './buytradeadvertisements/layouts/BuyTradeAdvertisements'
 import SellTradeAdvertisement from './selltradeadvertisement/layouts/SellTradeAdvertisement'
 import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTradeAdvertisements'
+import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAdvertisement'
 
 import ActiveTrade from './activetrade/layouts/ActiveTrade'
 // Redux Store
@@ -112,6 +113,7 @@ ReactDOM.render((
       {/* ISSUE-231-40: activesellorder should be changed to activeTrade, orderId changed to purchaseRequestId */}
         {/*<Route path='activesellorder/:requestId' component={UserIsAuthenticated(ActiveSellOrder)} />*/}
         <Route path='activetrade/:purchaseRequestId' component={UserIsAuthenticated(ActiveTrade)} />
+        <Route path='edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId' component={UserIsAuthenticated(EditTradeAdvertisement)} />
 {/*        <Route path='payment/:orderId' component={UserIsAuthenticated(Payment)} />
         <Route path='release/:orderId' component={UserIsAuthenticated(Release)} />
         <Route path='allDone/:orderId' component={UserIsAuthenticated(AllDone)} />*/}

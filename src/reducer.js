@@ -39,6 +39,7 @@ import activeTradeReducer from './activetrade/activetradereducer'
 import disputedTradesReducer from './disputedtrades/disputedtradesreducer'
 import completedTradesReducer from './completedtrades/completedtradesreducer'
 import tradeAdvertisementsReducer from './tradeadvertisements/tradeadvertisementsreducer'
+import editTradeAdvertisementReducer from './edittradeadvertisement/edittradeadvertisementreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -88,7 +89,8 @@ const reducer = combineReducers({
   purchaserequests: purchaseRequestsReducer,
   activetrade: activeTradeReducer,
   disputedtrades: disputedTradesReducer,
-  tradeadvertisements: tradeAdvertisementsReducer
+  tradeadvertisements: tradeAdvertisementsReducer,
+  edittradeadvertisement: editTradeAdvertisementReducer
 
 })
 
