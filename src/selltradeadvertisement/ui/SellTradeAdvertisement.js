@@ -60,8 +60,14 @@ export default class SellTradeAdvertisement extends Component {
           requestComponent = <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to buy?</h2>
             <h2 className='pv1 tc'>Available:{availableBalance} Ether</h2>
-            <div className='flex mxc'><Converter maxEther={availableBalance} handleTradeRequest={this.createPurchaseRequest.bind(this)}
-              onAmountChange={this.onAmountChange.bind(this)} currency={this.props.user.profile.currency} price={price} country={seller.country} etherAmount={this.state.etherAmount} fiatAmount={this.state.fiatAmount} /></div>
+            <div className='flex mxc'><Converter maxEther={availableBalance} 
+              handleTradeRequest={this.createPurchaseRequest.bind(this)}
+              onAmountChange={this.onAmountChange.bind(this)} 
+              currency={this.props.user.profile.currency} 
+              price={price} 
+              country={seller.country} 
+              etherAmount={this.state.etherAmount} 
+              fiatAmount={this.state.fiatAmount} /></div>
           </div>
         } else {
           requestComponent = <div className='w-50' >

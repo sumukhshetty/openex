@@ -27,8 +27,6 @@ class Payment extends Component {
   }
 
   render () {
-    console.log("Payment.render")
-    console.log(this.props)
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import BuyTradeAdvertisement from './BuyTradeAdvertisement'
-import {buyTradeAdvertisement, sellerCreatesPurchaseRequest, clearBuyer, clearBuyTradeAdvertisement} from './BuyTradeAdvertisementActions'
+import {buyTradeAdvertisement, sellerCreatesPurchaseRequest, clearState} from './BuyTradeAdvertisementActions'
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -10,8 +10,8 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user,
     users: state.users,
     buyer: state.buyer,
-    buyTradeAdvertisements: state.buytradeadvertisements,
-    buyTradeAdvertisement: state.buyTradeAdvertisement,
+    buytradeadvertisements: state.buytradeadvertisements,
+    buytradeadvertisement: state.buytradeadvertisement,
     buyTradeAdvertisementId: ownProps.buyTradeAdvertisementId
   }
 }
@@ -19,14 +19,13 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onBeforeComponentLoad: (buyTradeAdvertisements, buyTradeAdvertisementId, users) => {
-      dispatch(buyTradeAdvertisement(buyTradeAdvertisement, buyTradeAdvertisementId, users))
+      dispatch(buyTradeAdvertisement(buyTradeAdvertisements, buyTradeAdvertisementId, users))
     },
     onBeforeComponentWillUnmount: ()=>{
-      dispatch(clearBuyTradeAdvertisement())
-      dispatch(clearBuyer())
+      dispatch(clearState())
     },
-    createPurchaseRequest:(user, buyTradeAdvertisement)=>{
-      dispatch(sellerCreatesPurchaseRequest(user, buyTradeAdvertisement))
+    createPurchaseRequest:(etherAmount, fiatAmount, etherPrice, buyTradeAdvertisementId, buyTradeAdvertisement, buyer, sellerAddress, seller)=>{
+      dispatch(sellerCreatesPurchaseRequest(etherAmount, fiatAmount, etherPrice, buyTradeAdvertisementId, buyTradeAdvertisement, buyer, sellerAddress, seller))
     },
 /*    acceptOrder: (buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => {
       dispatch(createBuyOrderContract(buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3));

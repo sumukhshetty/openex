@@ -39,21 +39,52 @@ module.exports = {
   buyTradeAdvertisement: (buyTradeAdvertisements, buyTradeAdvertisementId, users) => (dispatch) => {
     var buyAdvertisement = buyTradeAdvertisements.data[buyTradeAdvertisementId]
     dispatch(setBuyTradeAdvertisement(buyAdvertisement))
-    dispatch(setBuyer(users[buyAdvertisement.buyerUid]))
+    dispatch(setBuyer(users.data[buyAdvertisement.buyerUid]))
   },
-  sellerCreatesPurchaseRequest: (seller, buyer, amount, buyTradeAdvertisementId, buyTradeAdvertisement, web3) => (dispatch) => {
-    var coinbase = web3.eth.coinbase;
+  sellerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, buyTradeAdvertisementId, buyTradeAdvertisement, buyer, sellerAddress, seller) => (dispatch) => {
+    var now = new Date()
+    var purchaseRequestData = {
+      bankinformation:'TODO', //need to set this to the user's profile. the 
+      buyerAddress: buyTradeAdvertisement.buyerAddress,
+      buyerUid: buyTradeAdvertisement.buyerUid,
+      buyerUsername: buyer.data.username,
+      // TODO get the contractAddress
+      contractAddress:'TODO', 
+      currency: buyer.data.currency,
+      createdAt:now.toUTCString(),
+      etherAmount: etherAmount,
+      fiatAmount: fiatAmount,
+      lastUpdated: now.toUTCString(),
+      paymentMethod: 'TODO', //need to get this from the seller's profile
+      price: etherPrice,
+      sellerAddress:sellerAddress,
+      sellerUid:seller.data.uid,
+      sellerUsername:seller.profile.username,
+      status:'Awaiting Seller Confirmation',
+      tradeAdvertisementId: buyTradeAdvertisementId,
+      tradeAdvertisementType: buyTradeAdvertisement.tradeType,
+      txHash: 'TODO', //added when the seller confirms the trade
+      buyercancelstime: '-',
+      buyerrequesttime: '-',
+      sellrequesttime: now.toUTCString(),
+      sellercancelstime: '-',
+      sellerconfirmtime: '-',
+      buyerconfirrmpaymenttime: '-',
+      sellerreleaseethertime: '-',
+      buyraisesdisputetime: '-',
+      sellerraisesdisputetime: '-'
+    }
     var postData = {
-      amount: amount,
+      //amount: amount,
       //bankInformation: buyTradeAdvertisement.bankInformation, //this should be taken from the sellTradeAdvertisement when the seller confirms a trade
       buyerAddress: buyTradeAdvertisement.buyerAddress,
-      buyerUsername: buyer.profile.username,
+      buyerUsername: buyer.data.username,
       buyerUid: buyTradeAdvertisement.buyerUid,
       tradeAdvertisementId: buyTradeAdvertisementId,
       buyer: buyer,
       //paymentMethod: buyTradeAdvertisement.paymentMethod, //this should be taken from the sellTradeAdvertisement when the seller confirms a trade
       price: buyTradeAdvertisement.price,
-      sellerAddress: coinbase,
+      //sellerAddress: coinbase,
       sellerUid: seller.profile.uid,
       sellerUsername: seller.profile.username,
       sellrequesttime: new Date(),
@@ -66,7 +97,12 @@ module.exports = {
       json: true,
       url: url
     }
-    request(options, function (err, res, body) {
+    var newRequest = firebaseRef.database().ref(/purchaserequests/ + seller.profile.country)
+      .push(purchaseRequestData, function(err){
+        firebaseRef.database().ref(/users/+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
+        firebaseRef.database().ref(/users/+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})   
+      })
+/*    request(options, function (err, res, body) {
       if (err) {
         console.error('error posting json: ', err)
         throw err
@@ -105,7 +141,7 @@ module.exports = {
         firebaseRef.database().ref('/users/'+buyer.data.uid+'/notifications/'+newNotifcation.key).set({vaule:true}) 
         browserHistory.push('/activetrade/' +  res.purchaseRequestId)
       }
-    });
+    });*/
   },
   clearState: () => (dispatch) =>{
     dispatch(clearBuyer())

@@ -62,9 +62,7 @@ module.exports = {
     dispatch(setSeller(users.data[activeTrade.sellerUid]))
   },
   sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    console.log("ui.ActiveTradeActions.sellerConfirms")
     //TODO web3 stuff with the sellOrderBookContract
-    console.log(seller, purchaseRequest, purchaseRequestId)
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -72,13 +70,9 @@ module.exports = {
         sellerconfirmtime: now.toUTCString(),
         status: 'Awaiting Payment'
       })
-    console.log(updatedPurchaseRequest)
     firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId).set(updatedPurchaseRequest);
-    console.log("updated purchaseRequest")
   },
   buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    console.log("activetrade.ui.buyerConfirmsPayment")
-    console.log(buyer, purchaseRequest, purchaseRequestId)
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -86,12 +80,9 @@ module.exports = {
         lastUpdated: now.toUTCString(),
         status: 'Awaiting Release'
       })
-    console.log(updatedPurchaseRequest)
     firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+ purchaseRequestId).set(updatedPurchaseRequest);
   },
   sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    console.log("activetrade.ui.sellerReleasesEther")
-    console.log(seller, purchaseRequest, purchaseRequestId)
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -99,7 +90,6 @@ module.exports = {
         sellerreleaseethertime: now.toUTCString(),
         status: 'All Done'
     })
-    console.log(updatedPurchaseRequest)
     // TODO web3 stuff with sellOrderBookContract
     firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
           .set(updatedPurchaseRequest)
@@ -116,9 +106,6 @@ module.exports = {
   },
   sellerCancelsTrade:(seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerCancelsTrade")
-    console.log(seller)
-    console.log(purchaseRequest)
-    console.log(purchaseRequestId)
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
             purchaseRequest, {
@@ -140,10 +127,6 @@ module.exports = {
           });
   },
   buyerCancelsTrade:(buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    console.log("ui.ActiveTradeActions.buyerCancelsTrade")
-    console.log(buyer)
-    console.log(purchaseRequest)
-    console.log(purchaseRequestId)
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
             purchaseRequest, {
