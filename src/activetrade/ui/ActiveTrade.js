@@ -1,18 +1,18 @@
 // ISSUE-231-53: change file name from ActiveSellOrder to ActiveTradeOrder
 import React, { Component } from 'react'
 
-import Confirmation from '../layouts/Confirmation.js'
-import Payment from '../layouts/Payment.js'
-import Release from '../layouts/Release.js'
-import AllDone from '../layouts/AllDone.js'
-import Disputed from '../layouts/Disputed.js'
-import Canceled from '../layouts/Canceled.js'
-import Dot from '../../images/svgReactComponents/Dot.js'
+import Confirmation from './../layouts/Confirmation.js'
+import Payment from './../layouts/Payment.js'
+import Release from './../layouts/Release.js'
+import AllDone from './../layouts/AllDone.js'
+import Disputed from './../layouts/Disputed.js'
+import Canceled from './../layouts/Canceled.js'
+import Dot from './../../images/svgReactComponents/Dot.js'
 
 class ActiveTrade extends Component {
 
   componentWillMount () {
-    this.props.onBeforeComponentLoad(this.props.activetrade, this.props.purchaseRequestId, this.props.user)
+    this.props.onBeforeComponentLoad(this.props.purchaserequests, this.props.purchaseRequestId, this.props.users)
   }
 
   componentWillUnmount () {
@@ -58,6 +58,7 @@ class ActiveTrade extends Component {
 
 
   render () {
+    console.log("ui.ActiveTrade.render")
     const progress_maps = {
       'Awaiting Seller Confirmation': [
         { status: 'active', label: <Dot />, text: 'Awaiting Seller Confirmation' },
@@ -88,7 +89,7 @@ class ActiveTrade extends Component {
     var status = 'getting status....'
     var activetrade, currentStep, viewerRole
     // console.log(this.props)
-    if (this.props.activetrade) {
+    if (this.props.activetrade.data) {
       activetrade = this.props.activetrade.data
 
       if (activetrade.buyerUid === this.props.user.data.uid) {
@@ -103,7 +104,7 @@ class ActiveTrade extends Component {
       // TODO add the raisedDispute and canceledTrade components
       var tradeFlowComponents = {
         'Awaiting Seller Confirmation': <Confirmation
-          activeTrade={activetrade}
+          activetrade={activetrade}
           confirmTrade={this.sellerConfirmsTrade.bind(this)} 
           buyer={this.props.buyer}
           buyerCancelsTrade={this.buyerCancelsTrade.bind(this)}
@@ -151,14 +152,14 @@ class ActiveTrade extends Component {
           step={status}
           viewerRole={viewerRole}
           />,
-        'Trade Canceled': <Canceled
+/*        'Trade Canceled': <Canceled
           activeTrade={activetrade} 
           viewerRole={viewerRole}
           />,
         'Trade Disputed': <Disputed
           activeTrade={activetrade} 
           viewerRole={viewerRole}
-         />
+         />*/
       }
 
       currentStep = tradeFlowComponents[status]

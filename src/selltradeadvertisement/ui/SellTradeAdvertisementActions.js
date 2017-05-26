@@ -73,7 +73,6 @@ module.exports = {
       buyraisesdisputetime: '-',
       sellerraisesdisputetime: '-'
     }
-    console.log(purchaseRequestData)
     var postData = {
       sellTradeAdvertisementId: sellTradeAdvertisementId,
       sellTradeAdvertisement: sellTradeAdvertisement,
@@ -93,6 +92,7 @@ module.exports = {
         firebaseRef.database().ref(/users/+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
       })
 
+      //TODO implement this with firebase functions and send notification
     /*request(options, function(err, res, body){
       if (err) {
         console.error('error posting json: ', err)

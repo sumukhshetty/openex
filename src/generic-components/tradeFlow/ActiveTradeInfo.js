@@ -22,8 +22,9 @@ class ActiveTradeInfo extends Component {
       user = _activetrade.sellerUsername
     }
     return (
+      //TODO check the pricing here
       <p className='flarge ma0 pt5 b measure-wide'>
-        Contract {display_id}: {action} {_activetrade.amount} ether for {_activetrade.amount * _activetrade.price} {_activetrade.currency} with {_activetrade.paymentMethod} payment. {action2} {user} at the exchange
+        Contract {display_id}: {action} {_activetrade.etherAmount} ether for {_activetrade.etherAmount * _activetrade.price} {_activetrade.currency} with {_activetrade.paymentMethod} payment. {action2} {user} at the exchange
         rate {_activetrade.price} {_activetrade.currency} / ether.
       </p>
     )

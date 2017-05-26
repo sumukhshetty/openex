@@ -13,6 +13,8 @@ class Confirmation extends Component {
   }
 
   render () {
+    console.log("Confirmation.render")
+    console.log(this.props)
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
@@ -21,8 +23,8 @@ class Confirmation extends Component {
           <div className='flex'>
             <ChatBox
               tradeId={this.props.purchaseRequestId}
-              sellerId={this.props.seller.data.uid}
-              buyerId={this.props.buyer.data.uid} />
+              sellerId={this.props.activetrade.buyerUid}
+              buyerId={this.props.activetrade.sellerUid} />
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
               <div>

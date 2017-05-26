@@ -50,8 +50,8 @@ module.exports = {
   activeTrade: (purchaseRequests, purchaseRequestId, users) => (dispatch) => {
     var activeTrade = purchaseRequests.data[purchaseRequestId]
     dispatch(setActiveTrade(activeTrade))
-    dispatch(setBuyer(users[activeTrade.buyerUid]))
-    dispatch(setSeller(users[activeTrade.sellerUid]))
+    dispatch(setBuyer(users.data[activeTrade.buyerUid]))
+    dispatch(setSeller(users.data[activeTrade.sellerUid]))
   },
   sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerConfirms")

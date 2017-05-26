@@ -3,20 +3,9 @@ import ViewActiveTradeButton from '../layouts/ViewActiveTradeButton'
 
 class ActiveTradeRow extends Component {
 
-  // ISSUE-231-31: orderId is changed to purchaseRequestId
-  componentWillMount () {
-    //this.props.onBeforeComponentLoads(this.props.orderId, this.props.tradeType)
-  }
   render () {
-    // ISSUE-231-34: This ActiveTradesRow should be given the data
-    // of the purchaseRequest as a prop - all of the activeTradeData
-    // should be replaced with a purchaseRequest obj
-    // ISSUE-231-32: orderId is changed to purchaseRequestId
-    console.log("ActiveTradesRow.render")
     if (this.props.purchaseRequest) {
-      // ISSUE-231-33: orderId is changed to purchaseRequestId
       var purchaseRequest = this.props.purchaseRequest
-      console.log(purchaseRequest)
       var display_id
       if (purchaseRequest.contractAddress) {
         display_id = purchaseRequest.contractAddress.slice(2, 6)

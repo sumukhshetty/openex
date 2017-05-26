@@ -6,12 +6,6 @@ import ActiveTradesHeader from './../layouts/ActiveTradesHeader'
 
 class ActiveTrades extends Component {
 
-  componentWillMount () {
-    console.log("ui.ActiveTrades.componentWillMount")
-    console.log(this.props)
-    //this.props.onBeforeComponentLoad(this.props.user)
-  }
-
   render () {
     const ActiveTradesLoadingDisplay = () => (
       <tbody className='flex'>

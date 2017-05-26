@@ -90,15 +90,6 @@ module.exports = {
           firebaseRef.database().ref('/users').on('value', function(snap){
             dispatch(users(snap.val()))
           })
-/*          firebaseRef.database().ref('/users/'+ user.uid+'/activeTrades/').on('value', function(snap){
-            dispatch(getActiveTrades(snap.val()))
-          })*/
-/*          firebaseRef.database().ref('/users/'+ user.uid+'/disputedTrades/').on('value', function(snap){
-            dispatch(getDisputedTrades(snap.val()))
-          })
-          firebaseRef.database().ref('/users/'+ user.uid+'/completedTrades/').on('value', function(snap){
-            dispatch(getCompletedTrades(snap.val()))
-          })*/
           firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
             dispatch(getBuyTradeAdvertisements(snap.val()))
           })
@@ -106,8 +97,6 @@ module.exports = {
             dispatch(getSellTradeAdvertisements(snap.val()))
           })
           firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
-            console.log("purchaserequests")
-            console.log(snap.val())
             dispatch(getPurchaseRequests(snap.val()))
           })
           return browserHistory.push('/dashboard')

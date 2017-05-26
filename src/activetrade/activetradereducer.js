@@ -1,11 +1,11 @@
-// ISSUE-231-48: move this to the activetrade directory
-
 const initialState = {
   data: {}
 }
 
 const activeTradeReducer = (state = initialState, action) => {
-  if (action.type === 'GET_ACTIVE_TRADE') {
+  if (action.type === 'SET_ACTIVE_TRADE') {
+    console.log("activeTradeReducer.SET_ACTIVE_TRADE")
+    console.log(action.payload)
     return {
       data: action.payload
     }
