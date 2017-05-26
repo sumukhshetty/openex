@@ -14,9 +14,9 @@ const SellTradeAdvertisementRow = (props) => {
     <tbody className='flex'>
       {props.sellTradeAdvertisementData && props.seller &&
       <tr className='flex cxc'>
-        <td className='fb20' >{props.sellTradeAdvertisementData.buyerUsername} - {props.sellTradeAdvertisementData.location}</td>
+        <td className='fb20' >{props.sellTradeAdvertisementData.sellerUsername} - {props.sellTradeAdvertisementData.location}</td>
         <td className='fb10 tc' >{props.sellTradeAdvertisementData.paymentMethod}</td>
-        <td className='fb15 tc' >{props.sellTradeAdvertisementData.amount}</td>
+        <td className='fb15 tc' >{props.sellTradeAdvertisementData.price}</td>
         <td className='fb5 tc' >{props.sellTradeAdvertisementData.minTransactionLimit} - {props.sellTradeAdvertisementData.maxTransactionLimit}</td>
         <td className='fb15 tc' >{moment(props.seller.lastTransfer).fromNow() || '-'}</td>
         <Trustworthiness trustLevel={props.seller.trustworthiness} />

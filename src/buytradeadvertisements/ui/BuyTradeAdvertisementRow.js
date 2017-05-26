@@ -8,6 +8,8 @@ import Trustworthiness from './Trustworthiness'
 const moment = require('moment')
 
 const BuyTradeAdvertismentRow = (props) => {
+  console.log("BuyTradeAdvertismentRow")
+  console.log(props)
   return (
     <tbody className='flex'>
       {props.buyTradeAdvertisementData && props.buyer &&
