@@ -22,7 +22,7 @@ class BuyerStepNote extends Component {
             <p>
               Method: {this.props.activetrade.paymentMethod}
               <br/>
-              Payment Info: {this.props.activetrade.bankInformation}
+              Payment Info: {this.props.activetrade.bankinformation}
             </p>
             <p className='tc flarge b'>Step 2: Confirm the Payment</p>
             <p> The Ether is held in escrow for {this.props.activetrade.timeLimit ? this.props.activetrade.timeLimit : '-'} minutes, which it is safe to pay.

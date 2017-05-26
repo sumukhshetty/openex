@@ -58,7 +58,6 @@ class ActiveTrade extends Component {
 
 
   render () {
-    console.log("ui.ActiveTrade.render")
     const progress_maps = {
       'Awaiting Seller Confirmation': [
         { status: 'active', label: <Dot />, text: 'Awaiting Seller Confirmation' },
@@ -88,7 +87,6 @@ class ActiveTrade extends Component {
 
     var status = 'getting status....'
     var activetrade, currentStep, viewerRole
-    // console.log(this.props)
     if (this.props.activetrade.data) {
       activetrade = this.props.activetrade.data
 
@@ -118,7 +116,7 @@ class ActiveTrade extends Component {
           viewerRole={viewerRole} 
           />,
         'Awaiting Payment': <Payment
-          activeTrade={activetrade} 
+          activetrade={activetrade} 
           buyer={this.props.buyer} 
           buyerRaisesDispute={this.props.buyerRaisesDispute.bind(this)} 
           confirmPayment={this.buyerConfirmsPayment.bind(this)} 
@@ -130,7 +128,7 @@ class ActiveTrade extends Component {
           viewerRole={viewerRole} 
           />,
         'Awaiting Release': <Release
-          activeTrade={activetrade} 
+          activetrade={activetrade} 
           buyer={this.props.buyer}
           buyerRaisesDispute={this.props.buyerRaisesDispute.bind(this)}
           progress_map={progress_maps[status]} 
@@ -144,7 +142,7 @@ class ActiveTrade extends Component {
           viewerRole={viewerRole}
           />,
         'All Done': <AllDone
-          activeTrade={activetrade} 
+          activetrade={activetrade} 
           buyer={this.props.buyer}
           seller={this.props.seller}
           progress_map={progress_maps[status]} 

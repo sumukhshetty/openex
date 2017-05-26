@@ -27,6 +27,7 @@ class Payment extends Component {
   }
 
   render () {
+    console.log("Payment.render")
     console.log(this.props)
     return (
       <section className='bg-smoke'>
@@ -35,9 +36,9 @@ class Payment extends Component {
           <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
             <ChatBox
-              tradeId={this.props.tradeId}
-              sellerId={this.props.sellerId}
-              buyerId={this.props.buyerId}
+              tradeId={this.props.purchaseRequestId}
+              sellerId={this.props.activetrade.sellerUid}
+              buyerId={this.props.activetrade.buyerUid}
               amount={this.props.amount} />
             {this.state.admin
               ? <AdminStep />

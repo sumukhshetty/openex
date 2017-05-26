@@ -33,8 +33,8 @@ class Release extends Component {
           <div className='flex'>
             <ChatBox
               tradeId={this.props.purchaseRequestId}
-              sellerId={this.props.sellerId}
-              buyerId={this.props.buyerId} />
+              sellerId={this.props.activetrade.sellerUid}
+              buyerId={this.props.activetrade.buyerUid} />
             {this.state.admin ?
               <AdminStep />
               :

@@ -22,8 +22,8 @@ class AllDone extends Component {
           <div className='flex'>
             <ChatBox
               tradeId={this.props.purchaseRequestId}
-              sellerId={this.props.sellerId}
-              buyerId={this.props.buyerId} />
+              sellerId={this.props.activetrade.sellerUid}
+              buyerId={this.props.activetrade.buyerUid} />
             <div className='w-50 ma3'>
               <TradeFeedback sellerId={this.props.seller.data.uid} buyerId={this.props.buyer.data.uid} purchaseRequestId={this.props.purchaseRequestId}/>
             </div>

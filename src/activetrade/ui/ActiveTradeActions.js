@@ -64,17 +64,45 @@ module.exports = {
   sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerConfirms")
     //TODO web3 stuff with the sellOrderBookContract
-    firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId +'/status').set('Awaiting Payment');
+    console.log(seller, purchaseRequest, purchaseRequestId)
+    var now = new Date()
+    var updatedPurchaseRequest = Object.assign({},
+      purchaseRequest, {
+        lastUpdated: now.toUTCString(),
+        sellerconfirmtime: now.toUTCString(),
+        status: 'Awaiting Payment'
+      })
+    console.log(updatedPurchaseRequest)
+    firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId).set(updatedPurchaseRequest);
+    console.log("updated purchaseRequest")
   },
   buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("activetrade.ui.buyerConfirmsPayment")
-    firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+ purchaseRequestId +'/status').set('Awaiting Release');
+    console.log(buyer, purchaseRequest, purchaseRequestId)
+    var now = new Date()
+    var updatedPurchaseRequest = Object.assign({},
+      purchaseRequest, {
+        buyerconfirrmpaymenttime: now.toUTCString(),
+        lastUpdated: now.toUTCString(),
+        status: 'Awaiting Release'
+      })
+    console.log(updatedPurchaseRequest)
+    firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+ purchaseRequestId).set(updatedPurchaseRequest);
   },
   sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("activetrade.ui.sellerReleasesEther")
+    console.log(seller, purchaseRequest, purchaseRequestId)
+    var now = new Date()
+    var updatedPurchaseRequest = Object.assign({},
+      purchaseRequest, {
+        lastUpdated: now.toUTCString(),
+        sellerreleaseethertime: now.toUTCString(),
+        status: 'All Done'
+    })
+    console.log(updatedPurchaseRequest)
     // TODO web3 stuff with sellOrderBookContract
-    firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId +'/status')
-          .set('All Done')
+    firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
+          .set(updatedPurchaseRequest)
           .then(function() {
             purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
             purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.sellerUid, purchaseRequestId)
