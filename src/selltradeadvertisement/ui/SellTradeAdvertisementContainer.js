@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import SellTradeAdvertisement from './SellTradeAdvertisement'
 //import { buyOrder, createBuyOrderContract, availableBalance, resetStatus } from './SellTradeOrderActions'
-import {sellTradeAdvertisement, clearSellTradeAdvertisement, clearSeller, buyerCreatesPurchaseRequest} from './SellTradeAdvertisementActions.js'
+import {sellTradeAdvertisement, clearState, buyerCreatesPurchaseRequest} from './SellTradeAdvertisementActions.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     users: state.users,
     seller: state.seller,
     selltradeadvertisements: state.selltradeadvertisements,
-    selltradeadvertisement: state.sellTradeAdvertisement,
+    selltradeadvertisement: state.selltradeadvertisement,
     sellTradeAdvertisementId: ownProps.sellTradeAdvertisementId
   }
 }
@@ -22,11 +22,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(sellTradeAdvertisement(sellTradeAdvertisements, sellTradeAdvertisementId, users))
     },
     onBeforeComponentWillUnmount: ()=>{
-      dispatch(clearSellTradeAdvertisement())
-      dispatch(clearSeller())
+      dispatch(clearState())
     },
-    createPurchaseRequest:(sellTradeAdvertisement, seller, buyer)=>{
-      dispatch(buyerCreatesPurchaseRequest(sellTradeAdvertisement, seller, buyer))
+    createPurchaseRequest:(etherAmount, fiatAmount, etherPrice, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyerAddress, buyer)=>{
+      dispatch(buyerCreatesPurchaseRequest(etherAmount, fiatAmount, etherPrice, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyerAddress, buyer))
     },
   }
 }

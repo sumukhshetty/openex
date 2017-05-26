@@ -1,104 +1,119 @@
 import React, { Component } from 'react';
-import Converter from '../ui/Converter';
-import Star from '../../images/Star';
+import Converter from './Converter';
+import Star from './../../images/Star';
 
 export default class SellTradeAdvertisement extends Component {
   constructor (props) {
     super(props);
-
-    this.handleConversion = this.handleConversion.bind(this)
+    this.state = {
+      etherAmount: 0,
+      fiatAmount: 0,
+    };
     this.createPurchaseRequest = this.createPurchaseRequest.bind(this)
   }
 
-  onComponentWillMount(){
-    this.props.sellTradeAdvertisement(this.props.selltradeadvertisements, this.props.sellTradeAdvertisementId, this.props.users)
+  componentWillMount(){
+    this.props.onBeforeComponentLoad(this.props.selltradeadvertisements, this.props.sellTradeAdvertisementId, this.props.users)
   }
 
-  onComponentWillUnmount(){
-    this.props.clearState()
+  componentWillUnmount(){
+    this.props.onBeforeComponentWillUnmount()
   }
 
-  createPurchaseRequest(){
-    this.props.createPurchaseRequest(this.props.selltradeadvertisement, this.props.seller, this.props.user)
-  }
-  handleConversion (amount) {
-    console.log('conversion handled');
-    console.log(amount);
-  }
-
-  onEtherAmountChange(e) {
-    console.log('ether changed');
-    console.log(e.target.value);
-    this.setState({requestAmount: e.target.value});
-
+  createPurchaseRequest(e){
+    e.preventDefault()
+    this.props.createPurchaseRequest(
+      this.state.etherAmount, 
+      this.state.fiatAmount,
+      this.props.etherPrice.data,
+      this.props.sellTradeAdvertisementId,
+      this.props.selltradeadvertisement.data, 
+      this.props.seller, 
+      this.props.web3.web3.eth.coinbase,
+      this.props.user)
   }
 
-  onFiatAmountChange(e) {
-    console.log('fiat changed');
-    console.log(e.target.value);
-  }
-
-  componentWillMount() {
-    this.props.onBeforeComponentLoad(this.props.params.orderId);
+  onAmountChange(e) {
+    if(e.target.id === 'etherAmount') {
+      this.setState({etherAmount: e.target.value});
+      this.setState({fiatAmount: (e.target.value * (this.props.etherPrice.data * this.props.selltradeadvertisement.data.margin).toFixed(2)).toFixed(2)})
+    } else if(e.target.id === 'fiatAmount') {
+      this.setState({fiatAmount: e.target.value});
+      this.setState({etherAmount: (e.target.value / (this.props.etherPrice.data * this.props.selltradeadvertisement.data.margin).toFixed(2)).toFixed(2)})
+    }
   }
 
   render () {
-    console.log("SellTradeAdvetisement")
-    var sellTradeAdvertisement = this.props.selltradeadvertisement
-    var seller = this.props.seller
-
+    var sellTradeAdvertisement = this.props.selltradeadvertisement.data;
+    var seller = this.props.seller.data
+    var requestComponent = <div className='w-50' >
+      <h2 className='pv1 tc'>Getting balance...</h2>
+    </div>;
     if(sellTradeAdvertisement && seller) {
-    var price = this.props.etherPrice ? (this.props.etherPrice.data * sellTradeAdvertisement.margin).toFixed(2) : null;
-    return (
-      <div className='w-100 bg-smoke vh-100'>
-        <div className='w-75 center pv3'>
-          <h1 className='pv1'>Sell {sellTradeAdvertisement.amount} ether to {seller.profile.username} using {sellTradeAdvertisement.paymentMethod}</h1>
-          <div className='flex mxb w-100 cxc'>
-            <div className='w-50'>
-              <table className='lh-copy'>
-                <tr>
-                  <td className='w4 pv2'>Price</td>
-                  <td className='green'>{price ? price : 'Getting price...'} {this.props.user.currency + '/ETH'}</td>
-                </tr>
-                <tr>
-                  <td className='w4 pv2'>Payment Method</td>
-                  <td>{sellTradeAdvertisement.paymentMethod}</td>
-                </tr>
-                <tr>
-                  <td className='w4 pv2'>User</td>
-                  <td>{seller.username} ({this.state.rating}<Star className='dib v-mid pb1' />)</td>
-                </tr>
-                <tr>
-                  <td className='w4 pv2'>Trade Limits</td>
-                  <td>{sellTradeAdvertisement.minTransactionLimit}- {sellTradeAdvertisement.maxTransactionLimit} {sellTradeAdvertisement.currency}</td>
-                </tr>
-                <tr>
-                  <td className='w4 pv2'>Location</td>
-                  <td>{sellTradeAdvertisement.location}</td>
-                </tr>
-              </table>
-            </div>
-            <div className='w-50' >
-              {/* <h2 className='pv1 tc'>How much do you wish to buy?</h2> */}
-              {sellTradeAdvertisement.status === 'Initiated' && <div className='flex mxc'><Converter amount={sellTradeAdvertisement.amount} onSubmit={this.createPurchaseRequest.bind(this)}
-                onEtherAmountChange={this.onEtherAmountChange.bind(this)} onFiatAmountChange={this.onFiatAmountChange} currency={this.props.user.currency} price={price} country={seller.country}/></div>}
-                {sellTradeAdvertisement.status !== 'Initiated' && sellTradeAdvertisement.sellerUid !== this.props.user.data.uid && <h2 className='pv1 tc'>Sorry, looks like this order was already accepted.</h2>}
-                {sellTradeAdvertisement.status !== 'Initiated' && sellTradeAdvertisement.sellerUid === this.props.user.data.uid && <h2 className='pv1 tc'>Please accept the MetaMask transaction.</h2>}
-            </div>
+      // TODO check the price is getting set correctly
+      var price = this.props.etherPrice ? (this.props.etherPrice.data * sellTradeAdvertisement.margin).toFixed(2) : null;
+      // TODO get this balance from the sellOrderBookContract 
+      //var availableBalance = this.props.sellOrderContract.availableBalance;
+      var availableBalance = 10
+      if(typeof availableBalance !== 'undefined') {
+        if(availableBalance > 0) {
+          requestComponent = <div className='w-50' >
+            <h2 className='pv1 tc'>How much do you wish to buy?</h2>
+            <h2 className='pv1 tc'>Available:{availableBalance} Ether</h2>
+            <div className='flex mxc'><Converter maxEther={availableBalance} handleTradeRequest={this.createPurchaseRequest.bind(this)}
+              onAmountChange={this.onAmountChange.bind(this)} currency={this.props.user.profile.currency} price={price} country={seller.country} etherAmount={this.state.etherAmount} fiatAmount={this.state.fiatAmount} /></div>
           </div>
-          <div>
+        } else {
+          requestComponent = <div className='w-50' >
+            <h2 className='pv1 tc'>Sorry, the seller does not have enough ether to sell.</h2>
+            <button>Return to Buy page</button>
+          </div>
+        }
+      }
+      return (
+        <div className='w-100 bg-smoke vh-100'>
+          <div className='w-75 center pv3'>
+            <h1 className='pv1'>Buy ether using {sellTradeAdvertisement.paymentMethod} from {seller.username}</h1>
+            <div className='flex mxb w-100 cxc'>
+              <div className='w-50'>
+                <table className='lh-copy'>
+                  <tr>
+                    <td className='w4 pv2'>Price</td>
+                    <td className='green'>{this.props.etherPrice.data ? (this.props.etherPrice.data * sellTradeAdvertisement.margin).toFixed(2) : 'Getting price...'} {this.props.user.profile.currency}/ETH</td>
+                  </tr>
+                  <tr>
+                    <td className='w4 pv2'>Payment Method</td>
+                    <td>{sellTradeAdvertisement.paymentMethod}</td>
+                  </tr>
+                  <tr>
+                    <td className='w4 pv2'>User</td>
+                    <td>{seller.username} ({seller.avgFeedback}<Star className='dib v-mid pb1' />)</td>
+                  </tr>
+                  <tr>
+                    <td className='w4 pv2'>Trade Limits</td>
+                    <td>{sellTradeAdvertisement.minTransactionLimit}- {sellTradeAdvertisement.maxTransactionLimit} {sellTradeAdvertisement.currency}</td>
+                  </tr>
+                  <tr>
+                    <td className='w4 pv2'>Location</td>
+                    <td>{sellTradeAdvertisement.location}</td>
+                  </tr>
+                </table>
+              </div>
+              {requestComponent}
+            </div>
             <div>
-              <div className='w-50 mt5'>
-                <p className='b tc measure'>Terms of Trade</p>
-                <p className='pv1 measure'>
-                {sellTradeAdvertisement.termsOfTrade}
-            </p>
+              <div>
+                <div className='w-50 mt5'>
+                  <p className='b tc measure'>Terms of Trade</p>
+                  <p className='pv1 measure'>
+                  {sellTradeAdvertisement.termsOfTrade}
+              </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
   } else {
     return(
       <div>Loading...</div>

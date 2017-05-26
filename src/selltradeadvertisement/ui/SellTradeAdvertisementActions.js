@@ -3,6 +3,7 @@ import {firebaseRef} from './../../index.js'
 
 export const SET_SELL_TRADE_ADVERTISEMENT = 'SET_SELL_TRADE_ADVERTISEMENT'
 function setSellTradeAdvertisement(sellTradeAdvertisementPayload){
+  console.log("SellTradeAdvertimentActions.setSellTradeAdvertisement")
   return {
     type: SET_SELL_TRADE_ADVERTISEMENT,
     payload: sellTradeAdvertisementPayload
@@ -34,11 +35,45 @@ function clearSellTradeAdvertisement(){
 
 module.exports = {
   sellTradeAdvertisement: (sellTradeAdvertisements, sellTradeAdvertisementId, users) => (dispatch) => {
-    var sellAdvertisement = sellTradeAdvertisements[sellTradeAdvertisementId]
-    dispatch(setSellTradeAdvertisement(sellAdvertisement))
-    dispatch(setSeller(users[sellAdvertisement.sellerUid]))
+    var sellTradeAdvertisement = sellTradeAdvertisements.data[sellTradeAdvertisementId]
+    dispatch(setSellTradeAdvertisement(sellTradeAdvertisement))
+    dispatch(setSeller(users.data[sellTradeAdvertisement.sellerUid]))
   },
-  buyerCreatesPurchaseRequest: (sellTradeAdvertisement, sellTradeAdvertisementId, seller, buyer) => (dispatch) => {
+  buyerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyerAddress, buyer) => (dispatch) => {
+    var now = new Date()
+    var purchaseRequestData = {
+      bankinformation: sellTradeAdvertisement.bankInformation,
+      buyerAddress: buyerAddress,
+      buyerUid: buyer.data.uid,
+      buyerUsername: buyer.profile.username,
+      // TODO get the contract address from the user
+      contractAddress: 'TODO',
+      currency: buyer.profile.currency,
+      createdAt: now,
+      etherAmount: etherAmount,
+      fiatAmount: fiatAmount,
+      lastUpdated: now,
+      paymentMethod: sellTradeAdvertisement.paymentMethod,
+      price: etherPrice,
+      sellerAddress: sellTradeAdvertisement.sellerAddress,
+      sellerUid: sellTradeAdvertisement.sellerUid,
+      sellerUsername: sellTradeAdvertisement.sellerUsername,
+      status: 'Awaiting Seller Confirmation',
+      tradeAdvertisementId: sellTradeAdvertisementId,
+      tradeAdvertisementType: sellTradeAdvertisement.tradeType,
+      // TODO update the txHash when the seller confirm
+      txHash: 'TODO',
+      buyercancelstime: '-',
+      buyerrequesttime: '-',
+      sellrequesttime: now,
+      sellercancelstime: '-',
+      sellerconfirmtime: '-',
+      buyerconfirrmpaymenttime: '-',
+      sellerreleaseethertime: '-',
+      buyraisesdisputetime: '-',
+      sellerraisesdisputetime: '-'
+    }
+    console.log(purchaseRequestData)
     var postData = {
       sellTradeAdvertisementId: sellTradeAdvertisementId,
       sellTradeAdvertisement: sellTradeAdvertisement,
@@ -52,7 +87,13 @@ module.exports = {
       json: true,
       url: url
     }
-    request(options, function(err, res, body){
+    var newRequest = firebaseRef.database().ref('/purchaserequests/' + buyer.profile.country)
+      .push(purchaseRequestData, function(err){
+        firebaseRef.database().ref('/users/' + sellTradeAdvertisement.sellerUid + '/activetrades/' + newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
+        firebaseRef.database().ref(/users/+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
+      })
+
+    /*request(options, function(err, res, body){
       if (err) {
         console.error('error posting json: ', err)
         throw err
@@ -87,7 +128,7 @@ module.exports = {
         var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
         firebaseRef.database().ref('/users/'+seller.data.uid+'/notifications/'+newNotifcation.key).set({vaule:true}) 
       }
-    })
+    })*/
   },
   clearState: () => (dispatch) => {
     dispatch(clearSeller())

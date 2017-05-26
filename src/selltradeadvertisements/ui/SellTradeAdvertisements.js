@@ -6,12 +6,6 @@ import SellTradeAdvertisementsHeader from '../layouts/SellTradeAdvertisementsHea
 
 class SellTradeAdvertisements extends Component {
 
-  componentWillMount () {
-    console.log("ui.SellTradeAdvertisements.componentWillMount")
-    console.log(this.props)
-    //this.props.onBeforeComponentLoad(this.state.user)
-  }
-
   render () {
     const SellTradeAdvertisementsLoadingDisplay = () => (<tbody className='flex'>
   {/*TODO show the your the first instead fo loding sell trade advertisements*/}

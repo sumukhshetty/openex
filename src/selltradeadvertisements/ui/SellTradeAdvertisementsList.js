@@ -5,7 +5,6 @@ import SellTradeAdvertisementRow from './SellTradeAdvertisementRow'
 
 class SellTradeAdvertisementsList extends Component {
   render(){
-    console.log("ui.SellTradeAdvertisementsList")
     var selltradeadvertisements = this.props.selltradeadvertisements.data
     var etherPrice = this.props.etherPrice.data;
     var currency = this.props.user.currency;
@@ -13,12 +12,10 @@ class SellTradeAdvertisementsList extends Component {
     var uid = this.props.user.data.uid;
     var userData, seller;
     const rows = _.map(selltradeadvertisements,function(sellTradeAdvertisement, key) {
-        console.log(sellTradeAdvertisement)
-        console.log(key)
         if(sellTradeAdvertisement.sellerUid !== uid) {
           seller = users.data[sellTradeAdvertisement.sellerUid]
           etherPrice = etherPrice ? etherPrice : null;
-          return <SellTradeAdvertisementRow sellTradeAdvertisementData={sellTradeAdvertisement} seller={seller} etherPrice={etherPrice} currency={currency} userId={key} key={key}/>
+          return <SellTradeAdvertisementRow sellTradeAdvertisementData={sellTradeAdvertisement} sellTradeAdvertisementId={key} seller={seller} etherPrice={etherPrice} currency={currency} userId={key} key={key}/>
         } else {
           console.log("seller is looking at themself")
         }
