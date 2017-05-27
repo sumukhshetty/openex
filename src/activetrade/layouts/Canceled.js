@@ -7,10 +7,6 @@ import SellerStepNote from '../ui/SellerStepNoteSell'
 
 class Canceled extends Component {
 
-  componentWillUnmount() {
-    this.props.resetEtherState();
-  }
-
   render () {
     console.log("Canceled.render")
     console.log(this.props)

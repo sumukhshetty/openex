@@ -9,17 +9,20 @@ function getTradeFeedback (tradeFeedbackPayload) {
 }
 
 module.exports = {
-  tradeFeedback: (user, purchaseRequestId) => (dispatch) => {
-    // console.log("TradeFeedbackActions.tradeFeedback")
-    // console.log(user)
-    // console.log(purchaseRequestId)
-    firebaseRef.database().ref('/traderating/' + user.uid + '/' + purchaseRequestId).once('value', function (snap) {
-      // console.log("!@#")
+  tradeFeedback: (activetrade, purchaseRequestId, viewerRole) => (dispatch) => {
+    var uid
+    if (viewerRole === 'buyer') {
+      uid = activetrade.sellerUid
+    }
+    if (viewerRole === 'seller') {
+      uid = activetrade.buyerUid
+    }
+    firebaseRef.database().ref('/traderating/' + uid + '/' + purchaseRequestId).once('value', function (snap) {
       var tradeFeedbackRating = snap.val()
-      // console.log(tradeFeedbackRating.value)
-      dispatch(getTradeFeedback(tradeFeedbackRating.value))
+      if(tradeFeedbackRating){
+        dispatch(getTradeFeedback(tradeFeedbackRating.rating))
+      }
     })
-    // console.log('last line in the actions')
   },
   updateRating: (rating) => (dispatch) => {
     // console.log('updating the rating')

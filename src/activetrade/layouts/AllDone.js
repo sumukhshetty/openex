@@ -25,7 +25,13 @@ class AllDone extends Component {
               sellerId={this.props.activetrade.sellerUid}
               buyerId={this.props.activetrade.buyerUid} />
             <div className='w-50 ma3'>
-              <TradeFeedback sellerId={this.props.seller.data.uid} buyerId={this.props.buyer.data.uid} purchaseRequestId={this.props.purchaseRequestId}/>
+              <TradeFeedback 
+                purchaseRequestId={this.props.purchaseRequestId}
+                activetrade={this.props.activetrade}
+                sellerRatesBuyer={this.props.sellerRatesBuyer}
+                buyerRatesSeller={this.props.buyerRatesSeller}
+                viewerRole={this.props.viewerRole}
+                />
             </div>
           </div>
         </div>

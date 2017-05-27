@@ -19,7 +19,7 @@
 </defs>
 <path d="M0,0H500L0,300H500z" fill="#ce1126"/>
 <path d="M0,0V300L500,0V300z" fill="#1eb53a"/>
-<path d="M0,0 500,300M500,0 0,300" stroke="#fff" strokeWidth="40"/>
+<path d="M0,0 500,300M500,0 0,300" stroke="#fff" stroke-width="40"/>
 <circle cx="250" cy="150" r="85" fill="#fff"/>
 <use xlink:href="#star"/>
 <use xlink:href="#star" transform="rotate(120,250,150)"/>

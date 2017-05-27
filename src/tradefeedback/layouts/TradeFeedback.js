@@ -5,7 +5,13 @@ export default class TradeFeedback extends Component {
   render () {
     return (
       <div className='measure pv4'>
-          <TradeFeedbackContainer purchaseRequestId={this.props.purchaseRequestId} sellerId={this.props.sellerId} buyerId={this.props.buyerId} />
+          <TradeFeedbackContainer 
+            purchaseRequestId={this.props.purchaseRequestId}
+            activetrade={this.props.activetrade}
+            sellerRatesBuyer={this.props.sellerRatesBuyer}
+            buyerRatesSeller={this.props.buyerRatesSeller}
+            viewerRole={this.props.viewerRole}
+          />
       </div>
     );
   }

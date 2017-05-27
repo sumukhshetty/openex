@@ -49,6 +49,12 @@ const mapDispatchToProps = (dispatch) => {
     arbiterVotesForBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId)=>{
       dispatch(actions.arbiterVotesForBuyer(buyer, arbiter, purchaseRequest, purchaseRequestId))
     },
+    sellerRatesBuyer: (rating, purchaseRequestId, purchaseRequest) => {
+      dispatch(actions.sellerRatesBuyer(rating, purchaseRequestId, purchaseRequest))
+    },
+    buyerRatesSeller: (rating, purchaseRequestId, purchaseRequest) =>{
+      dispatch(actions.buyerRatesSeller(rating, purchaseRequestId, purchaseRequest))
+    },
     clearState: ()=>{
       dispatch(actions.clearState())
     },

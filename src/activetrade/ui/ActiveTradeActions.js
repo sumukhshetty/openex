@@ -222,6 +222,12 @@ module.exports = {
         firebaseRef.database().ref("users/" + purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
       });
   },
+  sellerRatesBuyer: (rating, purchaseRequestId, purchaseRequest) => (dispatch) => {
+    firebaseRef.database().ref('/traderating/' + purchaseRequest.buyerUid + '/' + purchaseRequestId).set({rating: rating})
+  },
+  buyerRatesSeller: (rating, purchaseRequestId, purchaseRequest)  => (dispatch) => {
+    firebaseRef.database().ref('/traderating/' + purchaseRequest.sellerUid + '/' + purchaseRequestId).set({rating: rating})
+  },
   clearState: () => (dispatch) => {
     dispatch(clearBuyer())
     dispatch(clearSeller())

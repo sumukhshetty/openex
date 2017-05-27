@@ -157,7 +157,9 @@ class ActiveTrade extends Component {
         'All Done': <AllDone
           activetrade={activetrade} 
           buyer={this.props.buyer}
+          buyerRatesSeller={this.props.buyerRatesSeller}
           seller={this.props.seller}
+          sellerRatesBuyer={this.props.sellerRatesBuyer}
           progress_map={progress_maps[status]} 
           purchaseRequestId={this.props.purchaseRequestId}
           step={status}

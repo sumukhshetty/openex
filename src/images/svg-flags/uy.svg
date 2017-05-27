@@ -9,7 +9,7 @@
 		<rect x="-5" y="5" width="27" height="2"/>
 		<rect x="-5" y="9" width="27" height="2"/>
 	</g>
-	<g transform="scale(0.11)" fill="#fcd116" stroke="#000" strokeWidth="0.6" stroke-miterlimit="20">
+	<g transform="scale(0.11)" fill="#fcd116" stroke="#000" stroke-width="0.6" stroke-miterlimit="20">
 		<g id="u">
 			<g id="t">
 				<g id="s">
