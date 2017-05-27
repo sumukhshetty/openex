@@ -1,6 +1,6 @@
 import {firebaseRef, FIREBASE_TIMESTAMP} from './../../index.js'
 import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
-
+import { browserHistory } from 'react-redux'
 
 function setActiveTrade(purchaseRequestPayload){
   return {
@@ -204,6 +204,7 @@ module.exports = {
   },
   arbiterReleasesToSeller: (seller, arbiter, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("activetrade.ui.arbiterReleasesToSeller")
+    console.log(seller, arbiter, purchaseRequest, purchaseRequestId)
     // TODO web3 stuff
     firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId + '/status')
       .set('All Done')
@@ -217,10 +218,13 @@ module.exports = {
 
         firebaseRef.database().ref("users/"+purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
         firebaseRef.database().ref("users/"+purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
+
+        browserHistory.push('/dashboard')
       });
   },
   arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId) => (dispatch) =>{
     console.log("activetrade.ui.arbiterVotesForBuyer") 
+    console.log(buyer, arbiter, purchaseRequest, purchaseRequestId)
     // TODO web3 stuff
     firebaseRef.database().ref('/purchaserequests/'+ buyer.country + '/' + purchaseRequestId + '/status')
       .set('All Done')
@@ -234,6 +238,8 @@ module.exports = {
 
         firebaseRef.database().ref("users/" + purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
         firebaseRef.database().ref("users/" + purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
+        
+        browserHistory.push('/dashboard')
       });
   },
   sellerRatesBuyer: (rating, purchaseRequestId, purchaseRequest) => (dispatch) => {

@@ -46,11 +46,11 @@ class ActiveTrade extends Component {
   }
   arbiterReleasesToSeller () {
     // TODO web3 stuff
-    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.arbiter, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   arbiterReleasesToBuyer () {
     // TODO web3 stuff
-    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.arbiter.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   resetEtherState() {
@@ -182,7 +182,7 @@ class ActiveTrade extends Component {
         'Seller Canceled Trade': <Canceled
           activetrade={activetrade} 
           viewerRole={viewerRole}
-          progress_map={progress_maps[status]} 
+          progress_map={progress_maps[status]}
           purchaseRequestId={this.props.purchaseRequestId}
           step={status}
           />,
@@ -198,7 +198,8 @@ class ActiveTrade extends Component {
           progress_map={progress_maps[status]} 
           viewerRole={viewerRole}
           step={status}
-          releaseToBuyer={this.arbiterReleasesToSeller.bind(this)} 
+          purchaseRequestId={this.props.purchaseRequestId}
+          releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)} 
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)} 
           />,
         'Buyer Raised Dispute': <Disputed
@@ -206,7 +207,8 @@ class ActiveTrade extends Component {
           progress_map={progress_maps[status]} 
           viewerRole={viewerRole}
           step={status}
-          releaseToBuyer={this.arbiterReleasesToSeller.bind(this)} 
+          purchaseRequestId={this.props.purchaseRequestId}
+          releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)} 
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)} 
           />
       }

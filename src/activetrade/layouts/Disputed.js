@@ -28,7 +28,7 @@ class Disputed extends Component {
               </div>
             }
               {this.props.viewerRole === 'seller' &&
-              <div>
+              <div className='tc'>
                 <SellerStepNote step={this.props.step} />
                 <button onClick={this.props.releaseEther}>
                   Release Ether

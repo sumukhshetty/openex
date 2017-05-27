@@ -3,7 +3,7 @@ const initialState = {
 }
 
 const disputedTradesReducer = (state = initialState, action) => {
-  if (action.type === 'GET_DISPUTED_TRADES')
+  if (action.type === 'SET_DISPUTED_TRADES')
   {
     return Object.assign({}, state, {
       data: action.payload

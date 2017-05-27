@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { firebaseRef } from '../../index.js'
 import { browserHistory } from 'react-router'
-
+import AdminRow from './AdminRow'
 export default class Admin extends Component {
 
   constructor (props) {
@@ -10,20 +10,93 @@ export default class Admin extends Component {
       disputes: {}
     }
   }
+  componentWillMount (){
+    this.props.onBeforeComponentLoad()
+  }
 
-  componentDidMount () {
+  componentWillUnmount(){
+    this.props.onBeforeComponentWillUnmount()
+  }
+/*  componentDidMount () {
     firebaseRef.database()
       .ref('/disputes')
       .once('value')
       .then(snap => {
         this.setState({ disputes: snap.val() })
       })
-  }
+  }*/
 
   render () {
     console.log("components.Admin")
     console.log(this.props)
-    if(this.props.user.profile.isAdmin){
+    var purchaserequests = this.props.purchaserequests.data
+/*    return(
+      <div>Admin is everything loaded right</div>
+      )*/
+    if(this.props.user.profile){
+      if(this.props.user.profile.isAdmin && this.props.disputedtrades.data){
+        const rows = Object.keys(this.props.disputedtrades.data).map((purchaseRequestId, index)=>{
+          console.log(purchaseRequestId, index)
+          console.log(purchaserequests[purchaseRequestId])
+          var purchaserequest = purchaserequests[purchaseRequestId]
+          var time
+          if (purchaserequest.status === 'Seller Raised Dispute'){
+            time = purchaserequest.sellerraisesdisputetime
+          } else {
+            time = purchaserequest.buyerraisesdisputetime
+          }
+          return (<AdminRow 
+                    index={index}
+                    key={index}
+                    purchaseRequestId={purchaseRequestId}
+                    time={time}
+                    purchaserequest={purchaserequest}
+                  />)
+        })
+  /*      const Disputes = Object.keys(this.props.disputedtrades.data).map((key, value)=>
+          console.log(key, value)
+          console.log(purchaserequests[key])
+          )*/
+          return (
+            <section className='bg-smoke'>
+              <div className='w-75 center pv3'>
+                <div>
+                  <div>
+                    <p className='b pv3 measure-wide'>Welcome to the Admin Dashboard</p>
+                    <div className='pt3'>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th className='fb5 tc'>#</th>
+                            <th className='fb20 tc'>Created at</th>
+                            <th className='fb10 tc'>Seller</th>
+                            <th className='fb15 tc'>Buyer</th>
+                            <th className='fb10 tc'>Ether</th>
+                            <th className='fb10 tc'>Amount</th>
+                            <th className='fb10 tc'>Status</th>
+                            <th className='fb10 tc'>&nbsp;</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          { rows }
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )
+      } else {
+        return (
+          <div>Exit immediately</div>
+          )
+      }
+    } else {
+      return (
+        <div>loading</div>)
+    }
+/*    if(this.props.user.profile.isAdmin){
       const Disputes = Object.keys(this.state.disputes).map((dispute, index) =>
         <tr className='flex cxc' key={index}>
           <td className='fb5 tc'>{this.state.disputes[dispute].id}</td>
@@ -76,6 +149,6 @@ export default class Admin extends Component {
       return (
         <div>Exit immediately</div>
         )
-    }
+    }*/
   }
 }

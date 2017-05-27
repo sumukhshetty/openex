@@ -4,18 +4,30 @@ import { browserHistory } from 'react-router'
 class DisputedTrades extends Component {
 
   render () {
-    if (this.props.user.profile.isAdmin) {
-      console.log("ui.DisputedTrades user is admin")
-      return (
-        <tbody>
-          <a onClick={()=>browserHistory.push('/admin')}> Go to admin</a>
-        </tbody>
-      );
+    console.log("DisputedTrades")
+    console.log(this.props)
+    if(this.props.user){
+      if(this.props.user.profile){
+        if (this.props.user.profile !== null){
+          if (this.props.user.profile.isAdmin){
+            console.log("user is Admin")
+            return (
+              <div>
+                <a onClick={()=>browserHistory.push('/admin')}> Go to admin</a>
+              </div>
+            );
+          } else {
+            return (<div></div>)  
+          }
+        } else {
+          return (<div></div>)
+        }
+      } else {
+        return (<div></div>)
+      }
+      return (<div></div>)
     } else {
-      console.log("ui.DisputedTrades user is not admin")
-      return (
-        <div></div>
-      );
+      return(<div></div>)
     }
   }
 }

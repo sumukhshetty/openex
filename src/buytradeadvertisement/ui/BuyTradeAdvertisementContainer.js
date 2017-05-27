@@ -27,12 +27,6 @@ const mapDispatchToProps = (dispatch) => {
     createPurchaseRequest:(etherAmount, fiatAmount, etherPrice, buyTradeAdvertisementId, buyTradeAdvertisement, buyer, sellerAddress, seller)=>{
       dispatch(sellerCreatesPurchaseRequest(etherAmount, fiatAmount, etherPrice, buyTradeAdvertisementId, buyTradeAdvertisement, buyer, sellerAddress, seller))
     },
-/*    acceptOrder: (buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3) => {
-      dispatch(createBuyOrderContract(buyOrder, amount, price, sellerUsername, buyerAddress, orderId, uid, buyerUid, web3));
-    },*/
-/*    getAvailableBalance: (contractAddress, web3) => {
-      dispatch(availableBalance(contractAddress, web3))
-    }*/
   }
 }
 
