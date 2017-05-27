@@ -6,10 +6,10 @@ class DisputeTrade extends Component {
 
   constructor (props) {
     super(props)
-    this.disputeTheTrade = this.disputeTheTrade.bind(this)
+    //this.disputeTheTrade = this.disputeTheTrade.bind(this)
   }
 
-  disputeTheTrade () {
+/*  disputeTheTrade () {
     firebaseRef.database()
       .ref('/disputes')
       .push({
@@ -29,7 +29,7 @@ class DisputeTrade extends Component {
         raisedBy: firebaseRef.auth().currentUser.uid
       }).then(() => browserHistory.push('/dashboard'))
   }
-
+*/
   render () {
     return (
       <div className='measure pv4'>

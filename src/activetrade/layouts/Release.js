@@ -25,6 +25,7 @@ class Release extends Component {
   }
 
   render () {
+    console.log(this.props.viewerRole)
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
@@ -35,33 +36,36 @@ class Release extends Component {
               tradeId={this.props.purchaseRequestId}
               sellerId={this.props.activetrade.sellerUid}
               buyerId={this.props.activetrade.buyerUid} />
-            {this.state.admin ?
-              <AdminStep />
-              :
+
               <div className='w-50 ma3'>
                 {this.props.viewerRole === 'buyer' &&
-                  <BuyerStepNote step={this.props.step} />}
+                  <div>
+                  <BuyerStepNote step={this.props.step} />
                     <DisputeTrade 
                       viewerRole={this.props.viewerRole} 
                       activetrade={this.props.activetrade} 
                       raiseDispute={this.props.buyerRaisesDispute}/>
+                  </div>}
                 {this.props.viewerRole === 'seller' &&
                   <div>
                     <SellerStepNote step={this.props.step} />
                     <div className='tc'>
                       {this.props.sendEtherState === 'init' &&
+                        <div>
                         <button onClick={this.props.releaseEther}>
                           Release Ether
-                        </button>}
-                    <DisputeTrade 
-                      viewerRole={this.props.viewerRole} 
-                      activetrade={this.props.activetrade} 
-                      raiseDispute={this.props.sellerRaisesDispute}/>
+                        </button>
+                        <DisputeTrade 
+                          viewerRole={this.props.viewerRole} 
+                          activetrade={this.props.activetrade} 
+                          raiseDispute={this.props.sellerRaisesDispute}/>
+                        </div>
+                      }
                       {this.props.sendEtherState === 'sending' &&
                         <span>Please accept the transaction in MetaMask</span>}
                     </div>
                   </div>}
-              </div>}
+              </div>
           </div>
         </div>
       </section>

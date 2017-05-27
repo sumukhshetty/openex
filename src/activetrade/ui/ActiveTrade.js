@@ -44,13 +44,13 @@ class ActiveTrade extends Component {
   sellerRaisesDispute () {
     this.props.sellerRaisesDispute(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
-  arbiterVotesForSeller () {
+  arbiterReleasesToSeller () {
     // TODO web3 stuff
-    this.props.arbiterVotesForSeller(this.props.seller.data, this.props.arbiter, this.props.activetrade, this.props.purchaseRequestId)
+    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.arbiter, this.props.activetrade, this.props.purchaseRequestId)
   }
-  arbiterVotesForBuyer () {
+  arbiterReleasesToBuyer () {
     // TODO web3 stuff
-    this.props.arbiterVotesForBuyer(this.props.buyer.data, this.props.arbiter.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.arbiter.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   resetEtherState() {
@@ -95,6 +95,18 @@ class ActiveTrade extends Component {
         { status: '', label: '', text: 'Awaiting Payment' },
         { status: '', label: '', text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
+      ],
+      'Seller Raised Dispute': [
+        { status: 'active', label: <Dot />, text: 'Seller Raised Dispute' },
+        { status: '', label: '', text: 'Awaiting Payment' },
+        { status: '', label: '', text: 'Awaiting Release' },
+        { status: '', label: '', text: 'All Done' }
+      ],
+      'Buyer Raised Dispute': [
+        { status: 'active', label: <Dot />, text: 'Seller Raised Dispute' },
+        { status: '', label: '', text: 'Awaiting Payment' },
+        { status: '', label: '', text: 'Awaiting Release' },
+        { status: '', label: '', text: 'All Done' }
       ]
     }
 
@@ -108,7 +120,9 @@ class ActiveTrade extends Component {
       } else if (activetrade.sellerUid === this.props.user.data.uid) {
         viewerRole = 'seller'
       } else {
-        viewerRole = 'arbiter'
+        if (this.props.user.profile.isAdmin){
+          viewerRole = 'arbiter'
+        }
       }
 
       status = activetrade['status']
@@ -178,13 +192,23 @@ class ActiveTrade extends Component {
           progress_map={progress_maps[status]} 
           purchaseRequestId={this.props.purchaseRequestId}
           step={status}
-          />
-/*          
-        'Trade Disputed': <Disputed
+          />,
+        'Seller Raised Dispute': <Disputed
           activetrade={activetrade} 
           progress_map={progress_maps[status]} 
           viewerRole={viewerRole}
-         />*/
+          step={status}
+          releaseToBuyer={this.arbiterReleasesToSeller.bind(this)} 
+          releaseToSeller={this.arbiterReleasesToSeller.bind(this)} 
+          />,
+        'Buyer Raised Dispute': <Disputed
+          activetrade={activetrade} 
+          progress_map={progress_maps[status]} 
+          viewerRole={viewerRole}
+          step={status}
+          releaseToBuyer={this.arbiterReleasesToSeller.bind(this)} 
+          releaseToSeller={this.arbiterReleasesToSeller.bind(this)} 
+          />
       }
 
       currentStep = tradeFlowComponents[status]

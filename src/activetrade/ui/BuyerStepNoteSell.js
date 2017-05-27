@@ -59,6 +59,20 @@ class BuyerStepNote extends Component {
             <p>The buyer has canceled the trade!</p>
           </div>
           )
+      case 'Seller Raised Dispute':
+        return(
+          <div className="measure pb4">
+            <p className='tc flarge b'>Dispute</p>
+            <p>The seller has raised a dispute. The arbiter will look at evidence from both sides and release funds to the honest party.</p>
+          </div>
+          )
+      case 'Buyer Raised Dispute':
+        return(
+          <div className="measure pb4">
+            <p className='tc flarge b'>Dispute</p>
+            <p>You've raised a dispute. The arbiter will look at evidence from both sides and release funds to the honest party.</p>
+          </div>
+          )
       default:
         return(
           <div className="measure pb4">

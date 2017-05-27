@@ -9,11 +9,17 @@ class AdminStepNote extends Component {
           <p>This is final, It cannot be undone. Make sure that you have solved the dispute with concrete evidence and answers from both sides.
               </p>
         </div>
-        <div className='tc'><button
+        <div className='tc'>
+        <button
           className='bg-blue'
-          onClick={this.disputeTheTrade}>
+          onClick={this.props.releaseToSeller}>
+              Release To Seller
+        </button>
+        <button
+          className='bg-blue'
+          onClick={this.props.releaseToBuyer}>
               Release To Buyer
-            </button>
+        </button>
           <div className='measure pb4'>
             <p className='tc flarge b'>Guide</p>
             <ol className='tl'>

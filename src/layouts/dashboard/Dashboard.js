@@ -9,6 +9,7 @@ import TradeAdvertisements from './../../tradeadvertisements/layouts/TradeAdvert
 
 import EnableNotifications from './../../enablenotifications/layouts/EnableNotifications'
 import CompletedTrades from './../../completedtrades/layouts/CompletedTrades'
+import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
 
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
@@ -72,6 +73,7 @@ class Dashboard extends Component {
               <TradeAdvertisements />
               {/*<CompletedTradeList />*/}
               <CompletedTrades />
+              <DisputedTrades />
             </div>
           </div>
         </div>

@@ -19,12 +19,12 @@ class Payment extends Component {
     }
   }
 
-  componentDidMount () {
+/*  componentDidMount () {
     firebaseRef.database().ref(`/users/${firebaseRef.auth().currentUser.uid}/isAdmin`).once('value').then(snap => this.setState({
       admin: snap.val()
     })
   )
-  }
+  }*/
 
   render () {
     return (
@@ -38,9 +38,7 @@ class Payment extends Component {
               sellerId={this.props.activetrade.sellerUid}
               buyerId={this.props.activetrade.buyerUid}
               amount={this.props.amount} />
-            {this.state.admin
-              ? <AdminStep />
-              : <div className='w-50 ma3'>
+              <div className='w-50 ma3'>
                 {this.props.viewerRole === 'buyer' &&
 
                   <div>
@@ -66,7 +64,7 @@ class Payment extends Component {
                       raiseDispute={this.props.sellerRaisesDispute}
                       />
                   </div>}
-              </div>}
+              </div>
           </div>
         </div>
       </section>
