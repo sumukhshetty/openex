@@ -20,7 +20,7 @@ module.exports = {
     amount = Number(amount);
     // TODO: web3 stuff
     let value = web3.toWei(amount, 'ether');
-    web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, address) {
+/*    web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, address) {
       if(!err) {
         dispatch(sendEtherState('sent'));
         firebaseRef.database().ref('/users/'+firebaseRef.auth().currentUser.uid).once("value", function(snap){
@@ -44,7 +44,7 @@ module.exports = {
           console.log(err);
         }
       }
-    })
+    })*/
 
   },
 

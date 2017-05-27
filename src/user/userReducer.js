@@ -11,7 +11,6 @@ const userReducer = (state = initialState, action) => {
   {
     return Object.assign({}, state, {
       data: action.payload,
-      currency: action.currency
     })
   }
 

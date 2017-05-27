@@ -61,7 +61,6 @@ function getDisputedTrades (disputedTradesPayload) {
 
 
 function getPurchaseRequests (purchaseRequestsPayload) {
-  console.log("userActions.getPurchaseRequests")
   return {
     type: 'GET_PURCHASE_REQUESTS',
     payload: purchaseRequestsPayload
@@ -77,7 +76,6 @@ function getTradeAdvertisements (tradeAdvertisementsPayload) {
 
 module.exports = {
   startListeningUserAuth: () => (dispatch, getState) =>{
-    console.log('startListeningUserAuth')
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){

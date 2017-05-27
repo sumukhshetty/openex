@@ -4,32 +4,6 @@ import { browserHistory } from 'react-router'
 
 class DisputeTrade extends Component {
 
-  constructor (props) {
-    super(props)
-    //this.disputeTheTrade = this.disputeTheTrade.bind(this)
-  }
-
-/*  disputeTheTrade () {
-    firebaseRef.database()
-      .ref('/disputes')
-      .push({
-        time: +new Date(),
-        status: 'Disputed',
-        amount: this.props.order.amount,
-        tradeId: this.props.tradeId,
-        tradeType: this.props.activeTrades.activeTrades[this.props.tradeId].tradeType,
-        seller: {
-          uid: this.props.order.sellerUid,
-          name: this.props.order.sellerUsername},
-        buyer: {
-          uid: this.props.order.buyerUid,
-          name: this.props.order.buyerUsername},
-        ether: 'fix me',
-        id: 'fix me',
-        raisedBy: firebaseRef.auth().currentUser.uid
-      }).then(() => browserHistory.push('/dashboard'))
-  }
-*/
   render () {
     return (
       <div className='measure pv4'>
