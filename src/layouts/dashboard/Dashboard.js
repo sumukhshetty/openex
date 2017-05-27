@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import DashboardInfoMessage from './DashboardInfoMessage';
-// ISSUE-231-82: Deprcate ActiveEscrowList for ActiveTrades
-//import ActiveEscrowList from './../../activeescrowlist/layouts/ActiveEscrowList';
 import ActiveTrades from './../../activetrades/layouts/ActiveTrades';
 import TradeAdvertisements from './../../tradeadvertisements/layouts/TradeAdvertisements'
-//import AdList from './../../adlist/layouts/AdList';
-//import CompletedTradeList from './../../completedtradeslist/layouts/CompletedTradeList';
 
 import EnableNotifications from './../../enablenotifications/layouts/EnableNotifications'
 import CompletedTrades from './../../completedtrades/layouts/CompletedTrades'
@@ -66,12 +62,8 @@ class Dashboard extends Component {
             <div>
               <EnableNotifications />
               <DashboardInfoMessage />
-              {/* ISSUE-231-28: The ActiveEscrowList component will be renamed to ActiveTrades*/}
-              {/*<ActiveEscrowList />*/}
               <ActiveTrades />
-              {/*<AdList />*/}
               <TradeAdvertisements />
-              {/*<CompletedTradeList />*/}
               <CompletedTrades />
               <DisputedTrades />
             </div>

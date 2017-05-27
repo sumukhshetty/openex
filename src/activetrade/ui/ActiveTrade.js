@@ -1,4 +1,3 @@
-// ISSUE-231-53: change file name from ActiveSellOrder to ActiveTradeOrder
 import React, { Component } from 'react'
 
 import Confirmation from './../layouts/Confirmation.js'
@@ -126,7 +125,6 @@ class ActiveTrade extends Component {
       }
 
       status = activetrade['status']
-      // TODO add the raisedDispute and canceledTrade components
       var tradeFlowComponents = {
         'Awaiting Seller Confirmation': <Confirmation
           activetrade={activetrade}

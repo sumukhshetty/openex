@@ -10,20 +10,6 @@ import {firebaseRef} from '../../index.js'
 
 class Release extends Component {
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      admin: null
-    }
-  }
-
-  componentDidMount () {
-    firebaseRef.database().ref(`/users/${firebaseRef.auth().currentUser.uid}/isAdmin`).once('value').then(snap => this.setState({
-      admin: snap.val()
-    })
-  )
-  }
-
   render () {
     console.log(this.props.viewerRole)
     return (

@@ -9,32 +9,16 @@ import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
 import App from './App'
 import Home from './layouts/home/Home'
 import Dashboard from './layouts/dashboard/Dashboard'
-import SignUp from './user/layouts/signup/SignUp'
-import Profile from './user/layouts/profile/Profile'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'
-//import OrdersList from './orderslist/layouts/OrdersList'
-//import OrderDetail from './orderdetail/layouts/OrderDetail'
-//import BuyOrderDetail from './buyorderdetail/layouts/BuyOrderDetail'
-//import SellOrderDetail from './sellorderdetail/layouts/SellOrderDetail'
 import Login from './user/layouts/login/Login'
-//import BuyOrders from './buyorders/layouts/BuyOrders'
-//import SellOrders from './sellorders/layouts/SellOrders'
 
 import Help from './help/layouts/Help'
 import HelpConfirmation from './help/layouts/HelpConfirmation'
-//import Payment from './activetrade/layouts/Payment'
-//import Release from './activetrade/layouts/Release'
-//import AllDone from './activetrade/layouts/AllDone'
-//import ActiveBuyOrder from './activetrade/layouts/ActiveBuyOrder'
-//import ActiveSellOrder from './activetrade/layouts/ActiveSellOrder'
 import HTMLStyles from './css/HTMLStyles.js'
 import Static from './staticPages/Master/Static'
-//import BuyTradeOrder from './buyTradeOrder/layouts/BuyTradeOrder'
-//import SellTradeOrder from './sellTradeOrder/layouts/SellTradeOrder'
 import UserScreen from './userScreen/layouts/UserScreen'
 import TermsOfService from './termsofservice/TermsOfService'
 import ResetPassword from './signup/ResetPassword'
-import ChatBox from './chat/containers/ChatBox'
 import Admin from './admin/layouts/Admin'
 
 import BuyTradeAdvertisement from './buytradeadvertisement/layouts/BuyTradeAdvertisement'
@@ -48,11 +32,8 @@ import ActiveTrade from './activetrade/layouts/ActiveTrade'
 import store from './store'
 import * as firebase from 'firebase'
 import * as _firebaseconfig from './../secrets/firebaseconfig'
-// import * as actions from './buyorders/ui/BuyOrdersActions'
 import * as useractions from './user/userActions'
 
-// Config
-// import truffleConfig from './../truffle-config.js'
 
 var config = {
   apiKey: _firebaseconfig._apiKey,
@@ -84,42 +65,19 @@ ReactDOM.render((
         <IndexRoute component={Home} />
         <Route path='dashboard' component={UserIsAuthenticated(Dashboard)} />
         <Route path='admin' component={UserIsAuthenticated(Admin)} />
-        <Route path='signup' component={UserIsNotAuthenticated(SignUp)} />
         <Route path='login' component={UserIsNotAuthenticated(Login)} />
-        <Route path='profile' component={UserIsAuthenticated(Profile)} />
-      {/* ISSUE-231: delete sellorders, replace with sellether,BuyTradeAdvertisements*/}
-        {/*<Route path='sellorders' component={UserIsAuthenticated(BuyOrders)} />*/}
         <Route path='sellether' component={UserIsAuthenticated(BuyTradeAdvertisements)}/>
-      {/* ISSUE-231: delete buyorders, replace with buyether,SellTradeAdvertisements*/}
-        {/*<Route path='buyorders' component={UserIsAuthenticated(SellOrders)} />*/}
         <Route path='buyether' component={UserIsAuthenticated(SellTradeAdvertisements)} />
         <Route path='help' component={UserIsAuthenticated(Help)} />
         <Route path='help/confirmation' component={UserIsAuthenticated(HelpConfirmation)} />
         <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />
-        {/*<Route path='orderslist' component={UserIsAuthenticated(OrdersList)} />*/}
         <Route path='user/:userUid' component={UserIsAuthenticated(UserScreen)} />
-        {/*<Route path='orderdetail/:address' component={UserIsAuthenticated(OrderDetail)} />*/}
-        {/*<Route path='buyorderdetail/:orderId' component={UserIsAuthenticated(BuyOrderDetail)} />*/}
-      {/*ISSUE-231-75: delete buyTradeOrder, replace with selltradeadvertisement/:sellTradeAdvertisementId*/}
-        {/*<Route path='buyTradeOrder/:orderId' component={UserIsAuthenticated(BuyTradeOrder)} />*/}
         <Route path='selltradeadvertisement/:sellTradeAdvertisementId' component={UserIsAuthenticated(SellTradeAdvertisement)} />
-      {/*ISSUE-231-75: delete sellTradeOrder, replace with buytradeadvertisement/:buyTradeAdvertisementId*/}
-        {/*<Route path='sellTradeOrder/:orderId' component={UserIsAuthenticated(SellTradeOrder)} />*/}
         <Route path='buytradeadvertisement/:buyTradeAdvertisementId' component={UserIsAuthenticated(BuyTradeAdvertisement)}/>
-        {/*<Route path='sellorderdetail/:orderId' component={UserIsAuthenticated(SellOrderDetail)} />*/}
-      {/* ISSUE-231-25: buyTradeAdvertisement should be changed to buytradeadvertisement, orderId changed to tradeAdvertisementId */}
-      {/* ISSUE-231-40: activebuyorder should be changed to activeTrade, orderId changed to purchaseRequestId */}
-        {/*<Route path='activebuyorder/:orderId' component={UserIsAuthenticated(ActiveBuyOrder)} />*/}
-      {/* ISSUE-231-40: activesellorder should be changed to activeTrade, orderId changed to purchaseRequestId */}
-        {/*<Route path='activesellorder/:requestId' component={UserIsAuthenticated(ActiveSellOrder)} />*/}
         <Route path='activetrade/:purchaseRequestId' component={UserIsAuthenticated(ActiveTrade)} />
         <Route path='edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId' component={UserIsAuthenticated(EditTradeAdvertisement)} />
-{/*        <Route path='payment/:orderId' component={UserIsAuthenticated(Payment)} />
-        <Route path='release/:orderId' component={UserIsAuthenticated(Release)} />
-        <Route path='allDone/:orderId' component={UserIsAuthenticated(AllDone)} />*/}
         <Route path='termsofservice' component={UserIsAuthenticated(TermsOfService)} />
         <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} />
-        <Route path='chat' component={UserIsAuthenticated(ChatBox)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>

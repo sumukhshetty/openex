@@ -1,5 +1,3 @@
-// ISSUE-231-70: This replaces buyorders
-
 import React, { Component } from 'react'
 import BuyTradeAdvertisementsContainer from './../ui/BuyTradeAdvertisementsContainer'
 
