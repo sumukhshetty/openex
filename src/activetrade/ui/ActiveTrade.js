@@ -83,6 +83,18 @@ class ActiveTrade extends Component {
         { status: 'completed', label: '', text: 'Buyer Confirmed Payment' },
         { status: 'completed', label: '', text: 'Seller Released Ether' },
         { status: 'completed', label: '', text: 'All Done' }
+      ],
+      'Seller Canceled Trade': [
+        { status: 'active', label: <Dot />, text: 'Seller Canceled Trade' },
+        { status: '', label: '', text: 'Awaiting Payment' },
+        { status: '', label: '', text: 'Awaiting Release' },
+        { status: '', label: '', text: 'All Done' }
+      ],
+      'Buyer Canceled Trade': [
+        { status: 'active', label: <Dot />, text: 'Buyer Canceled Trade' },
+        { status: '', label: '', text: 'Awaiting Payment' },
+        { status: '', label: '', text: 'Awaiting Release' },
+        { status: '', label: '', text: 'All Done' }
       ]
     }
 
@@ -151,12 +163,24 @@ class ActiveTrade extends Component {
           step={status}
           viewerRole={viewerRole}
           />,
-/*        'Trade Canceled': <Canceled
-          activeTrade={activetrade} 
-          viewerRole={viewerRole}
+        'Seller Canceled Trade': <Canceled
+            activetrade={activetrade} 
+            viewerRole={viewerRole}
+            progress_map={progress_maps[status]} 
+            purchaseRequestId={this.props.purchaseRequestId}
+            step={status}
           />,
+          'Buyer Canceled Trade':<Canceled
+            activetrade={activetrade} 
+            viewerRole={viewerRole}
+            progress_map={progress_maps[status]} 
+            purchaseRequestId={this.props.purchaseRequestId}
+            step={status}
+          />
+/*          
         'Trade Disputed': <Disputed
-          activeTrade={activetrade} 
+          activetrade={activetrade} 
+          progress_map={progress_maps[status]} 
           viewerRole={viewerRole}
          />*/
       }

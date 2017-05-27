@@ -21,8 +21,8 @@ class Confirmation extends Component {
           <div className='flex'>
             <ChatBox
               tradeId={this.props.purchaseRequestId}
-              sellerId={this.props.activetrade.buyerUid}
-              buyerId={this.props.activetrade.sellerUid} />
+              sellerId={this.props.activetrade.sellerUid}
+              buyerId={this.props.activetrade.buyerUid} />
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
               <div>
