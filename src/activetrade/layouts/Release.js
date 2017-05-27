@@ -41,6 +41,10 @@ class Release extends Component {
               <div className='w-50 ma3'>
                 {this.props.viewerRole === 'buyer' &&
                   <BuyerStepNote step={this.props.step} />}
+                    <DisputeTrade 
+                      viewerRole={this.props.viewerRole} 
+                      activetrade={this.props.activetrade} 
+                      raiseDispute={this.props.buyerRaisesDispute}/>
                 {this.props.viewerRole === 'seller' &&
                   <div>
                     <SellerStepNote step={this.props.step} />
@@ -49,15 +53,14 @@ class Release extends Component {
                         <button onClick={this.props.releaseEther}>
                           Release Ether
                         </button>}
+                    <DisputeTrade 
+                      viewerRole={this.props.viewerRole} 
+                      activetrade={this.props.activetrade} 
+                      raiseDispute={this.props.sellerRaisesDispute}/>
                       {this.props.sendEtherState === 'sending' &&
                         <span>Please accept the transaction in MetaMask</span>}
                     </div>
                   </div>}
-                <DisputeTrade
-                  viewerRole={this.props.viewerRole}
-                  tradeId={this.props.tradeId}
-                  order={this.props.order}
-                />
               </div>}
           </div>
         </div>

@@ -50,7 +50,10 @@ class Payment extends Component {
                         Confirm Payment
                       </button>
                     </div>
-                    <DisputeTrade viewerRole={this.props.viewerRole} activetrade={this.props.activetrade} raiseDispute={this.props.buyerRaisesDispute}/>
+                    <DisputeTrade 
+                      viewerRole={this.props.viewerRole} 
+                      activetrade={this.props.activetrade} 
+                      raiseDispute={this.props.buyerRaisesDispute}/>
                   </div>
                 }
                 {this.props.viewerRole === 'seller' &&
@@ -59,7 +62,9 @@ class Payment extends Component {
                     <DisputeTrade
                       viewerRole={this.props.viewerRole}
                       tradeId={this.props.purchaseRequestId}
-                      activetrade={this.props.activetrade} />
+                      activetrade={this.props.activetrade} 
+                      raiseDispute={this.props.sellerRaisesDispute}
+                      />
                   </div>}
               </div>}
           </div>

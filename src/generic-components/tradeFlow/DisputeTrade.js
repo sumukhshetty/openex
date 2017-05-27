@@ -58,7 +58,7 @@ class DisputeTrade extends Component {
         <div className='tc'>
           <button
             className='bg-danger'
-            onClick={this.disputeTheTrade}>
+            onClick={this.props.raiseDispute}>
             Dispute Trade
           </button>
           <p />

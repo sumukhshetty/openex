@@ -131,25 +131,25 @@ class ActiveTrade extends Component {
         'Awaiting Payment': <Payment
           activetrade={activetrade} 
           buyer={this.props.buyer} 
-          buyerRaisesDispute={this.props.buyerRaisesDispute.bind(this)} 
+          buyerRaisesDispute={this.buyerRaisesDispute.bind(this)} 
           confirmPayment={this.buyerConfirmsPayment.bind(this)} 
           progress_map={progress_maps[status]} 
           purchaseRequestId={this.props.purchaseRequestId} 
           seller={this.props.seller} 
-          sellerRaisesDispute={this.props.sellerRaisesDispute.bind(this)} 
+          sellerRaisesDispute={this.sellerRaisesDispute.bind(this)} 
           step={status} 
           viewerRole={viewerRole} 
           />,
         'Awaiting Release': <Release
           activetrade={activetrade} 
           buyer={this.props.buyer}
-          buyerRaisesDispute={this.props.buyerRaisesDispute.bind(this)}
+          buyerRaisesDispute={this.buyerRaisesDispute.bind(this)}
           progress_map={progress_maps[status]} 
           purchaseRequestId={this.props.purchaseRequestId}
           releaseEther={this.sellerReleasesEther.bind(this)} 
           resetEtherState={this.resetEtherState.bind(this)}
           seller={this.props.seller}
-          sellerRaisesDispute={this.props.sellerRaisesDispute.bind(this)}
+          sellerRaisesDispute={this.sellerRaisesDispute.bind(this)}
           sendEtherState={this.props.sendEtherState}
           step={status}
           viewerRole={viewerRole}
@@ -164,18 +164,18 @@ class ActiveTrade extends Component {
           viewerRole={viewerRole}
           />,
         'Seller Canceled Trade': <Canceled
-            activetrade={activetrade} 
-            viewerRole={viewerRole}
-            progress_map={progress_maps[status]} 
-            purchaseRequestId={this.props.purchaseRequestId}
-            step={status}
+          activetrade={activetrade} 
+          viewerRole={viewerRole}
+          progress_map={progress_maps[status]} 
+          purchaseRequestId={this.props.purchaseRequestId}
+          step={status}
           />,
-          'Buyer Canceled Trade':<Canceled
-            activetrade={activetrade} 
-            viewerRole={viewerRole}
-            progress_map={progress_maps[status]} 
-            purchaseRequestId={this.props.purchaseRequestId}
-            step={status}
+        'Buyer Canceled Trade':<Canceled
+          activetrade={activetrade} 
+          viewerRole={viewerRole}
+          progress_map={progress_maps[status]} 
+          purchaseRequestId={this.props.purchaseRequestId}
+          step={status}
           />
 /*          
         'Trade Disputed': <Disputed
