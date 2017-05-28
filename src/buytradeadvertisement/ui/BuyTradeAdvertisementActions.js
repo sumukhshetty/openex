@@ -94,10 +94,10 @@ module.exports = {
       json: true,
       url: url
     }*/
-    var newRequest = firebaseRef.database().ref(/purchaserequests/ + seller.profile.country)
+    var newRequest = firebaseRef.database().ref('/purchaserequests/' + seller.profile.country)
       .push(purchaseRequestData, function(err){
-        firebaseRef.database().ref(/users/+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
-        firebaseRef.database().ref(/users/+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})   
+        firebaseRef.database().ref('/users/'+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
+        firebaseRef.database().ref('/users/'+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})   
       })
 /*    request(options, function (err, res, body) {
       if (err) {

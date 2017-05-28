@@ -89,7 +89,7 @@ module.exports = {
     var newRequest = firebaseRef.database().ref('/purchaserequests/' + buyer.profile.country)
       .push(purchaseRequestData, function(err){
         firebaseRef.database().ref('/users/' + sellTradeAdvertisement.sellerUid + '/activetrades/' + newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
-        firebaseRef.database().ref(/users/+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
+        firebaseRef.database().ref('/users/'+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
       })
 
       //TODO implement this with firebase functions and send notification

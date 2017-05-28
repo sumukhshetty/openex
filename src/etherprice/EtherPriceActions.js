@@ -11,7 +11,7 @@ function etherPrice(pricesPayload) {
 
 export function getEtherPrice(uid) {
   return function(dispatch) {
-    firebaseRef.database().ref('users/'+uid+'/currency').once('value', function(snap){
+    firebaseRef.database().ref('/users/'+uid+'/currency').once('value', function(snap){
       let toSymbols = snap.val();
       request({
           method: 'GET',

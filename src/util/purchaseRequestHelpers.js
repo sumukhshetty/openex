@@ -1,5 +1,5 @@
 import {firebaseRef} from './../index.js'
-
+// group-user-country pass in the country
 module.exports = {
   removePurchaseRequestFromActiveTrades: (uid, purchaseRequestId) => {
     firebaseRef.database().ref('/users/'+uid+'/activetrades/').child(purchaseRequestId).remove()

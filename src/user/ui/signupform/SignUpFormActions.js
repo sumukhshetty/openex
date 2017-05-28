@@ -51,7 +51,7 @@ export function signUpUser (signUpInfo, web3) {
         'firstPurchase': '-',
         'shownotificationrequest': 'true',
       }
-      firebaseRef.database().ref('users/' + userid).set(userdata)
+      firebaseRef.database().ref('/users/' + userid).set(userdata)
       firebaseUser.updateProfile({
         displayName: username
       })

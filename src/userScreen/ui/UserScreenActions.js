@@ -15,7 +15,7 @@ module.exports = {
     console.log(userUid)
     var userScreenPayload = {}
     //get all the user data needed and load it onto the userScreenPayload
-    firebaseRef.database().ref(/users/+userUid).once("value", function(snap){
+    firebaseRef.database().ref('/users/'+userUid).once("value", function(snap){
       var userData = snap.val()
       console.log(userData)
       userScreenPayload['username'] = userData.username

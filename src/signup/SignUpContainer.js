@@ -12,7 +12,8 @@ class SignUpContainer extends Component {
         <section>
           <h3>Sign Up</h3>
         </section>
-
+    {this.props.web3.eth.accounts[0] ? 
+      <div>
         <section className="metamask">
           <WalletComponent web3={this.props.web3}/>
         </section>
@@ -20,6 +21,13 @@ class SignUpContainer extends Component {
         <section className="signup-form">
           <SignUpFormContainer />
         </section>
+        </div>
+      : 
+      <section>
+      <div>Unlock MetaMask and refresh your browser to signup </div>
+      </section> 
+    }
+
 
         <Help />
       </div>
