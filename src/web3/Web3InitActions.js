@@ -12,6 +12,19 @@ function web3Init(web3) {
   }
 }
 
+function browserBasedWalletLocked(lockedBool){
+  return {
+    type: 'GET_BROWSER_WALLET_LOCK_STATUS',
+    payload: lockedBool
+  }
+}
+
+function wrongNetwork(wrongNetworkBool){
+  return {
+    type: 'GET_WRONG_NETWORK_STATUS',
+    payload: wrongNetworkBool
+  }
+}
 
 export function web3Initialize() {
   return function(dispatch) {
@@ -21,7 +34,22 @@ export function web3Initialize() {
       // DEVELOPER NOTE: removing the next commented line will break the app
       // eslint-disable-next-line
       web3Provided = new Web3(web3.currentProvider)
-      // ISSUE-249
+      if (web3Provided.eth.accounts.length === 0){
+        dispatch(browserBasedWalletLocked(true))
+      } else {
+        dispatch(browserBasedWalletLocked(false))
+      }
+      web3Provided.version.getNetwork((err, res)=> {
+        // ISSUE - Change this to the mainnet
+        if(err){
+          console.log(err)
+        }
+        if(res != 42){
+          dispatch(wrongNetwork(true))
+        } else{
+          dispatch(wrongNetwork(false))
+        }
+      })
     } else {                                                      
       // DEVELOPER NOTE: What happens in the wild if the 
       // user does not have a browser based wallet? What happens
