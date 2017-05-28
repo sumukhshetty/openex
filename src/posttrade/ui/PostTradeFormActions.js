@@ -52,6 +52,7 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
         firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
             newAdvertisement.key + '/tradetype').set('sell-ether')
       })
+    // ISSUE-240 - call on the OrderBookFactory contract to create a new ETHOrderBook when the seller creates a trade advertisement
 /*    request({
       method: 'post',
       body: {

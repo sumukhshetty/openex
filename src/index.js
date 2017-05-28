@@ -9,6 +9,7 @@ import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
 import App from './App'
 import Home from './layouts/home/Home'
 import Dashboard from './layouts/dashboard/Dashboard'
+import WrongNetwork from './layouts/wrongnetwork/WrongNetwork'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'
 import Login from './user/layouts/login/Login'
 
@@ -64,6 +65,7 @@ ReactDOM.render((
       <Route path='/' component={App}>
         <IndexRoute component={Home} />
         <Route path='dashboard' component={UserIsAuthenticated(Dashboard)} />
+        <Route path='wrongnetwork' component={WrongNetwork} />
         <Route path='admin' component={UserIsAuthenticated(Admin)} />
         <Route path='login' component={UserIsNotAuthenticated(Login)} />
         <Route path='sellether' component={UserIsAuthenticated(BuyTradeAdvertisements)}/>

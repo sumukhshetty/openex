@@ -160,11 +160,6 @@ class PostTradeForm extends Component {
     console.log(_postTradeDetails)
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
       this.showWaitModal()
-/*      this.props.onPostTradeFormSubmit(
-        _postTradeDetails,
-        this.state.web3.web3,
-        this.state
-      )*/
       this.props.onCreateSellTradeAdvertisementFormSubmit(
         _postTradeDetails, 
         this.props.web3.web3, 
@@ -238,20 +233,6 @@ class PostTradeForm extends Component {
 
               <span className='measure-narrow fw1 i pa0 me'>Margin you want over the ether market price. Use a negative value for buying or selling under the market price to attract more contracts. For more complex pricing edit the price equation directly.</span>
             </div>
-
-            {/* <div className='flex mv3'>
-              <label htmlFor='equation' className='w5' >Price equation</label>
-              <div className='flex col'><input id='equation' name='equation' type='text' value={this.state.postTradeDetails.equation} onChange={this.onInputChange.bind(this)} placeholder='Kraken_API' className='w5'/>
-                <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice : 'Getting price...'} INR/ETH</span></small>
-              </div>
-
-              <span className='measure-narrow fw1 i pa0 me'>
-                  How the trade price is determined from the hourly market price. For more information about equations how to determine your traing price see pricing FAQ.
-                  <span className='b fw1'>
-                    Please note that the advertiser is always responsible for all payment processing fees.
-                  </span>
-              </span>
-            </div> */}
 
             <div className='flex mv3'>
               <label htmlFor='paymentMethod' className='w5'>Payment Method</label>

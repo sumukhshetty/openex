@@ -12,7 +12,6 @@ class SignUpContainer extends Component {
       <div className="ethereum-automte">
         <section>
           <h3>Sign Up</h3>
-          <SwitchAccounts />
         </section>
 
         <section className="metamask">

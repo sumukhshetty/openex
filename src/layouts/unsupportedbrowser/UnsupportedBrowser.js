@@ -1,6 +1,3 @@
-// TODO import Help Container
-// Who's todo is this? leave your name beside it.
-
 import React from 'react';
 import browserImages from '../../images/browserGroup.png';
 

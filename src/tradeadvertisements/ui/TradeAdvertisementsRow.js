@@ -27,7 +27,6 @@ export default class TradeAdvertisementsRow extends Component {
 
   handleEscrowRequest () {
     console.log('trade request handled')
-    // ISSUE-231-16: orderId changes to tradeAdvertisementId
     this.props.addEther(this.state.sendAmount, this.props.tradeAdvertisementId, this.props.tradeadvertisement.contractAddress, this.props.web3.web3)
   }
 
@@ -44,7 +43,7 @@ export default class TradeAdvertisementsRow extends Component {
       } else {
         display_id = "-"
       }
-      // ISSUE-231-18: get the available balance from the contract
+      // TODO
       var availableBalance
       if (tradeAdvertisement.availableBalance) {
         availableBalance = tradeAdvertisement.availableBalance - tradeAdvertisement.pendingBalance

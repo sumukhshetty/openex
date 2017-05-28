@@ -18,7 +18,7 @@ module.exports = {
     dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     amount = Number(amount);
-    // TODO: web3 stuff
+    // ISSUE-241: add ether to the ETHOrderBook contract
     let value = web3.toWei(amount, 'ether');
 
 

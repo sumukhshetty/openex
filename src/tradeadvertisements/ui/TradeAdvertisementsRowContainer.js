@@ -15,14 +15,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // ISSUE-231-12: orderId changes to tradeAdvertisementId
-/*    onBeforeComponentLoads: (orderId, tradeType) => {
-      // ISSUE-231-13: orderId changes to tradeAdvertisementId
-      dispatch(getAd(orderId, tradeType))
-    },*/
 
     addEther: (amount, tradeAdvertisementId, contractAddress, web3) => {
-      // ISSUE-231-13tradeAdvertisementIdtradeAdvertisementId: orderId changes to tradeAdvertisementId
+      // TODO - create issue
       dispatch(addEtherToContract(amount, tradeAdvertisementId, contractAddress, web3))
     },
 

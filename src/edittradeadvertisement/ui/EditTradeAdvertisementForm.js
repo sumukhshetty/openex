@@ -115,6 +115,7 @@ class EditTradeAdvertisementForm extends Component {
     event.preventDefault()
     console.log(_postTradeDetails)
     var now = new Date()
+    // TODO - create issue
     var margin = (1 + (this.props.tradeAdvertisement.margin * 0.01))
     console.log(margin)
     var price

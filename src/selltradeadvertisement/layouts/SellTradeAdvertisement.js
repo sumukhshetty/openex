@@ -1,4 +1,3 @@
-// ISSUE-231-75: This changes to sellTradeAdvertisement
 import React, { Component } from 'react';
 import SellTradeAdvertisementContainer from './../ui/SellTradeAdvertisementContainer'
 

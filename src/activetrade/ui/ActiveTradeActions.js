@@ -62,7 +62,7 @@ module.exports = {
     dispatch(setSeller(users.data[activeTrade.sellerUid]))
   },
   sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    //TODO web3 stuff with the sellOrderBookContract
+    // ISSUE-242: call on ETHOrderBook.addOrder when the seller confirms the trade
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -105,7 +105,7 @@ module.exports = {
         sellerreleaseethertime: now.toUTCString(),
         status: 'All Done'
     })
-    // TODO web3 stuff with sellOrderBookContract
+    // ISSUE-243 call on ETHOrderBook.completeOrder when the seller releases the ether
     firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
           .set(updatedPurchaseRequest)
           .then(function() {
@@ -203,9 +203,7 @@ module.exports = {
       });
   },
   arbiterReleasesToSeller: (seller, arbiter, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    console.log("activetrade.ui.arbiterReleasesToSeller")
-    console.log(seller, arbiter, purchaseRequest, purchaseRequestId)
-    // TODO web3 stuff
+    // ISSUE-244: call on ETHOrderBook.resolveDisputeSeller when the arbiter votes for the seller
     firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId + '/status')
       .set('All Done')
       .then(function() {
@@ -223,9 +221,7 @@ module.exports = {
       });
   },
   arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId) => (dispatch) =>{
-    console.log("activetrade.ui.arbiterVotesForBuyer") 
-    console.log(buyer, arbiter, purchaseRequest, purchaseRequestId)
-    // TODO web3 stuff
+    // ISSUE-245: call on ETHOrderBook.resolveDisputeBuyer when the arbiter votes for the buyer
     firebaseRef.database().ref('/purchaserequests/'+ buyer.country + '/' + purchaseRequestId + '/status')
       .set('All Done')
       .then(function() {
