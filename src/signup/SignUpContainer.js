@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import SwitchAccounts from './SwitchAccounts'
 import WalletComponent from './../wallet/WalletComponent'
 import SignUpFormContainer from './../user/ui/signupform/SignUpFormContainer'
 import Help from './Help'

@@ -1,10 +1,5 @@
-import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
-import ContractDirectoryContract from '../../../build/contracts/ContractDirectory.json'
-import { browserHistory } from 'react-router'
-import factoryAddress from '../../contract_addresses/orderfactory.js'
-
-const request = require('request')
-const contract = require('truffle-contract')
+//const request = require('request')
+//const contract = require('truffle-contract')
 
 import {firebaseRef} from './../../index.js'
 
@@ -17,13 +12,13 @@ function sendEtherState(etherStatePayload) {
   }
 }
 
-export const CREATE_BUY_TRADE_ADVERTISEMENT = 'BUY_TRADE_ADVERTISEMENT'
+/*export const CREATE_BUY_TRADE_ADVERTISEMENT = 'BUY_TRADE_ADVERTISEMENT'
 function createBuyTradeAdvertisement(buyTradeAdvertisementPayload){
   return {
     type: CREATE_BUY_TRADE_ADVERTISEMENT,
     payload: buyTradeAdvertisementPayload
   }
-}
+}*/
 
 export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
@@ -36,13 +31,13 @@ export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
   }
 }
 
-export const CREATE_SELL_TRADE_ADVERTISEMENT = 'CREATE_SELL_TRADE_ADVERTISEMENT'
+/*export const CREATE_SELL_TRADE_ADVERTISEMENT = 'CREATE_SELL_TRADE_ADVERTISEMENT'
 function createSellTradeAdvertisement(sellTradeAdvertisementPayload){
   return {
     type: CREATE_SELL_TRADE_ADVERTISEMENT,
     payload: sellTradeAdvertisementPayload
   }
-}
+}*/
 
 export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){

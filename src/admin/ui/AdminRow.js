@@ -2,7 +2,7 @@ import React from 'react'
 import * as _ from 'lodash'
 import { browserHistory } from 'react-router'
 
-const moment = require('moment')
+//const moment = require('moment')
 
 const AdminRow = (props) => {
   return (

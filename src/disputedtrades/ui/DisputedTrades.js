@@ -22,7 +22,6 @@ class DisputedTrades extends Component {
       } else {
         return (<div></div>)
       }
-      return (<div></div>)
     } else {
       return(<div></div>)
     }

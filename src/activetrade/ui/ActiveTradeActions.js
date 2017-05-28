@@ -71,7 +71,7 @@ module.exports = {
         status: 'Awaiting Payment'
       })
     console.log(updatedPurchaseRequest)
-    var updatedRef = firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+    firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
     .set(updatedPurchaseRequest, function(error){
       if(error){
         console.log(error)
@@ -149,8 +149,8 @@ module.exports = {
               status: 'Buyer Canceled Trade',
               lastUpdated: now.toUTCString()
             })
-    firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+ purchaseRequestId +'/status')
-          .set('Buyer Canceled Trade')
+    firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+ purchaseRequestId)
+          .set(updatedPurchaseRequest)
           .then(function() {
             purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
             purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.sellerUid, purchaseRequestId)
@@ -171,8 +171,8 @@ module.exports = {
         lastUpdated: now.toUTCString()
       })
 
-    firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId + '/status')
-          .set('Seller Raised Dispute')
+    firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId)
+          .set(updatedPurchaseRequest)
           .then(function() {
             //purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
             //purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.sellerUid, purchaseRequestId)
@@ -192,8 +192,8 @@ module.exports = {
         status: 'Buyer Raised Dispute',
         lastUpdated: now.toUTCString()
       })
-    firebaseRef.database().ref('/purchaserequests/'+ buyer.country + '/' + purchaseRequestId + '/status')
-      .set('Buyer Raised Dispute')
+    firebaseRef.database().ref('/purchaserequests/'+ buyer.country + '/' + purchaseRequestId)
+      .set(updatedPurchaseRequest)
       .then(function() {
         //purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
         //purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.sellerUid, purchaseRequestId)

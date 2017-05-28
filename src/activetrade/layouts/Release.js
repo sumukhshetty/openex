@@ -5,8 +5,6 @@ import ChatBox from '../../chat/containers/ChatBox'
 import DisputeTrade from '../../admin/disputeContainer'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
-import AdminStep from '../ui/AdminStepNote'
-import {firebaseRef} from '../../index.js'
 
 class Release extends Component {
 

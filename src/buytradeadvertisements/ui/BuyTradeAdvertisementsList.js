@@ -8,7 +8,7 @@ class BuyTradeAdvertisementsList extends Component {
     var buytradeadvertisements = this.props.buytradeadvertisements.data
     var uid = this.props.user.data.uid;
     var users = this.props.users
-    var userData, buyer
+    var buyer
     const rows = _.map(buytradeadvertisements, function (buyTradeAdvertisementData, key) {
       if(buyTradeAdvertisementData.buyerUid !== uid) {
         buyer = users.data[buyTradeAdvertisementData.buyerUid]

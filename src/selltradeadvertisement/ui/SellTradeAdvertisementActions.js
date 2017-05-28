@@ -1,4 +1,4 @@
-const request = require('request')
+//const request = require('request')
 import {firebaseRef} from './../../index.js'
 
 export const SET_SELL_TRADE_ADVERTISEMENT = 'SET_SELL_TRADE_ADVERTISEMENT'
@@ -73,19 +73,19 @@ module.exports = {
       buyraisesdisputetime: '-',
       sellerraisesdisputetime: '-'
     }
-    var postData = {
+/*    var postData = {
       sellTradeAdvertisementId: sellTradeAdvertisementId,
       sellTradeAdvertisement: sellTradeAdvertisement,
       seller: seller,
       buyer: buyer
-    }
-    var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/buyerCreatesPurchaseRequest'
+    }*/
+/*    var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/buyerCreatesPurchaseRequest'
     var options = {
       method: 'post',
       body: postData,
       json: true,
       url: url
-    }
+    }*/
     var newRequest = firebaseRef.database().ref('/purchaserequests/' + buyer.profile.country)
       .push(purchaseRequestData, function(err){
         firebaseRef.database().ref('/users/' + sellTradeAdvertisement.sellerUid + '/activetrades/' + newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})

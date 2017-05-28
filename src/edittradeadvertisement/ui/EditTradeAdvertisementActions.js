@@ -1,6 +1,6 @@
-import { browserHistory } from 'react-router'
+//import { browserHistory } from 'react-router'
 
-const request = require('request')
+//const request = require('request')
 import {firebaseRef} from './../../index.js'
 
 

@@ -10,7 +10,7 @@ class SellTradeAdvertisementsList extends Component {
     var currency = this.props.user.currency;
     var users = this.props.users
     var uid = this.props.user.data.uid;
-    var userData, seller;
+    var seller;
     const rows = _.map(selltradeadvertisements,function(sellTradeAdvertisement, key) {
         if(sellTradeAdvertisement.sellerUid !== uid) {
           seller = users.data[sellTradeAdvertisement.sellerUid]

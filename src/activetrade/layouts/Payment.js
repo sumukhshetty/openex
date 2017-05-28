@@ -6,10 +6,6 @@ import DisputeTrade from '../../generic-components/tradeFlow/DisputeTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
 
-import AdminStep from '../ui/AdminStepNote'
-import {firebaseRef} from '../../index.js'
-
-
 class Payment extends Component {
 
   render () {

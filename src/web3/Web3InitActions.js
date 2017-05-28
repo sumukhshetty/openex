@@ -21,6 +21,7 @@ export function web3Initialize() {
       // DEVELOPER NOTE: removing the next commented line will break the app
       // eslint-disable-next-line
       web3Provided = new Web3(web3.currentProvider)
+      // ISSUE-249
     } else {                                                      
       // DEVELOPER NOTE: What happens in the wild if the 
       // user does not have a browser based wallet? What happens

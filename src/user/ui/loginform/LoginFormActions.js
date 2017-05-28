@@ -10,12 +10,7 @@ function userLoggedIn(user) {
   }
 }
 
-function userProfile(userProfile) {
-  return {
-    type: 'GET_USER_PROFILE',
-    payload: userProfile
-  }
-}
+
 
 function userLoggedInError(error){
   return {

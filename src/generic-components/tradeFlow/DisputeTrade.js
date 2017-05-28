@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { firebaseRef } from '../../index.js'
-import { browserHistory } from 'react-router'
 
 class DisputeTrade extends Component {
 

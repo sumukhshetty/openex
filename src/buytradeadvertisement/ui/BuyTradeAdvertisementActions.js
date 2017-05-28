@@ -1,6 +1,3 @@
-import { browserHistory } from 'react-router'
-
-const request = require('request')
 import {firebaseRef} from './../../index.js'
 
 
@@ -74,7 +71,7 @@ module.exports = {
       buyraisesdisputetime: '-',
       sellerraisesdisputetime: '-'
     }
-    var postData = {
+/*    var postData = {
       //amount: amount,
       //bankInformation: buyTradeAdvertisement.bankInformation, //this should be taken from the sellTradeAdvertisement when the seller confirms a trade
       buyerAddress: buyTradeAdvertisement.buyerAddress,
@@ -90,13 +87,13 @@ module.exports = {
       sellrequesttime: new Date(),
       status: 'Initiated'
     }
-    var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/sellerCreatesPurchaseRequest'
-    var options = {
+    var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/sellerCreatesPurchaseRequest'*/
+/*    var options = {
       method: 'post',
       body: postData,
       json: true,
       url: url
-    }
+    }*/
     var newRequest = firebaseRef.database().ref(/purchaserequests/ + seller.profile.country)
       .push(purchaseRequestData, function(err){
         firebaseRef.database().ref(/users/+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})

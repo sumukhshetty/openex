@@ -76,6 +76,7 @@ function getTradeAdvertisements (tradeAdvertisementsPayload) {
 
 module.exports = {
   startListeningUserAuth: () => (dispatch, getState) =>{
+    console.log("startListeningUserAuth")
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 //import Block from '../../images/svgReactComponents/Block.js'
 import TrustButton from './../../trust/layouts/TrustButton'
 import BlockButton from './../../block/layouts/BlockButton'
-import {firebaseRef} from './../../index.js'
+//import {firebaseRef} from './../../index.js'
 import {Rating} from 'rebass'
 
 class TradeFeedback extends Component {
@@ -35,7 +35,7 @@ class TradeFeedback extends Component {
     if (this.props.tradeFeedback.data){
       _rating = this.props.tradeFeedback.data
     } else {
-      0
+      _rating = 0
     }
     return (
       <div className='measure pv4'>

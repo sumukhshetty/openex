@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Other from '../../images/svgReactComponents/other.js'
 import You from '../../images/svgReactComponents/you.js'
 import Arbiter from '../../images/svgReactComponents/Arbiter.js'
-import stockPhoto from '../../images/downloadPhoto.png'
+//import stockPhoto from '../../images/downloadPhoto.png'
 const moment = require('moment')
 
 const ChatMessage = (props) => (

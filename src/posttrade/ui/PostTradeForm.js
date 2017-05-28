@@ -3,6 +3,7 @@ import { BuyForm } from './BuyForm'
 import { SellForm } from './SellForm'
 import PostTradeInstructions from './PostTradeInstructions'
 import MetaMaskWaitModal from './../../generic-components/metamaskmodal/MetaMaskWaitModal'
+import { browserHistory } from 'react-router'
 
 class PostTradeForm extends Component {
   constructor (props) {
@@ -54,6 +55,15 @@ class PostTradeForm extends Component {
     this.props.resetEtherState()
   }
 
+  componentDidMount() {
+    if (this.props.web3.web3.eth.accounts[0]) {
+      console.log(this.props.web3.web3.eth.accounts[0])
+    } else {
+      alert("unlock your metamask account and refresh the page")
+      browserHistory.push('/')
+    }
+  }
+
   showWaitModal () {
     this.setState({showMetaMaskWaitModal: true})
   }
@@ -81,7 +91,16 @@ class PostTradeForm extends Component {
   }
 
   onTradeTypeChange (event) {
-    var connectedAccount = this.props.web3.web3.eth.accounts[0]
+    // ISSUE-247: make this experience more elegant delete the alert
+    console.log('PostTradeForm.onTradeTypeChange')
+    console.log(this.props.web3.web3.eth.accounts[0])
+    var connectedAccount
+    if (this.props.web3.web3.eth.accounts[0]) {
+      connectedAccount = this.props.web3.web3.eth.accounts[0]
+    } else {
+      alert("unlock your metamask account and refresh the page")
+      connectedAccount = '0x00000000000000000000000000000000000000000000000000000000000000'
+    }
     var _postTradeDetails = this.state.postTradeDetails
     var _buyFormBool = this.state.buyFormBool
     _postTradeDetails['tradeType'] = event.target.value
@@ -121,10 +140,19 @@ class PostTradeForm extends Component {
   }
 
   onPaymentMethodChange (event) {
-    var _postTradeDetails = Object.assign({},
-      this.state.postTradeDetails,
-      {paymentMethod: event.target.value}
+    var _postTradeDetails
+    if (event.target.value !== 'National Bank'){
+      _postTradeDetails = Object.assign({},
+        this.state.postTradeDetails,
+        {paymentMethod: event.target.value,
+          bankInformation: event.target.value}
       )
+    } else { 
+      _postTradeDetails = Object.assign({},
+        this.state.postTradeDetails,
+        {paymentMethod: event.target.value}
+      )
+    }
     this.setState({postTradeDetails: _postTradeDetails})
   }
 

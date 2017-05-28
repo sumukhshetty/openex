@@ -3,6 +3,12 @@ import React, { Component } from 'react';
 export default class EnableNotifications extends Component {
 
   componentWillMount() {
+    // ISSUE-249 - delete this once the issue is resolved
+    if (this.props.web3.web3.eth.accounts[0]) {
+      console.log("we got a metamask account")
+    } else {
+      alert("unlock your metamask account and refresh the page")
+    }
     this.props.onBeforeComponentLoad(this.props.user);
   }
 
