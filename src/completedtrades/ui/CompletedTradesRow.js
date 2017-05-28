@@ -22,11 +22,11 @@ class CompletedTradesRow extends Component {
       return (
         <tr className='flex cxc'>
           <td className='fb5 tc'>{display_id}</td>
-          <td className='fb15 tc'>{purchaseRequest.lastUpated}</td>
+          <td className='fb15 tc'>{purchaseRequest.createdAt}</td>
           <td className='fb10 tc'>{tradeType}</td>
           <td className='fb15 tc'>{username}</td>
-          <td className='fb10 tc'>{purchaseRequest.amount}</td>
-          <td className='fb10 tc'>{purchaseRequest.amount}</td>
+          <td className='fb10 tc'>{purchaseRequest.etherAmount}</td>
+          <td className='fb10 tc'>{purchaseRequest.fiatAmount}</td>
           <td className='fb10 tc'>{purchaseRequest.status}</td>
           <td className='fb10 tc'><i className='icon'>greendot</i> Active</td>
           <ViewCompletedTradeButton purchaseRequestId={this.props.purchaseRequestId} tradeType={purchaseRequest.tradeAdvertisementType} />
