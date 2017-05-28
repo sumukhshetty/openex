@@ -10,6 +10,7 @@ export default class Subscribe extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  // ISSUE-199: add the users email to a mailing list using firebase functions and mailgun-js
   handleSubmit (e) {
     e.preventDefault()
     console.log(this.state.email)

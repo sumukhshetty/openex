@@ -74,8 +74,6 @@ class PostTradeForm extends Component {
       _postTradeDetails['minTransactionLimit'] = event.target.value
     } else if (event.target.id === 'maxTransactionLimit') {
       _postTradeDetails['maxTransactionLimit'] = event.target.value
-    } else if (event.target.id === 'restrictTo') {
-      _postTradeDetails['restrictTo'] = event.target.value
     } else if (event.target.id === 'termsOfTrade') {
       _postTradeDetails['termsOfTrade'] = event.target.value
     }

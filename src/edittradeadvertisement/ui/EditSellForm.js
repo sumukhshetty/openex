@@ -44,16 +44,6 @@ export class EditSellForm extends Component {
         </div>
 
         <div className='flex mb3'>
-          <label htmlFor='restrictTo' className='w5 '>Restrict Amount to</label>
-          <div className='flex w5 h-100'>
-            <input id='restrictTo' type='number' onChange={this.props.onChangeProp} value={this.props.restrictTo}
-              className='br--white'
-              required />
-            <button className='ftiny br0 bg-gray bl--gray b--blue ba gray'>{this.props.currency}</button>
-          </div>
-          <span className='measure-narrow fw1 i pa0 me'>  Optional. Restrict trading amounts to specific comma-separated integers, for example 200,500,1000. In fiat currency (INR/EUR/etc). Handy for coupons, gift cards, etc.</span>
-        </div>
-        <div className='flex mb3'>
           <label htmlFor='termsOfTrade' className='w5'>Terms of trade</label>
           <textarea id='termsOfTrade' type='textArea' onChange={this.props.onChangeProp} value={this.props.termsOfTrade} className='w5' placeholder='For example, please make request only when you can complete the payment
            with cash within 12 hours.' rows='4' required />
