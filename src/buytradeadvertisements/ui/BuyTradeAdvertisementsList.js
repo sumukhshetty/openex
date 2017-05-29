@@ -5,7 +5,6 @@ import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeade
 import YouAreFirst from './../../generic-components/YouAreFirst'
 
 class BuyTradeAdvertisementsList extends Component {
-  // TODO if the length of the rows is zero - show the you're the first screen
   render () {
     var buytradeadvertisements = this.props.buytradeadvertisements.data
     var etherPrice = this.props.etherPrice.data;

@@ -61,27 +61,27 @@ const mapDispatchToProps = (dispatch) => {
     clearBuyOrder: () => {
       dispatch(actions.clearBuyOrderState())
     },
-    sendEther: (buyOrder, contractAddress, orderId, sellerUid, web3) => {
+/*    sendEther: (buyOrder, contractAddress, orderId, sellerUid, web3) => {
       dispatch(actions.fillEscrow(buyOrder, contractAddress, orderId, sellerUid, web3))
-    },
+    },*/
     resetEtherState: () => {
       dispatch(actions.resetEtherState());
     },
-    resetCancelState: () => {
+/*    resetCancelState: () => {
       dispatch(actions.resetCancelState());
-    },
-    releaseEther: (buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid) => {
+    },*/
+/*    releaseEther: (buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid) => {
       dispatch(actions.releaseEscrow(buyOrder, contractAddress, orderId, web3, buyerUid, sellerUid))
-    },
-    cancelTrade: (orderId, uid) => {
+    },*/
+/*    cancelTrade: (orderId, uid) => {
       dispatch(actions.cancelTrade(orderId, uid));
-    },
-    setCancelState: () => {
+    },*/
+/*    setCancelState: () => {
       dispatch(actions.setCancelState());
-    },
-    confirmPayment: (buyOrder, orderId) => {
+    },*/
+/*    confirmPayment: (buyOrder, orderId) => {
       dispatch(actions.paymentConfirmed(buyOrder, orderId))
-    }
+    }*/
   }
 }
 

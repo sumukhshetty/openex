@@ -9,18 +9,8 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-/*const mapDispatchToProps = (dispatch) => {
-  return {
-    onBeforeComponentLoad: (user) => {
-      console.log("selltradeadvertisements.onBeforeComponentLoad")
-      //dispatch(buyOrders(user))
-    }
-  }
-}*/
-
 const SellTradeAdvertisementsContainer = connect(
   mapStateToProps,
-  //mapDispatchToProps
 )(SellTradeAdvertisements)
 
 export default SellTradeAdvertisementsContainer
