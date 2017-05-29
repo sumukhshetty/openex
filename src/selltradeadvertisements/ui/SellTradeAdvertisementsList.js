@@ -18,10 +18,7 @@ class SellTradeAdvertisementsList extends Component {
           var marginMultiplier = (1 + (parseInt(sellTradeAdvertisement.margin, 10) * 0.01))
           var price = etherPrice ? (etherPrice*marginMultiplier) : null;
           return <SellTradeAdvertisementRow price={price} sellTradeAdvertisementData={sellTradeAdvertisement} sellTradeAdvertisementId={key} seller={seller} etherPrice={etherPrice} userId={key} key={key}/>
-        } else {
-          console.log("seller is looking at themself")
         }
-
     })
     if(rows.length > 1){
       return (
