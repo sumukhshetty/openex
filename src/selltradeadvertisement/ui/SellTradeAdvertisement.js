@@ -46,16 +46,12 @@ export default class SellTradeAdvertisement extends Component {
   }
 
   render () {
-    console.log("SellTradeAdvertisement.render")
-    console.log(this.props)
     var sellTradeAdvertisement = this.props.selltradeadvertisement.data;
     var seller = this.props.seller.data
     var requestComponent = <div className='w-50' >
       <h2 className='pv1 tc'>Getting balance...</h2>
     </div>;
     if(sellTradeAdvertisement && seller) {
-      // ISSUE-255 check the price is getting set correctly this works 
-      // this sets the price to the current price of ether rather than the price set in the trade advertisement
       var marginMultiplier = (1 + (parseInt(sellTradeAdvertisement.margin, 10) * 0.01))
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
       // ISSUE-254 get available balance from the ETHOrderBook 
@@ -92,7 +88,6 @@ export default class SellTradeAdvertisement extends Component {
                 <table className='lh-copy'>
                   <tr>
                     <td className='w4 pv2'>Price</td>
-                    {/*ISSUE-255 this works if margin is saved as a decimal*/}
                     <td className='green'>{this.props.etherPrice.data ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : 'Getting price...'} {this.props.user.profile.currency}/ETH</td>
                   </tr>
                   <tr>

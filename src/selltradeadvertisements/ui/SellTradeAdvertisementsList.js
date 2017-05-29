@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import * as _ from 'lodash'
 import SellTradeAdvertisementRow from './SellTradeAdvertisementRow'
+import SellTradeAdvertisementsHeader from './../layouts/SellTradeAdvertisementsHeader'
 //import LoadMoreSellOrders from './LoadMoreSellOrders'
+import YouAreFirst from './../../generic-components/YouAreFirst'
 
 class SellTradeAdvertisementsList extends Component {
   render(){
@@ -21,11 +23,18 @@ class SellTradeAdvertisementsList extends Component {
         }
 
     })
-
-    return (
-      <div>
-        {rows}
-      </div>)
+    if(rows.length > 1){
+      return (
+        <table>
+        {this.props.selltradeadvertisements.data && <SellTradeAdvertisementsHeader />}
+        <tbody>
+          {rows}
+        </tbody>
+        </table>
+        )
+    } else {
+      return (<YouAreFirst />)
+    }
   }
 }
 

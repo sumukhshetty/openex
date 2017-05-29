@@ -2,18 +2,13 @@ import React, { Component } from 'react'
 import * as _ from 'lodash'
 
 import BuyTradeAdvertisementsListContainer from './BuyTradeAdvertisementsListContainer'
-import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
 
 import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
 import WrongNetwork from './../../layouts/wrongnetwork/WrongNetwork'
+import YouAreFirst from './../../generic-components/YouAreFirst'
 
 class BuyTradeAdvertisements extends Component {
   render () {
-    const BuyTradeAdvertisementLoadingDisplay = () => (
-      <tbody className='flex'>
-        <tr className='flex cxc mxc'>Buy Advertisements Loading...</tr>
-      </tbody>
-      )
     if(this.props.web3.locked || this.props.web3.wrongnetwork) {
       return(
         <div>
@@ -23,12 +18,9 @@ class BuyTradeAdvertisements extends Component {
         )
     } else {
       return (
-        <table>
-          <BuyTradeAdvertisementsHeader />
-          <div>
-            { this.props.buytradeadvertisements ? <BuyTradeAdvertisementsListContainer /> : <BuyTradeAdvertisementLoadingDisplay />}
-          </div>
-        </table>
+        <div>
+          { this.props.buytradeadvertisements.data ? <BuyTradeAdvertisementsListContainer /> : <YouAreFirst />}
+        </div>
       )
     }
   }

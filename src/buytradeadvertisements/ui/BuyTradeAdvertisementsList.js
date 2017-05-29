@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import * as _ from 'lodash'
 import BuyTradeAdvertisementRow from './BuyTradeAdvertisementRow'
+import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
+import YouAreFirst from './../../generic-components/YouAreFirst'
 
 class BuyTradeAdvertisementsList extends Component {
   // TODO if the length of the rows is zero - show the you're the first screen
@@ -20,11 +22,19 @@ class BuyTradeAdvertisementsList extends Component {
         console.log("buyer is looking at himself")
       }
     })
+    if(rows.length >1) {
+      return (
+        <table>
+        {this.props.buytradeadvertisements.data && <BuyTradeAdvertisementsHeader />}
+        <tbody>
+          {rows}
+        </tbody>
+        </table>
+        )
+    } else {
+      return (<YouAreFirst />)
+    }
 
-    return (
-      <div>
-        {rows}
-      </div>)
   }
 }
 

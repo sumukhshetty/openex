@@ -3,7 +3,6 @@ import {firebaseRef} from './../../index.js'
 
 export const SET_SELL_TRADE_ADVERTISEMENT = 'SET_SELL_TRADE_ADVERTISEMENT'
 function setSellTradeAdvertisement(sellTradeAdvertisementPayload){
-  console.log("SellTradeAdvertimentActions.setSellTradeAdvertisement")
   return {
     type: SET_SELL_TRADE_ADVERTISEMENT,
     payload: sellTradeAdvertisementPayload
