@@ -79,6 +79,7 @@ module.exports = {
     console.log("startListeningUserAuth")
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
+
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
           var userProfile = snap.val()
           dispatch(getUserProfile(userProfile))
@@ -88,15 +89,19 @@ module.exports = {
           dispatch(getCompletedTrades(userProfile['completedtrades']))
           dispatch(userLoggedIn(user))
           firebaseRef.database().ref('/users').on('value', function(snap){
+
             dispatch(users(snap.val()))
           })
           firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
+
             dispatch(getBuyTradeAdvertisements(snap.val()))
           })
           firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).on('value', function(snap){
+
             dispatch(getSellTradeAdvertisements(snap.val()))
           })
           firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
+
             dispatch(getPurchaseRequests(snap.val()))
           })
           return browserHistory.push('/dashboard')

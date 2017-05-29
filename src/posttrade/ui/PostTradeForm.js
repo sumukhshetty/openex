@@ -3,7 +3,7 @@ import { BuyForm } from './BuyForm'
 import { SellForm } from './SellForm'
 import PostTradeInstructions from './PostTradeInstructions'
 import MetaMaskWaitModal from './../../generic-components/metamaskmodal/MetaMaskWaitModal'
-import { browserHistory } from 'react-router'
+//import { browserHistory } from 'react-router'
 
 import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
 import WrongNetwork from './../../layouts/wrongnetwork/WrongNetwork'
@@ -161,10 +161,14 @@ class PostTradeForm extends Component {
   handleSubmit (event) {
     event.preventDefault()
     var now = new Date()
-    var margin = (1 + (this.state.postTradeDetails.margin * 0.01))
+    // ISSUE-255 storing as a number above one complicates editing the tradeadvertisement
+    // because the margin is compounded. storing it as a string and then dynamically generating the price
+    // with (1 + (this.props.selltradeorder.margin * 0.01)) seems to be the more robust approach
+    var margin = (1 + (parseInt(this.state.postTradeDetails.margin) * 0.01))
     var price
+    // ISSUE-255
     if (this.props.etherPrice.data){
-      price =(this.props.etherPrice.data * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2)
+      price =(this.props.etherPrice.data * margin).toFixed(2)
     } else {
       price = '-'
     }
@@ -174,7 +178,7 @@ class PostTradeForm extends Component {
       {lastUpated: now.toUTCString(),
         status: 'Initiated',
         active: true,
-        margin: margin,
+        //margin: this.state.postTradeDetails.margin,
         price: price
       }
       )
@@ -257,7 +261,7 @@ class PostTradeForm extends Component {
                       required />
                     <button className='ftiny br0 bg-gray bl--gray b--blue ba gray'>%</button>
                   </div>
-                  <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice ? (this.props.etherPrice.data * (1 + (this.state.postTradeDetails.margin * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</span></small>
+                  <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice ? (this.props.etherPrice.data * (1 + (parseInt(this.state.postTradeDetails.margin) * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</span></small>
                   <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice.data : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</span></small>
                 </div>
 

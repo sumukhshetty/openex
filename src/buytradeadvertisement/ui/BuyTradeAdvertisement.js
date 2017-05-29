@@ -37,12 +37,13 @@ export default class BuyTradeAdvertisement extends Component {
   }
 
   onAmountChange(e) {
+    var marginMultiplier = (1 + (parseInt(this.props.buytradeadvertisement.data.margin) * 0.01))
     if(e.target.id === 'etherAmount') {
       this.setState({etherAmount: e.target.value});
-      this.setState({fiatAmount: (e.target.value * (this.props.etherPrice.data * this.props.buytradeadvertisement.data.margin).toFixed(2)).toFixed(2)})
+      this.setState({fiatAmount: (e.target.value * (this.props.etherPrice.data * marginMultiplier).toFixed(2)).toFixed(2)})
     } else if(e.target.id === 'fiatAmount') {
       this.setState({fiatAmount: e.target.value});
-      this.setState({etherAmount: (e.target.value / (this.props.etherPrice.data * this.props.buytradeadvertisement.data.margin).toFixed(2)).toFixed(2)})
+      this.setState({etherAmount: (e.target.value / (this.props.etherPrice.data * marginMultiplier).toFixed(2)).toFixed(2)})
     }
   }
 
@@ -60,7 +61,8 @@ export default class BuyTradeAdvertisement extends Component {
       <h2 className='pv1 tc'>Getting balance...</h2>
     </div>;
     if(buyTradeAdvertisement && buyer) {
-      var price = this.props.etherPrice ? (this.props.etherPrice.data * buyTradeAdvertisement.margin).toFixed(2) : null;
+      var marginMultiplier = (1 + (parseInt(this.props.buytradeadvertisement.data.margin) * 0.01))
+      var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
       // TODO get the available balance from web3
       var availableBalance = 10
       if(typeof availableBalance !== 'undefined') {
