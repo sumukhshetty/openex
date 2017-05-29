@@ -35,7 +35,8 @@ export function signUpUser (signUpInfo, web3) {
 
     auth.createUserWithEmailAndPassword(email, pass).then(function (firebaseUser) {
       userid = firebaseUser.uid
-      var userdata = {'email': email,
+      var userdata = {
+        //'email': email, better that we stop storing this in publically viewable data
         'country': country,
         'currency': currency,
         'username': username,
@@ -45,7 +46,7 @@ export function signUpUser (signUpInfo, web3) {
         'verifiedPhoneNumber': false,
         'verifiedEmail': true,
         'numberOfTrades': 0,
-        'accountCreated': new Date(),
+        'accountCreated': new Date().toUTCString(),
         'tradeVolume': 0,
         'avgFeedback': 0,
         'firstPurchase': '-',

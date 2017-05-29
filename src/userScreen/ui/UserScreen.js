@@ -3,64 +3,17 @@ import React, { Component } from 'react';
 const moment = require('moment')
 
 export default class UserScreen extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      volume: 100,
-      buyingFrom: 'Victoria Padilla',
-      trades: 4,
-      partners: 4,
-      feedback: 100,
-      firstPurchase: '2 weeks, 5 days',
-      accountCreated: '4 months, 3 weeks',
-      lastSeen: 'Just Now',
-      language: 'English',
-      emailVerified: '4 months, 3 weeks',
-      phoneVerified: '4 months, 3 weeks',
-      trust: 2,
-      blocks: 0,
-      activeTrades: [
-        {
-          name: 'Victoria Padilla',
-          currency: 'EUR',
-          paymentMethod: 'UPI',
-          price: 1350,
-          minTransactionLimit: 0,
-          maxTransactionLimit: 21194,
-          lastTransfer: '26 Oct 2017',
-          trustworthiness: 'Sufficient',
-          lastOnline: 'active',
-          buyOrSell: 'Sell'
-        },
-        {
-          name: 'David Washington',
-          currency: 'USD',
-          paymentMethod: 'IMPS',
-          price: 1250,
-          minTransactionLimit: 100,
-          maxTransactionLimit: 1120,
-          lastTransfer: '2 Oct 2017',
-          trustworthiness: 'Perfect',
-          lastOnline: '02 Dec 2016',
-          buyOrSell: 'Buy'
-        }
-      ]
-    };
-  }
-
   componentWillMount(){
     console.log("ui.UserScreen.componentWillMount")
-    console.log(this.props)
-    this.props.onBeforeComponentLoad(this.props.userScreenUid)
+    this.props.onBeforeComponentLoad(this.props.userScreenUid, this.props.users)
   }
 
   componentWillUnmount(){
     console.log("ui.UserScreen.componentWillUnmount")
+    this.props.onBeforeComponentUnmount()
   }
 
   render () {
-    console.log("ui.UserScreen.render")
-    console.log(this.props)
     if(this.props.userScreen.data){
       return (
         <div className='w-100 bg-smoke'>
@@ -78,10 +31,10 @@ export default class UserScreen extends Component {
                     <td className='w4 pv2'>Confirmed Trades</td>
                     <td className='pl3'>{this.props.userScreen.data.numberOfTrades.toString()}</td>
                   </tr>
-                  <tr className='w-50'>
+{/*                  <tr className='w-50'>
                     <td className='w4 pv2'>Traded with</td>
                     <td className='pl3'>with {this.state.partners} different partners</td>
-                  </tr>
+                  </tr>*/}
                   <tr className='w-50'>
                     <td className='w4 pv2'>Feedback Score</td>
                     <td className='pl3'>{this.props.userScreen.data.avgFeedback}</td>

@@ -84,7 +84,7 @@ module.exports = {
       //sellerAddress: coinbase,
       sellerUid: seller.profile.uid,
       sellerUsername: seller.profile.username,
-      sellrequesttime: new Date(),
+      sellrequesttime: new Date().toUTCString(),
       status: 'Initiated'
     }
     var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/sellerCreatesPurchaseRequest'*/

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Converter from '../ui/Converter';
 import Star from '../../images/Star';
+import { browserHistory } from 'react-router'
 
 export default class BuyTradeAdvertisement extends Component {
   constructor (props) {
@@ -88,7 +89,7 @@ export default class BuyTradeAdvertisement extends Component {
           </div>
         }
       }
-
+      var url = '/user/' + buyTradeAdvertisement.buyerUid
       return (
         <div className='w-100 bg-smoke vh-100'>
           <div className='w-75 center pv3'>
@@ -106,7 +107,7 @@ export default class BuyTradeAdvertisement extends Component {
                   </tr>
                   <tr>
                     <td className='w4 pv2'>User</td>
-                    <td>{buyer.username} ({buyer.avgFeedback}<Star className='dib v-mid pb1' />)</td>
+                    <td><a onClick={()=>browserHistory.push(url)}>{buyer.username}</a> ({buyer.avgFeedback}<Star className='dib v-mid pb1' />)</td>
                   </tr>
                   <tr>
                     <td className='w4 pv2'>Trade Limits</td>
