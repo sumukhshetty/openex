@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import TradeFeedback from './TradeFeedback'
-import { tradeFeedback, updateRating } from './TradeFeedbackActions'
+import { tradeFeedback, updateRating,clearState } from './TradeFeedbackActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -22,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateRating: (rating) =>{
      dispatch(updateRating(rating)) 
+    },
+    onBeforeComponentUnmount: () => {
+      dispatch(clearState())
     }
   }
 }

@@ -47,7 +47,6 @@ function clearSeller(){
 }
 
 function clearActiveTrade(){
-  console.log('ui.ActiveTradeActions.clearActiveTrade')
   return {
     type: 'CLEAR_ACTIVE_TRADE',
     payload: null
