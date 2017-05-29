@@ -31,7 +31,7 @@ export default class ChatBox extends Component {
     return (
       <div
         className='pa3 w-50 overflow-y-auto'
-        style={{height: '650px'}}
+        style={{height: '350px'}}
         ref={`thing`} >
         {Object.keys(messages)
           .map((message, index) =>
