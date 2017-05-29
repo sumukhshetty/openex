@@ -34,7 +34,7 @@ export default class SellTradeAdvertisement extends Component {
   }
 
   onAmountChange(e) {
-    var marginMultiplier = (1 + (parseInt(this.props.selltradeadvertisement.data.margin) * 0.01))
+    var marginMultiplier = (1 + (parseInt(this.props.selltradeadvertisement.data.margin, 10) * 0.01))
     if(e.target.id === 'etherAmount') {
       this.setState({etherAmount: e.target.value});
       this.setState({fiatAmount: (e.target.value * (this.props.etherPrice.data * marginMultiplier).toFixed(2)).toFixed(2)})
@@ -55,7 +55,7 @@ export default class SellTradeAdvertisement extends Component {
     if(sellTradeAdvertisement && seller) {
       // ISSUE-255 check the price is getting set correctly this works 
       // this sets the price to the current price of ether rather than the price set in the trade advertisement
-      var marginMultiplier = (1 + (parseInt(sellTradeAdvertisement.margin) * 0.01))
+      var marginMultiplier = (1 + (parseInt(sellTradeAdvertisement.margin, 10) * 0.01))
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
       // ISSUE-254 get available balance from the ETHOrderBook 
       //var availableBalance = this.props.sellOrderContract.availableBalance;
