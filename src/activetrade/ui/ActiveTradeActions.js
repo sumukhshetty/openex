@@ -47,6 +47,7 @@ function clearSeller(){
 }
 
 function clearActiveTrade(){
+  console.log('ui.ActiveTradeActions.clearActiveTrade')
   return {
     type: 'CLEAR_ACTIVE_TRADE',
     payload: null
@@ -55,11 +56,13 @@ function clearActiveTrade(){
 
 
 module.exports = {
-  activeTrade: (purchaseRequests, purchaseRequestId, users) => (dispatch) => {
-    var activeTrade = purchaseRequests.data[purchaseRequestId]
-    dispatch(setActiveTrade(activeTrade))
-    dispatch(setBuyer(users.data[activeTrade.buyerUid]))
-    dispatch(setSeller(users.data[activeTrade.sellerUid]))
+  activeTrade: (purchaseRequests, purchaseRequestId, users, user) => (dispatch) => {
+    firebaseRef.database().ref('/purchaserequests/'+user.profile.country+'/'+purchaseRequestId).on('value', function(snap){
+      var activeTrade = snap.val()
+      dispatch(setActiveTrade(activeTrade))
+      dispatch(setBuyer(users.data[activeTrade.buyerUid]))
+      dispatch(setSeller(users.data[activeTrade.sellerUid]))
+    })
   },
   sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     // ISSUE-242: call on ETHOrderBook.addOrder when the seller confirms the trade
@@ -70,14 +73,11 @@ module.exports = {
         sellerconfirmtime: now.toUTCString(),
         status: 'Awaiting Payment'
       })
-    console.log(updatedPurchaseRequest)
     firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
     .set(updatedPurchaseRequest, function(error){
       if(error){
         console.log(error)
-      } else {
-        dispatch(setActiveTrade(updatedPurchaseRequest))
-      }
+      } 
     });
   },
   buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -92,9 +92,7 @@ module.exports = {
       .set(updatedPurchaseRequest, function(error){
         if(error){
           console.log(error)
-        } else {
-          dispatch(setActiveTrade(updatedPurchaseRequest))
-        }
+        } 
       });
   },
   sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -116,7 +114,6 @@ module.exports = {
 
             firebaseRef.database().ref("users/"+purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
             firebaseRef.database().ref("users/"+purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
-            dispatch(setActiveTrade(updatedPurchaseRequest))
           });
 
   },
@@ -138,7 +135,6 @@ module.exports = {
             purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
             purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
 
-            dispatch(setActiveTrade(updatedPurchaseRequest))
           });
   },
   buyerCancelsTrade:(buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -157,7 +153,6 @@ module.exports = {
             purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
             purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
 
-            dispatch(setActiveTrade(updatedPurchaseRequest))
           });
   },
   sellerRaisesDispute: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -179,7 +174,6 @@ module.exports = {
             purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
             purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
             
-            dispatch(setActiveTrade(updatedPurchaseRequest))
           });
   },
   buyerRaisesDispute: (buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {

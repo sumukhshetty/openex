@@ -11,7 +11,8 @@ import Dot from './../../images/svgReactComponents/Dot.js'
 class ActiveTrade extends Component {
 
   componentWillMount () {
-    this.props.onBeforeComponentLoad(this.props.purchaserequests, this.props.purchaseRequestId, this.props.users)
+    this.props.onBeforeComponentLoad(this.props.purchaserequests, 
+      this.props.purchaseRequestId, this.props.users, this.props.user)
   }
 
   componentWillUnmount () {

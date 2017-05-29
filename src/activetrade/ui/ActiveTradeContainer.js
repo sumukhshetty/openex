@@ -19,8 +19,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users) => {
-      dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users))
+    onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users, user) => {
+      dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users, user))
     },
     sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.sellerConfirmsTrade(seller, purchaseRequest, purchaseRequestId))
@@ -58,9 +58,9 @@ const mapDispatchToProps = (dispatch) => {
     clearState: ()=>{
       dispatch(actions.clearState())
     },
-    clearBuyOrder: () => {
+/*    clearBuyOrder: () => {
       dispatch(actions.clearBuyOrderState())
-    },
+    },*/
 /*    sendEther: (buyOrder, contractAddress, orderId, sellerUid, web3) => {
       dispatch(actions.fillEscrow(buyOrder, contractAddress, orderId, sellerUid, web3))
     },*/
