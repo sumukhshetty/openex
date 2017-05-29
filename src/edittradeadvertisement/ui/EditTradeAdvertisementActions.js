@@ -1,4 +1,4 @@
-//import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 
 //const request = require('request')
 import {firebaseRef} from './../../index.js'
@@ -21,7 +21,6 @@ function clearEditTradeAdvertisement(){
 
 module.exports = {
   setEditTradeAdvertisement: (tradeAdvertisementId, tradeAdvertisementType, buytradeadvertisements, selltradeadvertisements) => (dispatch) => {
-    console.log("EditTradeAdvertisementActions.setEditTradeAdvertisement")
     var editTradeAdvertisement
     if (tradeAdvertisementType === 'buy-ether') {
       editTradeAdvertisement = buytradeadvertisements.data[tradeAdvertisementId] 
@@ -30,17 +29,16 @@ module.exports = {
     }
     dispatch(setEditTradeAdvertisement(editTradeAdvertisement))
   },
-  updateTradeAdvertisement: (editTradeAdvertisementData, tradeAdvertisementId, tradeAdvertisementType) => {
-    console.log('EditTradeAdvertisementActions.updateTradeAdvertisement')
-    console.log(editTradeAdvertisementData, tradeAdvertisementId, tradeAdvertisementType)
+  updateTradeAdvertisement: (editTradeAdvertisementData, tradeAdvertisementId, tradeAdvertisementType, user) => {
     var tradeTypeRef
     if (tradeAdvertisementType === 'buy-ether'){
       tradeTypeRef = '/buytradeadvertisements/'
     } else {
       tradeTypeRef = '/selltradeadvertisements/'
     }
-    console.log(tradeTypeRef)
-    firebaseRef.database().ref(tradeTypeRef+tradeAdvertisementId).set(editTradeAdvertisementData)
+    firebaseRef.database().ref(tradeTypeRef+user.profile.country+'/'+tradeAdvertisementId).set(editTradeAdvertisementData).then(function(snap){
+      browserHistory.push('/dashboard')
+    })
   },
   clearState: () => (dispatch) =>{
     dispatch(clearEditTradeAdvertisement())

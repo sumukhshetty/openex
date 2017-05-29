@@ -161,14 +161,10 @@ class PostTradeForm extends Component {
   handleSubmit (event) {
     event.preventDefault()
     var now = new Date()
-    // ISSUE-255 storing as a number above one complicates editing the tradeadvertisement
-    // because the margin is compounded. storing it as a string and then dynamically generating the price
-    // with (1 + (this.props.selltradeorder.margin * 0.01)) seems to be the more robust approach
-    var margin = (1 + (parseInt(this.state.postTradeDetails.margin, 10) * 0.01))
+    var marginMultiplier = (1 + (parseInt(this.state.postTradeDetails.margin, 10) * 0.01))
     var price
-    // ISSUE-255
     if (this.props.etherPrice.data){
-      price =(this.props.etherPrice.data * margin).toFixed(2)
+      price =(this.props.etherPrice.data * marginMultiplier).toFixed(2)
     } else {
       price = '-'
     }
@@ -182,8 +178,6 @@ class PostTradeForm extends Component {
         price: price
       }
       )
-    console.log("handleSubmit")
-    console.log(_postTradeDetails)
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
       this.showWaitModal()
       this.props.onCreateSellTradeAdvertisementFormSubmit(

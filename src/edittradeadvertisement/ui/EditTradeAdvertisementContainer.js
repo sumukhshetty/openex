@@ -25,8 +25,8 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentWillUnmount: () => {
       dispatch(actions.clearState())
     },
-    updateTradeAdvertisement:(editTradeAdvertisementData, tradeAdvertisementId, tradeAdvertisementType)=>{
-      actions.updateTradeAdvertisement(editTradeAdvertisementData, tradeAdvertisementId, tradeAdvertisementType)
+    updateTradeAdvertisement:(editTradeAdvertisementData, tradeAdvertisementId, tradeAdvertisementType, user)=>{
+      actions.updateTradeAdvertisement(editTradeAdvertisementData, tradeAdvertisementId, tradeAdvertisementType, user)
     }
   }
 }

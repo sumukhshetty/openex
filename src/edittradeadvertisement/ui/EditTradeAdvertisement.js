@@ -4,14 +4,14 @@ import EditTradeAdvertisementForm from './EditTradeAdvertisementForm'
 
 class EditTradeAdvertisement extends Component {
   componentWillMount(){
-    console.log("EditTradeAdvertisement.componentWillMount")
     this.props.onBeforeComponentLoad(this.props.tradeAdvertisementId, this.props.tradeAdvertisementType, this.props.buytradeadvertisements, this.props.selltradeadvertisements)
   }
+  componentWillUnmount(){
+    this.props.onBeforeComponentWillUnmount()
+  }
   render () {
-    console.log("EditTradeAdvertisement.render")
     var display
     if (this.props.edittradeadvertisement.data){
-      console.log(this.props.etherPrice)
       display = <div>
           <EditTradeAdvertisementForm 
             tradeAdvertisement={this.props.edittradeadvertisement.data} 
@@ -24,7 +24,6 @@ class EditTradeAdvertisement extends Component {
             />
         </div>;
     } else {
-      console.log("we dont have data")
       display = <div>Loading Trade Advertisement ...</div>
     }
     return (

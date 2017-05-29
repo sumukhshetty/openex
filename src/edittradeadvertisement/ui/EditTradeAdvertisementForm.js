@@ -55,7 +55,7 @@ class EditTradeAdvertisementForm extends Component {
     this.setState({ postTradeDetails: _postTradeDetails })
   }
 
-  onTradeTypeChange (event) {
+/*  onTradeTypeChange (event) {
     var connectedAccount = this.props.web3.web3.eth.coinbase
     var _postTradeDetails = this.props.tradeAdvertisement
     var _buyFormBool = this.state.buyFormBool
@@ -93,7 +93,7 @@ class EditTradeAdvertisementForm extends Component {
     }
 
     this.setState({ postTradeDetails: _postTradeDetails, buyFormBool: _buyFormBool })
-  }
+  }*/
 
   onPaymentMethodChange (event) {
     var _postTradeDetails = Object.assign({},
@@ -114,32 +114,27 @@ class EditTradeAdvertisementForm extends Component {
   handleSubmit (event) {
     event.preventDefault()
     var now = new Date()
-    // TODO - create issue
-    var margin = (1 + (this.props.tradeAdvertisement.margin * 0.01))
-    console.log(margin)
+    var marginMultiplier = (1 + (parseInt(this.state.postTradeDetails.margin, 10) * 0.01))
     var price
     if (this.props.etherPrice.data){
-      price =(this.props.etherPrice.data * (1 + (this.props.tradeAdvertisement.margin * 0.01))).toFixed(2)
+      price =(this.props.etherPrice.data * marginMultiplier).toFixed(2)
     } else {
       price = '-'
     }
-    console.log(price)
     var _postTradeDetails = Object.assign({},
       this.props.tradeAdvertisement,
       {lastUpated: now.toUTCString(),
         status: 'Initiated',
         active: true,
-        margin: margin,
+        //margin: margin,
         price: price
       }
       )
-    console.log("handleSubmit")
-    console.log(_postTradeDetails)
-    console.log(this.props.tradeAdvertisementType)
     this.props.updateTradeAdvertisement(
       _postTradeDetails,
       this.props.tradeAdvertisementId,
-      this.props.tradeAdvertisementType)
+      this.props.tradeAdvertisementType, 
+      this.props.user)
   }
 
   render () {
@@ -148,7 +143,7 @@ class EditTradeAdvertisementForm extends Component {
         <form className='mv3' onSubmit={this.handleSubmit.bind(this)}>
           <fieldset >
             <legend className='b f4 mv3'>Trade Information</legend>
-            <div className='flex pa0 mv3'>
+{/*            <div className='flex pa0 mv3'>
               <p className='w5'>I want to...</p>
               <div className='flex col'>
                 <label htmlFor='buyTradeType'><input disabled id='buyTradeType' name='tradeType' type='radio' value='buy-ether' onChange={this.onTradeTypeChange.bind(this)}
@@ -159,7 +154,7 @@ class EditTradeAdvertisementForm extends Component {
               <span className='measure-narrow fw1 i pa0 me'>
                 What kind of trade advertisement do you wish to create? If you wish to sell ether make sure you have ether in your Metamask wallet.
               </span>
-            </div>
+            </div>*/}
 
             <div className='flex mv3'>
               <label htmlFor='location' className='w5' >Location</label>
