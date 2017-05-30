@@ -8,22 +8,35 @@ function getTradeFeedback (tradeFeedbackPayload) {
   }
 }
 
+function clearTradeFeedback (){
+  return {
+    type: 'CLEAR_TRADE_FEEDBACK'
+  }
+}
+
 module.exports = {
-  tradeFeedback: (user, orderId) => (dispatch) => {
-    // console.log("TradeFeedbackActions.tradeFeedback")
-    // console.log(user)
-    // console.log(orderId)
-    firebaseRef.database().ref('/traderating/' + user.uid + '/' + orderId).once('value', function (snap) {
-      // console.log("!@#")
+  tradeFeedback: (activetrade, purchaseRequestId, viewerRole) => (dispatch) => {
+    var uid
+    if (viewerRole === 'buyer') {
+      uid = activetrade.sellerUid
+    }
+    if (viewerRole === 'seller') {
+      uid = activetrade.buyerUid
+    }
+    firebaseRef.database().ref('/traderating/' + uid + '/' + purchaseRequestId).on('value', function (snap) {
       var tradeFeedbackRating = snap.val()
-      // console.log(tradeFeedbackRating.value)
-      dispatch(getTradeFeedback(tradeFeedbackRating.value))
+      if(tradeFeedbackRating){
+        dispatch(getTradeFeedback(tradeFeedbackRating.rating))
+      }
     })
-    // console.log('last line in the actions')
   },
   updateRating: (rating) => (dispatch) => {
     // console.log('updating the rating')
     // console.log(rating)
     dispatch(getTradeFeedback(rating))
+  },
+  clearState: () => (dispatch) => {
+    dispatch(clearTradeFeedback())
   }
+
 }

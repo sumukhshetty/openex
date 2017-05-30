@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 import { firebaseStorage } from '../../index.js'
 import PaperClip from '../../images/svgReactComponents/PaperClip.js'
+
 
 export default class NewChatMessage extends Component {
 

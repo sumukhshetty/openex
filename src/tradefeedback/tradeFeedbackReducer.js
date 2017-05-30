@@ -9,7 +9,12 @@ const tradeFeedbackReducer = (state = initialState, action) => {
       data: action.payload
     })
   }
-
+  if (action.type === 'CLEAR_TRADE_FEEDBACK')
+  {
+    return Object.assign({}, state,{
+      data: null
+    })
+  }
   return state
 }
 

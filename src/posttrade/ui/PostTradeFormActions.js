@@ -1,21 +1,6 @@
-import OrderFactoryContract from '../../../build/contracts/OrderFactory.json'
-import ContractDirectoryContract from '../../../build/contracts/ContractDirectory.json'
-import { browserHistory } from 'react-router'
-import factoryAddress from '../../contract_addresses/orderfactory.js'
-
-const request = require('request')
-const contract = require('truffle-contract')
-
 import {firebaseRef} from './../../index.js'
 
-export const POST_TRADE = 'POST_TRADE'
-function tradeCreated(tradePayload) {
-  return {
-    type: POST_TRADE,
-    payload: tradePayload
-  }
-}
-
+// New
 export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
 function sendEtherState(etherStatePayload) {
   return {
@@ -24,83 +9,57 @@ function sendEtherState(etherStatePayload) {
   }
 }
 
-export function postTrade(postTradeDetails, web3, state) {
-  return function(dispatch) {
-    dispatch(sendEtherState('sending'));
-    // Using truffle-contract we create the authentication object.
-    // TODO check what kind of trade is being made and either get the contract
-    // or make an entry in the firebase db
-    const factory = contract(OrderFactoryContract);
-    factory.setProvider(web3.currentProvider);
 
-    const directory = contract(ContractDirectoryContract);
-    directory.setProvider(web3.currentProvider);
-
-    // Declaring this for later so we can chain functions on Authentication.
-    var factoryInstance;
-
-    // Get current ethereum wallet. TODO: Wrap in try/catch.
-    var coinbase = web3.eth.coinbase;
-    //var block, orderAddress;
-
-    factory.at(factoryAddress.factoryAddress)
-    .then(function(_factory) {
-      console.log('got factory contract');
-      factoryInstance = _factory;
-      return factoryInstance.createSellOrder({from: coinbase});
-    })
-    .then(function(txHash) {
-      request({
-          method: 'post',
-          body: {
-            postTradeDetails: postTradeDetails,
-            sellerUid: state.user.data.uid,
-            contractTx: txHash['tx'],
-            contractAddress: txHash['logs'][0]['args']['orderAddress']
-          },
-          json: true,
-          url: 'https://us-central1-automteetherexchange.cloudfunctions.net/postSellOrder'
-        },
-        function(err, res, body) {
-          if (err) {
-            console.error('error posting json: ', err)
-            throw err
-          }
-          if(res.statusCode === 200) {
-            browserHistory.push('/dashboard')
-          }
-          if(res.statusCode === 500) {
-            console.error('Server responded with an error: ' + res.body.error);
-            throw res.body.error
-          }
-        });
-    })
-    .catch(function (error) {
-      dispatch(sendEtherState('init'));
-      console.log(error);
-    })
+export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
+  return function(dispatch){
+    var newAdvertisement = firebaseRef.database().ref('/buytradeadvertisements/'+ user.profile.country)
+      .push(tradeDetails, function(error){
+        firebaseRef.database().ref('/users/' + user.data.uid + '/advertisements/buyether/' + 
+          newAdvertisement.key + '/tradetype').set('buy-ether')
+      })
   }
 }
 
 
-export function buyEtherPostTrade(postTradeDetails, web3, state) {
+export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
     dispatch(sendEtherState('sending'));
-    try {
-      firebaseRef.database().ref("users/"+state.user.data.uid).once("value", function(snap){
-        var userData = snap.val()
-        var newOrder = firebaseRef.database().ref('/buyorders/' + userData.country).push(postTradeDetails);
-        console.log(state.user.data.uid)
-        firebaseRef.database().ref('/buyorders/'+userData.country+"/"+newOrder.key+'/orderId').set(newOrder.key);
-        firebaseRef.database().ref("users/"+state.user.data.uid).child('advertisements').child(newOrder.key).set({tradeType: postTradeDetails.tradeType})
-        
+    var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
+      .push(tradeDetails, function(err){
+        firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
+            newAdvertisement.key + '/tradetype').set('sell-ether')
       })
-      dispatch(tradeCreated(postTradeDetails))
-      browserHistory.push('/dashboard')
-    } catch(err) {
+    // ISSUE-240 - call on the OrderBookFactory contract to create a new ETHOrderBook when the seller creates a trade advertisement
+/*    request({
+      method: 'post',
+      body: {
+        tradeDetails: tradeDetails,
+        sellerUid: user.data.uid,
+        //contractTx: txHash['tx'],
+        // change this to sellOrderBook
+        //contractAddress: txHash['logs'][0]['args']['orderAddress'] 
+      },
+      json: true,
+      url: 'https://us-central1-automteetherexchange.cloudfunctions.net/createSellTradeAdvertisement'
+      },
+      function(err, res, body) {
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 200) {
+          dispatch(createSellTradeAdvertisement(tradeDetails))
+          browserHistory.push('/dashboard')
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+      }
+    })
+    .catch(function (error) {
       dispatch(sendEtherState('init'));
-      console.log(err);
-    }
+      console.log(error);
+    })*/
   }
 }
 

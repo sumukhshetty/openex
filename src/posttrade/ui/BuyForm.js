@@ -4,18 +4,11 @@ export class BuyForm extends Component {
   render () {
     return (
       <div>
-        {/* <div className='flex mb3'>
-          <label htmlFor='currency' className='w5'>Currency</label>
-        <input id='currency' value={this.props.currency} className='w5 h-100' disabled required/> */}
-        {/* <select id='currency' onChange={this.props.onCurrencyChange}className='w5' required>
-            <option value='INR'>INR</option>
-            <option value='USD'>USD</option>
-        </select> */}
-        {/* </div> */}
 
         {this.props.paymentMethod === 'neft'
           || this.props.paymentMethod === 'IMPS'
           || this.props.paymentMethod === 'RTGS'
+          || this.props.paymentMethod === 'National Bank'
             ? <div className='flex mb3'>
               <label htmlFor='bankInformation' className='w5'>Bank Information</label>
               <textarea id='bankInformation' type='textArea' rows='4' onChange={this.props.onChangeProp} value={this.props.bankInformation} className='w5' required />
@@ -59,16 +52,6 @@ export class BuyForm extends Component {
           </div>
           <span className='measure-narrow fw1 i pa0 me'>Optional. Maximum transaction limit in one trade. For online sells, your
           sell smart contract balance may limit the maximum fundable trade also.</span>
-        </div>
-        <div className='flex mb3'>
-          <label htmlFor='restrictTo' className='w5 '>Restrict Amount to</label>
-          <div className='flex w5 h-100'>
-            <input id='restrictTo' type='number' onChange={this.props.onChangeProp} value={this.props.restrictTo}
-              className='br--white'
-              required />
-            <button className='ftiny br0 bg-gray bl--gray b--blue ba gray'>{this.props.currency}</button>
-          </div>
-          <span className='measure-narrow fw1 i pa0 me'>  Optional. Restrict trading amounts to specific comma-separated integers, for example 200,500,1000. In fiat currency (INR/EUR/etc). Handy for coupons, gift cards, etc.</span>
         </div>
 
         <div className='flex mb3'>

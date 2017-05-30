@@ -1,9 +1,14 @@
-import React, { Component } from 'react'
-import DashboardInfoMessage from './DashboardInfoMessage'
-import ActiveEscrowList from './../../activeescrowlist/layouts/ActiveEscrowList'
-import AdList from './../../adlist/layouts/AdList'
-import CompletedTradeList from './../../completedtradeslist/layouts/CompletedTradeList'
+import React, { Component } from 'react';
+import DashboardInfoMessage from './DashboardInfoMessage';
+import ActiveTrades from './../../activetrades/layouts/ActiveTrades';
+import TradeAdvertisements from './../../tradeadvertisements/layouts/TradeAdvertisements'
+
 import EnableNotifications from './../../enablenotifications/layouts/EnableNotifications'
+import CompletedTrades from './../../completedtrades/layouts/CompletedTrades'
+import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
+
+import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
+import WrongNetwork from './../wrongnetwork/WrongNetwork'
 
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
@@ -53,21 +58,31 @@ class Dashboard extends Component {
   }
 
   render () {
-    return (
-      <section className='bg-smoke'>
-        <div className='w-75 center pv3'>
-          <div>
+    if(this.props.web3.locked || this.props.web3.wrongnetwork) {
+      return(
+        <div>
+        { this.props.web3.locked ? <BrowserWalletLockedAlert /> : null }
+        { this.props.web3.wrongnetwork ? <WrongNetwork /> : null }
+        </div>
+        )
+    } else{
+      return (
+        <section className='bg-smoke'>
+          <div className='w-75 center pv3'>
             <div>
-              <EnableNotifications />
-              <DashboardInfoMessage />
-              <ActiveEscrowList />
-              <AdList />
-              <CompletedTradeList />
+              <div>
+                <EnableNotifications />
+                <DashboardInfoMessage />
+                <ActiveTrades />
+                <TradeAdvertisements />
+                <CompletedTrades />
+                <DisputedTrades />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    )
+        </section>
+      )
+    }
   }
 }
 

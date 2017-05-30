@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
-// TODO import HelpContainer
 
 class ActiveTradeInfo extends Component {
-  componentWillMount () {
-    console.log('ActiveTradeInfo')
-    console.log(this.props)
-  }
   render () {
-    var _order = this.props.params
+    var _activetrade = this.props.activetrade
+    // TODO change the display from the contractAddress to the txHash
     var display_id
-    if (_order.contractAddress){
-      display_id = _order.contractAddress.slice(2,6)
+    if (_activetrade.contractAddress){
+      display_id = _activetrade.contractAddress.slice(2,6)
     } else {
       display_id = "-"
     }
@@ -19,16 +15,17 @@ class ActiveTradeInfo extends Component {
     if(this.props.viewerRole === 'seller') {
       action = 'Selling'
       action2 = 'Selling to'
-      user = _order.buyerUsername
+      user = _activetrade.buyerUsername
     } else {
       action = 'Buying'
       action2 = 'Buying from'
-      user = _order.sellerUsername
+      user = _activetrade.sellerUsername
     }
     return (
+      //TODO check the pricing here
       <p className='flarge ma0 pt5 b measure-wide'>
-        Contract {display_id}: {action} {_order.amount} ether for {_order.amount * _order.price} INR with {_order.paymentMethod} payment. {action2} {user} at the exchange
-        rate {_order.price} INR / ether.
+        Contract {display_id}: {action} {_activetrade.etherAmount} ether for {_activetrade.fiatAmount} {_activetrade.currency} with {_activetrade.paymentMethod} payment. {action2} {user} at the exchange
+        rate {_activetrade.price} {_activetrade.currency} / ether.
       </p>
     )
   }

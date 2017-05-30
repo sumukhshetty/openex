@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const Star = (props) => {
   return (
@@ -19,9 +20,9 @@ const Star = (props) => {
       <g
         id='Mockups'
         stroke='none'
-        strokeWidth='1'
+        stroke-width='1'
         fill='none'
-        fillRule='evenodd'>
+        fill-rule='evenodd'>
         <g id='Buy-trade-order-page' transform='translate(-412.000000, -429.000000)'>
           <g id='Group-2' transform='translate(41.000000, 325.000000)'>
             <mask id='mask-2' fill='white'>
@@ -30,7 +31,7 @@ const Star = (props) => {
             <use
               id='star1'
               stroke='gold'
-              strokeWidth='0.5'
+              stroke-width='0.5'
               fill={props.colour}
               xlinkHref='#path-1' />
           </g>

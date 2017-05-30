@@ -37,6 +37,34 @@ class SellerStepNote extends Component {
             <p>Click <a href="https://kovan.etherscan.io/address/0xd03fcf6ef9e02e8e2d54ecad19e24369a6e56341">here</a> to view the transcation.</p>
           </div>
         )
+      case 'Seller Canceled Trade':
+        return(
+          <div className="measure pb4">
+            <p className='tc flarge b'>Seller Canceled Trade</p>
+            <p>The seller has canceled the trade!</p>
+          </div>
+          )
+      case 'Buyer Canceled Trade':
+        return(
+          <div className="measure pb4">
+            <p className='tc flarge b'>Buyer Canceled Trade</p>
+            <p>The buyer has canceled the trade!</p>
+          </div>
+          )
+      case 'Seller Raised Dispute':
+        return(
+          <div className="measure pb4">
+            <p className='tc flarge b'>Dispute</p>
+            <p>You've has raised a dispute. The arbiter will look at evidence from both sides and release funds to the honest party.</p>
+          </div>
+          )
+      case 'Buyer Raised Dispute':
+        return(
+          <div className="measure pb4">
+            <p className='tc flarge b'>Dispute</p>
+            <p>The buyer raised a dispute. The arbiter will look at evidence from both sides and release funds to the honest party.</p>
+          </div>
+          )
       default:
         return(
           <div className="measure pb4">

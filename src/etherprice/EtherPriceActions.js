@@ -11,7 +11,7 @@ function etherPrice(pricesPayload) {
 
 export function getEtherPrice(uid) {
   return function(dispatch) {
-    firebaseRef.database().ref('users/'+uid+'/currency').once('value', function(snap){
+    firebaseRef.database().ref('/users/'+uid+'/currency').once('value', function(snap){
       let toSymbols = snap.val();
       request({
           method: 'GET',
@@ -25,6 +25,8 @@ export function getEtherPrice(uid) {
           }
           if(res.statusCode === 200) {
             let prices = JSON.parse(body);
+            // ISSUE-253 dont dispatch this to the store - make a write to firebase
+            // and then dipatch from firebase as the single source of truth
             dispatch(etherPrice(prices[toSymbols]))
           }
         })

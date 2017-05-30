@@ -15,6 +15,16 @@ export const createMessage = ({content, uid, tradeId, download}) => {
   }
 }
 
+export const addMessage = (key, message, tradeId) => {
+  return {
+    type: 'ADD_MESSAGE',
+    content: message.content,
+    key,
+    timeStamp: Date.now(),
+    uid: message.uid,
+    tradeId
+  }
+}
 // when the data changes fire these actions in redux
 
 export const startListeningForMessages = (tradeId) => {
@@ -27,18 +37,6 @@ export const startListeningForMessages = (tradeId) => {
       dispatch(addMessage(snapshot.key, snapshot.val(), tradeId))
     }
   )
-  }
-}
-
-export const addMessage = (key, message, tradeId) => {
-  return {
-    type: 'ADD_MESSAGE',
-    content: message.content,
-    key,
-    timeStamp: Date.now(),
-    uid: message.uid,
-    tradeId,
-    download: message.download
   }
 }
 

@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 
 class AdminStepNote extends Component {
+
   render () {
+    console.log("AdminStepNote")
+    console.log(this.props)
+    var style = {
+      marginTop:'1em'
+    }
     return (
       <div>
         <div className='measure pb4'>
@@ -9,11 +15,21 @@ class AdminStepNote extends Component {
           <p>This is final, It cannot be undone. Make sure that you have solved the dispute with concrete evidence and answers from both sides.
               </p>
         </div>
-        <div className='tc'><button
+        <div className='tc'>
+        <div>
+        <button
           className='bg-blue'
-          onClick={this.disputeTheTrade}>
+          onClick={this.props.releaseToSeller}>
+              Release To Seller
+        </button>
+        </div>
+        <div style={style}>
+        <button
+          className='bg-blue'
+          onClick={this.props.releaseToBuyer}>
               Release To Buyer
-            </button>
+        </button>
+        </div>
           <div className='measure pb4'>
             <p className='tc flarge b'>Guide</p>
             <ol className='tl'>

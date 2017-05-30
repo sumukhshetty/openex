@@ -1,4 +1,4 @@
-import {firebaseRef} from './../../../index.js'
+import {firebaseRef, FIREBASE_TIMESTAMP} from './../../../index.js'
 
 const currencies = require('country-currency')
 
@@ -26,7 +26,6 @@ export function signUpUser (signUpInfo, web3) {
     var username = signUpInfo.username
     var country = signUpInfo.country
     const pass = signUpInfo.password
-    var errormessage = ''
     var currency
     try {
       currency = currencies.byCountry().get(country)
@@ -36,7 +35,8 @@ export function signUpUser (signUpInfo, web3) {
 
     auth.createUserWithEmailAndPassword(email, pass).then(function (firebaseUser) {
       userid = firebaseUser.uid
-      var userdata = {'email': email,
+      var userdata = {
+        //'email': email, better that we stop storing this in publically viewable data
         'country': country,
         'currency': currency,
         'username': username,
@@ -46,13 +46,13 @@ export function signUpUser (signUpInfo, web3) {
         'verifiedPhoneNumber': false,
         'verifiedEmail': true,
         'numberOfTrades': 0,
-        'accountCreated': new Date(),
+        'accountCreated': FIREBASE_TIMESTAMP,
         'tradeVolume': 0,
         'avgFeedback': 0,
         'firstPurchase': '-',
         'shownotificationrequest': 'true',
       }
-      firebaseRef.database().ref('users/' + userid).set(userdata)
+      firebaseRef.database().ref('/users/' + userid).set(userdata)
       firebaseUser.updateProfile({
         displayName: username
       })
@@ -63,7 +63,6 @@ export function signUpUser (signUpInfo, web3) {
       })
       dispatch(userSignedUp(firebaseUser, currency))
     }).catch(function (error) {
-      errormessage = error.message
       console.log(error)
       dispatch(userSignedUpError(error))
     })

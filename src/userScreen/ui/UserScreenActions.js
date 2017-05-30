@@ -8,26 +8,30 @@ function getUserScreen(userScreenPayload) {
   }
 }
 
+function clearUserScreen(){
+  return {
+    type: 'CLEAR_USER_SCREEN',
+  }
+}
+
 module.exports = {
-  userScreen: (userUid) => (dispatch) => {
-    //do stuff
-    console.log("UserScreenActions.getUserScreen")
-    console.log(userUid)
-    var userScreenPayload = {}
-    //get all the user data needed and load it onto the userScreenPayload
-    firebaseRef.database().ref(/users/+userUid).once("value", function(snap){
-      var userData = snap.val()
-      console.log(userData)
-      userScreenPayload['username'] = userData.username
-      userScreenPayload['lastOnline'] = userData.lastOnline
-      userScreenPayload['numberOfTrades'] = userData.numberOfTrades
-      userScreenPayload['verifiedEmail'] = userData.verifiedEmail
-      userScreenPayload['verifiedPhoneNumber'] = userData.verifiedPhoneNumber
-      userScreenPayload['avgFeedback'] = userData.avgFeedback
-      userScreenPayload['accountCreated'] = userData.accountCreated
-      userScreenPayload['tradeVolume'] = userData.tradeVolume
-      userScreenPayload['firstPurchase'] = userData.firstPurchase
-      dispatch(getUserScreen(userScreenPayload))
-    })
+  userScreen: (userUid, users) => (dispatch) => {
+    var user = users.data[userUid]
+    var userScreenPayload = {
+      username: user.username,
+      lastOnline: user.lastOnline,
+      numberOfTrades: user.numberOfTrades,
+      verifiedEmail: user.verifiedEmail,
+      verifiedPhoneNumber: user.verifiedPhoneNumber,
+      avgFeedback: user.avgFeedback,
+      accountCreated: user.accountCreated,
+      tradeVolume: user.tradeVolume,
+      firstPurchase: user.firstPurchase,
+      numberOfTradePartners: (user.tradingPartners) ? Object.keys(user.tradingPartners).length : 0
+    }
+    dispatch(getUserScreen(userScreenPayload))
+  },
+  clearState: () =>(dispatch)=>{
+    dispatch(clearUserScreen())
   }
 }

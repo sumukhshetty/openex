@@ -10,7 +10,7 @@ class FooterTable extends Component {
           <nav className='pure-menu'>
             <ul className='pure-menu-list'>
               <li><h3>About Us</h3></li>
-              <li className='pure-menu-item'><a href='#'>Blog</a></li>
+              <li className='pure-menu-item'><a href='https://medium.com/automte/'>Blog</a></li>
               <li className='pure-menu-item'><a href='#'>Who Are We</a></li>
               <li className='pure-menu-item'><a href='#'>Media Coverage</a></li>
               <li className='pure-menu-item'><a href='#'>Jobs</a></li>

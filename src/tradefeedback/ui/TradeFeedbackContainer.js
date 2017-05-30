@@ -1,25 +1,30 @@
 import { connect } from 'react-redux'
 import TradeFeedback from './TradeFeedback'
-import { tradeFeedback, updateRating } from './TradeFeedbackActions'
+import { tradeFeedback, updateRating,clearState } from './TradeFeedbackActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     user: state.user,
     tradeFeedback: state.tradeFeedback,
-    orderId: ownProps.orderId,
-    buyerId: ownProps.buyerId,
-    sellerId: ownProps.sellerId
+    activetrade: ownProps.activetrade,
+    purchaseRequestId: ownProps.purchaseRequestId,
+    sellerRatesBuyer: ownProps.sellerRatesBuyer,
+    buyerRatesSeller: ownProps.buyerRatesSeller,
+    viewerRole: ownProps.viewerRole
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoad: (user, orderId) => {
-      dispatch(tradeFeedback(user, orderId))
+    onBeforeComponentLoad: (activetrade, purchaseRequestId, viewerRole) => {
+      dispatch(tradeFeedback(activetrade, purchaseRequestId, viewerRole))
     },
     updateRating: (rating) =>{
      dispatch(updateRating(rating)) 
+    },
+    onBeforeComponentUnmount: () => {
+      dispatch(clearState())
     }
   }
 }

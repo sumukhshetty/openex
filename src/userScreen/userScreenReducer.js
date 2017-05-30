@@ -9,7 +9,7 @@ const userScreenReducer = (state = initialState, action) => {
       data: action.payload
     })
   }
-  if (action.type === 'NULL_USER_SCREEN'){
+  if (action.type === 'CLEAR_USER_SCREEN'){
     return Object.assign({}, state, {
       data: null
     })

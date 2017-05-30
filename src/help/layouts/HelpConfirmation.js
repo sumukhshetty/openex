@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// TODO import HelpContainer
-import HelpForm from './HelpForm';
 
 class HelpConfirmation extends Component {
   render () {

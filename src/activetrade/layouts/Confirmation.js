@@ -5,8 +5,6 @@ import ChatBox from '../../chat/containers/ChatBox'
 import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
 import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
-//import Dot from '../../images/svgReactComponents/Dot.js'
-//import { Link } from 'react-router'
 
 class Confirmation extends Component {
 
@@ -15,33 +13,39 @@ class Confirmation extends Component {
   }
 
   render () {
-    // NOTE / TODO: above variables hold mock data
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
-          <ActiveTradeInfo params={this.props.order} viewerRole={this.props.viewerRole} />
+          <ActiveTradeInfo activetrade={this.props.activetrade} viewerRole={this.props.viewerRole} />
           <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
             <ChatBox
-              tradeId={this.props.tradeId}
-              sellerId={this.props.sellerId}
-              buyerId={this.props.buyerId} />
+              tradeId={this.props.purchaseRequestId}
+              sellerId={this.props.activetrade.sellerUid}
+              buyerId={this.props.activetrade.buyerUid} />
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
-              <BuyerStepNote step={this.props.step} />}
+              <div>
+              <BuyerStepNote step={this.props.step} />
+              <CancelTrade cancelTrade={this.props.buyerCancelsTrade} />
+              </div>
+            }
               {this.props.viewerRole === 'seller' &&
               <div>
                 <SellerStepNote step={this.props.step} />
                 <div className='tc'>
                   {this.props.sendEtherState === 'init' &&
+                  <div>
                   <button onClick={this.props.confirmTrade}>
                    Confirm Trade
-                 </button>}
+                 </button>
+                <CancelTrade cancelTrade={this.props.sellerCancelsTrade}/>
+                </div>
+               }
                  {this.props.sendEtherState === 'sending' &&
                  <span>Please accept the transaction in MetaMask</span>}
                 </div>
               </div>}
-              <CancelTrade />
             </div>
           </div>
         </div>

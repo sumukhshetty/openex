@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import UserScreen from './UserScreen'
-import { userScreen } from './UserScreenActions'
+import { userScreen, clearState } from './UserScreenActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     user: state.user,
+    users: state.users,
     userScreen: state.userScreen,
     userScreenUid: ownProps.userScreenUid
   }
@@ -13,9 +14,12 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoad: (user) => {
+    onBeforeComponentLoad: (user, users) => {
 
-      dispatch(userScreen(user))
+      dispatch(userScreen(user, users))
+    },
+    onBeforeComponentUnmount: ()=>{
+      dispatch(clearState())
     }
   }
 }

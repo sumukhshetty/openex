@@ -17,9 +17,9 @@ export default (props) => {
       <g
         id='Mockups'
         stroke='none'
-        strokeWidth='1'
+        stroke-width='1'
         fill='none'
-        fillRule='evenodd'>
+        fill-rule='evenodd'>
         <g
           id='Trade'
           transform='translate(-101.000000, -1149.000000)'

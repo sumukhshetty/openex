@@ -13,7 +13,6 @@ import Web3InitContainer from './web3/Web3InitContainer'
 import EtherPriceContainer from './etherprice/EtherPriceContainer'
 import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
-import Footer from './footer/Footer'
 
 // Styles
 import './css/pure-min.css'
@@ -26,7 +25,6 @@ import Bell from './images/svgReactComponents/Bell'
 import Notifications from './notifications/NotificationsLayout'
 import {default as Toast} from 'react-notify-toast'
 
-const request = require('request')
 
 class App extends Component {
   constructor (props) {
@@ -53,9 +51,9 @@ class App extends Component {
           <div className='w-75 center'>
             {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
-              <div className='pure-u-1-4 brand'>
-                <Link to='/admin'>
-                  <img className='brand' src={logo} alt='Automt Ether Exchange' />
+              <div className='pure-u-1-4 brand' >
+                <Link to='/dashboard'>
+                  <img className='brand' src={logo} alt='Automte Ether Exchange' />
                 </Link>
               </div>
               <div className='flex mxe cxc'>
@@ -70,11 +68,11 @@ class App extends Component {
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/buyorders' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Buy
+                  <Link to='/buyether' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Buy
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/sellorders' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Sell
+                  <Link to='/sellether' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Sell
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
@@ -117,7 +115,7 @@ class App extends Component {
           <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
             {this.props.children}
           </main>
-          <Footer />
+          
         </section>
       )
     }

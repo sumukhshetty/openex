@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Other from '../../images/svgReactComponents/other.js'
 import You from '../../images/svgReactComponents/you.js'
 import Arbiter from '../../images/svgReactComponents/Arbiter.js'
-import stockPhoto from '../../images/downloadPhoto.png'
+//import stockPhoto from '../../images/downloadPhoto.png'
 const moment = require('moment')
 
 const ChatMessage = (props) => (
@@ -11,7 +11,7 @@ const ChatMessage = (props) => (
     <div className={`flex cxc ${props.you ? null : `reverse`}`}>
       {props.arbiter ? <Arbiter /> : props.you ? <You /> : <Other />}
       {props.download ?
-        <div className={`pa2 br2 flex ${props.you ? `bg-white` : `bg-blue white`}`}>
+        <div className={`pa2 br2 flex ${props.you ? `bg-white` : `bg-blue-60 white`}`}>
           <img
             src={props.message}
             alt='Download Preview'
@@ -26,7 +26,7 @@ const ChatMessage = (props) => (
             </a>
           </div>
         </div> :
-        <div className={`pa2 br2 o ${props.arbiter ? `bg-danger white` : props.you ? `bg-white` : `bg-blue white`}`}>
+        <div className={`pa2 br2 o ${props.arbiter ? `bg-danger white` : props.you ? `bg-white` : `bg-blue-60 white`}`}>
           {props.message}
         </div>}
     </div>
