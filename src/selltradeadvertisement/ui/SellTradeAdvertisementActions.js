@@ -54,6 +54,7 @@ module.exports = {
       lastUpdated: now.toUTCString(),
       paymentMethod: sellTradeAdvertisement.paymentMethod,
       price: etherPrice,
+      postProcessingCompleted: false,
       sellerAddress: sellTradeAdvertisement.sellerAddress,
       sellerUid: sellTradeAdvertisement.sellerUid,
       sellerUsername: sellTradeAdvertisement.sellerUsername,

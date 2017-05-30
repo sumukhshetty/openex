@@ -1,4 +1,4 @@
-import {firebaseRef} from './../../../index.js'
+import {firebaseRef, FIREBASE_TIMESTAMP} from './../../../index.js'
 
 const currencies = require('country-currency')
 
@@ -46,7 +46,7 @@ export function signUpUser (signUpInfo, web3) {
         'verifiedPhoneNumber': false,
         'verifiedEmail': true,
         'numberOfTrades': 0,
-        'accountCreated': new Date().toUTCString(),
+        'accountCreated': FIREBASE_TIMESTAMP,
         'tradeVolume': 0,
         'avgFeedback': 0,
         'firstPurchase': '-',

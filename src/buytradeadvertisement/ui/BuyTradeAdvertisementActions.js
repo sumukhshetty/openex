@@ -54,6 +54,7 @@ module.exports = {
       lastUpdated: now.toUTCString(),
       paymentMethod: 'TODO', //need to get this from the seller's profile
       price: etherPrice,
+      postProcessingCompleted: false,
       sellerAddress:sellerAddress,
       sellerUid:seller.data.uid,
       sellerUsername:seller.profile.username,

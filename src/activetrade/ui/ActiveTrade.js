@@ -51,6 +51,9 @@ class ActiveTrade extends Component {
     // TODO web3 stuff
     this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId)
   }
+  tradePostProcessing () {
+    this.props.tradePostProcessing(this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.users)
+  }
 
   resetEtherState() {
     this.props.resetEtherState();
@@ -176,6 +179,7 @@ class ActiveTrade extends Component {
           purchaseRequestId={this.props.purchaseRequestId}
           step={status}
           viewerRole={viewerRole}
+          tradePostProcessing={this.tradePostProcessing.bind(this)}
           />,
         'Seller Canceled Trade': <Canceled
           activetrade={activetrade} 

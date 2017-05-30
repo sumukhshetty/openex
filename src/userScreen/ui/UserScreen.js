@@ -4,12 +4,10 @@ const moment = require('moment')
 
 export default class UserScreen extends Component {
   componentWillMount(){
-    console.log("ui.UserScreen.componentWillMount")
     this.props.onBeforeComponentLoad(this.props.userScreenUid, this.props.users)
   }
 
   componentWillUnmount(){
-    console.log("ui.UserScreen.componentWillUnmount")
     this.props.onBeforeComponentUnmount()
   }
 
@@ -31,10 +29,10 @@ export default class UserScreen extends Component {
                     <td className='w4 pv2'>Confirmed Trades</td>
                     <td className='pl3'>{this.props.userScreen.data.numberOfTrades.toString()}</td>
                   </tr>
-{/*                  <tr className='w-50'>
+                  <tr className='w-50'>
                     <td className='w4 pv2'>Traded with</td>
-                    <td className='pl3'>with {this.state.partners} different partners</td>
-                  </tr>*/}
+                    <td className='pl3'>with {this.props.userScreen.data.numberOfTradePartners} different partners</td>
+                  </tr>
                   <tr className='w-50'>
                     <td className='w4 pv2'>Feedback Score</td>
                     <td className='pl3'>{this.props.userScreen.data.avgFeedback}</td>

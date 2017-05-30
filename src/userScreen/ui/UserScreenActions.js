@@ -16,7 +16,6 @@ function clearUserScreen(){
 
 module.exports = {
   userScreen: (userUid, users) => (dispatch) => {
-    console.log("UserScreenActions.getUserScreen")
     var user = users.data[userUid]
     var userScreenPayload = {
       username: user.username,
@@ -27,7 +26,8 @@ module.exports = {
       avgFeedback: user.avgFeedback,
       accountCreated: user.accountCreated,
       tradeVolume: user.tradeVolume,
-      firstPurchase: user.firstPurchase
+      firstPurchase: user.firstPurchase,
+      numberOfTradePartners: (user.tradingPartners) ? Object.keys(user.tradingPartners).length : 0
     }
     dispatch(getUserScreen(userScreenPayload))
   },

@@ -95,6 +95,7 @@ module.exports = {
       });
   },
   sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
+    // ISSUE-243 call on ETHOrderBook.completeOrder when the seller releases the ether
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -102,19 +103,21 @@ module.exports = {
         sellerreleaseethertime: now.toUTCString(),
         status: 'All Done'
     })
-    // ISSUE-243 call on ETHOrderBook.completeOrder when the seller releases the ether
     firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
           .set(updatedPurchaseRequest)
-          .then(function() {
-            purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
-            purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.sellerUid, purchaseRequestId)
-            purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-            purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
 
-            firebaseRef.database().ref("users/"+purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
-            firebaseRef.database().ref("users/"+purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
-          });
-
+  },
+  tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
+      if (!purchaseRequest.postProcessingCompleted){
+        console.log('ok we need to do some post processing')
+        purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.buyerUid, users)
+        purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.sellerUid, users)
+        purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
+        purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.sellerUid, purchaseRequestId)
+        purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
+        purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
+        firebaseRef.database().ref('/purchaserequests/' + user.profile.country + '/' + purchaseRequestId + '/postProcessingCompleted').set(true)
+      } 
   },
   sellerCancelsTrade:(seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerCancelsTrade")
@@ -168,8 +171,6 @@ module.exports = {
     firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId)
           .set(updatedPurchaseRequest)
           .then(function() {
-            //purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
-            //purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.sellerUid, purchaseRequestId)
             purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
             purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
             
@@ -188,8 +189,6 @@ module.exports = {
     firebaseRef.database().ref('/purchaserequests/'+ buyer.country + '/' + purchaseRequestId)
       .set(updatedPurchaseRequest)
       .then(function() {
-        //purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
-        //purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.sellerUid, purchaseRequestId)
         purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
         purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
 

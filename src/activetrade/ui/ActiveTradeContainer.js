@@ -55,6 +55,9 @@ const mapDispatchToProps = (dispatch) => {
     buyerRatesSeller: (rating, purchaseRequestId, purchaseRequest) =>{
       dispatch(actions.buyerRatesSeller(rating, purchaseRequestId, purchaseRequest))
     },
+    tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
+      actions.tradePostProcessing(user, purchaseRequest, purchaseRequestId, users)
+    },
     clearState: ()=>{
       dispatch(actions.clearState())
     },
