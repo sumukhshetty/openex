@@ -96,6 +96,13 @@ export default class BuyTradeAdvertisement extends Component {
             <h1 className='pv1'>Sell {buyTradeAdvertisement.amount} ether to {buyer.username} using {buyTradeAdvertisement.paymentMethod}</h1>
             <div className='flex mxb w-100 cxc'>
               <div className='w-50'>
+                <div className='w-100'>
+                  <p className='b tc measure'>Terms of Trade</p>
+                  <p className='pv1 measure'>
+                  {buyTradeAdvertisement.termsOfTrade}
+                  </p>
+                </div>
+                <div className='mt3'>
                 <table className='lh-copy'>
                   <tr>
                     <td className='w4 pv2'>Price</td>
@@ -118,18 +125,9 @@ export default class BuyTradeAdvertisement extends Component {
                     <td>{buyTradeAdvertisement.location}</td>
                   </tr>
                 </table>
-              </div>
-              {requestComponent}
-            </div>
-            <div>
-              <div>
-                <div className='w-50 mt5'>
-                  <p className='b tc measure'>Terms of Trade</p>
-                  <p className='pv1 measure'>
-                  {buyTradeAdvertisement.termsOfTrade}
-              </p>
                 </div>
               </div>
+              {requestComponent}
             </div>
           </div>
         </div>

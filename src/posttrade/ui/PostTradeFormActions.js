@@ -1,6 +1,3 @@
-//const request = require('request')
-//const contract = require('truffle-contract')
-
 import {firebaseRef} from './../../index.js'
 
 // New
@@ -12,17 +9,9 @@ function sendEtherState(etherStatePayload) {
   }
 }
 
-/*export const CREATE_BUY_TRADE_ADVERTISEMENT = 'BUY_TRADE_ADVERTISEMENT'
-function createBuyTradeAdvertisement(buyTradeAdvertisementPayload){
-  return {
-    type: CREATE_BUY_TRADE_ADVERTISEMENT,
-    payload: buyTradeAdvertisementPayload
-  }
-}*/
 
 export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
-    console.log("PostTradFormActions.userCreatesBuyTradeAdvertisement")
     var newAdvertisement = firebaseRef.database().ref('/buytradeadvertisements/'+ user.profile.country)
       .push(tradeDetails, function(error){
         firebaseRef.database().ref('/users/' + user.data.uid + '/advertisements/buyether/' + 
@@ -31,13 +20,6 @@ export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
   }
 }
 
-/*export const CREATE_SELL_TRADE_ADVERTISEMENT = 'CREATE_SELL_TRADE_ADVERTISEMENT'
-function createSellTradeAdvertisement(sellTradeAdvertisementPayload){
-  return {
-    type: CREATE_SELL_TRADE_ADVERTISEMENT,
-    payload: sellTradeAdvertisementPayload
-  }
-}*/
 
 export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){

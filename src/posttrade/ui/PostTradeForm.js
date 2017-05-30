@@ -86,15 +86,8 @@ class PostTradeForm extends Component {
   }
 
   onTradeTypeChange (event) {
-    // ISSUE-247: make this experience more elegant delete the alert
-    console.log('PostTradeForm.onTradeTypeChange')
-    console.log(this.props.web3.web3.eth.accounts[0])
-    var connectedAccount
-    if (this.props.web3.web3.eth.accounts[0]) {
-      connectedAccount = this.props.web3.web3.eth.accounts[0]
-    } else {
-      connectedAccount = '0x00000000000000000000000000000000000000000000000000000000000000'
-    }
+    var connectedAccount = this.props.web3.web3.eth.accounts[0]
+
     var _postTradeDetails = this.state.postTradeDetails
     var _buyFormBool = this.state.buyFormBool
     _postTradeDetails['tradeType'] = event.target.value
@@ -186,7 +179,6 @@ class PostTradeForm extends Component {
         this.props.user)
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
-      console.log('buy-ether')
       this.props.userCreatesBuyTradeAdvertisement(
         _postTradeDetails,
         this.props.web3.web3,
