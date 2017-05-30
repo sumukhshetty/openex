@@ -231,10 +231,49 @@ module.exports = {
       });
   },
   sellerRatesBuyer: (rating, purchaseRequestId, purchaseRequest) => (dispatch) => {
-    firebaseRef.database().ref('/traderating/' + purchaseRequest.buyerUid + '/' + purchaseRequestId).set({rating: rating})
+    //excellent place for a firebase cloud functions onWrite
+    console.log('sellerRatesBuyer')
+    firebaseRef.database().ref('/traderating/' + purchaseRequest.buyerUid + '/' + purchaseRequestId)
+      .set({rating: rating})
+      .then(function(){
+        //this needs to be moved when the trade feedback component unmounts
+        firebaseRef.database().ref('/traderating/'+ purchaseRequest.buyerUid).once('value',function(snap){
+          var totalRating = 0
+          var ratings = snap.val()
+          console.log(ratings)
+          Object.entries(ratings).forEach(
+            ([key,value])=>{
+              totalRating += value.rating
+            })
+          console.log(totalRating)
+          console.log(Object.keys(ratings).length)
+          var averageFeedback = totalRating/(Object.keys(ratings).length)
+          console.log(averageFeedback)
+          firebaseRef.database().ref('/users/'+ purchaseRequest.buyerUid + '/avgFeedback').set(averageFeedback.toFixed(1))
+        })
+    })
   },
   buyerRatesSeller: (rating, purchaseRequestId, purchaseRequest)  => (dispatch) => {
-    firebaseRef.database().ref('/traderating/' + purchaseRequest.sellerUid + '/' + purchaseRequestId).set({rating: rating})
+    console.log('buyerRatesSeller')
+    firebaseRef.database().ref('/traderating/' + purchaseRequest.sellerUid + '/' + purchaseRequestId)
+      .set({rating: rating})
+      .then(function(){
+        //this needs to be moved when the trade feedback component unmounts
+        firebaseRef.database().ref('/traderating/'+ purchaseRequest.sellerUid).once('value',function(snap){
+          var totalRating = 0
+          var ratings = snap.val()
+          console.log(ratings)
+          Object.entries(ratings).forEach(
+            ([key,value])=>{
+              totalRating += value.rating
+            })
+          console.log(totalRating)
+          console.log(Object.keys(ratings).length)
+          var averageFeedback = totalRating/(Object.keys(ratings).length)
+          console.log(averageFeedback)
+          firebaseRef.database().ref('/users/'+purchaseRequest.sellerUid + '/avgFeedback').set(averageFeedback.toFixed(1))
+        })
+      })
   },
   clearState: () => (dispatch) => {
     dispatch(clearBuyer())
