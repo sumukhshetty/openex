@@ -41,7 +41,7 @@ module.exports = {
   sellerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, buyTradeAdvertisementId, buyTradeAdvertisement, buyer, sellerAddress, seller) => (dispatch) => {
     var now = new Date()
     var purchaseRequestData = {
-      bankinformation:'TODO', //need to set this to the user's profile. the 
+      bankinformation:'Request the bank information from the seller in chat.', //need to set this to the user's profile. the 
       buyerAddress: buyTradeAdvertisement.buyerAddress,
       buyerUid: buyTradeAdvertisement.buyerUid,
       buyerUsername: buyer.data.username,
@@ -52,7 +52,7 @@ module.exports = {
       etherAmount: etherAmount,
       fiatAmount: fiatAmount,
       lastUpdated: now.toUTCString(),
-      paymentMethod: 'TODO', //need to get this from the seller's profile
+      paymentMethod: 'Request the paymentMethod from the seller in chat.', //need to get this from the seller's profile
       price: etherPrice,
       postProcessingCompleted: false,
       sellerAddress:sellerAddress,

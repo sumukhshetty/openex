@@ -9,32 +9,24 @@ class EditTradeAdvertisementForm extends Component {
     this.state = {
       web3: this.props.web3,
       etherPrice: this.props.etherPrice,
-      postTradeDetails: this.props.edittradeadvertisement,
+      postTradeDetails: this.props.tradeAdvertisement,
       buyFormBool: false,
       user: this.props.user,
       uid: this.props.uid,
       sendEtherState: this.props.sendEtherState
     }
+    this.onPaymentMethodChange = this.onPaymentMethodChange.bind(this)
   }
 
   componentWillMount () {
-    //var connectedAccount = this.props.web3.eth.accounts[0]
     this.setState({
-      buyFormBool: true,
-      showMetaMaskWaitModal: false
+      buyFormBool: (this.props.tradeAdvertisementType === 'buy-ether' ? true : false),
     })
   }
 
-/*  componentWillUnmount () {
-    this.props.resetEtherState()
-  }*/
-
-  showWaitModal () {
-    this.setState({showMetaMaskWaitModal: true})
-  }
 
   onInputChange (event) {
-    var _postTradeDetails = this.props.tradeAdvertisement
+    var _postTradeDetails = this.state.postTradeDetails
     if (event.target.id === 'location') {
       _postTradeDetails['location'] = event.target.value
     } else if (event.target.id === 'margin') {
@@ -55,49 +47,10 @@ class EditTradeAdvertisementForm extends Component {
     this.setState({ postTradeDetails: _postTradeDetails })
   }
 
-/*  onTradeTypeChange (event) {
-    var connectedAccount = this.props.web3.web3.eth.coinbase
-    var _postTradeDetails = this.props.tradeAdvertisement
-    var _buyFormBool = this.state.buyFormBool
-    _postTradeDetails['tradeType'] = event.target.value
-    if (_postTradeDetails['tradeType'] === 'sell-ether') {
-      _postTradeDetails = Object.assign({},
-        this.props.tradeAdvertisement, {
-          tradeType: event.target.value,
-          sellerUid: this.state.uid,
-          buyerUid: '',
-          sellerAddress: connectedAccount,
-          buyerAddress: '',
-          sellerUsername: this.props.user.data.displayName,
-          buyerUsername: '',
-          availableBalance: 0,
-          pendingBalance: 0
-        }
-      )
-      _buyFormBool = false
-    } else {
-      _postTradeDetails = Object.assign({},
-      this.props.tradeAdvertisement, {
-        tradeType: event.target.value,
-        buyerUid: this.state.uid,
-        sellerUid: '',
-        buyerAddress: connectedAccount,
-        sellerAddress: '',
-        buyerUsername: this.props.user.data.displayName,
-        sellerUsername: '',
-        availableBalance: '',
-        pendingBalance: ''
-      }
-    )
-      _buyFormBool = true
-    }
-
-    this.setState({ postTradeDetails: _postTradeDetails, buyFormBool: _buyFormBool })
-  }*/
 
   onPaymentMethodChange (event) {
     var _postTradeDetails = Object.assign({},
-      this.props.tradeAdvertisement,
+      this.state.postTradeDetails,
       {paymentMethod: event.target.value}
       )
     this.setState({postTradeDetails: _postTradeDetails})
@@ -105,7 +58,7 @@ class EditTradeAdvertisementForm extends Component {
 
   onCurrencyChange (event) {
     var _postTradeDetails = Object.assign({},
-      this.props.tradeAdvertisement,
+      this.state.postTradeDetails,
       {currency: event.target.value}
       )
     this.setState({postTradeDetails: _postTradeDetails})
@@ -122,7 +75,7 @@ class EditTradeAdvertisementForm extends Component {
       price = '-'
     }
     var _postTradeDetails = Object.assign({},
-      this.props.tradeAdvertisement,
+      this.state.postTradeDetails,
       {lastUpated: now.toUTCString(),
         status: 'Initiated',
         active: true,
@@ -143,18 +96,7 @@ class EditTradeAdvertisementForm extends Component {
         <form className='mv3' onSubmit={this.handleSubmit.bind(this)}>
           <fieldset >
             <legend className='b f4 mv3'>Trade Information</legend>
-{/*            <div className='flex pa0 mv3'>
-              <p className='w5'>I want to...</p>
-              <div className='flex col'>
-                <label htmlFor='buyTradeType'><input disabled id='buyTradeType' name='tradeType' type='radio' value='buy-ether' onChange={this.onTradeTypeChange.bind(this)}
-                  className='mr2' defaultChecked='true' />Buy Ether</label>
-                <label htmlFor='sellTradeType'> <input disabled id='sellTradeType' name='tradeType' type='radio' value='sell-ether' onChange={this.onTradeTypeChange.bind(this)}
-                  className='mr2' />Sell Ether</label>
-              </div>
-              <span className='measure-narrow fw1 i pa0 me'>
-                What kind of trade advertisement do you wish to create? If you wish to sell ether make sure you have ether in your Metamask wallet.
-              </span>
-            </div>*/}
+
 
             <div className='flex mv3'>
               <label htmlFor='location' className='w5' >Location</label>
@@ -196,9 +138,9 @@ class EditTradeAdvertisementForm extends Component {
 
             <div className='flex mv3'>
               <label htmlFor='paymentMethod' className='w5'>Payment Method</label>
-              <select id='paymentMethod' name='paymentMethod' onChange={this.onPaymentMethodChange.bind(this)}
+              <select id='paymentMethod' defaultValue={this.props.tradeAdvertisement.paymentMethod} name='paymentMethod' onChange={this.onPaymentMethodChange.bind(this)}
                 className='w5'required>
-                <option value='National Bank'>National Bank</option>
+                <option value='National Bank' >National Bank</option>
                 <option value='cash'>cash</option>
                 <option value='mobile'>mobile</option>
               </select>
@@ -208,24 +150,26 @@ class EditTradeAdvertisementForm extends Component {
               (this.state.buyFormBool)
                 ? <EditBuyForm
                   onChangeProp={this.onInputChange.bind(this)}
-                  amount={this.props.tradeAdvertisement.amount}
-                  paymentMethod={this.props.tradeAdvertisement.paymentMethod}
+                  amount={this.state.postTradeDetails.amount}
+                  paymentMethod={this.state.postTradeDetails.paymentMethod}
+                  onPaymentMethodChange={this.onPaymentMethodChange.bind(this)}
                   onCurrencyChange={this.onCurrencyChange.bind(this)}
-                  bankInformation={this.props.tradeAdvertisement.bankInformation}
-                  minTransactionLimit={this.props.tradeAdvertisement.minTransactionLimit}
-                  maxTransactionLimit={this.props.tradeAdvertisement.maxTransactionLimit}
-                  termsOfTrade={this.props.tradeAdvertisement.termsOfTrade}
+                  bankInformation={this.state.postTradeDetails.bankInformation}
+                  minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
+                  maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
+                  termsOfTrade={this.state.postTradeDetails.termsOfTrade}
                   currency={this.state.user.profile.currency} />
               : <EditSellForm
                 onChangeProp={this.onInputChange.bind(this)}
                 currency={this.props.user.profile.currency}
-                amount={this.props.tradeAdvertisement.amount}
-                paymentMethod={this.props.tradeAdvertisement.paymentMethod}
+                amount={this.state.postTradeDetails.amount}
+                onPaymentMethodChange={this.onPaymentMethodChange.bind(this)}
+                paymentMethod={this.state.postTradeDetails.paymentMethod}
                 onCurrencyChange={this.onCurrencyChange.bind(this)}
-                bankInformation={this.props.tradeAdvertisement.bankInformation}
-                minTransactionLimit={this.props.tradeAdvertisement.minTransactionLimit}
-                maxTransactionLimit={this.props.tradeAdvertisement.maxTransactionLimit}
-                termsOfTrade={this.props.tradeAdvertisement.termsOfTrade} />
+                bankInformation={this.state.postTradeDetails.bankInformation}
+                minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
+                maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
+                termsOfTrade={this.state.postTradeDetails.termsOfTrade} />
             }
 
             {
