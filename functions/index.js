@@ -19,7 +19,7 @@ exports.createBuyTradeAdvertisement = functions.https.onRequest((req, res) => {
     try{
       var newAdvertisement = admin.database().ref('/buytradeadvertisements/'+ req.body.user.profile.country)
         .push(req.body.tradeDetails, function(error){
-          admin.database().ref('/users/' + req.body.user.data.uid + '/advertisements/buyether/' + 
+          admin.database().ref('/users/' + req.body.user.data.uid + '/advertisements/buyether/' +
             newAdvertisement.key + '/tradetype').set('buy-ether')
         })
 
@@ -29,7 +29,7 @@ exports.createBuyTradeAdvertisement = functions.https.onRequest((req, res) => {
   })
 })
 
-exports.createSellTradeAdvertisement = function.https.onRequest((req, res) => {
+exports.createSellTradeAdvertisement = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try {
       var newAdvertisement = admin.database().ref('/selltradeadvertisements/'+ req.body.user.profile.country)
@@ -43,13 +43,13 @@ exports.createSellTradeAdvertisement = function.https.onRequest((req, res) => {
   })
 })
 
-exports.sellerCreatesPurchaseRequest = function.https.onRequest((req, res) => {
+exports.sellerCreatesPurchaseRequest = functions.https.onRequest((req, res) => {
   cors(req, res, ()=>{
     try {
-      var newRequest = admin.database().ref(/purchaserequests/ + req.body.user.profile.country)
+      var newRequest = admin.database().ref('/purchaserequests/' + req.body.user.profile.country)
         .push(req.body.purchaseRequestData, function(err){
-          admin.database().ref(/users/+ req.body.user.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
-          admin.database().ref(/users/+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})   
+          admin.database().ref('/users/'+ req.body.user.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
+          admin.database().ref('/users/'+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
         })
 
     } catch(error){
@@ -58,13 +58,13 @@ exports.sellerCreatesPurchaseRequest = function.https.onRequest((req, res) => {
   })
 })
 
-exports.buyerCreatesPurchaseRequest = function.https.onRequest((req, res) => {
+exports.buyerCreatesPurchaseRequest = functions.https.onRequest((req, res) => {
   cors(req, res, ()=>{
     try {
       var newRequest = admin.database().ref('/purchaserequests/' + req.body.buyer.profile.country)
         .push(req.body.purchaseRequestData, function(err){
           admin.database().ref('/users/' + req.body.seller.data.uid + '/activetrades/' + newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
-          admin.database().ref(/users/+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
+          admin.database().ref('/users/'+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
         })
     }  catch(error){
       console.log(error)
@@ -160,6 +160,24 @@ exports.helpForm = functions.https.onRequest((req, res) => {
       })
       res.status(200).send()
     } catch(e){
+      res.status(500).send({error:'[helpForm] Error' + e})
+    }
+  })
+})
+
+//Check Dispute, used by Oraclize
+exports.checkDispute = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try {
+      admin.database().ref('/purchaserequests/'+req.body.country+'/'+req.body.orderId)
+      .once('value', function(snap) {
+        if(snap.val()['status'] === "Disputed") {
+          res.json({"dispute": "true"});
+        } else {
+          res.json({"dispute": "false"});
+        }
+      })
+    } catch(e) {
       res.status(500).send({error:'[helpForm] Error' + e})
     }
   })
