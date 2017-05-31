@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import CompletedTradesRowContainer from './CompletedTradesRowContainer';
 import CompletedTradesEmptyState from './../layouts/CompletedTradesEmptyState';
+import CompletedTradesHeader from './../layouts/CompletedTradesHeader';
 
 class CompletedTrades extends Component {
 
@@ -15,15 +16,18 @@ class CompletedTrades extends Component {
             }
         );
       return (
+        <table>
+          <CompletedTradesHeader />
         <tbody>
           {rows}
         </tbody>
+        </table>
       );
     } else {
       return (
-        <tbody>
+        <div>
           <CompletedTradesEmptyState />
-        </tbody>
+        </div>
       );
     }
   }

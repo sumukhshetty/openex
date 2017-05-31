@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import CompletedTradesRow from './CompletedTradesRow'
-//import { getCompletedTrade } from './CompletedTradeActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -12,14 +11,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-/*const mapDispatchToProps = (dispatch) => {
-  return {
-    onBeforeComponentLoads: (orderId, tradeType) => {
-
-      dispatch(getCompletedTrade(orderId, tradeType))
-    },
-  }
-}*/
 
 const CompletedTradesListContainer = connect(
   mapStateToProps,

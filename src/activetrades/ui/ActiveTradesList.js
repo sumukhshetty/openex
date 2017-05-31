@@ -19,11 +19,7 @@ class ActiveTradesList extends Component {
         </tbody>
       );
     } else {
-      return (
-        <tbody>
-          <ActiveTradesListEmptyState />
-        </tbody>
-      );
+      return null
     }
   }
 }

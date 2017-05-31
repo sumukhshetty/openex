@@ -17,7 +17,7 @@ module.exports = {
     var userProfile = users.data[userUid]
     var updatedUserTradeVolume = parseInt(userProfile.tradeVolume, 10) + parseInt(purchaseRequest.etherAmount, 10)
 
-    var updatedUserNumberOfTrades = parseInt(userProfile.numberOfTrades) + 1
+    var updatedUserNumberOfTrades = parseInt(userProfile.numberOfTrades, 10) + 1
     var userTradingPartners, tradingPartnerUid
     if (userUid===purchaseRequest.buyerUid){
 
