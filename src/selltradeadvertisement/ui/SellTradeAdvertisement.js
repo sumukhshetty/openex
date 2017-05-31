@@ -93,6 +93,7 @@ export default class SellTradeAdvertisement extends Component {
                 </div>
                 <div className='mt4'>
                 <table className='lh-copy'>
+                  <tbody>
                   <tr>
                     <td className='w4 pv2'>Price</td>
                     <td className='green'>{this.props.etherPrice.data ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : 'Getting price...'} {this.props.user.profile.currency}/ETH</td>
@@ -113,6 +114,7 @@ export default class SellTradeAdvertisement extends Component {
                     <td className='w4 pv2'>Location</td>
                     <td>{sellTradeAdvertisement.location}</td>
                   </tr>
+                  </tbody>
                 </table>
                 </div>
               </div>

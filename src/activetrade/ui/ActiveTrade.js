@@ -200,6 +200,7 @@ class ActiveTrade extends Component {
           progress_map={progress_maps[status]} 
           viewerRole={viewerRole}
           step={status}
+          releaseEther={this.sellerReleasesEther.bind(this)} 
           purchaseRequestId={this.props.purchaseRequestId}
           releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)} 
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)} 
@@ -209,6 +210,7 @@ class ActiveTrade extends Component {
           progress_map={progress_maps[status]} 
           viewerRole={viewerRole}
           step={status}
+          releaseEther={this.sellerReleasesEther.bind(this)} 
           purchaseRequestId={this.props.purchaseRequestId}
           releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)} 
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)} 
