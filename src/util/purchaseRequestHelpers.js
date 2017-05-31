@@ -36,7 +36,7 @@ module.exports = {
     var updatedUserProfile = Object.assign({}, userProfile,{
       tradeVolume: updatedUserTradeVolume,
       numberOfTrades: updatedUserNumberOfTrades,
-      firstPurchase: (userProfile.tradeVolume === 0) ? new Date().toUTCString() : userProfile.firstPurchase,
+      firstPurchase: (userProfile.tradeVolume === 0) ? FIREBASE_TIMESTAMP : userProfile.firstPurchase,
       tradingPartners: userTradingPartners,
       lastTransfer: FIREBASE_TIMESTAMP
     })
