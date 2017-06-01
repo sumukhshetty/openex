@@ -16,6 +16,9 @@ class ActiveTrade extends Component {
   }
 
   componentWillUnmount () {
+    if (this.props.activetrade.data.status === 'All Done' &&  !this.props.activetrade.data.postProcessingCompleted){
+      this.tradePostProcessing()
+    }
     this.props.clearState()
   }
 
@@ -179,7 +182,6 @@ class ActiveTrade extends Component {
           purchaseRequestId={this.props.purchaseRequestId}
           step={status}
           viewerRole={viewerRole}
-          tradePostProcessing={this.tradePostProcessing.bind(this)}
           />,
         'Seller Canceled Trade': <Canceled
           activetrade={activetrade} 

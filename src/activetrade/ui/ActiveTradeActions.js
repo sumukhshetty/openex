@@ -108,8 +108,8 @@ module.exports = {
 
   },
   tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
+    console.log('ActiveTradeActions.tradePostProcessing')
       if (!purchaseRequest.postProcessingCompleted){
-        console.log('ok we need to do some post processing')
         purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.buyerUid, users)
         purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.sellerUid, users)
         purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
@@ -276,6 +276,7 @@ module.exports = {
       })
   },
   clearState: () => (dispatch) => {
+    console.log("ActiveTradeActions.clearState")
     dispatch(clearBuyer())
     dispatch(clearSeller())
     dispatch(clearActiveTrade())
