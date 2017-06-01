@@ -276,7 +276,6 @@ module.exports = {
       })
   },
   clearState: () => (dispatch) => {
-    console.log("ActiveTradeActions.clearState")
     dispatch(clearBuyer())
     dispatch(clearSeller())
     dispatch(clearActiveTrade())
