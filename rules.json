@@ -24,7 +24,6 @@
       ".read": "auth != null",
       ".write": "auth != null",
       "$countryCode":{
-        ".indexOn": ["createdAt", "status", "buyerUid", "sellerUid", ],
         "$purchaseRequestId":{
           "status": {
             ".validate": "newData.isString() && (data.val() == null && newData.val() == 'Awaiting Seller Confirmation') || (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Awaiting Payment')|| (data.val() == 'Awaiting Payment' && newData.val() == 'Awaiting Release')|| (data.val() == 'Awaiting Release' && newData.val() == 'All Done')|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Seller Canceled Trade' )|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Buyer Canceled Trade' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Buyer Raised Dispute' && newData.val() == 'All Done' )|| (data.val() == 'Seller Raised Dispute' && newData.val() == 'All Done' )"

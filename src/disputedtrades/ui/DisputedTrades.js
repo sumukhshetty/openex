@@ -6,7 +6,6 @@ const request = require('request')
 class DisputedTrades extends Component {
 
   checkAdmin() {
-    console.log('DisputedTrades.checkAdmin')
     var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/checkAdmin'
     var options = {
       method: 'post',
