@@ -10,6 +10,7 @@ import AutoLogoLight from './images/svgReactComponents/autoLogoLight.js'
 // UI Components
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import Web3InitContainer from './web3/Web3InitContainer'
+import ETHOrderBookContainer from './web3/ETHOrderBookContainer'
 import EtherPriceContainer from './etherprice/EtherPriceContainer'
 import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
@@ -115,7 +116,7 @@ class App extends Component {
           <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
             {this.props.children}
           </main>
-          
+          <ETHOrderBookContainer />
         </section>
       )
     }
