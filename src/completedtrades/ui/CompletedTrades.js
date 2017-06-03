@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router'
+
+import * as _ from 'lodash'
 
 import CompletedTradesRowContainer from './CompletedTradesRowContainer';
 import CompletedTradesEmptyState from './../layouts/CompletedTradesEmptyState';
@@ -8,20 +11,28 @@ class CompletedTrades extends Component {
 
   render () {
     var completedTrades = this.props.completedtrades.data;
-    if (completedTrades) {
+    var list = [];
+    Object.entries(completedTrades).forEach(([key, value]) => {
+      list.push([key, value])
+    })
+    var reversedList = _.reverse(list)
+    
+    if (reversedList) {
       var rows = [];
-      Object.entries(completedTrades).forEach(
-            ([key, value]) => {
-              rows.push(<CompletedTradesRowContainer purchaseRequestId={key} key={key} tradeType={value.tradeType} />);
-            }
-        );
+      reversedList.slice(0,4).forEach((s) => {
+        rows.push(<CompletedTradesRowContainer purchaseRequestId={s[0]} key={s[0]} tradeType={s[1].tradeType} />);
+      })
+
       return (
+        <div>
         <table>
           <CompletedTradesHeader />
         <tbody>
           {rows}
         </tbody>
         </table>
+        <a onClick={()=>browserHistory.push('/completedtrades')}> See More </a>
+        </div>
       );
     } else {
       return (
