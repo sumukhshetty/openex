@@ -15,16 +15,33 @@ function clearDisptedTrades(){
   }
 }
 
+function setProcessKyc(processKycPayload){
+  return {
+    type: 'SET_PROCESS_KYC',
+    payload: processKycPayload
+  }
+}
+
+function clearProcessKyc(){
+  return {
+    type: 'CLEAR_PROCESS_KYC',
+    payload: null
+  }
+}
+
 
 module.exports = {
   disputedTrades: () => (dispatch) => {
-    console.log('AdminActions.disputedTrades')
     firebaseRef.database().ref('/disputes').once('value', function(snap){
       console.log(snap.val())
       dispatch(setDisputedTrades(snap.val()))
     })
+    firebaseRef.database().ref('/processkyc').once('value', function(snap){
+      dispatch(setProcessKyc(snap.val()))
+    })
   },
   clearState: () => (dispatch) =>{
     dispatch(clearDisptedTrades())
+    dispatch(clearProcessKyc())
   }
 }

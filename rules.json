@@ -54,6 +54,10 @@
     "selltradeadvertisements": {
       ".read": "auth != null",
       ".write": "auth != null"
+    },
+    "processkyc": {
+      ".read": "auth != null",
+      ".write": "auth != null"
     }
   }
 }

@@ -10,14 +10,13 @@ import CompletedTradesHeader from './../layouts/CompletedTradesHeader';
 class CompletedTrades extends Component {
 
   render () {
-    var completedTrades = this.props.completedtrades.data;
-    var list = [];
-    Object.entries(completedTrades).forEach(([key, value]) => {
-      list.push([key, value])
-    })
-    var reversedList = _.reverse(list)
-    
-    if (reversedList) {
+    if (this.props.completedtrades.data) {
+      var completedTrades = this.props.completedtrades.data;
+      var list = [];
+      Object.entries(completedTrades).forEach(([key, value]) => {
+        list.push([key, value])
+      })
+      var reversedList = _.reverse(list)
       var rows = [];
       reversedList.slice(0,4).forEach((s) => {
         rows.push(<CompletedTradesRowContainer purchaseRequestId={s[0]} key={s[0]} tradeType={s[1].tradeType} />);

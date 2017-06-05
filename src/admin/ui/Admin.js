@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import AdminRow from './AdminRow'
+import ProcessKycRow from './ProcessKycRow'
+
 export default class Admin extends Component {
 
   constructor (props) {
@@ -18,15 +20,11 @@ export default class Admin extends Component {
 
 
   render () {
-    console.log("components.Admin")
-    console.log(this.props)
     var purchaserequests = this.props.purchaserequests.data
 
     if(this.props.user.profile){
       if(this.props.user.profile.isAdmin && this.props.disputedtrades.data){
         const rows = Object.keys(this.props.disputedtrades.data).map((purchaseRequestId, index)=>{
-          console.log(purchaseRequestId, index)
-          console.log(purchaserequests[purchaseRequestId])
           var purchaserequest = purchaserequests[purchaseRequestId]
           var time
           if (purchaserequest.status === 'Seller Raised Dispute'){
@@ -42,6 +40,22 @@ export default class Admin extends Component {
                     purchaserequest={purchaserequest}
                   />)
         })
+        var kycRows = [];
+        if (this.props.processkyc.data){
+          Object.entries(this.props.processkyc.data).forEach((countryData)=>{
+            var countryCode = countryData[0]
+            var userUids = countryData[1]
+            Object.keys(userUids).map((userUid, index)=>{
+              kycRows.push(<ProcessKycRow
+                index={userUid}
+                key={userUid}
+                userUid={userUid}
+                country={countryCode}
+                />)
+            })
+          })
+          
+        }
 
           return (
             <section className='bg-smoke'>
@@ -64,7 +78,9 @@ export default class Admin extends Component {
                           </tr>
                         </thead>
                         <tbody>
-                          { rows }
+                          { rows }                          
+                          { kycRows ? kycRows : null}
+                          
                         </tbody>
                       </table>
                     </div>
