@@ -36,9 +36,12 @@ module.exports = {
     } else {
       tradeTypeRef = '/selltradeadvertisements/'
     }
-    firebaseRef.database().ref(tradeTypeRef+user.profile.country+'/'+tradeAdvertisementId).set(editTradeAdvertisementData).then(function(snap){
-      browserHistory.push('/dashboard')
-    })
+    console.log(editTradeAdvertisementData)
+    firebaseRef.database().ref(tradeTypeRef+user.profile.country+'/'+tradeAdvertisementId)
+      .set(editTradeAdvertisementData)
+      .then(function(snap){
+        browserHistory.push('/dashboard')
+      })
   },
   clearState: () => (dispatch) =>{
     dispatch(clearEditTradeAdvertisement())

@@ -24,11 +24,15 @@ export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
 export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
     dispatch(sendEtherState('sending'));
-    var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
-      .push(tradeDetails, function(err){
-        firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
-            newAdvertisement.key + '/tradetype').set('sell-ether')
-      })
+    try {
+      var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
+        .push(tradeDetails, function(err){
+          firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
+              newAdvertisement.key + '/tradetype').set('sell-ether')
+        })
+    } catch (error) {
+      console.log(error)
+    }
     // ISSUE-240 - call on the OrderBookFactory contract to create a new ETHOrderBook when the seller creates a trade advertisement
 /*    request({
       method: 'post',

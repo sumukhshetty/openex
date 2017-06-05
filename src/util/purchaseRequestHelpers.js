@@ -17,7 +17,7 @@ module.exports = {
     var userProfile = users.data[userUid]
     var updatedUserTradeVolume = parseInt(userProfile.tradeVolume, 10) + parseInt(purchaseRequest.etherAmount, 10)
 
-    var updatedUserNumberOfTrades = parseInt(userProfile.numberOfTrades) + 1
+    var updatedUserNumberOfTrades = parseInt(userProfile.numberOfTrades, 10) + 1
     var userTradingPartners, tradingPartnerUid
     if (userUid===purchaseRequest.buyerUid){
 
@@ -36,7 +36,7 @@ module.exports = {
     var updatedUserProfile = Object.assign({}, userProfile,{
       tradeVolume: updatedUserTradeVolume,
       numberOfTrades: updatedUserNumberOfTrades,
-      firstPurchase: (userProfile.tradeVolume === 0) ? new Date().toUTCString() : userProfile.firstPurchase,
+      firstPurchase: (userProfile.tradeVolume === 0) ? FIREBASE_TIMESTAMP : userProfile.firstPurchase,
       tradingPartners: userTradingPartners,
       lastTransfer: FIREBASE_TIMESTAMP
     })

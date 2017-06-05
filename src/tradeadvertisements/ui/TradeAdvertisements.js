@@ -4,7 +4,7 @@ import TradeAdvertisementsRowContainer from './TradeAdvertisementsRowContainer'
 import TradeAdvertisementsEmptyState from './../layouts/TradeAdvertisementsEmptyState'
 //import ActiveAdContainer from './ActiveAdContainer'
 //import AdListEmptyState from './AdListEmptyState'
-
+import TradeAdvertisementsHeader from './../layouts/TradeAdvertisementsHeader';
 class TradeAdvertisements extends Component {
 
     render() {
@@ -30,16 +30,21 @@ class TradeAdvertisements extends Component {
           //console.log(error)
         }
         return(
+          <div>
+          <table>
+          <TradeAdvertisementsHeader/>
           <tbody>
           {buyrows}
           {sellrows}
           </tbody>
+          </table>
+          </div>
         )
       } else {
         return(
-          <tbody>
+          <div>
             <TradeAdvertisementsEmptyState/>
-          </tbody>
+          </div>
         )
       }
   }

@@ -8,9 +8,8 @@ import Trustworthiness from './Trustworthiness'
 const moment = require('moment')
 
 const BuyTradeAdvertismentRow = (props) => {
-  return (
-    <tbody className='flex'>
-      {props.buyTradeAdvertisementData && props.buyer &&
+  if (props.buyTradeAdvertisementData && props.buyer){
+    return (
       <tr className='flex cxc'>
         <td className='fb20' >{props.buyTradeAdvertisementData.buyerUsername} - {props.buyTradeAdvertisementData.location}</td>
         <td className='fb10 tc' >{props.buyTradeAdvertisementData.paymentMethod}</td>
@@ -20,9 +19,9 @@ const BuyTradeAdvertismentRow = (props) => {
         <Trustworthiness trustLevel={props.buyer.trustworthiness} />
         <LastOnline time={props.buyer.lastOnline} />
         <SellButton buyTradeAdvertisementId={props.buyTradeAdvertisementId} />
-      </tr>}
-    </tbody>
-  )
+      </tr>
+      )
+  }
 }
 
 BuyTradeAdvertismentRow.propTypes = {

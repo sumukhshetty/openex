@@ -104,6 +104,7 @@ export default class BuyTradeAdvertisement extends Component {
                 </div>
                 <div className='mt3'>
                 <table className='lh-copy'>
+                <tbody>
                   <tr>
                     <td className='w4 pv2'>Price</td>
                     <td className='green'>{price ? price : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</td>
@@ -124,6 +125,7 @@ export default class BuyTradeAdvertisement extends Component {
                     <td className='w4 pv2'>Location</td>
                     <td>{buyTradeAdvertisement.location}</td>
                   </tr>
+                </tbody>
                 </table>
                 </div>
               </div>
