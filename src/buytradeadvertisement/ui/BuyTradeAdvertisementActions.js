@@ -1,5 +1,5 @@
 import {firebaseRef} from './../../index.js'
-
+import * as notificationHelpers from './../../util/notificationHelpers'
 
 export const SET_BUY_TRADE_ADVERTISEMENT = 'SET_BUY_TRADE_ADVERTISEMENT'
 function setBuyTradeAdvertisement(buyTradeAdvertisementPayload){
@@ -76,39 +76,9 @@ module.exports = {
     try {
       var newRequest = firebaseRef.database().ref('/purchaserequests/' + seller.profile.country)
         .push(purchaseRequestData, function(err){
-          console.log("about to add to activetrades")
           firebaseRef.database().ref('/users/'+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
           firebaseRef.database().ref('/users/'+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
-
-          try {
-            var _body = seller.profile.username + " has responded to your Buy Trade Advertisement"
-            console.log(_body)
-            var _fcmToken
-              if(buyer.data.fcmToken){
-                _fcmToken = buyer.data.fcmToken
-              } else {
-                _fcmToken = null
-              }
-            var notificationData = {
-                "title": "New Buy Trade Advertisement Response",
-                "body": _body,
-                "type": "accept-buy-order",
-                "email": true,
-                "fcm": true,
-                "recipientToken": _fcmToken,
-                "verifiedEmail": buyer.data.verifiedEmail,
-                "senderUsername": seller.profile.username,
-                "buyTradeAdvertisementId": buyTradeAdvertisementId,
-                "purchaseRequestId": newRequest.key,
-                "seen": false,
-                "createdAt": Date.now()
-              }
-              var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-              console.log(buyTradeAdvertisement.buyerUid)
-              firebaseRef.database().ref('/users/'+buyTradeAdvertisement.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
-            } catch (error) {
-              console.log(error)
-            }
+          notificationHelpers.sendSellerCreatesPurchaseRequestNotification(newRequest.key, buyTradeAdvertisementId, buyTradeAdvertisement, seller, buyer)
           })
         } catch (error) {
           console.log(error)
