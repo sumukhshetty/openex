@@ -76,6 +76,7 @@ exports.buyerCreatesPurchaseRequest = functions.https.onRequest((req, res) => {
 exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid}/notifications/{notificationUid}')
   .onWrite(event=>{
     let notificationUid = event.params.notificationUid
+    let recipientUid = event.params.recipientUid
     admin.database().ref('/notifications/'+ notificationUid).once('value', function(snap){
       let notifcationData = snap.val()
       console.log(notifcationData)
@@ -95,18 +96,18 @@ exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid
           console.log("no token")
         }
       }
-      if(notifcationData.email){
-        if(notifcationData.verifiedEmail){
+      if(notifcationData.verifiedEmail){
+        admin.database().ref('/notificationsConfig/'+recipientUid+'/email').once('value',function(snap){
           var emaildata = {
             from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
-            to: notifcationData.recipientEmail,
+            to: snap.val(),
             subject: notifcationData.title,
             text: notifcationData.body
           }
           mailgun.messages().send(emaildata, function(error, body){
             console.log(body);
           })
-        }
+        })
       }
     })
   })

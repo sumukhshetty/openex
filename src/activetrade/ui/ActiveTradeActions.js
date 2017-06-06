@@ -1,5 +1,6 @@
 import {firebaseRef, FIREBASE_TIMESTAMP} from './../../index.js'
 import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
+import * as notificationHelpers from './../../util/notificationHelpers'
 import { browserHistory } from 'react-router'
 
 function setActiveTrade(purchaseRequestPayload){
@@ -63,7 +64,7 @@ module.exports = {
       dispatch(setSeller(users.data[activeTrade.sellerUid]))
     })
   },
-  sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
+  sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
     // ISSUE-242: call on ETHOrderBook.addOrder when the seller confirms the trade
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
@@ -76,10 +77,12 @@ module.exports = {
     .set(updatedPurchaseRequest, function(error){
       if(error){
         console.log(error)
-      } 
+      }
+      notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+
     });
   },
-  buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
+  buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -92,9 +95,10 @@ module.exports = {
         if(error){
           console.log(error)
         } 
+        notificationHelpers.sendBuyerConfirmsPaymentNotification(buyer,seller,purchaseRequest,purchaseRequestId)
       });
   },
-  sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
+  sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
     // ISSUE-243 call on ETHOrderBook.completeOrder when the seller releases the ether
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
@@ -104,7 +108,9 @@ module.exports = {
         status: 'All Done'
     })
     firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
-          .set(updatedPurchaseRequest)
+      .set(updatedPurchaseRequest, function(error){
+        notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+      })
 
   },
   tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {

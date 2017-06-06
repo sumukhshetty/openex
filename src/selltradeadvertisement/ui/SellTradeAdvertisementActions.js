@@ -73,41 +73,16 @@ module.exports = {
       buyraisesdisputetime: '-',
       sellerraisesdisputetime: '-'
     }
-/*    var postData = {
-      sellTradeAdvertisementId: sellTradeAdvertisementId,
-      sellTradeAdvertisement: sellTradeAdvertisement,
-      seller: seller,
-      buyer: buyer
-    }*/
-/*    var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/buyerCreatesPurchaseRequest'
-    var options = {
-      method: 'post',
-      body: postData,
-      json: true,
-      url: url
-    }*/
     var newRequest = firebaseRef.database().ref('/purchaserequests/' + buyer.profile.country)
       .push(purchaseRequestData, function(err){
         firebaseRef.database().ref('/users/' + sellTradeAdvertisement.sellerUid + '/activetrades/' + newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
         firebaseRef.database().ref('/users/'+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
-      })
 
-      //TODO implement this with firebase functions and send notification
-    /*request(options, function(err, res, body){
-      if (err) {
-        console.error('error posting json: ', err)
-        throw err
-      }
-      var statusCode = res.statusCode
-      if(statusCode === 500) {
-        console.error('Server responded with an error: ' + res.body.error);
-        throw res.body.error
-      }
-      if(statusCode === 200) {
+
         var _body = buyer.profile.username + " has created a purchase request"
         var _fcmToken
         if(seller.fcmToken){
-          _fcmToken = seller.fcmToken
+          _fcmToken = seller.data.fcmToken
         } else {
           _fcmToken = null
         }
@@ -118,17 +93,17 @@ module.exports = {
           "email": true,
           "fcm": true,
           "recipientToken": _fcmToken,
-          "recipientEmail": seller.profile.email,
-          "verifiedEmail": seller.profile.verifiedEmail,
+          "verifiedEmail": seller.data.verifiedEmail,
           "senderUsername": buyer.profile.username,
           "selltradeadvertisement": sellTradeAdvertisement,
+          "purchaseRequestId": newRequest.key,
           "seen": false,
           "createdAt": Date.now()
         }
         var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-        firebaseRef.database().ref('/users/'+seller.data.uid+'/notifications/'+newNotifcation.key).set({vaule:true}) 
-      }
-    })*/
+        firebaseRef.database().ref('/users/'+sellTradeAdvertisement.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true}) 
+
+      })
   },
   clearState: () => (dispatch) => {
     dispatch(clearSeller())

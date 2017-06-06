@@ -22,14 +22,14 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users, user) => {
       dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users, user))
     },
-    sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerConfirmsTrade(seller, purchaseRequest, purchaseRequestId))
+    sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId) => {
+      dispatch(actions.sellerConfirmsTrade(seller, buyer, purchaseRequest, purchaseRequestId))
     },
-    buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.buyerConfirmsPayment(buyer, purchaseRequest, purchaseRequestId))
+    buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => {
+      dispatch(actions.buyerConfirmsPayment(buyer, seller, purchaseRequest, purchaseRequestId))
     },
-    sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerReleasesEther(seller, purchaseRequest, purchaseRequestId))
+    sellerReleasesEther: (seller, buyer,purchaseRequest, purchaseRequestId) => {
+      dispatch(actions.sellerReleasesEther(seller, buyer, purchaseRequest, purchaseRequestId))
     },
     sellerCancelsTrade: (seller, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.sellerCancelsTrade(seller, purchaseRequest, purchaseRequestId))

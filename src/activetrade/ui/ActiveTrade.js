@@ -24,15 +24,15 @@ class ActiveTrade extends Component {
 
   sellerConfirmsTrade () {
     // TODO web3 stuff
-    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   buyerConfirmsPayment () {
-    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId) 
+    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.seller.data,this.props.activetrade.data, this.props.purchaseRequestId) 
   }
 
   sellerReleasesEther () {
     // TODO web3 stuff
-    this.props.sellerReleasesEther(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   sellerCancelsTrade () {
     this.props.sellerCancelsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
