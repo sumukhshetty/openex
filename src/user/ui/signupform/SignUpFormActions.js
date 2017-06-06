@@ -57,6 +57,7 @@ export function signUpUser (signUpInfo, web3) {
       firebaseUser.updateProfile({
         displayName: username
       })
+      firebaseRef.database().ref('/notificationsConfig/'+userid+'/email').set(email)
       firebaseUser.sendEmailVerification().then(function () {
         // Email sent
       }, function (error) {

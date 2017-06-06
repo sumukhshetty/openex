@@ -95,7 +95,7 @@ module.exports = {
           "recipientToken": _fcmToken,
           "verifiedEmail": seller.data.verifiedEmail,
           "senderUsername": buyer.profile.username,
-          "selltradeadvertisement": sellTradeAdvertisement,
+          "sellTradeAdvertisementId": sellTradeAdvertisementId,
           "purchaseRequestId": newRequest.key,
           "seen": false,
           "createdAt": Date.now()
