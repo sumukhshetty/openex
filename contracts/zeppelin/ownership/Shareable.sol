@@ -1,17 +1,14 @@
 pragma solidity ^0.4.8;
 
 
-/*
- * Shareable
- *
- * Based on https://github.com/ethereum/dapp-bin/blob/master/wallet/wallet.sol
- *
- * inheritable "property" contract that enables methods to be protected by requiring the acquiescence of either a single, or, crucially, each of a number of, designated owners.
- *
- * usage:
- * use modifiers onlyowner (just own owned) or onlymanyowners(hash), whereby the same hash must be provided by some number (specified in constructor) of the set of owners (specified in the constructor) before the interior is executed.
+/**
+ * @title Shareable
+ * @dev inheritable "property" contract that enables methods to be protected by requiring the 
+ * acquiescence of either a single, or, crucially, each of a number of, designated owners.
+ * @dev Usage: use modifiers onlyowner (just own owned) or onlymanyowners(hash), whereby the same hash must be provided by some number (specified in constructor) of the set of owners (specified in the constructor) before the interior is executed.
  */
 contract Shareable {
+
   // struct for the status of a pending operation.
   struct PendingState {
     uint yetNeeded;
@@ -23,9 +20,9 @@ contract Shareable {
   uint public required;
 
   // list of owners
-  uint[256] owners;
+  address[256] owners;
   // index on the list of owners to allow reverse lookup
-  mapping(uint => uint) ownerIndex;
+  mapping(address => uint) ownerIndex;
   // the ongoing operations.
   mapping(bytes32 => PendingState) pendings;
   bytes32[] pendingsIndex;
@@ -44,31 +41,43 @@ contract Shareable {
     }
     _;
   }
-
-  // multi-sig function modifier: the operation must have an intrinsic hash in order
-  // that later attempts can be realised as the same underlying operation and
-  // thus count as confirmations.
+  
+  /** 
+   * @dev Modifier for multisig functions. 
+   * @param _operation The operation must have an intrinsic hash in order that later attempts can be
+   * realised as the same underlying operation and thus count as confirmations.
+   */
   modifier onlymanyowners(bytes32 _operation) {
     if (confirmAndCheck(_operation)) {
       _;
     }
   }
 
-  // constructor is given number of sigs required to do protected "onlymanyowners" transactions
-  // as well as the selection of addresses capable of confirming them.
+  /** 
+   * @dev Constructor is given the number of sigs required to do protected "onlymanyowners" 
+   * transactions as well as the selection of addresses capable of confirming them.
+   * @param _owners A list of owners.
+   * @param _required The amount required for a transaction to be approved.
+   */
   function Shareable(address[] _owners, uint _required) {
-    owners[1] = uint(msg.sender);
-    ownerIndex[uint(msg.sender)] = 1;
+    owners[1] = msg.sender;
+    ownerIndex[msg.sender] = 1;
     for (uint i = 0; i < _owners.length; ++i) {
-      owners[2 + i] = uint(_owners[i]);
-      ownerIndex[uint(_owners[i])] = 2 + i;
+      owners[2 + i] = _owners[i];
+      ownerIndex[_owners[i]] = 2 + i;
     }
     required = _required;
+    if (required > owners.length) {
+      throw;
+    }
   }
 
-  // Revokes a prior confirmation of the given operation
+  /**
+   * @dev Revokes a prior confirmation of the given operation.
+   * @param _operation A string identifying the operation.
+   */
   function revoke(bytes32 _operation) external {
-    uint index = ownerIndex[uint(msg.sender)];
+    uint index = ownerIndex[msg.sender];
     // make sure they're an owner
     if (index == 0) {
       return;
@@ -82,18 +91,33 @@ contract Shareable {
     }
   }
 
-  // Gets an owner by 0-indexed position (using numOwners as the count)
+  /**
+   * @dev Gets an owner by 0-indexed position (using numOwners as the count)
+   * @param ownerIndex Uint The index of the owner
+   * @return The address of the owner
+   */
   function getOwner(uint ownerIndex) external constant returns (address) {
     return address(owners[ownerIndex + 1]);
   }
 
+  /**
+   * @dev Checks if given address is an owner.
+   * @param _addr address The address which you want to check.
+   * @return True if the address is an owner and fase otherwise.
+   */
   function isOwner(address _addr) constant returns (bool) {
-    return ownerIndex[uint(_addr)] > 0;
+    return ownerIndex[_addr] > 0;
   }
 
+  /**
+   * @dev Function to check is specific owner has already confirme the operation.
+   * @param _operation The operation identifier.
+   * @param _owner The owner address.
+   * @return True if the owner has confirmed and false otherwise.
+   */
   function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {
     var pending = pendings[_operation];
-    uint index = ownerIndex[uint(_owner)];
+    uint index = ownerIndex[_owner];
 
     // make sure they're an owner
     if (index == 0) {
@@ -105,12 +129,17 @@ contract Shareable {
     return !(pending.ownersDone & ownerIndexBit == 0);
   }
 
+  /**
+   * @dev Confirm and operation and checks if it's already executable.
+   * @param _operation The operation identifier.
+   * @return Returns true when operation can be executed.
+   */
   function confirmAndCheck(bytes32 _operation) internal returns (bool) {
     // determine what index the present sender is:
-    uint index = ownerIndex[uint(msg.sender)];
+    uint index = ownerIndex[msg.sender];
     // make sure they're an owner
     if (index == 0) {
-      return;
+      throw;
     }
 
     var pending = pendings[_operation];
@@ -140,8 +169,13 @@ contract Shareable {
         pending.ownersDone |= ownerIndexBit;
       }
     }
+    return false;
   }
 
+
+  /**
+   * @dev Clear the pending list.
+   */
   function clearPending() internal {
     uint length = pendingsIndex.length;
     for (uint i = 0; i < length; ++i) {
