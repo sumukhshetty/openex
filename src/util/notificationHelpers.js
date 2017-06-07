@@ -21,9 +21,9 @@ module.exports = {
       "sellTradeAdvertisementId": sellTradeAdvertisementId,
       "purchaseRequestId": purchaseRequestId,
       "seen": false,
-      "createdAt": Date.now()
+      "createdAt": FIREBASE_TIMESTAMP
     }
-    var newNotifcation = firebaseRef.database().ref("/notifications/"+sellTradeAdvertisement.sellerUid+'/'+purchaseRequestId+'/buyercreatespurchaserequest').set(notificationData)
+    firebaseRef.database().ref("/notifications/"+sellTradeAdvertisement.sellerUid+'/'+purchaseRequestId+'/buyercreatespurchaserequest').set(notificationData)
     //firebaseRef.database().ref('/users/'+sellTradeAdvertisement.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true}) 
 
   },
@@ -48,10 +48,10 @@ module.exports = {
         "buyTradeAdvertisementId": buyTradeAdvertisementId,
         "purchaseRequestId": purchaseRequestId,
         "seen": false,
-        "createdAt": Date.now()
+        "createdAt": FIREBASE_TIMESTAMP
       }
-      //var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-      var newNotifcation = firebaseRef.database().ref("/notifications/"+buyTradeAdvertisement.buyerUid+'/'+purchaseRequestId+'/sellercreatespurchaserequest').set(notificationData)
+      //firebaseRef.database().ref("/notifications/").push(notificationData)
+      firebaseRef.database().ref("/notifications/"+buyTradeAdvertisement.buyerUid+'/'+purchaseRequestId+'/sellercreatespurchaserequest').set(notificationData)
       console.log(buyTradeAdvertisement.buyerUid)
       //firebaseRef.database().ref('/users/'+buyTradeAdvertisement.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
   },
@@ -75,11 +75,11 @@ module.exports = {
       "senderUsername": purchaseRequest.buyerUsername,
       "purchaseRequestId": purchaseRequestId,
       "seen": false,
-      "createdAt": Date.now()
+      "createdAt": FIREBASE_TIMESTAMP
     }
 
-    //var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-    var newNotifcation = firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/buyerconfirmspayment').set(notificationData)
+    //firebaseRef.database().ref("/notifications/").push(notificationData)
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/buyerconfirmspayment').set(notificationData)
     //firebaseRef.database().ref('/users/'+purchaseRequest.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
   },
   sendSellerConfirmsTradeNotification: (seller, buyer, purchaseRequest, purchaseRequestId) => {
@@ -101,11 +101,11 @@ module.exports = {
       "senderUsername": purchaseRequest.sellerUsername,
       "purchaseRequestId": purchaseRequestId,
       "seen": false,
-      "createdAt": Date.now()
+      "createdAt": FIREBASE_TIMESTAMP
     }
 
-    //var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-    var newNotifcation = firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/sellerconfirmstrade').set(notificationData)
+    //firebaseRef.database().ref("/notifications/").push(notificationData)
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/sellerconfirmstrade').set(notificationData)
     //firebaseRef.database().ref('/users/'+purchaseRequest.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
   },
   sendSellerReleasesEtherNotification: (seller, buyer, purchaseRequest, purchaseRequestId) => {
@@ -129,10 +129,10 @@ module.exports = {
       "senderUsername": purchaseRequest.sellerUsername,
       //"orderId": sellOrder.orderId,
       "seen": false,
-      "createdAt": Date.now()
+      "createdAt": FIREBASE_TIMESTAMP
     }
-    //var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-    var newNotifcation = firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/sellerreleasesether').set(notificationData)
+    //firebaseRef.database().ref("/notifications/").push(notificationData)
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/sellerreleasesether').set(notificationData)
     //firebaseRef.database().ref('/users/'+purchaseRequest.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
   },
 }
