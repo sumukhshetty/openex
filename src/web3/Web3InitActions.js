@@ -44,7 +44,7 @@ export function web3Initialize() {
         if(err){
           console.log(err)
         }
-        if(res !== '42'){
+        if(res !== '4'){
           dispatch(wrongNetwork(true))
         } else{
           dispatch(wrongNetwork(false))
