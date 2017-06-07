@@ -55,6 +55,7 @@
     "country-currency": "git+https://github.com/srcagency/country-currencies.git",
     "firebase": "^3.7.1",
     "i": "^0.3.5",
+    "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "npm": "^4.6.1",

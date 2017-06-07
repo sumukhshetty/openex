@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Spinner from 'react-spinkit';
-import { authRef } from '../reference';
+import { firebaseRef } from './../index.js';
 
 export default class VerifyEmail extends Component {
   state = {
@@ -11,7 +11,7 @@ export default class VerifyEmail extends Component {
 
   componentDidMount() {
     // Try to apply the email verification code.
-    authRef
+    firebaseRef.auth()
       .applyActionCode(this.props.actionCode)
       .then(() => {
         // Email address has been verified.
