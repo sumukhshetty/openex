@@ -31,7 +31,7 @@ import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAd
 
 import KycUpload from './kycupload/layouts/KycUpload'
 import ProcessKyc from './processkyc/layouts/ProcessKyc'
-
+import EmailHandler from './emailhandlers/EmailHandler'
 import ActiveTrade from './activetrade/layouts/ActiveTrade'
 // Redux Store
 import store from './store'
@@ -86,6 +86,7 @@ ReactDOM.render((
         <Route path='processkyc/:country/:userUid' component={UserIsAuthenticated(ProcessKyc)}/>
         <Route path='termsofservice' component={UserIsAuthenticated(TermsOfService)} />
         <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} />
+        <Route path='emailactions' component={EmailHandler} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>
