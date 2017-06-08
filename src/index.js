@@ -86,7 +86,7 @@ ReactDOM.render((
         <Route path='processkyc/:country/:userUid' component={UserIsAuthenticated(ProcessKyc)}/>
         <Route path='termsofservice' component={UserIsAuthenticated(TermsOfService)} />
         <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} />
-        <Route path='emailactions' component={EmailHandler} />
+        <Route path='emailactions' component={UserIsNotAuthenticated(EmailHandler)} />
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>
