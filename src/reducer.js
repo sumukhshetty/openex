@@ -25,6 +25,7 @@ import completedTradesReducer from './completedtrades/completedtradesreducer'
 import tradeAdvertisementsReducer from './tradeadvertisements/tradeadvertisementsreducer'
 import editTradeAdvertisementReducer from './edittradeadvertisement/edittradeadvertisementreducer'
 import processKycReducer from './processkyc/processkycreducer'
+import ethOrderBookReducer from './ethorderbook/ethorderbookreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -52,8 +53,8 @@ const reducer = combineReducers({
   disputedtrades: disputedTradesReducer,
   tradeadvertisements: tradeAdvertisementsReducer,
   edittradeadvertisement: editTradeAdvertisementReducer,
-  processkyc: processKycReducer
-
+  processkyc: processKycReducer,
+  ethorderbook: ethOrderBookReducer
 })
 
 export default reducer
