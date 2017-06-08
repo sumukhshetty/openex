@@ -195,115 +195,122 @@ class PostTradeForm extends Component {
         </div>
         )
     } else {
-      return (
-        <div>
+      if(this.props.user.profile.orderBookAddress && !this.state.buyFormBool){
+        return(
+          <div>Looks like you already have an Sell Trade Advertisement. If need to make changes edit it.</div>
+          )
+      } else {
+        return (
           <div>
-            <PostTradeInstructions />
-          </div>
-          <form className='mv3' onSubmit={this.handleSubmit.bind(this)}>
-            <fieldset >
-              <legend className='b f4 mv3'>Trade Information</legend>
-              <div className='flex pa0 mv3'>
-                <p className='w5'>I want to...</p>
-                <div className='flex col'>
-                  <label htmlFor='buyTradeType'><input id='buyTradeType' name='tradeType' type='radio' value='buy-ether' onChange={this.onTradeTypeChange.bind(this)}
-                    className='mr2' defaultChecked='true' />Buy Ether</label>
-                  <label htmlFor='sellTradeType'> <input id='sellTradeType' name='tradeType' type='radio' value='sell-ether' onChange={this.onTradeTypeChange.bind(this)}
-                    className='mr2' />Sell Ether</label>
-                </div>
-                <span className='measure-narrow fw1 i pa0 me'>
-                  What kind of trade advertisement do you wish to create? If you wish to sell ether make sure you have ether in your Metamask wallet.
-                </span>
-              </div>
-
-              <div className='flex mv3'>
-                <label htmlFor='location' className='w5' >Location</label>
-                <input id='location' name='location' type='text' value={this.state.postTradeDetails.location} onChange={this.onInputChange.bind(this)}
-                  placeholder='Enter a Location' className='w5 h-100' required />
-                <span className='measure-narrow fw1 i pa0 me'>For online trade you need to specify the country. For local trade, please specify a city, postal code or street name.</span>
-              </div>
-
-              {this.state.buyFormBool
-                && <div className='flex mb3'>
-                  <label
-                    htmlFor='buyerAddress'
-                    className='w5'>Buyer Address</label>
-                  <textarea
-                    id='buyerAddress'
-                    type='textArea'
-                    rows='4'
-                    value={this.state.postTradeDetails.buyerAddress}
-                    placeholder='Please make sure you are logged into metamask in your chrome browser.'
-                    className='w5'
-                    disabled />
-                </div>
-              }
-
-              <div className='flex mv3'>
-                <label htmlFor='margin' className='w5' >Margin</label>
-                <div className='flex col'>
-                  <div className='flex w5 h-100'>
-                    <input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='br--white'
-                      required />
-                    <button className='ftiny br0 bg-gray bl--gray b--blue ba gray'>%</button>
+            <div>
+              <PostTradeInstructions />
+            </div>
+            <form className='mv3' onSubmit={this.handleSubmit.bind(this)}>
+              <fieldset >
+                <legend className='b f4 mv3'>Trade Information</legend>
+                <div className='flex pa0 mv3'>
+                  <p className='w5'>I want to...</p>
+                  <div className='flex col'>
+                    <label htmlFor='buyTradeType'><input id='buyTradeType' name='tradeType' type='radio' value='buy-ether' onChange={this.onTradeTypeChange.bind(this)}
+                      className='mr2' defaultChecked='true' />Buy Ether</label>
+                    <label htmlFor='sellTradeType'> <input id='sellTradeType' name='tradeType' type='radio' value='sell-ether' onChange={this.onTradeTypeChange.bind(this)}
+                      className='mr2' />Sell Ether</label>
                   </div>
-                  <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice ? (this.props.etherPrice.data * (1 + (parseInt(this.state.postTradeDetails.margin, 10) * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</span></small>
-                  <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice.data : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</span></small>
+                  <span className='measure-narrow fw1 i pa0 me'>
+                    What kind of trade advertisement do you wish to create? If you wish to sell ether make sure you have ether in your Metamask wallet.
+                  </span>
                 </div>
 
-                <span className='measure-narrow fw1 i pa0 me'>Margin you want over the ether market price. Use a negative value for buying or selling under the market price to attract more contracts. For more complex pricing edit the price equation directly.</span>
-              </div>
+                <div className='flex mv3'>
+                  <label htmlFor='location' className='w5' >Location</label>
+                  <input id='location' name='location' type='text' value={this.state.postTradeDetails.location} onChange={this.onInputChange.bind(this)}
+                    placeholder='Enter a Location' className='w5 h-100' required />
+                  <span className='measure-narrow fw1 i pa0 me'>For online trade you need to specify the country. For local trade, please specify a city, postal code or street name.</span>
+                </div>
 
-              <div className='flex mv3'>
-                <label htmlFor='paymentMethod' className='w5'>Payment Method</label>
-                <select id='paymentMethod' name='paymentMethod' onChange={this.onPaymentMethodChange.bind(this)}
-                  className='w5'required>
-                  <option value='National Bank'>National Bank</option>
-                  <option value='cash'>cash</option>
-                  <option value='mobile'>mobile</option>
-                </select>
-              </div>
+                {this.state.buyFormBool
+                  && <div className='flex mb3'>
+                    <label
+                      htmlFor='buyerAddress'
+                      className='w5'>Buyer Address</label>
+                    <textarea
+                      id='buyerAddress'
+                      type='textArea'
+                      rows='4'
+                      value={this.state.postTradeDetails.buyerAddress}
+                      placeholder='Please make sure you are logged into metamask in your chrome browser.'
+                      className='w5'
+                      disabled />
+                  </div>
+                }
 
-              {
-                (this.state.buyFormBool)
-                  ? <BuyForm
+                <div className='flex mv3'>
+                  <label htmlFor='margin' className='w5' >Margin</label>
+                  <div className='flex col'>
+                    <div className='flex w5 h-100'>
+                      <input id='margin' name='margin' type='number' value={this.state.postTradeDetails.margin} onChange={this.onInputChange.bind(this)} className='br--white'
+                        required />
+                      <button className='ftiny br0 bg-gray bl--gray b--blue ba gray'>%</button>
+                    </div>
+                    <small className='f6 fw3 mt3'>Your price: <span className='green'>{this.props.etherPrice ? (this.props.etherPrice.data * (1 + (parseInt(this.state.postTradeDetails.margin, 10) * 0.01))).toFixed(2) : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</span></small>
+                    <small className='f6 fw3 mt3'>Current market value <span className='green'>{this.props.etherPrice ? this.props.etherPrice.data : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</span></small>
+                  </div>
+
+                  <span className='measure-narrow fw1 i pa0 me'>Margin you want over the ether market price. Use a negative value for buying or selling under the market price to attract more contracts. For more complex pricing edit the price equation directly.</span>
+                </div>
+
+                <div className='flex mv3'>
+                  <label htmlFor='paymentMethod' className='w5'>Payment Method</label>
+                  <select id='paymentMethod' name='paymentMethod' onChange={this.onPaymentMethodChange.bind(this)}
+                    className='w5'required>
+                    <option value='National Bank'>National Bank</option>
+                    <option value='cash'>cash</option>
+                    <option value='mobile'>mobile</option>
+                  </select>
+                </div>
+
+                {
+                  (this.state.buyFormBool)
+                    ? <BuyForm
+                      onChangeProp={this.onInputChange.bind(this)}
+                      amount={this.state.postTradeDetails.amount}
+                      paymentMethod={this.state.postTradeDetails.paymentMethod}
+                      onCurrencyChange={this.onCurrencyChange.bind(this)}
+                      bankInformation={this.state.postTradeDetails.bankInformation}
+                      minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
+                      maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
+                      termsOfTrade={this.state.postTradeDetails.termsOfTrade}
+                      currency={this.state.user.profile.currency} />
+                  : <SellForm
                     onChangeProp={this.onInputChange.bind(this)}
+                    currency={this.props.user.profile.currency}
                     amount={this.state.postTradeDetails.amount}
                     paymentMethod={this.state.postTradeDetails.paymentMethod}
                     onCurrencyChange={this.onCurrencyChange.bind(this)}
                     bankInformation={this.state.postTradeDetails.bankInformation}
                     minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
                     maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
-                    termsOfTrade={this.state.postTradeDetails.termsOfTrade}
-                    currency={this.state.user.profile.currency} />
-                : <SellForm
-                  onChangeProp={this.onInputChange.bind(this)}
-                  currency={this.props.user.profile.currency}
-                  amount={this.state.postTradeDetails.amount}
-                  paymentMethod={this.state.postTradeDetails.paymentMethod}
-                  onCurrencyChange={this.onCurrencyChange.bind(this)}
-                  bankInformation={this.state.postTradeDetails.bankInformation}
-                  minTransactionLimit={this.state.postTradeDetails.minTransactionLimit}
-                  maxTransactionLimit={this.state.postTradeDetails.maxTransactionLimit}
-                  termsOfTrade={this.state.postTradeDetails.termsOfTrade} />
-              }
+                    termsOfTrade={this.state.postTradeDetails.termsOfTrade} />
+                }
 
-              {
-                (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal />)
-              }
+                {
+                  (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal />)
+                }
 
-              <div className='flex mv3'>
-                <label className='w5 ' />
-                <input
-                  type='submit'
-                  className='mv5'
-                  value='Publish Advertisement' />
-              </div>
+                <div className='flex mv3'>
+                  <label className='w5 ' />
+                  <input
+                    type='submit'
+                    className='mv5'
+                    value='Publish Advertisement' />
+                </div>
 
-            </fieldset>
-          </form>
-        </div>
-      )
+              </fieldset>
+            </form>
+          </div>
+        )
+        
+      }
     }
   }
 }
