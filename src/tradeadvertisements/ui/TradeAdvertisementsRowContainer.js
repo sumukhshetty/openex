@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import TradeAdvertisementsRow from './TradeAdvertisementsRow'
-import { addEtherToContract, resetSendEtherState } from './TradeAdvertisementsRowActions'
+import * as actions from './TradeAdvertisementsRowActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -9,20 +9,19 @@ const mapStateToProps = (state, ownProps) => {
     tradeAdvertisementId: ownProps.tradeAdvertisementId,
     tradeType: ownProps.tradeType,
     tradeadvertisement: ownProps.tradeAdvertisement,
-    sendEtherState: state.sendEtherState
+    sendEtherState: state.sendEtherState,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
-    addEther: (amount, tradeAdvertisementId, contractAddress, web3) => {
+    addEther: (amount, tradeAdvertisementId, contractAddress, web3, user) => {
       // TODO - create issue
-      dispatch(addEtherToContract(amount, tradeAdvertisementId, contractAddress, web3))
+      dispatch(actions.addEtherToContract(amount, tradeAdvertisementId, contractAddress, web3, user))
     },
 
     resetEtherState: () => {
-      dispatch(resetSendEtherState());
+      dispatch(actions.resetSendEtherState());
     }
   }
 }
