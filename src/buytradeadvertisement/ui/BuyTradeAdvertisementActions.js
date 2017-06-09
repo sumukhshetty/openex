@@ -41,7 +41,7 @@ module.exports = {
   sellerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, buyTradeAdvertisementId, buyTradeAdvertisement, buyer, sellerAddress, seller) => (dispatch) => {
     var now = new Date()
     var purchaseRequestData = {
-      bankinformation:'TODO', //need to set this to the user's profile. the 
+      bankinformation:'Request the bank information from the seller in chat.', //need to set this to the user's profile. the 
       buyerAddress: buyTradeAdvertisement.buyerAddress,
       buyerUid: buyTradeAdvertisement.buyerUid,
       buyerUsername: buyer.data.username,
@@ -52,7 +52,7 @@ module.exports = {
       etherAmount: etherAmount,
       fiatAmount: fiatAmount,
       lastUpdated: now.toUTCString(),
-      paymentMethod: 'TODO', //need to get this from the seller's profile
+      paymentMethod: 'Request the paymentMethod from the seller in chat.', //need to get this from the seller's profile
       price: etherPrice,
       postProcessingCompleted: false,
       sellerAddress:sellerAddress,
@@ -72,6 +72,7 @@ module.exports = {
       buyraisesdisputetime: '-',
       sellerraisesdisputetime: '-'
     }
+
 /*    var postData = {
       //amount: amount,
       //bankInformation: buyTradeAdvertisement.bankInformation, //this should be taken from the sellTradeAdvertisement when the seller confirms a trade
@@ -95,11 +96,15 @@ module.exports = {
       json: true,
       url: url
     }*/
-    var newRequest = firebaseRef.database().ref('/purchaserequests/' + seller.profile.country)
-      .push(purchaseRequestData, function(err){
-        firebaseRef.database().ref('/users/'+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
-        firebaseRef.database().ref('/users/'+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})   
-      })
+    try {
+      var newRequest = firebaseRef.database().ref('/purchaserequests/' + seller.profile.country)
+        .push(purchaseRequestData, function(err){
+          firebaseRef.database().ref('/users/'+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
+          firebaseRef.database().ref('/users/'+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})   
+        })
+    } catch (error) {
+      console.log(error)
+    }
 /*    request(options, function (err, res, body) {
       if (err) {
         console.error('error posting json: ', err)

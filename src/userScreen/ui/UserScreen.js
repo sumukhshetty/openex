@@ -20,7 +20,8 @@ export default class UserScreen extends Component {
             <div>
               <h2>User Information</h2>
               <div className='w-100'>
-                <ul className='lh-copy flex col wrap w-100 vh-50 list'>
+                <ui className='lh-copy flex col wrap w-100 vh-50 list'>
+                  <tbody>
                   <tr className='w-50 bg-bone flex cxc'>
                     <td className='w4 pv2'>Trade Volume</td>
                     <td className='green pl3'>{this.props.userScreen.data.tradeVolume} Ether</td>
@@ -69,7 +70,8 @@ export default class UserScreen extends Component {
                     <td className='w4 pv2'>Blocks</td>
                     <td className='pl3'>{this.state.language} people</td>
                   </tr>*/}
-                </ul>
+                  </tbody>
+                </ui>
               </div>
             </div>
             <div>

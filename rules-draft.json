@@ -1,0 +1,83 @@
+{
+  "rules": {
+    // By default, make all data private unless specified otherwise.
+    ".read": false,
+    ".write": false,
+    "chatrooms": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "chats": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$buyerUid": {
+        ".validate": "newData.isString() && !data.exists()"
+      },
+      "$sellerUid": {
+        ".validate": "newData.isString() && !data.exists()"
+      }
+    },
+    "purchaserequests": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$countryCode":{
+        "$purchaseRequestId":{
+          "status": {
+            ".validate": "newData.isString() && (data.val() == null && newData.val() == 'Awaiting Seller Confirmation') || (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Awaiting Payment')|| (data.val() == 'Awaiting Payment' && newData.val() == 'Awaiting Release')|| (data.val() == 'Awaiting Release' && newData.val() == 'All Done')|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Seller Canceled Trade' )|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Buyer Canceled Trade' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Buyer Raised Dispute' && newData.val() == 'All Done' && root.child('admins').hasChild(auth.uid))|| (data.val() == 'Seller Raised Dispute' && newData.val() == 'All Done' && root.child('admins').hasChild(auth.uid))"
+          },
+          "sellerAddress": {
+            ".validate":"!data.exists()"
+          }
+        }
+      }
+    },
+    "users": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$userUid":{
+        "$accountCreated":{
+          ".validate":"(!data.exists())",
+        },
+        "isAdmin": {
+          ".read": false,
+          ".write": false
+        },
+        "firstPurchase":{
+          ".validate": "(data.val()==='-')"
+        }
+      }
+
+    },
+    "notifications": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "traderating": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$rateeUid":{
+        "$purchaseRequestId": {
+          "$rating":{
+            ".validate":"(!data.exists())"
+          }
+        }
+      }
+    },
+    "disputes": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "buytradeadvertisements": {
+      ".read": "true",
+      ".write": "auth != null"
+    },
+    "selltradeadvertisements": {
+      ".read": "true",
+      ".write": "auth != null"
+    },
+    "processkyc": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import ActiveTradesRow from './ActiveTradesRow'
-import ActiveTradesListEmptyState from './../layouts/ActiveTradesListEmptyState'
 
 class ActiveTradesList extends Component {
   render () {
@@ -19,11 +18,7 @@ class ActiveTradesList extends Component {
         </tbody>
       );
     } else {
-      return (
-        <tbody>
-          <ActiveTradesListEmptyState />
-        </tbody>
-      );
+      return null
     }
   }
 }

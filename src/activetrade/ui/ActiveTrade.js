@@ -16,6 +16,9 @@ class ActiveTrade extends Component {
   }
 
   componentWillUnmount () {
+    if (this.props.activetrade.data.status === 'All Done' &&  !this.props.activetrade.data.postProcessingCompleted){
+      this.tradePostProcessing()
+    }
     this.props.clearState()
   }
 
@@ -179,7 +182,6 @@ class ActiveTrade extends Component {
           purchaseRequestId={this.props.purchaseRequestId}
           step={status}
           viewerRole={viewerRole}
-          tradePostProcessing={this.tradePostProcessing.bind(this)}
           />,
         'Seller Canceled Trade': <Canceled
           activetrade={activetrade}
@@ -200,6 +202,7 @@ class ActiveTrade extends Component {
           progress_map={progress_maps[status]}
           viewerRole={viewerRole}
           step={status}
+          releaseEther={this.sellerReleasesEther.bind(this)} 
           purchaseRequestId={this.props.purchaseRequestId}
           releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
@@ -209,6 +212,7 @@ class ActiveTrade extends Component {
           progress_map={progress_maps[status]}
           viewerRole={viewerRole}
           step={status}
+          releaseEther={this.sellerReleasesEther.bind(this)} 
           purchaseRequestId={this.props.purchaseRequestId}
           releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)}

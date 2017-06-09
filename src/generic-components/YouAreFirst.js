@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import YouTube from 'react-youtube'
 // usage docs for youtube component https://github.com/troybetz/react-youtube
 
@@ -36,8 +35,5 @@ const YouAreFirst = () => (
 
   </div>
   )
-
-YouAreFirst.propTypes = {}
-YouAreFirst.defaultProps = {}
 
 export default YouAreFirst

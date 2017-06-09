@@ -51,6 +51,7 @@ export function signUpUser (signUpInfo, web3) {
         'avgFeedback': 0,
         'firstPurchase': '-',
         'shownotificationrequest': 'true',
+        'kycComplete': false,
       }
       firebaseRef.database().ref('/users/' + userid).set(userdata)
       firebaseUser.updateProfile({

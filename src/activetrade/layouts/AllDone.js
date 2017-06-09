@@ -6,10 +6,6 @@ import TradeFeedback from './../../tradefeedback/layouts/TradeFeedback'
 
 class AllDone extends Component {
 
-  componentWillUnmount(){
-    this.props.tradePostProcessing()
-  }
-
   render () {
     const progressMap = [
       { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },

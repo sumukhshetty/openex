@@ -1,5 +1,3 @@
-import {firebaseRef} from './../../index.js'
-
 export const GET_USER_SCREEN = 'GET_USER_SCREEN'
 function getUserScreen(userScreenPayload) {
   return {

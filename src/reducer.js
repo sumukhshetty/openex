@@ -25,6 +25,7 @@ import disputedTradesReducer from './disputedtrades/disputedtradesreducer'
 import completedTradesReducer from './completedtrades/completedtradesreducer'
 import tradeAdvertisementsReducer from './tradeadvertisements/tradeadvertisementsreducer'
 import editTradeAdvertisementReducer from './edittradeadvertisement/edittradeadvertisementreducer'
+import processKycReducer from './processkyc/processkycreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -52,7 +53,8 @@ const reducer = combineReducers({
   activetrade: activeTradeReducer,
   disputedtrades: disputedTradesReducer,
   tradeadvertisements: tradeAdvertisementsReducer,
-  edittradeadvertisement: editTradeAdvertisementReducer
+  edittradeadvertisement: editTradeAdvertisementReducer,
+  processkyc: processKycReducer
 
 })
 

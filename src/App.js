@@ -93,7 +93,7 @@ class App extends Component {
 
     const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />)
 
-    const isMobile = window.innerWidth <= 800
+    const isMobile = window.innerWidth <= 320
     if (isMobile) {
       return (
         <div className='absolute absolute--fill gradient white'>

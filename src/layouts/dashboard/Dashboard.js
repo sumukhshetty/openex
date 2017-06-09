@@ -10,6 +10,8 @@ import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
 import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
 import WrongNetwork from './../wrongnetwork/WrongNetwork'
 
+import Kyc from './kyc/layouts/Kyc'
+
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
 
@@ -72,6 +74,7 @@ class Dashboard extends Component {
             <div>
               <div>
                 <EnableNotifications />
+                <Kyc/>
                 <DashboardInfoMessage />
                 <ActiveTrades />
                 <TradeAdvertisements />

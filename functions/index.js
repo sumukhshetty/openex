@@ -240,3 +240,24 @@ exports.checkDispute = functions.https.onRequest((req, res) => {
     }
   })
 })
+
+
+// Check that the user actually is an admin
+
+exports.checkAdmin = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try {
+      console.log(req.body)
+      admin.database().ref('/users/'+ req.body.userUid)
+      .once('value', function(snap) {
+        if(snap.val()['isAdmin']){
+          res.status(200).send()
+        } else {
+          res.status(401).send({error:'[checkAdmin] Error not an Admin'})
+        }
+      })
+    } catch(error) {
+      res.status(500).send({error:'[helpForm] Error' + error}) 
+    }
+  })
+})
