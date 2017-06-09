@@ -81,7 +81,7 @@ class App extends Component {
                   </Link>
                 </li>
                 <li className='pure-menu-item'>
-                  <Link to='/help' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Help
+                  <Link to='/help' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}> Contact Us
                   </Link>
                 </li>
               </ul>
