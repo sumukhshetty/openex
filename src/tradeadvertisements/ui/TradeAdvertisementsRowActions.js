@@ -11,19 +11,18 @@ function sendEtherState(etherStatePayload) {
 
 module.exports = {
 
-  addEtherToContract: (amount, tradeAdvertisementId, contractAddress, web3, user) => (dispatch) => {
+  addEtherToContract: (amount, uid, contractAddress, web3) => (dispatch) => {
+    console.log('amount to send: ' + amount);
+    console.log('contract address: ' + contractAddress);
     dispatch(sendEtherState('sending'));
     var coinbase = web3.eth.coinbase;
     amount = Number(amount);
     let value = web3.toWei(amount, 'ether');
-    web3.eth.sendTransaction({from: coinbase, to: user.profile.orderBookAddress, value: value}, function(err, address) {
+    web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
       if(!err) {
         dispatch(sendEtherState('sent'));
-        firebaseRef.database().ref('/selltradeadvertisements/' + user.profile.country+ '/' + tradeAdvertisementId + '/availableBalance')
-        .once('value', function(snap) {
-          firebaseRef.database().ref('/selltradeadvertisements/' + user.profile.country+ '/' + tradeAdvertisementId + '/availableBalance')
-          .set(snap.val() + amount);
-        })
+        firebaseRef.database().ref('/users/'+uid+'/balanceUpdateTx')
+          .set(txHash);
       } else {
         if(err.message.includes('MetaMask Tx Signature: User denied')) {
           console.log('ERROR: User denied transaction');

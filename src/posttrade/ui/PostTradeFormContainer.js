@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import PostTradeForm from './PostTradeForm'
 import * as actions from './PostTradeFormActions'
+import { createETHOrderBook } from '../../web3/Web3InitActions.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -28,6 +29,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetEtherState: () => {
       dispatch(actions.resetEtherState());
+    },
+    createETHOrderBookContract: (web3, orderBookFactory, uid, country) => {
+      dispatch(createETHOrderBook(web3, orderBookFactory, uid, country));
     }
   }
 }

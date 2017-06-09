@@ -164,6 +164,64 @@ exports.confirmTrade = functions.https.onRequest((req, res) => {
   })
 })
 
+//TODO AK: update db rules for availableBalance: only account ownercan  write to balanceUpdateTx, which triggers this function
+exports.etherSent = functions.database.ref('/users/{uid}/balanceUpdateTx')
+  .onWrite(event=>{
+    //TODO AK: possibly check that txhash hasn't already been submitted. though right now I don't see a reason for the user to abuse this.
+    setTimeout(function(){
+      infura.sendAsync({
+        jsonrpc: "2.0",
+        method: "eth_getTransactionReceipt",
+        id: 1,
+        params: [event.data.val()]
+      }, function(err, result) {
+        if(err) {
+          throw err;
+        }
+        //check if tx went to the user's ETHOrderBook
+        let uid = event.params.uid;
+        admin.database().ref('/users/'+uid+'/orderBookAddress').once("value", function(snap) {
+          if(result.result.logs[0].address != snap.val()) {
+            res.status(500).send({error: 'Tx did not go to users ETHOrderBook. Tx address: ' + result.result.logs[0].address + ' orderBookAddress: ' + snap.val()});
+            throw 'Tx did not go to users ETHOrderBook';
+          }
+          //check for updated balance in logs
+          var balance = SolidityCoder.decodeParams(["uint"], result.result.logs[0].data.replace("0x", ""));
+          admin.database().ref('/users/'+uid+'/availableBalance').set(web3.fromWei(balance, 'ether'));
+        })
+      });
+    }, 10000)
+  })
+
+// exports.buyOrderCreated = functions.https.onRequest((req, res) => {
+//   cors(req, res, () => {
+//     infura.sendAsync({
+//       jsonrpc: "2.0",
+//       method: "eth_getTransactionReceipt",
+//       id: 1,
+//       params: [req.body.txHash]
+//     }, function(err, result) {
+//       if(err) {
+//         throw err;
+//       }
+//       if(result.result.logs[0].address !==  '0x20936d2f75958dca4cbe0ce505bd5cbb457de4d9') {
+//         res.status(500).send({error: 'Tx did not originate from our order factory. Tx address: ' + result.result.logs[0].address});
+//         throw 'Tx did not originate from our order factory';
+//       }
+//       //string uid, address seller, address buyer, uint amount, uint price, string currency
+//       var data = SolidityCoder.decodeParams(["string", "address", "address", "uint", "uint", "string"], result.result.logs[0].data.replace("0x", ""));
+//       if(data[2] !== 'buy') {
+//         res.status(500).send({error: 'Not a buy order'});
+//         throw 'Not a buy order';
+//       }
+//
+//       admin.database().ref('/users/'+req.body.sellerUid).once("value", function(snap){
+//
+//       })
+//     });
+//   });
+// });
+
 exports.confirmPayment = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try{

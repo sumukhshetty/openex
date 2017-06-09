@@ -30,7 +30,7 @@ class PostTradeForm extends Component {
         status: '',
         active: false
       },
-      buyFormBool: false,
+      buyFormBool: true,
       user: this.props.user,
       uid: this.props.uid,
       sendEtherState: this.props.sendEtherState
@@ -134,7 +134,7 @@ class PostTradeForm extends Component {
         {paymentMethod: event.target.value,
           bankInformation: event.target.value}
       )
-    } else { 
+    } else {
       _postTradeDetails = Object.assign({},
         this.state.postTradeDetails,
         {paymentMethod: event.target.value}
@@ -174,8 +174,8 @@ class PostTradeForm extends Component {
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
       this.showWaitModal()
       this.props.onCreateSellTradeAdvertisementFormSubmit(
-        _postTradeDetails, 
-        this.props.web3.web3, 
+        _postTradeDetails,
+        this.props.web3.web3,
         this.props.user)
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
@@ -184,6 +184,10 @@ class PostTradeForm extends Component {
         this.props.web3.web3,
         this.props.user)
     }
+  }
+
+  createETHOrderBook() {
+    this.props.createETHOrderBookContract(this.props.web3.web3, this.props.web3.orderBookFactory, this.props.user.data.uid, this.props.user.profile.country);
   }
 
   render () {
@@ -293,25 +297,25 @@ class PostTradeForm extends Component {
                     termsOfTrade={this.state.postTradeDetails.termsOfTrade} />
                 }
 
-                {
-                  (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal />)
-                }
-
-                <div className='flex mv3'>
-                  <label className='w5 ' />
-                  <input
-                    type='submit'
-                    className='mv5'
-                    value='Publish Advertisement' />
-                </div>
-
-              </fieldset>
-            </form>
-          </div>
-        )
-        
-      }
+              {
+                (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal />)
+              }
+              {(this.state.buyFormBool || (!this.state.buyFormBool && this.props.user.profile.orderBookAddress)) &&
+              <div className='flex mv3'>
+                <label className='w5 ' />
+                <input
+                  type='submit'
+                  className='mv5'
+                  value='Publish Advertisement' />
+              </div>}
+            </fieldset>
+          </form>
+          {!this.state.buyFormBool && !this.props.user.profile.orderBookAddress &&
+          <button onClick={this.createETHOrderBook.bind(this)} >Create Contract</button>}
+        </div>
+      )
     }
+  }
   }
 }
 
