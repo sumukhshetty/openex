@@ -75,6 +75,9 @@ module.exports = {
     console.log(purchaseRequest)
     console.log(typeof(web3.eth.coinbase))
     // ISSUE-242: call on ETHOrderBook.addOrder when the seller confirms the trade
+
+    let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
+    let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
     const orderBook = contract(ETHOrderBook);
     orderBook.setProvider(web3.currentProvider);
     orderBook.at(seller.orderBookAddress)
@@ -83,8 +86,8 @@ module.exports = {
       //function addOrder(string uid, address buyer, uint amount, uint price, string currency)
       _orderBook.addOrder(purchaseRequest.buyerUid, 
         purchaseRequest.buyerAddress, 
-        Number(purchaseRequest.etherAmount),
-        Number(purchaseRequest.fiatAmount),
+        etherAmount,
+        fiatAmount,
         seller.currency, {from: web3.eth.coinbase})
       .then(function(txHash){
         
@@ -140,7 +143,7 @@ module.exports = {
   },
   sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3) => (dispatch) => {
     // ISSUE-243 call on ETHOrderBook.completeOrder when the seller releases the ether
-    /*const orderBook = contract(ETHOrderBook);
+    const orderBook = contract(ETHOrderBook);
     orderBook.setProvider(web3.currentProvider);
     orderBook.at(seller.orderBookAddress)
     .then(function(_orderBook){
@@ -164,8 +167,8 @@ module.exports = {
 
         })
     })
-    */    
-    var now = new Date()
+        
+/*    var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
         lastUpdated: now.toUTCString(),
@@ -176,7 +179,7 @@ module.exports = {
       .set(updatedPurchaseRequest, function(error){
         notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)
       })
-
+*/
   },
   tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
     console.log('ActiveTradeActions.tradePostProcessing')
