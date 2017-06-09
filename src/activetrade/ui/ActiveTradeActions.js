@@ -1,11 +1,8 @@
 import {firebaseRef, FIREBASE_TIMESTAMP} from './../../index.js'
 import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
-<<<<<<< HEAD
 import { browserHistory } from 'react-redux'
 const request = require('request')
-=======
-import { browserHistory } from 'react-router'
->>>>>>> origin/master
+
 
 function setActiveTrade(purchaseRequestPayload){
   return {
@@ -268,13 +265,9 @@ module.exports = {
         purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
 
         firebaseRef.database().ref("users/" + purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
-<<<<<<< HEAD
         firebaseRef.database().ref("users/" + purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
 
-=======
-        firebaseRef.database().ref("users/" + purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)*/
-        
->>>>>>> origin/master
+        */
         browserHistory.push('/dashboard')
       });
   },
