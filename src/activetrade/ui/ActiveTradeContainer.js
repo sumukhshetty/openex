@@ -5,6 +5,7 @@ import * as actions from './ActiveTradeActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
+    orderBook: state.orderBook,
     user: state.user,
     users: state.users,
     purchaserequests: state.purchaserequests,
@@ -22,8 +23,8 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users, user) => {
       dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users, user))
     },
-    sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerConfirmsTrade(seller, purchaseRequest, purchaseRequestId))
+    sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId, web3, orderBook) => {
+      dispatch(actions.sellerConfirmsTrade(seller, purchaseRequest, purchaseRequestId, web3, orderBook))
     },
     buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.buyerConfirmsPayment(buyer, purchaseRequest, purchaseRequestId))

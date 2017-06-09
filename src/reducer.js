@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import userReducer from './user/userReducer'
 import web3Reducer from './web3/web3Reducer'
+import orderBookReducer from './web3/orderBookReducer'
 import etherPriceReducer from './etherprice/etherpricereducer'
 import etherSendReducer from './sendether/sendetherreducer'
 import chatAuthReducer from './chat/reducers/auth'
@@ -31,6 +32,7 @@ const reducer = combineReducers({
   user: userReducer,
   users: usersReducer,
   web3: web3Reducer,
+  orderBook: orderBookReducer,
   buytradeadvertisement: buyTradeAdvertisementReducer,
   buytradeadvertisements: buyTradeAdvertisementsReducer,
   selltradeadvertisements: sellTradeadvertisementsReducer,
