@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 class ETHOrderBook extends Component {
 
   componentWillUnmount() {
-    this.props.clearUserOrderBook();
+    this.props.clearETHOrderBook();
   }
 
   componentWillUpdate(nextProps, nextState) {

@@ -11,7 +11,7 @@ import Dot from './../../images/svgReactComponents/Dot.js'
 class ActiveTrade extends Component {
 
   componentWillMount () {
-    this.props.onBeforeComponentLoad(this.props.purchaserequests, 
+    this.props.onBeforeComponentLoad(this.props.purchaserequests,
       this.props.purchaseRequestId, this.props.users, this.props.user)
   }
 
@@ -21,10 +21,10 @@ class ActiveTrade extends Component {
 
   sellerConfirmsTrade () {
     // TODO web3 stuff
-    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.orderBook.userOrderBook)
   }
   buyerConfirmsPayment () {
-    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId) 
+    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   sellerReleasesEther () {
@@ -131,7 +131,7 @@ class ActiveTrade extends Component {
       var tradeFlowComponents = {
         'Awaiting Seller Confirmation': <Confirmation
           activetrade={activetrade}
-          confirmTrade={this.sellerConfirmsTrade.bind(this)} 
+          confirmTrade={this.sellerConfirmsTrade.bind(this)}
           buyer={this.props.buyer}
           buyerCancelsTrade={this.buyerCancelsTrade.bind(this)}
           progress_map={progress_maps[status]}
@@ -141,27 +141,27 @@ class ActiveTrade extends Component {
           sellerCancelsTrade={this.sellerCancelsTrade.bind(this)}
           sendEtherState={this.props.sendEtherState}
           step={status}
-          viewerRole={viewerRole} 
+          viewerRole={viewerRole}
           />,
         'Awaiting Payment': <Payment
-          activetrade={activetrade} 
-          buyer={this.props.buyer} 
-          buyerRaisesDispute={this.buyerRaisesDispute.bind(this)} 
-          confirmPayment={this.buyerConfirmsPayment.bind(this)} 
-          progress_map={progress_maps[status]} 
-          purchaseRequestId={this.props.purchaseRequestId} 
-          seller={this.props.seller} 
-          sellerRaisesDispute={this.sellerRaisesDispute.bind(this)} 
-          step={status} 
-          viewerRole={viewerRole} 
-          />,
-        'Awaiting Release': <Release
-          activetrade={activetrade} 
+          activetrade={activetrade}
           buyer={this.props.buyer}
           buyerRaisesDispute={this.buyerRaisesDispute.bind(this)}
-          progress_map={progress_maps[status]} 
+          confirmPayment={this.buyerConfirmsPayment.bind(this)}
+          progress_map={progress_maps[status]}
           purchaseRequestId={this.props.purchaseRequestId}
-          releaseEther={this.sellerReleasesEther.bind(this)} 
+          seller={this.props.seller}
+          sellerRaisesDispute={this.sellerRaisesDispute.bind(this)}
+          step={status}
+          viewerRole={viewerRole}
+          />,
+        'Awaiting Release': <Release
+          activetrade={activetrade}
+          buyer={this.props.buyer}
+          buyerRaisesDispute={this.buyerRaisesDispute.bind(this)}
+          progress_map={progress_maps[status]}
+          purchaseRequestId={this.props.purchaseRequestId}
+          releaseEther={this.sellerReleasesEther.bind(this)}
           resetEtherState={this.resetEtherState.bind(this)}
           seller={this.props.seller}
           sellerRaisesDispute={this.sellerRaisesDispute.bind(this)}
@@ -170,48 +170,48 @@ class ActiveTrade extends Component {
           viewerRole={viewerRole}
           />,
         'All Done': <AllDone
-          activetrade={activetrade} 
+          activetrade={activetrade}
           buyer={this.props.buyer}
           buyerRatesSeller={this.props.buyerRatesSeller}
           seller={this.props.seller}
           sellerRatesBuyer={this.props.sellerRatesBuyer}
-          progress_map={progress_maps[status]} 
+          progress_map={progress_maps[status]}
           purchaseRequestId={this.props.purchaseRequestId}
           step={status}
           viewerRole={viewerRole}
           tradePostProcessing={this.tradePostProcessing.bind(this)}
           />,
         'Seller Canceled Trade': <Canceled
-          activetrade={activetrade} 
+          activetrade={activetrade}
           viewerRole={viewerRole}
           progress_map={progress_maps[status]}
           purchaseRequestId={this.props.purchaseRequestId}
           step={status}
           />,
         'Buyer Canceled Trade':<Canceled
-          activetrade={activetrade} 
+          activetrade={activetrade}
           viewerRole={viewerRole}
-          progress_map={progress_maps[status]} 
+          progress_map={progress_maps[status]}
           purchaseRequestId={this.props.purchaseRequestId}
           step={status}
           />,
         'Seller Raised Dispute': <Disputed
-          activetrade={activetrade} 
-          progress_map={progress_maps[status]} 
+          activetrade={activetrade}
+          progress_map={progress_maps[status]}
           viewerRole={viewerRole}
           step={status}
           purchaseRequestId={this.props.purchaseRequestId}
-          releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)} 
-          releaseToSeller={this.arbiterReleasesToSeller.bind(this)} 
+          releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
+          releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
           />,
         'Buyer Raised Dispute': <Disputed
-          activetrade={activetrade} 
-          progress_map={progress_maps[status]} 
+          activetrade={activetrade}
+          progress_map={progress_maps[status]}
           viewerRole={viewerRole}
           step={status}
           purchaseRequestId={this.props.purchaseRequestId}
-          releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)} 
-          releaseToSeller={this.arbiterReleasesToSeller.bind(this)} 
+          releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
+          releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
           />
       }
 

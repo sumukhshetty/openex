@@ -28,9 +28,12 @@ contract ETHOrderBook is Ownable, usingOraclize {
     availableBalance = 0;
   }
 
+  event BalanceUpdated(uint availableBalance);
   function () payable {
     //Is there a reason to limit this to only the seller's address?
-    availableBalance += msg.value;
+    //availableBalance += msg.value;
+    availableBalance = availableBalance.add(msg.value);
+    BalanceUpdated(availableBalance);
   }
 
 
@@ -39,7 +42,7 @@ contract ETHOrderBook is Ownable, usingOraclize {
     return ((amount.mul(100)).mul(feePercent)).div(10000);
   }
 
-  event OrderAdded(string uid, address seller, address buyer, uint amount, uint price, string currency);
+  event OrderAdded(string uid, address seller, address buyer, uint amount, uint price, string currency, uint availableBalance);
 
   function addOrder(string uid, address buyer, uint amount, uint price, string currency) {
     uint fee = calculateFee(amount);
@@ -57,7 +60,7 @@ contract ETHOrderBook is Ownable, usingOraclize {
 
     availableBalance = availableBalance.sub(amount.add(fee));
 
-    OrderAdded(uid, seller, buyer, amount, price, currency);
+    OrderAdded(uid, seller, buyer, amount, price, currency, availableBalance);
   }
 
   event OrderCompleted(string uid, address seller, address buyer, uint amount);

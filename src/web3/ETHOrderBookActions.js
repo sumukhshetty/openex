@@ -1,5 +1,5 @@
 const contract = require('truffle-contract')
-import ETHOrderBookContract from '../../build/contracts/ETHOrderBook.json'
+import ETHOrderBookContract from '../../contracts/abi/ETHOrderBook.json'
 
 export const USER_ORDER_BOOK = 'USER_ORDER_BOOK'
 function userOrderBook(orderBook) {

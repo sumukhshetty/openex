@@ -1,4 +1,4 @@
-
+import {firebaseRef} from './../../index.js'
 
 export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
 function sendEtherState(etherStatePayload) {
@@ -11,15 +11,27 @@ function sendEtherState(etherStatePayload) {
 
 module.exports = {
 
-  addEtherToContract: (amount, tradeAdvertisementId, contractAddress, web3) => (dispatch) => {
+  addEtherToContract: (amount, uid, contractAddress, web3) => (dispatch) => {
     console.log('amount to send: ' + amount);
     console.log('contract address: ' + contractAddress);
     dispatch(sendEtherState('sending'));
-    //var coinbase = web3.eth.coinbase;
+    var coinbase = web3.eth.coinbase;
     amount = Number(amount);
-    // ISSUE-241: add ether to the ETHOrderBook contract
-    //let value = web3.toWei(amount, 'ether');
-
+    let value = web3.toWei(amount, 'ether');
+    web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
+      if(!err) {
+        dispatch(sendEtherState('sent'));
+        firebaseRef.database().ref('/users/'+uid+'/balanceUpdateTx')
+          .set(txHash);
+      } else {
+        if(err.message.includes('MetaMask Tx Signature: User denied')) {
+          console.log('ERROR: User denied transaction');
+          dispatch(sendEtherState('denied'))
+        } else {
+          console.log(err);
+        }
+      }
+    })
 
   },
 

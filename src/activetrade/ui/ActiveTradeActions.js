@@ -1,6 +1,7 @@
 import {firebaseRef, FIREBASE_TIMESTAMP} from './../../index.js'
 import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import { browserHistory } from 'react-redux'
+const request = require('request')
 
 function setActiveTrade(purchaseRequestPayload){
   return {
@@ -63,8 +64,46 @@ module.exports = {
       dispatch(setSeller(users.data[activeTrade.sellerUid]))
     })
   },
-  sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
+  sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId, web3, orderBook) => (dispatch) => {
     // ISSUE-242: call on ETHOrderBook.addOrder when the seller confirms the trade
+    let coinbase = web3.eth.coinbase;
+    //string uid, address buyer, uint amount, uint price, string currency
+    orderBook.addOrder(purchaseRequestId, purchaseRequest.buyerAddress, web3.toWei(purchaseRequest.etherAmount, 'ether'), purchaseRequest.price, purchaseRequest.currency, {from: coinbase})
+    .then(function(txHash) {
+      //call firebase function here
+      //event OrderAdded(string uid, address seller, address buyer, uint amount, uint price, string currency);
+      request({
+        method: 'post',
+        body: {
+          purchaseRequestId: purchaseRequestId,
+          txHash: txHash['tx'],
+          contractAddress: txHash['logs'][0]['args']['orderAddress'],
+          buyerAddress: purchaseRequest.buyerAddress,
+          amount: web3.toWei(purchaseRequest.etherAmount, 'ether'),
+          price: purchaseRequest.price,
+          currency: purchaseRequest.currency
+        },
+        json: true,
+        url: 'https://us-central1-automteetherexchange.cloudfunctions.net/confirmTrade'
+      },
+      function(err, res, body) {
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        if(res.statusCode === 500) {
+          console.error('Server responded with an error: ' + res.body.error);
+          throw res.body.error
+        }
+        if(res.statusCode === 200) {
+
+        }
+      })
+    })
+    .catch(function(error) {
+      console.log('[ActiveTradeActions.sellerConfirmsTrade] error: ' + error);
+    });
+
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -76,7 +115,7 @@ module.exports = {
     .set(updatedPurchaseRequest, function(error){
       if(error){
         console.log(error)
-      } 
+      }
     });
   },
   buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -91,7 +130,7 @@ module.exports = {
       .set(updatedPurchaseRequest, function(error){
         if(error){
           console.log(error)
-        } 
+        }
       });
   },
   sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -117,7 +156,7 @@ module.exports = {
         purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
         purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
         firebaseRef.database().ref('/purchaserequests/' + user.profile.country + '/' + purchaseRequestId + '/postProcessingCompleted').set(true)
-      } 
+      }
   },
   sellerCancelsTrade:(seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerCancelsTrade")
@@ -173,7 +212,7 @@ module.exports = {
           .then(function() {
             purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
             purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-            
+
           });
   },
   buyerRaisesDispute: (buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -226,7 +265,7 @@ module.exports = {
 
         firebaseRef.database().ref("users/" + purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
         firebaseRef.database().ref("users/" + purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
-        
+
         browserHistory.push('/dashboard')
       });
   },
