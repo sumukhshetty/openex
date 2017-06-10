@@ -1,5 +1,7 @@
 import {firebaseRef} from './../../index.js'
-
+import OrderBookFactory from './../../../contracts/abi/OrderBookFactory'
+import factoryAddress from './../../contract_addresses/orderfactory.js'
+const contract = require('truffle-contract')
 // New
 export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
 function sendEtherState(etherStatePayload) {
@@ -23,47 +25,38 @@ export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
 
 export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
+    console.log("PostTradeFormActions.userCreatesSellTradeAdvertisement")
+    console.log(user.profile.country)
+    console.log(web3.eth.coinbase)
     dispatch(sendEtherState('sending'));
     try {
-      var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
-        .push(tradeDetails, function(err){
-          firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
-              newAdvertisement.key + '/tradetype').set('sell-ether')
+      const factory = contract(OrderBookFactory);
+      console.log(factory)
+      factory.setProvider(web3.currentProvider);
+      var factoryInstance;
+      factory.at(factoryAddress.kovanAddress)
+      .then(function (_factory) {
+        console.log('got the factory')
+        factoryInstance = _factory
+        _factory.createETHOrderBook(user.profile.country, {from:web3.eth.coinbase})
+        .then(function(txHash){
+          console.log(txHash)
+          console.log('created the ETHOrderBookContract')
+          firebaseRef.database().ref('/users/'+user.data.uid+'/orderBookAddress')
+          .set(txHash['logs'][0]['args']['orderAddress'])
+          var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
+            .push(tradeDetails, function(err){
+              firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
+                  newAdvertisement.key + '/tradetype').set('sell-ether')
+            })
         })
+      }).catch(function(error){
+        console.log()
+        console.log(error)
+      })
     } catch (error) {
       console.log(error)
     }
-    // ISSUE-240 - call on the OrderBookFactory contract to create a new ETHOrderBook when the seller creates a trade advertisement
-/*    request({
-      method: 'post',
-      body: {
-        tradeDetails: tradeDetails,
-        sellerUid: user.data.uid,
-        //contractTx: txHash['tx'],
-        // change this to sellOrderBook
-        //contractAddress: txHash['logs'][0]['args']['orderAddress'] 
-      },
-      json: true,
-      url: 'https://us-central1-automteetherexchange.cloudfunctions.net/createSellTradeAdvertisement'
-      },
-      function(err, res, body) {
-        if (err) {
-          console.error('error posting json: ', err)
-          throw err
-        }
-        if(res.statusCode === 200) {
-          dispatch(createSellTradeAdvertisement(tradeDetails))
-          browserHistory.push('/dashboard')
-        }
-        if(res.statusCode === 500) {
-          console.error('Server responded with an error: ' + res.body.error);
-          throw res.body.error
-      }
-    })
-    .catch(function (error) {
-      dispatch(sendEtherState('init'));
-      console.log(error);
-    })*/
   }
 }
 

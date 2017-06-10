@@ -9,6 +9,7 @@ import Footer from './../../footer/Footer'
 
 const browserHandler = {
   chrome: () => <HomeMain />,
+  firefox: () => <HomeMain />,
   default: (browser) => <UnsupportedBrowser />
 }
 

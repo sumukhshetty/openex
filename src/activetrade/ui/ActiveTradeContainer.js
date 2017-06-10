@@ -23,14 +23,14 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users, user) => {
       dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users, user))
     },
-    sellerConfirmsTrade: (seller, purchaseRequest, purchaseRequestId, web3, orderBook) => {
-      dispatch(actions.sellerConfirmsTrade(seller, purchaseRequest, purchaseRequestId, web3, orderBook))
+    sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, orderBook) => {
+      dispatch(actions.sellerConfirmsTrade(seller, buyer, purchaseRequest, purchaseRequestId, web3, orderBook))
     },
-    buyerConfirmsPayment: (buyer, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.buyerConfirmsPayment(buyer, purchaseRequest, purchaseRequestId))
+    buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => {
+      dispatch(actions.buyerConfirmsPayment(buyer, seller, purchaseRequest, purchaseRequestId))
     },
-    sellerReleasesEther: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerReleasesEther(seller, purchaseRequest, purchaseRequestId))
+    sellerReleasesEther: (seller, buyer,purchaseRequest, purchaseRequestId, web3) => {
+      dispatch(actions.sellerReleasesEther(seller, buyer, purchaseRequest, purchaseRequestId, web3))
     },
     sellerCancelsTrade: (seller, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.sellerCancelsTrade(seller, purchaseRequest, purchaseRequestId))
@@ -44,11 +44,11 @@ const mapDispatchToProps = (dispatch) => {
     sellerRaisesDispute: (seller, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.sellerRaisesDispute(seller, purchaseRequest, purchaseRequestId))
     },
-    arbiterReleasesToSeller: (seller, arbiter, purchaseRequest, purchaseRequestId)=>{
-      dispatch(actions.arbiterReleasesToSeller(seller, arbiter, purchaseRequest, purchaseRequestId))
+    arbiterReleasesToSeller: (seller, arbiter, purchaseRequest, purchaseRequestId, web3)=>{
+      dispatch(actions.arbiterReleasesToSeller(seller, arbiter, purchaseRequest, purchaseRequestId, web3))
     },
-    arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId)=>{
-      dispatch(actions.arbiterReleasesToBuyer(buyer, arbiter, purchaseRequest, purchaseRequestId))
+    arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId, web3)=>{
+      dispatch(actions.arbiterReleasesToBuyer(buyer, arbiter, purchaseRequest, purchaseRequestId, web3))
     },
     sellerRatesBuyer: (rating, purchaseRequestId, purchaseRequest) => {
       dispatch(actions.sellerRatesBuyer(rating, purchaseRequestId, purchaseRequest))

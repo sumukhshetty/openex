@@ -76,6 +76,7 @@ exports.buyerCreatesPurchaseRequest = functions.https.onRequest((req, res) => {
 exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid}/notifications/{notificationUid}')
   .onWrite(event=>{
     let notificationUid = event.params.notificationUid
+    let recipientUid = event.params.recipientUid
     admin.database().ref('/notifications/'+ notificationUid).once('value', function(snap){
       let notifcationData = snap.val()
       console.log(notifcationData)
@@ -95,22 +96,63 @@ exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid
           console.log("no token")
         }
       }
-      if(notifcationData.email){
-        if(notifcationData.verifiedEmail){
+      if(notifcationData.verifiedEmail){
+        admin.database().ref('/notificationsConfig/'+recipientUid+'/email').once('value',function(snap){
           var emaildata = {
             from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
-            to: notifcationData.recipientEmail,
+            to: snap.val(),
             subject: notifcationData.title,
             text: notifcationData.body
           }
           mailgun.messages().send(emaildata, function(error, body){
             console.log(body);
           })
-        }
+        })
       }
     })
   })
 
+
+exports.notificationPostProcesing1 = functions.database.ref('/notifications/{recipientUid}/{purchaseRequestId}/{step}')
+  .onWrite(event=>{
+    if (event.data.previous.exists()){
+      return;
+    }
+    if(!event.data.exists()){
+      return;
+    }
+    let notificationUid = event.params.notificationUid
+    let recipientUid = event.params.recipientUid
+    let notificationData = event.data.val()
+    console.log(notificationData)
+    if (notificationData.fcm) {
+      if(notificationData.recipientToken){
+        admin.messaging().sendToDevice([notificationData.recipientToken],
+          {
+            notification:
+              {
+                title:notificationData.title,
+                body: notificationData.body
+              }
+          })
+      } else {
+        console.log("no token")
+      }
+    }
+    if (notificationData.verifiedEmail) {
+      admin.database().ref('/notificationsConfig/'+recipientUid+'/email').once('value',function(snap){
+        var emaildata = {
+          from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
+          to: snap.val(),
+          subject: notificationData.title,
+          text: notificationData.body
+        }
+        mailgun.messages().send(emaildata, function(error, body){
+          console.log(body);
+        })
+      })
+    }
+  })
 
 exports.confirmTrade = functions.https.onRequest((req, res) => {
   cors(req, res, () => {

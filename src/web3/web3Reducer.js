@@ -6,6 +6,7 @@ const web3 = new Web3(provider)
 const initialState = {
   web3: web3,
   locked: true,
+  verified: false,
   wrongnetwork: true,
   orderBookFactory: null
 }
@@ -17,7 +18,7 @@ const web3Reducer = (state = initialState, action) => {
       web3: action.payload
     })
   }
-  if (action.type === 'GET_BROWSER_WALLET_LOCK_STATUS')
+  if (action.type === 'SET_BROWSER_WALLET_LOCK_STATUS')
   {
     return Object.assign({}, state, {
       locked:action.payload
@@ -27,6 +28,12 @@ const web3Reducer = (state = initialState, action) => {
   {
     return Object.assign({}, state, {
       wrongnetwork:action.payload
+    })
+  }
+  if (action.type === 'SET_BROWSER_WALLET_VERIFIED_STATUS')
+  {
+    return Object.assign({}, state, {
+      verified:action.payload
     })
   }
   if (action.type === "ORDER_BOOK_FACTORY")

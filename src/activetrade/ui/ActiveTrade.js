@@ -23,16 +23,14 @@ class ActiveTrade extends Component {
   }
 
   sellerConfirmsTrade () {
-    // TODO web3 stuff
-    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.orderBook.userOrderBook)
+    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.orderBook.userOrderBook)
   }
   buyerConfirmsPayment () {
     this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   sellerReleasesEther () {
-    // TODO web3 stuff
-    this.props.sellerReleasesEther(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3)
   }
   sellerCancelsTrade () {
     this.props.sellerCancelsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
@@ -47,12 +45,10 @@ class ActiveTrade extends Component {
     this.props.sellerRaisesDispute(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   arbiterReleasesToSeller () {
-    // TODO web3 stuff
-    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3)
   }
   arbiterReleasesToBuyer () {
-    // TODO web3 stuff
-    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3)
   }
   tradePostProcessing () {
     this.props.tradePostProcessing(this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.users)

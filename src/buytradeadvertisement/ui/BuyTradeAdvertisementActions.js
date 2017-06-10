@@ -1,5 +1,5 @@
 import {firebaseRef} from './../../index.js'
-
+import * as notificationHelpers from './../../util/notificationHelpers'
 
 export const SET_BUY_TRADE_ADVERTISEMENT = 'SET_BUY_TRADE_ADVERTISEMENT'
 function setBuyTradeAdvertisement(buyTradeAdvertisementPayload){
@@ -73,78 +73,16 @@ module.exports = {
       sellerraisesdisputetime: '-'
     }
 
-/*    var postData = {
-      //amount: amount,
-      //bankInformation: buyTradeAdvertisement.bankInformation, //this should be taken from the sellTradeAdvertisement when the seller confirms a trade
-      buyerAddress: buyTradeAdvertisement.buyerAddress,
-      buyerUsername: buyer.data.username,
-      buyerUid: buyTradeAdvertisement.buyerUid,
-      tradeAdvertisementId: buyTradeAdvertisementId,
-      buyer: buyer,
-      //paymentMethod: buyTradeAdvertisement.paymentMethod, //this should be taken from the sellTradeAdvertisement when the seller confirms a trade
-      price: buyTradeAdvertisement.price,
-      //sellerAddress: coinbase,
-      sellerUid: seller.profile.uid,
-      sellerUsername: seller.profile.username,
-      sellrequesttime: new Date().toUTCString(),
-      status: 'Initiated'
-    }
-    var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/sellerCreatesPurchaseRequest'*/
-/*    var options = {
-      method: 'post',
-      body: postData,
-      json: true,
-      url: url
-    }*/
     try {
       var newRequest = firebaseRef.database().ref('/purchaserequests/' + seller.profile.country)
         .push(purchaseRequestData, function(err){
           firebaseRef.database().ref('/users/'+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
-          firebaseRef.database().ref('/users/'+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})   
-        })
-    } catch (error) {
-      console.log(error)
-    }
-/*    request(options, function (err, res, body) {
-      if (err) {
-        console.error('error posting json: ', err)
-        throw err
-      }
-      var statusCode = res.statusCode
-      if(statusCode === 500) {
-        console.error('Server responded with an error: ' + res.body.error);
-        throw res.body.error
-      }
-      if(statusCode === 200) {
-        console.log("ok got the 200")
-        var _body = seller.proflie.username + " has confirmed your buy order"
-        var _fcmToken
-        if(buyer.profile.fcmToken){
-          _fcmToken = buyer.fcmToken
-        } else {
-          _fcmToken = null
+          firebaseRef.database().ref('/users/'+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
+          notificationHelpers.sendSellerCreatesPurchaseRequestNotification(newRequest.key, buyTradeAdvertisementId, buyTradeAdvertisement, seller, buyer)
+          })
+        } catch (error) {
+          console.log(error)
         }
-        var purchaseRequestId = 'TODO'
-        var notificationData = {
-          "title": "New Seller Confirmation",
-          "body": _body,
-          "type": "accept-buy-order",
-          "email": true,
-          "fcm": true,
-          "recipientToken": _fcmToken,
-          "recipientEmail": buyer.email,
-          "verifiedEmail": buyer.verifiedEmail,
-          "senderUsername": seller.proflie.username,
-          // TODO get the purchaseRequestId from the res.body
-          "purchaseRequestId": purchaseRequestId,
-          "seen": false,
-          "createdAt": Date.now()
-        }
-        var newNotifcation = firebaseRef.database().ref("/notifications/").push(notificationData)
-        firebaseRef.database().ref('/users/'+buyer.data.uid+'/notifications/'+newNotifcation.key).set({vaule:true}) 
-        browserHistory.push('/activetrade/' +  res.purchaseRequestId)
-      }
-    });*/
   },
   clearState: () => (dispatch) =>{
     dispatch(clearBuyer())
