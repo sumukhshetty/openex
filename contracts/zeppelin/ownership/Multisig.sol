@@ -1,9 +1,9 @@
 pragma solidity ^0.4.8;
 
 
-/**
- * @title Multisig
- * @dev Interface contract for multisig proxy contracts; see below for docs.
+/*
+ * Multisig
+ * Interface contract for multisig proxy contracts; see below for docs.
  */
 contract Multisig {
   // EVENTS
@@ -26,3 +26,4 @@ contract Multisig {
   function execute(address _to, uint _value, bytes _data) external returns (bytes32);
   function confirm(bytes32 _h) returns (bool);
 }
+

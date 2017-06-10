@@ -1,0 +1,57 @@
+{
+  "contract_name": "Router",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "feePercent",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    },
+    {
+      "payable": true,
+      "type": "fallback"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000c57fe5b5b5b60008054600160a060020a03191633600160a060020a03161790555b5b5b61016e8061003b6000396000f3006060604052361561003b5763ffffffff60e060020a6000350416637fd6f15c81146100755780638da5cb5b14610097578063f2fde38b146100c3575b6100735b60008054604051600160a060020a03909116913480156108fc02929091818181858888f19350505050151561007057fe5b5b565b005b341561007d57fe5b6100856100e1565b60408051918252519081900360200190f35b341561009f57fe5b6100a76100e7565b60408051600160a060020a039092168252519081900360200190f35b34156100cb57fe5b610073600160a060020a03600435166100f6565b005b60015481565b600054600160a060020a031681565b60005433600160a060020a039081169116146101125760006000fd5b600160a060020a0381161561013d5760008054600160a060020a031916600160a060020a0383161790555b5b5b505600a165627a7a7230582071c0459854936c6bd8d1b97d05239392e649931701a6d7d52c3e4c5591e633750029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1497056275863
+}
