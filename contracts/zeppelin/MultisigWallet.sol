@@ -6,11 +6,11 @@ import "./ownership/Shareable.sol";
 import "./DayLimit.sol";
 
 
-/**
+/*
  * MultisigWallet
- * Usage:
- *     bytes32 h = Wallet(w).from(oneOwner).execute(to, value, data);
- *     Wallet(w).from(anotherOwner).confirm(h);
+ * usage:
+ * bytes32 h = Wallet(w).from(oneOwner).execute(to, value, data);
+ * Wallet(w).from(anotherOwner).confirm(h);
  */
 contract MultisigWallet is Multisig, Shareable, DayLimit {
 
@@ -20,41 +20,26 @@ contract MultisigWallet is Multisig, Shareable, DayLimit {
     bytes data;
   }
 
-  /**
-   * Constructor, sets the owners addresses, number of approvals required, and daily spending limit
-   * @param _owners A list of owners.
-   * @param _required The amount required for a transaction to be approved.
-   */
   function MultisigWallet(address[] _owners, uint _required, uint _daylimit)       
     Shareable(_owners, _required)        
     DayLimit(_daylimit) { }
 
-  /** 
-   * @dev destroys the contract sending everything to `_to`. 
-   */
+  // destroys the contract sending everything to `_to`.
   function destroy(address _to) onlymanyowners(keccak256(msg.data)) external {
     selfdestruct(_to);
   }
 
-  /** 
-   * @dev Fallback function, receives value and emits a deposit event. 
-   */
+  // gets called when no other function matches
   function() payable {
     // just being sent some cash?
     if (msg.value > 0)
       Deposit(msg.sender, msg.value);
   }
 
-  /**
-   * @dev Outside-visible transaction entry point. Executes transaction immediately if below daily 
-   * spending limit. If not, goes into multisig process. We provide a hash on return to allow the 
-   * sender to provide shortcuts for the other confirmations (allowing them to avoid replicating 
-   * the _to, _value, and _data arguments). They still get the option of using them if they want, 
-   * anyways.
-   * @param _to The receiver address
-   * @param _value The value to send
-   * @param _data The data part of the transaction
-   */
+  // Outside-visible transact entry point. Executes transaction immediately if below daily spend limit.
+  // If not, goes into multisig process. We provide a hash on return to allow the sender to provide
+  // shortcuts for the other confirmations (allowing them to avoid replicating the _to, _value
+  // and _data arguments). They still get the option of using them if they want, anyways.
   function execute(address _to, uint _value, bytes _data) external onlyOwner returns (bytes32 _r) {
     // first, take the opportunity to check that we're under the daily limit.
     if (underLimit(_value)) {
@@ -75,11 +60,8 @@ contract MultisigWallet is Multisig, Shareable, DayLimit {
     }
   }
 
-  /**
-   * @dev Confirm a transaction by providing just the hash. We use the previous transactions map, 
-   * txs, in order to determine the body of the transaction from the hash provided.
-   * @param _h The transaction hash to approve.
-   */
+  // confirm a transaction through just the hash. we use the previous transactions map, txs, in order
+  // to determine the body of the transaction from the hash provided.
   function confirm(bytes32 _h) onlymanyowners(_h) returns (bool) {
     if (txs[_h].to != 0) {
       if (!txs[_h].to.call.value(txs[_h].value)(txs[_h].data)) {
@@ -91,26 +73,17 @@ contract MultisigWallet is Multisig, Shareable, DayLimit {
     }
   }
 
-  /** 
-   * @dev Updates the daily limit value. 
-   * @param _newLimit 
-   */
   function setDailyLimit(uint _newLimit) onlymanyowners(keccak256(msg.data)) external {
     _setDailyLimit(_newLimit);
   }
 
-  /** 
-   * @dev Resets the value spent to enable more spending
-   */
   function resetSpentToday() onlymanyowners(keccak256(msg.data)) external {
     _resetSpentToday();
   }
 
 
   // INTERNAL METHODS
-  /** 
-   * @dev Clears the list of transactions pending approval.
-   */
+
   function clearPending() internal {
     uint length = pendingsIndex.length;
     for (uint i = 0; i < length; ++i) {
