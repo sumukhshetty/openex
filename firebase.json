@@ -3,12 +3,6 @@
     "rules": "./rules.json"
   },
   "hosting": {
-    "public": "./build_webpack",
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "./build_webpack/index.html"
-      }
-    ]
+    "public": "./build_webpack"
   }
 }

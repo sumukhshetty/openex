@@ -9,6 +9,7 @@ import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
 
 import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
 import WrongNetwork from './../wrongnetwork/WrongNetwork'
+import VerifyWalletContainer from './../../verifywallet/ui/VerifyWalletContainer'
 
 import Kyc from './kyc/layouts/Kyc'
 
@@ -60,11 +61,15 @@ class Dashboard extends Component {
   }
 
   render () {
-    if(this.props.web3.locked || this.props.web3.wrongnetwork) {
+    if(this.props.web3.locked || this.props.web3.wrongnetwork || !this.props.web3.verified) {
+      console.log(this.props.web3.locked, this.props.web3.wrongnetwork, this.props.web3.verified)
+      //this.props.web3.web3.version.getNetwork()
       return(
         <div>
         { this.props.web3.locked ? <BrowserWalletLockedAlert /> : null }
-        { this.props.web3.wrongnetwork ? <WrongNetwork /> : null }
+        { this.props.web3.wrongnetwork && !this.props.web3.locked ? <WrongNetwork /> : null }
+        { !this.props.web3.verified && !this.props.web3.locked && !this.props.web3.wrongnetwork? <VerifyWalletContainer/> : null }
+        
         </div>
         )
     } else{

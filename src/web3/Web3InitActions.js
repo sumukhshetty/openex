@@ -27,7 +27,7 @@ function orderBookFactory(factory) {
 
 function browserBasedWalletLocked(lockedBool){
   return {
-    type: 'GET_BROWSER_WALLET_LOCK_STATUS',
+    type: 'SET_BROWSER_WALLET_LOCK_STATUS',
     payload: lockedBool
   }
 }
@@ -40,6 +40,7 @@ function wrongNetwork(wrongNetworkBool){
 }
 
 export function web3Initialize() {
+  console.log("web3Initialize")
   return function(dispatch) {
     var web3Provided;
     if (typeof web3 !== 'undefined') {
@@ -47,28 +48,27 @@ export function web3Initialize() {
       // DEVELOPER NOTE: removing the next commented line will break the app
       // eslint-disable-next-line
       web3Provided = new Web3(web3.currentProvider)
-
-      web3Provided.version.getNetwork((err, res)=> {
-        // ISSUE - Change this to the mainnet
-        if(err){
-          console.log(err)
-        }
-        if(res !== '42' && res !== '4'){
-          dispatch(wrongNetwork(true))
-        } else{
+      if (web3Provided.eth.accounts.length === 0){
+        console.log("the account is locked")
+        dispatch(browserBasedWalletLocked(true))
+      } else {
+        console.log("the account is not locked")
+        dispatch(browserBasedWalletLocked(false))
+      }
+      // ISSUE - Change this to the mainnet
+      try {
+        if(web3Provided.version.network === '42'){
           dispatch(wrongNetwork(false))
-          if (web3Provided.eth.accounts.length === 0){
-            dispatch(browserBasedWalletLocked(true))
-          } else {
-            dispatch(browserBasedWalletLocked(false))
-          }
-        }
-      })
+        } else {
+          dispatch(wrongNetwork(true))
+        }        
+      } catch (error) {
+        console.log("we got an error getting the network")
+        //dispatch(wrongNetwork(false))
+      }
+      
     } else {
-      // DEVELOPER NOTE: What happens in the wild if the
-      // user does not have a browser based wallet? What happens
-      // if the Web3 object cannot be initialized with the httpProvider
-      // given from the loction in the truffle-config file?
+
       web3Provided = new Web3(new Web3.providers.HttpProvider(web3Location))
     }
     dispatch(web3Init(web3Provided))
