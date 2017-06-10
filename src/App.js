@@ -37,6 +37,10 @@ class App extends Component {
     this.showNotifications = this.showNotifications.bind(this)
   }
 
+  componentDidMount(){
+    console.log("Dashboard.componentDidMount")
+  }
+
   showNotifications () {
     this.setState({showNotifications: true})
   }
@@ -116,7 +120,7 @@ class App extends Component {
           <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
             {this.props.children}
           </main>
-          <ETHOrderBookContainer />
+          {/*<ETHOrderBookContainer />*/}
         </section>
       )
     }

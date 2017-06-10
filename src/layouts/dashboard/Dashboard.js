@@ -62,8 +62,6 @@ class Dashboard extends Component {
 
   render () {
     if(this.props.web3.locked || this.props.web3.wrongnetwork || !this.props.web3.verified) {
-      console.log(this.props.web3.locked, this.props.web3.wrongnetwork, this.props.web3.verified)
-      //this.props.web3.web3.version.getNetwork()
       return(
         <div>
         { this.props.web3.locked ? <BrowserWalletLockedAlert /> : null }
