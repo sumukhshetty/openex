@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import PostTradeForm from './PostTradeForm'
 import * as actions from './PostTradeFormActions'
-import { createETHOrderBook } from '../../web3/Web3InitActions.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -19,10 +18,10 @@ const mapDispatchToProps = (dispatch) => {
     userCreatesBuyTradeAdvertisement: (tradeDetails, web3, user) =>{
       dispatch(actions.userCreatesBuyTradeAdvertisement(tradeDetails, web3, user))
     },
-    onCreateSellTradeAdvertisementFormSubmit: (tradeDetails, web3, user) => {
+    onCreateSellTradeAdvertisementFormSubmit: (tradeDetails, web3, orderBookFactory, user) => {
       //event.preventDefault();
 
-      dispatch(actions.userCreatesSellTradeAdvertisement(tradeDetails, web3, user))
+      dispatch(actions.userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookFactory, user))
     },
     onBuyEtherFormSubmit: (tradeDetails, web3, state) => {
       event.preventDefault();
@@ -30,9 +29,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetEtherState: () => {
       dispatch(actions.resetEtherState());
-    },
-    createETHOrderBookContract: (web3, orderBookFactory, uid, country) => {
-      dispatch(createETHOrderBook(web3, orderBookFactory, uid, country));
     }
   }
 }

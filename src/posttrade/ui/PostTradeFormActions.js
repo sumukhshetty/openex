@@ -23,22 +23,12 @@ export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
 }
 
 
-export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
+export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookFactory, user){
   return function(dispatch){
     console.log("PostTradeFormActions.userCreatesSellTradeAdvertisement")
-    console.log(user.profile.country)
-    console.log(web3.eth.coinbase)
     dispatch(sendEtherState('sending'));
     try {
-      const factory = contract(OrderBookFactory);
-      console.log(factory)
-      factory.setProvider(web3.currentProvider);
-      var factoryInstance;
-      factory.at(factoryAddress.kovanAddress)
-      .then(function (_factory) {
-        console.log('got the factory')
-        factoryInstance = _factory
-        _factory.createETHOrderBook(user.profile.country, {from:web3.eth.coinbase})
+      orderBookFactory.data.createETHOrderBook(user.profile.country, {from:web3.eth.coinbase})
         .then(function(txHash){
           console.log(txHash)
           console.log('created the ETHOrderBookContract')
@@ -49,10 +39,6 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, user){
               firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
                   newAdvertisement.key + '/tradetype').set('sell-ether')
             })
-        })
-      }).catch(function(error){
-        console.log()
-        console.log(error)
       })
     } catch (error) {
       console.log(error)
