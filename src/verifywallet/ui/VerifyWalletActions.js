@@ -1,5 +1,6 @@
 const contract = require('truffle-contract')
 import ETHOrderBookContract from './../../../contracts/abi/ETHOrderBook.json'
+import OrderBookFactoryContract from './../../../contracts/abi/OrderBookFactory.json'
 
 
 function setWalletVerifiedStatus(verifiedBool){
@@ -13,6 +14,13 @@ function userOrderBook(orderBook) {
   return {
   type: 'USER_ETH_ORDER_BOOK',
   payload: orderBook
+  }
+}
+
+function setOrderBookFactory(orderBookFactory) {
+  return {
+  type: 'ETH_ORDER_BOOK_FACTORY',
+  payload: orderBookFactory
   }
 }
 
@@ -34,6 +42,21 @@ module.exports = {
       console.log("ui.VerifyWalletActions.verifyWallet.loadUserOrderBook.error")
       console.log(error)
       dispatch(userOrderBook(null))
+    }
+  },
+  loadOrderBookFactory: (web3, orderBookFactoryAddress) => (dispatch) => {
+    dispatch(setOrderBookFactory('obtaining...'))
+    try {
+      const orderBookFactory = contract(OrderBookFactoryContract)
+      orderBookFactory.setProvider(web3.currentProvider)
+      orderBookFactory.at(orderBookFactoryAddress)
+        .then(function(_orderBookFactory){
+          dispatch(setOrderBookFactory(_orderBookFactory))
+        })
+    } catch(error) {
+      console.log('ui.VerifyWalletActions.loadOrderBookFactory.catch')
+      console.log(error)
+      dispatch(setOrderBookFactory(null))
     }
   }
 }

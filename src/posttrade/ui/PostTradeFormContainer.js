@@ -9,7 +9,8 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user,
     etherPrice: state.etherPrice,
     uid: ownProps.uid,
-    sendEtherState: state.sendEtherState
+    sendEtherState: state.sendEtherState,
+    orderbookfactory: state.orderbookfactory
   }
 }
 

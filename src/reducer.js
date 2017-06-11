@@ -28,6 +28,7 @@ import editTradeAdvertisementReducer from './edittradeadvertisement/edittradeadv
 import processKycReducer from './processkyc/processkycreducer'
 import ethOrderBookReducer from './ethorderbook/ethorderbookreducer'
 import verifyWalletReducer from './verifywallet/verifywalletreducer'
+import orderBookFactoryReducer from './orderbookfactory/orderbookfactoryreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -58,7 +59,8 @@ const reducer = combineReducers({
   edittradeadvertisement: editTradeAdvertisementReducer,
   processkyc: processKycReducer,
   //ethorderbook: ethOrderBookReducer,
-  ethorderbook: verifyWalletReducer
+  ethorderbook: verifyWalletReducer,
+  orderbookfactory: orderBookFactoryReducer
 })
 
 export default reducer
