@@ -14,7 +14,8 @@ const mapStateToProps = (state, ownProps) => {
     activetrade: state.activetrade,
     sendEtherState: state.sendEtherState,
     cancelTradeState: state.cancelTradeState,
-    purchaseRequestId: ownProps.purchaseRequestId
+    purchaseRequestId: ownProps.purchaseRequestId,
+    ethorderbook: state.ethorderbook
   }
 }
 

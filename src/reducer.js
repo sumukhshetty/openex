@@ -27,13 +27,14 @@ import tradeAdvertisementsReducer from './tradeadvertisements/tradeadvertisement
 import editTradeAdvertisementReducer from './edittradeadvertisement/edittradeadvertisementreducer'
 import processKycReducer from './processkyc/processkycreducer'
 import ethOrderBookReducer from './ethorderbook/ethorderbookreducer'
+import verifyWalletReducer from './verifywallet/verifywalletreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
   user: userReducer,
   users: usersReducer,
   web3: web3Reducer,
-  orderBook: orderBookReducer,
+  //orderBook: orderBookReducer,
   buytradeadvertisement: buyTradeAdvertisementReducer,
   buytradeadvertisements: buyTradeAdvertisementsReducer,
   selltradeadvertisements: sellTradeadvertisementsReducer,
@@ -56,7 +57,8 @@ const reducer = combineReducers({
   tradeadvertisements: tradeAdvertisementsReducer,
   edittradeadvertisement: editTradeAdvertisementReducer,
   processkyc: processKycReducer,
-  ethorderbook: ethOrderBookReducer
+  //ethorderbook: ethOrderBookReducer,
+  ethorderbook: verifyWalletReducer
 })
 
 export default reducer

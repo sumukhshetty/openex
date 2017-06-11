@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     user: state.user,
+    ethorderbook: state.ethorderbook
   }
 }
 
@@ -25,7 +26,11 @@ const mapDispatchToProps = (dispatch) => {
     },
     verifyWallet: (result) => {
       dispatch(actions.verifyWallet(result))
-    }
+    },
+    loadETHOrderBook: (web3, orderBookAddress) => {
+      console.log("ui.VerifyWalletContainer.loadETHOrderBook")
+      dispatch(actions.loadUserOrderBook(web3, orderBookAddress))
+    },
   }
 }
 

@@ -4,6 +4,11 @@
   },
   "hosting": {
     "public": "./build_webpack",
-    "rewrites":[{"source":"**","destination":"/build_webpack/index.js"}]
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],    
+    "rewrites":[{"source":"**","destination":"/index.html"}]
   }
 }

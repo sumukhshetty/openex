@@ -7,12 +7,11 @@ class VerifyWallet extends Component {
   }
 
   componentWillMount(){
-    console.log('VerifyWallet.componentWillMount')
-    console.log(this.props)
     this.props.beforeComponentMounts(this.props.web3)
   }
   verifyWallet(e) {
     //this.props.verifyWallet(this.props.web3.web3)
+    console.log(this.props.user)
     var message = this.props.web3.web3.sha3("buyether.automte")
     var component = this
     this.props.web3.web3.eth.sign(this.props.web3.web3.eth.accounts[0], message, function(error, result){
@@ -21,6 +20,9 @@ class VerifyWallet extends Component {
           console.log(error)
           component.props.verifyWallet(false)
         } else {
+          if (component.props.user.profile.orderBookAddress){
+            component.props.loadETHOrderBook(component.props.web3.web3, component.props.user.profile.orderBookAddress)
+          }
           component.props.verifyWallet(true)
         }
       })
