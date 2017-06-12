@@ -106,7 +106,6 @@ module.exports = {
   },
   buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
     console.log("buyerConfirmsPayment")
-    console.log(buyer, seller, purchaseRequest, purchaseRequestIdbuyer, seller, purchaseRequest, purchaseRequestId)
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
