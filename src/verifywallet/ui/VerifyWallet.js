@@ -24,6 +24,7 @@ class VerifyWallet extends Component {
           if (component.props.user.profile.orderBookAddress){
             component.props.loadETHOrderBook(component.props.web3.web3, component.props.user.profile.orderBookAddress)
           }
+          console.log()
           component.props.loadOrderBookFactory(component.props.web3.web3, factoryAddress.kovanAddress)
           component.props.verifyWallet(true)
         }

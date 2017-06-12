@@ -38,8 +38,6 @@ class PostTradeForm extends Component {
   }
 
   componentWillMount () {
-    console.log("PostTradeForm.componentWillMount")
-    console.log(this.props)
     var connectedAccount = this.props.web3.web3.eth.accounts[0]
     this.setState({postTradeDetails: {
       amount: 0,

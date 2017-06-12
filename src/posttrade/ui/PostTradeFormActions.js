@@ -2,6 +2,7 @@ import {firebaseRef} from './../../index.js'
 import OrderBookFactory from './../../../contracts/abi/OrderBookFactory'
 import factoryAddress from './../../contract_addresses/orderfactory.js'
 import ETHOrderBookContract from './../../../contracts/abi/ETHOrderBook.json'
+import * as contractAbis from './../../contract_addresses/contractAbi'
 
 const contract = require('truffle-contract')
 // New
@@ -53,6 +54,7 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookF
             .push(tradeDetails, function(err){
               firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
                   newAdvertisement.key + '/tradetype').set('sell-ether')
+              dispatch(sendEtherState('init'));
             })
       })
     } catch (error) {
@@ -71,14 +73,18 @@ export function loadUserOrderBook(web3, orderBookAddress) {
   return function(dispatch){
     dispatch(userOrderBook('obtaining...'))
     try {
-      const orderBook = contract(ETHOrderBookContract);
+      const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
+      const _instance = ETHOrderBook.at(orderBookAddress)
+      dispatch(userOrderBook(_instance))
+      dispatch(updateLoadingContractsStatus('loaded'))
+/*      const orderBook = contract(ETHOrderBookContract);
       orderBook.setProvider(web3.currentProvider);
       var orderBookInstance;
       orderBook.at(orderBookAddress)
         .then(function (_orderBook) {
           dispatch(userOrderBook(_orderBook))
           dispatch(updateLoadingContractsStatus('loaded'))
-        })
+        })*/
     } catch(error) {
       console.log("ui.VerifyWalletActions.verifyWallet.loadUserOrderBook.error")
       console.log(error)

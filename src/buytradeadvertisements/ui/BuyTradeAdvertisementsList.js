@@ -14,6 +14,7 @@ class BuyTradeAdvertisementsList extends Component {
     const rows = _.map(buytradeadvertisements, function (buyTradeAdvertisementData, key) {
       if(buyTradeAdvertisementData.buyerUid !== uid) {
         if(buyTradeAdvertisementData.active) {
+          buyer = users.data[buyTradeAdvertisementData.buyerUid]
           var marginMultiplier = (1 + (parseInt(buyTradeAdvertisementData.margin, 10) * 0.01))
           var price = etherPrice ? (etherPrice*marginMultiplier) : null;
           return <BuyTradeAdvertisementRow buyTradeAdvertisementData={buyTradeAdvertisementData} buyTradeAdvertisementId={key} price={price.toFixed(2)} buyer={buyer} key={key} />

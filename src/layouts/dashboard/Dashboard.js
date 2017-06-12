@@ -20,8 +20,6 @@ import {firebaseRef} from './../../index.js'
 
 class Dashboard extends Component {
   componentWillMount () {
-    console.log('Dashboard.componentWillMount')
-    console.log(this.props)
     firebaseMessaging.onTokenRefresh(function () {
       firebaseMessaging.getToken()
     .then(function (refreshedToken) {

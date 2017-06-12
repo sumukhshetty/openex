@@ -36,17 +36,12 @@ module.exports = {
     dispatch(setWalletVerifiedStatus(result))
   },
   loadUserOrderBook: (web3, orderBookAddress) => (dispatch) => {
-    console.log("VerifyWalletActions.loadUserOrderBook")
     dispatch(userOrderBook('obtaining...'))
     try {
-      console.log(new Date())
       const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
-      console.log(ETHOrderBook)
       const _instance = ETHOrderBook.at(orderBookAddress)
-      console.log(_instance)
       dispatch(userOrderBook(_instance))
       dispatch(updateLoadingContractsStatus('loaded'))
-      console.log(new Date())
       /*const orderBook = contract(ETHOrderBookContract);
       orderBook.setProvider(web3.currentProvider);
       var orderBookInstance;
@@ -62,15 +57,10 @@ module.exports = {
     }
   },
   loadOrderBookFactory: (web3, orderBookFactoryAddress) => (dispatch) => {
-    console.log("loadOrderBookFactory")
-    console.log(contractAbis.OrderBookFactoryAbi)
-    console.log(orderBookFactoryAddress)
     dispatch(setOrderBookFactory('obtaining...'))
     try {
       const OrderBookFactory = web3.eth.contract(contractAbis.OrderBookFactoryAbi)
-      console.log(OrderBookFactory)
       const _orderBookFactory = OrderBookFactory.at(orderBookFactoryAddress)
-      console.log(_orderBookFactory)
       dispatch(setOrderBookFactory(_orderBookFactory))
       dispatch(updateLoadingContractsStatus('loaded'))
       /*const orderBookFactory = contract(OrderBookFactoryContract)
