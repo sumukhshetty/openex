@@ -1,6 +1,8 @@
 import {firebaseRef} from './../../index.js'
 import OrderBookFactory from './../../../contracts/abi/OrderBookFactory'
 import factoryAddress from './../../contract_addresses/orderfactory.js'
+import ETHOrderBookContract from './../../../contracts/abi/ETHOrderBook.json'
+
 const contract = require('truffle-contract')
 // New
 export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
@@ -11,6 +13,19 @@ function sendEtherState(etherStatePayload) {
   }
 }
 
+function userOrderBook(orderBook) {
+  return {
+  type: 'USER_ETH_ORDER_BOOK',
+  payload: orderBook
+  }
+}
+
+function updateLoadingContractsStatus(status) {
+  return {
+    type: 'UPDATE_LOADING_CONTRACTS_STATUS',
+    payload: status
+  }
+}
 
 export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
@@ -22,7 +37,6 @@ export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
   }
 }
 
-
 export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookFactory, user){
   return function(dispatch){
     console.log("PostTradeFormActions.userCreatesSellTradeAdvertisement")
@@ -32,6 +46,7 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookF
         .then(function(txHash){
           console.log(txHash)
           console.log('created the ETHOrderBookContract')
+          loadUserOrderBook(web3, txHash['logs'][0]['args']['orderAddress'])
           firebaseRef.database().ref('/users/'+user.data.uid+'/orderBookAddress')
           .set(txHash['logs'][0]['args']['orderAddress'])
           var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
@@ -51,3 +66,23 @@ export function resetEtherState() {
     dispatch(sendEtherState('init'));
   }
 }
+
+export function loadUserOrderBook(web3, orderBookAddress) {
+  return function(dispatch){
+    dispatch(userOrderBook('obtaining...'))
+    try {
+      const orderBook = contract(ETHOrderBookContract);
+      orderBook.setProvider(web3.currentProvider);
+      var orderBookInstance;
+      orderBook.at(orderBookAddress)
+        .then(function (_orderBook) {
+          dispatch(userOrderBook(_orderBook))
+          dispatch(updateLoadingContractsStatus('loaded'))
+        })
+    } catch(error) {
+      console.log("ui.VerifyWalletActions.verifyWallet.loadUserOrderBook.error")
+      console.log(error)
+      dispatch(userOrderBook(null))
+    }
+  }
+  }
