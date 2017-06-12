@@ -15,9 +15,9 @@ module.exports = {
   },
   updateUserTradingStats: (purchaseRequest, userUid, users) => {
     var userProfile = users.data[userUid]
-    var updatedUserTradeVolume = parseInt(userProfile.tradeVolume, 10) + parseInt(purchaseRequest.etherAmount, 10)
+    var updatedUserTradeVolume = parseInt(Number(userProfile.tradeVolume), 10) + parseInt(Number(purchaseRequest.etherAmount), 10)
 
-    var updatedUserNumberOfTrades = parseInt(userProfile.numberOfTrades, 10) + 1
+    var updatedUserNumberOfTrades = parseInt(Number(userProfile.numberOfTrades), 10) + 1
     var userTradingPartners, tradingPartnerUid
     if (userUid===purchaseRequest.buyerUid){
 

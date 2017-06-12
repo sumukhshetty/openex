@@ -99,6 +99,9 @@ module.exports = {
 
           });
         })
+        .catch(function(error) {
+          dispatch(sendEtherState('init'));
+        })
     } catch (error) {
       console.log("ui.ActiveTradeActions.sellerConfirmsTrade.catch")
       console.log(error)
@@ -140,6 +143,8 @@ module.exports = {
             notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)
           })
         // END FIREBASE STUFF
+    }).catch(function(error) {
+        dispatch(sendEtherState('init'));
     })
   },
   tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
