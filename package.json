@@ -60,6 +60,7 @@
     "moment": "^2.18.1",
     "npm": "^4.6.1",
     "prop-types": "^15.5.8",
+    "raven-js": "^3.15.0",
     "react": "^15.4.2",
     "react-browser-detection": "^1.0.2",
     "react-dom": "^15.4.2",
