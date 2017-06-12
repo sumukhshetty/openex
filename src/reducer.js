@@ -29,6 +29,7 @@ import processKycReducer from './processkyc/processkycreducer'
 import ethOrderBookReducer from './ethorderbook/ethorderbookreducer'
 import verifyWalletReducer from './verifywallet/verifywalletreducer'
 import orderBookFactoryReducer from './orderbookfactory/orderbookfactoryreducer'
+import loadingContractsReducer from './loadingcontracts/loadingcontractsreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -60,7 +61,8 @@ const reducer = combineReducers({
   processkyc: processKycReducer,
   //ethorderbook: ethOrderBookReducer,
   ethorderbook: verifyWalletReducer,
-  orderbookfactory: orderBookFactoryReducer
+  orderbookfactory: orderBookFactoryReducer,
+  loadingcontracts: loadingContractsReducer
 })
 
 export default reducer

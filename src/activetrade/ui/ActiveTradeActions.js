@@ -72,50 +72,41 @@ module.exports = {
       dispatch(setSeller(users.data[activeTrade.sellerUid]))
     })
   },
-  sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3) => (dispatch) => {
+  sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerConfirmsTrade")
-    console.log(seller)
-    console.log(purchaseRequest)
-    console.log(typeof(web3.eth.coinbase))
-    // ISSUE-242: call on ETHOrderBook.addOrder when the seller confirms the trade
 
     let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
     let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
     let price = web3.toWei(purchaseRequest.price)
-    const orderBook = contract(ETHOrderBook);
-    orderBook.setProvider(web3.currentProvider);
-    orderBook.at(seller.orderBookAddress)
-    .then(function(_orderBook){
-      console.log(_orderBook)
-      //function addOrder(string uid, address buyer, uint amount, uint price, string currency)
-      _orderBook.addOrder(purchaseRequestId, 
-        purchaseRequest.buyerAddress, 
-        etherAmount,
-        // TODO user price or fiatAmount?
-        price,
-        purchaseRequest.currency, {from: web3.eth.coinbase})
-      .then(function(txHash){
-        
-        var now = new Date()
-        var updatedPurchaseRequest = Object.assign({},
-          purchaseRequest, {
-            lastUpdated: now.toUTCString(),
-            sellerconfirmtime: now.toUTCString(),
-            status: 'Awaiting Payment'
-          })
-        firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-        .set(updatedPurchaseRequest, function(error){
-          if(error){
-            console.log(error)
-          }
-          notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+    try {
+      ethOrderBook.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
+        etherAmount, price, purchaseRequest.currency, {from:web3.eth.coinbase}
+        ).then(function(txHash){
+          var now = new Date()
+          var updatedPurchaseRequest = Object.assign({},
+            purchaseRequest, {
+              lastUpdated: now.toUTCString(),
+              sellerconfirmtime: now.toUTCString(),
+              status: 'Awaiting Payment'
+            })
+          firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+          .set(updatedPurchaseRequest, function(error){
+            if(error){
+              console.log(error)
+            }
+            notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
 
-        });
-        
+          });
         })
-    })   
+    } catch (error) {
+      console.log("ui.ActiveTradeActions.sellerConfirmsTrade.catch")
+      console.log(error)
+    }
+
   },
   buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
+    console.log("buyerConfirmsPayment")
+    console.log(buyer, seller, purchaseRequest, purchaseRequestIdbuyer, seller, purchaseRequest, purchaseRequestId)
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -131,16 +122,9 @@ module.exports = {
         notificationHelpers.sendBuyerConfirmsPaymentNotification(buyer,seller,purchaseRequest,purchaseRequestId)
         });
   },
-  sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3) => (dispatch) => {
-    // ISSUE-243 call on ETHOrderBook.completeOrder when the seller releases the ether
-    const orderBook = contract(ETHOrderBook);
-    orderBook.setProvider(web3.currentProvider);
-    orderBook.at(seller.orderBookAddress)
-    .then(function(_orderBook){
-      console.log(_orderBook)
-      // function completeOrder(string uid)
-      _orderBook.completeOrder(purchaseRequest.buyerUid, {from: web3.eth.coinbase})
-      .then(function(txHash){
+  sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
+    ethOrderBook.data.completeOrder(purchaseRequestId, {from: web3.eth.coinbase})
+    .then(function(txHash){
         // START FIREBASE STUFF
         var now = new Date()
         var updatedPurchaseRequest = Object.assign({},
@@ -154,22 +138,7 @@ module.exports = {
             notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)
           })
         // END FIREBASE STUFF
-
-        })
     })
-        
-/*    var now = new Date()
-    var updatedPurchaseRequest = Object.assign({},
-      purchaseRequest, {
-        lastUpdated: now.toUTCString(),
-        sellerreleaseethertime: now.toUTCString(),
-        status: 'All Done'
-    })
-    firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
-      .set(updatedPurchaseRequest, function(error){
-        notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)
-      })
-*/
   },
   tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
     console.log('ActiveTradeActions.tradePostProcessing')

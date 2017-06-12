@@ -11,6 +11,8 @@ import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLo
 import WrongNetwork from './../wrongnetwork/WrongNetwork'
 import VerifyWalletContainer from './../../verifywallet/ui/VerifyWalletContainer'
 
+import LoadingContracts from './../../loadingcontracts/LoadingContracts'
+
 import Kyc from './kyc/layouts/Kyc'
 
 import {firebaseMessaging} from './../../index.js'
@@ -18,6 +20,8 @@ import {firebaseRef} from './../../index.js'
 
 class Dashboard extends Component {
   componentWillMount () {
+    console.log('Dashboard.componentWillMount')
+    console.log(this.props)
     firebaseMessaging.onTokenRefresh(function () {
       firebaseMessaging.getToken()
     .then(function (refreshedToken) {
@@ -71,23 +75,37 @@ class Dashboard extends Component {
         </div>
         )
     } else{
-      return (
-        <section className='bg-smoke'>
-          <div className='w-75 center pv3'>
+      if(this.props.loadingcontracts.data){
+        if(this.props.loadingcontracts.data === 'loading' || this.props.loadingcontracts.data === 'init' ){
+          return ( 
             <div>
-              <div>
-                <EnableNotifications />
-                <Kyc/>
-                <DashboardInfoMessage />
-                <ActiveTrades />
-                <TradeAdvertisements />
-                <CompletedTrades />
-                <DisputedTrades />
-              </div>
+              <LoadingContracts />
             </div>
-          </div>
-        </section>
-      )
+            )
+        } else if(this.props.loadingcontracts.data === 'loaded'){
+          return (
+            <section className='bg-smoke'>
+              <div className='w-75 center pv3'>
+                <div>
+                  <div>
+                    <EnableNotifications />
+                    <Kyc/>
+                    <DashboardInfoMessage />
+                    <ActiveTrades />
+                    <TradeAdvertisements />
+                    <CompletedTrades />
+                    <DisputedTrades />
+                  </div>
+                </div>
+              </div>
+            </section>
+          )
+        } else {
+          return (
+            <div> Error contact support </div>
+            )
+        }
+      }
     }
   }
 }

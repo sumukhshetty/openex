@@ -23,8 +23,9 @@ class VerifyWallet extends Component {
         } else {
           if (component.props.user.profile.orderBookAddress){
             component.props.loadETHOrderBook(component.props.web3.web3, component.props.user.profile.orderBookAddress)
+          } else {
+            component.props.loadOrderBookFactory(component.props.web3.web3, factoryAddress.kovanAddress)
           }
-          component.props.loadOrderBookFactory(component.props.web3.web3, factoryAddress.kovanAddress)
           component.props.verifyWallet(true)
         }
       })

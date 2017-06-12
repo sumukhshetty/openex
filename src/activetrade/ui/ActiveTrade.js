@@ -23,14 +23,14 @@ class ActiveTrade extends Component {
   }
 
   sellerConfirmsTrade () {
-    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.orderBook.userOrderBook)
+    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.ethorderbook)
   }
   buyerConfirmsPayment () {
-    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.seller.data,this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   sellerReleasesEther () {
-    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3)
+    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.ethorderbook)
   }
   sellerCancelsTrade () {
     this.props.sellerCancelsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)

@@ -9,6 +9,7 @@ const mapStateToProps = (state, ownProps) => {
     purchaserequests: state.purchaserequests,
     buytradeadvertisements: state.buytradeadvertisements,
     selltradeadvertisements: state.selltradeadvertisements,
+    loadingcontracts: state.loadingcontracts
   }
 }
 

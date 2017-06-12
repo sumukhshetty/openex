@@ -24,6 +24,13 @@ function setOrderBookFactory(orderBookFactory) {
   }
 }
 
+function updateLoadingContractsStatus(status) {
+  return {
+    type: 'UPDATE_LOADING_CONTRACTS_STATUS',
+    payload: status
+  }
+}
+
 module.exports = {
   verifyWallet: (result) => (dispatch) => {
     dispatch(setWalletVerifiedStatus(result))
@@ -37,6 +44,7 @@ module.exports = {
       orderBook.at(orderBookAddress)
         .then(function (_orderBook) {
           dispatch(userOrderBook(_orderBook))
+          dispatch(updateLoadingContractsStatus('loaded'))
         })
     } catch(error) {
       console.log("ui.VerifyWalletActions.verifyWallet.loadUserOrderBook.error")
@@ -52,6 +60,7 @@ module.exports = {
       orderBookFactory.at(orderBookFactoryAddress)
         .then(function(_orderBookFactory){
           dispatch(setOrderBookFactory(_orderBookFactory))
+          dispatch(updateLoadingContractsStatus('loaded'))
         })
     } catch(error) {
       console.log('ui.VerifyWalletActions.loadOrderBookFactory.catch')
