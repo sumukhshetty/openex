@@ -74,7 +74,7 @@ module.exports = {
   },
   sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerConfirmsTrade")
-
+    dispatch(sendEtherState('sending'));
     let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
     let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
     let price = web3.toWei(purchaseRequest.price)
@@ -94,6 +94,7 @@ module.exports = {
             if(error){
               console.log(error)
             }
+            dispatch(sendEtherState('init'));
             notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
 
           });
@@ -122,6 +123,7 @@ module.exports = {
         });
   },
   sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
+    dispatch(sendEtherState('sending'));
     ethOrderBook.data.completeOrder(purchaseRequestId, {from: web3.eth.coinbase})
     .then(function(txHash){
         // START FIREBASE STUFF
@@ -134,6 +136,7 @@ module.exports = {
         })
         firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
           .set(updatedPurchaseRequest, function(error){
+            dispatch(sendEtherState('init'));
             notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)
           })
         // END FIREBASE STUFF
