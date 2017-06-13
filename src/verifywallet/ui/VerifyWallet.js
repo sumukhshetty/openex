@@ -4,6 +4,9 @@ import factoryAddress from './../../contract_addresses/orderfactory.js'
 class VerifyWallet extends Component {
   constructor(props){
     super(props)
+    this.state={
+      isButtonDisabled:false
+    }
     this.verifyWallet = this.verifyWallet.bind(this)
   }
 
@@ -15,6 +18,7 @@ class VerifyWallet extends Component {
     console.log(this.props.user)
     var message = this.props.web3.web3.sha3("buyether.automte")
     var component = this
+    this.setState({isButtonDisabled:true})
     this.props.web3.web3.eth.sign(this.props.web3.web3.eth.accounts[0], message, function(error, result){
         //change the contents of the verifyAccount
         if(error){
@@ -36,7 +40,7 @@ class VerifyWallet extends Component {
       <div className="flex x">
         <div className="pa4">Automte needs you to verify your wallet address</div>
         <div className="pa4">
-        <button onClick={this.verifyWallet.bind(this)}>Verify Wallet</button>
+        <button onClick={this.verifyWallet.bind(this)} disabled={this.state.isButtonDisabled}>Verify Wallet</button>
         </div>
       </div>
       : null
