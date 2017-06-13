@@ -63,12 +63,11 @@ class Dashboard extends Component {
   }
 
   render () {
-    if(this.props.web3.locked || this.props.web3.wrongnetwork || !this.props.web3.verified) {
+    if(!this.props.web3.verified) {
       return(
         <div>
-        { this.props.web3.locked ? <BrowserWalletLockedAlert /> : null }
-        { this.props.web3.wrongnetwork && !this.props.web3.locked ? <WrongNetwork /> : null }
-        { !this.props.web3.verified && !this.props.web3.locked && !this.props.web3.wrongnetwork? <VerifyWalletContainer/> : null }
+        
+        { !this.props.web3.verified ? <VerifyWalletContainer/> : null }
         
         </div>
         )
