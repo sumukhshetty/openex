@@ -60,6 +60,10 @@ const mapDispatchToProps = (dispatch) => {
     tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
       actions.tradePostProcessing(user, purchaseRequest, purchaseRequestId, users)
     },
+    sellerAddsEther: (amount, uid, contractAddress, web3) => {
+      console.log("ui.ActiveTradeContainer.sellerAddsEther")
+      dispatch(actions.sellerAddsEther(amount, uid, contractAddress, web3))
+    },
     clearState: ()=>{
       dispatch(actions.clearState())
     },

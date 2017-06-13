@@ -74,64 +74,54 @@ module.exports = {
   },
   sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerConfirmsTrade")
-    dispatch(sendEtherState('sending'));
     let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
     let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
     let price = web3.toWei(purchaseRequest.price)
-    try {
-      ethOrderBook.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
-        etherAmount, price, purchaseRequest.currency, {from:web3.eth.coinbase},
-        function(error, result){
-          if(!error){
-            var now = new Date()
-          var updatedPurchaseRequest = Object.assign({},
-            purchaseRequest, {
-              lastUpdated: now.toUTCString(),
-              sellerconfirmtime: now.toUTCString(),
-              status: 'Awaiting Payment'
-            })
-          firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-          .set(updatedPurchaseRequest, function(error){
-            if(error){
-              console.log(error)
-            }
-            dispatch(sendEtherState('init'));
-            notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+    ethOrderBook.data.availableBalance(function(error, result){
+      if(!error){
+        // check if the request is greater than the available balance
+        if(result.toNumber()>web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')){
+          console.log("the availableBalance is greater than the purchase request")
+          dispatch(sendEtherState('sending'));
+          try {
+            ethOrderBook.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
+              etherAmount, price, purchaseRequest.currency, {from:web3.eth.coinbase},
+              function(error, result){
+                if(!error){
+                  var now = new Date()
+                var updatedPurchaseRequest = Object.assign({},
+                  purchaseRequest, {
+                    lastUpdated: now.toUTCString(),
+                    sellerconfirmtime: now.toUTCString(),
+                    status: 'Awaiting Payment'
+                  })
+                firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+                .set(updatedPurchaseRequest, function(error){
+                  if(error){
+                    console.log(error)
+                  }
+                  dispatch(sendEtherState('init'));
+                  notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
 
-          });
-          } else {
+                });
+                } else {
+                  console.log(error)
+                  dispatch(sendEtherState('init'));
+                }
+              }
+              )
+
+          } catch (error) {
+            console.log("ui.ActiveTradeActions.sellerConfirmsTrade.catch")
             console.log(error)
-            dispatch(sendEtherState('init'));
           }
+        } else {
+          dispatch(sendEtherState('insufficient-available-balance'));
         }
-        )
-      /*ethOrderBook.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
-        etherAmount, price, purchaseRequest.currency, {from:web3.eth.coinbase}
-        ).then(function(txHash){
-          var now = new Date()
-          var updatedPurchaseRequest = Object.assign({},
-            purchaseRequest, {
-              lastUpdated: now.toUTCString(),
-              sellerconfirmtime: now.toUTCString(),
-              status: 'Awaiting Payment'
-            })
-          firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-          .set(updatedPurchaseRequest, function(error){
-            if(error){
-              console.log(error)
-            }
-            dispatch(sendEtherState('init'));
-            notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
-
-          });
-        })
-        .catch(function(error) {
-          dispatch(sendEtherState('init'));
-        })*/
-    } catch (error) {
-      console.log("ui.ActiveTradeActions.sellerConfirmsTrade.catch")
-      console.log(error)
-    }
+      } else {
+        console.log(error)
+      }
+    })
 
   },
   buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -392,6 +382,28 @@ module.exports = {
           firebaseRef.database().ref('/users/'+purchaseRequest.sellerUid + '/avgFeedback').set(averageFeedback.toFixed(1))
         })
       })
+  },
+  sellerAddsEther: (amount, uid, contractAddress, web3) => (dispatch) => {
+    console.log("ui.ActiveTradeActions.sellerAddsEther")
+    dispatch(sendEtherState('sending'));
+    var coinbase = web3.eth.coinbase;
+    amount = Number(amount);
+    let value = web3.toWei(amount, 'ether');
+    web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
+      if(!err) {
+        dispatch(sendEtherState('init'));
+        /*firebaseRef.database().ref('/users/'+uid+'/balanceUpdateTx')
+          .set(txHash);*/
+      } else {
+        if(err.message.includes('MetaMask Tx Signature: User denied')) {
+          console.log('ERROR: User denied transaction');
+          dispatch(sendEtherState('insufficient-available-balance'))
+        } else {
+          console.log(err);
+          dispatch(sendEtherState('insufficient-available-balance'))
+        }
+      }
+    })
   },
   clearState: () => (dispatch) => {
     dispatch(clearBuyer())

@@ -12,6 +12,16 @@ class Confirmation extends Component {
     this.props.resetEtherState();
   }
 
+  onEtherAmountChange (e) {
+    e.preventDefault()
+    this.setState({amountToSend:e.target.value})
+  }
+
+  handleEscrowRequest (e) {
+    e.preventDefault()
+    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.seller.data.orderBookAddress, this.props.web3)
+  }
+
   render () {
     return (
       <section className='bg-smoke'>
@@ -44,6 +54,13 @@ class Confirmation extends Component {
                }
                  {this.props.sendEtherState === 'sending' &&
                  <span>Please accept the transaction in MetaMask</span>}
+                 {this.props.sendEtherState === 'insufficient-available-balance' &&
+                 <div>
+                 <span> Your contract doesn't have enough ether, add some to confirm this trade </span>
+                 <input type='number' onChange={this.onEtherAmountChange.bind(this)}/>
+                 <button onClick={this.handleEscrowRequest.bind(this)}> submit </button>
+                 </div>
+               }
                 </div>
               </div>}
             </div>

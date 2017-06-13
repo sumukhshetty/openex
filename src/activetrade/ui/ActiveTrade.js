@@ -131,6 +131,7 @@ class ActiveTrade extends Component {
       status = activetrade['status']
       var tradeFlowComponents = {
         'Awaiting Seller Confirmation': <Confirmation
+          web3={this.props.web3.web3}
           activetrade={activetrade}
           confirmTrade={this.sellerConfirmsTrade.bind(this)}
           buyer={this.props.buyer}
@@ -141,6 +142,7 @@ class ActiveTrade extends Component {
           seller={this.props.seller}
           sellerCancelsTrade={this.sellerCancelsTrade.bind(this)}
           sendEtherState={this.props.sendEtherState}
+          sellerAddsEther={this.props.sellerAddsEther}
           step={status}
           viewerRole={viewerRole}
           />,
