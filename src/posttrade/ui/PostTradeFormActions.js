@@ -42,8 +42,22 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookF
   return function(dispatch){
     console.log("PostTradeFormActions.userCreatesSellTradeAdvertisement")
     dispatch(sendEtherState('sending'));
-    try {
-      orderBookFactory.data.createETHOrderBook(user.profile.country, {from:web3.eth.coinbase})
+    orderBookFactory.data.createETHOrderBook(user.profile.country, {from: web3.eth.coinbase}, function(error, result){
+      if(!error){
+        loadUserOrderBook(web3, result)
+        firebaseRef.database().ref('/users/'+user.data.uid+'/orderBookAddress')
+        .set(result)
+        var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
+          .push(tradeDetails, function(err){
+            firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
+                newAdvertisement.key + '/tradetype').set('sell-ether')
+            dispatch(sendEtherState('init'));
+          })
+        } else {
+          console.log(error)
+        }
+      })
+      /*orderBookFactory.data.createETHOrderBook(user.profile.country, {from:web3.eth.coinbase})
         .then(function(txHash){
           console.log(txHash)
           console.log('created the ETHOrderBookContract')
@@ -56,7 +70,7 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookF
                   newAdvertisement.key + '/tradetype').set('sell-ether')
               dispatch(sendEtherState('init'));
             })
-      })
+      })*/
     } catch (error) {
       console.log(error)
     }
