@@ -53,27 +53,10 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookF
                 newAdvertisement.key + '/tradetype').set('sell-ether')
             dispatch(sendEtherState('init'));
           })
-        } else {
-          console.log(error)
-        }
-      })
-      /*orderBookFactory.data.createETHOrderBook(user.profile.country, {from:web3.eth.coinbase})
-        .then(function(txHash){
-          console.log(txHash)
-          console.log('created the ETHOrderBookContract')
-          loadUserOrderBook(web3, txHash['logs'][0]['args']['orderAddress'])
-          firebaseRef.database().ref('/users/'+user.data.uid+'/orderBookAddress')
-          .set(txHash['logs'][0]['args']['orderAddress'])
-          var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
-            .push(tradeDetails, function(err){
-              firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
-                  newAdvertisement.key + '/tradetype').set('sell-ether')
-              dispatch(sendEtherState('init'));
-            })
-      })*/
-    } catch (error) {
-      console.log(error)
-    }
+      } else {
+        console.log(error)
+      }
+    })
   }
 }
 
@@ -91,14 +74,6 @@ export function loadUserOrderBook(web3, orderBookAddress) {
       const _instance = ETHOrderBook.at(orderBookAddress)
       dispatch(userOrderBook(_instance))
       dispatch(updateLoadingContractsStatus('loaded'))
-/*      const orderBook = contract(ETHOrderBookContract);
-      orderBook.setProvider(web3.currentProvider);
-      var orderBookInstance;
-      orderBook.at(orderBookAddress)
-        .then(function (_orderBook) {
-          dispatch(userOrderBook(_orderBook))
-          dispatch(updateLoadingContractsStatus('loaded'))
-        })*/
     } catch(error) {
       console.log("ui.VerifyWalletActions.verifyWallet.loadUserOrderBook.error")
       console.log(error)

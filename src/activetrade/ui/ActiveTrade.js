@@ -55,7 +55,10 @@ class ActiveTrade extends Component {
   tradePostProcessing () {
     this.props.tradePostProcessing(this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.users)
   }
-
+  createOrderBookContract () {
+    console.log('ui.ActiveTrade.createOrderBookContract')
+    this.props.createOrderBookContract(this.props.web3.web3, this.props.orderbookfactory, this.props.user)
+  }
   resetEtherState() {
     this.props.resetEtherState();
   }
@@ -143,6 +146,7 @@ class ActiveTrade extends Component {
           sellerCancelsTrade={this.sellerCancelsTrade.bind(this)}
           sendEtherState={this.props.sendEtherState}
           sellerAddsEther={this.props.sellerAddsEther}
+          createOrderBookContract={this.createOrderBookContract.bind(this)}
           step={status}
           viewerRole={viewerRole}
           />,

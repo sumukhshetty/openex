@@ -61,6 +61,15 @@ class Confirmation extends Component {
                  <button onClick={this.handleEscrowRequest.bind(this)}> submit </button>
                  </div>
                }
+               {this.props.sendEtherState === 'no-eth-order-book' &&
+               <div>
+               <div>
+                 <span>You haven't created an Order Book Contract</span>
+                 </div>
+                 <div>
+                 <button onClick={this.props.createOrderBookContract}> Create Contract</button>
+                 </div>
+               </div>}
                 </div>
               </div>}
             </div>
