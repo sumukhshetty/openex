@@ -30,6 +30,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadOrderBookFactory: (web3, orderBookFactoryAddress) => {
       dispatch(actions.loadOrderBookFactory(web3, orderBookFactoryAddress))
+    },
+    wrongNetwork: (value) => {
+      dispatch(actions.wrongNetwork(value))
     }
   }
 }

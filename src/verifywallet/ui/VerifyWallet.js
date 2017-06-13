@@ -14,8 +14,6 @@ class VerifyWallet extends Component {
     this.props.beforeComponentMounts(this.props.web3)
   }
   verifyWallet(e) {
-    //this.props.verifyWallet(this.props.web3.web3)
-    console.log(this.props.user)
     var message = this.props.web3.web3.sha3("buyether.automte")
     var component = this
     this.setState({isButtonDisabled:true})
@@ -28,7 +26,13 @@ class VerifyWallet extends Component {
           if (component.props.user.profile.orderBookAddress){
             component.props.loadETHOrderBook(component.props.web3.web3, component.props.user.profile.orderBookAddress)
           }
-          console.log()
+          switch(component.props.web3.web3.version.network) {
+              case '42':
+                  component.props.wrongNetwork(false)
+                  break;
+              default:
+                  component.props.wrongNetwork(true)
+          }
           component.props.loadOrderBookFactory(component.props.web3.web3, factoryAddress.kovanAddress)
           component.props.verifyWallet(true)
         }

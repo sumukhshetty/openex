@@ -85,6 +85,7 @@ class Dashboard extends Component {
               <div className='w-75 center pv3'>
                 <div>
                   <div>
+                    {this.props.web3.wrongnetwork? <WrongNetwork/>: null}
                     <EnableNotifications />
                     <Kyc/>
                     <DashboardInfoMessage />
