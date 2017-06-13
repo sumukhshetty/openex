@@ -3,6 +3,8 @@ import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import * as notificationHelpers from './../../util/notificationHelpers'
 import { browserHistory } from 'react-router'
 
+import * as contractAbis from './../../contract_addresses/contractAbi'
+
 const request = require('request')
 
 
@@ -62,6 +64,19 @@ function clearActiveTrade(){
   }
 }
 
+function updateLoadingContractsStatus(status) {
+  return {
+    type: 'UPDATE_LOADING_CONTRACTS_STATUS',
+    payload: status
+  }
+}
+
+function userOrderBook(orderBook) {
+  return {
+  type: 'USER_ETH_ORDER_BOOK',
+  payload: orderBook
+  }
+}
 
 module.exports = {
   activeTrade: (purchaseRequests, purchaseRequestId, users, user) => (dispatch) => {
@@ -77,51 +92,61 @@ module.exports = {
     let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
     let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
     let price = web3.toWei(purchaseRequest.price)
-    ethOrderBook.data.availableBalance(function(error, result){
-      if(!error){
-        // check if the request is greater than the available balance
-        if(result.toNumber()>web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')){
-          console.log("the availableBalance is greater than the purchase request")
-          dispatch(sendEtherState('sending'));
-          try {
-            ethOrderBook.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
-              etherAmount, price, purchaseRequest.currency, {from:web3.eth.coinbase},
-              function(error, result){
-                if(!error){
-                  var now = new Date()
-                var updatedPurchaseRequest = Object.assign({},
-                  purchaseRequest, {
-                    lastUpdated: now.toUTCString(),
-                    sellerconfirmtime: now.toUTCString(),
-                    status: 'Awaiting Payment'
-                  })
-                firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-                .set(updatedPurchaseRequest, function(error){
-                  if(error){
+    try {
+      ethOrderBook.data.availableBalance(function(error, result){
+        if(!error){
+          // check if the request is greater than the available balance
+          if(result.toNumber()>web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')){
+            console.log("the availableBalance is greater than the purchase request")
+            dispatch(sendEtherState('sending'));
+            try {
+              ethOrderBook.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
+                etherAmount, price, purchaseRequest.currency, {from:web3.eth.coinbase},
+                function(error, result){
+                  if(!error){
+                    var now = new Date()
+                  var updatedPurchaseRequest = Object.assign({},
+                    purchaseRequest, {
+                      lastUpdated: now.toUTCString(),
+                      sellerconfirmtime: now.toUTCString(),
+                      status: 'Awaiting Payment'
+                    })
+                  firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+                  .set(updatedPurchaseRequest, function(error){
+                    if(error){
+                      console.log(error)
+                    }
+                    dispatch(sendEtherState('init'));
+                    notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+
+                  });
+                  } else {
                     console.log(error)
+                    dispatch(sendEtherState('init'));
                   }
-                  dispatch(sendEtherState('init'));
-                  notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
-
-                });
-                } else {
-                  console.log(error)
-                  dispatch(sendEtherState('init'));
                 }
-              }
-              )
+                )
 
-          } catch (error) {
-            console.log("ui.ActiveTradeActions.sellerConfirmsTrade.catch")
-            console.log(error)
+            } catch (error) {
+              console.log("ui.ActiveTradeActions.sellerConfirmsTrade.catch")
+              console.log(error)
+            }
+          } else {
+            dispatch(sendEtherState('insufficient-available-balance'));
           }
         } else {
-          dispatch(sendEtherState('insufficient-available-balance'));
+          console.log(error)
         }
+      })
+    } catch (error) {
+      console.log(error)
+      console.log(error.message)
+      if( error.message === "Cannot read property 'availableBalance' of null") {
+        dispatch(sendEtherState('no-eth-order-book'));
       } else {
         console.log(error)
       }
-    })
+    }
 
   },
   buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
@@ -404,6 +429,55 @@ module.exports = {
         }
       }
     })
+  },
+  sellerCreatesETHOrderBook: (web3, orderBookFactory, user) => (dispatch) => {
+    console.log("ui.ActiveTradeActions.sellerCreatesETHOrderBook")
+    dispatch(sendEtherState('sending'));
+/*    web3.eth.getTransactionReceipt('0x7ad6c4eec94fca7927d514ff4cba4a6ddd737374fb9b28bd009c8ce8d7ae90e4', 
+      function(error, result){
+        if(!error){
+          console.log(result)
+        } else {
+          console.log(error)
+        }
+      })*/
+    var event = orderBookFactory.data.ETHOrderBookCreated()
+    event.watch((error, result) => {
+      console.log("ETHOrderBookCreated.watch")
+      console.log(result.args.orderAddress)
+      const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
+      const _instance = ETHOrderBook.at(result.args.orderAddress)
+      dispatch(userOrderBook(_instance))
+      dispatch(updateLoadingContractsStatus('loaded'))
+      dispatch(sendEtherState('init'))
+    })
+    console.log(event)
+    orderBookFactory.data.createETHOrderBook(user.profile.country, {from: web3.eth.coinbase}, function(error, result){
+      if(!error){
+        console.log(result)
+        /*orderBookFactory.data.ETHOrderBookCreated({seller:web3.eth.coinbase},
+          function(error, result){
+            if(!error) {
+              console.log(result)
+              console.log(result.args.orderAddress)              
+            } else {
+              console.log(error)
+            }
+            
+          })
+*/
+        /*const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
+        const _instance = ETHOrderBook.at(result)
+        dispatch(userOrderBook(_instance))
+        dispatch(updateLoadingContractsStatus('loaded'))
+        firebaseRef.database().ref('/users/'+user.data.uid+'/orderBookAddress')
+        .set(result)
+        dispatch(sendEtherState('init'));*/
+        
+        } else {
+          console.log(error)
+        }
+      })
   },
   clearState: () => (dispatch) => {
     dispatch(clearBuyer())
