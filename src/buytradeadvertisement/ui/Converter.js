@@ -11,7 +11,7 @@ export default (props) => (
           <img src={etherium} alt='etherium logo' className='pr3' /> Ether
         </label>
         {/* TODO: [AK] maximum should be calculated and validated elsewhere */}
-        <input id='etherAmount' type='number' value={props.etherAmount} step='any' className='w3 pa2' min='0.000001' max={props.maxEther - (props.maxEther * 0.1)} onChange={props.onAmountChange}/>
+        <input id='etherAmount' type='number' value={props.etherAmount} step='any' className='w3 pa2' min='0.001' max={props.maxEther - (props.maxEther * 0.1)} onChange={props.onAmountChange}/>
       </div>
       <div className='flex mv3'>
         <div className='flex col mxc'>
