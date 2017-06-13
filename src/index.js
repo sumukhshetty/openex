@@ -39,6 +39,9 @@ import * as firebase from 'firebase'
 import * as _firebaseconfig from './../secrets/firebaseconfig'
 import * as useractions from './user/userActions'
 
+import Raven from 'raven-js';
+Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install();
+
 
 var config = {
   apiKey: _firebaseconfig._apiKey,

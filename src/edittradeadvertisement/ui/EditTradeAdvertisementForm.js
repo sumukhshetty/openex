@@ -43,6 +43,12 @@ class EditTradeAdvertisementForm extends Component {
       _postTradeDetails['maxTransactionLimit'] = event.target.value
     } else if (event.target.id === 'termsOfTrade') {
       _postTradeDetails['termsOfTrade'] = event.target.value
+    } else if (event.target.id === 'activeTrade') {
+      if (event.target.value === 'true') {
+        _postTradeDetails['active'] = true
+      } else {
+        _postTradeDetails['active'] = false
+      }
     }
     this.setState({ postTradeDetails: _postTradeDetails })
   }
@@ -78,7 +84,6 @@ class EditTradeAdvertisementForm extends Component {
       this.state.postTradeDetails,
       {lastUpated: now.toUTCString(),
         status: 'Initiated',
-        active: true,
         //margin: margin,
         price: price
       }
@@ -91,12 +96,29 @@ class EditTradeAdvertisementForm extends Component {
   }
 
   render () {
+    var isAdActive
+    if (this.state.postTradeDetails.active){
+      isAdActive = true
+    } else{
+      isAdActive = false
+    }
     return (
       <div>
         <form className='mv3' onSubmit={this.handleSubmit.bind(this)}>
           <fieldset >
             <legend className='b f4 mv3'>Trade Information</legend>
-
+                <div className='flex pa0 mv3'>
+                  <p className='w5'>I want to...</p>
+                  <div className='flex col'>
+                    <label htmlFor='activeTrade'><input id='activeTrade' name='activeTrade' type='radio' value='true' onChange={this.onInputChange.bind(this)}
+                      className='mr2' checked={isAdActive} />list my advertisement</label>
+                    <label htmlFor='activeTrade'> <input id='activeTrade' name='activeTrade' type='radio' value='false' onChange={this.onInputChange.bind(this)}
+                      className='mr2' checked={!isAdActive}/>unlist my advertisement</label>
+                  </div>
+                  <span className='measure-narrow fw1 i pa0 me'>
+                    If you wish to list your advertisment or if you want to unlist it.
+                  </span>
+                </div>
 
             <div className='flex mv3'>
               <label htmlFor='location' className='w5' >Location</label>

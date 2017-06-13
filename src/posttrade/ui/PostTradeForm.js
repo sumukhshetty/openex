@@ -176,6 +176,7 @@ class PostTradeForm extends Component {
       this.props.onCreateSellTradeAdvertisementFormSubmit(
         _postTradeDetails,
         this.props.web3.web3,
+        this.props.orderbookfactory,
         this.props.user)
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
@@ -184,10 +185,6 @@ class PostTradeForm extends Component {
         this.props.web3.web3,
         this.props.user)
     }
-  }
-
-  createETHOrderBook() {
-    this.props.createETHOrderBookContract(this.props.web3.web3, this.props.web3.orderBookFactory, this.props.user.data.uid, this.props.user.profile.country);
   }
 
   render () {
@@ -300,18 +297,15 @@ class PostTradeForm extends Component {
               {
                 (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal />)
               }
-              {(this.state.buyFormBool || (!this.state.buyFormBool && this.props.user.profile.orderBookAddress)) &&
               <div className='flex mv3'>
                 <label className='w5 ' />
                 <input
                   type='submit'
                   className='mv5'
                   value='Publish Advertisement' />
-              </div>}
+              </div>
             </fieldset>
           </form>
-          {!this.state.buyFormBool && !this.props.user.profile.orderBookAddress &&
-          <button onClick={this.createETHOrderBook.bind(this)} >Create Contract</button>}
         </div>
       )
     }

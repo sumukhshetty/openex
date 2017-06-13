@@ -23,7 +23,8 @@ class Home extends Component {
           </BrowserDetection>
         </div>
         <Process />
-        <Testimonials />
+      {/*TODO add this in with the main lanch*/}
+        {/*<Testimonials />*/}
         <Subscribe />
         <Footer/>
       </section>

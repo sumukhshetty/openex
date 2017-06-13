@@ -21,6 +21,8 @@ const BuyTradeAdvertismentRow = (props) => {
         <SellButton buyTradeAdvertisementId={props.buyTradeAdvertisementId} />
       </tr>
       )
+  } else {
+    return(null)
   }
 }
 

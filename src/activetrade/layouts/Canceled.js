@@ -8,8 +8,6 @@ import SellerStepNote from '../ui/SellerStepNoteSell'
 class Canceled extends Component {
 
   render () {
-    console.log("Canceled.render")
-    console.log(this.props)
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>

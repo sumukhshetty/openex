@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import factoryAddress from './../../contract_addresses/orderfactory.js'
 
 class VerifyWallet extends Component {
   constructor(props){
@@ -23,6 +24,8 @@ class VerifyWallet extends Component {
           if (component.props.user.profile.orderBookAddress){
             component.props.loadETHOrderBook(component.props.web3.web3, component.props.user.profile.orderBookAddress)
           }
+          console.log()
+          component.props.loadOrderBookFactory(component.props.web3.web3, factoryAddress.kovanAddress)
           component.props.verifyWallet(true)
         }
       })

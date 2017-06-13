@@ -1,14 +1,14 @@
 {
   "database": {
-    "rules": "./rules.json"
+    "rules": "./../rules.json"
   },
   "hosting": {
-    "public": "./build_webpack",
+    "public": "./",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],    
-    "rewrites":[{"source":"**","destination":"/index.html"}]
+    "rewrites":[{"source":"**","destination":"./index.html"}]
   }
 }

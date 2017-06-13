@@ -11,6 +11,8 @@ import Dot from './../../images/svgReactComponents/Dot.js'
 class ActiveTrade extends Component {
 
   componentWillMount () {
+    console.log("ActiveTrade.componentWillMount")
+    console.log(this.props)
     this.props.onBeforeComponentLoad(this.props.purchaserequests,
       this.props.purchaseRequestId, this.props.users, this.props.user)
   }
@@ -23,14 +25,14 @@ class ActiveTrade extends Component {
   }
 
   sellerConfirmsTrade () {
-    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.orderBook.userOrderBook)
+    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.ethorderbook)
   }
   buyerConfirmsPayment () {
-    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.seller.data,this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   sellerReleasesEther () {
-    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3)
+    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.ethorderbook)
   }
   sellerCancelsTrade () {
     this.props.sellerCancelsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
@@ -129,6 +131,7 @@ class ActiveTrade extends Component {
       status = activetrade['status']
       var tradeFlowComponents = {
         'Awaiting Seller Confirmation': <Confirmation
+          web3={this.props.web3.web3}
           activetrade={activetrade}
           confirmTrade={this.sellerConfirmsTrade.bind(this)}
           buyer={this.props.buyer}
@@ -139,6 +142,7 @@ class ActiveTrade extends Component {
           seller={this.props.seller}
           sellerCancelsTrade={this.sellerCancelsTrade.bind(this)}
           sendEtherState={this.props.sendEtherState}
+          sellerAddsEther={this.props.sellerAddsEther}
           step={status}
           viewerRole={viewerRole}
           />,

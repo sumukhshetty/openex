@@ -5,7 +5,7 @@ import * as actions from './ActiveTradeActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    orderBook: state.orderBook,
+    //orderBook: state.orderBook,
     user: state.user,
     users: state.users,
     purchaserequests: state.purchaserequests,
@@ -24,14 +24,14 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users, user) => {
       dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users, user))
     },
-    sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, orderBook) => {
-      dispatch(actions.sellerConfirmsTrade(seller, buyer, purchaseRequest, purchaseRequestId, web3, orderBook))
+    sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => {
+      dispatch(actions.sellerConfirmsTrade(seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook))
     },
     buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.buyerConfirmsPayment(buyer, seller, purchaseRequest, purchaseRequestId))
     },
-    sellerReleasesEther: (seller, buyer,purchaseRequest, purchaseRequestId, web3) => {
-      dispatch(actions.sellerReleasesEther(seller, buyer, purchaseRequest, purchaseRequestId, web3))
+    sellerReleasesEther: (seller, buyer,purchaseRequest, purchaseRequestId, web3, ethOrderBook) => {
+      dispatch(actions.sellerReleasesEther(seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook))
     },
     sellerCancelsTrade: (seller, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.sellerCancelsTrade(seller, purchaseRequest, purchaseRequestId))
@@ -59,6 +59,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
       actions.tradePostProcessing(user, purchaseRequest, purchaseRequestId, users)
+    },
+    sellerAddsEther: (amount, uid, contractAddress, web3) => {
+      console.log("ui.ActiveTradeContainer.sellerAddsEther")
+      dispatch(actions.sellerAddsEther(amount, uid, contractAddress, web3))
     },
     clearState: ()=>{
       dispatch(actions.clearState())

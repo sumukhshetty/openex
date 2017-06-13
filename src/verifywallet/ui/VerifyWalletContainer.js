@@ -6,16 +6,14 @@ const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
     user: state.user,
-    ethorderbook: state.ethorderbook
+    ethorderbook: state.ethorderbook,
+    orderbookfactory: state.orderbookfactory
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     beforeComponentMounts: (web3) => {
-      console.log('beforeComponentMounts')
-      console.log(web3)
-      console.log()
       try{
         if (web3.locked){
           dispatch(actions.verifyWallet(false))
@@ -28,9 +26,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.verifyWallet(result))
     },
     loadETHOrderBook: (web3, orderBookAddress) => {
-      console.log("ui.VerifyWalletContainer.loadETHOrderBook")
       dispatch(actions.loadUserOrderBook(web3, orderBookAddress))
     },
+    loadOrderBookFactory: (web3, orderBookFactoryAddress) => {
+      dispatch(actions.loadOrderBookFactory(web3, orderBookFactoryAddress))
+    }
   }
 }
 
