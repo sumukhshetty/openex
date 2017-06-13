@@ -75,6 +75,7 @@ export function web3Initialize() {
   }
 }
 
+//deprecate this has been moved to verify wallet
 export function createETHOrderBook(web3, orderBookFactory, uid, country) {
   return function(dispatch) {
     let coinbase = web3.eth.coinbase;
