@@ -25,14 +25,14 @@ class ActiveTrade extends Component {
   }
 
   sellerConfirmsTrade () {
-    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.ethorderbook)
+    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.ethorderbook)
   }
   buyerConfirmsPayment () {
     this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.seller.data,this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   sellerReleasesEther () {
-    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3, this.props.ethorderbook)
+    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.ethorderbook)
   }
   sellerCancelsTrade () {
     this.props.sellerCancelsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
@@ -47,17 +47,17 @@ class ActiveTrade extends Component {
     this.props.sellerRaisesDispute(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   arbiterReleasesToSeller () {
-    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3)
+    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
   }
   arbiterReleasesToBuyer () {
-    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.web3)
+    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
   }
   tradePostProcessing () {
     this.props.tradePostProcessing(this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.users)
   }
   createOrderBookContract () {
     console.log('ui.ActiveTrade.createOrderBookContract')
-    this.props.createOrderBookContract(this.props.web3.web3, this.props.orderbookfactory, this.props.user)
+    this.props.createOrderBookContract(this.props.web3.data, this.props.orderbookfactory, this.props.user)
   }
   resetEtherState() {
     this.props.resetEtherState();
@@ -136,7 +136,7 @@ class ActiveTrade extends Component {
       status = activetrade['status']
       var tradeFlowComponents = {
         'Awaiting Seller Confirmation': <Confirmation
-          web3={this.props.web3.web3}
+          web3={this.props.web3.data}
           activetrade={activetrade}
           confirmTrade={this.sellerConfirmsTrade.bind(this)}
           buyer={this.props.buyer}

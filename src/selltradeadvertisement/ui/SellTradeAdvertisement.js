@@ -32,7 +32,7 @@ export default class SellTradeAdvertisement extends Component {
       this.props.sellTradeAdvertisementId,
       this.props.selltradeadvertisement.data, 
       this.props.seller, 
-      this.props.web3.web3.eth.coinbase,
+      this.props.web3.data.eth.coinbase,
       this.props.user)
   }
 

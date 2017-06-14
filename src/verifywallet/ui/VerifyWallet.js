@@ -15,11 +15,11 @@ class VerifyWallet extends Component {
     this.props.beforeComponentMounts(this.props.web3)
   }
   verifyWallet(e) {
-    var message = this.props.web3.web3.sha3("buyether.automte")
+    var message = this.props.web3.data.sha3("buyether.automte")
     var component = this
     this.setState({isButtonDisabled:true, errorMessage:null})
     try{
-      this.props.web3.web3.eth.sign(this.props.web3.web3.eth.accounts[0], message, function(error, result){
+      this.props.web3.data.eth.sign(this.props.web3.data.eth.accounts[0], message, function(error, result){
           //change the contents of the verifyAccount
           if(error){
             console.log(error)
@@ -27,16 +27,16 @@ class VerifyWallet extends Component {
             component.props.verifyWallet(false)
           } else {
             if (component.props.user.profile.orderBookAddress){
-              component.props.loadETHOrderBook(component.props.web3.web3, component.props.user.profile.orderBookAddress)
+              component.props.loadETHOrderBook(component.props.web3.data, component.props.user.profile.orderBookAddress)
             }
-            switch(component.props.web3.web3.version.network) {
+            switch(component.props.web3.data.version.network) {
                 case '42':
                     component.props.wrongNetwork(false)
                     break;
                 default:
                     component.props.wrongNetwork(true)
             }
-            component.props.loadOrderBookFactory(component.props.web3.web3, factoryAddress.kovanAddress)
+            component.props.loadOrderBookFactory(component.props.web3.data, factoryAddress.kovanAddress)
             component.props.verifyWallet(true)
           }
         })

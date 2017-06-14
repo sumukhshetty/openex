@@ -39,7 +39,7 @@ class PostTradeForm extends Component {
   }
 
   componentWillMount () {
-    var connectedAccount = this.props.web3.web3.eth.accounts[0]
+    var connectedAccount = this.props.web3.data.eth.accounts[0]
     this.setState({postTradeDetails: {
       amount: 0,
       buyerAddress: connectedAccount,
@@ -87,7 +87,7 @@ class PostTradeForm extends Component {
   }
 
   onTradeTypeChange (event) {
-    var connectedAccount = this.props.web3.web3.eth.accounts[0]
+    var connectedAccount = this.props.web3.data.eth.accounts[0]
 
     var _postTradeDetails = this.state.postTradeDetails
     var _buyFormBool = this.state.buyFormBool
@@ -176,14 +176,14 @@ class PostTradeForm extends Component {
       this.showWaitModal()
       this.props.onCreateSellTradeAdvertisementFormSubmit(
         _postTradeDetails,
-        this.props.web3.web3,
+        this.props.web3.data,
         this.props.orderbookfactory,
         this.props.user)
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
       this.props.userCreatesBuyTradeAdvertisement(
         _postTradeDetails,
-        this.props.web3.web3,
+        this.props.web3.data,
         this.props.user)
     }
   }

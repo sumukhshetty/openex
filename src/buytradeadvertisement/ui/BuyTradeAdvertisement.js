@@ -34,7 +34,7 @@ export default class BuyTradeAdvertisement extends Component {
       this.props.buyTradeAdvertisementId,
       this.props.buytradeadvertisement.data,
       this.props.buyer,
-      this.props.web3.web3.eth.coinbase,
+      this.props.web3.data.eth.coinbase,
       this.props.user
       )
   }
