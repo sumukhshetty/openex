@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 // import SignUpForm from './SignUpForm'
-import { signUpUser } from './SignUpFormActions'
+import { signUpUser, signUpUserCustomAuth } from './SignUpFormActions'
 import SignUpForm from './../../../signup/SignUpForm'
+import SignUpFormCustomAuth from './../../../signup/SignUpFormCustomAuth'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -12,9 +13,13 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSignUpFormSubmit: (name, web3) => {
+    onSignUpFormSubmit: (signUpInfo, web3) => {
       event.preventDefault()
-      dispatch(signUpUser(name, web3))
+      dispatch(signUpUser(signUpInfo, web3))
+    },
+    onSignUpFormCustomAuthSubmit: (signUpInfo, web3) => {
+      event.preventDefault()
+      dispatch(signUpUserCustomAuth(signUpInfo, web3))
     }
   }
 }
@@ -22,6 +27,6 @@ const mapDispatchToProps = (dispatch) => {
 const SignUpFormContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignUpForm)
+)(SignUpFormCustomAuth)
 
 export default SignUpFormContainer

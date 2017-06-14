@@ -1,10 +1,16 @@
 var functions = require('firebase-functions');
 const admin = require('firebase-admin');
-admin.initializeApp(functions.config().firebase);
+var serviceAccount = require("./service-account.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://automteetherexchange.firebaseio.com"
+});
 
 const cors = require('cors')({origin: true});
 
 const SolidityCoder = require("web3/lib/solidity/coder.js");
+var ethUtil = require('ethereumjs-util');
 const Web3 = require("web3");
 const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/QmKbFq9RrJ0qz6zqSRPO'));
 const infura = web3.currentProvider;
@@ -14,64 +20,6 @@ var mgApiKey = "key-3d2bd1463fc87e2aff2224f96c1df70a"
 var domain = "mg.automte.com"
 var mailgun= require('mailgun-js')({apiKey: mgApiKey, domain:domain})
 
-exports.createBuyTradeAdvertisement = functions.https.onRequest((req, res) => {
-  cors(req, res, () => {
-    try{
-      var newAdvertisement = admin.database().ref('/buytradeadvertisements/'+ req.body.user.profile.country)
-        .push(req.body.tradeDetails, function(error){
-          admin.database().ref('/users/' + req.body.user.data.uid + '/advertisements/buyether/' +
-            newAdvertisement.key + '/tradetype').set('buy-ether')
-        })
-
-    } catch (error) {
-      console.log(error)
-    }
-  })
-})
-
-exports.createSellTradeAdvertisement = functions.https.onRequest((req, res) => {
-  cors(req, res, () => {
-    try {
-      var newAdvertisement = admin.database().ref('/selltradeadvertisements/'+ req.body.user.profile.country)
-        .push(req.body.tradeDetails, function(err){
-          admin.database().ref('/users/'+req.body.user.data.uid+'/advertisements/sellether/' +
-              newAdvertisement.key + '/tradetype').set('sell-ether')
-        })
-    } catch (error){
-      console.log(error)
-    }
-  })
-})
-
-exports.sellerCreatesPurchaseRequest = functions.https.onRequest((req, res) => {
-  cors(req, res, ()=>{
-    try {
-      var newRequest = admin.database().ref('/purchaserequests/' + req.body.user.profile.country)
-        .push(req.body.purchaseRequestData, function(err){
-          admin.database().ref('/users/'+ req.body.user.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
-          admin.database().ref('/users/'+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
-        })
-
-    } catch(error){
-      console.log(error)
-    }
-  })
-})
-
-exports.buyerCreatesPurchaseRequest = functions.https.onRequest((req, res) => {
-  cors(req, res, ()=>{
-    try {
-      var newRequest = admin.database().ref('/purchaserequests/' + req.body.buyer.profile.country)
-        .push(req.body.purchaseRequestData, function(err){
-          admin.database().ref('/users/' + req.body.seller.data.uid + '/activetrades/' + newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
-          admin.database().ref('/users/'+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
-        })
-    }  catch(error){
-      console.log(error)
-    }
-
-  })
-})
 
 exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid}/notifications/{notificationUid}')
   .onWrite(event=>{
@@ -154,15 +102,6 @@ exports.notificationPostProcesing1 = functions.database.ref('/notifications/{rec
     }
   })
 
-exports.confirmTrade = functions.https.onRequest((req, res) => {
-  cors(req, res, () => {
-    try{
-      res.status(200).send()
-    } catch(e) {
-      res.status(500).send({error:'[confirmTrade] Error' + e})
-    }
-  })
-})
 
 //TODO AK: update db rules for availableBalance: only account ownercan  write to balanceUpdateTx, which triggers this function
 exports.etherSent = functions.database.ref('/users/{uid}/balanceUpdateTx')
@@ -193,54 +132,6 @@ exports.etherSent = functions.database.ref('/users/{uid}/balanceUpdateTx')
     }, 10000)
   })
 
-// exports.buyOrderCreated = functions.https.onRequest((req, res) => {
-//   cors(req, res, () => {
-//     infura.sendAsync({
-//       jsonrpc: "2.0",
-//       method: "eth_getTransactionReceipt",
-//       id: 1,
-//       params: [req.body.txHash]
-//     }, function(err, result) {
-//       if(err) {
-//         throw err;
-//       }
-//       if(result.result.logs[0].address !==  '0x20936d2f75958dca4cbe0ce505bd5cbb457de4d9') {
-//         res.status(500).send({error: 'Tx did not originate from our order factory. Tx address: ' + result.result.logs[0].address});
-//         throw 'Tx did not originate from our order factory';
-//       }
-//       //string uid, address seller, address buyer, uint amount, uint price, string currency
-//       var data = SolidityCoder.decodeParams(["string", "address", "address", "uint", "uint", "string"], result.result.logs[0].data.replace("0x", ""));
-//       if(data[2] !== 'buy') {
-//         res.status(500).send({error: 'Not a buy order'});
-//         throw 'Not a buy order';
-//       }
-//
-//       admin.database().ref('/users/'+req.body.sellerUid).once("value", function(snap){
-//
-//       })
-//     });
-//   });
-// });
-
-exports.confirmPayment = functions.https.onRequest((req, res) => {
-  cors(req, res, () => {
-    try{
-      res.status(200).send()
-    } catch(e) {
-      res.status(500).send({error:'[confirmPayment] Error' + e})
-    }
-  })
-})
-
-exports.releaseEther = functions.https.onRequest((req, res) => {
-  cors(req, res, () => {
-    try{
-      res.status(200).send()
-    } catch(e) {
-      res.status(500).send({error:'[releaseEther] Error' + e})
-    }
-  })
-})
 
 // Help Form
 exports.helpForm = functions.https.onRequest((req, res) => {
@@ -300,6 +191,54 @@ exports.checkAdmin = functions.https.onRequest((req, res) => {
       })
     } catch(error) {
       res.status(500).send({error:'[helpForm] Error' + error}) 
+    }
+  })
+})
+
+// check the signature provided for signin and if
+// the recovered public address is the same as the one in
+// the post then give a token
+
+exports.signUpUserCustomAuth = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try {
+
+      var sig = req.body.signature;
+      var account_address = req.body.account_address
+      var data = "I am signing up for the automte ether marketplace and I have read the terms and conditions"
+
+      var message = ethUtil.toBuffer(data)
+      var msgHash = ethUtil.hashPersonalMessage(message)
+
+      var signature = ethUtil.toBuffer(sig)
+      var sigParams = ethUtil.fromRpcSig(signature)
+      var publicKey = ethUtil.ecrecover(msgHash, sigParams.v, sigParams.r, sigParams.s)
+      var sender = ethUtil.publicToAddress(publicKey)
+      var addr = ethUtil.bufferToHex(sender)
+
+      var match = false;
+      if (addr == account_address) { match = true; }
+      if(match){
+        var uid = account_address;
+        var additionalClaims = {
+          premiumAccount: true,
+          account_address: req.body.account_address,
+          email: req.body.signUpInfo.email,
+          country: req.body.signUpInfo.country,
+          username: req.body.signUpInfo.username
+        };
+
+        admin.auth().createCustomToken(uid, additionalClaims)
+          .then(function(token){
+            console.log(token)
+            res.send(200,{status: 1, "token":token});
+          });
+      } else {
+        res.status(401).send({error: '[signUpUserCustomAuth] Error User not Authorized'})  
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({error: '[signUpUserCustomAuth] Error' + error})
     }
   })
 })
