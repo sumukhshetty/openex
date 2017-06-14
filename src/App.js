@@ -119,7 +119,7 @@ class App extends Component {
     }
     )
 
-    const OnlyGuestLinks = HiddenOnlyAuth(() => <Header web3={this.state.web3}/>)
+    const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />)
 
     const isMobile = window.innerWidth <= 320
     if (isMobile) {

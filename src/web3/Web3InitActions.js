@@ -9,13 +9,16 @@ import OrderBookFactoryContract from '../../contracts/abi/OrderBookFactory.json'
 import factoryAddress from '../contract_addresses/orderfactory.js'
 const contract = require('truffle-contract')
 
+// start deprecate
 export const WEB_3_INITIALIZE = 'WEB_3_INITIALIZE'
 function web3Init(web3) {
+  console.log("web3Init.WEB_3_INITIALIZE")
   return {
   type:WEB_3_INITIALIZE,
   payload:web3
   }
 }
+// end deprecate
 
 export const ORDER_BOOK_FACTORY = 'ORDER_BOOK_FACTORY'
 function orderBookFactory(factory) {

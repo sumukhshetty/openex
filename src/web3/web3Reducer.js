@@ -1,10 +1,12 @@
 import Web3 from 'web3'
 
-const provider = new Web3.providers.HttpProvider('http://localhost:8545')
-const web3 = new Web3(provider)
+//const provider = new Web3.providers.HttpProvider('http://localhost:8545')
+// TODO change this to mainnet on launch
+const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/QmKbFq9RrJ0qz6zqSRPO'));
+//const web3 = new Web3(provider)
 
 const initialState = {
-  web3: web3,
+  data: web3,
   locked: true,
   verified: false,
   wrongnetwork: true,
@@ -12,10 +14,10 @@ const initialState = {
 }
 
 const web3Reducer = (state = initialState, action) => {
-  if (action.type === "WEB_3_INITIALIZE")
+  if (action.type === "SET_WEB_3")
   {
     return Object.assign({}, state, {
-      web3: action.payload
+      data: action.payload
     })
   }
   if (action.type === 'SET_BROWSER_WALLET_LOCK_STATUS')

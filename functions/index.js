@@ -242,3 +242,39 @@ exports.signUpUserCustomAuth = functions.https.onRequest((req, res) => {
     }
   })
 })
+
+exports.loginUserCustomAuth = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    try {
+      var sig = req.body.signature;
+      var account_address = req.body.account_address
+      var data = "I am logging into the automte ether marketplace and I have read the terms and conditions"
+
+      var message = ethUtil.toBuffer(data)
+      var msgHash = ethUtil.hashPersonalMessage(message)
+
+      var signature = ethUtil.toBuffer(sig)
+      var sigParams = ethUtil.fromRpcSig(signature)
+      var publicKey = ethUtil.ecrecover(msgHash, sigParams.v, sigParams.r, sigParams.s)
+      var sender = ethUtil.publicToAddress(publicKey)
+      var addr = ethUtil.bufferToHex(sender)
+
+      var match = false;
+      if (addr == account_address) { match = true; }
+      if(match){
+        var uid = account_address;
+
+        admin.auth().createCustomToken(uid)
+          .then(function(token){
+            console.log(token)
+            res.send(200,{status: 1, "token":token});
+          });
+      } else {
+        res.status(401).send({error: '[signUpUserCustomAuth] Error User not Authorized'})  
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({error: '[loginUserCustomAuth] Error' + error})
+    }
+  })
+})

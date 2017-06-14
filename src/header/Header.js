@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import HomeNav from './HomeNav'
+import HomeNavContainer from './HomeNavContainer'
 
 class Header extends Component {
   render () {
     return(
       <header>
-        <HomeNav />
+        <HomeNavContainer />
       </header>
     )
   }

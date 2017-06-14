@@ -6,7 +6,8 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
 
 // Layouts
-import App from './App'
+import AppContainer from './AppContainer'
+
 import Home from './layouts/home/Home'
 //import Dashboard from './layouts/dashboard/Dashboard'
 import DashboardContainer from './layouts/dashboard/DashboardContainer'
@@ -69,7 +70,7 @@ export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
 ReactDOM.render((
   <Provider store={store}>
     <Router history={history}>
-      <Route path='/' component={App}>
+      <Route path='/' component={AppContainer}>
         <IndexRoute component={Home} />
         <Route path='dashboard' component={UserIsAuthenticated(DashboardContainer)} />
         <Route path='wrongnetwork' component={WrongNetwork} />
