@@ -16,7 +16,8 @@ const mapStateToProps = (state, ownProps) => {
     cancelTradeState: state.cancelTradeState,
     purchaseRequestId: ownProps.purchaseRequestId,
     ethorderbook: state.ethorderbook,
-    orderbookfactory: state.orderbookfactory
+    orderbookfactory: state.orderbookfactory,
+    txhash: state.txhash
   }
 }
 

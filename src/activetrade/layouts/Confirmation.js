@@ -23,6 +23,12 @@ class Confirmation extends Component {
   }
 
   render () {
+    var txHashUrl
+    console.log('Confirmation.render')
+    console.log(this.props)
+    if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
+      txHashUrl = "https://kovan.etherscan.io/tx/"+this.props.txhash
+    }
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
@@ -70,6 +76,12 @@ class Confirmation extends Component {
                  <button onClick={this.props.createOrderBookContract}> Create Contract</button>
                  </div>
                </div>}
+               {this.props.sendEtherState === 'waiting-for-tx-to-mine' &&
+               <div>
+              <div> You can check the status of you transaction here: </div>
+              <div><a target="_blank" href={txHashUrl}>{txHashUrl}</a></div>
+              </div>
+             }
                 </div>
               </div>}
             </div>

@@ -65,6 +65,8 @@ class ActiveTrade extends Component {
 
 
   render () {
+    console.log('ActiveTrade.render')
+    console.log(this.props)
     const progress_maps = {
       'Awaiting Seller Confirmation': [
         { status: 'active', label: <Dot />, text: 'Awaiting Seller Confirmation' },
@@ -149,6 +151,7 @@ class ActiveTrade extends Component {
           createOrderBookContract={this.createOrderBookContract.bind(this)}
           step={status}
           viewerRole={viewerRole}
+          txhash={this.props.txhash.data}
           />,
         'Awaiting Payment': <Payment
           activetrade={activetrade}

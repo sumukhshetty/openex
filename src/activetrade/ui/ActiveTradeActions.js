@@ -78,6 +78,21 @@ function userOrderBook(orderBook) {
   }
 }
 
+function setTxHash(txHash){
+  console.log('ui.ActiveTradeActions.setTxHash')
+  console.log(txHash)
+  return {
+    type: 'SET_TX_HASH',
+    payload: txHash
+  }
+}
+
+function clearTxHash(){
+  return{
+    type: 'CLEAR_TX_HASH'
+  }
+}
+
 module.exports = {
   activeTrade: (purchaseRequests, purchaseRequestId, users, user) => (dispatch) => {
     firebaseRef.database().ref('/purchaserequests/'+user.profile.country+'/'+purchaseRequestId).on('value', function(snap){
@@ -104,37 +119,41 @@ module.exports = {
                 etherAmount, price, purchaseRequest.currency, {from:web3.eth.coinbase},
                 function(error, result){
                   if(!error){
+                    console.log("we were able to add the order to the smart contract")
                     var now = new Date()
-                  var updatedPurchaseRequest = Object.assign({},
-                    purchaseRequest, {
-                      lastUpdated: now.toUTCString(),
-                      sellerconfirmtime: now.toUTCString(),
-                      status: 'Awaiting Payment'
-                    })
-                  firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-                  .set(updatedPurchaseRequest, function(error){
-                    if(error){
-                      console.log(error)
-                    }
-                    dispatch(sendEtherState('init'));
-                    notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+                    var updatedPurchaseRequest = Object.assign({},
+                      purchaseRequest, {
+                        lastUpdated: now.toUTCString(),
+                        sellerconfirmtime: now.toUTCString(),
+                        status: 'Awaiting Payment'
+                      })
+                    firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+                    .set(updatedPurchaseRequest, function(error){
+                      if(error){
+                        console.log(error)
+                      }
+                      dispatch(sendEtherState('init'));
+                      notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
 
-                  });
-                  } else {
-                    console.log(error)
-                    dispatch(sendEtherState('init'));
-                  }
+                    });
+                    } else {
+                      console.log(error)
+                      dispatch(sendEtherState('init'));
+                    }
                 }
                 )
 
             } catch (error) {
-              console.log("ui.ActiveTradeActions.sellerConfirmsTrade.catch")
+              console.log("there was an error with adding the order to the smart contract")
               console.log(error)
             }
           } else {
+            console.log("we don't have enough ether in the contract")
             dispatch(sendEtherState('insufficient-available-balance'));
           }
         } else {
+          console.log("ethOrderBook.data.availableBalance.error")
+          dispatch(sendEtherState('init'));
           console.log(error)
         }
       })
@@ -144,6 +163,7 @@ module.exports = {
       if( error.message === "Cannot read property 'availableBalance' of null") {
         dispatch(sendEtherState('no-eth-order-book'));
       } else {
+        console.log("there's a different error")
         console.log(error)
       }
     }
@@ -433,20 +453,19 @@ module.exports = {
   sellerCreatesETHOrderBook: (web3, orderBookFactory, user) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerCreatesETHOrderBook")
     dispatch(sendEtherState('sending'));
-/*    web3.eth.getTransactionReceipt('0x7ad6c4eec94fca7927d514ff4cba4a6ddd737374fb9b28bd009c8ce8d7ae90e4', 
-      function(error, result){
-        if(!error){
-          console.log(result)
-        } else {
-          console.log(error)
-        }
-      })*/
     var event = orderBookFactory.data.ETHOrderBookCreated()
+    // TODO add index to the ETHOrderBookCreated event in the smart contract and filter for the seller
+    //var event = orderBookFactory.data.ETHOrderBookCreated({seller:web3.eth.coinbase})
     event.watch((error, result) => {
       console.log("ETHOrderBookCreated.watch")
       console.log(result.args.orderAddress)
       const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
       const _instance = ETHOrderBook.at(result.args.orderAddress)
+
+      // move this to the component will unmount for persistence
+      firebaseRef.database().ref('/ethorderbook/'+user.profile.country+'/'+user.data.uid+'/orderBookAddress')
+      .set(result.args.orderAddress)
+
       dispatch(userOrderBook(_instance))
       dispatch(updateLoadingContractsStatus('loaded'))
       dispatch(sendEtherState('init'))
@@ -454,34 +473,21 @@ module.exports = {
     console.log(event)
     orderBookFactory.data.createETHOrderBook(user.profile.country, {from: web3.eth.coinbase}, function(error, result){
       if(!error){
+        console.log("created ethorderbook")
         console.log(result)
-        /*orderBookFactory.data.ETHOrderBookCreated({seller:web3.eth.coinbase},
-          function(error, result){
-            if(!error) {
-              console.log(result)
-              console.log(result.args.orderAddress)              
-            } else {
-              console.log(error)
-            }
-            
-          })
-*/
-        /*const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
-        const _instance = ETHOrderBook.at(result)
-        dispatch(userOrderBook(_instance))
-        dispatch(updateLoadingContractsStatus('loaded'))
-        firebaseRef.database().ref('/users/'+user.data.uid+'/orderBookAddress')
-        .set(result)
-        dispatch(sendEtherState('init'));*/
+        dispatch(sendEtherState('waiting-for-tx-to-mine'))
+        dispatch(setTxHash(result))
         
         } else {
           console.log(error)
+          dispatch(sendEtherState('init'))
         }
       })
   },
   clearState: () => (dispatch) => {
     dispatch(clearBuyer())
     dispatch(clearSeller())
+    dispatch(clearTxHash())
     dispatch(clearActiveTrade())
   },
   resetEtherState: () => (dispatch) => {
