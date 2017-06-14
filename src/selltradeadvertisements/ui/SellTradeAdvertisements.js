@@ -13,21 +13,11 @@ class SellTradeAdvertisements extends Component {
   render () {
     console.log("ui.SellTradeAdvertisements.render")
     console.log(this.props.web3)
-    if(!this.props.web3.verified) {
-      return(
+    return (
         <div>
-        
-        { !this.props.web3.verified ? <VerifyWalletContainer/> : null }
-        
+          { this.props.selltradeadvertisements.data ? <SellTradeAdvertisementsListContainer /> : <YouAreFirst />}
         </div>
-        )
-    } else {
-      return (
-          <div>
-            { this.props.selltradeadvertisements.data ? <SellTradeAdvertisementsListContainer /> : <YouAreFirst />}
-          </div>
-      )
-    }
+    )
   }
 }
 

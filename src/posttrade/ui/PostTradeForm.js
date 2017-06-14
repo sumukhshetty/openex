@@ -189,15 +189,6 @@ class PostTradeForm extends Component {
   }
 
   render () {
-    if(!this.props.web3.verified) {
-      return(
-        <div>
-        
-        { !this.props.web3.verified ? <VerifyWalletContainer/> : null }
-        
-        </div>
-        )
-    } else {
       if(this.props.user.profile.orderBookAddress && !this.state.buyFormBool){
         return(
           <div>Looks like you already have an Sell Trade Advertisement. If need to make changes edit it.</div>
@@ -244,7 +235,7 @@ class PostTradeForm extends Component {
                       placeholder='Please make sure you are logged into metamask in your chrome browser.'
                       className='w5'
                       disabled />
-                  </div>
+                    </div>
                 }
 
                 <div className='flex mv3'>
@@ -306,13 +297,13 @@ class PostTradeForm extends Component {
                   className='mv5'
                   value='Publish Advertisement' />
               </div>
-            </fieldset>
-          </form>
-        </div>
-      )
+              </fieldset>
+            </form>
+          </div>
+        )
+      }
     }
-  }
-  }
+  
 }
 
 export default PostTradeForm

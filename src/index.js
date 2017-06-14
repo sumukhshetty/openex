@@ -100,6 +100,7 @@ ReactDOM.render((
   document.getElementById('root')
 )
 
+// TODO add the ethprice listener here
 setTimeout(function () {
   store.dispatch(useractions.startListeningUserAuth())
 })

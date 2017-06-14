@@ -63,48 +63,23 @@ class Dashboard extends Component {
   }
 
   render () {
-    if(!this.props.web3.verified) {
-      return(
-        <div>
-        
-        { !this.props.web3.verified ? <VerifyWalletContainer/> : null }
-        
-        </div>
-        )
-    } else{
-      if(this.props.loadingcontracts.data){
-        if(this.props.loadingcontracts.data === 'loading' || this.props.loadingcontracts.data === 'init' ){
-          return ( 
+    return (
+      <section className='bg-smoke'>
+        <div className='w-75 center pv3'>
+          <div>
             <div>
-              <LoadingContracts />
+              <EnableNotifications />
+              <Kyc/>
+              <DashboardInfoMessage />
+              <ActiveTrades />
+              <TradeAdvertisements />
+              <CompletedTrades />
+              <DisputedTrades />
             </div>
-            )
-        } else if(this.props.loadingcontracts.data === 'loaded'){
-          return (
-            <section className='bg-smoke'>
-              <div className='w-75 center pv3'>
-                <div>
-                  <div>
-                    {this.props.web3.wrongnetwork? <WrongNetwork/>: null}
-                    <EnableNotifications />
-                    <Kyc/>
-                    <DashboardInfoMessage />
-                    <ActiveTrades />
-                    <TradeAdvertisements />
-                    <CompletedTrades />
-                    <DisputedTrades />
-                  </div>
-                </div>
-              </div>
-            </section>
-          )
-        } else {
-          return (
-            <div> Error contact support </div>
-            )
-        }
-      }
-    }
+          </div>
+        </div>
+      </section>
+    )
   }
 }
 

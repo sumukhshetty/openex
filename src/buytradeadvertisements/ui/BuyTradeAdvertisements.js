@@ -10,22 +10,11 @@ import VerifyWalletContainer from './../../verifywallet/ui/VerifyWalletContainer
 
 class BuyTradeAdvertisements extends Component {
   render () {
-    if(!this.props.web3.verified) {
-      return(
-        <div>
-        
-        { !this.props.web3.verified ? <VerifyWalletContainer/> : null }
-        
-        </div>
-        )
-    } else {
-      return (
-        <div>
-          { this.props.buytradeadvertisements.data ? <BuyTradeAdvertisementsListContainer /> : <YouAreFirst />}
-        </div>
-      )
-    }
-  }
+    return (
+      <div>
+        { this.props.buytradeadvertisements.data ? <BuyTradeAdvertisementsListContainer /> : <YouAreFirst />}
+      </div>
+  )}
 }
 
 export default BuyTradeAdvertisements
