@@ -32,7 +32,7 @@
       }
     },
     "users": {
-      ".read": "auth != null",
+      ".read": "true",
       ".write": "auth != null"
     },
     "notifications": {
@@ -59,8 +59,16 @@
       ".read": "auth != null",
       ".write": "auth != null"
     },
+    "notificationsConfig": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
     "ethorderbook": {
       ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "registeredAccounts":{
+      ".read": "true",
       ".write": "auth != null"
     }
   }

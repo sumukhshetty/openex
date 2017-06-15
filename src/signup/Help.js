@@ -7,7 +7,7 @@ class Help extends Component {
     return(
       
       <footer>
-        <a onClick={()=>browserHistory.push('password/reset')}>Forgot Password?</a>
+        <a >Help me unlock</a>
       </footer>
     )
   }

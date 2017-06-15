@@ -22,11 +22,16 @@ function userLoggedInError(error){
 module.exports = {
   login: (web3) => (dispatch) => {
     console.log('HomeNavActions.login')
-    // try to login without checking if the user exists
     var data = cryptoHelpers.toHex('I am logging into the automte ether marketplace and I have read the terms and conditions');
     try {
-      web3.currentProvider.sendAsync({ id: 1, method: 'personal_sign', params: [web3.eth.accounts[0], data] },
+      web3.currentProvider.sendAsync({id: 1, method: 'personal_sign', params: [web3.eth.accounts[0], data] },
         function(err, result) {
+          if(result.error){
+            if(result.error.message.includes("TypeError: Cannot use 'in' operator to search for 'from' in null")) {
+              notify.show("It looks like your MetaMask account is locked")
+            }
+            throw result.error
+          }
           let signature = result.result;
           //dispatch(exchange.authenticate(sig, user))
           var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/loginUserCustomAuth'

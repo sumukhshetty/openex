@@ -3,8 +3,6 @@ import WalletComponent from './../wallet/WalletComponent'
 import SignUpFormContainer from './../user/ui/signupform/SignUpFormContainer'
 import Help from './Help'
 
-
-
 class SignUpContainer extends Component {
   render() {
     return(

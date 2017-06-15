@@ -1,3 +1,4 @@
+import {notify} from 'react-notify-toast';
 import {firebaseRef, FIREBASE_TIMESTAMP} from './../../../index.js'
 const request = require('request')
 
@@ -18,60 +19,6 @@ function userSignedUpError (error) {
     payload: error
   }
 }
-// START deprecate this
-export function signUpUser (signUpInfo, web3) {
-  return function (dispatch) {
-    const auth = firebaseRef.auth()
-    var userid = ''
-    var email = signUpInfo.email
-    var username = signUpInfo.username
-    var country = signUpInfo.country
-    const pass = signUpInfo.password
-    var currency
-    try {
-      currency = currencies.byCountry().get(country)
-    } catch(e){
-      currency = 'USD'
-    }
-
-    auth.createUserWithEmailAndPassword(email, pass).then(function (firebaseUser) {
-      userid = firebaseUser.uid
-      var userdata = {
-        //'email': email, better that we stop storing this in publically viewable data
-        'country': country,
-        'currency': currency,
-        'username': username,
-        'isAdmin': false,
-        'trustworthiness': 'unknown',
-        'verifiedIdentification': false,
-        'verifiedPhoneNumber': false,
-        'verifiedEmail': true,
-        'numberOfTrades': 0,
-        'accountCreated': FIREBASE_TIMESTAMP,
-        'tradeVolume': 0,
-        'avgFeedback': 0,
-        'firstPurchase': '-',
-        'shownotificationrequest': 'true',
-        'kycComplete': false,
-      }
-      firebaseRef.database().ref('/users/' + userid).set(userdata)
-      firebaseUser.updateProfile({
-        displayName: username
-      })
-      firebaseRef.database().ref('/notificationsConfig/'+userid+'/email').set(email)
-      firebaseUser.sendEmailVerification().then(function () {
-        // Email sent
-      }, function (error) {
-        dispatch(userSignedUpError(error))
-      })
-      dispatch(userSignedUp(firebaseUser, currency))
-    }).catch(function (error) {
-      console.log(error)
-      dispatch(userSignedUpError(error))
-    })
-  }
-}
-// END deprecate this
 
 function toHex(s) {
    var hex = '';
@@ -96,6 +43,12 @@ export function signUpUserCustomAuth (signUpInfo, web3) {
     console.log(data)
     web3.currentProvider.sendAsync({ id: 1, method: 'personal_sign', params: [web3.eth.accounts[0], data] },
       function(err, result) {
+        if(result.error){
+          if(result.error.message.includes("TypeError: Cannot use 'in' operator to search for 'from' in null")) {
+            notify.show("It looks like your MetaMask account is locked")
+          }
+          throw result.error
+        }
         let signature = result.result;
         console.log(signature)
         //dispatch(exchange.authenticate(sig, user))
@@ -118,11 +71,9 @@ export function signUpUserCustomAuth (signUpInfo, web3) {
           }
           var statusCode = res.statusCode
           if (statusCode === 200){
-            console.log("signUpUserCustomAuth.200")
             // do more stuff
             firebaseRef.auth().signInWithCustomToken(res.body.token)
               .then(function(firebaseUser){
-                console.log(firebaseUser)
                 userid = firebaseUser.uid
                 var userdata = {
                   //'email': email, better that we stop storing this in publically viewable data

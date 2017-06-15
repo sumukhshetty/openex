@@ -1,3 +1,4 @@
+// Deprecate this
 import {firebaseRef} from './../../../index.js'
 //import { browserHistory } from 'react-router'
 
