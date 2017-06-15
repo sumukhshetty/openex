@@ -13,7 +13,8 @@ class HelpForm extends Component {
         email: '',
         topic: '',
         message: ''
-      }
+      },
+      isButtonDisabled:false
     };
     this.onInputChange = this.onInputChange.bind(this);
   }
@@ -37,6 +38,7 @@ class HelpForm extends Component {
       "message": this.state.helpFormDetails.message,
       "topic": this.state.helpFormDetails.topic,
     }
+    this.setState({isButtonDisabled:true})
     request({
       method:'post',
       body:{postData:postData},
@@ -55,6 +57,7 @@ class HelpForm extends Component {
       }
       if(res.statusCode === 500) {
         console.error('Server responded with an error: ' + res.body.error);
+        this.setState({isButtonDisabled:false})
         throw res.body.error
       }
     })    
@@ -107,7 +110,7 @@ class HelpForm extends Component {
               <label className='w5 ' /><input
                 type='submit'
                 className='mv5'
-                value='Send Request' /></div>
+                value='Send Request' disabled={this.state.isButtonDisabled}/></div>
 
           </fieldset>
         </form>

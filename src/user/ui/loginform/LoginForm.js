@@ -1,3 +1,5 @@
+
+// TODO Deprecate
 import React, { Component } from 'react'
 
 class LoginForm extends Component {
@@ -28,7 +30,7 @@ class LoginForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.onLoginFormSubmit(this.state.loginInfo, this.props.web3.web3)
+    this.props.onLoginFormSubmit(this.state.loginInfo, this.props.web3.data)
   }
 
   render() {

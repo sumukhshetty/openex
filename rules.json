@@ -58,6 +58,10 @@
     "processkyc": {
       ".read": "auth != null",
       ".write": "auth != null"
+    },
+    "ethorderbook": {
+      ".read": "auth != null",
+      ".write": "auth != null"
     }
   }
 }

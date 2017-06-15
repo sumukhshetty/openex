@@ -15,7 +15,9 @@ const mapStateToProps = (state, ownProps) => {
     sendEtherState: state.sendEtherState,
     cancelTradeState: state.cancelTradeState,
     purchaseRequestId: ownProps.purchaseRequestId,
-    ethorderbook: state.ethorderbook
+    ethorderbook: state.ethorderbook,
+    orderbookfactory: state.orderbookfactory,
+    txhash: state.txhash
   }
 }
 
@@ -63,6 +65,10 @@ const mapDispatchToProps = (dispatch) => {
     sellerAddsEther: (amount, uid, contractAddress, web3) => {
       console.log("ui.ActiveTradeContainer.sellerAddsEther")
       dispatch(actions.sellerAddsEther(amount, uid, contractAddress, web3))
+    },
+    createOrderBookContract: (web3, orderBookFactory, user) => {
+      console.log("ui.ActiveTradeContainer.createOrderBookContract")
+      dispatch(actions.sellerCreatesETHOrderBook(web3, orderBookFactory, user))
     },
     clearState: ()=>{
       dispatch(actions.clearState())

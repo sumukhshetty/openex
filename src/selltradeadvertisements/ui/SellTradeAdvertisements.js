@@ -6,24 +6,18 @@ import SellTradeAdvertisementsListContainer from './SellTradeAdvertisementsListC
 import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
 import WrongNetwork from './../../layouts/wrongnetwork/WrongNetwork'
 import YouAreFirst from './../../generic-components/YouAreFirst'
+import VerifyWalletContainer from './../../verifywallet/ui/VerifyWalletContainer'
 
 class SellTradeAdvertisements extends Component {
 
   render () {
-    if(this.props.web3.locked || this.props.web3.wrongnetwork) {
-      return(
+    console.log("ui.SellTradeAdvertisements.render")
+    console.log(this.props.web3)
+    return (
         <div>
-        { this.props.web3.locked ? <BrowserWalletLockedAlert /> : null }
-        { this.props.web3.wrongnetwork ? <WrongNetwork /> : null }
+          { this.props.selltradeadvertisements.data ? <SellTradeAdvertisementsListContainer /> : <YouAreFirst />}
         </div>
-        )
-    } else {
-      return (
-          <div>
-            { this.props.selltradeadvertisements.data ? <SellTradeAdvertisementsListContainer /> : <YouAreFirst />}
-          </div>
-      )
-    }
+    )
   }
 }
 

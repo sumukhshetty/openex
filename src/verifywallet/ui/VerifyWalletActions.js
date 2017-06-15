@@ -31,6 +31,14 @@ function updateLoadingContractsStatus(status) {
   }
 }
 
+function wrongNetwork(wrongNetworkBool){
+  console.log("wrongNetwork.GET_WRONG_NETWORK_STATUS")
+  return {
+    type: 'GET_WRONG_NETWORK_STATUS',
+    payload: wrongNetworkBool
+  }
+}
+
 module.exports = {
   verifyWallet: (result) => (dispatch) => {
     dispatch(setWalletVerifiedStatus(result))
@@ -75,5 +83,8 @@ module.exports = {
       console.log(error)
       dispatch(setOrderBookFactory(null))
     }
+  },
+  wrongNetwork: (value)=>(dispatch)=>{
+    dispatch(wrongNetwork(value))
   }
 }

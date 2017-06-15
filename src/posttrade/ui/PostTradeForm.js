@@ -7,6 +7,7 @@ import MetaMaskWaitModal from './../../generic-components/metamaskmodal/MetaMask
 
 import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
 import WrongNetwork from './../../layouts/wrongnetwork/WrongNetwork'
+import VerifyWalletContainer from './../../verifywallet/ui/VerifyWalletContainer'
 
 class PostTradeForm extends Component {
   constructor (props) {
@@ -38,7 +39,7 @@ class PostTradeForm extends Component {
   }
 
   componentWillMount () {
-    var connectedAccount = this.props.web3.web3.eth.accounts[0]
+    var connectedAccount = this.props.web3.data.eth.accounts[0]
     this.setState({postTradeDetails: {
       amount: 0,
       buyerAddress: connectedAccount,
@@ -86,7 +87,7 @@ class PostTradeForm extends Component {
   }
 
   onTradeTypeChange (event) {
-    var connectedAccount = this.props.web3.web3.eth.accounts[0]
+    var connectedAccount = this.props.web3.data.eth.accounts[0]
 
     var _postTradeDetails = this.state.postTradeDetails
     var _buyFormBool = this.state.buyFormBool
@@ -175,27 +176,19 @@ class PostTradeForm extends Component {
       this.showWaitModal()
       this.props.onCreateSellTradeAdvertisementFormSubmit(
         _postTradeDetails,
-        this.props.web3.web3,
+        this.props.web3.data,
         this.props.orderbookfactory,
         this.props.user)
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
       this.props.userCreatesBuyTradeAdvertisement(
         _postTradeDetails,
-        this.props.web3.web3,
+        this.props.web3.data,
         this.props.user)
     }
   }
 
   render () {
-    if(this.props.web3.locked || this.props.web3.wrongnetwork) {
-      return(
-        <div>
-        { this.props.web3.locked ? <BrowserWalletLockedAlert /> : null }
-        { this.props.web3.wrongnetwork ? <WrongNetwork /> : null }
-        </div>
-        )
-    } else {
       if(this.props.user.profile.orderBookAddress && !this.state.buyFormBool){
         return(
           <div>Looks like you already have an Sell Trade Advertisement. If need to make changes edit it.</div>
@@ -242,7 +235,7 @@ class PostTradeForm extends Component {
                       placeholder='Please make sure you are logged into metamask in your chrome browser.'
                       className='w5'
                       disabled />
-                  </div>
+                    </div>
                 }
 
                 <div className='flex mv3'>
@@ -304,13 +297,13 @@ class PostTradeForm extends Component {
                   className='mv5'
                   value='Publish Advertisement' />
               </div>
-            </fieldset>
-          </form>
-        </div>
-      )
+              </fieldset>
+            </form>
+          </div>
+        )
+      }
     }
-  }
-  }
+  
 }
 
 export default PostTradeForm

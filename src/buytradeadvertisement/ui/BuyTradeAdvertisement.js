@@ -9,6 +9,7 @@ export default class BuyTradeAdvertisement extends Component {
     this.state = {
       etherAmount: 0,
       fiatAmount: 0,
+      isButtonDisabled: false
     };
     this.createPurchaseRequest = this.createPurchaseRequest.bind(this)
     this.onAmountChange = this.onAmountChange.bind(this)
@@ -25,6 +26,7 @@ export default class BuyTradeAdvertisement extends Component {
 
   createPurchaseRequest(e){
     e.preventDefault()
+    this.setState({isButtonDisabled:true})
     this.props.createPurchaseRequest(
       this.state.etherAmount, 
       this.state.fiatAmount,
@@ -32,7 +34,7 @@ export default class BuyTradeAdvertisement extends Component {
       this.props.buyTradeAdvertisementId,
       this.props.buytradeadvertisement.data,
       this.props.buyer,
-      this.props.web3.web3.eth.coinbase,
+      this.props.web3.data.eth.coinbase,
       this.props.user
       )
   }
@@ -80,6 +82,7 @@ export default class BuyTradeAdvertisement extends Component {
               etherAmount={this.state.etherAmount} 
               fiatAmount={this.state.fiatAmount} 
               tradeAdvertisementAmount={buyTradeAdvertisement.amount}
+              isButtonDisabled={this.state.isButtonDisabled}
               /></div>
           </div>
         } else {

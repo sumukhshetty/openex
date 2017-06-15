@@ -9,6 +9,7 @@ export default class SellTradeAdvertisement extends Component {
     this.state = {
       etherAmount: 0,
       fiatAmount: 0,
+      isButtonDisabled:false
     };
     this.createPurchaseRequest = this.createPurchaseRequest.bind(this)
   }
@@ -23,6 +24,7 @@ export default class SellTradeAdvertisement extends Component {
 
   createPurchaseRequest(e){
     e.preventDefault()
+    this.setState({isButtonDisabled:true})
     this.props.createPurchaseRequest(
       this.state.etherAmount, 
       this.state.fiatAmount,
@@ -30,7 +32,7 @@ export default class SellTradeAdvertisement extends Component {
       this.props.sellTradeAdvertisementId,
       this.props.selltradeadvertisement.data, 
       this.props.seller, 
-      this.props.web3.web3.eth.coinbase,
+      this.props.web3.data.eth.coinbase,
       this.props.user)
   }
 
@@ -69,7 +71,9 @@ export default class SellTradeAdvertisement extends Component {
               price={price} 
               country={seller.country} 
               etherAmount={this.state.etherAmount} 
-              fiatAmount={this.state.fiatAmount} /></div>
+              fiatAmount={this.state.fiatAmount} 
+              isButtonDisabled={this.state.isButtonDisabled}
+              /></div>
           </div>
         } else {
           requestComponent = <div className='w-50' >

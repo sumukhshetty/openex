@@ -2,7 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import logo from '../images/logo.svg';
 
+
 class HomeNav extends Component {
+  constructor(props){
+    super(props)
+  }
+
+  login () {
+    this.props.login(this.props.web3.data)
+  }
+
   render () {
     return (
       <div className='container'>
@@ -20,9 +29,7 @@ class HomeNav extends Component {
                 <li className='pure-menu-item'><a href='#trade'>Trade</a></li>
                 <li className='pure-menu-item'><a href='#support'>Support</a></li>
 
-                <li className='pure-menu-item'>
-                  <Link to='/login' activeStyle={{ color: 'white', borderBottom: '2px solid white' }}>Log in</Link>
-                </li>
+                <li className='pure-menu-item' onClick={this.login.bind(this)}><a>Log in</a></li>
               </ul>
             </nav>
           </div>

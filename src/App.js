@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
+import Web3 from 'web3'
+import truffleConfig from './../truffle-config.js'
+var web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`
+
 import { firebaseRef } from './index'
 
 import logo from './images/logo.svg'
@@ -31,14 +35,34 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      showNotifications: false
+      showNotifications: false,
+      web3: null
     }
     this.removeNotifications = this.removeNotifications.bind(this)
     this.showNotifications = this.showNotifications.bind(this)
+    this.web3Initialize.bind(this)
   }
 
-  componentDidMount(){
-    console.log("Dashboard.componentDidMount")
+  componentWillMount () {
+      this.web3Initialize()
+    }
+
+  web3Initialize () {
+    if (typeof web3 !== 'undefined') {
+        // Use the Mist/wallet provider.
+        // DEVELOPER NOTE: removing the next commented line will break the app
+        // eslint-disable-next-line
+        var web3Provided = new Web3(web3.currentProvider)
+        this.props.setWeb3(web3Provided)
+        //this.setState({web3:web3Provided})
+    } else {
+        // DEVELOPER NOTE: What happens in the wild if the
+        // user does not have a browser based wallet? What happens
+        // if the Web3 object cannot be initialized with the httpProvider
+        // given from the loction in the truffle-config file?
+        // dev haiku
+      this.web3Provided = new Web3(new Web3.providers.HttpProvider(web3Location))
+    }
   }
 
   showNotifications () {
@@ -112,15 +136,15 @@ class App extends Component {
       return (
         <section className='Site'>
           <Toast />
-          <OnlyGuestLinks />
-          <Web3InitContainer />
+        {/*moved this to actions*/}
+          {/*<Web3InitContainer />*/}
           <EtherPriceContainer />
+          <OnlyGuestLinks />
           <OnlyAuthLinks />
           {firebaseRef.auth().currentUser && <UserPresenceContainer />}
           <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
             {this.props.children}
           </main>
-          {/*<ETHOrderBookContainer />*/}
         </section>
       )
     }

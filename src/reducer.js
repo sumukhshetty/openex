@@ -30,6 +30,7 @@ import ethOrderBookReducer from './ethorderbook/ethorderbookreducer'
 import verifyWalletReducer from './verifywallet/verifywalletreducer'
 import orderBookFactoryReducer from './orderbookfactory/orderbookfactoryreducer'
 import loadingContractsReducer from './loadingcontracts/loadingcontractsreducer'
+import txHashReducer from './txhash/txhashreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -62,7 +63,8 @@ const reducer = combineReducers({
   //ethorderbook: ethOrderBookReducer,
   ethorderbook: verifyWalletReducer,
   orderbookfactory: orderBookFactoryReducer,
-  loadingcontracts: loadingContractsReducer
+  loadingcontracts: loadingContractsReducer,
+  txhash: txHashReducer
 })
 
 export default reducer
