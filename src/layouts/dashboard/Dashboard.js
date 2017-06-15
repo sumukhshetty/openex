@@ -22,6 +22,7 @@ class Dashboard extends Component {
   componentWillMount () {
     // TODO change this to mainnet
     this.props.loadOrderBookFactory(this.props.web3.data, factoryAddress.kovanAddress)
+    this.props.loadETHOrderBook(this.props.web3.data, this.props.user)
     firebaseMessaging.onTokenRefresh(function () {
       firebaseMessaging.getToken()
     .then(function (refreshedToken) {

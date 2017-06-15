@@ -10,7 +10,6 @@ const mapStateToProps = (state, ownProps) => {
     purchaserequests: state.purchaserequests,
     buytradeadvertisements: state.buytradeadvertisements,
     selltradeadvertisements: state.selltradeadvertisements,
-    loadingcontracts: state.loadingcontracts
   }
 }
 
@@ -19,6 +18,9 @@ const mapDispatchToProps = (dispatch) => {
     loadOrderBookFactory: (web3, orderBookFactoryAddress) => {
       dispatch(actions.loadOrderBookFactory(web3, orderBookFactoryAddress))
     },
+    loadETHOrderBook: (web3, user) => {
+      dispatch(actions.loadETHOrderBook(web3, user))
+    }
   }
 }
 

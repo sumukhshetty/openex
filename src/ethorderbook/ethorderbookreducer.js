@@ -3,7 +3,7 @@ const initialState = {
 }
 
 const ethOrderBookReducer = (state = initialState, action) => {
-  if (action.type === 'SET_ETH_ODER_BOOK')
+  if (action.type === 'SET_ETH_ORDER_BOOK')
   {
     return Object.assign({}, state, {
       data: action.payload
