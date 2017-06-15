@@ -16,8 +16,12 @@ import Kyc from './kyc/layouts/Kyc'
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
 
+import factoryAddress from './../../contract_addresses/orderfactory.js'
+
 class Dashboard extends Component {
   componentWillMount () {
+    // TODO change this to mainnet
+    this.props.loadOrderBookFactory(this.props.web3.data, factoryAddress.kovanAddress)
     firebaseMessaging.onTokenRefresh(function () {
       firebaseMessaging.getToken()
     .then(function (refreshedToken) {

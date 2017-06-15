@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import Dashboard from './Dashboard'
+import * as actions from './DashboardActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -13,8 +14,17 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadOrderBookFactory: (web3, orderBookFactoryAddress) => {
+      dispatch(actions.loadOrderBookFactory(web3, orderBookFactoryAddress))
+    },
+  }
+}
+
 const DashboardContainer = connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Dashboard)
 
 export default DashboardContainer

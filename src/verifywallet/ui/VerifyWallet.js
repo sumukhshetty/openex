@@ -1,3 +1,4 @@
+// deprecate this
 import React, { Component } from 'react'
 import factoryAddress from './../../contract_addresses/orderfactory.js'
 
