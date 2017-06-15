@@ -5,6 +5,7 @@ import "./zeppelin/SafeMath.sol";
 import "./OrderBook.sol";
 import "../oraclize-ethereum-api/oraclizeAPI_0.4.sol";
 
+
 contract ETHOrderBook is Ownable, usingOraclize {
   using SafeMath for uint;
 
@@ -13,14 +14,16 @@ contract ETHOrderBook is Ownable, usingOraclize {
   string country;
   uint public availableBalance;
   uint feePercent; // 1 = 1% fee
+  address disputeResolver;
 
   uint MINIMUM_ORDER_AMOUNT; //inclusive
   uint MAXIMUM_ORDER_AMOUNT; //exclusive
 
   mapping(bytes32 => string) disputeQueryIds;
 
-  function ETHOrderBook(address _seller, string _country, uint _feePercent, uint min, uint max) {
+  function ETHOrderBook(address _seller, address _disputeResolver, string _country, uint _feePercent, uint min, uint max) {
     seller = _seller;
+    disputeResolver = _disputeResolver;
     country = _country;
     feePercent = _feePercent;
     MINIMUM_ORDER_AMOUNT = min;
@@ -79,7 +82,7 @@ contract ETHOrderBook is Ownable, usingOraclize {
 
   event OrderDisputed(string uid, address seller, address buyer);
 
-  function checkDispute(string uid) onlyOwner statusIs(uid, OrderBook.Status.Open) {
+  function checkDispute(string uid) onlyDisputeResolver statusIs(uid, OrderBook.Status.Open) {
     disputeQueryIds[oraclize_query("URL", "json(https://us-central1-automteetherexchange.cloudfunctions.net/checkDispute).dispute", strConcat('\n{"country" :"', country, '", "orderId": "', uid, '"}'))] = uid;
   }
 
@@ -95,7 +98,7 @@ contract ETHOrderBook is Ownable, usingOraclize {
   event DisputeResolved(string uid, address seller, address buyer, string resolvedTo);
 
   //Resolve dispute in favor of seller
-  function resolveDisputeSeller(string uid) onlyOwner statusIs(uid, OrderBook.Status.Disputed) {
+  function resolveDisputeSeller(string uid) onlyDisputeResolver statusIs(uid, OrderBook.Status.Disputed) {
     availableBalance = availableBalance.add(orderBook.orders[uid].amount.add(orderBook.orders[uid].fee));
 
     orderBook.orders[uid].status = OrderBook.Status.ResolvedSeller;
@@ -104,7 +107,7 @@ contract ETHOrderBook is Ownable, usingOraclize {
   }
 
   //Resolve dispute in favor of buyer
-  function resolveDisputeBuyer(string uid) onlyOwner statusIs(uid, OrderBook.Status.Disputed) {
+  function resolveDisputeBuyer(string uid) onlyDisputeResolver statusIs(uid, OrderBook.Status.Disputed) {
     if(!orderBook.orders[uid].buyer.send(orderBook.orders[uid].amount))
       throw;
 
@@ -135,6 +138,12 @@ contract ETHOrderBook is Ownable, usingOraclize {
 
   modifier onlySeller() {
     if(msg.sender != seller)
+      throw;
+    _;
+  }
+
+  modifier onlyDisputeResolver() {
+    if(msg.sender != disputeResolver)
       throw;
     _;
   }
