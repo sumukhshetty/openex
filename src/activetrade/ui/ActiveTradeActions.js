@@ -104,11 +104,13 @@ module.exports = {
   },
   sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerConfirmsTrade")
+    console.log(ethOrderBook)
     let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
     let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
     let price = web3.toWei(purchaseRequest.price)
     try {
       ethOrderBook.data.availableBalance(function(error, result){
+        console.log(error, result)
         if(!error){
           // check if the request is greater than the available balance
           if(result.toNumber()>web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')){
