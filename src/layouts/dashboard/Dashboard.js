@@ -63,23 +63,29 @@ class Dashboard extends Component {
   }
 
   render () {
-    return (
-      <section className='bg-smoke'>
-        <div className='w-75 center pv3'>
-          <div>
+    if(!this.props.web3.wrongnetwork){
+      return (
+        <section className='bg-smoke'>
+          <div className='w-75 center pv3'>
             <div>
-              <EnableNotifications />
-              <Kyc/>
-              <DashboardInfoMessage />
-              <ActiveTrades />
-              <TradeAdvertisements />
-              <CompletedTrades />
-              <DisputedTrades />
+              <div>
+                <EnableNotifications />
+                <Kyc/>
+                <DashboardInfoMessage />
+                <ActiveTrades />
+                <TradeAdvertisements />
+                <CompletedTrades />
+                <DisputedTrades />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    )
+        </section>
+      )
+    } else {
+      return (
+        <WrongNetwork/>
+        )
+    }
   }
 }
 
