@@ -36,13 +36,9 @@ class PostTradeForm extends Component {
   }
 
   componentWillMount () {
-    console.log("PostTradeForm.componentWillMount")
-    console.log(this.props)
     var connectedAccount = this.props.web3.data.eth.accounts[0]
     this.setState({postTradeDetails: {
       amount: 0,
-      buyerAddress: connectedAccount,
-      buyerUsername: this.props.user.data.displayName,
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid, // Submitting a from without changing values leaves them as blank
       paymentMethod: 'National Bank',    // If defaults change, these must change as well.
@@ -287,7 +283,10 @@ class PostTradeForm extends Component {
                 }
 
               {
-                (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal />)
+                (this.props.sendEtherState === 'sending' && <MetaMaskWaitModal message='Please approve the transaction in MetaMask' />)
+              }
+              {
+                (this.props.sendEtherState === 'waiting-for-tx-to-mine' && <MetaMaskWaitModal message='the transaction is being mined' txhash={this.props.txhash.data} />)
               }
               <div className='flex mv3'>
                 <label className='w5 ' />

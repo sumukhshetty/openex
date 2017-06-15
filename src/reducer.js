@@ -2,7 +2,6 @@ import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import userReducer from './user/userReducer'
 import web3Reducer from './web3/web3Reducer'
-import orderBookReducer from './web3/orderBookReducer'
 import etherPriceReducer from './etherprice/etherpricereducer'
 import etherSendReducer from './sendether/sendetherreducer'
 import chatAuthReducer from './chat/reducers/auth'
@@ -27,7 +26,6 @@ import tradeAdvertisementsReducer from './tradeadvertisements/tradeadvertisement
 import editTradeAdvertisementReducer from './edittradeadvertisement/edittradeadvertisementreducer'
 import processKycReducer from './processkyc/processkycreducer'
 import ethOrderBookReducer from './ethorderbook/ethorderbookreducer'
-import verifyWalletReducer from './verifywallet/verifywalletreducer'
 import orderBookFactoryReducer from './orderbookfactory/orderbookfactoryreducer'
 import loadingContractsReducer from './loadingcontracts/loadingcontractsreducer'
 import txHashReducer from './txhash/txhashreducer'
@@ -37,7 +35,6 @@ const reducer = combineReducers({
   user: userReducer,
   users: usersReducer,
   web3: web3Reducer,
-  //orderBook: orderBookReducer,
   buytradeadvertisement: buyTradeAdvertisementReducer,
   buytradeadvertisements: buyTradeAdvertisementsReducer,
   selltradeadvertisements: sellTradeadvertisementsReducer,
@@ -60,8 +57,7 @@ const reducer = combineReducers({
   tradeadvertisements: tradeAdvertisementsReducer,
   edittradeadvertisement: editTradeAdvertisementReducer,
   processkyc: processKycReducer,
-  //ethorderbook: ethOrderBookReducer,
-  ethorderbook: verifyWalletReducer,
+  ethorderbook: ethOrderBookReducer,
   orderbookfactory: orderBookFactoryReducer,
   loadingcontracts: loadingContractsReducer,
   txhash: txHashReducer

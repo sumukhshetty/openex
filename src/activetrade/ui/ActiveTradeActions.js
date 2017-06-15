@@ -73,7 +73,7 @@ function updateLoadingContractsStatus(status) {
 
 function userOrderBook(orderBook) {
   return {
-  type: 'USER_ETH_ORDER_BOOK',
+  type: 'SET_ETH_ODER_BOOK',
   payload: orderBook
   }
 }
