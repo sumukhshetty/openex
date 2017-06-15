@@ -5,9 +5,6 @@ import PostTradeInstructions from './PostTradeInstructions'
 import MetaMaskWaitModal from './../../generic-components/metamaskmodal/MetaMaskWaitModal'
 //import { browserHistory } from 'react-router'
 
-import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
-import WrongNetwork from './../../layouts/wrongnetwork/WrongNetwork'
-import VerifyWalletContainer from './../../verifywallet/ui/VerifyWalletContainer'
 
 class PostTradeForm extends Component {
   constructor (props) {
@@ -39,6 +36,8 @@ class PostTradeForm extends Component {
   }
 
   componentWillMount () {
+    console.log("PostTradeForm.componentWillMount")
+    console.log(this.props)
     var connectedAccount = this.props.web3.data.eth.accounts[0]
     this.setState({postTradeDetails: {
       amount: 0,

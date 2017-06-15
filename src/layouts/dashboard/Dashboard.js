@@ -7,9 +7,7 @@ import EnableNotifications from './../../enablenotifications/layouts/EnableNotif
 import CompletedTrades from './../../completedtrades/layouts/CompletedTrades'
 import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
 
-import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
 import WrongNetwork from './../wrongnetwork/WrongNetwork'
-import VerifyWalletContainer from './../../verifywallet/ui/VerifyWalletContainer'
 
 import LoadingContracts from './../../loadingcontracts/LoadingContracts'
 

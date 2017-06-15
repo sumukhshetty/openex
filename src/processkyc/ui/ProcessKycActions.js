@@ -1,5 +1,4 @@
-import { firebaseRef, firebaseStorage } from './../../index.js'
-import { browserHistory } from 'react-router'
+import { firebaseRef } from './../../index.js'
 
 module.exports = {
   denyKyc:(userUid)=>(dispatch)=>{

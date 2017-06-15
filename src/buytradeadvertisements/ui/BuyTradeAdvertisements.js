@@ -3,10 +3,7 @@ import * as _ from 'lodash'
 
 import BuyTradeAdvertisementsListContainer from './BuyTradeAdvertisementsListContainer'
 
-import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
-import WrongNetwork from './../../layouts/wrongnetwork/WrongNetwork'
 import YouAreFirst from './../../generic-components/YouAreFirst'
-import VerifyWalletContainer from './../../verifywallet/ui/VerifyWalletContainer'
 
 class BuyTradeAdvertisements extends Component {
   render () {
