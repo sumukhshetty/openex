@@ -227,7 +227,7 @@ exports.signUpUserCustomAuth = functions.https.onRequest((req, res) => {
           country: req.body.signUpInfo.country,
           username: req.body.signUpInfo.username
         };
-
+        admin.database().ref('/registeredAccounts/'+ account_address).set(true)
         admin.auth().createCustomToken(uid, additionalClaims)
           .then(function(token){
             console.log(token)
@@ -246,32 +246,37 @@ exports.signUpUserCustomAuth = functions.https.onRequest((req, res) => {
 exports.loginUserCustomAuth = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     try {
-      var sig = req.body.signature;
       var account_address = req.body.account_address
-      var data = "I am logging into the automte ether marketplace and I have read the terms and conditions"
+      var sig = req.body.signature;
+      admin.database().ref('/registeredAccounts/'+ account_address).once('value', function(snap){
+        if(snap.val()){
+          var data = "I am logging into the automte ether marketplace and I have read the terms and conditions"
 
-      var message = ethUtil.toBuffer(data)
-      var msgHash = ethUtil.hashPersonalMessage(message)
+          var message = ethUtil.toBuffer(data)
+          var msgHash = ethUtil.hashPersonalMessage(message)
 
-      var signature = ethUtil.toBuffer(sig)
-      var sigParams = ethUtil.fromRpcSig(signature)
-      var publicKey = ethUtil.ecrecover(msgHash, sigParams.v, sigParams.r, sigParams.s)
-      var sender = ethUtil.publicToAddress(publicKey)
-      var addr = ethUtil.bufferToHex(sender)
+          var signature = ethUtil.toBuffer(sig)
+          var sigParams = ethUtil.fromRpcSig(signature)
+          var publicKey = ethUtil.ecrecover(msgHash, sigParams.v, sigParams.r, sigParams.s)
+          var sender = ethUtil.publicToAddress(publicKey)
+          var addr = ethUtil.bufferToHex(sender)
 
-      var match = false;
-      if (addr == account_address) { match = true; }
-      if(match){
-        var uid = account_address;
+          var match = false;
+          if (addr == account_address) { match = true; }
+          if(match){
+            var uid = account_address;
 
-        admin.auth().createCustomToken(uid)
-          .then(function(token){
-            console.log(token)
-            res.send(200,{status: 1, "token":token});
-          });
-      } else {
-        res.status(401).send({error: '[signUpUserCustomAuth] Error User not Authorized'})  
-      }
+            admin.auth().createCustomToken(uid)
+              .then(function(token){
+                res.send(200,{status: 1, "token":token});
+              });
+          } else {
+            res.status(401).send({error: '[signUpUserCustomAuth] Error User not Authorized'})  
+          }
+        } else {
+          res.status(401).send({error: "This account isn't registered yet. Please sign up first."})  
+        }
+      })
     } catch (error) {
       console.log(error)
       res.status(500).send({error: '[loginUserCustomAuth] Error' + error})

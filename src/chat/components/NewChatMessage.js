@@ -55,7 +55,7 @@ export default class NewChatMessage extends Component {
           placeholder={`Type here to chat...`}
           className=' w-100 bn fsmall mr2'
           value={this.props.newMessage}
-          onChange={this.props.handleChange}
+          onChange={this.props.handleChange} required
         />
         <input
           type='submit'
