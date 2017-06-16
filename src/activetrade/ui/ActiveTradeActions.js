@@ -1,4 +1,4 @@
-import {firebaseRef, FIREBASE_TIMESTAMP} from './../../index.js'
+import {firebaseRef, FIREBASE_TIMESTAMP, raven} from './../../index.js'
 import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import * as notificationHelpers from './../../util/notificationHelpers'
 import { browserHistory } from 'react-router'
@@ -60,7 +60,7 @@ function clearActiveTrade(){
 
 function userOrderBook(orderBook) {
   return {
-  type: 'SET_ETH_ODER_BOOK',
+  type: 'SET_ETH_ORDER_BOOK',
   payload: orderBook
   }
 }
@@ -417,64 +417,89 @@ module.exports = {
   },
   sellerAddsEther: (amount, uid, contractAddress, web3) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerAddsEther")
-
     try{
-      var coinbase = web3.eth.coinbase;
-      amount = Number(amount);
-      let value = web3.toWei(amount, 'ether');
-      dispatch(sendEtherState('sending'));
-      web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
-        if(!err) {
-          dispatch(sendEtherState('init'));
-          /*firebaseRef.database().ref('/users/'+uid+'/balanceUpdateTx')
-            .set(txHash);*/
-        } else {
-          if(err.message.includes('MetaMask Tx Signature: User denied')) {
-            console.log('ERROR: User denied transaction');
-            dispatch(sendEtherState('insufficient-available-balance'))
+      if(web3.eth.coinbase) {
+        var coinbase = web3.eth.coinbase;
+      } else {
+        throw new Error("Wallet Address Undefined")
+      }
+      if (contractAddress && ((typeof contractAddress)==="string") && (contractAddress.length === 42)) {
+        amount = Number(amount);
+        let value = web3.toWei(amount, 'ether');
+        dispatch(sendEtherState('sending'));
+        web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
+          if(!err) {
+            dispatch(sendEtherState('init'));
           } else {
-            console.log(err);
-            dispatch(sendEtherState('insufficient-available-balance'))
+            if(err.message.includes('MetaMask Tx Signature: User denied')) {
+              console.log('ERROR: User denied transaction');
+              dispatch(sendEtherState('insufficient-available-balance'))
+            } else {
+              console.log(err);
+              dispatch(sendEtherState('insufficient-available-balance'))
+            }
           }
-        }
-      })
-    } catch(error){
-      notify.show("Please unlock your MetaMask wallet")
-      console.log("we should notify the user that their wallet is locked")
+        })
+
+      } else {
+        console.log("invalid contract address")
+        throw new Error("Invalid Contract Address")
+      }
+
+    } catch (error) {
+      if (error.message === 'Wallet Address Undefined'){
+        notify.show("Please unlock your MetaMask Account")
+      }
+      else if (error.message === 'Invalid Contract Address'){
+        console.log('Invalid Contract Address')
+        raven.captureException(error)
+      }
+      else {
+        raven.captureException(error) 
+      }
+
     }
   },
   sellerCreatesETHOrderBook: (web3, orderBookFactory, user) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerCreatesETHOrderBook")
-    dispatch(sendEtherState('sending'));
-    var event = orderBookFactory.data.ETHOrderBookCreated()
-    // TODO add index to the ETHOrderBookCreated event in the smart contract and filter for the seller
-    //var event = orderBookFactory.data.ETHOrderBookCreated({seller:web3.eth.coinbase})
-    event.watch((error, result) => {
-      console.log("ETHOrderBookCreated.watch")
-      console.log(result.args.orderAddress)
-      const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
-      const _instance = ETHOrderBook.at(result.args.orderAddress)
+    try {
+      if (web3.eth.coinbase) {
+        var coinbase = web3.eth.coinbase
+      } else {
+        throw new Error("Undefined Wallet Address")        
+      }
+      var event = orderBookFactory.data.ETHOrderBookCreated({seller:coinbase})
+      event.watch((error, result) => {
+        const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
+        const _instance = ETHOrderBook.at(result.args.orderAddress)
 
-      // move this to the component will unmount for persistence
-      firebaseRef.database().ref('/ethorderbook/'+user.profile.country+'/'+user.data.uid+'/orderBookAddress')
-      .set(result.args.orderAddress)
-
-      dispatch(userOrderBook(_instance))
-      dispatch(sendEtherState('init'))
-    })
-    console.log(event)
-    orderBookFactory.data.createETHOrderBook(user.profile.country, {from: web3.eth.coinbase}, function(error, result){
-      if(!error){
-        console.log("created ethorderbook")
-        console.log(result)
-        dispatch(sendEtherState('waiting-for-tx-to-mine'))
-        dispatch(setTxHash(result))
-        
-        } else {
-          console.log(error)
-          dispatch(sendEtherState('init'))
-        }
+        // move this to the component will unmount for persistence
+        firebaseRef.database().ref('/ethorderbook/'+user.profile.country+'/'+user.data.uid+'/orderBookAddress')
+        .set(result.args.orderAddress)
+        event.stopWatching()
+        dispatch(userOrderBook(_instance))
+        dispatch(sendEtherState('init'))
+        dispatch(clearTxHash())
       })
+      dispatch(sendEtherState('sending'));
+      orderBookFactory.data.createETHOrderBook(user.profile.country, {from: coinbase}, function(error, result){
+        if(!error){
+          dispatch(sendEtherState('waiting-for-tx-to-mine'))
+          dispatch(setTxHash(result))
+          
+          } else {
+            console.log(error)
+            dispatch(sendEtherState('init'))
+          }
+        })
+    } catch (error) {
+      console.log(error)
+      if(error.message === 'Undefined Wallet Address'){
+        notify.show("Please unlock your MetaMask account")
+      } else {
+        raven.captureException(error)
+      }
+    }
   },
   clearState: () => (dispatch) => {
     dispatch(clearBuyer())

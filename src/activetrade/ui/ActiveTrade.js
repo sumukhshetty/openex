@@ -152,6 +152,7 @@ class ActiveTrade extends Component {
           step={status}
           viewerRole={viewerRole}
           txhash={this.props.txhash.data}
+          ethorderbook={this.props.ethorderbook.data}
           />,
         'Awaiting Payment': <Payment
           activetrade={activetrade}

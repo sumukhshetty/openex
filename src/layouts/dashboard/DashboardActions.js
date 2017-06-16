@@ -32,10 +32,10 @@ module.exports = {
   loadETHOrderBook: (web3, user) => (dispatch) => {
     dispatch(setETHOrderBook('obtaining...'))
     firebaseRef.database().ref('/ethorderbook/'+user.profile.country+'/'+user.data.uid).once('value', function(snap){
-      var orderBookAddress = snap.val().orderBookAddress
+      var orderBookAddress = snap.val()
       if(orderBookAddress) {
         const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
-        const _instance = ETHOrderBook.at(orderBookAddress)
+        const _instance = ETHOrderBook.at(orderBookAddress.orderBookAddress)
         dispatch(setETHOrderBook(_instance))
       } else {
         dispatch(setETHOrderBook(null))
