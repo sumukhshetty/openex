@@ -2,15 +2,9 @@ import {firebaseRef, FIREBASE_TIMESTAMP} from './../../index.js'
 import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import * as notificationHelpers from './../../util/notificationHelpers'
 import { browserHistory } from 'react-router'
+import {notify} from 'react-notify-toast'
 
 import * as contractAbis from './../../contract_addresses/contractAbi'
-
-const request = require('request')
-
-
-import ETHOrderBook from './../../../contracts/abi/ETHOrderBook'
-import factoryAddress from './../../contract_addresses/orderfactory.js'
-const contract = require('truffle-contract')
 
 
 function setActiveTrade(purchaseRequestPayload){
@@ -64,13 +58,6 @@ function clearActiveTrade(){
   }
 }
 
-function updateLoadingContractsStatus(status) {
-  return {
-    type: 'UPDATE_LOADING_CONTRACTS_STATUS',
-    payload: status
-  }
-}
-
 function userOrderBook(orderBook) {
   return {
   type: 'SET_ETH_ODER_BOOK',
@@ -79,8 +66,6 @@ function userOrderBook(orderBook) {
 }
 
 function setTxHash(txHash){
-  console.log('ui.ActiveTradeActions.setTxHash')
-  console.log(txHash)
   return {
     type: 'SET_TX_HASH',
     payload: txHash
@@ -105,10 +90,10 @@ module.exports = {
   sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerConfirmsTrade")
     console.log(ethOrderBook)
-    let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
-    let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
-    let price = web3.toWei(purchaseRequest.price)
     try {
+      let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
+      let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
+      let price = web3.toWei(purchaseRequest.price)
       ethOrderBook.data.availableBalance(function(error, result){
         console.log(error, result)
         if(!error){
@@ -432,25 +417,31 @@ module.exports = {
   },
   sellerAddsEther: (amount, uid, contractAddress, web3) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerAddsEther")
-    dispatch(sendEtherState('sending'));
-    var coinbase = web3.eth.coinbase;
-    amount = Number(amount);
-    let value = web3.toWei(amount, 'ether');
-    web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
-      if(!err) {
-        dispatch(sendEtherState('init'));
-        /*firebaseRef.database().ref('/users/'+uid+'/balanceUpdateTx')
-          .set(txHash);*/
-      } else {
-        if(err.message.includes('MetaMask Tx Signature: User denied')) {
-          console.log('ERROR: User denied transaction');
-          dispatch(sendEtherState('insufficient-available-balance'))
+
+    try{
+      var coinbase = web3.eth.coinbase;
+      amount = Number(amount);
+      let value = web3.toWei(amount, 'ether');
+      dispatch(sendEtherState('sending'));
+      web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
+        if(!err) {
+          dispatch(sendEtherState('init'));
+          /*firebaseRef.database().ref('/users/'+uid+'/balanceUpdateTx')
+            .set(txHash);*/
         } else {
-          console.log(err);
-          dispatch(sendEtherState('insufficient-available-balance'))
+          if(err.message.includes('MetaMask Tx Signature: User denied')) {
+            console.log('ERROR: User denied transaction');
+            dispatch(sendEtherState('insufficient-available-balance'))
+          } else {
+            console.log(err);
+            dispatch(sendEtherState('insufficient-available-balance'))
+          }
         }
-      }
-    })
+      })
+    } catch(error){
+      notify.show("Please unlock your MetaMask wallet")
+      console.log("we should notify the user that their wallet is locked")
+    }
   },
   sellerCreatesETHOrderBook: (web3, orderBookFactory, user) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerCreatesETHOrderBook")
@@ -469,7 +460,6 @@ module.exports = {
       .set(result.args.orderAddress)
 
       dispatch(userOrderBook(_instance))
-      dispatch(updateLoadingContractsStatus('loaded'))
       dispatch(sendEtherState('init'))
     })
     console.log(event)

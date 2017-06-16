@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class SellerStepNote extends Component {
   render() {
 
-    console.log("On step: ", this.props.step, " [StepNote.js]");
     switch(this.props.step) {
       case 'Awaiting Seller Confirmation':
         return(

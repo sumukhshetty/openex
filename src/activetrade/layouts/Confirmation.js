@@ -24,8 +24,6 @@ class Confirmation extends Component {
 
   render () {
     var txHashUrl
-    console.log('Confirmation.render')
-    console.log(this.props)
     if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
       txHashUrl = "https://kovan.etherscan.io/tx/"+this.props.txhash
     }
