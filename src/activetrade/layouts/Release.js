@@ -9,7 +9,6 @@ import SellerStepNote from '../ui/SellerStepNoteSell'
 class Release extends Component {
 
   render () {
-    console.log(this.props.viewerRole)
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
