@@ -11,7 +11,8 @@ const mapStateToProps = (state, ownProps) => {
     sendEtherState: state.sendEtherState,
     orderbookfactory: state.orderbookfactory,
     ethorderbook: state.ethorderbook,
-    txhash: state.txhash
+    txhash: state.txhash,
+    tradeadvertisements: state.tradeadvertisements
   }
 }
 

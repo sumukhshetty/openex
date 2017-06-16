@@ -31,14 +31,26 @@ class PostTradeForm extends Component {
       buyFormBool: true,
       user: this.props.user,
       uid: this.props.uid,
-      sendEtherState: this.props.sendEtherState
+      sendEtherState: this.props.sendEtherState,
+      isButtonDisabled: false
     }
   }
 
   componentWillMount () {
     var connectedAccount = this.props.web3.data.eth.accounts[0]
+    var buyerAddress
+    if(this.state.buyFormBool){
+      buyerAddress = connectedAccount
+    } else {
+      buyerAddress = null
+    }
+    var _isButtonDisabled = this.state.isButtonDisabled
+    if(this.props.tradeadvertisements.data.buyether){
+      _isButtonDisabled = true
+    }
     this.setState({postTradeDetails: {
       amount: 0,
+      buyerAddress: buyerAddress,
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid, // Submitting a from without changing values leaves them as blank
       paymentMethod: 'National Bank',    // If defaults change, these must change as well.
@@ -46,7 +58,8 @@ class PostTradeForm extends Component {
       currency: this.props.user.profile.currency
     },
       buyFormBool: true,
-      showMetaMaskWaitModal: false
+      showMetaMaskWaitModal: false,
+      isButtonDisabled: _isButtonDisabled
     })
   }
 
@@ -86,6 +99,7 @@ class PostTradeForm extends Component {
 
     var _postTradeDetails = this.state.postTradeDetails
     var _buyFormBool = this.state.buyFormBool
+    var _isButtonDisabled = this.state.isButtonDisabled
     _postTradeDetails['tradeType'] = event.target.value
     if (_postTradeDetails['tradeType'] === 'sell-ether') {
       _postTradeDetails = Object.assign({},
@@ -99,8 +113,10 @@ class PostTradeForm extends Component {
           buyerUsername: '',
           availableBalance: 0,
           pendingBalance: 0
-        }
-      )
+        })
+      if(this.props.tradeadvertisements.data.buyether){
+        _isButtonDisabled=true
+      }
       _buyFormBool = false
     } else {
       _postTradeDetails = Object.assign({},
@@ -119,7 +135,9 @@ class PostTradeForm extends Component {
       _buyFormBool = true
     }
 
-    this.setState({ postTradeDetails: _postTradeDetails, buyFormBool: _buyFormBool })
+    this.setState({ postTradeDetails: _postTradeDetails,
+     buyFormBool: _buyFormBool,
+     isButtonDisabled:_isButtonDisabled })
   }
 
   onPaymentMethodChange (event) {
@@ -184,7 +202,7 @@ class PostTradeForm extends Component {
   }
 
   render () {
-      if(this.props.user.profile.orderBookAddress && !this.state.buyFormBool){
+      if(this.props.tradeadvertisements.data.sellether && !this.state.buyFormBool){
         return(
           <div>Looks like you already have an Sell Trade Advertisement. If need to make changes edit it.</div>
           )
@@ -288,12 +306,13 @@ class PostTradeForm extends Component {
               {
                 (this.props.sendEtherState === 'waiting-for-tx-to-mine' && <MetaMaskWaitModal message='the transaction is being mined' txhash={this.props.txhash.data} />)
               }
-              <div className='flex mv3'>
+              <div className='flex mv3' >
                 <label className='w5 ' />
                 <input
                   type='submit'
                   className='mv5'
-                  value='Publish Advertisement' />
+                  value='Publish Advertisement' 
+                  disabled={this.state.isButtonDisabled} />
               </div>
               </fieldset>
             </form>
