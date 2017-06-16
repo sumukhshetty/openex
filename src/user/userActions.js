@@ -83,7 +83,7 @@ module.exports = {
         console.log("user.signedin")
         // TODO dispatch an event to show a loading circle thing
         console.log(new Date().getTime())
-        firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
+        firebaseRef.database().ref('/users/'+user.uid).once('value',function(snap){
           var userProfile = snap.val()
           dispatch(getUserProfile(userProfile))
           dispatch(getActiveTrades(userProfile['activetrades']))
@@ -91,19 +91,19 @@ module.exports = {
           dispatch(getTradeAdvertisements(userProfile['advertisements']))
           dispatch(getCompletedTrades(userProfile['completedtrades']))
           dispatch(userLoggedIn(user))
-          firebaseRef.database().ref('/users').on('value', function(snap){
+          firebaseRef.database().ref('/users').once('value', function(snap){
 
             dispatch(users(snap.val()))
           })
-          firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
+          firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).once('value',function(snap){
 
             dispatch(getBuyTradeAdvertisements(snap.val()))
           })
-          firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).on('value', function(snap){
+          firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).once('value', function(snap){
 
             dispatch(getSellTradeAdvertisements(snap.val()))
           })
-          firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
+          firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).once('value', function(snap){
 
             dispatch(getPurchaseRequests(snap.val()))
           })
