@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import RecoverEmail from './RecoverEmail';
 import ResetPassword from './ResetPassword';
 import VerifyEmail from './VerifyEmail';
@@ -26,4 +26,4 @@ const EmailHandler = (props) => {
         </div>
       );
   }
-}
+}*/

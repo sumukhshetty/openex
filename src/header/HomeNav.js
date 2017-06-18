@@ -9,7 +9,7 @@ class HomeNav extends Component {
   }
 
   login () {
-    this.props.login(this.props.web3.data)
+    this.props.login(this.props.web3)
   }
 
   render () {

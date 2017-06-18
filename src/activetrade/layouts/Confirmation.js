@@ -19,15 +19,17 @@ class Confirmation extends Component {
 
   handleEscrowRequest (e) {
     e.preventDefault()
-    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.seller.data.orderBookAddress, this.props.web3)
+    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.ethorderbook.address, this.props.web3)
   }
 
   render () {
     var txHashUrl
-    console.log('Confirmation.render')
-    console.log(this.props)
     if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
       txHashUrl = "https://kovan.etherscan.io/tx/"+this.props.txhash
+    }
+    var contractUrl
+    if(this.props.sendEtherState === 'insufficient-available-balance'){
+      contractUrl = "https://kovan.etherscan.io/address/"+this.props.ethorderbook.address
     }
     return (
       <section className='bg-smoke'>
@@ -63,6 +65,7 @@ class Confirmation extends Component {
                  {this.props.sendEtherState === 'insufficient-available-balance' &&
                  <div>
                  <span> Your contract doesn't have enough ether, add some to confirm this trade </span>
+                 <span> <a target="_blank" href={contractUrl}>{contractUrl}</a></span>
                  <input type='number' onChange={this.onEtherAmountChange.bind(this)}/>
                  <button onClick={this.handleEscrowRequest.bind(this)}> submit </button>
                  </div>
@@ -78,7 +81,7 @@ class Confirmation extends Component {
                </div>}
                {this.props.sendEtherState === 'waiting-for-tx-to-mine' &&
                <div>
-              <div> You can check the status of you transaction here: </div>
+              <div> Your contract is being mined. You can check the status of you transaction here: </div>
               <div><a target="_blank" href={txHashUrl}>{txHashUrl}</a></div>
               </div>
              }

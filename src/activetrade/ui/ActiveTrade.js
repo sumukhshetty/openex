@@ -11,8 +11,6 @@ import Dot from './../../images/svgReactComponents/Dot.js'
 class ActiveTrade extends Component {
 
   componentWillMount () {
-    console.log("ActiveTrade.componentWillMount")
-    console.log(this.props)
     this.props.onBeforeComponentLoad(this.props.purchaserequests,
       this.props.purchaseRequestId, this.props.users, this.props.user)
   }
@@ -65,8 +63,6 @@ class ActiveTrade extends Component {
 
 
   render () {
-    console.log('ActiveTrade.render')
-    console.log(this.props)
     const progress_maps = {
       'Awaiting Seller Confirmation': [
         { status: 'active', label: <Dot />, text: 'Awaiting Seller Confirmation' },
@@ -152,6 +148,7 @@ class ActiveTrade extends Component {
           step={status}
           viewerRole={viewerRole}
           txhash={this.props.txhash.data}
+          ethorderbook={this.props.ethorderbook.data}
           />,
         'Awaiting Payment': <Payment
           activetrade={activetrade}

@@ -80,6 +80,6 @@ module.exports = {
   },
 
   getNotificationsSettings: (user)=> (dispatch) => {
-    console.log("getNotificationsSettings")
+    //console.log("getNotificationsSettings")
   }
 }

@@ -7,9 +7,7 @@ import EnableNotifications from './../../enablenotifications/layouts/EnableNotif
 import CompletedTrades from './../../completedtrades/layouts/CompletedTrades'
 import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
 
-import BrowserWalletLockedAlert from './../../generic-components/BrowserWalletLockedAlert'
 import WrongNetwork from './../wrongnetwork/WrongNetwork'
-import VerifyWalletContainer from './../../verifywallet/ui/VerifyWalletContainer'
 
 import LoadingContracts from './../../loadingcontracts/LoadingContracts'
 
@@ -18,8 +16,13 @@ import Kyc from './kyc/layouts/Kyc'
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
 
+import factoryAddress from './../../contract_addresses/orderfactory.js'
+
 class Dashboard extends Component {
   componentWillMount () {
+    // TODO change this to mainnet
+    this.props.loadOrderBookFactory(this.props.web3.data, factoryAddress.kovanAddress)
+    this.props.loadETHOrderBook(this.props.web3.data, this.props.user)
     firebaseMessaging.onTokenRefresh(function () {
       firebaseMessaging.getToken()
     .then(function (refreshedToken) {
@@ -63,23 +66,29 @@ class Dashboard extends Component {
   }
 
   render () {
-    return (
-      <section className='bg-smoke'>
-        <div className='w-75 center pv3'>
-          <div>
+    if(!this.props.web3.wrongnetwork){
+      return (
+        <section className='bg-smoke'>
+          <div className='w-75 center pv3'>
             <div>
-              <EnableNotifications />
-              <Kyc/>
-              <DashboardInfoMessage />
-              <ActiveTrades />
-              <TradeAdvertisements />
-              <CompletedTrades />
-              <DisputedTrades />
+              <div>
+                <EnableNotifications />
+                <Kyc/>
+                <DashboardInfoMessage />
+                <ActiveTrades />
+                <TradeAdvertisements />
+                <CompletedTrades />
+                <DisputedTrades />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    )
+        </section>
+      )
+    } else {
+      return (
+        <WrongNetwork/>
+        )
+    }
   }
 }
 

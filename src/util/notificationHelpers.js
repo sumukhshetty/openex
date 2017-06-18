@@ -29,7 +29,6 @@ module.exports = {
   },
   sendSellerCreatesPurchaseRequestNotification: (purchaseRequestId, buyTradeAdvertisementId, buyTradeAdvertisement, seller, buyer) => {
     var _body = seller.profile.username + " has responded to your Buy Trade Advertisement"
-    console.log(_body)
     var _fcmToken
       if(buyer.data.fcmToken){
         _fcmToken = buyer.data.fcmToken
@@ -50,10 +49,7 @@ module.exports = {
         "seen": false,
         "createdAt": FIREBASE_TIMESTAMP
       }
-      //firebaseRef.database().ref("/notifications/").push(notificationData)
       firebaseRef.database().ref("/notifications/"+buyTradeAdvertisement.buyerUid+'/'+purchaseRequestId+'/sellercreatespurchaserequest').set(notificationData)
-      console.log(buyTradeAdvertisement.buyerUid)
-      //firebaseRef.database().ref('/users/'+buyTradeAdvertisement.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
   },
   sendBuyerConfirmsPaymentNotification: (buyer,seller,purchaseRequest,purchaseRequestId) => {
     var _fcmToken

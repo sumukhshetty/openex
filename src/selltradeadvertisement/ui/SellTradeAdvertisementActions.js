@@ -43,7 +43,7 @@ module.exports = {
     var now = new Date()
     var purchaseRequestData = {
       bankinformation: sellTradeAdvertisement.bankInformation,
-      buyerAddress: buyerAddress,
+      buyerAddress: buyer.data.uid,
       buyerUid: buyer.data.uid,
       buyerUsername: buyer.profile.username,
       // TODO get the contract address from the user

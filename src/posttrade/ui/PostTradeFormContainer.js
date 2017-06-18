@@ -9,7 +9,10 @@ const mapStateToProps = (state, ownProps) => {
     etherPrice: state.etherPrice,
     uid: ownProps.uid,
     sendEtherState: state.sendEtherState,
-    orderbookfactory: state.orderbookfactory
+    orderbookfactory: state.orderbookfactory,
+    ethorderbook: state.ethorderbook,
+    txhash: state.txhash,
+    tradeadvertisements: state.tradeadvertisements
   }
 }
 

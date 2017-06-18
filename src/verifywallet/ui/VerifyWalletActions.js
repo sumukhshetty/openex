@@ -1,3 +1,4 @@
+// deprecate this
 const contract = require('truffle-contract')
 import ETHOrderBookContract from './../../../contracts/abi/ETHOrderBook.json'
 import OrderBookFactoryContract from './../../../contracts/abi/OrderBookFactory.json'
@@ -50,14 +51,7 @@ module.exports = {
       const _instance = ETHOrderBook.at(orderBookAddress)
       dispatch(userOrderBook(_instance))
       dispatch(updateLoadingContractsStatus('loaded'))
-      /*const orderBook = contract(ETHOrderBookContract);
-      orderBook.setProvider(web3.currentProvider);
-      var orderBookInstance;
-      orderBook.at(orderBookAddress)
-        .then(function (_orderBook) {
-          dispatch(userOrderBook(_orderBook))
-          dispatch(updateLoadingContractsStatus('loaded'))
-        })*/
+
     } catch(error) {
       console.log("ui.VerifyWalletActions.verifyWallet.loadUserOrderBook.error")
       console.log(error)
@@ -71,13 +65,7 @@ module.exports = {
       const _orderBookFactory = OrderBookFactory.at(orderBookFactoryAddress)
       dispatch(setOrderBookFactory(_orderBookFactory))
       dispatch(updateLoadingContractsStatus('loaded'))
-      /*const orderBookFactory = contract(OrderBookFactoryContract)
-      orderBookFactory.setProvider(web3.currentProvider)
-      orderBookFactory.at(orderBookFactoryAddress)
-        .then(function(_orderBookFactory){
-          dispatch(setOrderBookFactory(_orderBookFactory))
-          dispatch(updateLoadingContractsStatus('loaded'))
-        })*/
+
     } catch(error) {
       console.log('ui.VerifyWalletActions.loadOrderBookFactory.catch')
       console.log(error)
