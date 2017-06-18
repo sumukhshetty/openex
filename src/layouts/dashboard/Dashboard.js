@@ -8,6 +8,7 @@ import CompletedTrades from './../../completedtrades/layouts/CompletedTrades'
 import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
 
 import WrongNetwork from './../wrongnetwork/WrongNetwork'
+import LockedAccount from './../lockedaccount/LockedAccount'
 import WrongAccount from './../wrongaccount/WrongAccount'
 
 import LoadingContracts from './../../loadingcontracts/LoadingContracts'
@@ -69,6 +70,11 @@ class Dashboard extends Component {
 
   render () {
     if(!this.props.web3.wrongnetwork){
+      if(this.props.web3.locked){
+        return (
+          <LockedAccount />
+          )
+      }
       if(this.props.user.correctUserAccount){
         return (
           <section className='bg-smoke'>

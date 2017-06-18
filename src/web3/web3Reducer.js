@@ -7,7 +7,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/Q
 
 const initialState = {
   data: web3,
-  locked: true,
+  locked: false,
   verified: false,
   wrongnetwork: true,
   orderBookFactory: null

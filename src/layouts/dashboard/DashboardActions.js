@@ -17,14 +17,20 @@ function setETHOrderBook(orderBook) {
 }
 
 function userAccountCorrect(value){
-  console.log('userAccountCorrect.UPDATE_CORRECT_USER_ACCOUNT')
-  console.log(value)
   return{
     type: 'UPDATE_CORRECT_USER_ACCOUNT',
     payload: value
   }
 }
 
+function setLockedWalletStatus(value){
+  console.log('DashboardActions.setLockedWalletStatus')
+  console.log(value)
+  return {
+    type: 'SET_BROWSER_WALLET_LOCK_STATUS',
+    payload: value
+  }
+}
 module.exports = {
   loadOrderBookFactory: (web3, orderBookFactoryAddress) => (dispatch) => {
     dispatch(setOrderBookFactory('obtaining...'))
@@ -54,9 +60,11 @@ module.exports = {
   },
   checkBrowserWalletAddress:(web3, user) => (dispatch) =>{
     try{
+      console.log('checkBrowserWalletAddress')
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
       } else {
+        console.log('checkBrowserWalletAddress.else')
         throw new Error("Wallet Address Undefined")
       }
       if(user.data.uid === coinbase){
@@ -65,6 +73,8 @@ module.exports = {
         dispatch(userAccountCorrect(false))
       }
     } catch(error){
+      console.log("checkBrowserWalletAddress.error")
+      dispatch(setLockedWalletStatus(true))
       if (error.message === 'Wallet Address Undefined') {
         notify.show("Please unlock your MetaMask account")
       }
