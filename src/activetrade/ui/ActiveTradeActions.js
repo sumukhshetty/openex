@@ -78,18 +78,28 @@ function clearTxHash(){
   }
 }
 
+function updateConfirmButtonIsDisabled(value){
+  console.log('ActiveTradeActions.updateConfirmButtonIsDisabled')
+  console.log(value)
+  return {
+    type: 'UPDATE_CONFIRM_BUTTON_IS_DISABLED',
+    payload: value
+  }
+}
+
 module.exports = {
   activeTrade: (purchaseRequests, purchaseRequestId, users, user) => (dispatch) => {
     firebaseRef.database().ref('/purchaserequests/'+user.profile.country+'/'+purchaseRequestId).on('value', function(snap){
       var activeTrade = snap.val()
       dispatch(setActiveTrade(activeTrade))
+      dispatch(updateConfirmButtonIsDisabled(false))
       dispatch(setBuyer(users.data[activeTrade.buyerUid]))
       dispatch(setSeller(users.data[activeTrade.sellerUid]))
     })
   },
   sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
     console.log("ui.ActiveTradeActions.sellerConfirmsTrade")
-    console.log(ethOrderBook)
+    dispatch(updateConfirmButtonIsDisabled(true))
     try {
       let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
       let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
@@ -125,6 +135,7 @@ module.exports = {
                 }
                 dispatch(sendEtherState('init'));
                 dispatch(clearTxHash())
+                dispatch(updateConfirmButtonIsDisabled(false))
                 notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)              
                 event.stopWatching()
               })

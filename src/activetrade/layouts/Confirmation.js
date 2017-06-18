@@ -54,7 +54,7 @@ class Confirmation extends Component {
                 <div className='tc'>
                   {this.props.sendEtherState === 'init' &&
                   <div>
-                  <button onClick={this.props.confirmTrade}>
+                  <button onClick={this.props.confirmTrade} disabled={this.props.confirmTradeButtonIsDisabled}>
                    Confirm Trade
                  </button>
                 <CancelTrade cancelTrade={this.props.sellerCancelsTrade}/>
