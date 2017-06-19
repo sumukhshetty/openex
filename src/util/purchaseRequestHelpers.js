@@ -14,10 +14,14 @@ module.exports = {
     firebaseRef.database().ref("/disputes/").child(purchaseRequestId).remove()
   },
   updateUserTradingStats: (purchaseRequest, userUid, users) => {
+    console.log('updateUserTradingStats')
     var userProfile = users.data[userUid]
-    var updatedUserTradeVolume = parseInt(Number(userProfile.tradeVolume), 10) + parseInt(Number(purchaseRequest.etherAmount), 10)
-
+    var updatedUserTradeVolume = Number(userProfile.tradeVolume) + Number(purchaseRequest.etherAmount)
+    console.log(userProfile.tradeVolume)
+    console.log(purchaseRequest.etherAmount)
+    console.log(updatedUserTradeVolume)
     var updatedUserNumberOfTrades = parseInt(Number(userProfile.numberOfTrades), 10) + 1
+    console.log(updatedUserNumberOfTrades)
     var userTradingPartners, tradingPartnerUid
     if (userUid===purchaseRequest.buyerUid){
 

@@ -66,7 +66,7 @@ class Confirmation extends Component {
                  <div>
                  <span> Your contract doesn't have enough ether, add some to confirm this trade </span>
                  <span> <a target="_blank" href={contractUrl}>{contractUrl}</a></span>
-                 <input type='number' onChange={this.onEtherAmountChange.bind(this)}/>
+                 <input type='number' onChange={this.onEtherAmountChange.bind(this)} required/>
                  <button onClick={this.handleEscrowRequest.bind(this)}> submit </button>
                  </div>
                }
