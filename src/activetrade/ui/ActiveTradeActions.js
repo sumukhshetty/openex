@@ -109,6 +109,29 @@ module.exports = {
       } else {
         throw new Error('Wallet Address Undefined')
       }
+/*      
+      // START NO-SMART CONTRACT
+      var now = new Date()
+      var updatedPurchaseRequest = Object.assign({},
+        purchaseRequest, {
+          lastUpdated: now.toUTCString(),
+          sellerconfirmtime: now.toUTCString(),
+          status: 'Awaiting Payment'
+        })
+      firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+      .set(updatedPurchaseRequest, function(error){
+        if(error){
+          console.log(error)
+        }
+        dispatch(sendEtherState('init'));
+        dispatch(clearTxHash())
+        dispatch(updateConfirmButtonIsDisabled(false))
+        notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)              
+        //event.stopWatching()
+      })
+      // END NO-SMART CONTRACT
+*/
+      // START WEB3
       ethOrderBook.data.availableBalance(function(error, result){
         if(!error){
           // check if the request is greater than the available balance
@@ -121,6 +144,7 @@ module.exports = {
               console.log('addOrder.event.watch')
               console.log(error,result)
               console.log("we were able to add the order to the smart contract")
+              // START FIREBASE
               var now = new Date()
               var updatedPurchaseRequest = Object.assign({},
                 purchaseRequest, {
@@ -139,6 +163,7 @@ module.exports = {
                 notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)              
                 event.stopWatching()
               })
+              // END FIREBASE
             })
             console.log(purchaseRequest.buyerAddress)
             console.log(purchaseRequestId.slice(1))
@@ -166,6 +191,7 @@ module.exports = {
           raven.captureException(error)
         }
       })
+      // END WEB3
     } catch (error) {
       console.log(error)
       if( error.message === "Cannot read property 'availableBalance' of null") {
@@ -207,6 +233,30 @@ module.exports = {
       }
       dispatch(sendEtherState('sending'));
       console.log(purchaseRequestId)
+/*
+      // START NO-SMART-CONTRACT
+      var now = new Date()
+      var updatedPurchaseRequest = Object.assign({},
+        purchaseRequest, {
+          lastUpdated: now.toUTCString(),
+          sellerconfirmtime: now.toUTCString(),
+          status: 'All Done'
+        })
+      console.log(updatedPurchaseRequest)
+      firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+      .set(updatedPurchaseRequest, function(error){
+        if(error){
+          console.log(error)
+        }
+        dispatch(sendEtherState('init'));
+        dispatch(clearTxHash())
+        dispatch(updateConfirmButtonIsDisabled(false))
+        notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)              
+        //event.stopWatching()
+      })
+      // END NO-SMART-CONTRACT 
+*/
+      // START WEB3
       var event = ethOrderBook.data.OrderCompleted()
       event.watch((error,result) => {
         console.log('event.OrderCompleted')
@@ -246,6 +296,7 @@ module.exports = {
           dispatch(sendEtherState('init'));
         }
       })
+      // END WEB3
     } catch (error){
       if(error.message==='Wallet Address Undefined'){
         notify.show("Please unlock your MetaMask Account")

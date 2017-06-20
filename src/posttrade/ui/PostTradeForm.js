@@ -44,10 +44,10 @@ class PostTradeForm extends Component {
     } else {
       buyerAddress = null
     }
-    var _isButtonDisabled = this.state.isButtonDisabled
+    /*var _isButtonDisabled = this.state.isButtonDisabled
     if(this.props.tradeadvertisements.data.buyether){
       _isButtonDisabled = true
-    }
+    }*/
     this.setState({postTradeDetails: {
       amount: 0,
       buyerAddress: buyerAddress,
@@ -59,7 +59,7 @@ class PostTradeForm extends Component {
     },
       buyFormBool: true,
       showMetaMaskWaitModal: false,
-      isButtonDisabled: _isButtonDisabled
+      //isButtonDisabled: _isButtonDisabled
     })
   }
 
@@ -114,9 +114,9 @@ class PostTradeForm extends Component {
           availableBalance: 0,
           pendingBalance: 0
         })
-      if(this.props.tradeadvertisements.data.buyether){
+/*      if(this.props.tradeadvertisements.data.buyether){
         _isButtonDisabled=true
-      }
+      }*/
       _buyFormBool = false
     } else {
       _postTradeDetails = Object.assign({},
@@ -136,8 +136,8 @@ class PostTradeForm extends Component {
     }
 
     this.setState({ postTradeDetails: _postTradeDetails,
-     buyFormBool: _buyFormBool,
-     isButtonDisabled:_isButtonDisabled })
+     buyFormBool: _buyFormBool,})
+     //isButtonDisabled:_isButtonDisabled })
   }
 
   onPaymentMethodChange (event) {
@@ -202,7 +202,7 @@ class PostTradeForm extends Component {
   }
 
   render () {
-      if(this.props.tradeadvertisements.data.sellether && !this.state.buyFormBool){
+      if(this.props.tradeadvertisements.data && !this.state.buyFormBool){
         return(
           <div>Looks like you already have an Sell Trade Advertisement. If need to make changes edit it.</div>
           )

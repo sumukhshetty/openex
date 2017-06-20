@@ -35,7 +35,7 @@ module.exports = {
         _fcmToken = null
       }
     var notificationData = {
-        "title": "New Buy Trade Advertisement Response",
+        "title": "New Buy Trade Advertisement Response from seller.profile.username",
         "body": _body,
         "type": "accept-buy-order",
         "email": true,
