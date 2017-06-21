@@ -153,7 +153,7 @@ module.exports = {
       "seen": false,
       "createdAt": FIREBASE_TIMESTAMP
     }
-    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/arbiterreleasestoseller').update(notificationData)
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/arbiterreleasestoseller').update(buyerNotificationData)
     var sellerNotificationData = {
       "title": "Arbiter released ether to seller",
       "body": _body,
@@ -167,7 +167,7 @@ module.exports = {
       "seen": false,
       "createdAt": FIREBASE_TIMESTAMP
     }
-    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/status/arbiterreleasestoseller').update(notificationData)
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/status/arbiterreleasestoseller').update(sellerNotificationData)
   },
 sendArbiterReleasesToBuyer: (seller, buyer, purchaseRequest, purchaseRequestId) => {
     console.log("notificationHelpers.sendArbiterReleasesToBuyer")
@@ -198,7 +198,7 @@ sendArbiterReleasesToBuyer: (seller, buyer, purchaseRequest, purchaseRequestId) 
       "seen": false,
       "createdAt": FIREBASE_TIMESTAMP
     }
-    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/arbiterreleasestobuyer').update(notificationData)
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/arbiterreleasestobuyer').update(buyerNotificationData)
     var sellerNotificationData = {
       "title": "Arbiter released ether to buyer",
       "body": _body,
@@ -212,6 +212,6 @@ sendArbiterReleasesToBuyer: (seller, buyer, purchaseRequest, purchaseRequestId) 
       "seen": false,
       "createdAt": FIREBASE_TIMESTAMP
     }
-    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/status/arbiterreleasestobuyer').update(notificationData)
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/status/arbiterreleasestobuyer').update(sellerNotificationData)
   },
 }

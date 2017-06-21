@@ -401,18 +401,25 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(ethOrderBook)){
+      if (!ethUtil.isValidAddress(ethOrderBook)) {
         throw new Error("Invalid address")
       } else {
         var event = ethOrderBook.data.DisputeResolved()
-        event.watch((error, result) = {
+        event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
-          console.log(event, result)
-          // update the status of the trade to all done
-          firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/status').update('All Done')
-          // send a notification to the buyer and the seller
-          notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
-.        })
+          console.log(error, result)
+          if(!error){
+            // update the status of the trade to all done
+            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/status').update('All Done')
+            // send a notification to the buyer and the seller
+            notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
+            event.stopWatching()
+          } else {
+            dispatch(sendEtherState('init'));
+            raven.captureException(error)
+          }
+        })
+
         ethOrderBook.data.resolveDisputeSeller(purchaseRequestId.slice(1),{from:coinbase}, function(error, result){
           if(!error) {
             dispatch(sendEtherState('waiting-for-tx-to-mine'))
@@ -431,7 +438,7 @@ module.exports = {
       }
     }
   },
-  arbiterReleasesToBuyer: (buyer, seller, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) =>{
+  arbiterReleasesToBuyer: (buyer, seller, arbiter, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) =>{
     try {
       if (web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
@@ -442,14 +449,15 @@ module.exports = {
         throw new Error("Invalid address")
       } else {
         var event = ethOrderBook.data.DisputeResolved()
-        event.watch((error, result) = {
+        event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
           console.log(event, result)
           // update the status of the trade to all done
           firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+purchaseRequestId+'/status').update('All Done')
           // send a notification to the buyer and the seller
           notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
-.        })
+          event.stopWatching()
+        })
         ethOrderBook.data.resolveDisputeSeller(purchaseRequestId.slice(1),{from:coinbase}, function(error, result){
           if(!error) {
             dispatch(sendEtherState('waiting-for-tx-to-mine'))
