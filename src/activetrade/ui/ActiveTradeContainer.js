@@ -47,11 +47,14 @@ const mapDispatchToProps = (dispatch) => {
     sellerRaisesDispute: (seller, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.sellerRaisesDispute(seller, purchaseRequest, purchaseRequestId))
     },
-    arbiterReleasesToSeller: (seller, arbiter, purchaseRequest, purchaseRequestId, web3)=>{
-      dispatch(actions.arbiterReleasesToSeller(seller, arbiter, purchaseRequest, purchaseRequestId, web3))
+    arbiterReleasesToSeller: (seller, buyer, arbiter, purchaseRequest, purchaseRequestId, web3)=>{
+      console.log('ActiveTradeContainer.arbiterReleasesToSeller')
+      console.log(web3)
+      console.log(web3.eth.coinbase)
+      dispatch(actions.arbiterReleasesToSeller(seller, buyer, arbiter, purchaseRequest, purchaseRequestId, web3))
     },
-    arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId, web3)=>{
-      dispatch(actions.arbiterReleasesToBuyer(buyer, arbiter, purchaseRequest, purchaseRequestId, web3))
+    arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId, web3, ethOrderBook)=>{
+      dispatch(actions.arbiterReleasesToBuyer(buyer, arbiter, purchaseRequest, purchaseRequestId, web3, ethOrderBook))
     },
     sellerRatesBuyer: (rating, purchaseRequestId, purchaseRequest) => {
       dispatch(actions.sellerRatesBuyer(rating, purchaseRequestId, purchaseRequest))

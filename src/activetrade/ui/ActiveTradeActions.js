@@ -3,10 +3,11 @@ import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import * as notificationHelpers from './../../util/notificationHelpers'
 import { browserHistory } from 'react-router'
 import {notify} from 'react-notify-toast'
+import * as contractAbis from './../../contract_addresses/contractAbi'
+import * as orderFactory from './../../contract_addresses/orderfactory'
 
 var ethUtil = require('ethereumjs-util')
 
-import * as contractAbis from './../../contract_addresses/contractAbi'
 
 
 function setActiveTrade(purchaseRequestPayload){
@@ -394,17 +395,23 @@ module.exports = {
 
       });
   },
-  arbiterReleasesToSeller: (seller, buyer, arbiter, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
+  arbiterReleasesToSeller: (seller, buyer, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) => {
+    console.log('ActiveTradeActions.arbiterReleasesToSeller')
     try {
       if (web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(ethOrderBook)) {
+      if (!ethUtil.isValidAddress(purchaseRequest.contractAddress)) {
         throw new Error("Invalid address")
       } else {
-        var event = ethOrderBook.data.DisputeResolved()
+        const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
+        const _instance = DisputeResolver.at(orderFactory.kovanDisputeResolver)
+        var event = _instance.DisputeResolved()
+        console.log(_instance)
+        //dispatch(setETHOrderBook(_instance))
+        var event = _instance.DisputeResolved()
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
           console.log(error, result)
@@ -419,12 +426,13 @@ module.exports = {
             raven.captureException(error)
           }
         })
-
-        ethOrderBook.data.resolveDisputeSeller(purchaseRequestId.slice(1),{from:coinbase}, function(error, result){
+        console.log()
+        _instance.resolveDisputeSeller(purchaseRequestId.slice(1),{from:coinbase}, function(error, result){
           if(!error) {
             dispatch(sendEtherState('waiting-for-tx-to-mine'))
             dispatch(setTxHash(result))
           } else {
+            console.log(error)
             dispatch(sendEtherState('init'))
           }
 
@@ -434,21 +442,25 @@ module.exports = {
       if(error.message==='Wallet Address Undefined'){
         notify.show("Please unlock your MetaMask Account")
       } else {
+        console.log(error)
         raven.captureException(error)
+
       }
     }
   },
-  arbiterReleasesToBuyer: (buyer, seller, arbiter, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) =>{
+  arbiterReleasesToBuyer: (buyer, seller, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) =>{
     try {
       if (web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(ethOrderBook)){
+      if (!ethUtil.isValidAddress(contractAbis.ETHOrderBookAbi)){
         throw new Error("Invalid address")
       } else {
-        var event = ethOrderBook.data.DisputeResolved()
+        const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
+        const _instance = DisputeResolver.at(orderFactory.kovanDisputeResolver)
+        var event = _instance.DisputeResolved()
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
           console.log(event, result)
@@ -458,7 +470,7 @@ module.exports = {
           notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
           event.stopWatching()
         })
-        ethOrderBook.data.resolveDisputeSeller(purchaseRequestId.slice(1),{from:coinbase}, function(error, result){
+        _instance.resolveDisputeBuyer(purchaseRequestId.slice(1),{from:coinbase}, function(error, result){
           if(!error) {
             dispatch(sendEtherState('waiting-for-tx-to-mine'))
             dispatch(setTxHash(result))

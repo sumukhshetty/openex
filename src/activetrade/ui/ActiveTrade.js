@@ -45,10 +45,12 @@ class ActiveTrade extends Component {
     this.props.sellerRaisesDispute(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   arbiterReleasesToSeller () {
-    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
+    console.log("ActiveTrade.arbiterReleasesToSeller")
+    console.log(this.props.web3)
+    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.buyer.data,this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
   }
   arbiterReleasesToBuyer () {
-    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
+    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.seller.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
   }
   tradePostProcessing () {
     this.props.tradePostProcessing(this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.users)
