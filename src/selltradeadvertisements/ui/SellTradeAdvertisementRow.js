@@ -16,7 +16,7 @@ const SellTradeAdvertisementRow = (props) => {
         <td className='fb15 tc' >{props.price.toFixed(2)}</td>
         <td className='fb5 tc' >{props.sellTradeAdvertisementData.minTransactionLimit} - {props.sellTradeAdvertisementData.maxTransactionLimit}</td>
         <td className='fb15 tc' >{moment(props.seller.lastTransfer).fromNow() || '-'}</td>
-        <Trustworthiness trustLevel={props.seller.trustworthiness} />
+        <Trustworthiness trustLevel={props.seller.avgFeedback} />
         <LastOnline time={props.seller.lastOnline} />
         <BuyButton sellTradeAdvertisementId={props.sellTradeAdvertisementId} />
       </tr>
