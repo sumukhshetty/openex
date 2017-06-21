@@ -23,8 +23,7 @@ module.exports = {
       "seen": false,
       "createdAt": FIREBASE_TIMESTAMP
     }
-    firebaseRef.database().ref("/notifications/"+sellTradeAdvertisement.sellerUid+'/'+purchaseRequestId+'/buyercreatespurchaserequest').set(notificationData)
-    //firebaseRef.database().ref('/users/'+sellTradeAdvertisement.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true}) 
+    firebaseRef.database().ref("/notifications/"+sellTradeAdvertisement.sellerUid+'/'+purchaseRequestId+'/status/buyercreatespurchaserequest').update(notificationData)
 
   },
   sendSellerCreatesPurchaseRequestNotification: (purchaseRequestId, buyTradeAdvertisementId, buyTradeAdvertisement, seller, buyer) => {
@@ -36,7 +35,7 @@ module.exports = {
         _fcmToken = null
       }
     var notificationData = {
-        "title": "New Buy Trade Advertisement Response",
+        "title": "New Buy Trade Advertisement Response from seller.profile.username",
         "body": _body,
         "type": "accept-buy-order",
         "email": true,
@@ -49,7 +48,7 @@ module.exports = {
         "seen": false,
         "createdAt": FIREBASE_TIMESTAMP
       }
-      firebaseRef.database().ref("/notifications/"+buyTradeAdvertisement.buyerUid+'/'+purchaseRequestId+'/sellercreatespurchaserequest').set(notificationData)
+      firebaseRef.database().ref("/notifications/"+buyTradeAdvertisement.buyerUid+'/'+purchaseRequestId+'/status/sellercreatespurchaserequest').update(notificationData)
   },
   sendBuyerConfirmsPaymentNotification: (buyer,seller,purchaseRequest,purchaseRequestId) => {
     var _fcmToken
@@ -74,9 +73,7 @@ module.exports = {
       "createdAt": FIREBASE_TIMESTAMP
     }
 
-    //firebaseRef.database().ref("/notifications/").push(notificationData)
-    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/buyerconfirmspayment').set(notificationData)
-    //firebaseRef.database().ref('/users/'+purchaseRequest.sellerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/status/buyerconfirmspayment').update(notificationData)
   },
   sendSellerConfirmsTradeNotification: (seller, buyer, purchaseRequest, purchaseRequestId) => {
     var _fcmToken
@@ -100,9 +97,7 @@ module.exports = {
       "createdAt": FIREBASE_TIMESTAMP
     }
 
-    //firebaseRef.database().ref("/notifications/").push(notificationData)
-    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/sellerconfirmstrade').set(notificationData)
-    //firebaseRef.database().ref('/users/'+purchaseRequest.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/sellerconfirmstrade').update(notificationData)
   },
   sendSellerReleasesEtherNotification: (seller, buyer, purchaseRequest, purchaseRequestId) => {
     console.log("notificationHelpers.sendSellerReleasesEtherNotification")
@@ -127,8 +122,6 @@ module.exports = {
       "seen": false,
       "createdAt": FIREBASE_TIMESTAMP
     }
-    //firebaseRef.database().ref("/notifications/").push(notificationData)
-    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/sellerreleasesether').set(notificationData)
-    //firebaseRef.database().ref('/users/'+purchaseRequest.buyerUid+'/notifications/'+newNotifcation.key).set({vaule:true})
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/sellerreleasesether').update(notificationData)
   },
 }

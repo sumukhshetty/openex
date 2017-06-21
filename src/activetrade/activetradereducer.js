@@ -1,5 +1,6 @@
 const initialState = {
-  data: {}
+  data: {},
+  confirmTradeButtonIsDisabled: false
 }
 
 const activeTradeReducer = (state = initialState, action) => {
@@ -12,6 +13,12 @@ const activeTradeReducer = (state = initialState, action) => {
     return {
       data: null
    }
+  }
+  if (action.type === 'UPDATE_CONFIRM_BUTTON_IS_DISABLED') {
+    return {
+      data: state.data,
+      confirmTradeButtonIsDisabled: action.payload
+    }
   }
   return state
 }

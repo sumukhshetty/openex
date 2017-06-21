@@ -8,6 +8,8 @@ import CompletedTrades from './../../completedtrades/layouts/CompletedTrades'
 import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
 
 import WrongNetwork from './../wrongnetwork/WrongNetwork'
+import LockedAccount from './../lockedaccount/LockedAccount'
+import WrongAccount from './../wrongaccount/WrongAccount'
 
 import LoadingContracts from './../../loadingcontracts/LoadingContracts'
 
@@ -23,6 +25,7 @@ class Dashboard extends Component {
     // TODO change this to mainnet
     this.props.loadOrderBookFactory(this.props.web3.data, factoryAddress.kovanAddress)
     this.props.loadETHOrderBook(this.props.web3.data, this.props.user)
+    this.props.checkBrowserWalletAddress(this.props.web3.data, this.props.user)
     firebaseMessaging.onTokenRefresh(function () {
       firebaseMessaging.getToken()
     .then(function (refreshedToken) {
@@ -67,23 +70,34 @@ class Dashboard extends Component {
 
   render () {
     if(!this.props.web3.wrongnetwork){
-      return (
-        <section className='bg-smoke'>
-          <div className='w-75 center pv3'>
-            <div>
+      if(this.props.web3.locked){
+        return (
+          <LockedAccount />
+          )
+      }
+      if(this.props.user.correctUserAccount){
+        return (
+          <section className='bg-smoke'>
+            <div className='w-75 center pv3'>
               <div>
-                <EnableNotifications />
-                <Kyc/>
-                <DashboardInfoMessage />
-                <ActiveTrades />
-                <TradeAdvertisements />
-                <CompletedTrades />
-                <DisputedTrades />
+                <div>
+                  <EnableNotifications />
+                  <Kyc/>
+                  <DashboardInfoMessage />
+                  <ActiveTrades />
+                  <TradeAdvertisements />
+                  <CompletedTrades />
+                  <DisputedTrades />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      )
+          </section>
+        )
+      } else {
+        return (
+          <WrongAccount walletAddress={this.props.user.data.uid}/>
+          )
+      }
     } else {
       return (
         <WrongNetwork/>

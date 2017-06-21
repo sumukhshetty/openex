@@ -6,6 +6,7 @@ import UnsupportedBrowser from './../unsupportedbrowser/UnsupportedBrowser'
 import Testimonials from './Testimonials'
 import Subscribe from './Subscribe'
 import Footer from './../../footer/Footer'
+import { firebaseRef } from './../../index'
 
 const browserHandler = {
   chrome: () => <HomeMain />,
@@ -15,20 +16,26 @@ const browserHandler = {
 
 class Home extends Component {
   render () {
-    return (
-      <section className='home'>
-        <div className='container'>
-          <BrowserDetection>
-            {browserHandler}
-          </BrowserDetection>
-        </div>
-        <Process />
-      {/*TODO add this in with the main lanch*/}
-        {/*<Testimonials />*/}
-        <Subscribe />
-        <Footer/>
-      </section>
-    )
+    if(this.props.loadinguserdata.data){
+      return (
+        <div>Loading</div>)
+    } else {
+      return (
+        <section className='home'>
+          <div className='container'>
+            <BrowserDetection>
+              {browserHandler}
+            </BrowserDetection>
+          </div>
+          <Process />
+        {/*TODO add this in with the main lanch*/}
+          {/*<Testimonials />*/}
+          <Subscribe />
+          <Footer/>
+        </section>
+      )
+      
+    }
   }
 }
 

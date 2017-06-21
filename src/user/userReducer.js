@@ -3,7 +3,8 @@ const initialState = {
   userInfo: null,
   error:null,
   currency: 'USD',
-  profile:null
+  profile:null,
+  correctUserAccount: true
 }
 
 const userReducer = (state = initialState, action) => {
@@ -50,6 +51,12 @@ const userReducer = (state = initialState, action) => {
   {
     return Object.assign({}, state, {
       userInfo: null
+    })
+  }
+  if (action.type === 'UPDATE_CORRECT_USER_ACCOUNT')
+  {
+    return Object.assign({}, state, {
+      correctUserAccount: action.payload
     })
   }
 

@@ -54,7 +54,7 @@ class Confirmation extends Component {
                 <div className='tc'>
                   {this.props.sendEtherState === 'init' &&
                   <div>
-                  <button onClick={this.props.confirmTrade}>
+                  <button onClick={this.props.confirmTrade} disabled={this.props.confirmTradeButtonIsDisabled}>
                    Confirm Trade
                  </button>
                 <CancelTrade cancelTrade={this.props.sellerCancelsTrade}/>
@@ -66,7 +66,7 @@ class Confirmation extends Component {
                  <div>
                  <span> Your contract doesn't have enough ether, add some to confirm this trade </span>
                  <span> <a target="_blank" href={contractUrl}>{contractUrl}</a></span>
-                 <input type='number' onChange={this.onEtherAmountChange.bind(this)}/>
+                 <input type='number' onChange={this.onEtherAmountChange.bind(this)} required/>
                  <button onClick={this.handleEscrowRequest.bind(this)}> submit </button>
                  </div>
                }

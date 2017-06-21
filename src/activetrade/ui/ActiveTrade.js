@@ -149,6 +149,7 @@ class ActiveTrade extends Component {
           viewerRole={viewerRole}
           txhash={this.props.txhash.data}
           ethorderbook={this.props.ethorderbook.data}
+          confirmTradeButtonIsDisabled={this.props.activetrade.confirmTradeButtonIsDisabled}
           />,
         'Awaiting Payment': <Payment
           activetrade={activetrade}
