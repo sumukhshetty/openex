@@ -133,20 +133,25 @@ class App extends Component {
         </div>
       )
     } else {
-      return (
-        <section className='Site'>
-          <Toast />
-        {/*moved this to actions*/}
-          {/*<Web3InitContainer />*/}
-          <EtherPriceContainer />
-          <OnlyGuestLinks />
-          <OnlyAuthLinks />
-          {firebaseRef.auth().currentUser && <UserPresenceContainer />}
-          <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
-            {this.props.children}
-          </main>
-        </section>
-      )
+      if (this.props.loadinguserdata.data ){
+        return (
+          <div>loading</div>)
+      } else {
+        return (
+          <section className='Site'>
+            <Toast />
+          {/*moved this to actions*/}
+            {/*<Web3InitContainer />*/}
+            <EtherPriceContainer />
+            <OnlyGuestLinks />
+            <OnlyAuthLinks />
+            
+            <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
+              {this.props.children}
+            </main>
+          </section>
+        )
+      }
     }
   }
 }

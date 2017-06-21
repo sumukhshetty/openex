@@ -61,7 +61,7 @@ exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid
   })
 
 
-exports.notificationPostProcesing1 = functions.database.ref('/notifications/{recipientUid}/{purchaseRequestId}/{step}')
+exports.notificationPostProcesing1 = functions.database.ref('/notifications/{recipientUid}/{purchaseRequestId}/status/{step}')
   .onWrite(event=>{
     if (event.data.previous.exists()){
       return;
@@ -72,7 +72,6 @@ exports.notificationPostProcesing1 = functions.database.ref('/notifications/{rec
     let notificationUid = event.params.notificationUid
     let recipientUid = event.params.recipientUid
     let notificationData = event.data.val()
-    console.log(notificationData)
     if (notificationData.fcm) {
       if(notificationData.recipientToken){
         admin.messaging().sendToDevice([notificationData.recipientToken],

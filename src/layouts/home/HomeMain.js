@@ -5,6 +5,7 @@ import SignUpContainer from './../../signup/SignUpContainer'
 import MetaMask from './../../signup/MetaMask'
 import Features from './Features'
 
+
 import truffleConfig from './../../../truffle-config.js'
 
 var web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`

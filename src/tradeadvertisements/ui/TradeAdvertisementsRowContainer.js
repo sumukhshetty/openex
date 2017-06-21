@@ -10,6 +10,7 @@ const mapStateToProps = (state, ownProps) => {
     tradeType: ownProps.tradeType,
     tradeadvertisement: ownProps.tradeAdvertisement,
     sendEtherState: state.sendEtherState,
+    ethorderbook: state.ethorderbook
   }
 }
 

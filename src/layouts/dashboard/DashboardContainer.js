@@ -20,6 +20,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadETHOrderBook: (web3, user) => {
       dispatch(actions.loadETHOrderBook(web3, user))
+    },
+    checkBrowserWalletAddress: (web3, user) => {
+      dispatch(actions.checkBrowserWalletAddress(web3, user))
     }
   }
 }

@@ -74,13 +74,35 @@ function getTradeAdvertisements (tradeAdvertisementsPayload) {
   };
 }
 
+function updateReduxStoreDataState (value) {
+  return {
+    type: 'GET_REDUX_STORE',
+    payload: value
+  }
+}
+
 module.exports = {
+  checkLocalStorage: ()=>(dispatch,getState)=>{
+    if (!firebaseRef.auth().currentUser) {
+      let hasLocalStorageUser = false;
+      for (let key in localStorage) {
+          if (key.startsWith("firebase:authUser:")) {
+              hasLocalStorageUser = true;
+              dispatch(updateReduxStoreDataState(true))
+          }
+      }
+      if (!hasLocalStorageUser) {
+          dispatch(updateReduxStoreDataState(false))
+      }
+    }
+  },
   startListeningUserAuth: () => (dispatch, getState) =>{
     console.log("startListeningUserAuth")
     console.log(new Date().getTime())
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
         console.log("user.signedin")
+        dispatch(updateReduxStoreDataState(true))
         // TODO dispatch an event to show a loading circle thing
         console.log(new Date().getTime())
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
@@ -92,7 +114,6 @@ module.exports = {
           dispatch(getCompletedTrades(userProfile['completedtrades']))
           dispatch(userLoggedIn(user))
           firebaseRef.database().ref('/users').on('value', function(snap){
-
             dispatch(users(snap.val()))
           })
           firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
@@ -107,6 +128,7 @@ module.exports = {
 
             dispatch(getPurchaseRequests(snap.val()))
           })
+          dispatch(updateReduxStoreDataState(false))
           return browserHistory.push('/dashboard')
         })
       } else {
