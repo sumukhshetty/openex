@@ -9,6 +9,7 @@ import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
 import AppContainer from './AppContainer'
 
 import Home from './layouts/home/Home'
+import HomeContainer from './layouts/home/HomeContainer'
 //import Dashboard from './layouts/dashboard/Dashboard'
 import DashboardContainer from './layouts/dashboard/DashboardContainer'
 import WrongNetwork from './layouts/wrongnetwork/WrongNetwork'
@@ -41,7 +42,8 @@ import * as _firebaseconfig from './../secrets/firebaseconfig'
 import * as useractions from './user/userActions'
 
 import Raven from 'raven-js';
-Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install();
+//var raven
+export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install();
 
 
 var config = {
@@ -71,7 +73,7 @@ ReactDOM.render((
   <Provider store={store}>
     <Router history={history}>
       <Route path='/' component={AppContainer}>
-        <IndexRoute component={Home} />
+        <IndexRoute component={HomeContainer} />
         <Route path='dashboard' component={UserIsAuthenticated(DashboardContainer)} />
         <Route path='wrongnetwork' component={WrongNetwork} />
         <Route path='admin' component={UserIsAuthenticated(Admin)} />
@@ -102,5 +104,6 @@ ReactDOM.render((
 
 // TODO add the ethprice listener here
 setTimeout(function () {
+  store.dispatch(useractions.checkLocalStorage())
   store.dispatch(useractions.startListeningUserAuth())
 })

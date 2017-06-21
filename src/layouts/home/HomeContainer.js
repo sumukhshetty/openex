@@ -1,26 +1,25 @@
 import { connect } from 'react-redux'
-import App from './App'
-import * as actions from './AppActions'
+import Home from './Home'
+//import * as actions from './AppActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    web3: state.web3,
     loadinguserdata: state.loadinguserdata
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+/*const mapDispatchToProps = (dispatch) => {
   return {
     setWeb3: (web3) => {
       dispatch(actions.setWeb3(web3))
     },
 
   }
-}
+}*/
 
-const AppContainer = connect(
+const HomeContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
-)(App)
+  //mapDispatchToProps
+)(Home)
 
-export default AppContainer
+export default HomeContainer

@@ -29,6 +29,7 @@ import ethOrderBookReducer from './ethorderbook/ethorderbookreducer'
 import orderBookFactoryReducer from './orderbookfactory/orderbookfactoryreducer'
 import loadingContractsReducer from './loadingcontracts/loadingcontractsreducer'
 import txHashReducer from './txhash/txhashreducer'
+import userDataReducer from './user/userdatareducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -60,7 +61,8 @@ const reducer = combineReducers({
   ethorderbook: ethOrderBookReducer,
   orderbookfactory: orderBookFactoryReducer,
   loadingcontracts: loadingContractsReducer,
-  txhash: txHashReducer
+  txhash: txHashReducer,
+  loadinguserdata: userDataReducer
 })
 
 export default reducer
