@@ -175,6 +175,7 @@ class ActiveTrade extends Component {
           sellerRaisesDispute={this.sellerRaisesDispute.bind(this)}
           sendEtherState={this.props.sendEtherState}
           step={status}
+          txhash={this.props.txhash.data}
           viewerRole={viewerRole}
           />,
         'All Done': <AllDone

@@ -9,6 +9,10 @@ import SellerStepNote from '../ui/SellerStepNoteSell'
 class Release extends Component {
 
   render () {
+    var txHashUrl
+    if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
+      txHashUrl = "https://kovan.etherscan.io/tx/"+this.props.txhash
+    }
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
@@ -46,6 +50,13 @@ class Release extends Component {
                       }
                       {this.props.sendEtherState === 'sending' &&
                         <span>Please accept the transaction in MetaMask</span>}
+                      {
+                        this.props.sendEtherState === 'waiting-for-tx-to-mine' &&
+                         <div>
+                        <div> Your transaction is being mined. You can check the status of you transaction here: </div>
+                        <div><a target="_blank" href={txHashUrl}>{txHashUrl}</a></div>
+                        </div>
+                       }
                     </div>
                   </div>}
               </div>
