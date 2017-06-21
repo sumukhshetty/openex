@@ -112,16 +112,106 @@ module.exports = {
     var notificationData = {
       "title": "Ether released from escrow",
       "body": _body,
-      "tyep": "releaseEther",
+      "type": "releaseEther",
       "email": true,
       "fcm": true,
       "recipientToken": _fcmToken,
       "verifiedEmail": buyer.verifiedEmail,
       "senderUsername": purchaseRequest.sellerUsername,
-      //"orderId": sellOrder.orderId,
+      "purchaseRequestId": purchaseRequestId,
       "seen": false,
       "createdAt": FIREBASE_TIMESTAMP
     }
     firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/sellerreleasesether').update(notificationData)
+  },
+  sendArbiterReleasesToSeller: (seller, buyer, purchaseRequest, purchaseRequestId) => {
+    console.log("notificationHelpers.sendArbiterReleasesToSeller")
+    var _buyerfcmToken
+    var _sellerfcmToken
+    if(buyer.fcmToken){
+      _buyerfcmToken = buyer.fcmToken
+    } else {
+      _buyerfcmToken = null
+    }
+    if (seller.fcmToken){
+      _sellerfcmToken = seller.fcmToken
+    } else {
+      _sellerfcmToken = null
+    }
+
+    var _body = "The arbiter has resolved the dispute in favor of the seller"
+    var buyerNotificationData = {
+      "title": "Arbiter released ether to seller",
+      "body": _body,
+      "type": "arbiterReleasesToSeller",
+      "email": true,
+      "fcm": true,
+      "recipientToken": _buyerfcmToken,
+      "verifiedEmail": buyer.verifiedEmail,
+      "senderUsername": purchaseRequest.sellerUsername,
+      "purchaseRequestId": purchaseRequestId,
+      "seen": false,
+      "createdAt": FIREBASE_TIMESTAMP
+    }
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/arbiterreleasestoseller').update(notificationData)
+    var sellerNotificationData = {
+      "title": "Arbiter released ether to seller",
+      "body": _body,
+      "type": "arbiterReleasesToSeller",
+      "email": true,
+      "fcm": true,
+      "recipientToken": _sellerfcmToken,
+      "verifiedEmail": -seller.verifiedEmail,
+      "senderUsername": purchaseRequest.sellerUsername,
+      "purchaseRequestId": purchaseRequestId,
+      "seen": false,
+      "createdAt": FIREBASE_TIMESTAMP
+    }
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/status/arbiterreleasestoseller').update(notificationData)
+  },
+sendArbiterReleasesToBuyer: (seller, buyer, purchaseRequest, purchaseRequestId) => {
+    console.log("notificationHelpers.sendArbiterReleasesToBuyer")
+    var _buyerfcmToken
+    var _sellerfcmToken
+    if(buyer.fcmToken){
+      _buyerfcmToken = buyer.fcmToken
+    } else {
+      _buyerfcmToken = null
+    }
+    if (seller.fcmToken){
+      _sellerfcmToken = seller.fcmToken
+    } else {
+      _sellerfcmToken = null
+    }
+
+    var _body = "The arbiter has resolved the dispute in favor of the buyer"
+    var buyerNotificationData = {
+      "title": "Arbiter released ether to buyer",
+      "body": _body,
+      "type": "arbiterReleasesToBuyer",
+      "email": true,
+      "fcm": true,
+      "recipientToken": _buyerfcmToken,
+      "verifiedEmail": buyer.verifiedEmail,
+      "senderUsername": purchaseRequest.sellerUsername,
+      "purchaseRequestId": purchaseRequestId,
+      "seen": false,
+      "createdAt": FIREBASE_TIMESTAMP
+    }
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/arbiterreleasestobuyer').update(notificationData)
+    var sellerNotificationData = {
+      "title": "Arbiter released ether to buyer",
+      "body": _body,
+      "type": "arbiterReleasesToBuyer",
+      "email": true,
+      "fcm": true,
+      "recipientToken": _sellerfcmToken,
+      "verifiedEmail": -seller.verifiedEmail,
+      "senderUsername": purchaseRequest.buuyerUsername,
+      "purchaseRequestId": purchaseRequestId,
+      "seen": false,
+      "createdAt": FIREBASE_TIMESTAMP
+    }
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/status/arbiterreleasestobuyer').update(notificationData)
   },
 }
