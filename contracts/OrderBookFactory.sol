@@ -3,9 +3,6 @@ pragma solidity ^0.4.11;
 import "./ETHOrderBook.sol";
 import "./zeppelin/ownership/Ownable.sol";
 
-/*
-  owner of OrderFactory should be the OrderManager
-*/
 contract OrderBookFactory is Ownable {
 
   uint public feePercent;
