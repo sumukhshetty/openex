@@ -67,7 +67,7 @@ export default class BuyTradeAdvertisement extends Component {
       var marginMultiplier = (1 + (parseInt(this.props.buytradeadvertisement.data.margin,10) * 0.01))
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
       // TODO get the available balance from web3
-      var availableBalance = 10
+      var availableBalance = 5
       if(typeof availableBalance !== 'undefined') {
         if(availableBalance > 0) {
           requestComponent = <div className='w-50' >
