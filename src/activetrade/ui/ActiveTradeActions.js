@@ -153,7 +153,8 @@ module.exports = {
                 purchaseRequest, {
                   lastUpdated: now.toUTCString(),
                   sellerconfirmtime: now.toUTCString(),
-                  status: 'Awaiting Payment'
+                  status: 'Awaiting Payment',
+                  contractAddress: ethOrderBook.data.address
                 })
               firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
               .set(updatedPurchaseRequest, function(error){
@@ -169,8 +170,8 @@ module.exports = {
               // END FIREBASE
             })
             console.log(purchaseRequest.buyerAddress)
-            console.log(purchaseRequestId.slice(1))
-            ethOrderBook.data.addOrder(purchaseRequestId.slice(1), purchaseRequest.buyerAddress,
+            console.log(purchaseRequestId)
+            ethOrderBook.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
               etherAmount, price, purchaseRequest.currency, {from:coinbase},
               function(error, result){
                 if(!error){
@@ -286,8 +287,7 @@ module.exports = {
         }
 
       })
-      console.log(purchaseRequestId.slice(1))
-      ethOrderBook.data.completeOrder(purchaseRequestId.slice(1), {from: coinbase}, function(error, result) {
+      ethOrderBook.data.completeOrder(purchaseRequestId, {from: coinbase}, function(error, result) {
         if(!error){
           console.log('ethOrderBook.data.completeOrder')
           dispatch(sendEtherState('waiting-for-tx-to-mine'))
@@ -411,7 +411,6 @@ module.exports = {
         var event = _instance.DisputeResolved()
         console.log(_instance)
         //dispatch(setETHOrderBook(_instance))
-        var event = _instance.DisputeResolved()
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
           console.log(error, result)
@@ -426,8 +425,7 @@ module.exports = {
             raven.captureException(error)
           }
         })
-        console.log()
-        _instance.resolveDisputeSeller(purchaseRequestId.slice(1),{from:coinbase}, function(error, result){
+        _instance.resolveDisputeSeller(purchaseRequestId,{from:coinbase}, function(error, result){
           if(!error) {
             dispatch(sendEtherState('waiting-for-tx-to-mine'))
             dispatch(setTxHash(result))
@@ -470,7 +468,7 @@ module.exports = {
           notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
           event.stopWatching()
         })
-        _instance.resolveDisputeBuyer(purchaseRequestId.slice(1),{from:coinbase}, function(error, result){
+        _instance.resolveDisputeBuyer(purchaseRequestId,{from:coinbase}, function(error, result){
           if(!error) {
             dispatch(sendEtherState('waiting-for-tx-to-mine'))
             dispatch(setTxHash(result))
@@ -615,6 +613,57 @@ module.exports = {
       if(error.message === 'Undefined Wallet Address'){
         notify.show("Please unlock your MetaMask account")
       } else {
+        raven.captureException(error)
+      }
+    }
+  },
+  assignArbiter:(user, buyer, seller, purchaseRequest, purchaseRequestId, web3) => (dispatch)=>{
+  try {
+      if (web3.eth.coinbase){
+        var coinbase = web3.eth.coinbase
+      } else {
+        throw new Error("Wallet Address Undefined")
+      }
+      if (!ethUtil.isValidAddress(purchaseRequest.contractAddress)) {
+        throw new Error("Invalid address")
+      } else {
+        // get the dispute resolver contract
+        const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
+        const _instance = DisputeResolver.at(orderFactory.kovanDisputeResolver)
+        // create an event, on the callback of the event do somme firebase stuff
+        var event = _instance.DisputeAssigned()
+        event.watch((error, result) => {
+          console.log("ActiveTradeActions.assignArbiter.watch")
+          console.log(error, result)
+          if(!error){
+            // update the status of the trade to all done
+            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/aribiterUid').update(coinbase)
+            // send a notification to the buyer and the seller
+            event.stopWatching()
+          } else {
+            dispatch(sendEtherState('init'));
+            raven.captureException(error)
+          }
+        })
+        // call on the assign arbiter function
+        _instance.assignDispute(purchaseRequest.contractAddress, purchaseRequestId, coinbase, {from:coinbase}, function(error, result){
+          if(!error) {
+            console.log("ok we've assigned the dispute")
+            console.log(result)
+            dispatch(sendEtherState('waiting-for-tx-to-mine'))
+            dispatch(setTxHash(result))
+          } else {
+            console.log("something went wrong we've assigned the dispute")
+            console.log(error)
+            dispatch(sendEtherState('init'))
+          }
+        })
+      }
+    } catch (error) {
+      if(error.message==='Wallet Address Undefined'){
+        notify.show("Please unlock your MetaMask Account")
+      } else {
+        console.log(error)
         raven.captureException(error)
       }
     }

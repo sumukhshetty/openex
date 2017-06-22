@@ -56,6 +56,9 @@ const mapDispatchToProps = (dispatch) => {
     arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId, web3, ethOrderBook)=>{
       dispatch(actions.arbiterReleasesToBuyer(buyer, arbiter, purchaseRequest, purchaseRequestId, web3, ethOrderBook))
     },
+    assignArbiter: (user, buyer, seller, purchaseRequest, purchaseRequestId, web3)=> {
+      dispatch(actions.assignArbiter(user, buyer, seller, purchaseRequest, purchaseRequestId, web3))
+    },
     sellerRatesBuyer: (rating, purchaseRequestId, purchaseRequest) => {
       dispatch(actions.sellerRatesBuyer(rating, purchaseRequestId, purchaseRequest))
     },

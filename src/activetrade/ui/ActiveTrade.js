@@ -62,7 +62,10 @@ class ActiveTrade extends Component {
   resetEtherState() {
     this.props.resetEtherState();
   }
-
+  assignArbiter () {
+    console.log('ui.ActiveTrade.assignArbiter')
+    this.props.assignArbiter(this.props.user, this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
+  }
 
   render () {
     const progress_maps = {
@@ -214,6 +217,7 @@ class ActiveTrade extends Component {
           purchaseRequestId={this.props.purchaseRequestId}
           releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
+          assignArbiter={this.assignArbiter.bind(this)}
           />,
         'Buyer Raised Dispute': <Disputed
           activetrade={activetrade}
@@ -224,6 +228,7 @@ class ActiveTrade extends Component {
           purchaseRequestId={this.props.purchaseRequestId}
           releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
+          assignArbiter={this.assignArbiter.bind(this)}
           />
       }
 

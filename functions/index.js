@@ -161,9 +161,11 @@ exports.checkDispute = functions.https.onRequest((req, res) => {
     try {
       admin.database().ref('/purchaserequests/'+req.body.country+'/'+req.body.orderId)
       .once('value', function(snap) {
-        if(snap.val()['status'] === "Disputed") {
+        if(snap.val()['status'] === "Seller Raised Dispute" || snap.val()['status'] === "Buyer Raised Dispute" ) {
+          console.log("the trade is in dispute")
           res.json({"dispute": "true"});
         } else {
+          console.log("the trade is not in dispute")
           res.json({"dispute": "false"});
         }
       })

@@ -11,11 +11,17 @@ class AdminStepNote extends Component {
     return (
       <div>
         <div className='measure pb4'>
+          <div className='tc'>
+            <div>
+              <button className='bg-blue' onClick={this.props.assignArbiter}>Assgin to Me</button>
+            </div>
+          </div>
           <p className='tc flarge b'>Vote</p>
           <p>This is final, It cannot be undone. Make sure that you have solved the dispute with concrete evidence and answers from both sides.
               </p>
         </div>
         <div className='tc'>
+
         <div>
         <button
           className='bg-blue'
