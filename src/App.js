@@ -29,7 +29,7 @@ import './css/swatch.css'
 import Bell from './images/svgReactComponents/Bell'
 import Notifications from './notifications/NotificationsLayout'
 import {default as Toast} from 'react-notify-toast'
-
+import LoadingUserData from './loadinguserdata/LoadingUserData'
 
 class App extends Component {
   constructor (props) {
@@ -135,7 +135,8 @@ class App extends Component {
     } else {
       if (this.props.loadinguserdata.data ){
         return (
-          <div>loading</div>)
+          <LoadingUserData />
+          )
       } else {
         return (
           <section className='Site'>
