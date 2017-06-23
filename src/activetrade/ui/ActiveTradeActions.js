@@ -637,7 +637,7 @@ module.exports = {
           console.log(error, result)
           if(!error){
             // update the status of the trade to all done
-            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/aribiterUid').update(coinbase)
+            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/aribiterUid').set(coinbase)
             // send a notification to the buyer and the seller
             event.stopWatching()
           } else {
