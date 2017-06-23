@@ -8,7 +8,7 @@ export default class LoadingUserData extends Component {
     return (
       <div className="flex mxc pv5">
       <div>
-      <Spinner name="circle"/>
+      <Spinner name="circle" color="white"/>
       </div>
       </div>
       )
