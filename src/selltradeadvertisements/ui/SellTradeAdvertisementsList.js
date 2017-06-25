@@ -9,14 +9,32 @@ class SellTradeAdvertisementsList extends Component {
   render(){
     console.log('SellTradeAdvertisementsList.render')
     var selltradeadvertisements = this.props.selltradeadvertisements.data
-    console.log(selltradeadvertisements)
-    console.log(typeof selltradeadvertisements)
-
     var etherPrice = this.props.etherPrice.data;
     var users = this.props.users
     var uid = this.props.user.data.uid;
     var seller;
-    const rows = _.map(selltradeadvertisements,function(sellTradeAdvertisement, key) {
+
+    var arr = _.map(selltradeadvertisements, function(value, prop){
+      return {prop: prop, value: value}
+    });
+    var byMargin = arr.slice(0)
+    byMargin.sort(function(a,b){
+      return a.value.margin - b.value.margin
+    })
+    byMargin = Object.assign({},byMargin)
+
+    const rows = _.map(byMargin, function(selltradeadvertisement, key){
+      if (selltradeadvertisement.value.sellerUid !== uid) {
+        if (selltradeadvertisement.value.active){
+          seller = users.data[selltradeadvertisement.value.sellerUid]
+          var marginMultiplier = (1 + (parseInt(selltradeadvertisement.value.margin, 10) * 0.01))
+          var price = etherPrice ? (etherPrice*marginMultiplier) : null;
+          return <SellTradeAdvertisementRow price={price} sellTradeAdvertisementData={selltradeadvertisement.value} sellTradeAdvertisementId={selltradeadvertisement.prop} seller={seller} etherPrice={etherPrice} key={selltradeadvertisement.prop}/>        }
+      }
+    })
+
+
+/*    const rows = _.map(selltradeadvertisements,function(sellTradeAdvertisement, key) {
         if(sellTradeAdvertisement.sellerUid !== uid) {
           if(sellTradeAdvertisement.active){            
             seller = users.data[sellTradeAdvertisement.sellerUid]
@@ -25,7 +43,7 @@ class SellTradeAdvertisementsList extends Component {
             return <SellTradeAdvertisementRow price={price} sellTradeAdvertisementData={sellTradeAdvertisement} sellTradeAdvertisementId={key} seller={seller} etherPrice={etherPrice} userId={key} key={key}/>
           }
         }
-    })
+    })*/
     if(rows.length > 1){
       return (
         <table>
