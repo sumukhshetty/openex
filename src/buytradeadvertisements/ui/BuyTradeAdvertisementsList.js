@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import createFragment from 'react-addons-create-fragment';
 import * as _ from 'lodash'
 import BuyTradeAdvertisementRow from './BuyTradeAdvertisementRow'
 import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
@@ -11,16 +12,27 @@ class BuyTradeAdvertisementsList extends Component {
     var uid = this.props.user.data.uid;
     var users = this.props.users
     var buyer
-    const rows = _.map(buytradeadvertisements, function (buyTradeAdvertisementData, key) {
-      if(buyTradeAdvertisementData.buyerUid !== uid) {
-        if(buyTradeAdvertisementData.active) {
-          buyer = users.data[buyTradeAdvertisementData.buyerUid]
-          var marginMultiplier = (1 + (parseInt(buyTradeAdvertisementData.margin, 10) * 0.01))
-          var price = etherPrice ? (etherPrice*marginMultiplier) : null;
-          return <BuyTradeAdvertisementRow buyTradeAdvertisementData={buyTradeAdvertisementData} buyTradeAdvertisementId={key} price={price.toFixed(2)} buyer={buyer} key={key} />
-        }
-      } 
+    var arr = _.map(buytradeadvertisements, function(value, prop){
+      return {prop: prop, value: value}
+    });
+
+    var byMargin = arr.slice(0)
+    byMargin.sort(function(a,b){
+      return a.value.margin - b.value.margin
     })
+
+    byMargin = Object.assign({},byMargin)
+    const rows = _.map(byMargin, function(buytradeadvertisement, key){
+      if (buytradeadvertisement.value.buyerUid !== uid){
+        if (buytradeadvertisement.value.active){
+          buyer = users.data[buytradeadvertisement.value.buyerUid]
+          var marginMultiplier = (1 + (parseInt(buytradeadvertisement.value.margin, 10) * 0.01))
+          var price = etherPrice ? (etherPrice*marginMultiplier) : null;
+          return <BuyTradeAdvertisementRow buyTradeAdvertisementData={buytradeadvertisement.value} buyTradeAdvertisementId={buytradeadvertisement.prop} price={price.toFixed(2)} buyer={buyer} key={buytradeadvertisement.prop} />
+        }
+      }
+    })
+
     if(rows.length >1) {
       return (
         <table>
