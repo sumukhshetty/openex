@@ -52,8 +52,8 @@ class TradeFeedback extends Component {
           />
         </div>
         <div className='flex col cxc'>
-          <TrustButton />
-          <BlockButton />
+{/*          <TrustButton />
+          <BlockButton />*/}
         </div>
       </div>
     )
