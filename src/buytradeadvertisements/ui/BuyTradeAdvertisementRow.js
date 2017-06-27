@@ -8,15 +8,21 @@ import Trustworthiness from './Trustworthiness'
 const moment = require('moment')
 
 const BuyTradeAdvertismentRow = (props) => {
+  var lastTransfer
   if (props.buyTradeAdvertisementData && props.buyer){
+    if(props.buyer.lastTransfer) {
+      lastTransfer = moment(props.buyer.lastTransfer).fromNow()
+    } else {
+        lastTransfer = '-'
+    }
     return (
       <tr className='flex cxc'>
         <td className='fb20' >{props.buyTradeAdvertisementData.buyerUsername} - {props.buyTradeAdvertisementData.location}</td>
         <td className='fb10 tc' >{props.buyTradeAdvertisementData.paymentMethod}</td>
         <td className='fb15 tc' >{props.price}</td>
         <td className='fb5 tc' >{props.buyTradeAdvertisementData.minTransactionLimit} - {props.buyTradeAdvertisementData.maxTransactionLimit}</td>
-        <td className='fb15 tc' >{moment(props.buyer.lastTransfer).fromNow() || '-'}</td>
-        <Trustworthiness trustLevel={props.buyer.trustworthiness} />
+        <td className='fb15 tc' >{lastTransfer}</td>
+        <Trustworthiness trustLevel={props.buyer.avgFeedback} />
         <LastOnline time={props.buyer.lastOnline} />
         <SellButton buyTradeAdvertisementId={props.buyTradeAdvertisementId} />
       </tr>

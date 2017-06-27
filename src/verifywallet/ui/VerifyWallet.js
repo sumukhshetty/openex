@@ -37,7 +37,7 @@ class VerifyWallet extends Component {
                 default:
                     component.props.wrongNetwork(true)
             }
-            component.props.loadOrderBookFactory(component.props.web3.data, factoryAddress.kovanAddress)
+            component.props.loadOrderBookFactory(component.props.web3.data, factoryAddress.kovanOrderFactoryAddress)
             component.props.verifyWallet(true)
           }
         })

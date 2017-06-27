@@ -23,7 +23,7 @@ import factoryAddress from './../../contract_addresses/orderfactory.js'
 class Dashboard extends Component {
   componentWillMount () {
     // TODO change this to mainnet
-    this.props.loadOrderBookFactory(this.props.web3.data, factoryAddress.kovanAddress)
+    this.props.loadOrderBookFactory(this.props.web3.data, factoryAddress.kovanOrderFactoryAddress)
     this.props.loadETHOrderBook(this.props.web3.data, this.props.user)
     this.props.checkBrowserWalletAddress(this.props.web3.data, this.props.user)
     firebaseMessaging.onTokenRefresh(function () {

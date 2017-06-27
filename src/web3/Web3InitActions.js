@@ -88,8 +88,8 @@ export function createETHOrderBook(web3, orderBookFactory, uid, country) {
     factory.setProvider(web3.currentProvider);
     var factoryInstance;
     console.log('coinbase:' + coinbase);
-    console.log('address: ' + factoryAddress.kovanAddress);
-    factory.at(factoryAddress.kovanAddress)
+    console.log('address: ' + factoryAddress.kovanOrderFactoryAddress);
+    factory.at(factoryAddress.kovanOrderFactoryAddress)
     .then(function (_factory) {
       _factory.createETHOrderBook(country, {from: coinbase})
       .then(function(txHash) {

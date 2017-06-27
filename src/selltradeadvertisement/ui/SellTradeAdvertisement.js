@@ -58,12 +58,12 @@ export default class SellTradeAdvertisement extends Component {
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
       // ISSUE-254 get available balance from the ETHOrderBook 
       //var availableBalance = this.props.sellOrderContract.availableBalance;
-      var availableBalance = 10
+      var availableBalance = 5
       if(typeof availableBalance !== 'undefined') {
         if(availableBalance > 0) {
           requestComponent = <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to buy?</h2>
-            <h2 className='pv1 tc'>Available:{availableBalance} Ether</h2>
+            <h2 className='pv1 tc'>Trade Limit Max:{availableBalance} Ether</h2>
             <div className='flex mxc'><Converter maxEther={availableBalance} 
               handleTradeRequest={this.createPurchaseRequest.bind(this)}
               onAmountChange={this.onAmountChange.bind(this)} 

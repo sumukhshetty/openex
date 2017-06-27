@@ -10,7 +10,7 @@ class BuyTradeAdvertisementsHeader extends Component {
           <th className='fb15 tc'>Price/ETH</th>
           <th className='fb5 tc'>Limits</th>
           <th className='fb15 tc'>Last Transfer</th>
-          <th className='fb15 tc'>Trustworthiness</th>
+          <th className='fb15 tc'>Rating</th>
           <th className='fb15 tc'>Last Online</th>
         </tr>
       </thead>

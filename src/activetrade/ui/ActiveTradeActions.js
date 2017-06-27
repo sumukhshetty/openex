@@ -3,8 +3,11 @@ import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import * as notificationHelpers from './../../util/notificationHelpers'
 import { browserHistory } from 'react-router'
 import {notify} from 'react-notify-toast'
-
 import * as contractAbis from './../../contract_addresses/contractAbi'
+import * as orderFactory from './../../contract_addresses/orderfactory'
+
+var ethUtil = require('ethereumjs-util')
+
 
 
 function setActiveTrade(purchaseRequestPayload){
@@ -150,7 +153,8 @@ module.exports = {
                 purchaseRequest, {
                   lastUpdated: now.toUTCString(),
                   sellerconfirmtime: now.toUTCString(),
-                  status: 'Awaiting Payment'
+                  status: 'Awaiting Payment',
+                  contractAddress: ethOrderBook.data.address
                 })
               firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
               .set(updatedPurchaseRequest, function(error){
@@ -166,8 +170,8 @@ module.exports = {
               // END FIREBASE
             })
             console.log(purchaseRequest.buyerAddress)
-            console.log(purchaseRequestId.slice(1))
-            ethOrderBook.data.addOrder(purchaseRequestId.slice(1), purchaseRequest.buyerAddress,
+            console.log(purchaseRequestId)
+            ethOrderBook.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
               etherAmount, price, purchaseRequest.currency, {from:coinbase},
               function(error, result){
                 if(!error){
@@ -283,8 +287,7 @@ module.exports = {
         }
 
       })
-      console.log(purchaseRequestId.slice(1))
-      ethOrderBook.data.completeOrder(purchaseRequestId.slice(1), {from: coinbase}, function(error, result) {
+      ethOrderBook.data.completeOrder(purchaseRequestId, {from: coinbase}, function(error, result) {
         if(!error){
           console.log('ethOrderBook.data.completeOrder')
           dispatch(sendEtherState('waiting-for-tx-to-mine'))
@@ -392,73 +395,96 @@ module.exports = {
 
       });
   },
-  arbiterReleasesToSeller: (seller, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) => {
-    // ISSUE-244: call on ETHOrderBook.resolveDisputeSeller when the arbiter votes for the seller
-    /*const orderBook = contract(ETHOrderBook);
-    orderBook.setProvider(web3.currentProvider);
-    orderBook.at(seller.orderBookAddress)
-    .then(function(_orderBook){
-      console.log(_orderBook)
-      // function resolveDisputeSeller(string uid)
-      _orderBook.resolveDisputeSeller(purchaseRequest.buyerUid, {from: web3.eth.coinbase})
-      .then(function(txHash){
-        // START FIREBASE STUFF
-        firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId + '/status')
-          .set('All Done')
-          .then(function() {
-            browserHistory.push('/dashboard')
-          });
-        // END FIREBASE STUFF
+  arbiterReleasesToSeller: (seller, buyer, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) => {
+    console.log('ActiveTradeActions.arbiterReleasesToSeller')
+    try {
+      if (web3.eth.coinbase){
+        var coinbase = web3.eth.coinbase
+      } else {
+        throw new Error("Wallet Address Undefined")
+      }
+      if (!ethUtil.isValidAddress(purchaseRequest.contractAddress)) {
+        throw new Error("Invalid address")
+      } else {
+        const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
+        const _instance = DisputeResolver.at(orderFactory.kovanDisputeResolver)
+        var event = _instance.DisputeResolved()
+        console.log(_instance)
+        //dispatch(setETHOrderBook(_instance))
+        event.watch((error, result) => {
+          console.log("ActiveTradeActions.arbiterReleasesToSeller")
+          console.log(error, result)
+          if(!error){
+            // update the status of the trade to all done
+            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/status').update('All Done')
+            // send a notification to the buyer and the seller
+            notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
+            event.stopWatching()
+          } else {
+            dispatch(sendEtherState('init'));
+            raven.captureException(error)
+          }
+        })
+        _instance.resolveDisputeSeller(purchaseRequestId,{from:coinbase}, function(error, result){
+          if(!error) {
+            dispatch(sendEtherState('waiting-for-tx-to-mine'))
+            dispatch(setTxHash(result))
+          } else {
+            console.log(error)
+            dispatch(sendEtherState('init'))
+          }
 
         })
-    })
-    */     
-    firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId + '/status')
-      .set('All Done')
-      .then(function() {
-        browserHistory.push('/dashboard')
-      });
+      }
+    } catch (error) {
+      if(error.message==='Wallet Address Undefined'){
+        notify.show("Please unlock your MetaMask Account")
+      } else {
+        console.log(error)
+        raven.captureException(error)
+
+      }
+    }
   },
-  arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) =>{
-    // ISSUE-245: call on ETHOrderBook.resolveDisputeBuyer when the arbiter votes for the buyer
-
-    /*const orderBook = contract(ETHOrderBook);
-    orderBook.setProvider(web3.currentProvider);
-    orderBook.at(seller.orderBookAddress)
-    .then(function(_orderBook){
-      console.log(_orderBook)
-      // function resolveDisputeBuyer(string uid)
-      _orderBook.resolveDisputeBuyer(purchaseRequest.buyerUid, {from: web3.eth.coinbase})
-      .then(function(txHash){
-        // START FIREBASE STUFF
-        firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId + '/status')
-          .set('All Done')
-          .then(function(){
-            browserHistory.push('/dashboard')
-          })
-        // END FIREBASE STUFF
+  arbiterReleasesToBuyer: (buyer, seller, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) =>{
+    try {
+      if (web3.eth.coinbase){
+        var coinbase = web3.eth.coinbase
+      } else {
+        throw new Error("Wallet Address Undefined")
+      }
+      if (!ethUtil.isValidAddress(contractAbis.ETHOrderBookAbi)){
+        throw new Error("Invalid address")
+      } else {
+        const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
+        const _instance = DisputeResolver.at(orderFactory.kovanDisputeResolver)
+        var event = _instance.DisputeResolved()
+        event.watch((error, result) => {
+          console.log("ActiveTradeActions.arbiterReleasesToSeller")
+          console.log(event, result)
+          // update the status of the trade to all done
+          firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+purchaseRequestId+'/status').update('All Done')
+          // send a notification to the buyer and the seller
+          notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
+          event.stopWatching()
+        })
+        _instance.resolveDisputeBuyer(purchaseRequestId,{from:coinbase}, function(error, result){
+          if(!error) {
+            dispatch(sendEtherState('waiting-for-tx-to-mine'))
+            dispatch(setTxHash(result))
+          } else {
+            dispatch(sendEtherState('init'))
+          }
 
         })
-    })
-    */ 
-
-    firebaseRef.database().ref('/purchaserequests/'+ buyer.country + '/' + purchaseRequestId + '/status')
-      .set('All Done')
-      .then(function() {
-
-/*        purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
-        purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.sellerUid, purchaseRequestId)
-        purchaseRequestHelpers.removePurchaseRequestFromDisputedTrades(purchaseRequest.buyerUid, purchaseRequestId)
-        purchaseRequestHelpers.removePurchaseRequestFromDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId)
-        purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-        purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-
-        firebaseRef.database().ref("users/" + purchaseRequest.buyerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
-        firebaseRef.database().ref("users/" + purchaseRequest.sellerUid+'/lastTransfer').set(FIREBASE_TIMESTAMP)
-
-        */
-        browserHistory.push('/dashboard')
-      });
+      }
+    } catch (error) {
+      if(error.message==='Wallet Address Undefined'){
+        notify.show("Please unlock your MetaMask Account")
+      } else {
+        raven.captureException(error)
+      }
+    }
   },
   sellerRatesBuyer: (rating, purchaseRequestId, purchaseRequest) => (dispatch) => {
     //excellent place for a firebase cloud functions onWrite
@@ -587,6 +613,57 @@ module.exports = {
       if(error.message === 'Undefined Wallet Address'){
         notify.show("Please unlock your MetaMask account")
       } else {
+        raven.captureException(error)
+      }
+    }
+  },
+  assignArbiter:(user, buyer, seller, purchaseRequest, purchaseRequestId, web3) => (dispatch)=>{
+  try {
+      if (web3.eth.coinbase){
+        var coinbase = web3.eth.coinbase
+      } else {
+        throw new Error("Wallet Address Undefined")
+      }
+      if (!ethUtil.isValidAddress(purchaseRequest.contractAddress)) {
+        throw new Error("Invalid address")
+      } else {
+        // get the dispute resolver contract
+        const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
+        const _instance = DisputeResolver.at(orderFactory.kovanDisputeResolver)
+        // create an event, on the callback of the event do somme firebase stuff
+        var event = _instance.DisputeAssigned()
+        event.watch((error, result) => {
+          console.log("ActiveTradeActions.assignArbiter.watch")
+          console.log(error, result)
+          if(!error){
+            // update the status of the trade to all done
+            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/aribiterUid').set(coinbase)
+            // send a notification to the buyer and the seller
+            event.stopWatching()
+          } else {
+            dispatch(sendEtherState('init'));
+            raven.captureException(error)
+          }
+        })
+        // call on the assign arbiter function
+        _instance.assignDispute(purchaseRequest.contractAddress, purchaseRequestId, coinbase, {from:coinbase}, function(error, result){
+          if(!error) {
+            console.log("ok we've assigned the dispute")
+            console.log(result)
+            dispatch(sendEtherState('waiting-for-tx-to-mine'))
+            dispatch(setTxHash(result))
+          } else {
+            console.log("something went wrong we've assigned the dispute")
+            console.log(error)
+            dispatch(sendEtherState('init'))
+          }
+        })
+      }
+    } catch (error) {
+      if(error.message==='Wallet Address Undefined'){
+        notify.show("Please unlock your MetaMask Account")
+      } else {
+        console.log(error)
         raven.captureException(error)
       }
     }

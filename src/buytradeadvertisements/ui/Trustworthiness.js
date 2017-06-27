@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import Flag from '../../images/svgReactComponents/Flag';
+import Star from '../../images/Star';
 
 const Trustworthiness = (props) => {
   return (
     <td className='fb15 flex cxc mxc'>
-      <Flag color={props.trustLevel} />
+      <Star />
       {props.trustLevel}
     </td>
   );

@@ -39,6 +39,7 @@ class Disputed extends Component {
               <AdminStepNote 
                 releaseToBuyer={this.props.releaseToBuyer} 
                 releaseToSeller={this.props.releaseToSeller}
+                assignArbiter={this.props.assignArbiter}
               />
               </div>
             }
