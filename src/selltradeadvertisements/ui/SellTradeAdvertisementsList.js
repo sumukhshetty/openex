@@ -33,17 +33,6 @@ class SellTradeAdvertisementsList extends Component {
       }
     })
 
-
-/*    const rows = _.map(selltradeadvertisements,function(sellTradeAdvertisement, key) {
-        if(sellTradeAdvertisement.sellerUid !== uid) {
-          if(sellTradeAdvertisement.active){            
-            seller = users.data[sellTradeAdvertisement.sellerUid]
-            var marginMultiplier = (1 + (parseInt(sellTradeAdvertisement.margin, 10) * 0.01))
-            var price = etherPrice ? (etherPrice*marginMultiplier) : null;
-            return <SellTradeAdvertisementRow price={price} sellTradeAdvertisementData={sellTradeAdvertisement} sellTradeAdvertisementId={key} seller={seller} etherPrice={etherPrice} userId={key} key={key}/>
-          }
-        }
-    })*/
     if(rows.length > 1){
       return (
         <table>
