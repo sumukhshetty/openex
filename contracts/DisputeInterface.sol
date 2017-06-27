@@ -5,7 +5,7 @@ import "./ETHOrderBook.sol";
 
 contract DisputeInterface is Ownable {
 
-  address disputeResolver;
+  address public disputeResolver;
 
   function DisputeInterface() {
     disputeResolver = 0x0;

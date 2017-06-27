@@ -1,6 +1,5 @@
 pragma solidity ^0.4.11;
 
-import "./ETHOrderBook.sol";
 import "./DisputeInterface.sol";
 
 contract DisputeResolver {
@@ -18,12 +17,9 @@ contract DisputeResolver {
     _;
   }
 
-  enum Status { Assigned, ResolvedSeller, ResolvedBuyer }
-
   struct Dispute {
     address assignee;
     address ethOrderBook;
-    Status status;
   }
 
   //maps uid to Dispute
@@ -31,6 +27,7 @@ contract DisputeResolver {
 
   DisputeInterface disputeInterface;
 
+  //note: sets msg.sender as owner
   function DisputeResolver(address[] _owners, address _disputeInterface) {
     owners[1] = msg.sender;
     ownerIndex[msg.sender] = 1;
@@ -49,7 +46,6 @@ contract DisputeResolver {
   function assignDispute(address ethOrderBook, string uid, address assignee) onlyOwner {
     disputes[uid].assignee = assignee;
     disputes[uid].ethOrderBook = ethOrderBook;
-    disputes[uid].status = Status.Assigned;
     disputeInterface.checkDispute(uid, ethOrderBook);
     DisputeAssigned(ethOrderBook, uid, assignee, msg.sender);
   }
@@ -57,11 +53,6 @@ contract DisputeResolver {
   function resolveDisputeSeller(string uid) onlyAssignee(uid) {
     disputeInterface.resolveDisputeSeller(uid, disputes[uid].ethOrderBook);
     DisputeResolved(disputes[uid].ethOrderBook, uid, 'seller', msg.sender);
-  }
-
-  function resolveDisputeSeller(string uid, address ethOrderBookAddress) onlyAssignee(uid) {
-    disputeInterface.resolveDisputeSeller(uid, ethOrderBookAddress);
-    DisputeResolved(ethOrderBookAddress, uid, 'seller', msg.sender);
   }
 
   function resolveDisputeBuyer(string uid) onlyAssignee(uid) {
