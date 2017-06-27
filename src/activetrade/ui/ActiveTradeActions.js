@@ -228,6 +228,7 @@ module.exports = {
   },
   sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
     console.log("sellerReleasesEther")
+    console.log(ethOrderBook)
     try{
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
