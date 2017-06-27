@@ -5,19 +5,19 @@ import "./zeppelin/ownership/Ownable.sol";
 
 contract OrderBookFactory is Ownable {
 
-  uint public feePercent;
-  address disputeResolver;
+  uint feePercent;
+  address disputeInterface;
 
-  function OrderBookFactory(address _disputeResolver) {
+  function OrderBookFactory(address _disputeInterface) {
     feePercent = 1;
-    disputeResolver = _disputeResolver;
+    disputeInterface = _disputeInterface;
   }
 
   //Only contracts whose addresses are logged by this event will appear on the exchange.
   event ETHOrderBookCreated(address indexed seller, address orderAddress);
 
   function createETHOrderBook(string country) external {
-    ETHOrderBook orderBook = new ETHOrderBook(msg.sender, disputeResolver, country, feePercent, 0.001 ether, 5 ether);
+    ETHOrderBook orderBook = new ETHOrderBook(msg.sender, disputeInterface, country, feePercent);
 
     orderBook.transferOwnership(owner);
 
