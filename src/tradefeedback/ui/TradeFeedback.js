@@ -51,10 +51,10 @@ class TradeFeedback extends Component {
             style={{fontSize:'2.5em'}}
           />
         </div>
-        <div className='flex col cxc'>
-          <TrustButton />
-          <BlockButton />
-        </div>
+        {/*<div className='flex col cxc'>
+          <TrustButton userName={trustUsername}/>
+          <BlockButton userName={trustUsername}/>
+        </div>*/}
       </div>
     )
   }

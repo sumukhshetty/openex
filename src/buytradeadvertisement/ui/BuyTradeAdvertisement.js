@@ -72,7 +72,7 @@ export default class BuyTradeAdvertisement extends Component {
         if(availableBalance > 0) {
           requestComponent = <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to sell?</h2>
-            <h2 className='pv1 tc'>Trade Limit Max:{availableBalance} Ether</h2>
+            <h2 className='pv1 tc'> Max Trade Limit:{availableBalance} Ether</h2>
             <div className='flex mxc'><Converter maxEther={availableBalance} 
               handleTradeRequest={this.createPurchaseRequest.bind(this)}
               onAmountChange={this.onAmountChange.bind(this)} 

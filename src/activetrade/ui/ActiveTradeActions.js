@@ -403,7 +403,7 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(purchaseRequest.contractAddress)) {
+      if (!ethUtil.isValidAddress(orderFactory.kovanDisputeResolver)) {
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
@@ -416,10 +416,23 @@ module.exports = {
           console.log(error, result)
           if(!error){
             // update the status of the trade to all done
-            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/status').update('All Done')
+            var now = new Date()
+            var updatedPurchaseRequest = Object.assign({},
+            purchaseRequest, {
+              lastUpdated: now.toUTCString(),
+              sellerreleaseethertime: now.toUTCString(),
+              status: 'All Done'
+            })
+            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
+              .set(updatedPurchaseRequest, function(error){
+                dispatch(sendEtherState('init'));
+                event.stopWatching()
+                notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
+              })
+/*            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/status').update('All Done')
             // send a notification to the buyer and the seller
             notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
-            event.stopWatching()
+            event.stopWatching()*/
           } else {
             dispatch(sendEtherState('init'));
             raven.captureException(error)
@@ -447,13 +460,14 @@ module.exports = {
     }
   },
   arbiterReleasesToBuyer: (buyer, seller, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) =>{
+    console.log("ActiveTradeActions.arbiterReleasesToBuyer")
     try {
       if (web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(contractAbis.ETHOrderBookAbi)){
+      if (!ethUtil.isValidAddress(orderFactory.kovanDisputeResolver)){
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
@@ -463,16 +477,32 @@ module.exports = {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
           console.log(event, result)
           // update the status of the trade to all done
-          firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+purchaseRequestId+'/status').update('All Done')
+          var now = new Date()
+          var updatedPurchaseRequest = Object.assign({},
+            purchaseRequest, {
+              lastUpdated: now.toUTCString(),
+              sellerreleaseethertime: now.toUTCString(),
+              status: 'All Done'
+          })
+          firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
+            .set(updatedPurchaseRequest, function(error){
+              dispatch(sendEtherState('init'));
+              event.stopWatching()
+              notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
+            })
+          /*firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+purchaseRequestId+'/status').update('All Done')
           // send a notification to the buyer and the seller
           notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
-          event.stopWatching()
+          event.stopWatching()*/
         })
+        console.log("about to resolve to buyer")
         _instance.resolveDisputeBuyer(purchaseRequestId,{from:coinbase}, function(error, result){
           if(!error) {
+            console.log(result)
             dispatch(sendEtherState('waiting-for-tx-to-mine'))
             dispatch(setTxHash(result))
           } else {
+            console.log(error)
             dispatch(sendEtherState('init'))
           }
 
