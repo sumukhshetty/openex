@@ -141,6 +141,7 @@ class App extends Component {
         return (
           <section className='Site'>
             <Toast />
+          {/* ISSUE-341 */}
           {/*moved this to actions*/}
             {/*<Web3InitContainer />*/}
             <EtherPriceContainer />

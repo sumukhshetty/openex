@@ -33,6 +33,11 @@ class TradeFeedback extends Component {
   }
   render () {
     var _rating
+    if (this.props.tradeFeedback.data){
+      _rating = this.props.tradeFeedback.data
+    } else {
+      _rating = 0
+    }
     return (
       <div className='measure pv4'>
         <p className='tc flarge b'>
