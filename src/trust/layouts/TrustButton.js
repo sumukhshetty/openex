@@ -7,7 +7,7 @@ class TrustButton extends Component {
       <div className='flex cxc bg-blue w5 white br2 pa2 mt4 grow pointer'>
         <Star size={32} className='mh2' />
         <p>
-          {userName}
+          Victoria Padilla
         </p>
       </div>
     )

@@ -33,20 +33,6 @@ class TradeFeedback extends Component {
   }
   render () {
     var _rating
-    var rater = this.props.user.data.uid
-    var trustUsername
-    switch (rater) {
-      case (this.props.activetrade.sellerUid):
-        trustUsername = this.props.buyer.userName
-        break
-      case (this.props.activetrade.buyerUid):
-        trustUsername = this.props.seller.userName
-      } 
-    if (this.props.tradeFeedback.data){
-      _rating = this.props.tradeFeedback.data
-    } else {
-      _rating = 0
-    }
     return (
       <div className='measure pv4'>
         <p className='tc flarge b'>
