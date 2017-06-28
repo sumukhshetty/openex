@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import createFragment from 'react-addons-create-fragment';
 import * as _ from 'lodash'
 import BuyTradeAdvertisementRow from './BuyTradeAdvertisementRow'
 import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
