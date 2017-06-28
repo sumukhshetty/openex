@@ -7,7 +7,7 @@ class BlockButton extends Component {
       <div className='flex cxc bg-danger w5 white br2 pa2 mt4 grow pointer'>
         <Block className='mh2' />
         <p>
-          Block Victoira Padilla
+          {userName}
         </p>
       </div>
     )

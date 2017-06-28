@@ -33,6 +33,15 @@ class TradeFeedback extends Component {
   }
   render () {
     var _rating
+    var rater = this.props.user.data.uid
+    var trustUsername
+    switch (rater) {
+      case (this.props.activetrade.sellerUid):
+        trustUsername = this.props.buyer.userName
+        break
+      case (this.props.activetrade.buyerUid):
+        trustUsername = this.props.seller.userName
+      } 
     if (this.props.tradeFeedback.data){
       _rating = this.props.tradeFeedback.data
     } else {
@@ -51,10 +60,10 @@ class TradeFeedback extends Component {
             style={{fontSize:'2.5em'}}
           />
         </div>
-        <div className='flex col cxc'>
-          <TrustButton />
-          <BlockButton />
-        </div>
+        {/*<div className='flex col cxc'>
+          <TrustButton userName={trustUsername}/>
+          <BlockButton userName={trustUsername}/>
+        </div>*/}
       </div>
     )
   }
