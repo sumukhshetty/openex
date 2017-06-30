@@ -1,7 +1,6 @@
-import {firebaseRef, FIREBASE_TIMESTAMP, raven} from './../../index.js'
+import {firebaseRef, raven} from './../../index.js'
 import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import * as notificationHelpers from './../../util/notificationHelpers'
-import { browserHistory } from 'react-router'
 import {notify} from 'react-notify-toast'
 import * as contractAbis from './../../contract_addresses/contractAbi'
 import * as orderFactory from './../../contract_addresses/orderfactory'
@@ -105,7 +104,7 @@ module.exports = {
     dispatch(updateConfirmButtonIsDisabled(true))
     try {
       let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
-      let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
+      //let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
       let price = web3.toWei(purchaseRequest.price)
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase

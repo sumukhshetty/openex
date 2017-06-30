@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import TrustButton from './../../trust/layouts/TrustButton'
-import BlockButton from './../../block/layouts/BlockButton'
+//import TrustButton from './../../trust/layouts/TrustButton'
+//import BlockButton from './../../block/layouts/BlockButton'
 import {Rating} from 'rebass'
 
 class TradeFeedback extends Component {

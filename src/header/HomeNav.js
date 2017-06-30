@@ -4,10 +4,6 @@ import logo from '../images/logo.svg';
 import { browserHistory } from 'react-router'
 
 class HomeNav extends Component {
-  constructor(props){
-    super(props)
-  }
-
   login () {
     this.props.login(this.props.web3)
   }

@@ -1,11 +1,7 @@
 import {firebaseRef, raven} from './../../index.js'
-import OrderBookFactory from './../../../contracts/abi/OrderBookFactory'
-import factoryAddress from './../../contract_addresses/orderfactory.js'
-import ETHOrderBookContract from './../../../contracts/abi/ETHOrderBook.json'
 import * as contractAbis from './../../contract_addresses/contractAbi'
 import {notify} from 'react-notify-toast'
 
-const contract = require('truffle-contract')
 // New
 export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
 function sendEtherState(etherStatePayload) {

@@ -3,9 +3,8 @@ import HomeMain from './HomeMain'
 import BrowserDetection from 'react-browser-detection'
 import Process from './Process'
 import UnsupportedBrowser from './../unsupportedbrowser/UnsupportedBrowser'
-import Testimonials from './Testimonials'
+//import Testimonials from './Testimonials'
 import Footer from './../../footer/Footer'
-import { firebaseRef } from './../../index'
 
 const browserHandler = {
   chrome: () => <HomeMain />,

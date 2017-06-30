@@ -60,11 +60,9 @@ module.exports = {
   },
   checkBrowserWalletAddress:(web3, user) => (dispatch) =>{
     try{
-      console.log('checkBrowserWalletAddress')
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
       } else {
-        console.log('checkBrowserWalletAddress.else')
         throw new Error("Wallet Address Undefined")
       }
       if(user.data.uid === coinbase){

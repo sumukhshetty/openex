@@ -7,12 +7,6 @@ class ActiveTradeRow extends Component {
   render () {
     if (this.props.purchaseRequest) {
       var purchaseRequest = this.props.purchaseRequest
-      var display_id
-      if (purchaseRequest.contractAddress) {
-        display_id = purchaseRequest.contractAddress.slice(2, 6)
-      } else {
-        display_id = '-'
-      }
       var tradeType = (purchaseRequest.tradeAdvertisementType === 'buy-ether') ? 'Buy Order' : 'Sell Order'
       var username, uid, url
       if (purchaseRequest.buyerUid === this.props.user.data.uid) {

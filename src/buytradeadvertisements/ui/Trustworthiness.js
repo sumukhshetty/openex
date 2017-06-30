@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import Flag from '../../images/svgReactComponents/Flag';
+//import Flag from '../../images/svgReactComponents/Flag';
 import Star from '../../images/Star';
 
 const Trustworthiness = (props) => {

@@ -97,14 +97,9 @@ module.exports = {
     }
   },
   startListeningUserAuth: () => (dispatch, getState) =>{
-    console.log("startListeningUserAuth")
-    console.log(new Date().getTime())
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
-        console.log("user.signedin")
         dispatch(updateReduxStoreDataState(true))
-        // TODO dispatch an event to show a loading circle thing
-        console.log(new Date().getTime())
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
           var userProfile = snap.val()
           dispatch(getUserProfile(userProfile))

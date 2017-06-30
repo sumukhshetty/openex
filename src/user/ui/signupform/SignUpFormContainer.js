@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 // import SignUpForm from './SignUpForm'
 import { signUpUser, signUpUserCustomAuth } from './SignUpFormActions'
-import SignUpForm from './../../../signup/SignUpForm'
+//import SignUpForm from './../../../signup/SignUpForm'
 import SignUpFormCustomAuth from './../../../signup/SignUpFormCustomAuth'
 
 const mapStateToProps = (state, ownProps) => {
