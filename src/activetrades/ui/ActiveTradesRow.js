@@ -25,7 +25,7 @@ class ActiveTradeRow extends Component {
       url = '/user/' + uid
       return (
         <tr className='flex cxc'>
-          <td className='fb5 tc'>{display_id}</td>
+          <td className='fb5 tc'>{this.props.purchaseRequestId.slice(1,6)}</td>
           <td className='fb15 tc'>{purchaseRequest.lastUpdated}</td>
           <td className='fb10 tc'>{tradeType}</td>
           <td className='fb15 tc'><a onClick={()=>browserHistory.push(url)}>{username}</a></td>

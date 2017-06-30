@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-
+//import {raven} from './../../index.js'
 import TradeAdvertisementsRowContainer from './TradeAdvertisementsRowContainer'
 import TradeAdvertisementsEmptyState from './../layouts/TradeAdvertisementsEmptyState'
-//import ActiveAdContainer from './ActiveAdContainer'
-//import AdListEmptyState from './AdListEmptyState'
 import TradeAdvertisementsHeader from './../layouts/TradeAdvertisementsHeader';
+
 class TradeAdvertisements extends Component {
 
     render() {
@@ -19,7 +18,7 @@ class TradeAdvertisements extends Component {
               }
           );
         } catch(error){
-          //console.log(error)
+          //raven.captureException(error)
         }
         try{
           Object.entries(tradeadvertisements.sellether).forEach(
@@ -27,7 +26,7 @@ class TradeAdvertisements extends Component {
                 sellrows.push(<TradeAdvertisementsRowContainer tradeAdvertisement={this.props.selltradeadvertisements.data[key]} tradeAdvertisementId={key} key={key} tradeType='sell-ether'/>)}
           )
         } catch (error) {
-          //console.log(error)
+          //raven.captureException(error)
         }
         return(
           <div>
