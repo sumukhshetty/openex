@@ -6,309 +6,151 @@ class TermsOfService extends Component {
       <div className='w-100 bg-smoke vh-100'>
         <div className='w-75 center'>
           <div className='measure-wide mv3'>
-            <h1 className='pv1'>Automte.com - Terms of Service</h1>
-            <p className='pv1'>
-            It is important to us that you, and our other visitors, have the best possible time while using our site, and that when you use this site you are fully aware of your respective legal rights and obligations. For that reason, we have created these Terms of Service as the legally binding terms to govern your use of this site. Please read these Terms of Service carefully before using the site because they affect your legal rights and obligations. 
-            </p>
-            <p className='pv1'>
-            These Terms of Service ("agreement") is a legal agreement covering the provision of Automte.com services ("service" or "services") by Automte   ("Automte.com" or "Automte" or "us" or "our" or "we") to you as an individual ("you" or "your"). Your use of the services will be governed by this agreement, along with the Automte.com privacy policy. Please read this agreement carefully before using Automte.com. By using the service, you agree to become bound by the terms and conditions of this agreement.
-            </p>
+          <p className='pv1'>
+By using the website www.automte.com (“Website”), and further by registering to avail the services offered by the Website (“Service”), you are hereby agreeing to accept and comply with the terms and conditions of use stated below (“Terms of Use”). You should read,agree, and accept the entire Terms of Use prior to your use of this Website or any of the Service. You are hereby expressly barred from accessing the Website or availing the Service unless you agree and accept to these 
+</p>
+<h1 className='pv1'>Terms of Use.</h1>
+<p className='pv1'>
+As used herein, “Automte or Company” refers to the holding company of Farmalytics being Farmalytics Labs LLP(‘Company’), a limited liability partnership incorporated under the laws of India and having its registered office at 3rd floor, Hare, K.C Road, Bhoopasandra, Bangalore, India- 560094 its owners, directors, investors, employees or other related parties. Where the context so permits, Depending upon context, “Automte” may also refer to the services, products, website, content or other materials (collectively, “Materials”) provided by the Company.
+</p>
+<h1 className='pv1'>Service</h1>
+<p className='pv1'>
+The Service operated by Company in the name of Automte allows buyers (“Buyers”) and sellers (“Sellers”), to buy and sell Ethers (for more information on Ether, please refer to https://www.ethereum.org/).
+The Service provided Automte also allows all registered users of the Service (“Members”) to:
+1.  Purchase and sell Ethers,
+2.  To deploy smart contracts on the ethereum blockchain.
+It is possible that the laws in the country where the user resides do not allow the usage of an online tool with the characteristics of Ethers or any of its features. Automte does not encourage the violation of any laws and cannot be held responsible for violation of such laws.It is your responsibility to follow the laws of your country of residence and/or country from which you access this Website and the Service. As long as you agree to and comply with these Terms of Use, Automte grants to you a personal, non-exclusive, non-transferable, non-sublicensable, and limited right to enter and use the Website and the Service.
+</p>
+<h1 className='pv1'>Taxes</h1>
+<p className='pv1'>
+It is your responsibility to determine, collect, report, and submit any taxes applicable to the payments you make or receive in connection with the use of the Website and the Service to the appropriate tax authority. Automte is not responsible for determining whether taxes apply to your transaction, or for collecting, reporting or remitting any taxes arising from any transaction.
+</p>
+<h1 className='pv1'>Identity verification</h1>
+<p className='pv1'>
+To comply with AML/KYC recommendations, we require our clients to verify their identity by providing scanned copies* of the following**:
 
-            <h2 className='pv1'>Your Acceptance of Terms</h2>
-            <p className='pv1'>
-            If you do not agree with any of these Terms of Service please do not use this site, by using this Site you will be deemed to have irrevocably agreed to these terms. Please note that these Terms of Service may be revised and reissued without notice at any time. You should visit this page regularly to review the current Terms of Service, since your continued use of the site will be deemed as irrevocable acceptance of any revisions.
-            </p>
-            <h2 className='pv1'>Allowed jurisdictions</h2>
-            <p>
-            Services provided by Automte   might not be legally allowed in certain jurisdictions. By accepting these terms and services you confirm that you are not a resident of a such jurisdiction, including, but not limited to the Federal Republic of Germany and State of New York in the United States of America.
-            </p>
-            <h2 className='pv1'>How to contact us</h2>
-            <p>
-            This site is owned and operated by Automte  . You can contact us at any time. Please send us any questions, requests or general correspondence by contacting our support.
-            </p>
-            <h2 className='pv1'>Registration and user account</h2>
-            <p>
-            To access this site or some of the resources it has to offer, you may be asked to provide registration details in order to register a user account ("account"). It is a condition of use of this site that all the details you provide will be correct, current, and complete. If we at Automte.com believe the details are not correct, current, or complete, we have the right to refuse you access to the site, or any of its resources, and to terminate or suspend your account. 
-            </p>
-            <p>
-            You may only act on your own behalf. Your account can not be used to act as an intermediary or broker for any person or entity.
-            </p>
-            <p>
-            You may only use your own account to trade at Automte.com and you may only use one user account at a time for trading. You are responsible for maintaining adequate security and control of any and all IDs, passwords, personal identification numbers (PINs), or any other codes that you use to access Automte. You are not allowed to sell, borrow, share or otherwise make available your account or any detail necessary to access your account to people or entities other than yourself. 
-            </p>
-            <p>
-            Your account must not contain misleading or fraudulent information, including, but not limited to having a non-personal phone number, creating fake reputation information for your account, faking your country of origin or providing fraudulent identification documents. 
-            </p>
-            <p>
-            We may at any time require you to complete our ID verification process and may also require you to submit additional identification documents to Automte if we deem it necessary. Failing to complete ID verification will be considered a violation of this agreement. 
-            </p>
-            <p>
-            We may close, suspend, or limit your access to your account or to other Services we offer, and/or limit access to your  Ether balance for up to 180 days (or longer if pursuant to a court order or other legal process) if you violate these Terms of Service or any other agreement you enter into with Automte, or as otherwise specified in these Terms of Service or other agreement you have entered into with Automte. We may also use proprietary fraud and risk modeling when assessing the risk associated with your account, high risk users are deemed to be in violation of this agreement. 
-            </p>
-            <p>
-            If we determine that you have at any previous point in time violated this agreement or any other agreement that you have entered into with us we will immediately close, suspend or limit your account and Ether balance as per the terms outlined in this agreement.
-            </p>
-            <h2 className='pv1'>Advertisements and trading</h2>
-            <p>
-            With a registered account you can create Ether trade advertisements ("advertisement" or "ad" or "ads") to advertise that you are purchasing or selling Ethers. You may initiate Ether trades ("trades" or "contacts") by contacting advertisements created by other users or wait for users to initiate trades with you by contacting ads created by yourself. 
-            </p>
-            <p>
-            By initiating a Ether trade you agree to be bound by the advertisers terms of trade ("advertisers terms") set forth by the advertiser and displayed as terms of trade on the advertisement page. The terms of trade as determined by the advertiser are valid in all cases except when the advertisers terms contradict the Automte Terms of Service or are illegal or if both parties of the trade consent to alter the terms of trade. 
-            </p>
-            <p>
-            The price or price equation that is defined in the advertisement must contain any and all fees that the advertiser requires the user initiating the trade to pay. After initiation of a trade the Ether price is locked and cannot be changed or any additional fees added without consent from both parties of the trade and Automte.com. 
-            </p>
-            <p>
-            Ether advertisements must be placed in the correct payment category, if a category does not exist for the payment method it must be placed in the Other category. 
-            </p>
-            <p>
-            We may hide, remove, or limit your advertisements, if you violate these Terms of Service or any other agreement you enter into with Automte, or as otherwise specified in these Terms of Service or other agreement you have entered into with Automte. 
-            </p>
-            <p>
-            Valid payment details must be provided through the Automte trade system. It is a violation of this terms of service to provide payment details through other communication channels. 
-            </p>
-            <p>
-            In case a payment made by a Ether buyer to a seller is frozen, held, reversed, charged back or in other ways withheld from the Ether seller the buyer will be considered in breach of these terms of service. User information of the buyer can be provided to the seller to assist in recovery of the funds. 
-            </p>
-            <p>
-            Ether must be held in escrow during the whole trade process until the seller has received payment in full. 
-            </p>
-            <p>
-            Ether buyers must be able to, upon request by Automte, provide adequate proof of payment for up to 180 days after the trade has been completed. 
-            </p>
-            <p>
-            We use proprietary fraud and risk modeling when assessing the risk associated with your account, your ads and your trades. If we find your account to pose a high risk to Automte or our customers we will consider you in breach of these terms of service and may temporarily limit your account and freeze your Ether wallet in accordance with these terms of service.
-            </p>
-            <h2 className='pv1'>Online advertisements</h2>
-            <p>
-            Online advertisements ("Online ads" or "Online advertisements") are advertisements in the categories "Buy Ethers online" and "Sell Ethers online" or any other advertisement where the payment method is any other than cash or the advertisement type is online buy or online sell.
-            </p>
-            <p>
-            You are allowed to have active ads with only one account at a time.
-            </p>
-            <p>
-            You must place your ads in the correct payment category.
-            </p>
-            <p>
-            Multiple ads for the same payment method are not allowed in the same country unless the ads are limited to certain customer groups and the advertisements have a price difference of at least 3%.
-            </p>
-            <h2 className='pv1'>Accounts verified as company</h2>
-            <p>
-            A user account can be verified as a company account. Accounts that are company verified are allowed the following exemptions from these terms: 
-            </p>
-            <p>
-            A company may have several active user accounts at any time, provided they are all company verified and operated by an empl ee of the company. Each company verified account is personal to the empl ee operating it. 
-            </p>
-            <p>
-            A company may have active advertisements from several accounts with the following exceptions:
-            </p>
-            <p>
-            Ads are not allowed to overlap between accounts. E.g. you’re not allowed to create advertisements using the same limits with the same price in the same payment method category in the same country.
-            </p>
-            <p>
-            Multiple advertisements for the same payment method in the same country are not allowed if they have the same price and don’t have at least one of the following differences:
-            </p>
-            <p>
-            Minimum and Maximum transaction limit is not allowed to overlap.
-            </p>
-            <h2 className='pv1'>Disputes with Ether trades</h2>
-            <p>
-            If the buyer and seller of a Ether trade are in disagreement over a trade either party or Automte may initiate a dispute. Disputed trades are resolved by Automte.com support staff. 
-            </p>
-            <p>
-            Automte.com support resolves disputes by carefully evaluating the terms of trade, payment evidence, trade chat messages, user reputation, other data submitted to us by our users and data collected by us as part of the privacy policy. 
-            </p>
-            <p>
-            When sellers turn unresponsive, we will resolve the dispute to the buyer if we are confident the seller has received valid payment from the buyer. If the buyer is unresponsive the seller may dispute the trade and we will resolve the dispute to the seller. 
-            </p>
-            <p>
-            After the trade has been released by the seller, cancelled by the buyer or automatically cancelled due to not being marked as paid the trade is considered finished and cannot be disputed, reversed or altered. 
-            </p>
-            <p>
-            Providing fraudulent information or documents in a dispute or making false claims or otherwise trying to force a certain outcome of a disputed trade is considered a violation of this agreement. If payment details are provided outside of Automte the dispute may be resolved without taking the payment details into consideration.
-            </p>
-            <h2 className='pv1'>Online Privacy Notice</h2>
-            <p>
-            Your privacy is important to us. To better protect your privacy, we provide a notice explaining our online information practices and the choices you can make about the way your information is collected and used at this site. Click here to read the Privacy Statement which forms part of these Terms of Service.
-            </p>
-            <h2 className='pv1'>Trademarks and Copyrights</h2>
-            <p>
-            This site and all materials incorporated by Automte.com are protected by copyrights, or other proprietary copyrights. Some of the logos or other images incorporated on this site are also protected.
-            </p>
-            <h2 className='pv1'>Your Use of Material</h2>
-            <p>
-            Your right to make use of this site and any material or other content appearing on it is subject to your compliance with these Terms of Service. Modification or use of the material or any other content on this site for any purpose not permitted by these Terms of Service may be a violation of the Copyright and is prohibited. You may access and display material and all other content displayed on this site for non-commercial, personal, entertainment. The material and all other content on this site may not otherwise be copied, reproduced, republished, uploaded, posted, transmitted, distributed or used in any way unless specifically authorized by Automte.com
-            </p>
-            <h2 className='pv1'>Disclaimer of Warranties/Liability</h2>
-            <p>
-            Your use of this site is at your own risk. Automte.com and all the materials, information, software, facilities, services and other content are provided 'As Is' and 'As Available' without warranties of any kind, either expresses or implied. Automte.com does not warrant that the functions contained in this site will be available, uninterrupted or error-free, that defects will be corrected, or that Automte.com or the servers that make them available are free of viruses or other harmful components. Automte.com does not warrant or make any representation.
-            </p>
-            <h2 className='pv1'>Limitation of Liability</h2>
-            <p>
-            Automte.com does not accept any liability for any loss or damage, direct or indirect, resulting from any use of, or inability to use, Automte.com or the material, information, software, facilities, services or other content on Automte.com, regardless of the basis upon which liability is claimed and even if Automte.com has been advised of the possibility of such loss or damage. Without limitation, you (and not Automte.com) assume the entire cost of all necessary servicing, repair or correction or correction in the event of any such loss or damage arising.
-            </p>
-            <h2 className='pv1'>Messages</h2>
-            <p>
-            The materials, informations and opinions included and/or expressed in or on the messages, feedbacks, advertisements or other pages on this site are not necessarily those of Automte.com or it's affiliated or related entities or content providers. Automte.com is not responsible to monitor or review the messages, feedbacks or advertisements and the content of the messages, feedbacks or advertisements is not the responsibility of Automte.com. Automte may remove or modify any content without notice of liability at any time in it's sole discretion. Any use of the messages, feedbacks, advertisements or any other content on this site will be at your own risk and will be subject to the disclaimers and limitations on liability set out above.
-            </p>
-            <h2 className='pv1'>Submissions, Postings and Emails</h2>
-            <p>
-            Automte.com is always interested in hearing from you. It is, however, our policy that we will not accept or consider unsolicited submissions of concepts, stories, or other potential content. Therefore, please do not send Automte.com any unsolicited submissions. From time to time, areas on this site may expressly request submissions of concepts, stories, or other potential content from you. Where this is the case, please carefully read any specific rules or other terms and conditions which appear elsewhere on this site to govern those submissions, since they will affect your legal rights. If no Additional Terms govern those submissions, then these Terms of Service will apply in full to any submissions you make. 
-            </p>
-            <p>
-            Please act responsibly when using this site. You may only use this site and its contents for lawful purposes and in accordance with applicable law and you are prohibited from storing, distributing or transmitting any unlawful material through this Site. You recognize that storing, distributing or transmitting unlawful material could expose you to criminal and/or civil liability. You agree that if a third party claims that material you have contributed to the Site is unlawful, you will bear the burden of establishing that it is lawful. You understand and agree that all materials publicly posted (other than by Automte.com) or privately transmitted on or through this site are the sole responsibility of the sender, not Automte.com, and that you are responsible for all material you upload, post or otherwise transmit to or through this site. 
-            </p>
-            <p>
-            We at Automte.com require that you do not post emails or submit to or publish through Forums or otherwise make available on this site any content, or act in a way, which in our opinion:
-            </p>
-            <li>libels, defames, invades privacy, stalks, is obscene, pornographic, racist, abusive, harassing, threatening or offensive;</li>
-            <li>
-            seeks to exploit or harm children by exposing them to inappropriate content, asking for personally identifiable details or otherwise;
-            </li>
-            <li>
-            infringes any intellectual property or other right of any entity or person, including violating anyone's copyrights or trademarks or their rights of publicity;
-            </li>
-            <li>
-            violates any law or may be considered to violate any law;
-            </li>
-            <li>
-            you do not have the right to transmit under any contractual or other relationship (e.g., inside information, proprietary or confidential information received in the context of an empl ment or a non-disclosure agreement);
-            advocates or promotes illegal activity;
-            </li>
-            <li>
-            impersonates or misrepresents your connection to any other entity or person or otherwise manipulates headers or identifiers to disguise the origin of the content;
-            </li>
-            <li>
-            advertises any commercial endeavor (e.g., offering for sale products or services) or otherwise engages in any commercial activity (e.g., conducting raffles or contests, displaying sponsorship banners, and/or soliciting goods or services) except as specifically authorized on this Site;
-            </li>
-            <li>
-            solicits funds, advertisers or sponsors;
-            </li>
-            <li>
-            includes programs which contain viruses, worms and/or 'Trojan horses' or any other computer code, files or programs designed to interrupt, destr  or limit the functionality of any computer software or hardware or telecommunications;
-            </li>
-            <li>
-            disrupts the normal flow of dialogue, causes a screen to scroll faster than other users are able to type, or otherwise act in a way which affects the ability of other people to engage in real time activities via the Site;
-            </li>
-            <li>
-            copies any other pages or images on this site except with appropriate authority;
-            </li>
-            <li>
-            includes MP3 format files;
-            </li>
-            <li>
-            amounts to a 'pyramid' or similar scheme;
-            </li>
-            <li>
-            amounts to 'data warehousing' (i.e., using any web space made available to you as storage for large files which are only linked from other sites). You must provide a reasonable amount of content to accompany such material in order that at least some of the traffic to your site comes directly via us;
-            </li>
-            <li>
-            disobeys any policy or regulations established from time to time regarding use of this site or any networks connected to this Site; or contains links to other sites that contain the kind of content, which falls within the descriptions above.
-            </li>
-            <p>
-            In addition, you are prohibited from removing any sponsorship banners or other material inserted by Automte.com anywhere on this Site (e.g., on any web space made available for your use).
-            </p>
-            <h2 className='pv1'>System Abuse</h2>
-            <p>
-            Without limitation, you agree not to send, create or reply to so called mailbombs (i.e., emailing copies of a single message to many users, or sending large or multiple files or messages to a single user with malicious intent) or engage in spamming (i.e., unsolicited emailing or messaging for business or other purposes) or undertake any other activity which may adversely affect the operation or enj ment of this site by any other person. You may not reproduce, sell, resell or otherwise exploit any resource, or access to any resource, contained on this Site.
-            Security
-            </p>
-            <p>
-            Any passwords used for this site are for individual use only. You shall be responsible for the security of your password (if any). Automte.com shall be entitled to monitor your password and, at its discretion, require you to change it. If you use a password that Automte.com considers insecure, Automte.com will be entitled to require this to be changed and/or terminate your account. You are prohibited from using any services or facilities provided in connection with this site to compromise security or tamper with system resources and/or accounts. The use or distribution of tools designed for compromising security (e.g. password guessing programs, cracking tools or network probing tools) are strictly prohibited. If you become involved in any violation of system security, Automte.com reserves the right to release your details to system administrators at other sites in order to assist them in resolving security incidents.
-            </p>
-            <h2 className='pv1'>Investigations</h2>
-            <p>
-            Automte.com reserves the right to investigate suspected violations of these Terms of Service, including without limitation any violation arising from any submission, posting or e-mails you make or send to any Forum. Automte.com may seek to gather information from the user who is suspected of violating these Terms of Service, and from any other user. Automte.com may suspend any users whose conduct or postings are under investigation and may remove such material from its servers as it deems appropriate and without notice. If Automte.com believes, in its sole discretion, that a violation of these Terms of Service has occurred, it may edit or modify any submission, posting or e-mails, remove the material permanently, cancel postings, warn users, suspend users and passwords, terminate accounts or take other corrective action it deems appropriate. Automte.com will fully co-operate with any law enforcement authorities or court order requesting or directing Automte.com to disclose the identity of anyone posting any e-mails, or publishing or otherwise making available any materials that are believed to violate these Terms of Service.
-            </p>
-            <h2 className='pv1'>Service</h2>
-            <p>
-            Automte.com reserves the right to modify or discontinue, temporarily or permanently, all or any part of this site and/or any software, facilities and services on this site, with or without notice, and/or to establish general guidelines and limitations on their use.
-            </p>
-            <h2 className='pv1'>Third-Party Sites</h2>
-            <p>
-            This site may link you to other sites on the Internet. These sites may contain information or material that some people may find inappropriate or offensive. These other sites are not under the control of Automte.com, and you acknowledge that (whEther or not such sites are affiliated in any way with Automte.com) Automte.com is not responsible for the accuracy, copyright compliance, legality, decency, or any other aspect of the content of such sites. The inclusion of such a link does not imply endorsement of any site by Automte.com or any association with its operators. 
-            </p>
-            <p>
-            Automte.com cannot ensure that you will be satisfied with any products or services that you purchase from any third-party site that links to or from Automte.com since other sites/stores are owned and operated by independent web masters/retailers.
-            Jurisdictional Issues
-            </p>
-            <p>
-            Users of Automte.com are themselves responsible for making sure they are in compliance with legislation of the jurisdiction they operate in. 
-            </p>
-            <p>
-            The Materials and all other content in this site are presented solely for the purpose of providing entertainment and information and promoting programs, films, music, and other products available. The site is controlled and operated by Automte Labs
-            </p>
-            <h2 className='pv1'>Privacy policy</h2>
-            <p>
-            Automte.com is committed to protecting the privacy of its visitors. The policy statement provides our visitors with an overview of the measures we have taken to show our commitment to this policy.
-            </p>
-            <h2 className='pv1'>Cookie policy for Automte.com</h2>
-            <h2 className='pv1'>What Are Cookies</h2>
-            <p>
-            As is common practice with almost all professional websites this site uses cookies, which are tiny files that are downloaded to your computer, to improve your experience. This page describes what information they gather, how we use it and why we sometimes need to store these cookies. We will also share how you can prevent these cookies from being stored however this may downgrade or 'break' certain elements of the sites functionality. 
-            </p>
-            <p>
-            For more general information on cookies see the Wikipedia article on HTTP Cookies.
-            </p>
-            <h2 className='pv1'>How We Use Cookies</h2>
-            <p>
-            We use cookies for a variety of reasons detailed below. Unfortunately in most cases there are no industry standard options for disabling cookies without completely disabling the functionality and features they add to this site. It is recommended that you leave on all cookies if you are not sure whEther you need them or not in case they are used to provide a service that you use.
-            </p>
-            <h2 className='pv1'>Disabling Cookies</h2>
-            <p>
-            You can prevent the setting of cookies by adjusting the settings on your browser (see your browser Help for how to do this). Be aware that disabling cookies will affect the functionality of this and many other websites that you visit. Disabling cookies will usually result in also disabling certain functionality and features of the this site. Therefore it is recommended that you do not disable cookies.
-            </p>
-            <h2 className='pv1'>The Cookies We Set</h2>
-            <p>
-            If you create an account with us then we will use cookies for the management of the signup process and general administration. These cookies will usually be deleted when you log out however in some cases they may remain afterwards to remember your site preferences when logged out. We use cookies when you are logged in so that we can remember this fact. This prevents you from having to log in every single time you visit a new page. These cookies are typically removed or cleared when you log out to ensure that you can only access restricted features and areas when logged in. When you submit data to through a form such as those found on contact pages or comment forms cookies may be set to remember your user details for future correspondence. In order to provide you with a great experience on this site we provide the functionality to set your preferences for how this site runs when you use it. In order to remember your preferences we need to set cookies so that this information can be called whenever you interact with a page is affected by your preferences.
-            </p>
-            <h2 className='pv1'>Third Party Cookies</h2>
-            <p>
-            In some special cases we also use cookies provided by trusted third parties. The following section details which third party cookies you might encounter through this site. This site uses Google Analytics which is one of the most widespread and trusted analytics solution on the web for helping us to understand how you use the site and ways that we can improve your experience. These cookies may track things such as how long you spend on the site and the pages that you visit so we can continue to produce engaging content. For more information on Google Analytics cookies, see the official Google Analytics page. As we sell products it's important for us to understand statistics about how many of the visitors to our site actually make a purchase and as such this is the kind of data that these cookies will track. This is important to you as it means that we can accurately make business predictions that allow us to monitor our advertising and product costs to ensure the best possible price. Several partners advertise on our behalf and affiliate tracking cookies simply allow us to see if our customers have come to the site through one of our partner sites so that we can credit them appropriately and where applicable allow our affiliate partners to provide any bonus that they may provide you for making a purchase.
-            </p>
-            <h2 className='pv1'>More Information</h2>
-            <p>
-            Hopefully that has clarified things for you and as was previously mentioned if there is something that you aren't sure whEther you need or not it's usually safer to leave cookies enabled in case it does interact with one of the features you use on our site. However if you are still looking for more information then you can contact our support regarding that.
-            </p>
-            <h2 className='pv1'>Personal Information</h2>
-            <p>
-            We collect personal data that you volunteer on forms which you submit to us and in emails that you send to us. In addition we automatically gather details of browser types and IP addresses of the users who visit our site. We do not release this information to any outside party, except in suspected fraud cases. 
-            </p>
-            <p>
-            When fraudulent activity is suspected, we may release the users details to the party that the user has been trading with. This is done only if there is strong evidence of fraud.
-            </p>
-            <h2 className='pv1'>Opting Out</h2>
-            <p>
-            Users who sign up for Automte will automatically receive Newsletters. Should users later decide to opt-out from receiving this information please contact us and you will be removed from our database and no longer receive future communication.
-            </p>
-            <h2 className='pv1'>Correct/Update</h2>
-            <p>
-            You may request that we amend any personal data that we are holding about you which is factually inaccurate. You can contact customer support us stating your wishes.
-            </p>
-            <h2 className='pv1'>Public Forums/Chat Room</h2>
-            <p>
-            This web site has a message board and chat room available to its users. Please remember that any information that is disclosed in these areas become public information and you should exercise caution when deciding to disclose your personal information.
-            </p>
-            <h2 className='pv1'>Links</h2>
-            <p>
-            This web site contains links to other sites. Automte.com is not responsible for the privacy practices of such other sites. This privacy statement applies solely to information collected by this web site.
-            </p>
-            <h2 className='pv1'>Online Payment methods</h2>
-            <p>
-            Automte   or Automte.com is not associated with any of the trademarks which might appear visible in the Online Payment method lists or advertisement details. Including, but not limited to Alipay, AstroPay, BPAY, CashU, Chase Quickpay, Dwolla, Easypaisa, EgoPay, Amazon Gift Card Code, Apple Store Gift Card Code, Ebay Gift Card Code, iTunes Gift Card Code, Starbucks Gift Card Code, Steam Gift Card Code, Walmart Gift Card Code, Google Wallet, Hal-cash, hyperWALLET, Interac e-transfer, MobilePay FI, MobilePay, MobilePay NO, Moneybookers / Skrill, Moneygram, MoneyPak, M-PESA Kenya (Safaricom), M-PESA Tanzania (Vodacom), Neteller, NetSpend Reload Pack, OKPay, Paxum, Payeer, Paytm, Paypal, PayPal My Cash, PaySafeCard, Payza, Perfect Money, Pingit, PYC, PostePay, QIWI, Reloadit, RIA Money Transfer, Serve2Serve, SolidTrustPay, Square Cash, Superflash, Swish, Tigo-Pesa Tanzania, Transferwise, Ukash, Vanilla, Venmo, Vipps, Walmart 2 Walmart, WebMoney, Western Union, Xoom, Yandex Money or any other payment method. Automte.com does not itself support these payment methods, or claim to be in partnership with them. Also, services provided by Automte   or Automte.com are not authorized, approved, endorsed or sponsored by any of the payment methods listed above or their respective trademark owners. Payment method listings are visible on Automte.com for informative purposes only. Trademarks which might appear visible on Automte.com website, belong to the respective trademark owners alone.
-            </p>
-            <h2 className='pv1'>Competitions</h2>
-            <p>
-            Automte.com may occasionally run competitions with other web sites and we will ask visitors for their contact information. Any information that you supply will be held in the strictest confidence and will only be used in conjunction with the competition. In order for visitors to take part in the competitions you must be a member of the Automte Forum.
-            </p>
-            <h2 className='pv1'>Data retention policy</h2>
-            <p>
-            We retain your personal information as long as it is necessary and relevant for our operations. In addition, we may retain personal information from closed accounts to comply with national laws, prevent fraud, collect any fees owed, resolve disputes, troubleshoot problems, assist with any investigation, enforce our Terms of Service and take other actions permitted or required by applicable national laws. Messages and file attachments related to trades are stored for 180 days after the trade closes.
-            </p>
-            <h2 className='pv1'>Contacting The Web Site</h2>
-            <p>
-            If you have any questions about this Privacy statement, the practices, or your dealing with this web site, please contact us and your enquiry will be dealt with as soon as possible.
-            </p>
+1. PAN card (mandatory),
+2. Photo identity (which could be avalid passport, Aadhaar card, driving license, Voter id),
+3. Passport sized photo (not older than 6 months) (mandatory), and
+*Copies should be in color and a good resolution.
+** The above documents provided by the clients shall be kept on the server safely and the Company shall not disclose the same to any third party unless we are mandated to do so under the provisions of any applicable laws.
+Automte may use your personal information:
+4. To identify you
+5. To process transactions,
+6. To send periodic emails with updates, promotions, company news, and notices regarding changes to policies,
+7. Customize, measure, and improve Automte Service and the content and layout of our Website and applications,
+8. To analyze use of the Website,
+9. Prevent potentially prohibited or illegal activities, and
+10. To undertake a verification of your identity with third party electronic identification providers.
+Notwithstanding anything contained in these terms of use, the Company shall be free to transfer/ disclose any information shared by you with the Company, to a related party or to an affiliate or to any entity controlled by the promoters of Automte. We may also transfer your information during sale of assets or business to another company, de-merger into another company, while getting acquired by another company or getting merged with another company.
+By opening an account to use the Service (“Account”), you expressly represent and warrant that:
+11. You have accepted these Terms of Use;
+12. You do have read and understood the information provided by the Website through its How-it-works and Resources section; and
+13. You are at least 18 years of age and have the full capacity to accept these Terms of Use and enter into a transaction involving Ethers.
+Risks
+The use of the Website and the Service may entail the following risks:
+14. Ether transactions are irreversible. The Ethers you buy will be sent to the Ether address provided. If you lose or delete your own Ether wallet, you will lose your Ethers in it and the same cannot be restored.
+15. Ether value tends to fluctuate on a minute to minute basis, due to which there may be increase or decrease in the value of the Ethers. Ethers are subject to large swings in value and may even become worthless. There is an inherent risk that losses will occur as a result of buying, selling or trading in Ethers.
+16. Ether is an as-yet autonomous and largely unregulated worldwide system of value transfer between individuals. It is not backed by any government or commodities and hence may be susceptible to risks not generally associated with government or central bank backed currencies.
+17. There is also the risk of loss of confidence in Ether trading, which could collapse demand relative to supply. For example, confidence might collapse in Ether because of unexpected changes imposed by the software developers, the creation of superior competing alternatives, a deflationary or inflationary spiral, or due to governmental actions. Confidence might also collapse because of technical problems, for instance, if the anonymity of the system is compromised, or if any entity is able to prevent any transactions from settling.
+18. There may be additional risks that we have not foreseen or identified in these Terms of Use.
+</p>
+<p className='pv1'>
+You should carefully assess whether your financial situation and tolerance for risk is suitable for buying, selling or trading Ethers.
+</p>
+<p className='pv1'>
+We use our banking service providers only for the receipt of client moneys and making payments. Our banking service providers do not transfer Ethers, exchange Ethers, or provide any services in connection with Ethers.
+</p>
+<h1 className='pv1'>Limited Right of Use</h1>
+<p className='pv1'>
+Unless otherwise specified, all Materials on this Website are the property of the Company and are protected by copyright, trademark, and other applicable laws. You may view, print, and/or download a copy of such Materials on any single computer solely for your personal, informational, non-commercial use, provided you keep intact all copyright and other proprietary notices.
+</p>
+<p className='pv1'>
+The trademarks, service marks, and logos of Automte and others used in this Website (“Trademarks”) are the property of the Company and their respective owners. The software, text, images, graphics, data, prices, trades, charts, graphs, video, and audio used on this Website belong to Company. The Trademarks and Materials should not be copied, reproduced, modified, republished, uploaded, posted, transmitted, scraped, collected or distributed in any form or by any means, whether manual or automated. The use of any such Materials on any other website or networked computer environment for any other purpose is strictly prohibited; any such unauthorized use may violate copyright, trademark, and other applicable laws and could result in criminal or civil legal actions and penalties.
+</p>
+<h1 className='pv1'>Maintaining Your Account: Our Rules</h1>
+<p className='pv1'>
+The Website is for your personal and non-commercial use only. We are vigilant in maintaining the security of our Website and the Service. By registering with us, you agree to provide Company with current, accurate, and complete information about yourself as prompted by the registration process, and to keep such information updated. You further agree that you will not use any Account other than your own, or access the Account of any other Member at any time, or assist others in obtaining unauthorized access.
+</p>
+<p className='pv1'>
+The creation or use of Accounts without obtaining the prior express permission from Company will result in the immediate suspension of all said Accounts, as well as all pending purchase/sale offers. Any attempt to do so or to assist others (Members or otherwise), or the distribution of instructions, software or tools for that purpose, will result in the Accounts of such Members being terminated, in addition to Automte, at its sole discretion, initiating any civil or criminal legal action against you and such others.
+</p>
+<p className='pv1'>
+You are also responsible for maintaining the confidentiality of your Account information, including your password, safeguarding your own Ether, and for all activity including transactions that are posted to your Account. If there is suspicious activity related to your Account, we may, but are not obligated, to request additional information from you, including authenticating documents, and to freeze any transactions pending our review. You are obligated to comply with these security requests, otherwise Automte, at its sole discretion, may choose to terminate your Account. You are required to notify Automte immediately of any unauthorized use of your Account or password, or any other breach of security by an email addressed to support@Automte.com. The membership of a Member who violates these rules may be terminated, and further be also held liable for losses incurred by Company or any user of the Website.
+</p>
+<p className='pv1'>
+You hereby agree that you shall not use the Website or our Service, in connection with any activity violating any law, statute, ordinance, or regulation. Further, you shall not sell Ethers to Automte that is obtained through illegal activities and you will also not use the Service to perform an illegal activity of any sort, including but not limited to, money laundering, illegal gambling operations, terrorist financing, or malicious hacking. Source of Ethers paid to your Ether wallet is not known to Automte and you hereby agree to ensure that it always comes from legitimate sources.
+</p>
+<h1 className='pv1'>Termination</h1>
+<p className='pv1'>
+You may terminate this agreement with Company, and close your Account at any time, following settlement of any pending transactions.
+</p>
+<p className='pv1'>
+You agree that Company may, by giving notice, in its sole discretion, terminate your access to the Website and to your Account; including without limitation, suspending or terminating the Service and Members’ Accounts, prohibiting access to the Website and its content, services and tools, delaying or removing hosted content, and taking technical and legal actions to keep Members off the Website if we reasonably perceive that such Members are creating any problems, including without limitation, possible legal liabilities, infringement of the intellectual property rights, or acting inconsistently with the letter or spirit of these Terms of Use.
+</p>
+<p className='pv1'>
+Notwithstanding the above, we may, in appropriate circumstances and at our sole discretion, suspend or terminate Accounts of Members for any reason, including without limitation (1) attempts to gain unauthorized access to the Website or another Member’s account or providing assistance to others’ attempting to do so, (2) overcoming software security features limiting use of or protecting any content, (3) usage of the Service to perform illegal activities such as money laundering, illegal gambling operations, financing terrorism, or other criminal activities, (4) violations of these Terms of Use, (5) failure to pay or fraudulent payment for Transactions, (6) unexpected operational difficulties, or (7) upon the request of law enforcement or other government agencies, if deemed to be legitimate and compelling by Automte, acting in its sole discretion.
+</p>
+<p className='pv1'>
+We also reserve the right to cancel unverified Accounts or Accounts that have been inactive for a period of 6 months or more, and/or to modify or discontinue our Website or Service. Members agree that Automte will not be liable to them or to any third party for termination of their Account or access to the Website.
+</p>
+<p className='pv1'>
+You hereby agree that the suspension of an Account shall not affect the payment of the commissions due for past Transactions. Upon termination, Members will receive any monies owed to them via their registered bank account with Automte.
+</p>
+<h1 className='pv1'>Assignment</h1>
+<p className='pv1'>
+You acknowledge and agree that the Company can freely assign these Terms of Use or any of its rights under these Terms of Use to any person without your consent. You shall however, not be entitled to assign these Terms of Use, in whole or in part, to another person without the prior written approval of the Company.
+</p>
+<h1 className='pv1'>Availability</h1>
+<p className='pv1'>
+All Services are provided without warranty of any kind, either express or implied. While we strive to provide you with the uninterrupted Service, we do not guarantee that the access to this Website will not be interrupted, or that there will be no delays, failures, errors, omissions or loss of transmitted information.
+</p>
+<p className='pv1'>
+We will use reasonable endeavors to ensure that the Website can normally be accessed by you in accordance with these Terms of Use. We may suspend use of the Website for maintenance and will make every effort to give you reasonable notice. You acknowledge that such notice, however, may not be possible in case of an emergency.
+External Websites
+</p>
+<p className='pv1'>
+The Website may provide links or other forms of reference to other websites (“External Websites”) or resources over which we may not have control. You acknowledge that Automte is providing any such links or references of External Websites or resources to you only as a convenience and that Automte makes no representations whatsoever about any External Websites which you may access through this Website, including such External Websites being free of such items as viruses, worms, Trojan horses, and other items of a destructive nature. Automte is not responsible for the availability of, and content provided on any External Websites. You are requested to review the policies posted by such External Websites regarding privacy and other topics before use. Automte is not responsible for third party content accessible through the Website, including opinions, advice, statements, prices, activities, and advertisements, and you shall bear all risks associated with the use of such content.
+</p>
+<h1 className='pv1'>Financial Advice</h1>
+<p className='pv1'>
+We do not provide any investment advice in connection with the Service contemplated by these Terms of Use. While we may provide information on the value, range, volatility of Ethers, and events that may affect/have affected the value of Ethers, this is not considered investment advice and should not be construed as such. Automte will not be liable for any loss suffered by you in connection with any transaction involving Ethers.
+</p>
+<h1 className='pv1'>Financial Regulation</h1>
+<p className='pv1'>
+Our business model, and our Service, consists of facilitating the buying, selling, sending and receiving of Ethers, and their use to purchase goods in an unregulated yet responsible, international open payment system. The Service we provide is currently unregulated within India.
+</p>
+<h1 className='pv1'>Email</h1>
+<p className='pv1'>
+Email messages sent over Internet are not always secure and Automte is not responsible for any damages incurred by the result of sending email messages over the Internet. We recommend sending sensitive emails by visiting ‘contact-us’ form on the Website where the information passes under security layer and is encrypted.
+</p>
+<h1 className='pv1'>Jurisdiction</h1>
+<p className='pv1'>
+These Terms of Use shall be governed and construed in accordance with the laws of India. The parties agree to irrevocably submit to the exclusive jurisdiction of the courts in Bangalore for the resolution of any disputes arising from these Terms of Use. Automte may also consider arbitration as the appropriate mechanism for dispute resolution.
+</p>
+<h1 className='pv1'>Limitation of Liability</h1>
+<p className='pv1'>
+Users of this website are responsible for their actions in connection with the use of the Website, Service, and their Accounts. Users are also responsible for protecting access information to the Website including, but not limited to, user names, passwords, and bank account details. Automte is not responsible for the outcome, whether positive or negative, of any action performed by any of its users within or related to the Website. Some deposits and withdrawal methods require Automte to use personal details of the user including, but not limited to, name, address, email, phone number, and bank account number, IFSC code, etc. and you agree that Automte can use these information to facilitate deposits and withdrawals.
+</p>
+<p className='pv1'>
+The parties agree that in no event shall Automte or its affiliates, officers, directors, agents, employees, and suppliers be liable for lost profits or any special, incidental or consequential damages arising out of or in connection with the use of our Website, Service, or theseTerms of Use.In case the applicable laws do not permit the limitation or exclusion of damages as described above, ouraggregate liability (including the liability of our affiliates, officers, directors, agents, employees, and suppliers)in respect of claims based on events arising out of or in connection with any single member’s use of the Website, whether in contract or tort or otherwise, shall in no circumstances exceed the amount of the transaction(s) that are the subject of the claim less any amount of commission that may be due and payable in respect of such transaction(s).
+</p>
+<h1 className='pv1'>Indemnity</h1>
+<p className='pv1'>
+To the full extent permitted by applicable law, you hereby agree to indemnify Automte, and its affiliates, officers, directors, agents, employees, and suppliers against any action, liability, cost, claim, loss, damage, proceeding or expense suffered or incurred if direct or not directly arising from your use of the Website, Service, or from your violation of these Terms of Use.
+</p>
+<h1 className='pv1'>Miscellaneous</h1>
+<p className='pv1'>
+If we are unable to perform the Service outlined in the Terms of Use due to factors beyond our control including but not limited to an event of force majeure, change of law or change in sanctions policy we will not have any liability to you with respect to the Service provided under these Terms of Use and for a time period coincident with the event.
+</p>
+<h1 className='pv1'>Modification of Terms</h1>
+<p className='pv1'>
+Automte reserves the right to change, add or remove portions of these Terms of Use, at any time, in an exercise of its sole discretion. You will be notified of any changes in advance through your Account inbox. Upon such notification, it is your responsibility to review the amended Terms of Use. Your continued use of the Website and Service following the posting of a notice of changes to the Terms of Use signifies that you have accepted and agreed to such changes, and that all subsequent transactions by you will be subject to the amended Terms of Use.
+</p>
+<h1 className='pv1'>Contact Us</h1>
+<p className='pv1'>
+If you have any questions relating to these Terms of Use, your rights and obligations arising from these Terms of Use and/or your use of the Website and the Service, your Account, or any other matter, please contact us at sumukh@Automte.com
+</p>
           </div>
         </div>
       </div>

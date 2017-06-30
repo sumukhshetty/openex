@@ -577,11 +577,14 @@ module.exports = {
         dispatch(sendEtherState('sending'));
         web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
           if(!err) {
+            dispatch(sendEtherState('init'));
+            dispatch(updateConfirmButtonIsDisabled(false))
             // TODO double check that this is the implementation we want
-            web3.eth.getTransactionReceipt(txHash, function(txReceipt){
+            /*web3.eth.getTransactionReceipt(txHash, function(txReceipt){
+              console.log("got the tx txReceipt")
               dispatch(sendEtherState('init'));
               dispatch(updateConfirmButtonIsDisabled(false))
-            })
+            })*/
           } else {
             if(err.message.includes('MetaMask Tx Signature: User denied')) {
               console.log('ERROR: User denied transaction');

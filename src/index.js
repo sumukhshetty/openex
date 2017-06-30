@@ -8,21 +8,21 @@ import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
 // Layouts
 import AppContainer from './AppContainer'
 
-import Home from './layouts/home/Home'
 import HomeContainer from './layouts/home/HomeContainer'
-//import Dashboard from './layouts/dashboard/Dashboard'
 import DashboardContainer from './layouts/dashboard/DashboardContainer'
 import WrongNetwork from './layouts/wrongnetwork/WrongNetwork'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'
-import Login from './user/layouts/login/Login'
+//import Login from './user/layouts/login/Login'
 
 import Help from './help/layouts/Help'
 import HelpConfirmation from './help/layouts/HelpConfirmation'
+import Support from './support/layouts/Support'
 import HTMLStyles from './css/HTMLStyles.js'
 import Static from './staticPages/Master/Static'
 import UserScreen from './userScreen/layouts/UserScreen'
 import TermsOfService from './termsofservice/TermsOfService'
-import ResetPassword from './signup/ResetPassword'
+import About from './about/About'
+//import ResetPassword from './signup/ResetPassword'
 import Admin from './admin/layouts/Admin'
 
 import BuyTradeAdvertisement from './buytradeadvertisement/layouts/BuyTradeAdvertisement'
@@ -33,7 +33,7 @@ import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAd
 
 import KycUpload from './kycupload/layouts/KycUpload'
 import ProcessKyc from './processkyc/layouts/ProcessKyc'
-import EmailHandler from './emailhandlers/EmailHandler'
+//import EmailHandler from './emailhandlers/EmailHandler'
 import ActiveTrade from './activetrade/layouts/ActiveTrade'
 // Redux Store
 import store from './store'
@@ -77,11 +77,11 @@ ReactDOM.render((
         <Route path='dashboard' component={UserIsAuthenticated(DashboardContainer)} />
         <Route path='wrongnetwork' component={WrongNetwork} />
         <Route path='admin' component={UserIsAuthenticated(Admin)} />
-        <Route path='login' component={UserIsNotAuthenticated(Login)} />
         <Route path='sellether' component={UserIsAuthenticated(BuyTradeAdvertisements)}/>
         <Route path='buyether' component={UserIsAuthenticated(SellTradeAdvertisements)} />
         <Route path='help' component={UserIsAuthenticated(Help)} />
         <Route path='help/confirmation' component={UserIsAuthenticated(HelpConfirmation)} />
+        <Route path='support' component={UserIsNotAuthenticated(Support)} />
         <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />
         <Route path='user/:userUid' component={UserIsAuthenticated(UserScreen)} />
         <Route path='selltradeadvertisement/:sellTradeAdvertisementId' component={UserIsAuthenticated(SellTradeAdvertisement)} />
@@ -90,9 +90,10 @@ ReactDOM.render((
         <Route path='edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId' component={UserIsAuthenticated(EditTradeAdvertisement)} />
         <Route path='kyc' component={UserIsAuthenticated(KycUpload)} />
         <Route path='processkyc/:country/:userUid' component={UserIsAuthenticated(ProcessKyc)}/>
-        <Route path='termsofservice' component={UserIsAuthenticated(TermsOfService)} />
-        <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} />
-        <Route path='emailactions' component={UserIsNotAuthenticated(EmailHandler)} />
+        <Route path='termsofservice' component={UserIsNotAuthenticated(TermsOfService)} />
+        <Route path='about' component={UserIsNotAuthenticated(About)} />
+        {/*<Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} />*/}
+        {/*<Route path='emailactions' component={UserIsNotAuthenticated(EmailHandler)} />*/}
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>
