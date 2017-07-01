@@ -21,14 +21,14 @@ function web3Init(web3) {
 }
 // end deprecate
 
-export const ORDER_BOOK_FACTORY = 'ORDER_BOOK_FACTORY'
+/*export const ORDER_BOOK_FACTORY = 'ORDER_BOOK_FACTORY'
 function orderBookFactory(factory) {
   return {
   type:ORDER_BOOK_FACTORY,
   payload:factory
   }
 }
-
+*/
 function browserBasedWalletLocked(lockedBool){
   return {
     type: 'SET_BROWSER_WALLET_LOCK_STATUS',
@@ -86,7 +86,7 @@ export function createETHOrderBook(web3, orderBookFactory, uid, country) {
 
     const factory = contract(OrderBookFactoryContract);
     factory.setProvider(web3.currentProvider);
-    var factoryInstance;
+    //var factoryInstance;
     console.log('coinbase:' + coinbase);
     console.log('address: ' + factoryAddress.kovanOrderFactoryAddress);
     factory.at(factoryAddress.kovanOrderFactoryAddress)

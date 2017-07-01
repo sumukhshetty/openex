@@ -3,10 +3,8 @@ import HomeMain from './HomeMain'
 import BrowserDetection from 'react-browser-detection'
 import Process from './Process'
 import UnsupportedBrowser from './../unsupportedbrowser/UnsupportedBrowser'
-import Testimonials from './Testimonials'
-import Subscribe from './Subscribe'
+//import Testimonials from './Testimonials'
 import Footer from './../../footer/Footer'
-import { firebaseRef } from './../../index'
 
 const browserHandler = {
   chrome: () => <HomeMain />,
@@ -30,7 +28,6 @@ class Home extends Component {
           <Process />
         {/*TODO add this in with the main lanch*/}
           {/*<Testimonials />*/}
-          <Subscribe />
           <Footer/>
         </section>
       )

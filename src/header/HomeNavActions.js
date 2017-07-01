@@ -49,7 +49,7 @@ module.exports = {
               json: true,
               url: url
             }
-
+            //dispatch(logginin) // with this dispatch we show a spinner with a logging in
             request(options, function (err, res, body) {
               if (err) {
                 console.error('error posting json: ', err)

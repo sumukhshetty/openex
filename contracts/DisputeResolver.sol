@@ -1,6 +1,6 @@
 pragma solidity ^0.4.11;
 
-import "./DisputeInterface.sol";
+import "./ETHOrderBook.sol";
 
 contract DisputeResolver {
 
@@ -17,46 +17,55 @@ contract DisputeResolver {
     _;
   }
 
+  enum Status { Assigned, ResolvedSeller, ResolvedBuyer }
+
   struct Dispute {
     address assignee;
     address ethOrderBook;
+    Status status;
   }
 
   //maps uid to Dispute
   mapping(string => Dispute) disputes;
 
-  DisputeInterface disputeInterface;
-
-  //note: sets msg.sender as owner
-  function DisputeResolver(address[] _owners, address _disputeInterface) {
+  function DisputeResolver(address[] _owners) {
     owners[1] = msg.sender;
     ownerIndex[msg.sender] = 1;
     for (uint i = 0; i < _owners.length; ++i) {
       owners[2 + i] = _owners[i];
       ownerIndex[_owners[i]] = 2 + i;
     }
-
-    disputeInterface = DisputeInterface(_disputeInterface);
   }
 
   event DisputeAssigned(address ethOrderBook, string uid, address assignee, address assigner);
   event DisputeEscalated(address ethOrderBook, string uid, address assignee, address assigner);
+  event DisputeChecked(address ethOrderBook, string uid, address assignee);
   event DisputeResolved(address ethOrderBook, string uid, string resolvedTo, address assignee);
 
   function assignDispute(address ethOrderBook, string uid, address assignee) onlyOwner {
     disputes[uid].assignee = assignee;
     disputes[uid].ethOrderBook = ethOrderBook;
-    disputeInterface.checkDispute(uid, ethOrderBook);
+    disputes[uid].status = Status.Assigned;
     DisputeAssigned(ethOrderBook, uid, assignee, msg.sender);
   }
 
+  function checkDispute(string uid) onlyAssignee(uid) {
+    ETHOrderBook orderBook = ETHOrderBook(disputes[uid].ethOrderBook);
+    orderBook.checkDispute(uid);
+    DisputeChecked(disputes[uid].ethOrderBook, uid, msg.sender);
+  }
+
   function resolveDisputeSeller(string uid) onlyAssignee(uid) {
-    disputeInterface.resolveDisputeSeller(uid, disputes[uid].ethOrderBook);
+    ETHOrderBook orderBook = ETHOrderBook(disputes[uid].ethOrderBook);
+    orderBook.resolveDisputeSeller(uid);
+    disputes[uid].status = Status.ResolvedSeller;
     DisputeResolved(disputes[uid].ethOrderBook, uid, 'seller', msg.sender);
   }
 
   function resolveDisputeBuyer(string uid) onlyAssignee(uid) {
-    disputeInterface.resolveDisputeBuyer(uid, disputes[uid].ethOrderBook);
+    ETHOrderBook orderBook = ETHOrderBook(disputes[uid].ethOrderBook);
+    orderBook.resolveDisputeBuyer(uid);
+    disputes[uid].status = Status.ResolvedBuyer;
     DisputeResolved(disputes[uid].ethOrderBook, uid, 'buyer', msg.sender);
   }
 

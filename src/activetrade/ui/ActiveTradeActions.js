@@ -1,7 +1,6 @@
-import {firebaseRef, FIREBASE_TIMESTAMP, raven} from './../../index.js'
+import {firebaseRef, raven} from './../../index.js'
 import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import * as notificationHelpers from './../../util/notificationHelpers'
-import { browserHistory } from 'react-router'
 import {notify} from 'react-notify-toast'
 import * as contractAbis from './../../contract_addresses/contractAbi'
 import * as orderFactory from './../../contract_addresses/orderfactory'
@@ -105,7 +104,7 @@ module.exports = {
     dispatch(updateConfirmButtonIsDisabled(true))
     try {
       let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
-      let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
+      //let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
       let price = web3.toWei(purchaseRequest.price)
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
@@ -182,6 +181,7 @@ module.exports = {
                     console.log(ethOrderBook.data.addOrder)
                     console.log(error)
                     dispatch(sendEtherState('init'));
+                    dispatch(updateConfirmButtonIsDisabled(false))
                   }
               })
           } else {
@@ -191,6 +191,7 @@ module.exports = {
         } else {
           console.log("ethOrderBook.data.availableBalance.error")
           dispatch(sendEtherState('init'));
+          dispatch(updateConfirmButtonIsDisabled(false))
           console.log(error)
           raven.captureException(error)
         }
@@ -576,6 +577,13 @@ module.exports = {
         web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
           if(!err) {
             dispatch(sendEtherState('init'));
+            dispatch(updateConfirmButtonIsDisabled(false))
+            // TODO double check that this is the implementation we want
+            /*web3.eth.getTransactionReceipt(txHash, function(txReceipt){
+              console.log("got the tx txReceipt")
+              dispatch(sendEtherState('init'));
+              dispatch(updateConfirmButtonIsDisabled(false))
+            })*/
           } else {
             if(err.message.includes('MetaMask Tx Signature: User denied')) {
               console.log('ERROR: User denied transaction');
@@ -625,6 +633,7 @@ module.exports = {
         event.stopWatching()
         dispatch(userOrderBook(_instance))
         dispatch(sendEtherState('init'))
+        dispatch(updateConfirmButtonIsDisabled(false))
         dispatch(clearTxHash())
       })
       dispatch(sendEtherState('sending'));
@@ -636,6 +645,7 @@ module.exports = {
           } else {
             console.log(error)
             dispatch(sendEtherState('init'))
+            dispatch(updateConfirmButtonIsDisabled(false))
           }
         })
     } catch (error) {

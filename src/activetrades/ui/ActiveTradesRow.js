@@ -7,12 +7,6 @@ class ActiveTradeRow extends Component {
   render () {
     if (this.props.purchaseRequest) {
       var purchaseRequest = this.props.purchaseRequest
-      var display_id
-      if (purchaseRequest.contractAddress) {
-        display_id = purchaseRequest.contractAddress.slice(2, 6)
-      } else {
-        display_id = '-'
-      }
       var tradeType = (purchaseRequest.tradeAdvertisementType === 'buy-ether') ? 'Buy Order' : 'Sell Order'
       var username, uid, url
       if (purchaseRequest.buyerUid === this.props.user.data.uid) {
@@ -25,7 +19,7 @@ class ActiveTradeRow extends Component {
       url = '/user/' + uid
       return (
         <tr className='flex cxc'>
-          <td className='fb5 tc'>{display_id}</td>
+          <td className='fb5 tc'>{this.props.purchaseRequestId.slice(1,6)}</td>
           <td className='fb15 tc'>{purchaseRequest.lastUpdated}</td>
           <td className='fb10 tc'>{tradeType}</td>
           <td className='fb15 tc'><a onClick={()=>browserHistory.push(url)}>{username}</a></td>

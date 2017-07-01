@@ -37,13 +37,8 @@ export default class TradeAdvertisementsRow extends Component {
   render () {
     if (this.props.tradeadvertisement) {
       var tradeAdvertisement = this.props.tradeadvertisement;
-      var display_id
-      if (tradeAdvertisement.contractAddress){
-        display_id = tradeAdvertisement.contractAddress.slice(2,6)
-      } else {
-        display_id = "-"
-      }
-      // TODO
+
+      // TODO @arseniy
       var availableBalance
       if (tradeAdvertisement.availableBalance) {
         availableBalance = tradeAdvertisement.availableBalance - tradeAdvertisement.pendingBalance
@@ -52,7 +47,7 @@ export default class TradeAdvertisementsRow extends Component {
 
       return (
         <tr className='flex cxc'>
-          <td className='fb5 tc'>{display_id}</td>
+          <td className='fb5 tc'>{this.props.tradeAdvertisementId.slice(1,6)}</td>
           <td className='fb10 tc'>{tradeAdvertisement.active ? <span className='green'>Live</span> : <span className='danger'>Disabled</span>}</td>
           <td className='fb10 tc'>{this.props.tradeType === 'sell-ether' ? 'Sell Online' : 'Buy Online'}</td>
           <td className='fb10 tc'>{this.props.tradeType === 'sell-ether' ? (availableBalance || 0) : '-'}</td>

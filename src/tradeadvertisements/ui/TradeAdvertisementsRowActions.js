@@ -1,4 +1,4 @@
-import {firebaseRef, raven} from './../../index.js'
+import {raven} from './../../index.js'
 
 import {notify} from 'react-notify-toast'
 

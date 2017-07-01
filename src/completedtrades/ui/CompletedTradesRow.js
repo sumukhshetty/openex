@@ -7,12 +7,6 @@ class CompletedTradesRow extends Component {
     if (this.props.purchaserequests.data) {
       try {
         var purchaseRequest = this.props.purchaserequests.data[this.props.purchaseRequestId]
-        var display_id
-        if (purchaseRequest.contractAddress) {
-          display_id = purchaseRequest.contractAddress.slice(2, 6)
-        } else {
-          display_id = '-'
-        }
         var tradeType = (purchaseRequest.tradeAdvertisementType === 'buy-ether') ? 'Buy Order' : 'Sell Order'
         var username
         if (purchaseRequest.buyerUid === this.props.user.data.uid) {
@@ -22,7 +16,7 @@ class CompletedTradesRow extends Component {
         }
         return (
           <tr className='flex cxc'>
-            <td className='fb5 tc'>{display_id}</td>
+            <td className='fb5 tc'>{this.props.purchaseRequestId.slice(1,6)}</td>
             <td className='fb15 tc'>{purchaseRequest.createdAt}</td>
             <td className='fb10 tc'>{tradeType}</td>
             <td className='fb15 tc'>{username}</td>

@@ -11,7 +11,7 @@ import WrongNetwork from './../wrongnetwork/WrongNetwork'
 import LockedAccount from './../lockedaccount/LockedAccount'
 import WrongAccount from './../wrongaccount/WrongAccount'
 
-import LoadingContracts from './../../loadingcontracts/LoadingContracts'
+//import LoadingContracts from './../../loadingcontracts/LoadingContracts'
 
 import Kyc from './kyc/layouts/Kyc'
 

@@ -14,7 +14,7 @@ class Disputed extends Component {
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>
-          <ActiveTradeInfo activetrade={this.props.activetrade} viewerRole={this.props.viewerRole} />
+          <ActiveTradeInfo activetrade={this.props.activetrade} viewerRole={this.props.viewerRole} displayId={this.props.purchaseRequestId.slice(1,6)}/>
           <Progress progress_map={this.props.progress_map} />
           <div className='flex'>
             <ChatBox
