@@ -31,6 +31,8 @@ import SellTradeAdvertisement from './selltradeadvertisement/layouts/SellTradeAd
 import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTradeAdvertisements'
 import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAdvertisement'
 
+import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
+
 import KycUpload from './kycupload/layouts/KycUpload'
 import ProcessKyc from './processkyc/layouts/ProcessKyc'
 //import EmailHandler from './emailhandlers/EmailHandler'
@@ -92,6 +94,7 @@ ReactDOM.render((
         <Route path='processkyc/:country/:userUid' component={UserIsAuthenticated(ProcessKyc)}/>
         <Route path='termsofservice' component={UserIsNotAuthenticated(TermsOfService)} />
         <Route path='about' component={UserIsNotAuthenticated(About)} />
+        <Route path='completedtrades' component={UserIsAuthenticated(CompletedTradesAll)} />
         {/*<Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} />*/}
         {/*<Route path='emailactions' component={UserIsNotAuthenticated(EmailHandler)} />*/}
         <Route path='html' component={HTMLStyles} />
