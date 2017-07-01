@@ -142,10 +142,9 @@ class App extends Component {
           {/* ISSUE-341 */}
           {/*moved this to actions*/}
             {/*<Web3InitContainer />*/}
-            <EtherPriceContainer />
             <OnlyGuestLinks />
             <OnlyAuthLinks />
-            
+
             <main role='main' className={firebaseRef.auth().currentUser && 'bg-smoke'}>
               {this.props.children}
             </main>
