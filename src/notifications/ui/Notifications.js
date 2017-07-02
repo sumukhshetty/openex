@@ -24,7 +24,7 @@ export class Notifications extends Component {
     });
     var byDateTime = arr.slice(0)
     byDateTime.sort(function(a,b){
-      return a.value.margin - b.value.margin
+      return b.value.createdAt - a.value.createdAt
     })
     byDateTime = Object.assign({},byDateTime)
     const rows = _.map(byDateTime, (notification,key)=>{
