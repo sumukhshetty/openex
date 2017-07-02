@@ -25,7 +25,7 @@ import './css/swatch.css'
 // import logo from './images/logo.svg'
 
 import Bell from './images/svgReactComponents/Bell'
-import Notifications from './notifications/NotificationsLayout'
+import NotificationsContainer from './notifications/ui/NotificationsContainer'
 import {default as Toast} from 'react-notify-toast'
 import LoadingUserData from './loadinguserdata/LoadingUserData'
 
@@ -76,7 +76,7 @@ class App extends Component {
       return (
         <div className='menu'>
           <div className='w-75 center'>
-            {this.state.showNotifications && <Notifications close={this.removeNotifications} />}
+            {this.state.showNotifications && <NotificationsContainer close={this.removeNotifications} />}
             <div className='pure-g flex mxb cxc '>
               <div className='pure-u-1-4 brand' >
                 <Link to='/dashboard'>
