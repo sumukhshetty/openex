@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import CancelIcon from '../images/svgReactComponents/Cancel';
 import GearIcon from '../images/svgReactComponents/Gear';
 import ClearIcon from '../images/svgReactComponents/Clear';
@@ -85,3 +85,4 @@ export default class Notifications extends Component {
     );
   }
 }
+*/

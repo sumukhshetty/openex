@@ -81,6 +81,13 @@ function updateReduxStoreDataState (value) {
   }
 }
 
+function getUserNotifications(notificationsPayload){
+  return {
+    type: 'GET_USER_NOTIFICATIONS',
+    payload: notificationsPayload
+  }
+}
+
 module.exports = {
   checkLocalStorage: ()=>(dispatch,getState)=>{
     if (!firebaseRef.auth().currentUser) {
@@ -122,6 +129,9 @@ module.exports = {
           firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
 
             dispatch(getPurchaseRequests(snap.val()))
+          })
+          firebaseRef.database().ref('/notifications/'+user.uid).on('value',function(snap){
+            dispatch(getUserNotifications(snap.val()))
           })
           dispatch(updateReduxStoreDataState(false))
           return browserHistory.push('/dashboard')

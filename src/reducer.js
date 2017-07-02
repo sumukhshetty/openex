@@ -30,6 +30,7 @@ import orderBookFactoryReducer from './orderbookfactory/orderbookfactoryreducer'
 import loadingContractsReducer from './loadingcontracts/loadingcontractsreducer'
 import txHashReducer from './txhash/txhashreducer'
 import userDataReducer from './user/userdatareducer'
+import notificationsReducer from './notifications/notificationsreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -62,7 +63,8 @@ const reducer = combineReducers({
   orderbookfactory: orderBookFactoryReducer,
   loadingcontracts: loadingContractsReducer,
   txhash: txHashReducer,
-  loadinguserdata: userDataReducer
+  loadinguserdata: userDataReducer,
+  notifications: notificationsReducer
 })
 
 export default reducer

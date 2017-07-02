@@ -21,47 +21,47 @@ var domain = "mg.automte.com"
 var mailgun= require('mailgun-js')({apiKey: mgApiKey, domain:domain})
 
 
-exports.notificationPostProcesing = functions.database.ref('/users/{recipientUid}/notifications/{notificationUid}')
+exports.notificationPostProcesing1 = functions.database.ref('/notifications/{recipientUid}/{purchaseRequestId}/status/{step}')
   .onWrite(event=>{
+    if (event.data.previous.exists()){
+      return;
+    }
+    if(!event.data.exists()){
+      return;
+    }
     let notificationUid = event.params.notificationUid
     let recipientUid = event.params.recipientUid
-    admin.database().ref('/notifications/'+ notificationUid).once('value', function(snap){
-      let notifcationData = snap.val()
-      console.log(notifcationData)
-
-      // TODO add in check to not send fcm and emails more than once if any value is written on the index
-      if(notifcationData.fcm){
-        if(notifcationData.recipientToken){
-          admin.messaging().sendToDevice([notifcationData.recipientToken],
-            {
-              notification:
-                {
-                  title:notifcationData.title,
-                  body: notifcationData.body
-                }
-            })
-        } else {
-          console.log("no token")
-        }
-      }
-      if(notifcationData.verifiedEmail){
-        admin.database().ref('/notificationsConfig/'+recipientUid+'/email').once('value',function(snap){
-          var emaildata = {
-            from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
-            to: snap.val(),
-            subject: notifcationData.title,
-            text: notifcationData.body
-          }
-          mailgun.messages().send(emaildata, function(error, body){
-            console.log(body);
+    let notificationData = event.data.val()
+    if (notificationData.fcm) {
+      if(notificationData.recipientToken){
+        admin.messaging().sendToDevice([notificationData.recipientToken],
+          {
+            notification:
+              {
+                title:notificationData.title,
+                body: notificationData.body
+              }
           })
-        })
+      } else {
+        console.log("no token")
       }
-    })
+    }
+    if (notificationData.verifiedEmail) {
+      admin.database().ref('/notificationsConfig/'+recipientUid+'/email').once('value',function(snap){
+        var emaildata = {
+          from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
+          to: snap.val(),
+          subject: notificationData.title,
+          text: notificationData.body
+        }
+        mailgun.messages().send(emaildata, function(error, body){
+          console.log(body);
+        })
+      })
+    }
   })
 
-
-exports.notificationPostProcesing1 = functions.database.ref('/notifications/{recipientUid}/{purchaseRequestId}/status/{step}')
+exports.notificationPostProcesing2 = functions.database.ref('/notifications/{recipientUid}/{notificationId}')
   .onWrite(event=>{
     if (event.data.previous.exists()){
       return;
