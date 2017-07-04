@@ -54,6 +54,7 @@ class PostTradeForm extends Component {
       tradeType: 'buy-ether',  // NOTE Arseniy: Set default values here.
       buyerUid: this.props.uid, // Submitting a from without changing values leaves them as blank
       paymentMethod: 'National Bank',    // If defaults change, these must change as well.
+      buyerUsername: this.props.user.data.displayName,
       margin: 0,
       currency: this.props.user.profile.currency
     },
@@ -109,6 +110,7 @@ class PostTradeForm extends Component {
           buyerUid: '',
           sellerAddress: connectedAccount,
           buyerAddress: '',
+          buyerUsername: '',
           sellerUsername: this.props.user.data.displayName,
           buyerUsername: '',
           availableBalance: 0,
