@@ -27,7 +27,7 @@ export default class TradeAdvertisementsRow extends Component {
 
   handleEscrowRequest () {
     console.log('trade request handled')
-    this.props.addEther(this.state.sendAmount, this.props.user.data.uid, this.props.ethorderbook.data.address, this.props.web3.data)
+    this.props.addEther(this.state.sendAmount, this.props.user.data.uid, this.props.ethorderbook.data.address, this.props.web3.data, this.props.ethorderbook.data)
   }
 
   onEtherAmountChange (e) {
