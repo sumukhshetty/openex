@@ -1,4 +1,4 @@
 module.exports = {
-  kovanOrderFactoryAddress: '0x2e15f104213f3fc2017cd28969706de792ea0f1b',
-  kovanDisputeResolver: '0x0b7ddde7a2e7e17299f976650eb102942e637cee'
+  kovanOrderFactoryAddress: '0x685B49398BDF26BF0C2199e42A57d0894aD54395',
+  kovanDisputeResolver: '0x14ad38f7a855f62c4d07a99b6d2df6f143a935f2'
 }
