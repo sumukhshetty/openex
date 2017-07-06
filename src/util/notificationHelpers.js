@@ -206,7 +206,7 @@ sendArbiterReleasesToBuyer: (seller, buyer, purchaseRequest, purchaseRequestId) 
       "createdAt": FIREBASE_TIMESTAMP
     }
     //firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid+'/'+purchaseRequestId+'/status/arbiterreleasestobuyer').update(buyerNotificationData)
-    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid).update(buyerNotificationData)
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid).push(buyerNotificationData)
     var sellerNotificationData = {
       "title": "Arbiter released ether to buyer",
       "body": _body,
@@ -221,6 +221,6 @@ sendArbiterReleasesToBuyer: (seller, buyer, purchaseRequest, purchaseRequestId) 
       "createdAt": FIREBASE_TIMESTAMP
     }
     //firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid+'/'+purchaseRequestId+'/status/arbiterreleasestobuyer').update(sellerNotificationData)
-    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid).update(sellerNotificationData)
+    firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid).push(sellerNotificationData)
   },
 }
