@@ -111,7 +111,7 @@ module.exports = {
       } else {
         throw new Error('Wallet Address Undefined')
       }
-/*      
+/*
       // START NO-SMART CONTRACT
       var now = new Date()
       var updatedPurchaseRequest = Object.assign({},
@@ -128,7 +128,7 @@ module.exports = {
         dispatch(sendEtherState('init'));
         dispatch(clearTxHash())
         dispatch(updateConfirmButtonIsDisabled(false))
-        notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)              
+        notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
         //event.stopWatching()
       })
       // END NO-SMART CONTRACT
@@ -163,7 +163,7 @@ module.exports = {
                 dispatch(sendEtherState('init'));
                 dispatch(clearTxHash())
                 dispatch(updateConfirmButtonIsDisabled(false))
-                notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)              
+                notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
                 event.stopWatching()
               })
               // END FIREBASE
@@ -223,7 +223,7 @@ module.exports = {
       .set(updatedPurchaseRequest, function(error){
         if(error){
           console.log(error)
-        } 
+        }
         notificationHelpers.sendBuyerConfirmsPaymentNotification(buyer,seller,purchaseRequest,purchaseRequestId)
         });
   },
@@ -256,10 +256,10 @@ module.exports = {
         dispatch(sendEtherState('init'));
         dispatch(clearTxHash())
         dispatch(updateConfirmButtonIsDisabled(false))
-        notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)              
+        notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)
         //event.stopWatching()
       })
-      // END NO-SMART-CONTRACT 
+      // END NO-SMART-CONTRACT
 */
       // START WEB3
       var event = ethOrderBook.data.OrderCompleted()
@@ -609,7 +609,7 @@ module.exports = {
         raven.captureException(error)
       }
       else {
-        raven.captureException(error) 
+        raven.captureException(error)
       }
 
     }
@@ -620,7 +620,7 @@ module.exports = {
       if (web3.eth.coinbase) {
         var coinbase = web3.eth.coinbase
       } else {
-        throw new Error("Undefined Wallet Address")        
+        throw new Error("Undefined Wallet Address")
       }
       var event = orderBookFactory.data.ETHOrderBookCreated({seller:coinbase})
       event.watch((error, result) => {
@@ -641,7 +641,7 @@ module.exports = {
         if(!error){
           dispatch(sendEtherState('waiting-for-tx-to-mine'))
           dispatch(setTxHash(result))
-          
+
           } else {
             console.log(error)
             dispatch(sendEtherState('init'))
@@ -686,7 +686,7 @@ module.exports = {
           }
         })
         // call on the assign arbiter function
-        _instance.assignDispute(purchaseRequest.contractAddress, purchaseRequestId, coinbase, {from:coinbase}, function(error, result){
+        _instance.assignDispute(purchaseRequest.contractAddress, purchaseRequestId, coinbase, seller.country, {from:coinbase}, function(error, result){
           if(!error) {
             console.log("ok we've assigned the dispute")
             console.log(result)
