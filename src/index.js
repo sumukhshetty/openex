@@ -30,7 +30,8 @@ import BuyTradeAdvertisements from './buytradeadvertisements/layouts/BuyTradeAdv
 import SellTradeAdvertisement from './selltradeadvertisement/layouts/SellTradeAdvertisement'
 import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTradeAdvertisements'
 import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAdvertisement'
-import ManageContract from './manageContract'
+//import ManageContract from './manageContract'
+import ManageContractContainer from './manageContract/ui/ManageContractContainer'
 
 import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
 
@@ -45,7 +46,7 @@ import * as _firebaseconfig from './../secrets/firebaseconfig'
 import * as useractions from './user/userActions'
 
 import Raven from 'raven-js'
-// var raven
+//var raven
 export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
 
 var config = {
@@ -90,7 +91,7 @@ ReactDOM.render((
         <Route path='buytradeadvertisement/:buyTradeAdvertisementId' component={UserIsAuthenticated(BuyTradeAdvertisement)} />
         <Route path='activetrade/:purchaseRequestId' component={UserIsAuthenticated(ActiveTrade)} />
         <Route path='edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId' component={UserIsAuthenticated(EditTradeAdvertisement)} />
-        <Route path='manage/:tradeId' component={UserIsAuthenticated(ManageContract)} />
+        <Route path='manage/:tradeId' component={UserIsAuthenticated(ManageContractContainer)} />
         <Route path='kyc' component={UserIsAuthenticated(KycUpload)} />
         <Route path='processkyc/:country/:userUid' component={UserIsAuthenticated(ProcessKyc)} />
         <Route path='termsofservice' component={UserIsNotAuthenticated(TermsOfService)} />
