@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import EditTradeAdvertisementButton from './../layouts/EditTradeAdvertisementButton'
 import AddEtherModal from './../layouts/AddEtherModal'
+import { browserHistory } from 'react-router'
 
 export default class TradeAdvertisementsRow extends Component {
   constructor(props) {
@@ -38,6 +39,8 @@ export default class TradeAdvertisementsRow extends Component {
   }
 
   render() {
+    console.log('TradeAdvertisementsRow.render')
+    console.log(this.props.ethorderbook)
     if (this.props.tradeadvertisement) {
       var tradeAdvertisement = this.props.tradeadvertisement
 
@@ -99,6 +102,7 @@ export default class TradeAdvertisementsRow extends Component {
                 >
                   + Add Ether
                 </button>
+                <button onClick={()=>browserHistory.push('manage/1234')}> Manage Contract </button>
               </div>}
             <EditTradeAdvertisementButton
               tradeAdvertisementId={this.props.tradeAdvertisementId}
