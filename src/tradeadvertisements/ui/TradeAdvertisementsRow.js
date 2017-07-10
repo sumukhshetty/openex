@@ -34,7 +34,8 @@ export default class TradeAdvertisementsRow extends Component {
       this.state.sendAmount,
       this.props.user.data.uid,
       this.props.ethorderbook.data.address,
-      this.props.web3.data
+      this.props.web3.data,
+      this.props.ethorderbook.data
     )
   }
 

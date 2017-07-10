@@ -16,9 +16,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addEther: (amount, tradeAdvertisementId, contractAddress, web3, user) => {
+    addEther: (amount, tradeAdvertisementId, contractAddress, web3, user, ethOrderBook) => {
       // TODO - create issue
-      dispatch(actions.addEtherToContract(amount, tradeAdvertisementId, contractAddress, web3, user))
+      dispatch(actions.addEtherToContract(amount, tradeAdvertisementId, contractAddress, web3, user, ethOrderBook))
     },
 
     resetEtherState: () => {
