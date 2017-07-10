@@ -83,7 +83,7 @@ class App extends Component {
               <NotificationsContainer close={this.removeNotifications} />}
             <div className="pure-g flex mxb cxc ">
               <div className="pure-u-1-4 brand">
-                <Link to="/manage/123">
+                <Link to="/admin">
                   <img
                     className="brand"
                     src={logo}
@@ -106,7 +106,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Dashboard
+                    Dashboard
                   </Link>
                 </li>
                 <li className="pure-menu-item">
@@ -117,7 +117,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Buy
+                    Buy
                   </Link>
                 </li>
                 <li className="pure-menu-item">
@@ -128,7 +128,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Sell
+                    Sell
                   </Link>
                 </li>
                 <li className="pure-menu-item">
@@ -139,7 +139,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Post a Trade
+                    Post a Trade
                   </Link>
                 </li>
                 <li className="pure-menu-item">
@@ -150,7 +150,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Contact Us
+                    Contact Us
                   </Link>
                 </li>
               </ul>
