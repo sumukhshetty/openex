@@ -686,7 +686,7 @@ module.exports = {
           }
         })
         // call on the assign arbiter function
-        _instance.assignDispute(purchaseRequest.contractAddress, purchaseRequestId, coinbase, seller.country, {from:coinbase}, function(error, result){
+        _instance.assignDispute(purchaseRequestId, purchaseRequest.contractAddress, seller.country, coinbase, {from:coinbase}, function(error, result){
           if(!error) {
             console.log("ok we've assigned the dispute")
             console.log(result)
