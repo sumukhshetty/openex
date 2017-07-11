@@ -24,15 +24,15 @@ function userAccountCorrect(value){
 }
 
 function setLockedWalletStatus(value){
-  console.log('DashboardActions.setLockedWalletStatus')
-  console.log(value)
   return {
     type: 'SET_BROWSER_WALLET_LOCK_STATUS',
     payload: value
   }
 }
+
 module.exports = {
   loadOrderBookFactory: (web3, orderBookFactoryAddress) => (dispatch) => {
+    console.log('DashboardActions.loadOrderBookFactory')
     dispatch(setOrderBookFactory('obtaining...'))
     try {
       const OrderBookFactory = web3.eth.contract(contractAbis.OrderBookFactoryAbi)
@@ -46,6 +46,7 @@ module.exports = {
     }
   },
   loadETHOrderBook: (web3, user) => (dispatch) => {
+    console.log('DashboardActions.loadETHOrderBook')
     dispatch(setETHOrderBook('obtaining...'))
     firebaseRef.database().ref('/ethorderbook/'+user.profile.country+'/'+user.data.uid).once('value', function(snap){
       var orderBookAddress = snap.val()
@@ -59,6 +60,8 @@ module.exports = {
     })
   },
   checkBrowserWalletAddress:(web3, user) => (dispatch) =>{
+    console.log('DashboardActions.checkBrowserWalletAddress')
+    console.log(web3)
     try{
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
@@ -72,6 +75,7 @@ module.exports = {
       }
     } catch(error){
       console.log("checkBrowserWalletAddress.error")
+      console.log(error)
       dispatch(setLockedWalletStatus(true))
       if (error.message === 'Wallet Address Undefined') {
         notify.show("Please unlock your MetaMask account")

@@ -21,8 +21,10 @@ import {firebaseRef} from './../../index.js'
 import factoryAddress from './../../contract_addresses/orderfactory.js'
 
 class Dashboard extends Component {
+
   componentWillMount () {
     // TODO change this to mainnet
+    console.log("Dashboard.componentWillMount")
     this.props.loadOrderBookFactory(this.props.web3.data, factoryAddress.kovanOrderFactoryAddress)
     this.props.loadETHOrderBook(this.props.web3.data, this.props.user)
     this.props.checkBrowserWalletAddress(this.props.web3.data, this.props.user)

@@ -1,4 +1,4 @@
-// deprecate this
+/*// deprecate this
 import { connect } from 'react-redux'
 import VerifyWallet from './VerifyWallet'
 import * as actions from './VerifyWalletActions'
@@ -44,3 +44,4 @@ const VerifyWalletContainer = connect(
 )(VerifyWallet)
 
 export default VerifyWalletContainer
+*/
