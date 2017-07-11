@@ -1,4 +1,4 @@
-// deprecate this
+/*// deprecate this
 import Web3 from 'web3'
 
 import truffleConfig from './../../truffle-config.js'
@@ -104,3 +104,4 @@ export function createETHOrderBook(web3, orderBookFactory, uid, country) {
 
   }
 }
+*/

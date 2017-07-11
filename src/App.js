@@ -4,6 +4,8 @@ import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
 import Web3 from 'web3'
 import truffleConfig from './../truffle-config.js'
+import getWeb3 from './util/getWeb3'
+
 var web3Location = `http://${truffleConfig.networks.development
   .host}:${truffleConfig.networks.development.port}`
 
@@ -43,10 +45,18 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.web3Initialize()
+    console.log("App.componentWillMount")
+    getWeb3.then(results => {
+      console.log('getWeb3.then')
+      console.log(results.web3)
+      this.web3Initialize(results.web3)
+      //dispatch(web3Init(results.web3))  
+    })
   }
 
-  web3Initialize() {
+
+  web3Initialize(web3) {
+
     if (typeof web3 !== 'undefined') {
       // Use the Mist/wallet provider.
       // DEVELOPER NOTE: removing the next commented line will break the app

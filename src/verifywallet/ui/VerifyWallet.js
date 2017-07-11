@@ -1,4 +1,4 @@
-// deprecate this
+/*// deprecate this
 import React, { Component } from 'react'
 import factoryAddress from './../../contract_addresses/orderfactory.js'
 
@@ -70,4 +70,4 @@ class VerifyWallet extends Component {
   }
 }
 
-export default VerifyWallet
+export default VerifyWallet*/

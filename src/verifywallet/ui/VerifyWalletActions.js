@@ -1,4 +1,4 @@
-// deprecate this
+/*// deprecate this
 const contract = require('truffle-contract')
 import ETHOrderBookContract from './../../../contracts/abi/ETHOrderBook.json'
 import OrderBookFactoryContract from './../../../contracts/abi/OrderBookFactory.json'
@@ -75,4 +75,4 @@ module.exports = {
   wrongNetwork: (value)=>(dispatch)=>{
     dispatch(wrongNetwork(value))
   }
-}
+}*/
