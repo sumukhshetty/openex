@@ -33,7 +33,7 @@ class SellTradeAdvertisementsList extends Component {
       }
     })
 
-    if(rows.length > 1){
+    if(rows.length >= 1){
       return (
         <table>
         {this.props.selltradeadvertisements.data && <SellTradeAdvertisementsHeader />}
