@@ -78,7 +78,7 @@ module.exports = {
         .push(purchaseRequestData, function(err){
           firebaseRef.database().ref('/users/'+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
           firebaseRef.database().ref('/users/'+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
-          notificationHelpers.sendSellerCreatesPurchaseRequestNotification(newRequest.key, buyTradeAdvertisementId, buyTradeAdvertisement, seller, buyer)
+          notificationHelpers.sendSellerCreatesPurchaseRequestNotification(purchaseRequestData, newRequest.key, buyTradeAdvertisementId, buyTradeAdvertisement, seller, buyer)
           })
         } catch (error) {
           console.log(error)

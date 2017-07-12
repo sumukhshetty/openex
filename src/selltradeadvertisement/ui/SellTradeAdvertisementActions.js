@@ -39,7 +39,7 @@ module.exports = {
     dispatch(setSellTradeAdvertisement(sellTradeAdvertisement))
     dispatch(setSeller(users.data[sellTradeAdvertisement.sellerUid]))
   },
-  buyerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyerAddress, buyer) => (dispatch) => {
+  buyerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer) => (dispatch) => {
     var now = new Date()
     var purchaseRequestData = {
       bankinformation: sellTradeAdvertisement.bankInformation,
@@ -79,7 +79,7 @@ module.exports = {
         firebaseRef.database().ref('/users/' + sellTradeAdvertisement.sellerUid + '/activetrades/' + newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
         firebaseRef.database().ref('/users/'+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
 
-        notificationHelpers.sendBuyerCreatesPurchaseRequestNotification(newRequest.key, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer)
+        notificationHelpers.sendBuyerCreatesPurchaseRequestNotification(purchaseRequestData, newRequest.key, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer)
         
       })
   },

@@ -33,20 +33,19 @@ class ActiveTrade extends Component {
     this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.ethorderbook)
   }
   sellerCancelsTrade () {
-    this.props.sellerCancelsTrade(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.sellerCancelsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   buyerCancelsTrade () {
-    this.props.buyerCancelsTrade(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.buyerCancelsTrade(this.props.seller.data, this.props.buyer.data,this.props.activetrade.data, this.props.purchaseRequestId)
   }
   buyerRaisesDispute () {
-    this.props.buyerRaisesDispute(this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.buyerRaisesDispute(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   sellerRaisesDispute () {
-    this.props.sellerRaisesDispute(this.props.seller.data, this.props.activetrade.data, this.props.purchaseRequestId)
+    this.props.sellerRaisesDispute(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
   }
   arbiterReleasesToSeller () {
     console.log("ActiveTrade.arbiterReleasesToSeller")
-    console.log(this.props.web3)
     this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.buyer.data,this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
   }
   arbiterReleasesToBuyer () {

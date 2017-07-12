@@ -35,17 +35,17 @@ const mapDispatchToProps = (dispatch) => {
     sellerReleasesEther: (seller, buyer,purchaseRequest, purchaseRequestId, web3, ethOrderBook) => {
       dispatch(actions.sellerReleasesEther(seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook))
     },
-    sellerCancelsTrade: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerCancelsTrade(seller, purchaseRequest, purchaseRequestId))
+    sellerCancelsTrade: (seller, buyer, purchaseRequest, purchaseRequestId) => {
+      dispatch(actions.sellerCancelsTrade(seller, buyer, purchaseRequest, purchaseRequestId))
     },
-    buyerCancelsTrade: (buyer, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.buyerCancelsTrade(buyer, purchaseRequest, purchaseRequestId))
+    buyerCancelsTrade: (seller, buyer, purchaseRequest, purchaseRequestId) => {
+      dispatch(actions.buyerCancelsTrade(seller, buyer, purchaseRequest, purchaseRequestId))
     },
-    buyerRaisesDispute: (buyer, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.buyerRaisesDispute(buyer, purchaseRequest, purchaseRequestId))
+    buyerRaisesDispute: (seller, buyer, purchaseRequest, purchaseRequestId) => {
+      dispatch(actions.buyerRaisesDispute(seller, buyer, purchaseRequest, purchaseRequestId))
     },
-    sellerRaisesDispute: (seller, purchaseRequest, purchaseRequestId) => {
-      dispatch(actions.sellerRaisesDispute(seller, purchaseRequest, purchaseRequestId))
+    sellerRaisesDispute: (seller, buyer, purchaseRequest, purchaseRequestId) => {
+      dispatch(actions.sellerRaisesDispute(seller, buyer, purchaseRequest, purchaseRequestId))
     },
     arbiterReleasesToSeller: (seller, buyer, arbiter, purchaseRequest, purchaseRequestId, web3)=>{
       console.log('ActiveTradeContainer.arbiterReleasesToSeller')

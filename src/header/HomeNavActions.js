@@ -21,8 +21,6 @@ function userLoggedInError(error){
 
 module.exports = {
   login: (web3) => (dispatch) => {
-    console.log('HomeNavActions.login')
-    console.log(web3)
     if(web3.wrongnetwork){
       notify.show("It looks like you're on the wrong network, please switch over to Kovan")
     } else {
