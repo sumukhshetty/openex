@@ -32,7 +32,7 @@ class BuyTradeAdvertisementsList extends Component {
       }
     })
 
-    if(rows.length >1) {
+    if(rows[0] !== undefined) {
       return (
         <table>
         {this.props.buytradeadvertisements.data && <BuyTradeAdvertisementsHeader />}

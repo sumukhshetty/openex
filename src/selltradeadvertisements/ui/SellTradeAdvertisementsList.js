@@ -24,7 +24,9 @@ class SellTradeAdvertisementsList extends Component {
     byMargin = Object.assign({},byMargin)
 
     const rows = _.map(byMargin, function(selltradeadvertisement, key){
+      console.log(selltradeadvertisement)
       if (selltradeadvertisement.value.sellerUid !== uid) {
+        console.log("i'm here")
         if (selltradeadvertisement.value.active){
           seller = users.data[selltradeadvertisement.value.sellerUid]
           var marginMultiplier = (1 + (parseInt(selltradeadvertisement.value.margin, 10) * 0.01))
@@ -32,8 +34,7 @@ class SellTradeAdvertisementsList extends Component {
           return <SellTradeAdvertisementRow price={price} sellTradeAdvertisementData={selltradeadvertisement.value} sellTradeAdvertisementId={selltradeadvertisement.prop} seller={seller} etherPrice={etherPrice} key={selltradeadvertisement.prop}/>        }
       }
     })
-
-    if(rows.length >= 1){
+    if(rows[0] !== undefined){
       return (
         <table>
         {this.props.selltradeadvertisements.data && <SellTradeAdvertisementsHeader />}
