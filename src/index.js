@@ -45,6 +45,15 @@ import * as _firebaseconfig from './../secrets/firebaseconfig'
 import * as useractions from './user/userActions'
 
 import Raven from 'raven-js'
+var ReactGA = require('react-ga');
+
+ReactGA.initialize('UA-90843374-1');
+
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname });
+  ReactGA.pageview(window.location.pathname);
+}
+
 // var raven
 export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
 
@@ -73,7 +82,7 @@ export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
 
 ReactDOM.render((
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={history} onUpdate={logPageView}>
       <Route path='/' component={AppContainer}>
         <IndexRoute component={HomeContainer} />
         <Route path='dashboard' component={UserIsAuthenticated(DashboardContainer)} />

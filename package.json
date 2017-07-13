@@ -64,6 +64,7 @@
     "react": "^15.4.2",
     "react-browser-detection": "^1.0.2",
     "react-dom": "^15.4.2",
+    "react-ga": "^2.2.0",
     "react-notify-toast": "^0.1.5",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
