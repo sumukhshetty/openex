@@ -31,6 +31,7 @@ import loadingContractsReducer from './loadingcontracts/loadingcontractsreducer'
 import txHashReducer from './txhash/txhashreducer'
 import userDataReducer from './user/userdatareducer'
 import notificationsReducer from './notifications/notificationsreducer'
+import countryReducer from './country/countryreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -64,7 +65,8 @@ const reducer = combineReducers({
   loadingcontracts: loadingContractsReducer,
   txhash: txHashReducer,
   loadinguserdata: userDataReducer,
-  notifications: notificationsReducer
+  notifications: notificationsReducer,
+  country: countryReducer
 })
 
 export default reducer
