@@ -1,5 +1,4 @@
 import {raven} from './../../index.js'
-
 import {notify} from 'react-notify-toast'
 
 export const ETHER_SEND_STATE = 'ETHER_SEND_STATE'
@@ -41,20 +40,6 @@ module.exports = {
           }
         }
       })
-      // web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
-      //   if(!err) {
-      //     dispatch(sendEtherState('sent'));
-      //     /*firebaseRef.database().ref('/users/'+uid+'/balanceUpdateTx')
-      //       .set(txHash);*/
-      //   } else {
-      //     if(err.message.includes('MetaMask Tx Signature: User denied')) {
-      //       console.log('ERROR: User denied transaction');
-      //       dispatch(sendEtherState('init'))
-      //     } else {
-      //       console.log(err);
-      //     }
-      //   }
-      // })
     } else {
       console.log("invalid contract address")
       throw new Error("Invalid Contract Address")
@@ -74,8 +59,6 @@ module.exports = {
       }
 
     }
-
-
   },
 
   resetSendEtherState: () => (dispatch) => {

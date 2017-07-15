@@ -89,20 +89,7 @@ export default class TradeAdvertisementsRow extends Component {
           <td className="me flex">
             {this.props.tradeType === 'sell-ether' &&
               <div>
-                {this.state.showEscrowModal &&
-                  <AddEtherModal
-                    sendEtherState={this.props.sendEtherState}
-                    close={this.removeEscrowModal.bind(this)}
-                    handleEscrowRequest={this.handleEscrowRequest.bind(this)}
-                    onEtherAmountChange={this.onEtherAmountChange.bind(this)}
-                  />}
-                <button
-                  className=" grow mr3"
-                  onClick={this.showEscrowModal.bind(this)}
-                >
-                  + Add Ether
-                </button>
-                <button onClick={()=>browserHistory.push('manage/1234')}> Manage Contract </button>
+                <button className=" grow mr3" onClick={()=>browserHistory.push('manage/')}> Manage Contract </button>
               </div>}
             <EditTradeAdvertisementButton
               tradeAdvertisementId={this.props.tradeAdvertisementId}

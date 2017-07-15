@@ -1,26 +1,33 @@
 import { connect } from 'react-redux'
 import ManageContract from './ManageContract'
+import * as actions from './ManageContractActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
     ethorderbook: state.ethorderbook,
-    web3: state.web3
+    web3: state.web3,
+    managecontract: state.managecontract,
+    sendEtherState: state.sendEtherState,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addEther:()=>{
-      console.log("ui.ManageContractContainer.addEther")
-      //dispatch(uploadKycFile(user, file))
+    getAvailableBalance: (ethorderbook, web3) => {
+      dispatch(actions.getAvailableBalance(ethorderbook, web3))
     },
-    withdraw:()=>{
-      console.log("ui.ManageContractContainer.withdraw")
+    getContractBalance: (ethorderbook, web3) =>{
+      dispatch(actions.getContractBalance(ethorderbook, web3))
     },
-    loadContractData: (ethorderbook)=>{
-      console.log("ui.ManageContractContainer.loadContractData")
-      console.log(ethorderbook)
+    addEther:(addAmount, contractAddress, web3, ethOrderBook)=>{
+      dispatch(actions.addEther(addAmount, contractAddress, web3, ethOrderBook))
+    },
+    withdrawEther:(withdrawAmount, contractAddress, web3, ethOrderBook)=>{
+      dispatch(actions.withdrawEther(withdrawAmount, contractAddress, web3, ethOrderBook))
+    },
+    resetEtherState: () => {
+      dispatch(actions.resetSendEtherState());
     }
   }
 }

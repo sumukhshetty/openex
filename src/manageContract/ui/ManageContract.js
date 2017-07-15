@@ -1,35 +1,76 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+
+import AddEtherModal from './../layouts/AddEtherModal'
+import WithdrawEtherModal from './../layouts/WithdrawEtherModal'
+
 
 class ManageContract extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state ={
-      availableBalance: 0
+    this.state = {
+      showAddEherModal: false,
+      showWithdrawEherModal: false,
+      AddAmount: 0,
+      WithdrawAmount: 0,
+      sendEtherState: this.props.sendEtherState
     }
   }
 
-  componentWillMount() {
-    console.log("ManageContract.componentWillMount")
-    var availableBalance
-    console.log(this.props.ethorderbook.data)
-    this.props.loadContractData(this.props.ethorderbook.data)
-    /*this.props.ethorderbook.data.availableBalance(function(error, result){
-      if(!error){
-        console.log(result)
-        this.setState({availableBalance:result})
-      }
-    })*/
+  showAddEherModal(e) {
+    e.preventDefault()
+    this.setState({ showAddEherModal: true })
   }
+
+  showWithdrawEherModal(e) {
+    e.preventDefault()
+    this.setState({ showWithdrawEherModal: true })
+  }
+
+  removeAddEtherModal(e) {
+    if (
+      this.props.sendEtherState !== 'sending' &&
+      e.target.classList.contains('bg-black-80')
+    ) {
+      this.setState({ showAddEherModal: false })
+      this.props.resetEtherState()
+    }
+  }
+
+  removeWithdrawEtherModal(e) {
+    if (
+      this.props.sendEtherState !== 'sending' &&
+      e.target.classList.contains('bg-black-80')
+    ) {
+      this.setState({ showWithdrawEherModal: false })
+      this.props.resetEtherState()
+    }
+  }
+
+  handleAddEtherRequest(e) {
+    e.preventDefault()
+    this.props.addEther(this.state.AddAmount, this.props.ethorderbook.data.address, this.props.web3.data, this.props.ethorderbook.data)
+  }
+
+  handleWithdrawEtherRequest(e) {
+    e.preventDefault()
+    this.props.withdrawEther(this.state.WithdrawAmount, this.props.ethorderbook.data.address, this.props.web3.data, this.props.ethorderbook.data)
+  }
+
+
+  onAddEtherAmountChange(e) {
+    this.setState({ AddAmount: e.target.value })
+  }
+
+  onWithdrawAmountChange(e) {
+    this.setState({ WithdrawAmount: e.target.value })
+  }
+
   componentDidMount(){
-    console.log("ManageContract.componentDidMount")
-    console.log(this.props.ethorderbook.data)
+    this.props.getAvailableBalance(this.props.ethorderbook.data, this.props.web3.data)
+    this.props.getContractBalance(this.props.ethorderbook.data, this.props.web3.data)
   }
 
   render() {
-    console.log("ManageContract.render")
-    console.log(this.props)
     var component = this
     if (this.props.ethorderbook.data==='obtaining...'){
       return (
@@ -38,15 +79,7 @@ class ManageContract extends Component {
     } else {
       // switch to mainnet
       var url = 'https://kovan.etherscan.io/address/' + this.props.ethorderbook.data.address
-      var availableBalance
-      this.props.ethorderbook.data.availableBalance(function(error, result){
-        if(!error){
-          console.log("we got an availableBalance")
-          console.log(result)
-          availableBalance = component.props.web3.data.fromWei(result, 'ether')
-          console.log(availableBalance.toNumber())
-        }
-      })
+
       return (
         <div className="w-100 bg-smoke h-100">
           <div className="w-75 center pv3">
@@ -57,19 +90,37 @@ class ManageContract extends Component {
                 <div className="bg-white pa3">
                   <Row
                     field="Available Balance"
-                    value={`${availableBalance} ETH`}
-                    button1={<button className="grow mr3">+ Add Ether</button>}
-                    button2={<button className="grow mr3">Withdraw</button>}
+                    value={`${this.props.managecontract.availableBalance} ETH`}
+
+                    button1={<button className="grow mr3" onClick={this.showAddEherModal.bind(this)}>+ Add Ether</button>}
+                    button2={<button className="grow mr3" onClick={this.showWithdrawEherModal.bind(this)}>Withdraw</button>}
                   />
-                  <Row
+                  {this.state.showAddEherModal &&
+                  <AddEtherModal
+                    sendEtherState={this.props.sendEtherState}
+                    close={this.removeAddEtherModal.bind(this)}
+                    handleEscrowRequest={this.handleAddEtherRequest.bind(this)}
+                    onEtherAmountChange={this.onAddEtherAmountChange.bind(this)}
+                  />}
+                  {this.state.showWithdrawEherModal &&
+                  <WithdrawEtherModal
+                    sendEtherState={this.props.sendEtherState}
+                    close={this.removeWithdrawEtherModal.bind(this)}
+                    handleEscrowRequest={this.handleWithdrawEtherRequest.bind(this)}
+                    onEtherAmountChange={this.onWithdrawAmountChange.bind(this)}
+                  />}
+                  {/*<Row
                     field="In Escrow"
-                    value={`${2} ETH`}
+                    value={`${this.props.managecontract.contractBalance - this.props.managecontract.availableBalance} ETH`}
                     button2={
                       <button className="w5 grow mr3">Active Trades</button>
                     }
+                  />*/}
+                  <Row
+                    field="In Escrow"
+                    value={`${this.props.managecontract.contractBalance - this.props.managecontract.availableBalance} ETH`}
                   />
-
-                  <a href={url} target="_blank">View on the BlockChain</a>
+                  <a href={url} target="_blank">View on the Etherscan</a>
                   <Row field="Trade Limit" value={`${5} ETH`} />
                   <Row field="Status" value="Live" />
                   {/*<div className="flex mxe">
