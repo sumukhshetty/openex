@@ -1,17 +1,18 @@
 import { firebaseRef } from '../../index.js'
 
-export const createMessage = ({content, uid, tradeId, download}) => {
-  return (dispatch) => {
+export const createMessage = ({ content, uid, tradeId, download }) => {
+  return dispatch => {
     const message = {
       content,
       uid,
       timeStamp: Date.now(),
       download
     }
-    firebaseRef.database()
-    .ref('chatrooms')
-    .child(`${tradeId}/messages`)
-    .push(message)
+    firebaseRef
+      .database()
+      .ref('chatrooms')
+      .child(`${tradeId}/messages`)
+      .push(message)
   }
 }
 
@@ -20,23 +21,22 @@ export const addMessage = (key, message, tradeId) => {
     type: 'ADD_MESSAGE',
     content: message.content,
     key,
-    timeStamp: Date.now(),
+    timeStamp: message.timeStamp,
     uid: message.uid,
     tradeId
   }
 }
 // when the data changes fire these actions in redux
 
-export const startListeningForMessages = (tradeId) => {
-  return (dispatch) => {
-    firebaseRef.database()
-    .ref('chatrooms')
-    .child(`${tradeId}/messages`)
-    .on('child_added',
-    (snapshot) => {
-      dispatch(addMessage(snapshot.key, snapshot.val(), tradeId))
-    }
-  )
+export const startListeningForMessages = tradeId => {
+  return dispatch => {
+    firebaseRef
+      .database()
+      .ref('chatrooms')
+      .child(`${tradeId}/messages`)
+      .on('child_added', snapshot => {
+        dispatch(addMessage(snapshot.key, snapshot.val(), tradeId))
+      })
   }
 }
 

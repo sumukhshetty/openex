@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
 import Home from './Home'
+import HomeMain from './HomeMain'
 //import * as actions from './AppActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    loadinguserdata: state.loadinguserdata
+    loadinguserdata: state.loadinguserdata,
+    web3: state.web3
   }
 }
 
@@ -20,6 +22,6 @@ const mapStateToProps = (state, ownProps) => {
 const HomeContainer = connect(
   mapStateToProps,
   //mapDispatchToProps
-)(Home)
+)(HomeMain)
 
 export default HomeContainer

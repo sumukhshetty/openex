@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import ProductShortDescription from './ProductShortDescription'
 import SignUpContainer from './../../signup/SignUpContainer'
 import MetaMask from './../../signup/MetaMask'
+import Process from './Process'
+import Footer from './../../footer/Footer'
 import Features from './Features'
 
 
@@ -11,46 +13,55 @@ import truffleConfig from './../../../truffle-config.js'
 var web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`
 
 class HomeMain extends Component {
-  constructor (props) {
-    super(props)
-    this.web3Initialize.bind(this)
-  }
-
-  componentWillMount () {
-    this.web3Initialize()
-  }
-
-  web3Initialize () {
-    if (typeof web3 !== 'undefined') {
-        // Use the Mist/wallet provider.
-        // DEVELOPER NOTE: removing the next commented line will break the app
-        // eslint-disable-next-line
-        this.web3Provided = new Web3(web3.currentProvider)
-    } else {
-        // DEVELOPER NOTE: What happens in the wild if the
-        // user does not have a browser based wallet? What happens
-        // if the Web3 object cannot be initialized with the httpProvider
-        // given from the loction in the truffle-config file?
-        // dev haiku
-      this.web3Provided = new Web3(new Web3.providers.HttpProvider(web3Location))
-    }
-  }
   render () {
-    var web3 = this.web3Provided
-    return (
-      <div>
-        <div className='pure-u-2-3'>
-          <ProductShortDescription />
-        </div>
+    //var web3 = this.web3Provided
+    console.log('HomeMain.render')
+    if(this.props.web3.data.currentProvider.isMetaMask){
+      return (
+      <section className='home'>
+          <div className='container'>
+        <div>
+          <div className='pure-u-2-3'>
+            <ProductShortDescription />
+          </div>
 
-        <div className='pure-u-1-3'>
-          {web3.currentProvider.isMetaMask
-            ? <SignUpContainer web3={web3} />
-            : <MetaMask />}
+          <div className='pure-u-1-3'>
+            <SignUpContainer web3={this.props.web3.data} />
+          </div>
+          <Features />
         </div>
-        <Features />
-      </div>
+          </div>
+          <Process />
+        {/*TODO add this in with the main lanch*/}
+          {/*<Testimonials />*/}
+          <Footer/>
+        </section>
+        
+    )} else {
+      return (
+
+
+      <section className='home'>
+          <div className='container'>
+        <div>
+          <div className='pure-u-2-3'>
+            <ProductShortDescription />
+          </div>
+
+          <div className='pure-u-1-3'>
+            <MetaMask />
+          </div>
+          <Features />
+        </div>
+          </div>
+          <Process />
+        {/*TODO add this in with the main lanch*/}
+          {/*<Testimonials />*/}
+          <Footer/>
+        </section>
+
     )
+    }
   }
 }
 

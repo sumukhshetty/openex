@@ -28,8 +28,15 @@
   background-color: #e5e5e5 !important;
 }
 
-.bg-gray {
+.bg-light-gray {
+  background-color: #ebeded;
+}
+/*.bg-gray {
   background-color: rgba(0, 126, 229, 1);
+}*/
+
+.bg-blue {
+  background-color: #2196f3;
 }
 
 .b--blue {

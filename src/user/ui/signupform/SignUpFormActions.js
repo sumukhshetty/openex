@@ -29,95 +29,100 @@ function toHex(s) {
 
 export function signUpUserCustomAuth (signUpInfo, web3) {
   return function (dispatch) {
-    var userid = ''
-    var email = signUpInfo.email
-    var username = signUpInfo.username
-    var country = signUpInfo.country
-    var currency
-    try {
-      currency = currencies.byCountry().get(country)
-    } catch(e){
-      currency = 'USD'
-    }
-    var data = toHex('I am signing up for the automte ether marketplace and I have read the terms and conditions');
-    console.log(data)
-    web3.currentProvider.sendAsync({ id: 1, method: 'personal_sign', params: [web3.eth.accounts[0], data] },
-      function(err, result) {
-        if(result.error){
-          if(result.error.message.includes("TypeError: Cannot use 'in' operator to search for 'from' in null")) {
-            notify.show("It looks like your MetaMask account is locked")
-          }
-          throw result.error
+    firebaseRef.database().ref('/registeredAccounts/'+web3.eth.accounts[0]).once('value', function(snap){
+      if(snap.val()){
+        notify.show("It looks like this account is already registered, please login")
+      } else {
+        var userid = ''
+        var email = signUpInfo.email
+        var username = signUpInfo.username
+        var country = signUpInfo.country
+        var currency
+        try {
+          currency = currencies.byCountry().get(country)
+        } catch(e){
+          currency = 'USD'
         }
-        let signature = result.result;
-        console.log(signature)
-        //dispatch(exchange.authenticate(sig, user))
-        var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/signUpUserCustomAuth'
-        var options = {
-          method: 'post',
-          body: {
-            "account_address":web3.eth.coinbase,
-            "signature": signature,
-            "signUpInfo": signUpInfo
-          },
-          headers: { "Content-Type": "application/json" },
-          json: true,
-          url: url
-        }
-        request(options, function (err, res, body) {
-          if (err) {
-            console.error('error posting json: ', err)
-            throw err
-          }
-          var statusCode = res.statusCode
-          if (statusCode === 200){
-            // do more stuff
-            firebaseRef.auth().signInWithCustomToken(res.body.token)
-              .then(function(firebaseUser){
-                userid = firebaseUser.uid
-                var userdata = {
-                  //'email': email, better that we stop storing this in publically viewable data
-                  'country': country,
-                  'currency': currency,
-                  'username': username,
-                  'isAdmin': false,
-                  'trustworthiness': 'unknown',
-                  'verifiedIdentification': false,
-                  'verifiedPhoneNumber': false,
-                  'verifiedEmail': true,
-                  'numberOfTrades': 0,
-                  'accountCreated': FIREBASE_TIMESTAMP,
-                  'tradeVolume': 0,
-                  'avgFeedback': 0,
-                  'firstPurchase': '-',
-                  'shownotificationrequest': 'true',
-                  'kycComplete': false,
-                }
-                firebaseRef.database().ref('/registeredAccounts/'+userid).set(true)
-                firebaseRef.database().ref('/users/' + userid).set(userdata)
-                firebaseUser.updateProfile({
-                  displayName: username
-                })
-                firebaseRef.database().ref('/notificationsConfig/'+userid+'/email').set(email)
-                dispatch(userSignedUp(firebaseUser, currency))
-              })
-              .catch(function(error) {
-              // Handle Errors here.
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              console.log(errorCode,errorMessage)
-              dispatch(userSignedUpError(error))
-              // ...
-            });
+        var data = toHex('I am signing up for the automte ether marketplace and I have read the terms and conditions');
+        web3.currentProvider.sendAsync({ id: 1, method: 'personal_sign', params: [web3.eth.accounts[0], data] },
+          function(err, result) {
+            if(result.error){
+              if(result.error.message.includes("TypeError: Cannot use 'in' operator to search for 'from' in null")) {
+                notify.show("It looks like your MetaMask account is locked")
+              }
+              throw result.error
+            }
+            let signature = result.result;
+            console.log(signature)
+            //dispatch(exchange.authenticate(sig, user))
+            var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/signUpUserCustomAuth'
+            var options = {
+              method: 'post',
+              body: {
+                "account_address":web3.eth.coinbase,
+                "signature": signature,
+                "signUpInfo": signUpInfo
+              },
+              headers: { "Content-Type": "application/json" },
+              json: true,
+              url: url
+            }
+            request(options, function (err, res, body) {
+              if (err) {
+                console.error('error posting json: ', err)
+                throw err
+              }
+              var statusCode = res.statusCode
+              if (statusCode === 200){
+                // do more stuff
+                firebaseRef.auth().signInWithCustomToken(res.body.token)
+                  .then(function(firebaseUser){
+                    userid = firebaseUser.uid
+                    var userdata = {
+                      //'email': email, better that we stop storing this in publically viewable data
+                      'country': country,
+                      'currency': currency,
+                      'username': username,
+                      'isAdmin': false,
+                      'trustworthiness': 'unknown',
+                      'verifiedIdentification': false,
+                      'verifiedPhoneNumber': false,
+                      'verifiedEmail': true,
+                      'numberOfTrades': 0,
+                      'accountCreated': FIREBASE_TIMESTAMP,
+                      'tradeVolume': 0,
+                      'avgFeedback': 0,
+                      'firstPurchase': '-',
+                      'shownotificationrequest': 'true',
+                      'kycComplete': false,
+                    }
+                    firebaseRef.database().ref('/registeredAccounts/'+userid).set(true)
+                    firebaseRef.database().ref('/users/' + userid).set(userdata)
+                    firebaseUser.updateProfile({
+                      displayName: username
+                    })
+                    firebaseRef.database().ref('/notificationsConfig/'+userid+'/email').set(email)
+                    dispatch(userSignedUp(firebaseUser, currency))
+                  })
+                  .catch(function(error) {
+                  // Handle Errors here.
+                  var errorCode = error.code;
+                  var errorMessage = error.message;
+                  console.log(errorCode,errorMessage)
+                  dispatch(userSignedUpError(error))
+                  // ...
+                });
 
-          }
-          if (statusCode === 500){
-            throw res.body.error
-          }
-          if (statusCode === 401){
-            throw res.body.error
-          }
+              }
+              if (statusCode === 500){
+                throw res.body.error
+              }
+              if (statusCode === 401){
+                throw res.body.error
+              }
+            })
         })
-      })
+      }
+    })
   }
 }

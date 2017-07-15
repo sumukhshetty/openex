@@ -4,6 +4,8 @@ import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
 import Web3 from 'web3'
 import truffleConfig from './../truffle-config.js'
+import getWeb3 from './util/getWeb3'
+
 var web3Location = `http://${truffleConfig.networks.development
   .host}:${truffleConfig.networks.development.port}`
 
@@ -43,10 +45,18 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.web3Initialize()
+    console.log("App.componentWillMount")
+    getWeb3.then(results => {
+      console.log('getWeb3.then')
+      console.log(results.web3)
+      this.web3Initialize(results.web3)
+      //dispatch(web3Init(results.web3))  
+    })
   }
 
-  web3Initialize() {
+
+  web3Initialize(web3) {
+
     if (typeof web3 !== 'undefined') {
       // Use the Mist/wallet provider.
       // DEVELOPER NOTE: removing the next commented line will break the app
@@ -83,7 +93,7 @@ class App extends Component {
               <NotificationsContainer close={this.removeNotifications} />}
             <div className="pure-g flex mxb cxc ">
               <div className="pure-u-1-4 brand">
-                <Link to="/manage/123">
+                <Link to="/admin">
                   <img
                     className="brand"
                     src={logo}
@@ -106,7 +116,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Dashboard
+                    Dashboard
                   </Link>
                 </li>
                 <li className="pure-menu-item">
@@ -117,7 +127,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Buy
+                    Buy
                   </Link>
                 </li>
                 <li className="pure-menu-item">
@@ -128,7 +138,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Sell
+                    Sell
                   </Link>
                 </li>
                 <li className="pure-menu-item">
@@ -139,7 +149,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Post a Trade
+                    Post a Trade
                   </Link>
                 </li>
                 <li className="pure-menu-item">
@@ -150,7 +160,7 @@ class App extends Component {
                       borderBottom: '2px solid white'
                     }}
                   >
-                    {' '}Contact Us
+                    Contact Us
                   </Link>
                 </li>
               </ul>

@@ -1,3 +1,5 @@
+import getWeb3 from './util/getWeb3'
+
 export const SET_WEB_3 = 'SET_WEB_3'
 function web3Init(web3) {
   return {
@@ -15,15 +17,25 @@ function wrongNetwork(wrongNetworkBool){
 
 module.exports = {
   setWeb3: (web3) => (dispatch) => {
+    console.log('AppActions.setWeb3')
     dispatch(web3Init(web3))
     // TODO change this to mainnet
     try {
-      if(web3.version.network==='42'){
-        dispatch(wrongNetwork(false))
-      } else {
-        dispatch(wrongNetwork(true))
-      }
+      web3.version.getNetwork(function(error, result){
+        if(!error){
+          console.log(result)
+          if(result==='42'){
+            dispatch(wrongNetwork(false))
+          } else {
+            dispatch(wrongNetwork(true))
+          }
+        } else{
+          console.log("AppActions.setWeb3")
+          console.log(error)
+        }
+      })
     } catch (error) {
+      console.log("AppActions.setWeb3")
       console.log(error)
       dispatch(wrongNetwork(false))
     }

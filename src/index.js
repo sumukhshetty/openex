@@ -37,7 +37,6 @@ import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
 
 import KycUpload from './kycupload/layouts/KycUpload'
 import ProcessKyc from './processkyc/layouts/ProcessKyc'
-// import EmailHandler from './emailhandlers/EmailHandler'
 import ActiveTrade from './activetrade/layouts/ActiveTrade'
 // Redux Store
 import store from './store'
@@ -46,7 +45,17 @@ import * as _firebaseconfig from './../secrets/firebaseconfig'
 import * as useractions from './user/userActions'
 
 import Raven from 'raven-js'
-//var raven
+
+var ReactGA = require('react-ga');
+
+ReactGA.initialize('UA-90843374-1');
+
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname });
+  ReactGA.pageview(window.location.pathname);
+}
+
+// var raven
 export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
 
 var config = {
@@ -74,7 +83,7 @@ export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
 
 ReactDOM.render((
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={history} onUpdate={logPageView}>
       <Route path='/' component={AppContainer}>
         <IndexRoute component={HomeContainer} />
         <Route path='dashboard' component={UserIsAuthenticated(DashboardContainer)} />
@@ -97,8 +106,6 @@ ReactDOM.render((
         <Route path='termsofservice' component={UserIsNotAuthenticated(TermsOfService)} />
         <Route path='about' component={UserIsNotAuthenticated(About)} />
         <Route path='completedtrades' component={UserIsAuthenticated(CompletedTradesAll)} />
-        {/* <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} /> */}
-        {/* <Route path='emailactions' component={UserIsNotAuthenticated(EmailHandler)} /> */}
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>

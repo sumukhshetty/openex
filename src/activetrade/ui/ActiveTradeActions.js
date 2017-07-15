@@ -81,8 +81,6 @@ function clearTxHash(){
 }
 
 function updateConfirmButtonIsDisabled(value){
-  console.log('ActiveTradeActions.updateConfirmButtonIsDisabled')
-  console.log(value)
   return {
     type: 'UPDATE_CONFIRM_BUTTON_IS_DISABLED',
     payload: value
@@ -100,7 +98,6 @@ module.exports = {
     })
   },
   sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
-    console.log("ui.ActiveTradeActions.sellerConfirmsTrade")
     dispatch(updateConfirmButtonIsDisabled(true))
     try {
       let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
@@ -211,7 +208,6 @@ module.exports = {
     }
   },
   buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    console.log("buyerConfirmsPayment")
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -228,7 +224,6 @@ module.exports = {
         });
   },
   sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
-    console.log("sellerReleasesEther")
     try{
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
@@ -237,7 +232,6 @@ module.exports = {
         throw new Error("Wallet Address Undefined")
       }
       dispatch(sendEtherState('sending'));
-      console.log(purchaseRequestId)
 /*
       // START NO-SMART-CONTRACT
       var now = new Date()
@@ -310,7 +304,6 @@ module.exports = {
     }
   },
   tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
-    console.log('ActiveTradeActions.tradePostProcessing')
       if (!purchaseRequest.postProcessingCompleted){
         purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.buyerUid, users)
         purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.sellerUid, users)
@@ -321,8 +314,7 @@ module.exports = {
         firebaseRef.database().ref('/purchaserequests/' + user.profile.country + '/' + purchaseRequestId + '/postProcessingCompleted').set(true)
       }
   },
-  sellerCancelsTrade:(seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    console.log("ui.ActiveTradeActions.sellerCancelsTrade")
+  sellerCancelsTrade: (seller, buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
             purchaseRequest, {
@@ -330,7 +322,6 @@ module.exports = {
               status: 'Seller Canceled Trade',
               lastUpdated: now.toUTCString()
             })
-    console.log(updatedPurchaseRequest)
     firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
           .set(updatedPurchaseRequest)
           .then(function() {
@@ -340,8 +331,9 @@ module.exports = {
             purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
 
           });
+    notificationHelpers.sendSellerCancelsTrade(seller, buyer, purchaseRequest, purchaseRequestId)
   },
-  buyerCancelsTrade:(buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
+  buyerCancelsTrade: (seller, buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
             purchaseRequest, {
@@ -358,10 +350,9 @@ module.exports = {
             purchaseRequestHelpers.addPurchaseRequestToCompletedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
 
           });
+    notificationHelpers.sendBuyerCancelsTrade(seller, buyer, purchaseRequest, purchaseRequestId)
   },
-  sellerRaisesDispute: (seller, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    console.log("activetrade.ui.sellerRaisesDispute")
-    console.log(seller, purchaseRequest, purchaseRequestId)
+  sellerRaisesDispute: (seller, buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -377,10 +368,9 @@ module.exports = {
             purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
 
           });
+    notificationHelpers.sendSellerRaisesDispute(seller, buyer, purchaseRequest, purchaseRequestId)
   },
-  buyerRaisesDispute: (buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
-    console.log("activetrade.ui.buyerRaisesDispute")
-    console.log(buyer, purchaseRequest, purchaseRequestId)
+  buyerRaisesDispute: (seller, buyer, purchaseRequest, purchaseRequestId) => (dispatch) => {
     var now = new Date()
     var updatedPurchaseRequest = Object.assign({},
       purchaseRequest, {
@@ -395,9 +385,9 @@ module.exports = {
         purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
 
       });
+    notificationHelpers.sendBuyerRaisesDispute(seller, buyer, purchaseRequest, purchaseRequestId)
   },
   arbiterReleasesToSeller: (seller, buyer, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) => {
-    console.log('ActiveTradeActions.arbiterReleasesToSeller')
     try {
       if (web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
@@ -461,7 +451,6 @@ module.exports = {
     }
   },
   arbiterReleasesToBuyer: (buyer, seller, arbiter, purchaseRequest, purchaseRequestId, web3) => (dispatch) =>{
-    console.log("ActiveTradeActions.arbiterReleasesToBuyer")
     try {
       if (web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
@@ -518,8 +507,6 @@ module.exports = {
     }
   },
   sellerRatesBuyer: (rating, purchaseRequestId, purchaseRequest) => (dispatch) => {
-    //excellent place for a firebase cloud functions onWrite
-    console.log('sellerRatesBuyer')
     firebaseRef.database().ref('/traderating/' + purchaseRequest.buyerUid + '/' + purchaseRequestId)
       .set({rating: rating})
       .then(function(){
@@ -541,7 +528,6 @@ module.exports = {
     })
   },
   buyerRatesSeller: (rating, purchaseRequestId, purchaseRequest)  => (dispatch) => {
-    console.log('buyerRatesSeller')
     firebaseRef.database().ref('/traderating/' + purchaseRequest.sellerUid + '/' + purchaseRequestId)
       .set({rating: rating})
       .then(function(){
@@ -563,7 +549,6 @@ module.exports = {
       })
   },
   sellerAddsEther: (amount, uid, contractAddress, web3) => (dispatch) => {
-    console.log("ui.ActiveTradeActions.sellerAddsEther")
     try{
       if(web3.eth.coinbase) {
         var coinbase = web3.eth.coinbase;
@@ -615,7 +600,6 @@ module.exports = {
     }
   },
   sellerCreatesETHOrderBook: (web3, orderBookFactory, user) => (dispatch) => {
-    console.log("ui.ActiveTradeActions.sellerCreatesETHOrderBook")
     try {
       if (web3.eth.coinbase) {
         var coinbase = web3.eth.coinbase
@@ -686,7 +670,7 @@ module.exports = {
           }
         })
         // call on the assign arbiter function
-        _instance.assignDispute(purchaseRequest.contractAddress, purchaseRequestId, coinbase, seller.country, {from:coinbase}, function(error, result){
+        _instance.assignDispute(purchaseRequestId, purchaseRequest.contractAddress, seller.country, coinbase, {from:coinbase}, function(error, result){
           if(!error) {
             console.log("ok we've assigned the dispute")
             console.log(result)
