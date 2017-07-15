@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import EditTradeAdvertisementButton from './../layouts/EditTradeAdvertisementButton'
 import AddEtherModal from './../layouts/AddEtherModal'
+import { browserHistory } from 'react-router'
 
 export default class TradeAdvertisementsRow extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class TradeAdvertisementsRow extends Component {
 
   handleEscrowRequest() {
     console.log('trade request handled')
+
     this.props.addEther(
       this.state.sendAmount,
       this.props.user.data.uid,
@@ -44,6 +46,8 @@ export default class TradeAdvertisementsRow extends Component {
   }
 
   render() {
+    console.log('TradeAdvertisementsRow.render')
+    console.log(this.props.ethorderbook)
     if (this.props.tradeadvertisement) {
       var tradeAdvertisement = this.props.tradeadvertisement
 
@@ -92,19 +96,7 @@ export default class TradeAdvertisementsRow extends Component {
           <td className="me flex">
             {this.props.tradeType === 'sell-ether' &&
               <div>
-                {this.state.showEscrowModal &&
-                  <AddEtherModal
-                    sendEtherState={this.props.sendEtherState}
-                    close={this.removeEscrowModal.bind(this)}
-                    handleEscrowRequest={this.handleEscrowRequest.bind(this)}
-                    onEtherAmountChange={this.onEtherAmountChange.bind(this)}
-                  />}
-                <button
-                  className=" grow mr3"
-                  onClick={this.showEscrowModal.bind(this)}
-                >
-                  + Add Ether
-                </button>
+                <button className=" grow mr3" onClick={()=>browserHistory.push('manage/')}> Manage Contract </button>
               </div>}
             <EditTradeAdvertisementButton
               tradeAdvertisementId={this.props.tradeAdvertisementId}

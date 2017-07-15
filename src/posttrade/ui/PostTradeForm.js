@@ -47,6 +47,7 @@ class PostTradeForm extends Component {
     if(this.props.tradeadvertisements.data.buyether){
       _isButtonDisabled = true
     }*/
+
     this.setState({
       postTradeDetails: {
         amount: 0,
