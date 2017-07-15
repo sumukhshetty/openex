@@ -48,11 +48,11 @@
       ".write": "auth != null"
     },
     "buytradeadvertisements": {
-      ".read": "auth != null",
+      ".read": "true",
       ".write": "auth != null"
     },
     "selltradeadvertisements": {
-      ".read": "auth != null",
+      ".read": "true",
       ".write": "auth != null"
     },
     "processkyc": {

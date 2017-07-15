@@ -81,17 +81,23 @@ module.exports = {
         //browserHistory.push('/admin')
         console.log("freegeoip.200124")
         console.log(res)
-        dispatch(setCountry(res.body.countryCode))
-        firebaseRef.database().ref('buytradeadvertisements/'+res.body.countryCode).once('value', function(snap){
+        console.log(res.body.country_code)
+        /*firebaseRef.database().ref('/buytradeadvertisements/'+res.body.country_code).once('value', function(snap){
+          console.log("got the buytradeadvertisements")
+          console.log(snap.val())
+          dispatch(getBuyTradeAdvertisements(snap.val()))
+        })*/
+        firebaseRef.database().ref('/buytradeadvertisements/'+res.body.country_code).once('value', function(snap){
           console.log("got the buytradeadvertisements")
           console.log(snap.val())
           dispatch(getBuyTradeAdvertisements(snap.val()))
         })
-        firebaseRef.database().ref('selltradeadvertisements/'+res.body.countryCode).once('value', function(snap){
+        firebaseRef.database().ref('/selltradeadvertisements/'+res.body.country_code).once('value', function(snap){
           console.log('got the selltradeadvertisements')
           console.log(snap.val())
           dispatch(getSellTradeAdvertisements(snap.val()))
         })
+        dispatch(setCountry(res.body.country_code))
       }
       if (statusCode === 500){
         throw res.body.error

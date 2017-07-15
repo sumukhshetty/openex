@@ -31,6 +31,7 @@ import SellTradeAdvertisement from './selltradeadvertisement/layouts/SellTradeAd
 import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTradeAdvertisements'
 import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAdvertisement'
 import ManageContract from './manageContract'
+import BrowseAdvertisements from './browseadvertisements/layouts/BrowseAdvertisements'
 
 import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
 
@@ -105,6 +106,7 @@ ReactDOM.render((
         <Route path='termsofservice' component={UserIsNotAuthenticated(TermsOfService)} />
         <Route path='about' component={UserIsNotAuthenticated(About)} />
         <Route path='completedtrades' component={UserIsAuthenticated(CompletedTradesAll)} />
+        <Route path='browseads' component={UserIsNotAuthenticated(BrowseAdvertisements)} />
         {/* <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} /> */}
         {/* <Route path='emailactions' component={UserIsNotAuthenticated(EmailHandler)} /> */}
         <Route path='html' component={HTMLStyles} />
