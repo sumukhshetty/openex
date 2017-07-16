@@ -52,7 +52,7 @@ export default class ChatBox extends Component {
         )}
         {this.props.chatAuth.status === 'ANONYMOUS' && <Loading />}
         {this.props.chatAuth.status === 'SIGNED_IN' &&
-          <NewChatMessage tradeId={this.props.tradeId} />}
+          <NewChatMessage tradeId={this.props.tradeId} purchaseRequest={this.props.purchaseRequest}/>}
       </div>
     )
   }

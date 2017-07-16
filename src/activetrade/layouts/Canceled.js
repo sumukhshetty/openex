@@ -17,7 +17,8 @@ class Canceled extends Component {
             <ChatBox
               tradeId={this.props.purchaseRequestId}
               sellerId={this.props.activetrade.sellerUid}
-              buyerId={this.props.activetrade.buyerUid} />
+              buyerId={this.props.activetrade.buyerUid} 
+              purchaseRequest={this.props.activetrade}/>
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
               <div>

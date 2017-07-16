@@ -1,6 +1,7 @@
 import { firebaseRef } from '../../index.js'
+import * as notificationHelpers from './../../util/notificationHelpers'
 
-export const createMessage = ({ content, uid, tradeId, download }) => {
+export const createMessage = ({ content, uid, tradeId, download , purchaseRequest}) => {
   return dispatch => {
     const message = {
       content,
@@ -13,6 +14,7 @@ export const createMessage = ({ content, uid, tradeId, download }) => {
       .ref('chatrooms')
       .child(`${tradeId}/messages`)
       .push(message)
+    notificationHelpers.sendNewChatNotification(uid, purchaseRequest, tradeId, content)
   }
 }
 
