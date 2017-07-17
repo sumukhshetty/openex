@@ -3,7 +3,7 @@ import { BuyForm } from './BuyForm'
 import { SellForm } from './SellForm'
 import PostTradeInstructions from './PostTradeInstructions'
 import MetaMaskWaitModal from './../../generic-components/metamaskmodal/MetaMaskWaitModal'
-//import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 
 class PostTradeForm extends Component {
   constructor(props) {
@@ -208,12 +208,9 @@ class PostTradeForm extends Component {
       selltrade = undefined
     }
     if ((selltrade !== undefined) && !this.state.buyFormBool) {
-      return (
-        <div>
-          Looks like you already have an Sell Trade Advertisement. If need to
-          make changes edit it.
-        </div>
-      )
+      var _selltradeUrl = '/edittradeadvertisement/sell-ether/' + Object.keys(selltrade)[0]
+      browserHistory.push(_selltradeUrl)
+
     } else {
       return (
         <div>
