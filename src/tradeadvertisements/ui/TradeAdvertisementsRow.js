@@ -96,7 +96,7 @@ export default class TradeAdvertisementsRow extends Component {
           <td className="me flex">
             {this.props.tradeType === 'sell-ether' &&
               <div>
-                <button className=" grow mr3" onClick={()=>browserHistory.push('manage/')}> Manage Contract </button>
+                <button className=" grow mr3" onClick={()=>browserHistory.push('manage/0x')}> Manage Contract </button>
               </div>}
             <EditTradeAdvertisementButton
               tradeAdvertisementId={this.props.tradeAdvertisementId}
