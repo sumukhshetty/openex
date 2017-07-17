@@ -201,7 +201,13 @@ class PostTradeForm extends Component {
   }
 
   render() {
-    if (this.props.tradeadvertisements.data.sellether && !this.state.buyFormBool) {
+    var selltrade
+    try {
+      selltrade = this.props.tradeadvertisements.data.sellether
+    } catch (error) {
+      selltrade = undefined
+    }
+    if ((selltrade !== undefined) && !this.state.buyFormBool) {
       return (
         <div>
           Looks like you already have an Sell Trade Advertisement. If need to
