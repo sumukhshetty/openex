@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     getUsers: () => {
       dispatch(actions.getUsers())
-    }
+    },
     getEtherPrice: () => {
       dispatch(actions.getEtherPrice())
     }

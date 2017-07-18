@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import * as _ from 'lodash'
-import BrowseAdvertisementRow from './BrowseAdvertisementRow'
+import BrowseBuyAdvertisementRow from './BrowseBuyAdvertisementRow'
+import BrowseSellAdvertisementRow from './BrowseSellAdvertisementRow'
+import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
+
 
 export default class BrowseAdvertisements extends Component {
 
@@ -15,6 +18,7 @@ export default class BrowseAdvertisements extends Component {
     console.log(this.props)
     var users = this.props.users
     var etherPrice = this.props.etherPrice.data;
+    console.log(etherPrice)
     var buytradeadvertisements = this.props.buytradeadvertisements.data
     var selltradeadvertisements = this.props.selltradeadvertisements.data
 
@@ -42,12 +46,22 @@ export default class BrowseAdvertisements extends Component {
       var buyer = users.data[buytradeadvertisement.value.buyerUid]
       var marginMultiplier = (1 + (parseInt(buytradeadvertisement.value.margin, 10) * 0.01))
       var price = etherPrice ? (etherPrice*marginMultiplier) : null;
-      return (<BrowseAdvertisementRow tradeAdvertisementData={buytradeadvertisement.value} 
-        tradeAdvertisementId={buytradeadvertisement.prop} 
+      console.log(price)
+      return (<BrowseBuyAdvertisementRow buyTradeAdvertisementData={buytradeadvertisement.value} 
+        buyTradeAdvertisementId={buytradeadvertisement.prop} 
         price={price.toFixed(2)} 
-        user={buyer} 
+        buyer={buyer} 
         key={buytradeadvertisement.prop} />)
     })
+    var buytable
+    if(buyrows[0]!==undefined){
+      buytable =         (<table>
+              <BuyTradeAdvertisementsHeader />
+              <tbody>
+                {buyrows}
+              </tbody>
+              </table>)
+    }
 
     const sellrows = _.map(sellTradeAdvertisementsByMargin, function(selltradeadvertisement, key){
       console.log('mapping through selltradeadvertisements')
@@ -55,21 +69,34 @@ export default class BrowseAdvertisements extends Component {
       var seller = users.data[selltradeadvertisement.value.sellerUid]
       var marginMultiplier = (1 + (parseInt(selltradeadvertisement.value.margin, 10) * 0.01))
       var price = etherPrice ? (etherPrice*marginMultiplier) : null;
-      return (<BrowseAdvertisementRow tradeAdvertisementData={selltradeadvertisement.value}
-        tradeAdvertisementId={selltradeadvertisement.prop} 
+      console.log(price)
+      return (<BrowseSellAdvertisementRow sellTradeAdvertisementData={selltradeadvertisement.value}
+        sellTradeAdvertisementId={selltradeadvertisement.prop} 
         price={price.toFixed(2)} 
-        user={seller} 
+        seller={seller} 
         key={selltradeadvertisement.prop} />)
     })
+    var selltable 
+    if(sellrows[0]!==undefined){
+      selltable = (<table>
+              <BuyTradeAdvertisementsHeader />
+              <tbody>
+                {sellrows}
+              </tbody>
+              </table>)
+    }
     return(<div>
       <div>
-      BrowseAdvertisements
+      Users Selling Ether
       </div>
       <div>
-      Sell Trade Advertisements
+      {selltable ? selltable : null}
       </div>
       <div>
-      Buy Trade Advertisements
+      Users Buying Ether
+      </div>
+      <div>
+      {buytable ? buytable : null}
       </div>
       </div>)
   }

@@ -67,7 +67,7 @@ export function signUpUserCustomAuth (signUpInfo, web3) {
               json: true,
               url: url
             }
-            /*request(options, function (err, res, body) {
+            request(options, function (err, res, body) {
               if (err) {
                 console.error('error posting json: ', err)
                 throw err
@@ -120,7 +120,7 @@ export function signUpUserCustomAuth (signUpInfo, web3) {
               if (statusCode === 401){
                 throw res.body.error
               }
-            })*/
+            })
         })
       }
     })

@@ -6,7 +6,7 @@ import MetaMask from './../../signup/MetaMask'
 import Process from './Process'
 import Footer from './../../footer/Footer'
 import Features from './Features'
-
+import BrowseAdvertisementsContainer from './../../browseadvertisements/ui/BrowseAdvertisementsContainer'
 
 import truffleConfig from './../../../truffle-config.js'
 
@@ -28,6 +28,7 @@ class HomeMain extends Component {
           <div className='pure-u-1-3'>
             <SignUpContainer web3={this.props.web3.data} />
           </div>
+          <BrowseAdvertisementsContainer />
           <Features />
         </div>
           </div>
@@ -51,6 +52,7 @@ class HomeMain extends Component {
           <div className='pure-u-1-3'>
             <MetaMask />
           </div>
+          <BrowseAdvertisementsContainer />
           <Features />
         </div>
           </div>

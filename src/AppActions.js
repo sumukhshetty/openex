@@ -1,6 +1,8 @@
-var request = require('request')
 import getWeb3 from './util/getWeb3'
 import { firebaseRef } from './index'
+
+var request = require('request')
+const currencies = require('country-currency')
 
 export const SET_WEB_3 = 'SET_WEB_3'
 function web3Init(web3) {
@@ -49,10 +51,11 @@ function users(usersPayload){
 
 function etherPrice(pricesPayload) {
   return {
-  type:GET_ETHER_PRICE,
+  type:'GET_ETHER_PRICE',
   payload: pricesPayload
   }
 }
+
 
 module.exports = {
   setWeb3: (web3) => (dispatch) => {
@@ -113,6 +116,32 @@ module.exports = {
           dispatch(getSellTradeAdvertisements(snap.val()))
         })
         dispatch(setCountry(res.body.country_code))
+        console.log("about to set the ether price")
+        //getEtherPrice(res.body.country_code)
+        var currency
+        try {
+          currency = currencies.byCountry().get(res.body.country_code)
+        } catch(e){
+          currency = 'USD'
+        }
+        request({
+          method: 'GET',
+          url: 'https://min-api.cryptocompare.com/data/price',
+          qs: { fsym: 'ETH', tsyms: currency }
+        },
+        function(err, res, body) {
+          if (err) {
+            console.error('error querying for price: ', err)
+            throw err
+          }
+          if(res.statusCode === 200) {
+            let prices = JSON.parse(body);
+            // ISSUE-253 dont dispatch this to the store - make a write to firebase
+            // and then dipatch from firebase as the single source of truth
+            dispatch(etherPrice(prices[currency]))
+          }
+        })
+        //dispatch(etherPrice(prices[toSymbols]))
       }
       if (statusCode === 500){
         throw res.body.error
@@ -128,7 +157,15 @@ module.exports = {
       dispatch(users(snap.val()))
     })
   },
-  getEtherPrice: () => (dispatch) => {
-
-  }
+/*  getEtherPrice: (country) => (dispatch) => {
+    console.log('AppActions.getEtherPrice')
+    console.log(country)
+    var currency
+    try {
+      currency = currencies.byCountry().get(country)
+    } catch(e){
+      currency = 'USD'
+    }
+    dispatch(etherPrice(prices[toSymbols]))
+  }*/
 }
