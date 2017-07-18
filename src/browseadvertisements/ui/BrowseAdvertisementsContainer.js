@@ -6,7 +6,9 @@ import BrowseAdvertisements from './BrowseAdvertisements'
 const mapStateToProps = (state, ownProps) => {
   return {
     buytradeadvertisements: state.buytradeadvertisements,
-    selltradeadvertisements: state.selltradeadvertisements
+    selltradeadvertisements: state.selltradeadvertisements,
+    users: state.users,
+    etherPrice: state.etherPrice,
   }
 }
 

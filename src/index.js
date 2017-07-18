@@ -55,8 +55,8 @@ function logPageView() {
   ReactGA.pageview(window.location.pathname);
 }
 
-// var raven
-export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
+var raven
+//export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
 
 var config = {
   apiKey: _firebaseconfig._apiKey,

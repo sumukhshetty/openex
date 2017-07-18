@@ -39,6 +39,21 @@ function getSellTradeAdvertisements(sellTradeAdvertisements){
   }
 }
 
+function users(usersPayload){
+  console.log('AppActions.users')
+  return {
+    type: 'GET_USERS',
+    payload: usersPayload
+  }
+}
+
+function etherPrice(pricesPayload) {
+  return {
+  type:GET_ETHER_PRICE,
+  payload: pricesPayload
+  }
+}
+
 module.exports = {
   setWeb3: (web3) => (dispatch) => {
     console.log('AppActions.setWeb3')
@@ -106,5 +121,14 @@ module.exports = {
         throw res.body.error
       }
     })
+  },
+  getUsers: () => (dispatch) => {
+    console.log('AppActions.getUsers')
+    firebaseRef.database().ref('/users').on('value', function(snap){
+      dispatch(users(snap.val()))
+    })
+  },
+  getEtherPrice: () => (dispatch) => {
+
   }
 }

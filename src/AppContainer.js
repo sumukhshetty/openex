@@ -16,6 +16,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     getCountry: () => {
       dispatch(actions.getCountry())
+    },
+    getUsers: () => {
+      dispatch(actions.getUsers())
+    }
+    getEtherPrice: () => {
+      dispatch(actions.getEtherPrice())
     }
 
   }

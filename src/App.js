@@ -59,6 +59,7 @@ class App extends Component {
 
   componentDidMount(){
     this.props.getCountry()
+    this.props.getUsers()
   }
 
   web3Initialize(web3) {
