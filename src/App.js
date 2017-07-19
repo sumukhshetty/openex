@@ -6,6 +6,8 @@ import Web3 from 'web3'
 import truffleConfig from './../truffle-config.js'
 import getWeb3 from './util/getWeb3'
 
+var request = require('request')
+//var fetch = require('fetch')
 var web3Location = `http://${truffleConfig.networks.development
   .host}:${truffleConfig.networks.development.port}`
 
@@ -52,8 +54,13 @@ class App extends Component {
       this.web3Initialize(results.web3)
       //dispatch(web3Init(results.web3))  
     })
+
   }
 
+  componentDidMount(){
+    this.props.getCountry()
+    this.props.getUsers()
+  }
 
   web3Initialize(web3) {
 
@@ -190,12 +197,10 @@ class App extends Component {
         return (
           <section className="Site">
             <Toast />
-            {/* ISSUE-341 */}
-            {/*moved this to actions*/}
-            {/*<Web3InitContainer />*/}
             <EtherPriceContainer />
             <OnlyGuestLinks />
             <OnlyAuthLinks />
+            {/*<UserPresenceContainer />*/}
             <main
               role="main"
               className={firebaseRef.auth().currentUser && 'bg-smoke'}

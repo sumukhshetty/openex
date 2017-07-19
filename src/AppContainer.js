@@ -14,6 +14,15 @@ const mapDispatchToProps = (dispatch) => {
     setWeb3: (web3) => {
       dispatch(actions.setWeb3(web3))
     },
+    getCountry: () => {
+      dispatch(actions.getCountry())
+    },
+    getUsers: () => {
+      dispatch(actions.getUsers())
+    },
+    getEtherPrice: () => {
+      dispatch(actions.getEtherPrice())
+    }
 
   }
 }
