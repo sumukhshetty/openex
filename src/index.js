@@ -32,7 +32,10 @@ import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTrade
 import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAdvertisement'
 
 import ManageContractContainer from './manageContract/ui/ManageContractContainer'
+
 import BrowseAdvertisements from './browseadvertisements/layouts/BrowseAdvertisements'
+import BrowseBuyAdvertisement from './browsebuyadvertisement/layouts/BrowseBuyAdvertisement'
+import BrowseSellAdvertisement from './browseselladvertisement/layouts/BrowseSellAdvertisement'
 
 import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
 
@@ -108,6 +111,8 @@ ReactDOM.render((
         <Route path='about' component={UserIsNotAuthenticated(About)} />
         <Route path='completedtrades' component={UserIsAuthenticated(CompletedTradesAll)} />
         <Route path='browseads' component={UserIsNotAuthenticated(BrowseAdvertisements)} />
+        <Route path='browsebuyadvertisement/:buyTradeAdvertisementId' component={UserIsNotAuthenticated(BrowseBuyAdvertisement)}/>
+        <Route path='browseselladvertisement/:sellTradeAdvertisementId' component={UserIsNotAuthenticated(BrowseSellAdvertisement)}/>
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>
