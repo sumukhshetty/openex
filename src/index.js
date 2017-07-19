@@ -31,10 +31,11 @@ import SellTradeAdvertisement from './selltradeadvertisement/layouts/SellTradeAd
 import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTradeAdvertisements'
 import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAdvertisement'
 
-import BrowseBuyAdvertisement from './browsebuyadvertisement/layouts/BrowseBuyAdvertisement'
-
 import ManageContractContainer from './manageContract/ui/ManageContractContainer'
+
 import BrowseAdvertisements from './browseadvertisements/layouts/BrowseAdvertisements'
+import BrowseBuyAdvertisement from './browsebuyadvertisement/layouts/BrowseBuyAdvertisement'
+import BrowseSellAdvertisement from './browseselladvertisement/layouts/BrowseSellAdvertisement'
 
 import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
 
@@ -58,8 +59,8 @@ function logPageView() {
   ReactGA.pageview(window.location.pathname);
 }
 
-var raven
-//export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
+//var raven
+export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
 
 var config = {
   apiKey: _firebaseconfig._apiKey,
@@ -111,6 +112,7 @@ ReactDOM.render((
         <Route path='completedtrades' component={UserIsAuthenticated(CompletedTradesAll)} />
         <Route path='browseads' component={UserIsNotAuthenticated(BrowseAdvertisements)} />
         <Route path='browsebuyadvertisement/:buyTradeAdvertisementId' component={UserIsNotAuthenticated(BrowseBuyAdvertisement)}/>
+        <Route path='browseselladvertisement/:sellTradeAdvertisementId' component={UserIsNotAuthenticated(BrowseSellAdvertisement)}/>
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>

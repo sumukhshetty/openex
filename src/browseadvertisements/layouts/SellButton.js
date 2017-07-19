@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router'
-import {notify} from 'react-notify-toast'
 
 class SellButton extends Component {
   render () {
