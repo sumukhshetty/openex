@@ -96,28 +96,14 @@ module.exports = {
       }
       var statusCode = res.statusCode
       if (statusCode === 200){
-        //browserHistory.push('/admin')
-        console.log("freegeoip.200124")
-        console.log(res)
-        console.log(res.body.country_code)
-        /*firebaseRef.database().ref('/buytradeadvertisements/'+res.body.country_code).once('value', function(snap){
-          console.log("got the buytradeadvertisements")
-          console.log(snap.val())
-          dispatch(getBuyTradeAdvertisements(snap.val()))
-        })*/
         firebaseRef.database().ref('/buytradeadvertisements/'+res.body.country_code).once('value', function(snap){
-          console.log("got the buytradeadvertisements")
-          console.log(snap.val())
           dispatch(getBuyTradeAdvertisements(snap.val()))
         })
         firebaseRef.database().ref('/selltradeadvertisements/'+res.body.country_code).once('value', function(snap){
-          console.log('got the selltradeadvertisements')
-          console.log(snap.val())
           dispatch(getSellTradeAdvertisements(snap.val()))
         })
         dispatch(setCountry(res.body.country_code))
-        console.log("about to set the ether price")
-        //getEtherPrice(res.body.country_code)
+
         var currency
         try {
           currency = currencies.byCountry().get(res.body.country_code)
@@ -157,15 +143,4 @@ module.exports = {
       dispatch(users(snap.val()))
     })
   },
-/*  getEtherPrice: (country) => (dispatch) => {
-    console.log('AppActions.getEtherPrice')
-    console.log(country)
-    var currency
-    try {
-      currency = currencies.byCountry().get(country)
-    } catch(e){
-      currency = 'USD'
-    }
-    dispatch(etherPrice(prices[toSymbols]))
-  }*/
 }
