@@ -27,6 +27,14 @@ function setCountry(countryCode) {
   }
 }
 
+function setCurrency(currency){
+  console.log("AppActions.setCurrency")
+  return {
+    type: 'SET_CURRENCY',
+    payload: currency
+  }
+}
+
 function getBuyTradeAdvertisements(buyTradeAdvertisements){
   return {
     type: 'GET_BUY_TRADE_ADVERTISEMENTS',
@@ -110,6 +118,7 @@ module.exports = {
         } catch(e){
           currency = 'USD'
         }
+        dispatch(setCurrency(currency))
         request({
           method: 'GET',
           url: 'https://min-api.cryptocompare.com/data/price',
