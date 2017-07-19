@@ -30,9 +30,9 @@ import BuyTradeAdvertisements from './buytradeadvertisements/layouts/BuyTradeAdv
 import SellTradeAdvertisement from './selltradeadvertisement/layouts/SellTradeAdvertisement'
 import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTradeAdvertisements'
 import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAdvertisement'
-import ManageContract from './manageContract'
-import BrowseAdvertisements from './browseadvertisements/layouts/BrowseAdvertisements'
 
+import ManageContractContainer from './manageContract/ui/ManageContractContainer'
+import BrowseAdvertisements from './browseadvertisements/layouts/BrowseAdvertisements'
 
 import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
 
