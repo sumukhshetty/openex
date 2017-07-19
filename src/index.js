@@ -49,15 +49,15 @@ import Raven from 'raven-js'
 
 var ReactGA = require('react-ga');
 
-ReactGA.initialize('UA-90843374-1');
+ReactGA.initialize('UA-90843374-4');
 
 function logPageView() {
   ReactGA.set({ page: window.location.pathname });
   ReactGA.pageview(window.location.pathname);
 }
 
-var raven
-//export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
+//var raven
+export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
 
 var config = {
   apiKey: _firebaseconfig._apiKey,
