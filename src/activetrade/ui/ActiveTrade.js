@@ -111,7 +111,7 @@ class ActiveTrade extends Component {
         { status: '', label: '', text: 'All Done' }
       ],
       'Buyer Raised Dispute': [
-        { status: 'active', label: <Dot />, text: 'Seller Raised Dispute' },
+        { status: 'active', label: <Dot />, text: 'Buyer Raised Dispute' },
         { status: '', label: '', text: 'Awaiting Payment' },
         { status: '', label: '', text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
