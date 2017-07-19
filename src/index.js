@@ -33,11 +33,11 @@ import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAd
 import ManageContract from './manageContract'
 import BrowseAdvertisements from './browseadvertisements/layouts/BrowseAdvertisements'
 
+
 import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
 
 import KycUpload from './kycupload/layouts/KycUpload'
 import ProcessKyc from './processkyc/layouts/ProcessKyc'
-// import EmailHandler from './emailhandlers/EmailHandler'
 import ActiveTrade from './activetrade/layouts/ActiveTrade'
 // Redux Store
 import store from './store'
@@ -46,6 +46,7 @@ import * as _firebaseconfig from './../secrets/firebaseconfig'
 import * as useractions from './user/userActions'
 
 import Raven from 'raven-js'
+
 var ReactGA = require('react-ga');
 
 ReactGA.initialize('UA-90843374-1');
@@ -100,15 +101,13 @@ ReactDOM.render((
         <Route path='buytradeadvertisement/:buyTradeAdvertisementId' component={UserIsAuthenticated(BuyTradeAdvertisement)} />
         <Route path='activetrade/:purchaseRequestId' component={UserIsAuthenticated(ActiveTrade)} />
         <Route path='edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId' component={UserIsAuthenticated(EditTradeAdvertisement)} />
-        <Route path='manage/:tradeId' component={UserIsAuthenticated(ManageContract)} />
+        <Route path='manage/:tradeId' component={UserIsAuthenticated(ManageContractContainer)} />
         <Route path='kyc' component={UserIsAuthenticated(KycUpload)} />
         <Route path='processkyc/:country/:userUid' component={UserIsAuthenticated(ProcessKyc)} />
         <Route path='termsofservice' component={UserIsNotAuthenticated(TermsOfService)} />
         <Route path='about' component={UserIsNotAuthenticated(About)} />
         <Route path='completedtrades' component={UserIsAuthenticated(CompletedTradesAll)} />
         <Route path='browseads' component={UserIsNotAuthenticated(BrowseAdvertisements)} />
-        {/* <Route path='password/reset' component={UserIsNotAuthenticated(ResetPassword)} /> */}
-        {/* <Route path='emailactions' component={UserIsNotAuthenticated(EmailHandler)} /> */}
         <Route path='html' component={HTMLStyles} />
         <Route path='static' component={Static} />
       </Route>

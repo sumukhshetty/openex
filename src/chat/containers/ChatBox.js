@@ -10,7 +10,8 @@ const mapStateToProps = (state, props) => {
     chatMessages: state.chatMessages,
     tradeId: props.tradeId,
     buyerId: props.buyerId,
-    sellerId: props.sellerId
+    sellerId: props.sellerId,
+    purchaseRequest: props.purchaseRequest
   }
 }
 const mapDispatchToProps = (dispatch) => {

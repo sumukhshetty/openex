@@ -8,7 +8,8 @@ const mapStateToProps = (state, props) => {
   return {
     newMessage: state.newMessage,
     auth: state.chatAuth,
-    tradeId: props.tradeId
+    tradeId: props.tradeId,
+    purchaseRequest: props.purchaseRequest
   }
 }
 
@@ -17,13 +18,15 @@ const mapDispatchToProps = (dispatch, props) => {
     handleChange (e) {
       dispatch(updateNewMessage(e.target.value))
     },
-    handleSubmit (e, content, uid, tradeId, download) {
+    handleSubmit (e, content, uid, tradeId, download, purchaseRequest) {
       e.preventDefault()
       dispatch(createMessage({
         content,
         uid,
         tradeId: props.tradeId,
-        download}))
+        download,
+        purchaseRequest
+      }))
       dispatch(clearNewMessage())
     }
 

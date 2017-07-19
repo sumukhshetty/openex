@@ -54,7 +54,8 @@ export default class NewChatMessage extends Component {
             this.props.newMessage,
             this.props.auth.uid,
             this.props.tradeId,
-            false
+            false,
+            this.props.purchaseRequest
           )}
       >
         <div className="file-input dim pointer">

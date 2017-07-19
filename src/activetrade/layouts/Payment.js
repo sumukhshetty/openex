@@ -19,7 +19,8 @@ class Payment extends Component {
               tradeId={this.props.purchaseRequestId}
               sellerId={this.props.activetrade.sellerUid}
               buyerId={this.props.activetrade.buyerUid}
-              amount={this.props.amount} />
+              amount={this.props.amount} 
+              purchaseRequest={this.props.activetrade}/>
               <div className='w-50 ma3'>
                 {this.props.viewerRole === 'buyer' &&
 

@@ -376,5 +376,35 @@ module.exports = {
       "createdAt": FIREBASE_TIMESTAMP
     }
     firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid).push(buyerNotificationData)
+  },
+  sendNewChatNotification: (userUid, purchaseRequest, purchaseRequestId, content) => {
+    var senderUid, senderUsername, recipientUid, recipientUsername
+    if(userUid  === purchaseRequest.buyerUid) {
+      senderUid = userUid
+      senderUsername = purchaseRequest.buyerUsername
+      recipientUid = purchaseRequest.sellerUid
+      recipientUsername = purchaseRequest.sellerUsername
+    } else if (userUid === purchaseRequest.sellerUid) {
+      senderUid = userUid
+      senderUsername = purchaseRequest.sellerUsername
+      recipientUid = purchaseRequest.buyerUid
+      recipientUsername = purchaseRequest.buyerUsername
+    }
+    var _body = "Hi " + recipientUsername + "- You've got a new chat message from " + senderUsername + ". Message: '" + content +"'. You can repond by going to alpha.automte.com/activetrade/"+purchaseRequestId
+    var _title = "New Chat Message from " + senderUsername
+    var newChatMessageNotificationData = {
+      "title": _title,
+      "body": _body,
+      type: "newchatmessage",
+      email: true,
+      "fcm": false,
+      recipientToken: null,
+      "verifiedEmail": true,
+      "senderUsername": senderUsername,
+      "purchaseRequestId": purchaseRequestId,
+      "seen": false,
+      "createdAt": FIREBASE_TIMESTAMP
+    }
+    firebaseRef.database().ref("/notifications/"+recipientUid).push(newChatMessageNotificationData)
   }
 }
