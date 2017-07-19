@@ -70,6 +70,10 @@
     "registeredAccounts":{
       ".read": "true",
       ".write": "auth != null"
+    },
+    "presence":{
+      ".read":"true",
+      ".write": "auth != null"
     }
   }
 }

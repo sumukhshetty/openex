@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router'
-
+import {notify} from 'react-notify-toast'
 
 class BuyButton extends Component {
   render () {
     return (
       <td className='fb5'>
-        <button onClick={()=>browserHistory.push('selltradeadvertisement/'+this.props.sellTradeAdvertisementId)}> Buy </button>
+        <button onClick={()=>notify.show("Please signup or login to buy ether")}> Buy </button>
       </td>
     );
   }
