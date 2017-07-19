@@ -1,4 +1,4 @@
-import {firebaseRef} from '../index.js'
+import {firebaseRef, FIREBASE_TIMESTAMP} from '../index.js'
 import * as firebase from 'firebase'
 
 export function userPresence(uid) {
@@ -24,7 +24,7 @@ export function userPresence(uid) {
       //con.onDisconnect().remove();
 
       // when I disconnect, update the last time I was seen online
-      userRef.onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
+      userRef.onDisconnect().set(FIREBASE_TIMESTAMP);
       userRef.set(true);
     }
   });

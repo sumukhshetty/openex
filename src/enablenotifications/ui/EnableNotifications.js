@@ -18,7 +18,7 @@ export default class EnableNotifications extends Component {
     try{
       if(this.props.user.profile.shownotificationrequest){
         return (
-          <div>Automte needs you to give permisson to <a onClick={this.enableNotifications.bind(this)}>enable desktop notifications</a>. <a onClick={this.enableNotifications.bind(this)}>Don't Show Again</a>.
+          <div>Receive <a onClick={this.enableNotifications.bind(this)}>desktop notifications</a> to speed up communication. <a onClick={this.enableNotifications.bind(this)}>Don't Show Again</a>.
           </div>
           )
       } else {
