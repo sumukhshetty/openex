@@ -34,15 +34,20 @@ class SellTradeAdvertisementsList extends Component {
           return <SellTradeAdvertisementRow price={price} sellTradeAdvertisementData={selltradeadvertisement.value} sellTradeAdvertisementId={selltradeadvertisement.prop} seller={seller} etherPrice={etherPrice} key={selltradeadvertisement.prop}/>        }
       }
     })
+    console.log(rows.length)
     if(rows[0] !== undefined){
-      return (
-        <table>
-        {this.props.selltradeadvertisements.data && <SellTradeAdvertisementsHeader />}
-        <tbody>
-          {rows}
-        </tbody>
-        </table>
-        )
+      if(rows.length==1){
+        return (<YouAreFirst />)
+      } else {
+        return (
+          <table>
+          {this.props.selltradeadvertisements.data && <SellTradeAdvertisementsHeader />}
+          <tbody>
+            {rows}
+          </tbody>
+          </table>
+          )
+      }
     } else {
       return (<YouAreFirst />)
     }

@@ -33,14 +33,18 @@ class BuyTradeAdvertisementsList extends Component {
     })
 
     if(rows[0] !== undefined) {
-      return (
-        <table>
-        {this.props.buytradeadvertisements.data && <BuyTradeAdvertisementsHeader />}
-        <tbody>
-          {rows}
-        </tbody>
-        </table>
-        )
+      if( rows.length==1){
+        return (<YouAreFirst />)
+      } else {
+        return (
+          <table>
+          {this.props.buytradeadvertisements.data && <BuyTradeAdvertisementsHeader />}
+          <tbody>
+            {rows}
+          </tbody>
+          </table>
+          )
+      }
     } else {
       return (<YouAreFirst />)
     }
