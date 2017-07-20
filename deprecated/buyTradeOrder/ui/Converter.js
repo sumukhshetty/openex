@@ -18,11 +18,11 @@ export default (props) => (
           <div className='w5 h1' />
           <div className='bt b--seethrough w-90 me h1' />
         </div>
-        <img
+        {/*<img
           src={ConvertSymbol}
           alt='conversion symbol'
           className='pa0 ma0 relative right-2'
-          onClick={props.handleConversion} />
+          onClick={props.handleConversion} />*/}
       </div>
       <div className='flex cxc mxb w5'>
         <label className='pv1 white flex cxc'>
