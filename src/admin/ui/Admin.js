@@ -4,12 +4,6 @@ import ProcessKycRow from './ProcessKycRow'
 
 export default class Admin extends Component {
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      disputes: {}
-    }
-  }
   componentWillMount (){
     this.props.onBeforeComponentLoad()
   }
@@ -18,28 +12,28 @@ export default class Admin extends Component {
     this.props.onBeforeComponentWillUnmount()
   }
 
-
   render () {
-    var purchaserequests = this.props.purchaserequests.data
-
+    var purchaserequests = this.props.admin.purchaserequests
     if(this.props.user.profile){
       if(this.props.user.profile.isAdmin && this.props.disputedtrades.data){
-        const rows = Object.keys(this.props.disputedtrades.data).map((purchaseRequestId, index)=>{
-          var purchaserequest = purchaserequests[purchaseRequestId]
+        var rows = []
+        Object.entries(this.props.disputedtrades.data).forEach(([key, value]) =>{
+          var purchaserequest = purchaserequests[value.country][key]
           var time
           if (purchaserequest.status === 'Seller Raised Dispute'){
             time = purchaserequest.sellerraisesdisputetime
           } else {
             time = purchaserequest.buyerraisesdisputetime
           }
-          return (<AdminRow 
-                    index={index}
-                    key={index}
-                    purchaseRequestId={purchaseRequestId}
+          rows.push(<AdminRow 
+                    index={key}
+                    key={key}
+                    purchaseRequestId={key}
                     time={time}
                     purchaserequest={purchaserequest}
                   />)
         })
+
         var kycRows = [];
         if (this.props.processkyc.data){
           Object.entries(this.props.processkyc.data).forEach((countryData)=>{

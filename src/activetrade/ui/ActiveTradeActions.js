@@ -304,7 +304,15 @@ module.exports = {
     }
   },
   tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
+      // DEVELOPER NOTE: optimize spot - we don't have to check this each time only if we know that the purchase
+      // request was in dispute
       if (!purchaseRequest.postProcessingCompleted){
+        var ref = firebaseRef.database().ref('/disputes/'+purchaseRequestId).once('value', function(snap){
+          console.log(snap.val())
+          if(snap.val()){
+            firebaseRef.database().ref('/disputes/'+purchaseRequestId).remove()
+          }
+        })
         purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.buyerUid, users)
         purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.sellerUid, users)
         purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
@@ -364,9 +372,7 @@ module.exports = {
     firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId)
           .set(updatedPurchaseRequest)
           .then(function() {
-            purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-            purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-
+            purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(seller, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
           });
     notificationHelpers.sendSellerRaisesDispute(seller, buyer, purchaseRequest, purchaseRequestId)
   },
@@ -381,9 +387,7 @@ module.exports = {
     firebaseRef.database().ref('/purchaserequests/'+ buyer.country + '/' + purchaseRequestId)
       .set(updatedPurchaseRequest)
       .then(function() {
-        purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-        purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-
+        purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(buyer, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
       });
     notificationHelpers.sendBuyerRaisesDispute(seller, buyer, purchaseRequest, purchaseRequestId)
   },
@@ -420,10 +424,7 @@ module.exports = {
                 event.stopWatching()
                 notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
               })
-/*            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/status').update('All Done')
-            // send a notification to the buyer and the seller
-            notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
-            event.stopWatching()*/
+
           } else {
             dispatch(sendEtherState('init'));
             raven.captureException(error)
