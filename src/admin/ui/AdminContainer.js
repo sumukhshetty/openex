@@ -7,7 +7,8 @@ const mapStateToProps = (state, props) => {
     user: state.user,
     disputedtrades: state.disputedtrades,
     purchaserequests: state.purchaserequests,
-    processkyc: state.processkyc
+    processkyc: state.processkyc,
+    admin: state.admin
   }
 }
 

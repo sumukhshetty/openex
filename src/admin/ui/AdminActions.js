@@ -29,6 +29,19 @@ function clearProcessKyc(){
   }
 }
 
+function getPurchaseRequests(purchaseRequests){
+  return {
+    type: 'GET_PURCHASE_REQUESTS',
+    payload: purchaseRequests
+  }
+}
+
+function clearPurchaseRequests(){
+  return {
+    type: 'CLEAR_PURCHASE_REQUESTS',
+    payload: null
+  }
+}
 
 module.exports = {
   disputedTrades: () => (dispatch) => {
@@ -39,9 +52,14 @@ module.exports = {
     firebaseRef.database().ref('/processkyc').once('value', function(snap){
       dispatch(setProcessKyc(snap.val()))
     })
+    firebaseRef.database().ref('/purchaserequests').once('value', function(snap){
+      console.log('about to dispatch purchaserequests')
+      dispatch(getPurchaseRequests(snap.val()))
+    })
   },
   clearState: () => (dispatch) =>{
     dispatch(clearDisptedTrades())
     dispatch(clearProcessKyc())
+    dispatch(clearPurchaseRequests())
   }
 }
