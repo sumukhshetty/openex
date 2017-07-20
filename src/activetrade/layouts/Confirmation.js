@@ -19,7 +19,7 @@ class Confirmation extends Component {
 
   handleEscrowRequest (e) {
     e.preventDefault()
-    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.ethorderbook.address, this.props.web3)
+    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.ethorderbook.address, this.props.web3, this.props.ethorderbook)
   }
 
   render () {
@@ -55,7 +55,7 @@ class Confirmation extends Component {
                 <div className='tc'>
                   {this.props.sendEtherState === 'init' &&
                   <div>
-                  <button onClick={this.props.confirmTrade} disabled={this.props.confirmTradeButtonIsDisabled}>
+                  <button onClick={this.props.confirmTrade} disabled={this.props.confirmTradeButtonIsDisabled} style={{'backgroundColor':this.props.confirmTradeButtonColor}}>
                    Confirm Trade
                  </button>
                 <CancelTrade cancelTrade={this.props.sellerCancelsTrade}/>
