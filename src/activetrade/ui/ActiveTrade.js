@@ -154,6 +154,7 @@ class ActiveTrade extends Component {
           txhash={this.props.txhash.data}
           ethorderbook={this.props.ethorderbook.data}
           confirmTradeButtonIsDisabled={this.props.activetrade.confirmTradeButtonIsDisabled}
+          confirmTradeButtonColor={this.props.activetrade.confirmTradeButtonColor}
           />,
         'Awaiting Payment': <Payment
           activetrade={activetrade}
