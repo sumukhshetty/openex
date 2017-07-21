@@ -65,7 +65,7 @@ class Confirmation extends Component {
                  <span>Please accept the transaction in MetaMask</span>}
                  {this.props.sendEtherState === 'insufficient-available-balance' &&
                  <div>
-                 <span> Your contract doesn't have enough ether, add some to confirm this trade </span>
+                 <span> You need to add {this.props.activetraed.ethAmount*1.01} ETH to the smart contract to initiate the trade. Please accept the transaction on Metamask</span>
                  <span> <a target="_blank" href={contractUrl}>{contractUrl}</a></span>
                  <input type='number' onChange={this.onEtherAmountChange.bind(this)} required/>
                  <button onClick={this.handleEscrowRequest.bind(this)}> submit </button>
