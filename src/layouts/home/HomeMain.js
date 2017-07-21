@@ -15,7 +15,6 @@ var web3Location = `http://${truffleConfig.networks.development.host}:${truffleC
 class HomeMain extends Component {
   render () {
     //var web3 = this.web3Provided
-    console.log('HomeMain.render')
     if(this.props.web3.data.currentProvider.isMetaMask){
       return (
       <section className='home'>

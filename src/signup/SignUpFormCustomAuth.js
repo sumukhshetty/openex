@@ -44,7 +44,7 @@ class SignUpFormCustomAuth extends Component {
       <form action='#' className='pure-form' onSubmit={this.handleSubmit.bind(this)}>
         <input className='mv1' id='email' name='email' type='email' placeholder='Email address' onChange={this.onInputChange.bind(this)} required />
         <input className='mv1' id='username' name='username' type='text' placeholder='Username' onChange={this.onInputChange.bind(this)} required />
-        <select className='mv1' name='country' id='country' onChange={this.onInputChange.bind(this)} required>
+        <select className='mv1' name='country' id='country' onChange={this.onInputChange.bind(this)} value={this.props.country.data} required>
 
           <option value=''>Select Country</option>
           <option value='AF'>Afghanistan</option>

@@ -7,7 +7,8 @@ import SignUpFormCustomAuth from './../../../signup/SignUpFormCustomAuth'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    user: state.user
+    user: state.user,
+    country: state.country
   }
 }
 
