@@ -31,6 +31,8 @@ class BuyTradeAdvertisementsList extends Component {
         } else {
           return null
         }
+      } else {
+        return null 
       }
     })
 

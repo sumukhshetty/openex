@@ -32,7 +32,9 @@ class SellTradeAdvertisementsList extends Component {
         } else {
           return null
         }
-      } 
+      } else {
+        return null 
+      }
     })
     if(rows[0] !== undefined){
       if(rows.length==1){
