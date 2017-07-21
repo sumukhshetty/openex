@@ -64,9 +64,11 @@ export default class BuyTradeAdvertisement extends Component {
       <h2 className='pv1 tc'>Getting balance...</h2>
     </div>;
     if(buyTradeAdvertisement && buyer) {
+      var minLimit = Number(buyTradeAdvertisement.minTransactionLimit)/this.props.etherPrice.data
+      var maxLimit = Number(buyTradeAdvertisement.maxTransactionLimit)/this.props.etherPrice.data
+
       var marginMultiplier = (1 + (parseInt(this.props.buytradeadvertisement.data.margin,10) * 0.01))
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
-      // TODO get the available balance from web3
       var availableBalance = 5
 
       var url = '/user/' + buyTradeAdvertisement.buyerUid
@@ -122,6 +124,8 @@ export default class BuyTradeAdvertisement extends Component {
               fiatAmount={this.state.fiatAmount} 
               tradeAdvertisementAmount={buyTradeAdvertisement.amount}
               isButtonDisabled={this.state.isButtonDisabled}
+              minLimit = {minLimit}
+              maxLimit = {maxLimit}
               /></div>
           </div>
             </div>

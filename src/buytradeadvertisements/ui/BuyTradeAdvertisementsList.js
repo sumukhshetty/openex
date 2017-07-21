@@ -28,6 +28,8 @@ class BuyTradeAdvertisementsList extends Component {
           var marginMultiplier = (1 + (parseInt(buytradeadvertisement.value.margin, 10) * 0.01))
           var price = etherPrice ? (etherPrice*marginMultiplier) : null;
           return <BuyTradeAdvertisementRow buyTradeAdvertisementData={buytradeadvertisement.value} buyTradeAdvertisementId={buytradeadvertisement.prop} price={price.toFixed(2)} buyer={buyer} key={buytradeadvertisement.prop} />
+        } else {
+          return null
         }
       }
     })

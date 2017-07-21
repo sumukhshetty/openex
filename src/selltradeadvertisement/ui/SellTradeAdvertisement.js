@@ -57,6 +57,8 @@ export default class SellTradeAdvertisement extends Component {
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
       // ISSUE-254 get available balance from the ETHOrderBook 
       //var availableBalance = this.props.sellOrderContract.availableBalance;
+      var minLimit = Number(sellTradeAdvertisement.minTransactionLimit)/this.props.etherPrice.data
+      var maxLimit = Number(sellTradeAdvertisement.maxTransactionLimit)/this.props.etherPrice.data
       var availableBalance = 5
       if(typeof availableBalance !== 'undefined') {
         if(availableBalance > 0) {
@@ -72,6 +74,8 @@ export default class SellTradeAdvertisement extends Component {
               etherAmount={this.state.etherAmount} 
               fiatAmount={this.state.fiatAmount} 
               isButtonDisabled={this.state.isButtonDisabled}
+              minLimit = {minLimit}
+              maxLimit = {maxLimit}
               /></div>
           </div>
         } else {
