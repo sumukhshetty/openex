@@ -1,3 +1,4 @@
+/*//deprecate
 import React, { Component } from 'react';
 
 class BuyerStepNote extends Component {
@@ -25,7 +26,6 @@ class BuyerStepNote extends Component {
       case 'In Escrow':
         return(
           <div className="measure pb4">
-          {/* Show the following only when step === 'payment'. Each step should have its own set of instructions. */}
             <p className='tc flarge b'>Step 1: Pay the seller</p>
             <p>The reference message must be included or the seller can't identify your payment.</p>
             <p>Send a message to {this.props.order.sellerUsername} to receive help with completing the payment.</p>
@@ -67,3 +67,4 @@ class BuyerStepNote extends Component {
 }
 
 export default BuyerStepNote;
+*/
