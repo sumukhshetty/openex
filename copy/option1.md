@@ -9,10 +9,32 @@ and increasing liquidity of ethereum with fiat currencies
 creating a marketplace that combines security and ease of use,
 and prepares users for using smart contracts elsewhere
 
---  variation 1
+--  home page
 
 ezether  getting started   |  browse  |  support                    login |  sign up
 
-###join the blockchain revolution###
+<h2>join the blockchain revolution</h2>
+<h4>Use our secure ethereum marketplace, and truly _own_ your money</h4>
 
-####buy and sell ether securely, keeping ownership of your money
+
+Nimble        Sovereign       Secure
+
+Accessible    Cutting Edge    Easy to use
+
+**Nimble**
+Direct trading between users ensures that prices respond to market forces
+
+**Sovereign**
+You retain ownership of your ether independent of the service
+
+**Secure**
+Transactions are implemented in the form of smart contracts directly Ethereum blockchain, meaning there's no single point of failure
+
+**Global**
+We've designed our system such that it can be used in any country, including developing and emerging markets.
+
+**Cutting Edge**
+By using our product you'll learn how to use smart contracts, preparing you for the upcoming explosion of use cases for Ethereum
+
+**Easy to Use**
+We've designed the product keeping the needs of the user in mind. We'll guide you every step of the way.
