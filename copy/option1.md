@@ -9,7 +9,9 @@ and increasing liquidity of ethereum with fiat currencies
 creating a marketplace that combines security and ease of use,
 and prepares users for using smart contracts elsewhere
 
---  a
+--  variation 1
 
 ezether  getting started   |  browse  |  support                    login |  sign up
 
+###join the blockchain revolution###
+####buy and sell ether securely, keeping ownership of your money
