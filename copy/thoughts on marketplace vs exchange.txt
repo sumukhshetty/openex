@@ -1,16 +1,20 @@
-QJ had questioned me earlier about the differences in calling yourself a marketplace v/s an exchange.
+QJ had questioned me earlier about the differences in calling the product a marketplace v/s an exchange.
 
-I found parallels in this with Eric S Raymond's essay The Cathedral and The Bazaar.
+I found parallels in this with Eric S Raymond's essay The Cathedral and The Bazaar, an essay about the open-source vs closed source model.
 
 Exchanges act like Cathedrals, a top-down setting, having their own non-negotiable price, 
 leaving the user with the a single choice - is this price good for me or not.
 
-The trustability or reliability of the system is a straightforward choice, do you trust the exchange or not.
+The trust in, or reliability of the system is a straightforward choice, you trust the exchange or you don't.
 
-It helps to think of Marketplaces with the word Bazaar, and the key ideas become choice and adaptability.
-Marketplaces provide more variability, in price and user reputation. Markets are more nimble, a seller might
+It helps to think of Marketplaces in terms of the word 'Bazaar', and the hustle and bustle involved therein.
+On reflection, the key ideas become choice and adaptability.
+
+Marketplaces provide more variability, in price and user reputation. Marketplacess are more nimble, a seller might
 see others accepting PayTM and decided to accept PayTM himself, rather than the slow process of an exchange adding
-a payment method.
+a payment method. Or there can be a user anticipating price going up or down, and be willing to deviate from the
+standard rates everyone else is using.
 
-I think independence of the wallet also aligns more with the marketplace, aligning more with the real life experience
-of carrying cash v/s centralised escrow wallets akin to putting money in a food court card in a mall.
+Particularly in a global marketplace, the differentiator then becomes payment method, maybe even having scope for bartering work hours or physical objects for ether.
+
+I just felt we should keep this in mind whenever we talk about automte/ezether being a marketplace.
