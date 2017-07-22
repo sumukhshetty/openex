@@ -17,9 +17,12 @@ ezether  getting started   |  browse  |  support                    login |  sig
 <h4>Use our secure ethereum marketplace, and truly _own_ your money</h4>
 
 
-Nimble        Sovereign       Secure
+Nimble				Sovereign       Secure
 
 Accessible    Cutting Edge    Easy to use
+
+
+
 
 **Nimble**
 Direct trading between users ensures that prices respond to market forces
@@ -38,3 +41,6 @@ By using our product you'll learn how to use smart contracts, preparing you for 
 
 **Easy to Use**
 We've designed the product keeping the needs of the user in mind. We'll guide you every step of the way.
+
+
+Sign Up [storefront]	--> Find Trade	[jigsaw fitting]	-->	Buy/Sell Ether [handshake]
