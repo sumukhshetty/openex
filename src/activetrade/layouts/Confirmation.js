@@ -8,6 +8,11 @@ import SellerStepNote from '../ui/SellerStepNoteSell'
 
 class Confirmation extends Component {
 
+  constructor(props){
+    super(props)
+    this.state={amountToSend:0}
+  }
+
   componentWillUnmount() {
     this.props.resetEtherState();
   }
