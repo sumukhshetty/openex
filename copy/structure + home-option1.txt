@@ -1,0 +1,45 @@
+why are you doing this?
+bringing the blockchain revolution to the common man
+
+how do you plan to achieve this goal?
+introducing the concept of sovereign money,
+and increasing liquidity of ethereum with fiat currencies
+
+what are you going to build to do this?
+creating a marketplace that combines security and ease of use,
+and prepares users for using smart contracts elsewhere
+
+--  home page
+
+ezether  getting started   |  browse  |  support                    login |  sign up
+
+
+heading: join the blockchain revolution
+subheading: Use our secure ethereum marketplace, and truly _own_ your money
+
+
+Nimble . Sovereign . Secure
+
+Global . Cutting Edge . Easy to use
+
+
+Nimble
+Direct trading between users ensures that prices respond to market forces
+
+Sovereign
+You retain ownership of your ether independent of the service
+
+Secure
+Transactions are implemented in the form of smart contracts directly Ethereum blockchain, meaning there's no single point of failure
+
+Global
+We've designed our system such that it can be used in any country, including developing and emerging markets.
+
+Cutting Edge
+By using our product you'll learn how to use smart contracts, preparing you for the upcoming explosion of use cases for Ethereum
+
+Easy to Use
+We've designed the product keeping the needs of the user in mind. We'll guide you every step of the way.
+
+
+Sign Up [storefront]	--> Find Trade	[jigsaw fitting]	-->	Buy/Sell Ether [handshake]
