@@ -37,9 +37,7 @@ class SellTradeAdvertisementsList extends Component {
       }
     })
     if(rows[0] !== undefined){
-      if(rows.length==1){
-        return (<YouAreFirst />)
-      } else {
+
         return (
           <table>
           {this.props.selltradeadvertisements.data && <SellTradeAdvertisementsHeader />}
@@ -48,7 +46,7 @@ class SellTradeAdvertisementsList extends Component {
           </tbody>
           </table>
           )
-      }
+      
     } else {
       return (<YouAreFirst />)
     }
