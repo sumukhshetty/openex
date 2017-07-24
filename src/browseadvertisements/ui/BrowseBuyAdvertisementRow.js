@@ -23,7 +23,7 @@ const BrowseBuyAdvertisementRow = (props) => {
         <td className='fb5 tc' >{props.buyTradeAdvertisementData.minTransactionLimit} - {props.buyTradeAdvertisementData.maxTransactionLimit}</td>
         <td className='fb15 tc' >{lastTransfer}</td>
         <Trustworthiness trustLevel={props.buyer.avgFeedback} />
-        <LastOnline time={props.buyer.lastOnline} />
+        <LastOnline time={props.presence} />
         <SellButton buyTradeAdvertisementId={props.buyTradeAdvertisementId} />
       </tr>
       )

@@ -25,7 +25,7 @@ export function userPresence(uid) {
 
       // when I disconnect, update the last time I was seen online
       userRef.onDisconnect().set(FIREBASE_TIMESTAMP);
-      userRef.set(true);
+      userRef.set('Active');
     }
   });
 }

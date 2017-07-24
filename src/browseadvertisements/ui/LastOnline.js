@@ -4,7 +4,12 @@ const moment = require('moment');
 
 const LastOnline = (props) => {
   // const time = Math.floor((new Date() - new Date(props.time)) / (1000 * 60 * 60));
-  const time = moment(props.time).fromNow();
+  var time
+  if (time === 'Active'){
+    time === 'a few seconds ago'
+  } else {
+    time = moment(props.time).fromNow();
+  }
   return (
     // isNaN(time)
     // ? <td className='fb15 flex cxc mxc'><span className='blackDot mr1' /><span >Disabled</span></td>

@@ -35,6 +35,7 @@ import countryReducer from './country/countryreducer'
 import manageContractReducer from './manageContract/manangecontractreducer'
 import currencyReducer from './currency/currencyreducer'
 import adminReducer from './admin/adminreducer'
+import userPresenceReducer from './userpresence/userpresencereducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -72,7 +73,8 @@ const reducer = combineReducers({
   country: countryReducer,
   managecontract: manageContractReducer,
   currency: currencyReducer,
-  admin: adminReducer
+  admin: adminReducer,
+  presence: userPresenceReducer
 })
 
 export default reducer
