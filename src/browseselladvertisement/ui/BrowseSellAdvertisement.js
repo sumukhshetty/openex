@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Converter from './Converter';
 import Star from './../../images/Star';
 import { browserHistory } from 'react-router'
+import {notify} from 'react-notify-toast'
 
-export default class SellTradeAdvertisement extends Component {
+export default class BrowseSellAdvertisement extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -24,15 +25,7 @@ export default class SellTradeAdvertisement extends Component {
 
   createPurchaseRequest(e){
     e.preventDefault()
-    this.setState({isButtonDisabled:true})
-    this.props.createPurchaseRequest(
-      this.state.etherAmount, 
-      this.state.fiatAmount,
-      this.props.etherPrice.data,
-      this.props.sellTradeAdvertisementId,
-      this.props.selltradeadvertisement.data, 
-      this.props.seller, 
-      this.props.user)
+    notify.show("Please signup or login to buy Ether")
   }
 
   onAmountChange(e) {
@@ -57,8 +50,6 @@ export default class SellTradeAdvertisement extends Component {
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
       // ISSUE-254 get available balance from the ETHOrderBook 
       //var availableBalance = this.props.sellOrderContract.availableBalance;
-      var minLimit = Number(sellTradeAdvertisement.minTransactionLimit)/this.props.etherPrice.data
-      var maxLimit = Number(sellTradeAdvertisement.maxTransactionLimit)/this.props.etherPrice.data
       var availableBalance = 5
       if(typeof availableBalance !== 'undefined') {
         if(availableBalance > 0) {
@@ -68,14 +59,12 @@ export default class SellTradeAdvertisement extends Component {
             <div className='flex mxc'><Converter maxEther={availableBalance} 
               handleTradeRequest={this.createPurchaseRequest.bind(this)}
               onAmountChange={this.onAmountChange.bind(this)} 
-              currency={this.props.user.profile.currency} 
+              currency={this.props.currency.data} 
               price={price} 
-              country={seller.country} 
+              country={this.props.country.data} 
               etherAmount={this.state.etherAmount} 
               fiatAmount={this.state.fiatAmount} 
               isButtonDisabled={this.state.isButtonDisabled}
-              minLimit = {minLimit}
-              maxLimit = {maxLimit}
               /></div>
           </div>
         } else {
@@ -102,7 +91,7 @@ export default class SellTradeAdvertisement extends Component {
                 <table className='lh-copy'>
                   <tr>
                     <td className='w4 pv2'>Price</td>
-                    <td className='green'>{this.props.etherPrice.data ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : 'Getting price...'} {this.props.user.profile.currency}/ETH</td>
+                    <td className='green'>{this.props.etherPrice.data ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : 'Getting price...'} {this.props.currency.data}/ETH</td>
                   </tr>
                   <tr>
                     <td className='w4 pv2'>Payment Method</td>

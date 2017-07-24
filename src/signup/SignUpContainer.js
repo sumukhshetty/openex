@@ -8,7 +8,7 @@ class SignUpContainer extends Component {
     return(
       <div className="ethereum-automte">
         <section>
-          <h3>Sign Up</h3>
+          <h3>Your Address</h3>
         </section>
     {this.props.web3.eth.accounts[0] ? 
       <div>
@@ -17,7 +17,7 @@ class SignUpContainer extends Component {
         </section>
 
         <section className="signup-form">
-          <SignUpFormContainer />
+          <SignUpFormContainer/>
         </section>
         </div>
       : 

@@ -27,7 +27,7 @@ function toHex(s) {
    return finalhex;
  }
 
-export function signUpUserCustomAuth (signUpInfo, web3) {
+export function signUpUserCustomAuth (signUpInfo, web3, country) {
   return function (dispatch) {
     firebaseRef.database().ref('/registeredAccounts/'+web3.eth.accounts[0]).once('value', function(snap){
       if(snap.val()){
@@ -36,12 +36,18 @@ export function signUpUserCustomAuth (signUpInfo, web3) {
         var userid = ''
         var email = signUpInfo.email
         var username = signUpInfo.username
-        var country = signUpInfo.country
+        var _country
         var currency
         try {
           currency = currencies.byCountry().get(country)
         } catch(e){
           currency = 'USD'
+        }
+        if (country) {
+          _country = country 
+        } else {
+          // TODO handle this placeholder country appropriately
+          _country = 'jaaga'
         }
         var data = toHex('I am signing up for the automte ether marketplace and I have read the terms and conditions');
         web3.currentProvider.sendAsync({ id: 1, method: 'personal_sign', params: [web3.eth.accounts[0], data] },
@@ -53,8 +59,6 @@ export function signUpUserCustomAuth (signUpInfo, web3) {
               throw result.error
             }
             let signature = result.result;
-            console.log(signature)
-            //dispatch(exchange.authenticate(sig, user))
             var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/signUpUserCustomAuth'
             var options = {
               method: 'post',
@@ -97,15 +101,17 @@ export function signUpUserCustomAuth (signUpInfo, web3) {
                       'kycComplete': false,
                     }
                     firebaseRef.database().ref('/registeredAccounts/'+userid).set(true)
-                    firebaseRef.database().ref('/users/' + userid).set(userdata)
-                    firebaseUser.updateProfile({
-                      displayName: username
+                    firebaseRef.database().ref('/users/' + userid).set(userdata).then(function(result){
+                      firebaseUser.updateProfile({
+                        displayName: username
+                      })
+                      firebaseRef.database().ref('/notificationsConfig/'+userid+'/email').set(email)
+                      dispatch(userSignedUp(firebaseUser, currency))
                     })
-                    firebaseRef.database().ref('/notificationsConfig/'+userid+'/email').set(email)
-                    dispatch(userSignedUp(firebaseUser, currency))
                   })
                   .catch(function(error) {
                   // Handle Errors here.
+                  notify.show("There was an error with you signing up. Please contact support.")
                   var errorCode = error.code;
                   var errorMessage = error.message;
                   console.log(errorCode,errorMessage)

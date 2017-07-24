@@ -7,7 +7,8 @@ import SignUpFormCustomAuth from './../../../signup/SignUpFormCustomAuth'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    user: state.user
+    user: state.user,
+    country: state.country
   }
 }
 
@@ -17,9 +18,9 @@ const mapDispatchToProps = (dispatch) => {
       event.preventDefault()
       dispatch(signUpUser(signUpInfo, web3))
     },
-    onSignUpFormCustomAuthSubmit: (signUpInfo, web3) => {
+    onSignUpFormCustomAuthSubmit: (signUpInfo, web3, country) => {
       event.preventDefault()
-      dispatch(signUpUserCustomAuth(signUpInfo, web3))
+      dispatch(signUpUserCustomAuth(signUpInfo, web3, country))
     }
   }
 }

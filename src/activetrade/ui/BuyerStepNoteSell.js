@@ -17,6 +17,7 @@ class BuyerStepNote extends Component {
           {/* Show the following only when step === 'payment'. Each step should have its own set of instructions. */}
             <p className='tc flarge b'>Step 1: Pay the seller</p>
             <p>The reference message must be included or the seller can't identify your payment.</p>
+            <p className='tc flarge b'>{this.props.purchaseRequestId}</p>
             <p>Send a message to {this.props.activetrade.sellerUsername} to receive help with completing the payment.</p>
             <p>
               Method: {this.props.activetrade.paymentMethod}

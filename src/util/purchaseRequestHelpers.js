@@ -7,8 +7,8 @@ module.exports = {
   addPurchaseRequestToCompletedTrades: (uid, purchaseRequestId, tradeType)=> {
     firebaseRef.database().ref("/users/"+uid+'/completedtrades/'+ purchaseRequestId).set({tradeType: tradeType})
   },
-  addPurchaseRequestToDisputedTrades: (uid, purchaseRequestId, tradeType) => {
-    firebaseRef.database().ref("/disputes/").child(purchaseRequestId).set({tradeType: tradeType})
+  addPurchaseRequestToDisputedTrades: (user, purchaseRequestId, tradeType) => {
+    firebaseRef.database().ref("/disputes/").child(purchaseRequestId).set({tradeType: tradeType,country:user.country})
   },
   removePurchaseRequestFromDisputedTrades: (uid, purchaseRequestId) => {
     firebaseRef.database().ref("/disputes/").child(purchaseRequestId).remove()

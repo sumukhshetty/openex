@@ -6,16 +6,8 @@ import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeade
 
 
 export default class BrowseAdvertisements extends Component {
-
-  componentWillMount() {
-    console.log('BrowseAdvertisements.componentWillMount')
-    console.log(this.props)
-  }
-
   
   render () {
-    console.log('BrowseAdvertisements.render')
-    console.log(this.props)
     var users = this.props.users
     var etherPrice = this.props.etherPrice.data;
     console.log(etherPrice)
@@ -40,7 +32,7 @@ export default class BrowseAdvertisements extends Component {
       return a.value.margin - b.value.margin
     })    
 
-    const buyrows = _.map(buyTradeAdvertisementsByMargin,function(buytradeadvertisement, key){
+    const buyrows = _.map(buyTradeAdvertisementsByMargin.slice(0,4),function(buytradeadvertisement, key){
       console.log('mapping through buytradeadvertisements')
       console.log(buytradeadvertisement)
       var buyer = users.data[buytradeadvertisement.value.buyerUid]
@@ -63,7 +55,7 @@ export default class BrowseAdvertisements extends Component {
               </table>)
     }
 
-    const sellrows = _.map(sellTradeAdvertisementsByMargin, function(selltradeadvertisement, key){
+    const sellrows = _.map(sellTradeAdvertisementsByMargin.slice(0,4), function(selltradeadvertisement, key){
       console.log('mapping through selltradeadvertisements')
       console.log(selltradeadvertisement)
       var seller = users.data[selltradeadvertisement.value.sellerUid]

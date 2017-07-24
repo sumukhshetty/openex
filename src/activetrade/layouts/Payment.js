@@ -25,7 +25,7 @@ class Payment extends Component {
                 {this.props.viewerRole === 'buyer' &&
 
                   <div>
-                    <BuyerStepNote step={this.props.step} activetrade={this.props.activetrade} />
+                    <BuyerStepNote step={this.props.step} activetrade={this.props.activetrade} purchaseRequestId={this.props.purchaseRequestId} />
                     <div className='tc'>
                       <button onClick={this.props.confirmPayment}>
                         Confirm Payment

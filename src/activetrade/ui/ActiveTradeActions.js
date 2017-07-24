@@ -87,6 +87,13 @@ function updateConfirmButtonIsDisabled(value){
   }
 }
 
+function updateConfirmationButtonColor(value) {
+  return {
+    type: 'UPDATE_CONFIRM_BUTTON_COLOR',
+    payload: value
+  }
+}
+
 module.exports = {
   activeTrade: (purchaseRequests, purchaseRequestId, users, user) => (dispatch) => {
     firebaseRef.database().ref('/purchaserequests/'+user.profile.country+'/'+purchaseRequestId).on('value', function(snap){
@@ -108,7 +115,7 @@ module.exports = {
       } else {
         throw new Error('Wallet Address Undefined')
       }
-/*
+      /*
       // START NO-SMART CONTRACT
       var now = new Date()
       var updatedPurchaseRequest = Object.assign({},
@@ -129,7 +136,7 @@ module.exports = {
         //event.stopWatching()
       })
       // END NO-SMART CONTRACT
-*/
+      */
       // START WEB3
       ethOrderBook.data.availableBalance(function(error, result){
         if(!error){
@@ -232,7 +239,7 @@ module.exports = {
         throw new Error("Wallet Address Undefined")
       }
       dispatch(sendEtherState('sending'));
-/*
+      /*
       // START NO-SMART-CONTRACT
       var now = new Date()
       var updatedPurchaseRequest = Object.assign({},
@@ -254,7 +261,7 @@ module.exports = {
         //event.stopWatching()
       })
       // END NO-SMART-CONTRACT
-*/
+      */
       // START WEB3
       var event = ethOrderBook.data.OrderCompleted()
       event.watch((error,result) => {
@@ -304,7 +311,15 @@ module.exports = {
     }
   },
   tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
+      // DEVELOPER NOTE: optimize spot - we don't have to check this each time only if we know that the purchase
+      // request was in dispute
       if (!purchaseRequest.postProcessingCompleted){
+        var ref = firebaseRef.database().ref('/disputes/'+purchaseRequestId).once('value', function(snap){
+          console.log(snap.val())
+          if(snap.val()){
+            firebaseRef.database().ref('/disputes/'+purchaseRequestId).remove()
+          }
+        })
         purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.buyerUid, users)
         purchaseRequestHelpers.updateUserTradingStats(purchaseRequest, purchaseRequest.sellerUid, users)
         purchaseRequestHelpers.removePurchaseRequestFromActiveTrades(purchaseRequest.buyerUid, purchaseRequestId)
@@ -364,9 +379,7 @@ module.exports = {
     firebaseRef.database().ref('/purchaserequests/'+ seller.country + '/' + purchaseRequestId)
           .set(updatedPurchaseRequest)
           .then(function() {
-            purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-            purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-
+            purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(seller, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
           });
     notificationHelpers.sendSellerRaisesDispute(seller, buyer, purchaseRequest, purchaseRequestId)
   },
@@ -381,9 +394,7 @@ module.exports = {
     firebaseRef.database().ref('/purchaserequests/'+ buyer.country + '/' + purchaseRequestId)
       .set(updatedPurchaseRequest)
       .then(function() {
-        purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.buyerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-        purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(purchaseRequest.sellerUid, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
-
+        purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(buyer, purchaseRequestId, purchaseRequest.tradeAdvertisementType)
       });
     notificationHelpers.sendBuyerRaisesDispute(seller, buyer, purchaseRequest, purchaseRequestId)
   },
@@ -420,10 +431,7 @@ module.exports = {
                 event.stopWatching()
                 notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
               })
-/*            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/status').update('All Done')
-            // send a notification to the buyer and the seller
-            notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
-            event.stopWatching()*/
+
           } else {
             dispatch(sendEtherState('init'));
             raven.captureException(error)
@@ -465,7 +473,7 @@ module.exports = {
         var event = _instance.DisputeResolved()
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
-          console.log(event, result)
+          console.log(error, result)
           // update the status of the trade to all done
           var now = new Date()
           var updatedPurchaseRequest = Object.assign({},
@@ -548,7 +556,7 @@ module.exports = {
         })
       })
   },
-  sellerAddsEther: (amount, uid, contractAddress, web3) => (dispatch) => {
+  sellerAddsEther: (amount, uid, contractAddress, web3, ethOrderBook) => (dispatch) => {
     try{
       if(web3.eth.coinbase) {
         var coinbase = web3.eth.coinbase;
@@ -559,26 +567,28 @@ module.exports = {
         amount = Number(amount);
         let value = web3.toWei(amount, 'ether');
         dispatch(sendEtherState('sending'));
-        web3.eth.sendTransaction({from: coinbase, to: contractAddress, value: value}, function(err, txHash) {
-          if(!err) {
-            dispatch(sendEtherState('init'));
-            dispatch(updateConfirmButtonIsDisabled(false))
-            // TODO double check that this is the implementation we want
-            /*web3.eth.getTransactionReceipt(txHash, function(txReceipt){
-              console.log("got the tx txReceipt")
-              dispatch(sendEtherState('init'));
-              dispatch(updateConfirmButtonIsDisabled(false))
-            })*/
-          } else {
-            if(err.message.includes('MetaMask Tx Signature: User denied')) {
-              console.log('ERROR: User denied transaction');
-              dispatch(sendEtherState('insufficient-available-balance'))
-            } else {
-              console.log(err);
-              dispatch(sendEtherState('insufficient-available-balance'))
-            }
-          }
+        var event = ethOrderBook.BalanceUpdated()
+        event.watch((error, result)=>{
+          dispatch(updateConfirmButtonIsDisabled(false))
+          dispatch(updateConfirmationButtonColor('#2196f3'))
         })
+        if (contractAddress && ((typeof contractAddress)==="string") && (contractAddress.length === 42)) {
+          ethOrderBook.pay({from:coinbase, value: value}, function(err, txHash){
+            if(!err) {
+              dispatch(sendEtherState('init'));
+              dispatch(updateConfirmButtonIsDisabled(true))
+              dispatch(updateConfirmationButtonColor('grey'))
+            } else {
+              if(err.message.includes('MetaMask Tx Signature: User denied')) {
+                console.log('ERROR: User denied transaction');
+                dispatch(sendEtherState('insufficient-available-balance'))
+              } else {
+                console.log(err);
+                dispatch(sendEtherState('insufficient-available-balance'))
+              }
+            }
+          })
+        }
 
       } else {
         console.log("invalid contract address")

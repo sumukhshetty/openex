@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Converter from '../ui/Converter';
 import Star from '../../images/Star';
 import { browserHistory } from 'react-router'
+import {notify} from 'react-notify-toast'
 
-export default class BuyTradeAdvertisement extends Component {
+export default class BrowseBuyAdvertisement extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -16,6 +17,7 @@ export default class BuyTradeAdvertisement extends Component {
   }
 
   componentWillMount() {
+    console.log("BrowseBuyAdvertisement.componentWillMount")
     this.props.onBeforeComponentLoad(this.props.buytradeadvertisements, this.props.buyTradeAdvertisementId, this.props.users);
     //this.setState({etherAmount:this.props.buytradeadverisement})
   }
@@ -26,17 +28,7 @@ export default class BuyTradeAdvertisement extends Component {
 
   createPurchaseRequest(e){
     e.preventDefault()
-    this.setState({isButtonDisabled:true})
-    this.props.createPurchaseRequest(
-      this.state.etherAmount, 
-      this.state.fiatAmount,
-      this.props.etherPrice.data,
-      this.props.buyTradeAdvertisementId,
-      this.props.buytradeadvertisement.data,
-      this.props.buyer,
-      this.props.web3.data.eth.coinbase,
-      this.props.user
-      )
+    notify.show("Please signup or login to sell Ether")
   }
 
   onAmountChange(e) {
@@ -64,18 +56,16 @@ export default class BuyTradeAdvertisement extends Component {
       <h2 className='pv1 tc'>Getting balance...</h2>
     </div>;
     if(buyTradeAdvertisement && buyer) {
-      var minLimit = Number(buyTradeAdvertisement.minTransactionLimit)/this.props.etherPrice.data
-      var maxLimit = Number(buyTradeAdvertisement.maxTransactionLimit)/this.props.etherPrice.data
-
       var marginMultiplier = (1 + (parseInt(this.props.buytradeadvertisement.data.margin,10) * 0.01))
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
+      // TODO get the available balance from web3
       var availableBalance = 5
 
       var url = '/user/' + buyTradeAdvertisement.buyerUid
       return (
         <div className='w-100 bg-smoke vh-100'>
           <div className='w-75 center pv3'>
-            <h1 className='pv1'>Sell {buyTradeAdvertisement.amount} ether to {buyer.username} using {buyTradeAdvertisement.paymentMethod}</h1>
+            <h1 className='pv1'>Sell {buyTradeAdvertisement.amount} ether to {buyTradeAdvertisement.buyerUsername} using {buyTradeAdvertisement.paymentMethod}</h1>
             <div className='flex mxb w-100 cxc'>
               <div className='w-50'>
                 <div className='w-100'>
@@ -89,7 +79,7 @@ export default class BuyTradeAdvertisement extends Component {
                 <tbody>
                   <tr>
                     <td className='w4 pv2'>Price</td>
-                    <td className='green'>{price ? price : 'Getting price...'} {this.props.user.profile.currency + '/ETH'}</td>
+                    <td className='green'>{price ? price : 'Getting price...'} {this.props.currency.data + '/ETH'}</td>
                   </tr>
                   <tr>
                     <td className='w4 pv2'>Payment Method</td>
@@ -117,15 +107,13 @@ export default class BuyTradeAdvertisement extends Component {
             <div className='flex mxc'><Converter maxEther={availableBalance} 
               handleTradeRequest={this.createPurchaseRequest.bind(this)}
               onAmountChange={this.onAmountChange.bind(this)} 
-              currency={this.props.user.profile.currency} 
+              currency={this.props.currency.data} 
               price={price} 
-              country={buyer.country} 
+              country={this.props.country.data} 
               etherAmount={this.state.etherAmount} 
               fiatAmount={this.state.fiatAmount} 
               tradeAdvertisementAmount={buyTradeAdvertisement.amount}
               isButtonDisabled={this.state.isButtonDisabled}
-              minLimit = {minLimit}
-              maxLimit = {maxLimit}
               /></div>
           </div>
             </div>

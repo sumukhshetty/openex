@@ -33,6 +33,8 @@ import userDataReducer from './user/userdatareducer'
 import notificationsReducer from './notifications/notificationsreducer'
 import countryReducer from './country/countryreducer'
 import manageContractReducer from './manageContract/manangecontractreducer'
+import currencyReducer from './currency/currencyreducer'
+import adminReducer from './admin/adminreducer'
 
 const reducer = combineReducers({
   routing: routerReducer,
@@ -68,7 +70,9 @@ const reducer = combineReducers({
   loadinguserdata: userDataReducer,
   notifications: notificationsReducer,
   country: countryReducer,
-  managecontract: manageContractReducer
+  managecontract: manageContractReducer,
+  currency: currencyReducer,
+  admin: adminReducer
 })
 
 export default reducer

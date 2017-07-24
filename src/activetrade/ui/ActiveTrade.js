@@ -111,7 +111,7 @@ class ActiveTrade extends Component {
         { status: '', label: '', text: 'All Done' }
       ],
       'Buyer Raised Dispute': [
-        { status: 'active', label: <Dot />, text: 'Seller Raised Dispute' },
+        { status: 'active', label: <Dot />, text: 'Buyer Raised Dispute' },
         { status: '', label: '', text: 'Awaiting Payment' },
         { status: '', label: '', text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
@@ -154,6 +154,7 @@ class ActiveTrade extends Component {
           txhash={this.props.txhash.data}
           ethorderbook={this.props.ethorderbook.data}
           confirmTradeButtonIsDisabled={this.props.activetrade.confirmTradeButtonIsDisabled}
+          confirmTradeButtonColor={this.props.activetrade.confirmTradeButtonColor}
           />,
         'Awaiting Payment': <Payment
           activetrade={activetrade}

@@ -2,7 +2,15 @@ import React, { Component } from 'react'
 
 class DisputeTrade extends Component {
 
+  confirmDispute(){
+    if(window.confirm("Are you sure you want to raise a Dispute?")){
+      this.props.raiseDispute()
+    }
+  }
+
   render () {
+    console.log("DisputeTrade.render")
+    console.log(this.props)
     return (
       <div className='measure pv4'>
         <p className='tc flarge b'>
@@ -30,7 +38,7 @@ class DisputeTrade extends Component {
         <div className='tc'>
           <button
             className='bg-danger'
-            onClick={this.props.raiseDispute}>
+            onClick={this.confirmDispute.bind(this)}>
             Dispute Trade
           </button>
           <p />

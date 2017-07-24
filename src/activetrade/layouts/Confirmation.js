@@ -8,6 +8,11 @@ import SellerStepNote from '../ui/SellerStepNoteSell'
 
 class Confirmation extends Component {
 
+  constructor(props){
+    super(props)
+    this.state={amountToSend:0}
+  }
+
   componentWillUnmount() {
     this.props.resetEtherState();
   }
@@ -19,7 +24,7 @@ class Confirmation extends Component {
 
   handleEscrowRequest (e) {
     e.preventDefault()
-    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.ethorderbook.address, this.props.web3)
+    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.ethorderbook.address, this.props.web3, this.props.ethorderbook)
   }
 
   render () {
@@ -55,7 +60,7 @@ class Confirmation extends Component {
                 <div className='tc'>
                   {this.props.sendEtherState === 'init' &&
                   <div>
-                  <button onClick={this.props.confirmTrade} disabled={this.props.confirmTradeButtonIsDisabled}>
+                  <button onClick={this.props.confirmTrade} disabled={this.props.confirmTradeButtonIsDisabled} style={{'backgroundColor':this.props.confirmTradeButtonColor}}>
                    Confirm Trade
                  </button>
                 <CancelTrade cancelTrade={this.props.sellerCancelsTrade}/>
@@ -65,7 +70,7 @@ class Confirmation extends Component {
                  <span>Please accept the transaction in MetaMask</span>}
                  {this.props.sendEtherState === 'insufficient-available-balance' &&
                  <div>
-                 <span> Your contract doesn't have enough ether, add some to confirm this trade </span>
+                 <span> You need to add {this.props.activetrade.etherAmount*1.01} ETH to the smart contract to initiate the trade. Please accept the transaction on Metamask</span>
                  <span> <a target="_blank" href={contractUrl}>{contractUrl}</a></span>
                  <input type='number' onChange={this.onEtherAmountChange.bind(this)} required/>
                  <button onClick={this.handleEscrowRequest.bind(this)}> submit </button>
