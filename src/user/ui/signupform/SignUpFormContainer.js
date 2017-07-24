@@ -18,9 +18,9 @@ const mapDispatchToProps = (dispatch) => {
       event.preventDefault()
       dispatch(signUpUser(signUpInfo, web3))
     },
-    onSignUpFormCustomAuthSubmit: (signUpInfo, web3) => {
+    onSignUpFormCustomAuthSubmit: (signUpInfo, web3, country) => {
       event.preventDefault()
-      dispatch(signUpUserCustomAuth(signUpInfo, web3))
+      dispatch(signUpUserCustomAuth(signUpInfo, web3, country))
     }
   }
 }

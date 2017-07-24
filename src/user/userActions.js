@@ -88,6 +88,14 @@ function getUserNotifications(notificationsPayload){
   }
 }
 
+export const USER_LOGGED_OUT = 'USER_LOGGED_OUT'
+function userLoggedOut(user) {
+  return {
+    type: USER_LOGGED_OUT,
+    payload: user
+  }
+}
+
 module.exports = {
   checkLocalStorage: ()=>(dispatch,getState)=>{
     if (!firebaseRef.auth().currentUser) {
@@ -109,32 +117,40 @@ module.exports = {
         dispatch(updateReduxStoreDataState(true))
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
           var userProfile = snap.val()
-          dispatch(getUserProfile(userProfile))
-          dispatch(getActiveTrades(userProfile['activetrades']))
-          dispatch(getDisputedTrades(userProfile['disputedtrades']))
-          dispatch(getTradeAdvertisements(userProfile['advertisements']))
-          dispatch(getCompletedTrades(userProfile['completedtrades']))
-          dispatch(userLoggedIn(user))
-          firebaseRef.database().ref('/users').on('value', function(snap){
-            dispatch(users(snap.val()))
-          })
-          firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
+          if(userProfile) {
+            dispatch(getUserProfile(userProfile))
+            dispatch(getActiveTrades(userProfile['activetrades']))
+            dispatch(getDisputedTrades(userProfile['disputedtrades']))
+            dispatch(getTradeAdvertisements(userProfile['advertisements']))
+            dispatch(getCompletedTrades(userProfile['completedtrades']))
+            dispatch(userLoggedIn(user))
+            firebaseRef.database().ref('/users').on('value', function(snap){
+              dispatch(users(snap.val()))
+            })
+            firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
 
-            dispatch(getBuyTradeAdvertisements(snap.val()))
-          })
-          firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).on('value', function(snap){
+              dispatch(getBuyTradeAdvertisements(snap.val()))
+            })
+            firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).on('value', function(snap){
 
-            dispatch(getSellTradeAdvertisements(snap.val()))
-          })
-          firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
+              dispatch(getSellTradeAdvertisements(snap.val()))
+            })
+            firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
 
-            dispatch(getPurchaseRequests(snap.val()))
+              dispatch(getPurchaseRequests(snap.val()))
+            })
+            firebaseRef.database().ref('/notifications/'+user.uid).on('value',function(snap){
+              dispatch(getUserNotifications(snap.val()))
+            })
+            dispatch(updateReduxStoreDataState(false))
+            return browserHistory.push('/dashboard')
+          } else {
+            const auth = firebaseRef.auth()
+            auth.signOut().then(function(promise){
+            console.log("logout")
+            dispatch(userLoggedOut())
           })
-          firebaseRef.database().ref('/notifications/'+user.uid).on('value',function(snap){
-            dispatch(getUserNotifications(snap.val()))
-          })
-          dispatch(updateReduxStoreDataState(false))
-          return browserHistory.push('/dashboard')
+          }
         })
       } else {
         dispatch({ type: "USER_LOGGED_OUT"});

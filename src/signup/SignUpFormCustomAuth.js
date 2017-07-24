@@ -12,7 +12,7 @@ class SignUpFormCustomAuth extends Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    this.props.onSignUpFormCustomAuthSubmit(this.state.signUpInfo, this.props.web3.data)
+    this.props.onSignUpFormCustomAuthSubmit(this.state.signUpInfo, this.props.web3.data, this.props.country.data)
   }
   onInputChange (event) {
     var _signUpInfo = this.state.signUpInfo

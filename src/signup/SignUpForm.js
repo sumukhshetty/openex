@@ -1,4 +1,4 @@
-//Deprecate this
+/*//Deprecate this
 
 import React, { Component } from 'react'
 
@@ -48,6 +48,7 @@ class SignUpForm extends Component {
   }
 
   render () {
+    console.log('SignUpForm.render')
     var error_message
     if (this.props.user.error) {
       error_message = this.props.user.error.message
@@ -322,3 +323,4 @@ class SignUpForm extends Component {
 }
 
 export default SignUpForm
+*/
