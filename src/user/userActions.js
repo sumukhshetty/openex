@@ -96,6 +96,13 @@ function userLoggedOut(user) {
   }
 }
 
+function getUserPresence(userPresencePayload) {
+  return {
+    type: 'SET_USER_PRESENCE',
+    payload: userPresencePayload
+  }
+}
+
 module.exports = {
   checkLocalStorage: ()=>(dispatch,getState)=>{
     if (!firebaseRef.auth().currentUser) {
@@ -142,6 +149,10 @@ module.exports = {
             firebaseRef.database().ref('/notifications/'+user.uid).on('value',function(snap){
               dispatch(getUserNotifications(snap.val()))
             })
+            firebaseRef.database().ref('/presence/').on('value', function(snap){
+              dispatch(getUserPresence(snap.val()))
+            })
+
             dispatch(updateReduxStoreDataState(false))
             return browserHistory.push('/dashboard')
           } else {

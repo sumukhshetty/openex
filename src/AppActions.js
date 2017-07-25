@@ -64,6 +64,12 @@ function etherPrice(pricesPayload) {
   }
 }
 
+function getUserPresence(userPresencePayload) {
+  return {
+    type: 'SET_USER_PRESENCE',
+    payload: userPresencePayload
+  }
+}
 
 module.exports = {
   setWeb3: (web3) => (dispatch) => {
@@ -109,6 +115,9 @@ module.exports = {
         })
         firebaseRef.database().ref('/selltradeadvertisements/'+res.body.country_code).once('value', function(snap){
           dispatch(getSellTradeAdvertisements(snap.val()))
+        })
+        firebaseRef.database().ref('/presence/').once('value', function(snap){
+          dispatch(getUserPresence(snap.val()))
         })
         dispatch(setCountry(res.body.country_code))
 

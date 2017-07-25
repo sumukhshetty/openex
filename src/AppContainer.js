@@ -5,7 +5,8 @@ import * as actions from './AppActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    loadinguserdata: state.loadinguserdata
+    loadinguserdata: state.loadinguserdata,
+    presence: state.presence
   }
 }
 

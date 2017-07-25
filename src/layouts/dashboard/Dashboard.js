@@ -10,7 +10,7 @@ import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
 import WrongNetwork from './../wrongnetwork/WrongNetwork'
 import LockedAccount from './../lockedaccount/LockedAccount'
 import WrongAccount from './../wrongaccount/WrongAccount'
-
+import UserPresenceContainer from './../../userpresence/UserPresenceContainer'
 //import LoadingContracts from './../../loadingcontracts/LoadingContracts'
 
 import Kyc from './kyc/layouts/Kyc'
@@ -90,6 +90,7 @@ class Dashboard extends Component {
                   <TradeAdvertisements />
                   <CompletedTrades />
                   <DisputedTrades />
+                  <UserPresenceContainer />
                 </div>
               </div>
             </div>

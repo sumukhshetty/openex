@@ -11,6 +11,8 @@ class BuyTradeAdvertisementsList extends Component {
     var uid = this.props.user.data.uid;
     var users = this.props.users
     var buyer
+    console.log('BuyTradeAdvertisementsList.render')
+    console.log(this.props.presence)
     var arr = _.map(buytradeadvertisements, function(value, prop){
       return {prop: prop, value: value}
     });
@@ -21,13 +23,25 @@ class BuyTradeAdvertisementsList extends Component {
     })
 
     byMargin = Object.assign({},byMargin)
+    var component = this
     const rows = _.map(byMargin, function(buytradeadvertisement, key){
       if (buytradeadvertisement.value.buyerUid !== uid){
         if (buytradeadvertisement.value.active){
           buyer = users.data[buytradeadvertisement.value.buyerUid]
           var marginMultiplier = (1 + (parseInt(buytradeadvertisement.value.margin, 10) * 0.01))
           var price = etherPrice ? (etherPrice*marginMultiplier) : null;
-          return <BuyTradeAdvertisementRow buyTradeAdvertisementData={buytradeadvertisement.value} buyTradeAdvertisementId={buytradeadvertisement.prop} price={price.toFixed(2)} buyer={buyer} key={buytradeadvertisement.prop} />
+          var _presence
+          if (component.props.presence.data){
+            _presence = component.props.presence.data[buytradeadvertisement.value.buyerUid]
+          }
+          console.log(_presence)
+          return <BuyTradeAdvertisementRow 
+            buyTradeAdvertisementData={buytradeadvertisement.value} 
+            buyTradeAdvertisementId={buytradeadvertisement.prop} 
+            price={price.toFixed(2)} 
+            buyer={buyer} 
+            key={buytradeadvertisement.prop} 
+            presence={_presence}/>
         } else {
           return null
         }

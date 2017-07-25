@@ -4,7 +4,22 @@ const moment = require('moment');
 
 const LastOnline = (props) => {
   // const time = Math.floor((new Date() - new Date(props.time)) / (1000 * 60 * 60));
-  const time = moment(props.time).fromNow();
+  console.log('buytradeadvertisements.LastOnline')
+  console.log(props.time)
+  var time
+  try {
+    if (props.time === 'Active'){
+      time === 'a few seconds ago'
+    } else {
+      console.log('else')
+      console.log(props.time)
+      time = moment(props.time).fromNow();
+    }
+  } catch(error) {
+    console.log(error)
+    time = '-'
+  }
+  console.log(time)
   return (
     // isNaN(time)
     // ? <td className='fb15 flex cxc mxc'><span className='blackDot mr1' /><span >Disabled</span></td>
