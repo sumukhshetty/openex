@@ -5,10 +5,14 @@ const moment = require('moment');
 const LastOnline = (props) => {
   // const time = Math.floor((new Date() - new Date(props.time)) / (1000 * 60 * 60));
   var time
-  if (time === 'Active'){
-    time === 'a few seconds ago'
-  } else {
-    time = moment(props.time).fromNow();
+  try {
+    if (props.time === 'Active'){
+      time === 'a few seconds ago'
+    } else {
+      time = moment(props.time).fromNow();
+    }
+  } catch(error) {
+    time = '-'
   }
   return (
     // isNaN(time)

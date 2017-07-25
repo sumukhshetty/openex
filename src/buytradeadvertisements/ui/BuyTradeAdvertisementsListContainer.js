@@ -8,7 +8,8 @@ const mapStateToProps = (state, ownProps) => {
     etherPrice: state.etherPrice,
     user: state.user,
     users: state.users,
-    usersInfo: state.usersInfo
+    usersInfo: state.usersInfo,
+    presence: state.presence
   }
 }
 
