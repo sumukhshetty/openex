@@ -84,6 +84,7 @@ export function signUpUserCustomAuth (signUpInfo, web3, country) {
                     userid = firebaseUser.uid
                     var userdata = {
                       //'email': email, better that we stop storing this in publically viewable data
+                      'active:': true,
                       'country': country,
                       'currency': currency,
                       'username': username,

@@ -11,6 +11,7 @@ class SellTradeAdvertisementsList extends Component {
     var selltradeadvertisements = this.props.selltradeadvertisements.data
     var etherPrice = this.props.etherPrice.data;
     var users = this.props.users
+    console.log(users)
     var uid = this.props.user.data.uid;
     var seller;
 
@@ -25,21 +26,25 @@ class SellTradeAdvertisementsList extends Component {
     var component = this
     const rows = _.map(byMargin, function(selltradeadvertisement, key){
       if (selltradeadvertisement.value.sellerUid !== uid) {
-        if (selltradeadvertisement.value.active){
-          seller = users.data[selltradeadvertisement.value.sellerUid]
-          var marginMultiplier = (1 + (parseInt(selltradeadvertisement.value.margin, 10) * 0.01))
-          var price = etherPrice ? (etherPrice*marginMultiplier) : null;
-          var _presence
-          if (component.props.presence.data){
-            _presence = component.props.presence.data[selltradeadvertisement.value.buyerUid]
+        if (users.data[selltradeadvertisement.value.sellerUid].active){
+          if (selltradeadvertisement.value.active){
+            seller = users.data[selltradeadvertisement.value.sellerUid]
+            var marginMultiplier = (1 + (parseInt(selltradeadvertisement.value.margin, 10) * 0.01))
+            var price = etherPrice ? (etherPrice*marginMultiplier) : null;
+            var _presence
+            if (component.props.presence.data){
+              _presence = component.props.presence.data[selltradeadvertisement.value.buyerUid]
+            }
+            return (<SellTradeAdvertisementRow 
+              price={price} 
+              sellTradeAdvertisementData={selltradeadvertisement.value} 
+              sellTradeAdvertisementId={selltradeadvertisement.prop} 
+              seller={seller} etherPrice={etherPrice} 
+              key={selltradeadvertisement.prop}
+              presence={_presence}/>)
+          } else {
+            return null
           }
-          return (<SellTradeAdvertisementRow 
-            price={price} 
-            sellTradeAdvertisementData={selltradeadvertisement.value} 
-            sellTradeAdvertisementId={selltradeadvertisement.prop} 
-            seller={seller} etherPrice={etherPrice} 
-            key={selltradeadvertisement.prop}
-            presence={_presence}/>)
         } else {
           return null
         }
