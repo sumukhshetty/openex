@@ -6,7 +6,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loadinguserdata: state.loadinguserdata,
     web3: state.web3,
-    presence: state.presence
+    presence: state.presence,
+    country: state.country
   }
 }
 
