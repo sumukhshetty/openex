@@ -11,6 +11,7 @@ import WrongNetwork from './../wrongnetwork/WrongNetwork'
 import LockedAccount from './../lockedaccount/LockedAccount'
 import WrongAccount from './../wrongaccount/WrongAccount'
 import UserPresenceContainer from './../../userpresence/UserPresenceContainer'
+import NotLiveCountryContainer from './../../country/NotLiveCountryContainer'
 //import LoadingContracts from './../../loadingcontracts/LoadingContracts'
 
 import Kyc from './kyc/layouts/Kyc'
@@ -78,24 +79,30 @@ class Dashboard extends Component {
           )
       }
       if(this.props.user.correctUserAccount){
-        return (
-          <section className='bg-smoke'>
-            <div className='w-75 center pv3'>
-              <div>
+        if(this.props.user.profile.country !== 'IN'){
+          return(
+            <NotLiveCountryContainer />
+            )
+        } else {
+          return (
+            <section className='bg-smoke'>
+              <div className='w-75 center pv3'>
                 <div>
-                  <EnableNotifications />
-                  <Kyc/>
-                  <DashboardInfoMessage />
-                  <ActiveTrades />
-                  <TradeAdvertisements />
-                  <CompletedTrades />
-                  <DisputedTrades />
-                  <UserPresenceContainer />
+                  <div>
+                    <EnableNotifications />
+                    <Kyc/>
+                    <DashboardInfoMessage />
+                    <ActiveTrades />
+                    <TradeAdvertisements />
+                    <CompletedTrades />
+                    <DisputedTrades />
+                    <UserPresenceContainer />
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        )
+            </section>
+          )
+        }
       } else {
         return (
           <WrongAccount walletAddress={this.props.user.data.uid}/>
