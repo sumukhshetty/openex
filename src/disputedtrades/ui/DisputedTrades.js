@@ -10,6 +10,7 @@ class DisputedTrades extends Component {
     var options = {
       method: 'post',
       body: {userUid:firebaseRef.auth().currentUser.uid},
+      headers: { "Content-Type": "application/json" },
       json: true,
       url: url
     }
@@ -42,7 +43,7 @@ class DisputedTrades extends Component {
               </div>
             );
           } else {
-            return (<div></div>)  
+            return (<div></div>)
           }
         } else {
           return (<div></div>)
