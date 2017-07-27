@@ -149,9 +149,8 @@ module.exports = {
             console.log("the availableBalance is greater than the purchase request")
             dispatch(sendEtherState('sending'));
             //TODO: move to firebase functions
-            var event = orderBook.data.OrderAdded({uid:purchaseRequestId})
-            console.log(purchaseRequestId, sellerInterface.data.address, purchaseRequest.buyerAddress)
-            // TODO change seller to  sellerInterface
+
+            var event = orderBook.data.OrderAdded({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: buyer})
             event.watch(function(error, result) {
               // the order was added do stuff
               console.log('addOrder.event.watch')
@@ -271,7 +270,8 @@ module.exports = {
       */
       // START WEB3
       //event OrderCompleted(string uid, address seller, address buyer, uint amount);
-      var event = orderBook.data.OrderCompleted({uid:purchaseRequestId})
+
+      var event = orderBook.data.OrderCompleted({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: purchaseRequest.buyerAddress})
       event.watch(function(error,result) {
         console.log('event.OrderCompleted')
         console.log(error,result)
@@ -565,7 +565,6 @@ module.exports = {
       })
   },
   sellerAddsEther: (amount, uid, contractAddress, web3, sellerInterface, orderDB) => (dispatch) => {
-    console.log("ActiveTradeActions.sellerAddsEther")
     try{
       if(web3.eth.coinbase) {
         var coinbase = web3.eth.coinbase;
@@ -576,7 +575,6 @@ module.exports = {
         amount = Number(amount);
         let value = web3.toWei(amount, 'ether');
         dispatch(sendEtherState('sending'));
-        console.log('about to create the event')
         var event = orderDB.BalanceUpdated()
         event.watch((error, result)=>{
           dispatch(updateConfirmButtonIsDisabled(false))

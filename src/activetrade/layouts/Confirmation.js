@@ -24,7 +24,6 @@ class Confirmation extends Component {
 
   handleEscrowRequest (e) {
     e.preventDefault()
-    console.log('Confirmation.handleEscrowRequest')
     this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.sellerInterface.address, this.props.web3, this.props.sellerInterface, this.props.orderDB)
   }
 
@@ -46,7 +45,7 @@ class Confirmation extends Component {
             <ChatBox
               tradeId={this.props.purchaseRequestId}
               sellerId={this.props.activetrade.sellerUid}
-              buyerId={this.props.activetrade.buyerUid} 
+              buyerId={this.props.activetrade.buyerUid}
               purchaseRequest={this.props.activetrade}/>
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
