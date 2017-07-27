@@ -48,12 +48,12 @@ class ManageContract extends Component {
 
   handleAddEtherRequest(e) {
     e.preventDefault()
-    this.props.addEther(this.state.AddAmount, this.props.ethorderbook.data.address, this.props.web3.data, this.props.ethorderbook.data)
+    this.props.addEther(this.state.AddAmount, this.props.sellerInterface.data.address, this.props.web3.data, this.props.sellerInterface.data)
   }
 
   handleWithdrawEtherRequest(e) {
     e.preventDefault()
-    this.props.withdrawEther(this.state.WithdrawAmount, this.props.ethorderbook.data.address, this.props.web3.data, this.props.ethorderbook.data)
+    this.props.withdrawEther(this.state.WithdrawAmount, this.props.sellerInterface.data.address, this.props.web3.data, this.props.sellerInterface.data)
   }
 
 
@@ -66,19 +66,21 @@ class ManageContract extends Component {
   }
 
   componentDidMount(){
-    this.props.getAvailableBalance(this.props.ethorderbook.data, this.props.web3.data)
-    this.props.getContractBalance(this.props.ethorderbook.data, this.props.web3.data)
+    this.props.getAvailableBalance(this.props.sellerInterface.data.address, this.props.orderDB.data, this.props.web3.data)
+    this.props.getContractBalance(this.props.sellerInterface.data.address, this.props.web3.data)
   }
 
   render() {
+    console.log('ui.managecontract.render');
+    console.log(this.props);
     var component = this
-    if (this.props.ethorderbook.data==='obtaining...'){
+    if (this.props.sellerInterface.data==='obtaining...' || this.props.orderDB.data==='obtaining...'){
       return (
         <div>loading</div>
         )
     } else {
       // switch to mainnet
-      var url = 'https://kovan.etherscan.io/address/' + this.props.ethorderbook.data.address
+      var url = 'https://kovan.etherscan.io/address/' + this.props.sellerInterface.data.address
 
       return (
         <div className="w-100 bg-smoke h-100">

@@ -5,26 +5,27 @@ import * as actions from './ManageContractActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
-    ethorderbook: state.ethorderbook,
+    sellerInterface: state.sellerInterface,
     web3: state.web3,
     managecontract: state.managecontract,
     sendEtherState: state.sendEtherState,
+    orderDB: state.orderDB
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAvailableBalance: (ethorderbook, web3) => {
-      dispatch(actions.getAvailableBalance(ethorderbook, web3))
+    getAvailableBalance: (sellerInterface, orderDB, web3) => {
+      dispatch(actions.getAvailableBalance(sellerInterface, orderDB, web3))
     },
-    getContractBalance: (ethorderbook, web3) =>{
-      dispatch(actions.getContractBalance(ethorderbook, web3))
+    getContractBalance: (sellerInterface, web3) =>{
+      dispatch(actions.getContractBalance(sellerInterface, web3))
     },
-    addEther:(addAmount, contractAddress, web3, ethOrderBook)=>{
-      dispatch(actions.addEther(addAmount, contractAddress, web3, ethOrderBook))
+    addEther:(addAmount, contractAddress, web3, sellerInterface)=>{
+      dispatch(actions.addEther(addAmount, contractAddress, web3, sellerInterface))
     },
-    withdrawEther:(withdrawAmount, contractAddress, web3, ethOrderBook)=>{
-      dispatch(actions.withdrawEther(withdrawAmount, contractAddress, web3, ethOrderBook))
+    withdrawEther:(withdrawAmount, contractAddress, web3, sellerInterface)=>{
+      dispatch(actions.withdrawEther(withdrawAmount, contractAddress, web3, sellerInterface))
     },
     resetEtherState: () => {
       dispatch(actions.resetSendEtherState());

@@ -23,14 +23,22 @@ class ActiveTrade extends Component {
   }
 
   sellerConfirmsTrade () {
-    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.ethorderbook)
+    this.props.sellerConfirmsTrade(
+      this.props.seller.data, 
+      this.props.buyer.data, 
+      this.props.activetrade.data, 
+      this.props.purchaseRequestId, 
+      this.props.web3.data, 
+      this.props.sellerInterface, 
+      this.props.orderDB, 
+      this.props.orderBook)
   }
   buyerConfirmsPayment () {
     this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.seller.data,this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   sellerReleasesEther () {
-    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.ethorderbook)
+    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.sellerInterface, this.props.orderBook)
   }
   sellerCancelsTrade () {
     this.props.sellerCancelsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
@@ -54,9 +62,9 @@ class ActiveTrade extends Component {
   tradePostProcessing () {
     this.props.tradePostProcessing(this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.users)
   }
-  createOrderBookContract () {
-    console.log('ui.ActiveTrade.createOrderBookContract')
-    this.props.createOrderBookContract(this.props.web3.data, this.props.orderbookfactory, this.props.user)
+  createSellerInterfaceContract () {
+    console.log('ui.ActiveTrade.createSellerInterfaceContract')
+    this.props.createSellerInterfaceContract(this.props.web3.data, this.props.sellerInterfaceFactory, this.props.user)
   }
   resetEtherState() {
     this.props.resetEtherState();
@@ -148,13 +156,15 @@ class ActiveTrade extends Component {
           sellerCancelsTrade={this.sellerCancelsTrade.bind(this)}
           sendEtherState={this.props.sendEtherState}
           sellerAddsEther={this.props.sellerAddsEther}
-          createOrderBookContract={this.createOrderBookContract.bind(this)}
+          createSellerInterfaceContract={this.createSellerInterfaceContract.bind(this)}
           step={status}
           viewerRole={viewerRole}
           txhash={this.props.txhash.data}
-          ethorderbook={this.props.ethorderbook.data}
+          sellerInterface={this.props.sellerInterface.data}
+          orderDB={this.props.orderDB.data}
           confirmTradeButtonIsDisabled={this.props.activetrade.confirmTradeButtonIsDisabled}
           confirmTradeButtonColor={this.props.activetrade.confirmTradeButtonColor}
+          orderDB={this.props.orderDB.data}
           />,
         'Awaiting Payment': <Payment
           activetrade={activetrade}
@@ -213,7 +223,7 @@ class ActiveTrade extends Component {
           progress_map={progress_maps[status]}
           viewerRole={viewerRole}
           step={status}
-          releaseEther={this.sellerReleasesEther.bind(this)} 
+          releaseEther={this.sellerReleasesEther.bind(this)}
           purchaseRequestId={this.props.purchaseRequestId}
           releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
@@ -224,7 +234,7 @@ class ActiveTrade extends Component {
           progress_map={progress_maps[status]}
           viewerRole={viewerRole}
           step={status}
-          releaseEther={this.sellerReleasesEther.bind(this)} 
+          releaseEther={this.sellerReleasesEther.bind(this)}
           purchaseRequestId={this.props.purchaseRequestId}
           releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
           releaseToSeller={this.arbiterReleasesToSeller.bind(this)}

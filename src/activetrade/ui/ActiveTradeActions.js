@@ -3,7 +3,7 @@ import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import * as notificationHelpers from './../../util/notificationHelpers'
 import {notify} from 'react-notify-toast'
 import * as contractAbis from './../../contract_addresses/contractAbi'
-import * as orderFactory from './../../contract_addresses/orderfactory'
+import * as contractAddresses from './../../contract_addresses/contractAddresses'
 
 var ethUtil = require('ethereumjs-util')
 
@@ -60,10 +60,10 @@ function clearActiveTrade(){
   }
 }
 
-function userOrderBook(orderBook) {
+function userSellerInterface(sellerInterface) {
   return {
-  type: 'SET_ETH_ORDER_BOOK',
-  payload: orderBook
+  type: 'SET_SELLER_INTERFACE',
+  payload: sellerInterface
   }
 }
 
@@ -104,7 +104,7 @@ module.exports = {
       dispatch(setSeller(users.data[activeTrade.sellerUid]))
     })
   },
-  sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
+  sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderDBI, orderBook) => (dispatch) => {
     dispatch(updateConfirmButtonIsDisabled(true))
     try {
       let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
@@ -138,14 +138,20 @@ module.exports = {
       // END NO-SMART CONTRACT
       */
       // START WEB3
-      ethOrderBook.data.availableBalance(function(error, result){
+      orderDBI.data.availableBalances(sellerInterface.data.address, function(error, result){
         if(!error){
+          console.log("got the availableBalance")
+          console.log(result.toNumber())
+
           // check if the request is greater than the available balance
-          if(result.toNumber()>web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')){
+          //TODO: get feePercentage elsewhere to avoid hardcodinng it, probably from firebase
+          if(result.gte(web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether'))){
             console.log("the availableBalance is greater than the purchase request")
             dispatch(sendEtherState('sending'));
-            var event = ethOrderBook.data.OrderAdded()
-            event.watch((error, result) => {
+            //TODO: move to firebase functions
+
+            var event = orderBook.data.OrderAdded({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: buyer})
+            event.watch(function(error, result) {
               // the order was added do stuff
               console.log('addOrder.event.watch')
               console.log(error,result)
@@ -157,7 +163,7 @@ module.exports = {
                   lastUpdated: now.toUTCString(),
                   sellerconfirmtime: now.toUTCString(),
                   status: 'Awaiting Payment',
-                  contractAddress: ethOrderBook.data.address
+                  contractAddress: sellerInterface.data.address
                 })
               firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
               .set(updatedPurchaseRequest, function(error){
@@ -174,15 +180,15 @@ module.exports = {
             })
             console.log(purchaseRequest.buyerAddress)
             console.log(purchaseRequestId)
-            ethOrderBook.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
+            sellerInterface.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
               etherAmount, price, purchaseRequest.currency, {from:coinbase},
               function(error, result){
                 if(!error){
-                  console.log("ethOrderBook.data.addOrder")
+                  console.log("sellerInterface.data.addOrder")
                   dispatch(sendEtherState('waiting-for-tx-to-mine'))
                   dispatch(setTxHash(result))
                   }else {
-                    console.log(ethOrderBook.data.addOrder)
+                    console.log(sellerInterface.data.addOrder)
                     console.log(error)
                     dispatch(sendEtherState('init'));
                     dispatch(updateConfirmButtonIsDisabled(false))
@@ -193,7 +199,7 @@ module.exports = {
             dispatch(sendEtherState('insufficient-available-balance'));
           }
         } else {
-          console.log("ethOrderBook.data.availableBalance.error")
+          console.log("sellerInterface.data.availableBalance.error")
           dispatch(sendEtherState('init'));
           dispatch(updateConfirmButtonIsDisabled(false))
           console.log(error)
@@ -230,7 +236,7 @@ module.exports = {
         notificationHelpers.sendBuyerConfirmsPaymentNotification(buyer,seller,purchaseRequest,purchaseRequestId)
         });
   },
-  sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => (dispatch) => {
+  sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderBook) => (dispatch) => {
     try{
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
@@ -263,8 +269,10 @@ module.exports = {
       // END NO-SMART-CONTRACT
       */
       // START WEB3
-      var event = ethOrderBook.data.OrderCompleted()
-      event.watch((error,result) => {
+      //event OrderCompleted(string uid, address seller, address buyer, uint amount);
+
+      var event = orderBook.data.OrderCompleted({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: purchaseRequest.buyerAddress})
+      event.watch(function(error,result) {
         console.log('event.OrderCompleted')
         console.log(error,result)
         if(!error){
@@ -289,9 +297,9 @@ module.exports = {
         }
 
       })
-      ethOrderBook.data.completeOrder(purchaseRequestId, {from: coinbase}, function(error, result) {
+      sellerInterface.data.completeOrder(purchaseRequestId, {from: coinbase}, function(error, result) {
         if(!error){
-          console.log('ethOrderBook.data.completeOrder')
+          console.log('sellerInterface.data.completeOrder')
           dispatch(sendEtherState('waiting-for-tx-to-mine'))
           dispatch(setTxHash(result))
         } else {
@@ -405,14 +413,14 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(orderFactory.kovanDisputeResolver)) {
+      if (!ethUtil.isValidAddress(contractAddresses.kovanDisputeResolver)) {
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(orderFactory.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
         var event = _instance.DisputeResolved()
         console.log(_instance)
-        //dispatch(setETHOrderBook(_instance))
+        //dispatch(setSellerInterface(_instance))
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
           console.log(error, result)
@@ -465,11 +473,11 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(orderFactory.kovanDisputeResolver)){
+      if (!ethUtil.isValidAddress(contractAddresses.kovanDisputeResolver)){
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(orderFactory.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
         var event = _instance.DisputeResolved()
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
@@ -556,7 +564,7 @@ module.exports = {
         })
       })
   },
-  sellerAddsEther: (amount, uid, contractAddress, web3, ethOrderBook) => (dispatch) => {
+  sellerAddsEther: (amount, uid, contractAddress, web3, sellerInterface, orderDB) => (dispatch) => {
     try{
       if(web3.eth.coinbase) {
         var coinbase = web3.eth.coinbase;
@@ -567,13 +575,14 @@ module.exports = {
         amount = Number(amount);
         let value = web3.toWei(amount, 'ether');
         dispatch(sendEtherState('sending'));
-        var event = ethOrderBook.BalanceUpdated()
+        var event = orderDB.BalanceUpdated()
         event.watch((error, result)=>{
           dispatch(updateConfirmButtonIsDisabled(false))
           dispatch(updateConfirmationButtonColor('#2196f3'))
         })
         if (contractAddress && ((typeof contractAddress)==="string") && (contractAddress.length === 42)) {
-          ethOrderBook.pay({from:coinbase, value: value}, function(err, txHash){
+          console.log("about to deposit")
+          sellerInterface.deposit({from:coinbase, value: value}, function(err, txHash){
             if(!err) {
               dispatch(sendEtherState('init'));
               dispatch(updateConfirmButtonIsDisabled(true))
@@ -604,34 +613,35 @@ module.exports = {
         raven.captureException(error)
       }
       else {
+        console.log(error)
         raven.captureException(error)
       }
 
     }
   },
-  sellerCreatesETHOrderBook: (web3, orderBookFactory, user) => (dispatch) => {
+  sellerCreatesSellerInterface: (web3, sellerInterfaceFactory, user) => (dispatch) => {
     try {
       if (web3.eth.coinbase) {
         var coinbase = web3.eth.coinbase
       } else {
         throw new Error("Undefined Wallet Address")
       }
-      var event = orderBookFactory.data.ETHOrderBookCreated({seller:coinbase})
+      var event = sellerInterfaceFactory.data.SellerInterfaceCreated({seller:coinbase})
       event.watch((error, result) => {
-        const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
-        const _instance = ETHOrderBook.at(result.args.orderAddress)
+        const SellerInterface = web3.eth.contract(contractAbis.SellerInterfaceAbi)
+        const _instance = SellerInterface.at(result.args.orderAddress)
 
         // move this to the component will unmount for persistence
-        firebaseRef.database().ref('/ethorderbook/'+user.profile.country+'/'+user.data.uid+'/orderBookAddress')
+        firebaseRef.database().ref('/sellerInterface/'+user.profile.country+'/'+user.data.uid+'/sellerInterfaceAddress')
         .set(result.args.orderAddress)
         event.stopWatching()
-        dispatch(userOrderBook(_instance))
+        dispatch(userSellerInterface(_instance))
         dispatch(sendEtherState('init'))
         dispatch(updateConfirmButtonIsDisabled(false))
         dispatch(clearTxHash())
       })
       dispatch(sendEtherState('sending'));
-      orderBookFactory.data.createETHOrderBook(user.profile.country, {from: coinbase}, function(error, result){
+      sellerInterfaceFactory.data.createSellerInterface({from: coinbase}, function(error, result){
         if(!error){
           dispatch(sendEtherState('waiting-for-tx-to-mine'))
           dispatch(setTxHash(result))
@@ -663,7 +673,7 @@ module.exports = {
       } else {
         // get the dispute resolver contract
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(orderFactory.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
         // create an event, on the callback of the event do somme firebase stuff
         var event = _instance.DisputeAssigned()
         event.watch((error, result) => {
