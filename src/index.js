@@ -50,17 +50,18 @@ import * as useractions from './user/userActions'
 
 import Raven from 'raven-js'
 
-var ReactGA = require('react-ga');
+var ReactGA = require('react-ga')
 
-ReactGA.initialize('UA-90843374-4');
+ReactGA.initialize('UA-90843374-4')
 
 function logPageView() {
-  ReactGA.set({ page: window.location.pathname });
-  ReactGA.pageview(window.location.pathname);
+  ReactGA.set({ page: window.location.pathname })
+  ReactGA.pageview(window.location.pathname)
 }
 
-//var raven
-export const raven = Raven.config('https://e84964259dc24e9e902198566c748cdb@sentry.io/178466').install()
+export const raven = Raven.config(
+  'https://e84964259dc24e9e902198566c748cdb@sentry.io/178466'
+).install()
 
 var config = {
   apiKey: _firebaseconfig._apiKey,
@@ -75,55 +76,107 @@ export const firebaseStorage = firebase.storage()
 const history = syncHistoryWithStore(browserHistory, store)
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('../firebase-messaging-sw.js')
-    .then(function (registration) {
+  navigator.serviceWorker
+    .register('../firebase-messaging-sw.js')
+    .then(function(registration) {
       console.log('Registration successful, scope is:', registration.scope)
-    }).catch(function (err) {
-    console.log('Service worker registration failed, error:', err)
-  })
+    })
+    .catch(function(err) {
+      console.log('Service worker registration failed, error:', err)
+    })
 }
 
 export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
 
-ReactDOM.render((
+ReactDOM.render(
   <Provider store={store}>
     <Router history={history} onUpdate={logPageView}>
-      <Route path='/' component={AppContainer}>
+      <Route path="/" component={AppContainer}>
         <IndexRoute component={HomeContainer} />
-        <Route path='dashboard' component={UserIsAuthenticated(DashboardContainer)} />
-        <Route path='wrongnetwork' component={WrongNetwork} />
-        <Route path='admin' component={UserIsAuthenticated(Admin)} />
-        <Route path='sellether' component={UserIsAuthenticated(BuyTradeAdvertisements)} />
-        <Route path='buyether' component={UserIsAuthenticated(SellTradeAdvertisements)} />
-        <Route path='help' component={UserIsAuthenticated(Help)} />
-        <Route path='help/confirmation' component={UserIsAuthenticated(HelpConfirmation)} />
-        <Route path='support' component={UserIsNotAuthenticated(Support)} />
-        <Route path='posttrade' component={UserIsAuthenticated(PostTradeForm)} />
-        <Route path='user/:userUid' component={UserIsAuthenticated(UserScreen)} />
-        <Route path='selltradeadvertisement/:sellTradeAdvertisementId' component={UserIsAuthenticated(SellTradeAdvertisement)} />
-        <Route path='buytradeadvertisement/:buyTradeAdvertisementId' component={UserIsAuthenticated(BuyTradeAdvertisement)} />
-        <Route path='activetrade/:purchaseRequestId' component={UserIsAuthenticated(ActiveTrade)} />
-        <Route path='edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId' component={UserIsAuthenticated(EditTradeAdvertisement)} />
-        <Route path='manage/:tradeId' component={UserIsAuthenticated(ManageContractContainer)} />
-        <Route path='kyc' component={UserIsAuthenticated(KycUpload)} />
-        <Route path='processkyc/:country/:userUid' component={UserIsAuthenticated(ProcessKyc)} />
-        <Route path='termsofservice' component={UserIsNotAuthenticated(TermsOfService)} />
-        <Route path='about' component={UserIsNotAuthenticated(About)} />
-        <Route path='completedtrades' component={UserIsAuthenticated(CompletedTradesAll)} />
-        <Route path='browseads' component={UserIsNotAuthenticated(BrowseAdvertisements)} />
-        <Route path='browsebuyadvertisement/:buyTradeAdvertisementId' component={UserIsNotAuthenticated(BrowseBuyAdvertisement)}/>
-        <Route path='browseselladvertisement/:sellTradeAdvertisementId' component={UserIsNotAuthenticated(BrowseSellAdvertisement)}/>
-        <Route path='html' component={HTMLStyles} />
-        <Route path='static' component={Static} />
+        <Route
+          path="dashboard"
+          component={UserIsAuthenticated(DashboardContainer)}
+        />
+        <Route path="wrongnetwork" component={WrongNetwork} />
+        <Route path="admin" component={UserIsAuthenticated(Admin)} />
+        <Route
+          path="sellether"
+          component={UserIsAuthenticated(BuyTradeAdvertisements)}
+        />
+        <Route
+          path="buyether"
+          component={UserIsAuthenticated(SellTradeAdvertisements)}
+        />
+        <Route path="help" component={UserIsAuthenticated(Help)} />
+        <Route
+          path="help/confirmation"
+          component={UserIsAuthenticated(HelpConfirmation)}
+        />
+        <Route path="support" component={UserIsNotAuthenticated(Support)} />
+        <Route
+          path="posttrade"
+          component={UserIsAuthenticated(PostTradeForm)}
+        />
+        <Route
+          path="user/:userUid"
+          component={UserIsAuthenticated(UserScreen)}
+        />
+        <Route
+          path="selltradeadvertisement/:sellTradeAdvertisementId"
+          component={UserIsAuthenticated(SellTradeAdvertisement)}
+        />
+        <Route
+          path="buytradeadvertisement/:buyTradeAdvertisementId"
+          component={UserIsAuthenticated(BuyTradeAdvertisement)}
+        />
+        <Route
+          path="activetrade/:purchaseRequestId"
+          component={UserIsAuthenticated(ActiveTrade)}
+        />
+        <Route
+          path="edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId"
+          component={UserIsAuthenticated(EditTradeAdvertisement)}
+        />
+        <Route
+          path="manage/:tradeId"
+          component={UserIsAuthenticated(ManageContractContainer)}
+        />
+        <Route path="kyc" component={UserIsAuthenticated(KycUpload)} />
+        <Route
+          path="processkyc/:country/:userUid"
+          component={UserIsAuthenticated(ProcessKyc)}
+        />
+        <Route
+          path="termsofservice"
+          component={UserIsNotAuthenticated(TermsOfService)}
+        />
+        <Route path="about" component={UserIsNotAuthenticated(About)} />
+        <Route
+          path="completedtrades"
+          component={UserIsAuthenticated(CompletedTradesAll)}
+        />
+        <Route
+          path="browseads"
+          component={UserIsNotAuthenticated(BrowseAdvertisements)}
+        />
+        <Route
+          path="browsebuyadvertisement/:buyTradeAdvertisementId"
+          component={UserIsNotAuthenticated(BrowseBuyAdvertisement)}
+        />
+        <Route
+          path="browseselladvertisement/:sellTradeAdvertisementId"
+          component={UserIsNotAuthenticated(BrowseSellAdvertisement)}
+        />
+        <Route path="html" component={HTMLStyles} />
+        <Route path="static" component={Static} />
       </Route>
     </Router>
-  </Provider>
-  ),
+  </Provider>,
   document.getElementById('root')
 )
 
 // TODO add the ethprice listener here
-setTimeout(function () {
+setTimeout(function() {
   store.dispatch(useractions.checkLocalStorage())
   store.dispatch(useractions.startListeningUserAuth())
 })

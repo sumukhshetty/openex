@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addMessage 1`] = `
+Object {
+  "content": "testing addMessage action",
+  "key": 11,
+  "timeStamp": 11223344556677,
+  "tradeId": 1234,
+  "type": "ADD_MESSAGE",
+  "uid": 9876,
+}
+`;
+
+exports[`createMessage 1`] = `
+Object {
+  "content": "testing addMessage action",
+  "key": 11,
+  "timeStamp": 11223344556677,
+  "tradeId": 1234,
+  "type": "ADD_MESSAGE",
+  "uid": 9876,
+}
+`;

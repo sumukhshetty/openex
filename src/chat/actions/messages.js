@@ -1,20 +1,33 @@
 import { firebaseRef } from '../../index.js'
 import * as notificationHelpers from './../../util/notificationHelpers'
 
-export const createMessage = ({ content, uid, tradeId, download , purchaseRequest}) => {
+export const createMessage = ({
+  content,
+  uid,
+  tradeId,
+  download,
+  purchaseRequest,
+  fileType
+}) => {
   return dispatch => {
     const message = {
       content,
       uid,
       timeStamp: Date.now(),
-      download
+      download,
+      fileType
     }
     firebaseRef
       .database()
       .ref('chatrooms')
       .child(`${tradeId}/messages`)
       .push(message)
-    notificationHelpers.sendNewChatNotification(uid, purchaseRequest, tradeId, content)
+    notificationHelpers.sendNewChatNotification(
+      uid,
+      purchaseRequest,
+      tradeId,
+      content
+    )
   }
 }
 
@@ -25,7 +38,9 @@ export const addMessage = (key, message, tradeId) => {
     key,
     timeStamp: message.timeStamp,
     uid: message.uid,
-    tradeId
+    tradeId,
+    download: message.download,
+    fileType: message.fileType
   }
 }
 // when the data changes fire these actions in redux

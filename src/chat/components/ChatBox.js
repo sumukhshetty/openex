@@ -48,11 +48,15 @@ export default class ChatBox extends Component {
               messages[message].uid !== this.props.buyerId
             }
             download={messages[message].download}
+            fileType={messages[message].fileType}
           />
         )}
         {this.props.chatAuth.status === 'ANONYMOUS' && <Loading />}
         {this.props.chatAuth.status === 'SIGNED_IN' &&
-          <NewChatMessage tradeId={this.props.tradeId} purchaseRequest={this.props.purchaseRequest}/>}
+          <NewChatMessage
+            tradeId={this.props.tradeId}
+            purchaseRequest={this.props.purchaseRequest}
+          />}
       </div>
     )
   }

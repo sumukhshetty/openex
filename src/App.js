@@ -47,23 +47,21 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log("App.componentWillMount")
+    console.log('App.componentWillMount')
     getWeb3.then(results => {
       console.log('getWeb3.then')
       console.log(results.web3)
       this.web3Initialize(results.web3)
-      //dispatch(web3Init(results.web3))  
+      //dispatch(web3Init(results.web3))
     })
-
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.getCountry()
     this.props.getUsers()
   }
 
   web3Initialize(web3) {
-
     if (typeof web3 !== 'undefined') {
       // Use the Mist/wallet provider.
       // DEVELOPER NOTE: removing the next commented line will break the app
@@ -100,11 +98,13 @@ class App extends Component {
               <NotificationsContainer close={this.removeNotifications} />}
             <div className="pure-g flex mxb cxc ">
               <div className="pure-u-1-4 brand">
+                <Link to="/admin">
                   <img
                     className="brand"
                     src={logo}
                     alt="Automte Ether Exchange"
                   />
+                </Link>
               </div>
               <div className="flex mxe cxc">
                 <Bell action={this.showNotifications} />

@@ -1,4 +1,4 @@
-export default function messagesReducer (state = {}, action) {
+export default function messagesReducer(state = {}, action) {
   switch (action.type) {
     case 'ADD_MESSAGE':
       return {
@@ -7,7 +7,8 @@ export default function messagesReducer (state = {}, action) {
           content: action.content,
           timeStamp: action.timeStamp,
           uid: action.uid,
-          download: action.download
+          download: action.download,
+          fileType: action.fileType
         }
       }
     case 'CLEAR_MESSAGES_FROM_STATE':
