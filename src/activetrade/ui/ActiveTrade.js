@@ -153,6 +153,7 @@ class ActiveTrade extends Component {
           viewerRole={viewerRole}
           txhash={this.props.txhash.data}
           sellerInterface={this.props.sellerInterface.data}
+          orderDB={this.props.orderDB.data}
           confirmTradeButtonIsDisabled={this.props.activetrade.confirmTradeButtonIsDisabled}
           confirmTradeButtonColor={this.props.activetrade.confirmTradeButtonColor}
           />,
