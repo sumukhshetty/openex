@@ -33,45 +33,7 @@
     },
     "users": {
       ".read": "true",
-      ".write": "auth != null",
-      "$uid": {
-        "accountCreated": {
-          ".validate": "!data.exists() && newData.val() <= now"
-        },
-        "active": {
-          ".validate": "!data.exists()"
-        },
-        "avgFeedback": {
-          ".write": "false"
-        },
-        "country": {
-          ".validate": "!data.exists()"
-        },
-        "currency": {
-          ".validate": "!data.exists()"
-        },
-        "firstPurchase": {
-          ".validate": "!data.exists() && newData.val() <= now"
-        },
-        "isAdmin": {
-          ".write": "false"
-        },
-        "kycComplete": {
-          ".write": "false"
-        },
-        "username": {
-          ".validate": "!data.exists()"
-        },
-        "verifiedEmail":{
-         ".write": "false"
-        },
-        "verifiedIdentification":{
-         ".write": "false"
-        },
-        "verifiedPhoneNumber":{
-         ".write": "false"
-        }
-      }
+      ".write": "auth != null"
     },
     "notifications": {
       ".read": "auth != null",
@@ -91,27 +53,7 @@
     },
     "selltradeadvertisements": {
       ".read": "true",
-      ".write": "auth != null",
-      "$country": {
-        "$uid": {
-          ".validate": "auth.uid == data.child('sellerUid').val()",
-          "currency": {
-            ".validate": "!data.exists()"
-          },
-          "sellerAddress": {
-            ".validate": "!data.exists()"
-          },
-          "sellerUid": {
-            ".validate": "!data.exists()"
-          },
-          "sellerUsername": {
-            ".validate": "!data.exists()"
-          },
-          "tradeType": {
-            ".validate": "newData.val() == 'sell-ether'"
-          }
-        }
-      }
+      ".write": "auth != null"
     },
     "processkyc": {
       ".read": "auth != null",
@@ -121,29 +63,17 @@
       ".read": "auth != null",
       ".write": "auth != null"
     },
-    "sellerInterface": {
+    "ethorderbook": {
       ".read": "auth != null",
-      ".write": "auth != null",
-      "$country": {
-        ".validate": "auth.uid == newData.val()",
-        "$uid": {
-          "sellerInterfaceAddress": {
-            ".validate": "!data.exists()"
-          }
-        }
-      }
+      ".write": "auth != null"
     },
     "registeredAccounts":{
       ".read": "true",
-      ".validate": "!data.exists()"
-    },
-    "prices": {
-      ".read": "true",
-      ".write": "false"
+      ".write": "auth != null"
     },
     "presence":{
       ".read":"true",
-      ".write": "true"
+      ".write": "auth != null"
     }
   }
 }

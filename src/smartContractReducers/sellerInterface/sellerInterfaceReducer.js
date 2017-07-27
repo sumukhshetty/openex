@@ -2,15 +2,15 @@ const initialState = {
   data: null
 }
 
-const ethOrderBookReducer = (state = initialState, action) => {
-  if (action.type === 'SET_ETH_ORDER_BOOK')
+const sellerInterfaceReducer = (state = initialState, action) => {
+  if (action.type === 'SET_SELLER_INTERFACE')
   {
     return Object.assign({}, state, {
       data: action.payload
     })
   }
 
-  if (action.type === 'CLEAR_ETH_ORDER_BOOK')
+  if (action.type === 'CLEAR_SELLER_INTERFACE')
   {
     return Object.assign({}, state, {
       data: null
@@ -20,4 +20,4 @@ const ethOrderBookReducer = (state = initialState, action) => {
   return state
 }
 
-export default ethOrderBookReducer
+export default sellerInterfaceReducer

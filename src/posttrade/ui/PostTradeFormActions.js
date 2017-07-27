@@ -11,10 +11,10 @@ function sendEtherState(etherStatePayload) {
   }
 }
 
-function userOrderBook(orderBook) {
+function userSellerInterface(sellerInterface) {
   return {
-  type: 'SET_ETH_ODER_BOOK',
-  payload: orderBook
+  type: 'SET_SELLER_INTERFACE',
+  payload: sellerInterface
   }
 }
 
@@ -36,15 +36,15 @@ export function userCreatesBuyTradeAdvertisement(tradeDetails, web3, user){
   return function(dispatch){
     var newAdvertisement = firebaseRef.database().ref('/buytradeadvertisements/'+ user.profile.country)
       .push(tradeDetails, function(error){
-        firebaseRef.database().ref('/users/' + user.data.uid + '/advertisements/buyether/' + 
+        firebaseRef.database().ref('/users/' + user.data.uid + '/advertisements/buyether/' +
           newAdvertisement.key + '/tradetype').set('buy-ether')
       })
   }
 }
 
-export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookFactory, user){
+export function userCreatesSellTradeAdvertisement(tradeDetails, web3, sellerInterfaceFactory, user){
   return function(dispatch){
-    firebaseRef.database().ref('/ethorderbook/'+user.profile.country+'/'+user.data.uid+'/orderBookAddress').once('value', function(snap){
+    firebaseRef.database().ref('/sellerInterface/'+user.profile.country+'/'+user.data.uid+'/sellerInterfaceAddress').once('value', function(snap){
       if(snap.val()){
         var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
                   .push(tradeDetails, function(err){
@@ -59,12 +59,12 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookF
             throw new Error("Undefined Wallet Address")
           }
           dispatch(sendEtherState('sending'))
-          var event = orderBookFactory.data.ETHOrderBookCreated({seller:coinbase})
+          var event = sellerInterfaceFactory.data.SellerInterfaceCreated({seller:coinbase})
           event.watch((error, result) => {
-            const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
-            const _instance = ETHOrderBook.at(result.args.orderAddress)
+              const SellerInterface = web3.eth.contract(contractAbis.SellerInterfaceAbi)
+            const _instance = SellerInterface.at(result.args.orderAddress)
 
-            firebaseRef.database().ref('/ethorderbook/'+user.profile.country+'/'+user.data.uid+'/orderBookAddress')
+            firebaseRef.database().ref('/sellerInterface/'+user.profile.country+'/'+user.data.uid+'/sellerInterfaceAddress')
             .set(result.args.orderAddress)
             var newAdvertisement = firebaseRef.database().ref('/selltradeadvertisements/'+ user.profile.country)
                   .push(tradeDetails, function(err){
@@ -72,12 +72,12 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookF
                         newAdvertisement.key + '/tradetype').set('sell-ether')
                   })
             event.stopWatching()
-            dispatch(userOrderBook(_instance))
+            dispatch(userSellerInterface(_instance))
             dispatch(sendEtherState('init'))
             dispatch(clearTxHash())
           })
 
-          orderBookFactory.data.createETHOrderBook(user.profile.country, {from: coinbase}, function(error, result){
+          sellerInterfaceFactory.data.createSellerInterface({from: coinbase}, function(error, result){
             if(!error){
               dispatch(sendEtherState('waiting-for-tx-to-mine'));
               dispatch(setTxHash(result))

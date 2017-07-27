@@ -9,8 +9,8 @@ const mapStateToProps = (state, ownProps) => {
     etherPrice: state.etherPrice,
     uid: ownProps.uid,
     sendEtherState: state.sendEtherState,
-    orderbookfactory: state.orderbookfactory,
-    ethorderbook: state.ethorderbook,
+    sellerInterfaceFactory: state.sellerInterfaceFactory,
+    sellerInterface: state.sellerInterface,
     txhash: state.txhash,
     tradeadvertisements: state.tradeadvertisements
   }
@@ -21,10 +21,10 @@ const mapDispatchToProps = (dispatch) => {
     userCreatesBuyTradeAdvertisement: (tradeDetails, web3, user) =>{
       dispatch(actions.userCreatesBuyTradeAdvertisement(tradeDetails, web3, user))
     },
-    onCreateSellTradeAdvertisementFormSubmit: (tradeDetails, web3, orderBookFactory, user) => {
+    onCreateSellTradeAdvertisementFormSubmit: (tradeDetails, web3, sellerInterfaceFactory, user) => {
       //event.preventDefault();
 
-      dispatch(actions.userCreatesSellTradeAdvertisement(tradeDetails, web3, orderBookFactory, user))
+      dispatch(actions.userCreatesSellTradeAdvertisement(tradeDetails, web3, sellerInterfaceFactory, user))
     },
     onBuyEtherFormSubmit: (tradeDetails, web3, state) => {
       event.preventDefault();

@@ -18,15 +18,19 @@ import Kyc from './kyc/layouts/Kyc'
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
 
-import factoryAddress from './../../contract_addresses/orderfactory.js'
+import factoryAddress from './../../contract_addresses/contractAddresses.js'
 
 class Dashboard extends Component {
 
   componentWillMount () {
+    console.log('');
     // TODO change this to mainnet
     console.log("Dashboard.componentWillMount")
-    this.props.loadOrderBookFactory(this.props.web3.data, factoryAddress.kovanOrderFactoryAddress)
-    this.props.loadETHOrderBook(this.props.web3.data, this.props.user)
+    console.log(factoryAddress.kovanSellerInterfaceFactoryAddress);
+    this.props.loadSellerInterfaceFactory(this.props.web3.data, factoryAddress.kovanSellerInterfaceFactoryAddress)
+    this.props.loadOrderDB(this.props.web3.data, factoryAddress.kovanOrderDB)
+    this.props.loadOrderBook(this.props.web3.data, factoryAddress.kovanOrderBook)
+    this.props.loadSellerInterface(this.props.web3.data, this.props.user)
     this.props.checkBrowserWalletAddress(this.props.web3.data, this.props.user)
     firebaseMessaging.onTokenRefresh(function () {
       firebaseMessaging.getToken()
