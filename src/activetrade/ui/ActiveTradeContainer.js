@@ -70,9 +70,9 @@ const mapDispatchToProps = (dispatch) => {
     tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
       actions.tradePostProcessing(user, purchaseRequest, purchaseRequestId, users)
     },
-    sellerAddsEther: (amount, uid, contractAddress, web3, sellerInterface) => {
+    sellerAddsEther: (amount, uid, contractAddress, web3, sellerInterface, orderDB) => {
       console.log("ui.ActiveTradeContainer.sellerAddsEther")
-      dispatch(actions.sellerAddsEther(amount, uid, contractAddress, web3,sellerInterface))
+      dispatch(actions.sellerAddsEther(amount, uid, contractAddress, web3, sellerInterface, orderDB))
     },
     createSellerInterfaceContract: (web3, sellerInterfaceFactory, user) => {
       console.log("ui.ActiveTradeContainer.createSellerInterfaceContract")

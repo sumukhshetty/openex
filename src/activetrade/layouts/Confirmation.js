@@ -24,7 +24,8 @@ class Confirmation extends Component {
 
   handleEscrowRequest (e) {
     e.preventDefault()
-    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.ethorderbook.address, this.props.web3, this.props.ethorderbook)
+    console.log('Confirmation.handleEscrowRequest')
+    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.sellerInterface.address, this.props.web3, this.props.sellerInterface, this.props.orderDB)
   }
 
   render () {
@@ -34,7 +35,7 @@ class Confirmation extends Component {
     }
     var contractUrl
     if(this.props.sendEtherState === 'insufficient-available-balance'){
-      contractUrl = "https://kovan.etherscan.io/address/"+this.props.ethorderbook.address
+      contractUrl = "https://kovan.etherscan.io/address/"+this.props.sellerInterface.address
     }
     return (
       <section className='bg-smoke'>

@@ -140,14 +140,19 @@ module.exports = {
       // START WEB3
       orderDBI.data.availableBalances(sellerInterface.data.address, function(error, result){
         if(!error){
+          console.log("got the availableBalance")
+          console.log(result.toNumber())
+
           // check if the request is greater than the available balance
           //TODO: get feePercentage elsewhere to avoid hardcodinng it, probably from firebase
-          if(result.gt(web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether'))){
+          if(result.gte(web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether'))){
             console.log("the availableBalance is greater than the purchase request")
             dispatch(sendEtherState('sending'));
             //TODO: move to firebase functions
-            var event = orderBook.data.OrderAdded()
-            event.watch({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: purchaseRequest.buyerAddress}, function(error, result) {
+            var event = orderBook.data.OrderAdded({uid:purchaseRequestId})
+            console.log(purchaseRequestId, sellerInterface.data.address, purchaseRequest.buyerAddress)
+            // TODO change seller to  sellerInterface
+            event.watch(function(error, result) {
               // the order was added do stuff
               console.log('addOrder.event.watch')
               console.log(error,result)
@@ -266,8 +271,8 @@ module.exports = {
       */
       // START WEB3
       //event OrderCompleted(string uid, address seller, address buyer, uint amount);
-      var event = orderBook.data.OrderCompleted()
-      event.watch({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: purchaseRequest.buyerAddress}, function(error,result) {
+      var event = orderBook.data.OrderCompleted({uid:purchaseRequestId})
+      event.watch(function(error,result) {
         console.log('event.OrderCompleted')
         console.log(error,result)
         if(!error){
@@ -559,7 +564,8 @@ module.exports = {
         })
       })
   },
-  sellerAddsEther: (amount, uid, contractAddress, web3, sellerInterface) => (dispatch) => {
+  sellerAddsEther: (amount, uid, contractAddress, web3, sellerInterface, orderDB) => (dispatch) => {
+    console.log("ActiveTradeActions.sellerAddsEther")
     try{
       if(web3.eth.coinbase) {
         var coinbase = web3.eth.coinbase;
@@ -570,12 +576,14 @@ module.exports = {
         amount = Number(amount);
         let value = web3.toWei(amount, 'ether');
         dispatch(sendEtherState('sending'));
-        var event = sellerInterface.BalanceUpdated()
+        console.log('about to create the event')
+        var event = orderDB.BalanceUpdated()
         event.watch((error, result)=>{
           dispatch(updateConfirmButtonIsDisabled(false))
           dispatch(updateConfirmationButtonColor('#2196f3'))
         })
         if (contractAddress && ((typeof contractAddress)==="string") && (contractAddress.length === 42)) {
+          console.log("about to deposit")
           sellerInterface.deposit({from:coinbase, value: value}, function(err, txHash){
             if(!err) {
               dispatch(sendEtherState('init'));
@@ -607,6 +615,7 @@ module.exports = {
         raven.captureException(error)
       }
       else {
+        console.log(error)
         raven.captureException(error)
       }
 

@@ -23,7 +23,15 @@ class ActiveTrade extends Component {
   }
 
   sellerConfirmsTrade () {
-    this.props.sellerConfirmsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.sellerInterface, this.props.orderDB, this.props.orderBook)
+    this.props.sellerConfirmsTrade(
+      this.props.seller.data, 
+      this.props.buyer.data, 
+      this.props.activetrade.data, 
+      this.props.purchaseRequestId, 
+      this.props.web3.data, 
+      this.props.sellerInterface, 
+      this.props.orderDB, 
+      this.props.orderBook)
   }
   buyerConfirmsPayment () {
     this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.seller.data,this.props.activetrade.data, this.props.purchaseRequestId)
@@ -155,6 +163,7 @@ class ActiveTrade extends Component {
           sellerInterface={this.props.sellerInterface.data}
           confirmTradeButtonIsDisabled={this.props.activetrade.confirmTradeButtonIsDisabled}
           confirmTradeButtonColor={this.props.activetrade.confirmTradeButtonColor}
+          orderDB={this.props.orderDB.data}
           />,
         'Awaiting Payment': <Payment
           activetrade={activetrade}

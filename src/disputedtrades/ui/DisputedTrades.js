@@ -6,12 +6,16 @@ const request = require('request')
 class DisputedTrades extends Component {
 
   checkAdmin() {
+    console.log('DisputedTrades.checkAdmin')
+    //TODO reimplement admin
+    browserHistory.push('/admin')
     var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/checkAdmin'
     var options = {
       method: 'post',
       body: {userUid:firebaseRef.auth().currentUser.uid},
       json: true,
-      url: url
+      url: url,
+      headers: { "Content-Type": "application/json" },
     }
     request(options, function (err, res, body) {
       if (err) {
