@@ -15,11 +15,17 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadOrderBookFactory: (web3, orderBookFactoryAddress) => {
-      dispatch(actions.loadOrderBookFactory(web3, orderBookFactoryAddress))
+    loadSellerInterfaceFactory: (web3, sellerInterfaceFactoryAddress) => {
+      dispatch(actions.loadSellerInterfaceFactory(web3, sellerInterfaceFactoryAddress))
     },
-    loadETHOrderBook: (web3, user) => {
-      dispatch(actions.loadETHOrderBook(web3, user))
+    loadOrderDB: (web3, orderDBAddress) => {
+      dispatch(actions.loadOrderDB(web3, orderDBAddress))
+    },
+    loadOrderBook: (web3, orderBookAddress) => {
+      dispatch(actions.loadOrderBook(web3, orderBookAddress))
+    },
+    loadSellerInterface: (web3, user) => {
+      dispatch(actions.loadSellerInterface(web3, user))
     },
     checkBrowserWalletAddress: (web3, user) => {
       dispatch(actions.checkBrowserWalletAddress(web3, user))

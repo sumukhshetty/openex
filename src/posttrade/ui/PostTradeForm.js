@@ -187,7 +187,7 @@ class PostTradeForm extends Component {
       this.props.onCreateSellTradeAdvertisementFormSubmit(
         _postTradeDetails,
         this.props.web3.data,
-        this.props.orderbookfactory,
+        this.props.sellerInterfaceFactory,
         this.props.user
       )
     }

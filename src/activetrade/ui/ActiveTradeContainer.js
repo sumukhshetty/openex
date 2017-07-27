@@ -15,8 +15,10 @@ const mapStateToProps = (state, ownProps) => {
     sendEtherState: state.sendEtherState,
     cancelTradeState: state.cancelTradeState,
     purchaseRequestId: ownProps.purchaseRequestId,
-    ethorderbook: state.ethorderbook,
-    orderbookfactory: state.orderbookfactory,
+    sellerInterface: state.sellerInterface,
+    sellerInterfaceFactory: state.sellerInterfaceFactory,
+    orderDB: state.orderDB,
+    orderBook: state.orderBook,
     txhash: state.txhash
   }
 }
@@ -26,14 +28,14 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users, user) => {
       dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users, user))
     },
-    sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook) => {
-      dispatch(actions.sellerConfirmsTrade(seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook))
+    sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderDB, orderBook) => {
+      dispatch(actions.sellerConfirmsTrade(seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderDB, orderBook))
     },
     buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.buyerConfirmsPayment(buyer, seller, purchaseRequest, purchaseRequestId))
     },
-    sellerReleasesEther: (seller, buyer,purchaseRequest, purchaseRequestId, web3, ethOrderBook) => {
-      dispatch(actions.sellerReleasesEther(seller, buyer, purchaseRequest, purchaseRequestId, web3, ethOrderBook))
+    sellerReleasesEther: (seller, buyer,purchaseRequest, purchaseRequestId, web3, sellerInterface, orderBook) => {
+      dispatch(actions.sellerReleasesEther(seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderBook))
     },
     sellerCancelsTrade: (seller, buyer, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.sellerCancelsTrade(seller, buyer, purchaseRequest, purchaseRequestId))
@@ -53,8 +55,8 @@ const mapDispatchToProps = (dispatch) => {
       console.log(web3.eth.coinbase)
       dispatch(actions.arbiterReleasesToSeller(seller, buyer, arbiter, purchaseRequest, purchaseRequestId, web3))
     },
-    arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId, web3, ethOrderBook)=>{
-      dispatch(actions.arbiterReleasesToBuyer(buyer, arbiter, purchaseRequest, purchaseRequestId, web3, ethOrderBook))
+    arbiterReleasesToBuyer: (buyer, arbiter, purchaseRequest, purchaseRequestId, web3, sellerInterface)=>{
+      dispatch(actions.arbiterReleasesToBuyer(buyer, arbiter, purchaseRequest, purchaseRequestId, web3, sellerInterface))
     },
     assignArbiter: (user, buyer, seller, purchaseRequest, purchaseRequestId, web3)=> {
       dispatch(actions.assignArbiter(user, buyer, seller, purchaseRequest, purchaseRequestId, web3))
@@ -68,13 +70,13 @@ const mapDispatchToProps = (dispatch) => {
     tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
       actions.tradePostProcessing(user, purchaseRequest, purchaseRequestId, users)
     },
-    sellerAddsEther: (amount, uid, contractAddress, web3, ethOrderBook) => {
+    sellerAddsEther: (amount, uid, contractAddress, web3, sellerInterface) => {
       console.log("ui.ActiveTradeContainer.sellerAddsEther")
-      dispatch(actions.sellerAddsEther(amount, uid, contractAddress, web3,ethOrderBook))
+      dispatch(actions.sellerAddsEther(amount, uid, contractAddress, web3,sellerInterface))
     },
-    createOrderBookContract: (web3, orderBookFactory, user) => {
-      console.log("ui.ActiveTradeContainer.createOrderBookContract")
-      dispatch(actions.sellerCreatesETHOrderBook(web3, orderBookFactory, user))
+    createSellerInterfaceContract: (web3, sellerInterfaceFactory, user) => {
+      console.log("ui.ActiveTradeContainer.createSellerInterfaceContract")
+      dispatch(actions.sellerCreatesSellerInterface(web3, sellerInterfaceFactory, user))
     },
     clearState: ()=>{
       dispatch(actions.clearState())

@@ -2,17 +2,31 @@ import {firebaseRef} from './../../index.js'
 import * as contractAbis from './../../contract_addresses/contractAbi'
 import {notify} from 'react-notify-toast'
 
-function setOrderBookFactory(orderBookFactory) {
+function setSellerInterfaceFactory(sellerInterfaceFactory) {
   return {
-  type: 'ETH_ORDER_BOOK_FACTORY',
-  payload: orderBookFactory
+  type: 'SELLER_INTERFACE_FACTORY',
+  payload: sellerInterfaceFactory
   }
 }
 
-function setETHOrderBook(orderBook) {
+function setOrderDB(orderDB) {
   return {
-  type: 'SET_ETH_ORDER_BOOK',
+  type: 'ORDERDB',
+  payload: orderDB
+  }
+}
+
+function setOrderBook(orderBook) {
+  return {
+  type: 'ORDERBOOK',
   payload: orderBook
+  }
+}
+
+function setSellerInterface(sellerInterface) {
+  return {
+  type: 'SET_SELLER_INTERFACE',
+  payload: sellerInterface
   }
 }
 
@@ -31,33 +45,61 @@ function setLockedWalletStatus(value){
 }
 
 module.exports = {
-  loadOrderBookFactory: (web3, orderBookFactoryAddress) => (dispatch) => {
-    console.log('DashboardActions.loadOrderBookFactory')
-    dispatch(setOrderBookFactory('obtaining...'))
+  loadSellerInterfaceFactory: (web3, sellerInterfaceFactoryAddress) => (dispatch) => {
+    console.log('DashboardActions.loadSellerInterfaceFactory')
+    dispatch(setSellerInterfaceFactory('obtaining...'))
     try {
-      const OrderBookFactory = web3.eth.contract(contractAbis.OrderBookFactoryAbi)
-      const _orderBookFactory = OrderBookFactory.at(orderBookFactoryAddress)
-      dispatch(setOrderBookFactory(_orderBookFactory))
+      const SellerInterfaceFactory = web3.eth.contract(contractAbis.SellerInterfaceFactoryAbi)
+      const _sellerInterfaceFactory = SellerInterfaceFactory.at(sellerInterfaceFactoryAddress)
+      dispatch(setSellerInterfaceFactory(_sellerInterfaceFactory))
 
     } catch(error) {
-      console.log('ui.VerifyWalletActions.loadOrderBookFactory.catch')
+      console.log('ui.VerifyWalletActions.loadSellerInterfaceFactory.catch')
       console.log(error)
-      dispatch(setOrderBookFactory(null))
+      dispatch(setSellerInterfaceFactory(null))
     }
   },
-  loadETHOrderBook: (web3, user) => (dispatch) => {
-    console.log('DashboardActions.loadETHOrderBook')
-    dispatch(setETHOrderBook('obtaining...'))
-    firebaseRef.database().ref('/ethorderbook/'+user.profile.country+'/'+user.data.uid).once('value', function(snap){
-      var orderBookAddress = snap.val()
-      if(orderBookAddress) {
-        const ETHOrderBook = web3.eth.contract(contractAbis.ETHOrderBookAbi)
-        const _instance = ETHOrderBook.at(orderBookAddress.orderBookAddress)
-        dispatch(setETHOrderBook(_instance))
+  loadSellerInterface: (web3, user) => (dispatch) => {
+    console.log('DashboardActions.loadSellerInterface')
+    dispatch(setSellerInterface('obtaining...'))
+    firebaseRef.database().ref('/sellerInterface/'+user.profile.country+'/'+user.data.uid).once('value', function(snap){
+      var sellerInterfaceAddress = snap.val()
+      if(sellerInterfaceAddress) {
+        const SellerInterface = web3.eth.contract(contractAbis.SellerInterfaceAbi)
+        const _instance = SellerInterface.at(sellerInterfaceAddress.sellerInterfaceAddress)
+        dispatch(setSellerInterface(_instance))
       } else {
-        dispatch(setETHOrderBook(null))
+        dispatch(setSellerInterface(null))
       }
     })
+  },
+  loadOrderDB: (web3, orderDBAddress) => (dispatch) => {
+    console.log('DashboardActions.loadOrderDB')
+    dispatch(setOrderDB('obtaining...'))
+    try {
+      const OrderDB = web3.eth.contract(contractAbis.OrderDB)
+      const _orderDB = OrderDB.at(orderDBAddress)
+      dispatch(setOrderDB(_orderDB))
+
+    } catch(error) {
+      console.log('ui.VerifyWalletActions.loadOrderDB.catch')
+      console.log(error)
+      dispatch(setOrderDB(null))
+    }
+  },
+  loadOrderBook: (web3, orderBookAddress) => (dispatch) => {
+    console.log('DashboardActions.loadOrderBook')
+    dispatch(setOrderBook('obtaining...'))
+    try {
+      const OrderBook = web3.eth.contract(contractAbis.OrderBook)
+      const _orderBook = OrderBook.at(orderBookAddress)
+      dispatch(setOrderBook(_orderBook))
+
+    } catch(error) {
+      console.log('ui.VerifyWalletActions.loadOrderDB.catch')
+      console.log(error)
+      dispatch(setOrderDB(null))
+    }
   },
   checkBrowserWalletAddress:(web3, user) => (dispatch) =>{
     console.log('DashboardActions.checkBrowserWalletAddress')

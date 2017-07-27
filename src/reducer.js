@@ -25,8 +25,10 @@ import completedTradesReducer from './completedtrades/completedtradesreducer'
 import tradeAdvertisementsReducer from './tradeadvertisements/tradeadvertisementsreducer'
 import editTradeAdvertisementReducer from './edittradeadvertisement/edittradeadvertisementreducer'
 import processKycReducer from './processkyc/processkycreducer'
-import ethOrderBookReducer from './ethorderbook/ethorderbookreducer'
-import orderBookFactoryReducer from './orderbookfactory/orderbookfactoryreducer'
+import sellerInterfaceReducer from './smartContractReducers/sellerInterface/sellerInterfaceReducer'
+import sellerInterfaceFactoryReducer from './smartContractReducers/sellerInterfaceFactory/sellerInterfaceFactoryReducer'
+import orderBookReducer from './smartContractReducers/orderBook/orderBookReducer'
+import orderDBReducer from './smartContractReducers/orderDB/orderDBReducer'
 import loadingContractsReducer from './loadingcontracts/loadingcontractsreducer'
 import txHashReducer from './txhash/txhashreducer'
 import userDataReducer from './user/userdatareducer'
@@ -64,8 +66,10 @@ const reducer = combineReducers({
   tradeadvertisements: tradeAdvertisementsReducer,
   edittradeadvertisement: editTradeAdvertisementReducer,
   processkyc: processKycReducer,
-  ethorderbook: ethOrderBookReducer,
-  orderbookfactory: orderBookFactoryReducer,
+  sellerInterface: sellerInterfaceReducer,
+  sellerInterfaceFactory: sellerInterfaceFactoryReducer,
+  orderBook: orderBookReducer,
+  orderDB: orderDBReducer,
   loadingcontracts: loadingContractsReducer,
   txhash: txHashReducer,
   loadinguserdata: userDataReducer,
