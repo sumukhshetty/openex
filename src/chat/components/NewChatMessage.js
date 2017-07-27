@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-//import PropTypes from 'prop-types'
 import { firebaseStorage } from '../../index.js'
-// import PaperClip from '../../images/svgReactComponents/PaperClip.js'
 import fileUploadIcon from '../../images/file-plus.svg'
 
 export default class NewChatMessage extends Component {
@@ -19,6 +17,8 @@ export default class NewChatMessage extends Component {
       .child(this.props.auth.uid)
       .child(file.name)
       .put(file, { contentType: file.type })
+
+    console.log(file.type)
     // uploadTask.on('state_changed', (snapshot) => {
     //   this.setState({
     //     transferCurrent: snapshot.bytesTransferred,
@@ -32,7 +32,9 @@ export default class NewChatMessage extends Component {
           snap.downloadURL,
           this.props.auth.uid,
           this.props.tradeId,
-          true
+          true,
+          null,
+          file.type
         )
 
       // let user = this.state.user
@@ -66,8 +68,7 @@ export default class NewChatMessage extends Component {
             style={{ minWidth: '25px' }}
             className="mh1"
           />
-          <fileUploadIcon className="ph4" />
-          {/* <PaperClip className="ph3" /> */}
+          <fileUploadIcon className="ph4 pointer" />
         </div>
         <input
           type="text"

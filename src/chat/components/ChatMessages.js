@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Other from '../../images/svgReactComponents/other.js'
 import You from '../../images/svgReactComponents/you.js'
 import Arbiter from '../../images/svgReactComponents/Arbiter.js'
-//import stockPhoto from '../../images/downloadPhoto.png'
+import defaultPdfImage from '../../images/pdf.png'
 const moment = require('moment')
 
 const ChatMessage = props =>
@@ -16,8 +16,12 @@ const ChatMessage = props =>
               ? `bg-light-gray`
               : `bg-blue white`}`}
           >
-            <img
-              src={props.message}
+          <img
+            src={
+                props.fileType === 'application/pdf'
+                  ? defaultPdfImage
+                  : props.message
+              }
               alt="Download Preview"
               className="mh2"
               height="100px"
