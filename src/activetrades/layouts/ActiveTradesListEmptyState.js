@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class ActiveTradesListEmptyState extends Component {
-  render () {
+  render() {
     return (
-      <div className='flex mxc'>No active Escrows! Post a trade to get started!</div>
-    );
+      <div className="flex mxe">
+        <p className="w-two-thirds">
+          No active Escrows! Post a trade to get started!
+        </p>
+      </div>
+    )
   }
 }
 
-export default ActiveTradesListEmptyState;
+export default ActiveTradesListEmptyState
