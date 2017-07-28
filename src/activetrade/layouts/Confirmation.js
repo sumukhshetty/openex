@@ -82,7 +82,7 @@ class Confirmation extends Component {
                  <span>You haven't created an Order Book Contract</span>
                  </div>
                  <div>
-                 <button onClick={this.props.createOrderBookContract}> Create Contract</button>
+                 <button onClick={this.props.createSellerInterfaceContract}> Create Contract</button>
                  </div>
                </div>}
                {this.props.sendEtherState === 'waiting-for-tx-to-mine' &&

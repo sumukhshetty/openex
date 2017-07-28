@@ -209,7 +209,7 @@ module.exports = {
       // END WEB3
     } catch (error) {
       console.log(error)
-      if( error.message === "Cannot read property 'availableBalance' of null") {
+      if( error.message === "Cannot read property 'address' of null") {
         dispatch(sendEtherState('no-eth-order-book'));
       } else if (error.message === '"Wallet Address Undefined"') {
         console.log("Wallet Address Undefined")
