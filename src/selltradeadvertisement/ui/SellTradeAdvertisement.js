@@ -122,7 +122,7 @@ export default class SellTradeAdvertisement extends Component {
         <div className="w-100 bg-smoke vh-100">
           <div className="w-75 center pv3">
             <h1 className="pv1">
-              Buy ether using {sellTradeAdvertisement.paymentMethod} from{' '}
+              Buy ether using mode: {sellTradeAdvertisement.paymentMethod} from{' '}
               {seller.username}
             </h1>
             <div className="flex mxb w-100 cxc">
