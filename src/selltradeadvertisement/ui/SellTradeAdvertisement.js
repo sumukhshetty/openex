@@ -127,8 +127,8 @@ export default class SellTradeAdvertisement extends Component {
             </h1>
             <div className="flex mxb w-100 cxc">
               <div className="w-50">
-                <div className="w-100 bg-white br3 pa3">
-                  <p className="b tc measure">Terms of Trade with User</p>
+                <div className="w-100">
+                  <p className="b tc measure">Terms of Trade</p>
                   <p className="pv1 measure">
                     {sellTradeAdvertisement.termsOfTrade}
                   </p>

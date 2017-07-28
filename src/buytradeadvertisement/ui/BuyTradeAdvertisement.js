@@ -95,11 +95,11 @@ export default class BuyTradeAdvertisement extends Component {
           <div className="w-75 center pv3">
             <h1 className="pv1">
               Sell {buyTradeAdvertisement.amount} ether to {buyer.username}{' '}
-              using mode: {buyTradeAdvertisement.paymentMethod}
+              using {buyTradeAdvertisement.paymentMethod}
             </h1>
             <div className="flex mxb w-100 cxc">
               <div className="w-50">
-                <div className="w-100 bg-white br3 pa3">
+                <div className="w-100">
                   <p className="b tc measure">Terms of Trade</p>
                   <p className="pv1 measure">
                     {buyTradeAdvertisement.termsOfTrade}
