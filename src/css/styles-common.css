@@ -382,14 +382,28 @@ p.lead {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: #8bc34a;
+  background-color: #0ac775;
 }
 
-.blackDot {
+.yellowDot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: #666;
+  background-color: #ffde37;
+}
+
+.orangeDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #ff6300;
+}
+
+.redDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #d0011b;
 }
 
 /*form elements*/

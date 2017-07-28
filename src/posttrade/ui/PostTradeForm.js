@@ -207,10 +207,10 @@ class PostTradeForm extends Component {
     } catch (error) {
       selltrade = undefined
     }
-    if ((selltrade !== undefined) && !this.state.buyFormBool) {
-      var _selltradeUrl = '/edittradeadvertisement/sell-ether/' + Object.keys(selltrade)[0]
+    if (selltrade !== undefined && !this.state.buyFormBool) {
+      var _selltradeUrl =
+        '/edittradeadvertisement/sell-ether/' + Object.keys(selltrade)[0]
       browserHistory.push(_selltradeUrl)
-
     } else {
       return (
         <div>

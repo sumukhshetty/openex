@@ -10,58 +10,56 @@ import BrowseAdvertisementsContainer from './../../browseadvertisements/ui/Brows
 
 import truffleConfig from './../../../truffle-config.js'
 
-var web3Location = `http://${truffleConfig.networks.development.host}:${truffleConfig.networks.development.port}`
+var web3Location = `http://${truffleConfig.networks.development
+  .host}:${truffleConfig.networks.development.port}`
 
 class HomeMain extends Component {
-  render () {
+  render() {
     //var web3 = this.web3Provided
-    if(this.props.web3.data.currentProvider.isMetaMask){
+    if (this.props.web3.data.currentProvider.isMetaMask) {
       return (
-      <section className='home'>
-          <div className='container'>
-        <div>
-          <div className='pure-u-2-3'>
-            <ProductShortDescription />
-          </div>
+        <section className="home">
+          <div className="container">
+            <div>
+              <div className="pure-u-2-3">
+                <ProductShortDescription />
+              </div>
 
-          <div className='pure-u-1-3'>
-            <SignUpContainer web3={this.props.web3.data} />
-          </div>
-          <BrowseAdvertisementsContainer />
-          <Features />
-        </div>
+              <div className="pure-u-1-3">
+                <SignUpContainer web3={this.props.web3.data} />
+              </div>
+              <BrowseAdvertisementsContainer />
+              <Features />
+            </div>
           </div>
           <Process />
-        {/*TODO add this in with the main lanch*/}
+          {/*TODO add this in with the main lanch*/}
           {/*<Testimonials />*/}
-          <Footer/>
+          <Footer />
         </section>
-        
-    )} else {
+      )
+    } else {
       return (
+        <section className="home">
+          <div className="container">
+            <div>
+              <div className="pure-u-2-3">
+                <ProductShortDescription />
+              </div>
 
-
-      <section className='home'>
-          <div className='container'>
-        <div>
-          <div className='pure-u-2-3'>
-            <ProductShortDescription />
-          </div>
-
-          <div className='pure-u-1-3'>
-            <MetaMask />
-          </div>
-          <BrowseAdvertisementsContainer />
-          <Features />
-        </div>
+              <div className="pure-u-1-3">
+                <MetaMask />
+              </div>
+              <BrowseAdvertisementsContainer />
+              <Features />
+            </div>
           </div>
           <Process />
-        {/*TODO add this in with the main lanch*/}
+          {/*TODO add this in with the main lanch*/}
           {/*<Testimonials />*/}
-          <Footer/>
+          <Footer />
         </section>
-
-    )
+      )
     }
   }
 }
