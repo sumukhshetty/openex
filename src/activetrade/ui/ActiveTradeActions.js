@@ -150,34 +150,34 @@ module.exports = {
             dispatch(sendEtherState('sending'));
             //TODO: move to firebase functions
 
-            var event = orderBook.data.OrderAdded({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: buyer})
-            event.watch(function(error, result) {
-              // the order was added do stuff
-              console.log('addOrder.event.watch')
-              console.log(error,result)
-              console.log("we were able to add the order to the smart contract")
-              // START FIREBASE
-              var now = new Date()
-              var updatedPurchaseRequest = Object.assign({},
-                purchaseRequest, {
-                  lastUpdated: now.toUTCString(),
-                  sellerconfirmtime: now.toUTCString(),
-                  status: 'Awaiting Payment',
-                  contractAddress: sellerInterface.data.address
-                })
-              firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-              .set(updatedPurchaseRequest, function(error){
-                if(error){
-                  console.log(error)
-                }
-                dispatch(sendEtherState('init'));
-                dispatch(clearTxHash())
-                dispatch(updateConfirmButtonIsDisabled(false))
-                notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
-                event.stopWatching()
-              })
-              // END FIREBASE
-            })
+            // var event = orderBook.data.OrderAdded({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: buyer})
+            // event.watch(function(error, result) {
+            //   // the order was added do stuff
+            //   console.log('addOrder.event.watch')
+            //   console.log(error,result)
+            //   console.log("we were able to add the order to the smart contract")
+            //   // START FIREBASE
+            //   var now = new Date()
+            //   var updatedPurchaseRequest = Object.assign({},
+            //     purchaseRequest, {
+            //       lastUpdated: now.toUTCString(),
+            //       sellerconfirmtime: now.toUTCString(),
+            //       status: 'Awaiting Payment',
+            //       contractAddress: sellerInterface.data.address
+            //     })
+            //   firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+            //   .set(updatedPurchaseRequest, function(error){
+            //     if(error){
+            //       console.log(error)
+            //     }
+            //     dispatch(sendEtherState('init'));
+            //     dispatch(clearTxHash())
+            //     dispatch(updateConfirmButtonIsDisabled(false))
+            //     notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+            //     event.stopWatching()
+            //   })
+            //   // END FIREBASE
+            // })
             console.log(purchaseRequest.buyerAddress)
             console.log(purchaseRequestId)
             sellerInterface.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
@@ -187,6 +187,8 @@ module.exports = {
                   console.log("sellerInterface.data.addOrder")
                   dispatch(sendEtherState('waiting-for-tx-to-mine'))
                   dispatch(setTxHash(result))
+                  firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId + '/contractAddress')
+                  .set(result)
                   }else {
                     console.log(sellerInterface.data.addOrder)
                     console.log(error)
