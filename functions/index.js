@@ -191,7 +191,7 @@ exports.checkAdmin = functions.https.onRequest((req, res) => {
         }
       })
     } catch(error) {
-      res.status(500).send({error:'[helpForm] Error' + error}) 
+      res.status(500).send({error:'[helpForm] Error' + error})
     }
   })
 })
@@ -235,7 +235,7 @@ exports.signUpUserCustomAuth = functions.https.onRequest((req, res) => {
             res.send(200,{status: 1, "token":token});
           });
       } else {
-        res.status(401).send({error: '[signUpUserCustomAuth] Error User not Authorized'})  
+        res.status(401).send({error: '[signUpUserCustomAuth] Error User not Authorized'})
       }
     } catch (error) {
       console.log(error)
@@ -272,10 +272,10 @@ exports.loginUserCustomAuth = functions.https.onRequest((req, res) => {
                 res.send(200,{status: 1, "token":token});
               });
           } else {
-            res.status(401).send({error: '[signUpUserCustomAuth] Error User not Authorized'})  
+            res.status(401).send({error: '[signUpUserCustomAuth] Error User not Authorized'})
           }
         } else {
-          res.status(401).send({error: "This account isn't registered yet. Please sign up first."})  
+          res.status(401).send({error: "This account isn't registered yet. Please sign up first."})
         }
       })
     } catch (error) {
@@ -284,3 +284,47 @@ exports.loginUserCustomAuth = functions.https.onRequest((req, res) => {
     }
   })
 })
+
+exports.newPurchaseRequest = functions.database.ref('/purchaserequests/{country}/{uid}')
+  .onCreate(event=>{
+    console.log(event.data.val());
+    admin.database().ref('/users/' + event.data.val()['sellerUid'] + '/activetrades/' + event.params.uid).set({'tradeType': event.data.val()['tradeAdvertisementType']})
+    admin.database().ref('/users/'+ event.data.val()['buyerUid']+'/activetrades/'+event.params.uid).set({'tradeType': event.data.val()['tradeAdvertisementType']})
+  })
+
+exports.tradeConfirmed = functions.database.ref('/purchaserequests/{country}/{uid}/contractAddress')
+  .onWrite(event =>{
+    console.log(event.data.val());
+    setTimeout(function(){
+      infura.sendAsync({
+        method: "eth_getTransactionReceipt",
+        params: [event.data.val()],
+        jsonrpc: "2.0",
+        id: new Date().getTime()
+      }, function (error, result) {
+        console.log(result);
+        console.log(result.result.logs[1]);
+        if(error) console.error(error);
+
+        var data = SolidityCoder.decodeParams(["string","address","address","uint","uint","string","uint"], result.result.logs[1].data.replace("0x", ""));
+        var uid = data[0];
+        console.log('uid from data:' + data[0]);
+        var buyer = data[2];
+        console.log('buyer from data:' + data[2]);
+        var amount = data[3];
+        console.log('amount from data: ' + web3.fromWei(data[3], 'ether'));
+        admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid).once('value', function(snap) {
+          console.log('uid: ' + event.params.uid);
+          console.log('buyer: ' + snap.val()['buyerAddress']);
+          console.log('etherAmount: ' + snap.val()['etherAmount']);
+          if(data[0] == event.params.uid && data[2] == snap.val()['buyerAddress'] && web3.fromWei(data[3], 'ether') == snap.val()['etherAmount']) {
+            admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid+'/status').set('Awaiting Payment');
+            var now = (new Date()).toUTCString();
+            admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid+'/lastUpdated').set(now);
+            admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid+'/sellerconfirmtime').set(now);
+          }
+        })
+      });
+    }, 10000);
+
+  })

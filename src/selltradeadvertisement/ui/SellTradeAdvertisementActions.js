@@ -47,7 +47,7 @@ module.exports = {
       buyerUid: buyer.data.uid,
       buyerUsername: buyer.profile.username,
       // TODO get the contract address from the user
-      contractAddress: 'TODO',
+      //contractAddress: 'TODO',
       currency: buyer.profile.currency,
       createdAt: now.toUTCString(),
       etherAmount: etherAmount,
@@ -76,11 +76,11 @@ module.exports = {
     }
     var newRequest = firebaseRef.database().ref('/purchaserequests/' + buyer.profile.country)
       .push(purchaseRequestData, function(err){
-        firebaseRef.database().ref('/users/' + sellTradeAdvertisement.sellerUid + '/activetrades/' + newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
-        firebaseRef.database().ref('/users/'+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
+        // firebaseRef.database().ref('/users/' + sellTradeAdvertisement.sellerUid + '/activetrades/' + newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
+        // firebaseRef.database().ref('/users/'+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
 
         notificationHelpers.sendBuyerCreatesPurchaseRequestNotification(purchaseRequestData, newRequest.key, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer)
-        
+
       })
   },
   clearState: () => (dispatch) => {
