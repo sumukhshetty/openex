@@ -21,7 +21,7 @@ class HomeNav extends Component {
             <nav className='pure-menu pure-menu-horizontal'>
               <ul className='pure-menu-list'>
                 <li className='pure-menu-item'><a onClick={()=>browserHistory.push('/')}>Home</a></li>
-                <li className='pure-menu-item'><a target="_blank" href='https://www.youtube.com/watch?v=jY16rNgexE4'>Getting Started</a></li>
+                <li className='pure-menu-item'><a onClick={()=>browserHistory.push('/gettingstarted')}>Getting Started</a></li>
                 <li className='pure-menu-item'><a onClick={() => browserHistory.push('support')}>Support</a></li>
 
                 <li className='pure-menu-item' onClick={this.login.bind(this)}><a>Log in</a></li>
