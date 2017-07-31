@@ -7,7 +7,7 @@ export const createMessage = ({
   tradeId,
   download,
   purchaseRequest,
-  fileType
+  fileType = null
 }) => {
   return dispatch => {
     const message = {
