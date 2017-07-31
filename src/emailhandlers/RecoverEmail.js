@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+// deprecate this
+/*import React, { Component } from 'react';
 import Spinner from 'react-spinkit';
 import { firebaseRef } from './../index.js';
 
@@ -84,4 +85,4 @@ export default class RecoverEmail extends Component {
 
     return component;
   }
-}
+}*/
