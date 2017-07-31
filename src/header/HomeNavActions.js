@@ -18,6 +18,12 @@ function userLoggedInError(error){
   }
 }
 
+function updateReduxStoreDataState (value) {
+  return {
+    type: 'GET_REDUX_STORE',
+    payload: value
+  }
+}
 
 module.exports = {
   login: (web3) => (dispatch) => {
@@ -35,7 +41,6 @@ module.exports = {
               throw result.error
             }
             let signature = result.result;
-            //dispatch(exchange.authenticate(sig, user))
             var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/loginUserCustomAuth'
             var options = {
               method: 'post',
@@ -47,7 +52,7 @@ module.exports = {
               json: true,
               url: url
             }
-            //dispatch(logginin) // with this dispatch we show a spinner with a logging in
+            dispatch(updateReduxStoreDataState(true))
             request(options, function (err, res, body) {
               if (err) {
                 console.error('error posting json: ', err)
@@ -59,7 +64,6 @@ module.exports = {
                 // do more stuff
                 firebaseRef.auth().signInWithCustomToken(res.body.token)
                   .then(function(firebaseUser){
-
                     dispatch(userLoggedIn(firebaseUser))
                   })
                   .catch(function(error) {
