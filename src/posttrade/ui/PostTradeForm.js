@@ -30,7 +30,6 @@ class PostTradeForm extends Component {
       buyFormBool: true,
       user: this.props.user,
       uid: this.props.uid,
-      sendEtherState: this.props.sendEtherState,
       isButtonDisabled: false
     }
   }
@@ -111,9 +110,7 @@ class PostTradeForm extends Component {
         buyerAddress: '',
         buyerUsername: '',
         sellerUsername: this.props.user.data.displayName,
-        buyerUsername: '',
-        availableBalance: 0,
-        pendingBalance: 0
+        buyerUsername: ''
       })
       /*      if(this.props.tradeadvertisements.data.buyether){
         _isButtonDisabled=true
@@ -127,9 +124,7 @@ class PostTradeForm extends Component {
         buyerAddress: connectedAccount,
         sellerAddress: '',
         buyerUsername: this.props.user.data.displayName,
-        sellerUsername: '',
-        availableBalance: '',
-        pendingBalance: ''
+        sellerUsername: ''
       })
       _buyFormBool = true
     }
@@ -183,18 +178,14 @@ class PostTradeForm extends Component {
       price: price
     })
     if (this.state.postTradeDetails.tradeType === 'sell-ether') {
-      this.showWaitModal()
       this.props.onCreateSellTradeAdvertisementFormSubmit(
         _postTradeDetails,
-        this.props.web3.data,
-        this.props.sellerInterfaceFactory,
         this.props.user
       )
     }
     if (this.state.postTradeDetails.tradeType === 'buy-ether') {
       this.props.userCreatesBuyTradeAdvertisement(
         _postTradeDetails,
-        this.props.web3.data,
         this.props.user
       )
     }
@@ -204,6 +195,7 @@ class PostTradeForm extends Component {
     var selltrade
     try {
       selltrade = this.props.tradeadvertisements.data.sellether
+      console.log(selltrade);
     } catch (error) {
       selltrade = undefined
     }
@@ -391,13 +383,6 @@ class PostTradeForm extends Component {
                     termsOfTrade={this.state.postTradeDetails.termsOfTrade}
                   />}
 
-              {this.props.sendEtherState === 'sending' &&
-                <MetaMaskWaitModal message="Please approve the transaction in MetaMask" />}
-              {this.props.sendEtherState === 'waiting-for-tx-to-mine' &&
-                <MetaMaskWaitModal
-                  message="the transaction is being mined"
-                  txhash={this.props.txhash.data}
-                />}
               <div className="flex mv3">
                 <label className="w5 " />
                 <input

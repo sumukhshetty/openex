@@ -8,30 +8,23 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user,
     etherPrice: state.etherPrice,
     uid: ownProps.uid,
-    sendEtherState: state.sendEtherState,
-    sellerInterfaceFactory: state.sellerInterfaceFactory,
-    sellerInterface: state.sellerInterface,
-    txhash: state.txhash,
     tradeadvertisements: state.tradeadvertisements
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userCreatesBuyTradeAdvertisement: (tradeDetails, web3, user) =>{
-      dispatch(actions.userCreatesBuyTradeAdvertisement(tradeDetails, web3, user))
+    userCreatesBuyTradeAdvertisement: (tradeDetails, user) =>{
+      dispatch(actions.userCreatesBuyTradeAdvertisement(tradeDetails, user))
     },
-    onCreateSellTradeAdvertisementFormSubmit: (tradeDetails, web3, sellerInterfaceFactory, user) => {
+    onCreateSellTradeAdvertisementFormSubmit: (tradeDetails, user) => {
       //event.preventDefault();
 
-      dispatch(actions.userCreatesSellTradeAdvertisement(tradeDetails, web3, sellerInterfaceFactory, user))
+      dispatch(actions.userCreatesSellTradeAdvertisement(tradeDetails, user))
     },
-    onBuyEtherFormSubmit: (tradeDetails, web3, state) => {
+    onBuyEtherFormSubmit: (tradeDetails, state) => {
       event.preventDefault();
-      dispatch(actions.buyEtherPostTrade(tradeDetails, web3, state))
-    },
-    resetEtherState: () => {
-      dispatch(actions.resetEtherState());
+      dispatch(actions.buyEtherPostTrade(tradeDetails, state))
     }
   }
 }
