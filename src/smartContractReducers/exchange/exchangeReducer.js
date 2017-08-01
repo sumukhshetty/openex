@@ -2,15 +2,15 @@ const initialState = {
   data: null
 }
 
-const sellerInterfaceReducer = (state = initialState, action) => {
-  if (action.type === 'SET_SELLER_INTERFACE')
+const exchangeReducer = (state = initialState, action) => {
+  if (action.type === 'EXCHANGE')
   {
     return Object.assign({}, state, {
       data: action.payload
     })
   }
 
-  if (action.type === 'CLEAR_SELLER_INTERFACE')
+  if (action.type === 'CLEAR_EXCHANGE')
   {
     return Object.assign({}, state, {
       data: null
@@ -20,4 +20,4 @@ const sellerInterfaceReducer = (state = initialState, action) => {
   return state
 }
 
-export default sellerInterfaceReducer
+export default exchangeReducer

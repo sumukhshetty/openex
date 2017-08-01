@@ -60,13 +60,6 @@ function clearActiveTrade(){
   }
 }
 
-function userSellerInterface(sellerInterface) {
-  return {
-  type: 'SET_SELLER_INTERFACE',
-  payload: sellerInterface
-  }
-}
-
 function setTxHash(txHash){
   return {
     type: 'SET_TX_HASH',
@@ -104,7 +97,7 @@ module.exports = {
       dispatch(setSeller(users.data[activeTrade.sellerUid]))
     })
   },
-  sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderDBI, orderBook) => (dispatch) => {
+  sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, exchange) => (dispatch) => {
     dispatch(updateConfirmButtonIsDisabled(true))
     try {
       let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
@@ -115,8 +108,15 @@ module.exports = {
       } else {
         throw new Error('Wallet Address Undefined')
       }
-      /*
-      // START NO-SMART CONTRACT
+    dispatch(sendEtherState('sending'));
+
+    var event = exchange.OrderAdded({uid: purchaseRequestId, seller: coinbase, buyer: buyer})
+    event.watch(function(error, result) {
+      // the order was added do stuff
+      console.log('addOrder.event.watch')
+      console.log(error,result)
+      console.log("we were able to add the order to the smart contract")
+      // START FIREBASE
       var now = new Date()
       var updatedPurchaseRequest = Object.assign({},
         purchaseRequest, {
@@ -133,80 +133,28 @@ module.exports = {
         dispatch(clearTxHash())
         dispatch(updateConfirmButtonIsDisabled(false))
         notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
-        //event.stopWatching()
+        event.stopWatching()
       })
-      // END NO-SMART CONTRACT
-      */
-      // START WEB3
-      orderDBI.data.availableBalances(sellerInterface.data.address, function(error, result){
+      // END FIREBASE
+    })
+
+    console.log(purchaseRequest.buyerAddress)
+    console.log(purchaseRequestId)
+    exchange.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
+      etherAmount, price, purchaseRequest.currency, {from:coinbase, value: web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')},
+      function(error, result){
         if(!error){
-          console.log("got the availableBalance")
-          console.log(result.toNumber())
-
-          // check if the request is greater than the available balance
-          //TODO: get feePercentage elsewhere to avoid hardcodinng it, probably from firebase
-          if(result.gte(web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether'))){
-            console.log("the availableBalance is greater than the purchase request")
-            dispatch(sendEtherState('sending'));
-            //TODO: move to firebase functions
-
-            // var event = orderBook.data.OrderAdded({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: buyer})
-            // event.watch(function(error, result) {
-            //   // the order was added do stuff
-            //   console.log('addOrder.event.watch')
-            //   console.log(error,result)
-            //   console.log("we were able to add the order to the smart contract")
-            //   // START FIREBASE
-            //   var now = new Date()
-            //   var updatedPurchaseRequest = Object.assign({},
-            //     purchaseRequest, {
-            //       lastUpdated: now.toUTCString(),
-            //       sellerconfirmtime: now.toUTCString(),
-            //       status: 'Awaiting Payment',
-            //       contractAddress: sellerInterface.data.address
-            //     })
-            //   firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-            //   .set(updatedPurchaseRequest, function(error){
-            //     if(error){
-            //       console.log(error)
-            //     }
-            //     dispatch(sendEtherState('init'));
-            //     dispatch(clearTxHash())
-            //     dispatch(updateConfirmButtonIsDisabled(false))
-            //     notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
-            //     event.stopWatching()
-            //   })
-            //   // END FIREBASE
-            // })
-            console.log(purchaseRequest.buyerAddress)
-            console.log(purchaseRequestId)
-            sellerInterface.data.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
-              etherAmount, price, purchaseRequest.currency, {from:coinbase},
-              function(error, result){
-                if(!error){
-                  console.log("sellerInterface.data.addOrder")
-                  dispatch(sendEtherState('waiting-for-tx-to-mine'))
-                  dispatch(setTxHash(result))
-                  firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId + '/contractAddress')
-                  .set(result)
-                  }else {
-                    console.log(sellerInterface.data.addOrder)
-                    console.log(error)
-                    dispatch(sendEtherState('init'));
-                    dispatch(updateConfirmButtonIsDisabled(false))
-                  }
-              })
-          } else {
-            console.log("we don't have enough ether in the contract")
-            dispatch(sendEtherState('insufficient-available-balance'));
+          console.log("exchange.data.addOrder")
+          dispatch(sendEtherState('waiting-for-tx-to-mine'))
+          dispatch(setTxHash(result))
+          firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId + '/contractAddress')
+          .set(result)
+          }else {
+            console.log(exchange.addOrder)
+            console.log(error)
+            dispatch(sendEtherState('init'));
+            dispatch(updateConfirmButtonIsDisabled(false))
           }
-        } else {
-          console.log("sellerInterface.data.availableBalance.error")
-          dispatch(sendEtherState('init'));
-          dispatch(updateConfirmButtonIsDisabled(false))
-          console.log(error)
-          raven.captureException(error)
-        }
       })
       // END WEB3
     } catch (error) {
@@ -238,7 +186,7 @@ module.exports = {
         notificationHelpers.sendBuyerConfirmsPaymentNotification(buyer,seller,purchaseRequest,purchaseRequestId)
         });
   },
-  sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderBook) => (dispatch) => {
+  sellerReleasesEther: (seller, buyer, purchaseRequest, purchaseRequestId, web3, exchange) => (dispatch) => {
     try{
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase
@@ -273,7 +221,7 @@ module.exports = {
       // START WEB3
       //event OrderCompleted(string uid, address seller, address buyer, uint amount);
 
-      var event = orderBook.data.OrderCompleted({uid: purchaseRequestId, seller: sellerInterface.data.address, buyer: purchaseRequest.buyerAddress})
+      var event = exchange.OrderCompleted({uid: purchaseRequestId, seller: coinbase, buyer: purchaseRequest.buyerAddress})
       event.watch(function(error,result) {
         console.log('event.OrderCompleted')
         console.log(error,result)
@@ -297,11 +245,10 @@ module.exports = {
         } else {
           raven.captureException(error)
         }
-
       })
-      sellerInterface.data.completeOrder(purchaseRequestId, {from: coinbase}, function(error, result) {
+      exchange.completeOrder(purchaseRequestId, {from: coinbase}, function(error, result) {
         if(!error){
-          console.log('sellerInterface.data.completeOrder')
+          console.log('exchange.data.completeOrder')
           dispatch(sendEtherState('waiting-for-tx-to-mine'))
           dispatch(setTxHash(result))
         } else {
@@ -422,7 +369,6 @@ module.exports = {
         const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
         var event = _instance.DisputeResolved()
         console.log(_instance)
-        //dispatch(setSellerInterface(_instance))
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
           console.log(error, result)
@@ -565,103 +511,6 @@ module.exports = {
           firebaseRef.database().ref('/users/'+purchaseRequest.sellerUid + '/avgFeedback').set(averageFeedback.toFixed(1))
         })
       })
-  },
-  sellerAddsEther: (amount, uid, contractAddress, web3, sellerInterface, orderDB) => (dispatch) => {
-    try{
-      if(web3.eth.coinbase) {
-        var coinbase = web3.eth.coinbase;
-      } else {
-        throw new Error("Wallet Address Undefined")
-      }
-      if (contractAddress && ((typeof contractAddress)==="string") && (contractAddress.length === 42)) {
-        amount = Number(amount);
-        let value = web3.toWei(amount, 'ether');
-        dispatch(sendEtherState('sending'));
-        var event = orderDB.BalanceUpdated()
-        event.watch((error, result)=>{
-          dispatch(updateConfirmButtonIsDisabled(false))
-          dispatch(updateConfirmationButtonColor('#2196f3'))
-        })
-        if (contractAddress && ((typeof contractAddress)==="string") && (contractAddress.length === 42)) {
-          console.log("about to deposit")
-          sellerInterface.deposit({from:coinbase, value: value}, function(err, txHash){
-            if(!err) {
-              dispatch(sendEtherState('init'));
-              dispatch(updateConfirmButtonIsDisabled(true))
-              dispatch(updateConfirmationButtonColor('grey'))
-            } else {
-              if(err.message.includes('MetaMask Tx Signature: User denied')) {
-                console.log('ERROR: User denied transaction');
-                dispatch(sendEtherState('insufficient-available-balance'))
-              } else {
-                console.log(err);
-                dispatch(sendEtherState('insufficient-available-balance'))
-              }
-            }
-          })
-        }
-
-      } else {
-        console.log("invalid contract address")
-        throw new Error("Invalid Contract Address")
-      }
-
-    } catch (error) {
-      if (error.message === 'Wallet Address Undefined'){
-        notify.show("Please unlock your MetaMask Account")
-      }
-      else if (error.message === 'Invalid Contract Address'){
-        console.log('Invalid Contract Address')
-        raven.captureException(error)
-      }
-      else {
-        console.log(error)
-        raven.captureException(error)
-      }
-
-    }
-  },
-  sellerCreatesSellerInterface: (web3, sellerInterfaceFactory, user) => (dispatch) => {
-    try {
-      if (web3.eth.coinbase) {
-        var coinbase = web3.eth.coinbase
-      } else {
-        throw new Error("Undefined Wallet Address")
-      }
-      var event = sellerInterfaceFactory.data.SellerInterfaceCreated({seller:coinbase})
-      event.watch((error, result) => {
-        const SellerInterface = web3.eth.contract(contractAbis.SellerInterfaceAbi)
-        const _instance = SellerInterface.at(result.args.orderAddress)
-
-        // move this to the component will unmount for persistence
-        firebaseRef.database().ref('/sellerInterface/'+user.profile.country+'/'+user.data.uid+'/sellerInterfaceAddress')
-        .set(result.args.orderAddress)
-        event.stopWatching()
-        dispatch(userSellerInterface(_instance))
-        dispatch(sendEtherState('init'))
-        dispatch(updateConfirmButtonIsDisabled(false))
-        dispatch(clearTxHash())
-      })
-      dispatch(sendEtherState('sending'));
-      sellerInterfaceFactory.data.createSellerInterface({from: coinbase}, function(error, result){
-        if(!error){
-          dispatch(sendEtherState('waiting-for-tx-to-mine'))
-          dispatch(setTxHash(result))
-
-          } else {
-            console.log(error)
-            dispatch(sendEtherState('init'))
-            dispatch(updateConfirmButtonIsDisabled(false))
-          }
-        })
-    } catch (error) {
-      console.log(error)
-      if(error.message === 'Undefined Wallet Address'){
-        notify.show("Please unlock your MetaMask account")
-      } else {
-        raven.captureException(error)
-      }
-    }
   },
   assignArbiter:(user, buyer, seller, purchaseRequest, purchaseRequestId, web3) => (dispatch)=>{
   try {

@@ -79,11 +79,6 @@ export default class TradeAdvertisementsRow extends Component {
               : 'Buy Online'}
           </td>
           <td className="fb10 tc">
-            {this.props.tradeType === 'sell-ether'
-              ? availableBalance || 0
-              : '-'}
-          </td>
-          <td className="fb10 tc">
             {tradeAdvertisement.location}
           </td>
           <td className="fb10 tc">
@@ -94,10 +89,6 @@ export default class TradeAdvertisementsRow extends Component {
             {tradeAdvertisement.maxTransactionLimit}
           </td>
           <td className="me flex">
-            {this.props.tradeType === 'sell-ether' &&
-              <div>
-                <button className=" grow mr3" onClick={()=>browserHistory.push('manage/0x')}> Manage Contract </button>
-              </div>}
             <EditTradeAdvertisementButton
               tradeAdvertisementId={this.props.tradeAdvertisementId}
               tradeType={this.props.tradeType}

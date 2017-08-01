@@ -24,21 +24,19 @@ class ActiveTrade extends Component {
 
   sellerConfirmsTrade () {
     this.props.sellerConfirmsTrade(
-      this.props.seller.data, 
-      this.props.buyer.data, 
-      this.props.activetrade.data, 
-      this.props.purchaseRequestId, 
-      this.props.web3.data, 
-      this.props.sellerInterface, 
-      this.props.orderDB, 
-      this.props.orderBook)
+      this.props.seller.data,
+      this.props.buyer.data,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId,
+      this.props.web3.data,
+      this.props.exchange.data)
   }
   buyerConfirmsPayment () {
     this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.seller.data,this.props.activetrade.data, this.props.purchaseRequestId)
   }
 
   sellerReleasesEther () {
-    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.sellerInterface, this.props.orderBook)
+    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.exchange.data)
   }
   sellerCancelsTrade () {
     this.props.sellerCancelsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
@@ -61,10 +59,6 @@ class ActiveTrade extends Component {
   }
   tradePostProcessing () {
     this.props.tradePostProcessing(this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.users)
-  }
-  createSellerInterfaceContract () {
-    console.log('ui.ActiveTrade.createSellerInterfaceContract')
-    this.props.createSellerInterfaceContract(this.props.web3.data, this.props.sellerInterfaceFactory, this.props.user)
   }
   resetEtherState() {
     this.props.resetEtherState();
@@ -148,6 +142,7 @@ class ActiveTrade extends Component {
           activetrade={activetrade}
           confirmTrade={this.sellerConfirmsTrade.bind(this)}
           buyer={this.props.buyer}
+          exchange={this.props.exchange}
           buyerCancelsTrade={this.buyerCancelsTrade.bind(this)}
           progress_map={progress_maps[status]}
           purchaseRequestId={this.props.purchaseRequestId}
@@ -156,15 +151,11 @@ class ActiveTrade extends Component {
           sellerCancelsTrade={this.sellerCancelsTrade.bind(this)}
           sendEtherState={this.props.sendEtherState}
           sellerAddsEther={this.props.sellerAddsEther}
-          createSellerInterfaceContract={this.createSellerInterfaceContract.bind(this)}
           step={status}
           viewerRole={viewerRole}
           txhash={this.props.txhash.data}
-          sellerInterface={this.props.sellerInterface.data}
-          orderDB={this.props.orderDB.data}
           confirmTradeButtonIsDisabled={this.props.activetrade.confirmTradeButtonIsDisabled}
           confirmTradeButtonColor={this.props.activetrade.confirmTradeButtonColor}
-          orderDB={this.props.orderDB.data}
           />,
         'Awaiting Payment': <Payment
           activetrade={activetrade}
