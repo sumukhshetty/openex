@@ -5,7 +5,6 @@ import * as actions from './ActiveTradeActions'
 const mapStateToProps = (state, ownProps) => {
   return {
     web3: state.web3,
-    //orderBook: state.orderBook,
     user: state.user,
     users: state.users,
     purchaserequests: state.purchaserequests,
@@ -15,10 +14,7 @@ const mapStateToProps = (state, ownProps) => {
     sendEtherState: state.sendEtherState,
     cancelTradeState: state.cancelTradeState,
     purchaseRequestId: ownProps.purchaseRequestId,
-    sellerInterface: state.sellerInterface,
-    sellerInterfaceFactory: state.sellerInterfaceFactory,
-    orderDB: state.orderDB,
-    orderBook: state.orderBook,
+    exchange: state.exchange,
     txhash: state.txhash
   }
 }
@@ -28,14 +24,14 @@ const mapDispatchToProps = (dispatch) => {
     onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users, user) => {
       dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users, user))
     },
-    sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderDB, orderBook) => {
-      dispatch(actions.sellerConfirmsTrade(seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderDB, orderBook))
+    sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, exchange) => {
+      dispatch(actions.sellerConfirmsTrade(seller, buyer, purchaseRequest, purchaseRequestId, web3, exchange))
     },
     buyerConfirmsPayment: (buyer, seller, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.buyerConfirmsPayment(buyer, seller, purchaseRequest, purchaseRequestId))
     },
-    sellerReleasesEther: (seller, buyer,purchaseRequest, purchaseRequestId, web3, sellerInterface, orderBook) => {
-      dispatch(actions.sellerReleasesEther(seller, buyer, purchaseRequest, purchaseRequestId, web3, sellerInterface, orderBook))
+    sellerReleasesEther: (seller, buyer,purchaseRequest, purchaseRequestId, web3, exchange) => {
+      dispatch(actions.sellerReleasesEther(seller, buyer, purchaseRequest, purchaseRequestId, web3, exchange))
     },
     sellerCancelsTrade: (seller, buyer, purchaseRequest, purchaseRequestId) => {
       dispatch(actions.sellerCancelsTrade(seller, buyer, purchaseRequest, purchaseRequestId))
@@ -69,14 +65,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     tradePostProcessing: (user, purchaseRequest, purchaseRequestId, users) => {
       actions.tradePostProcessing(user, purchaseRequest, purchaseRequestId, users)
-    },
-    sellerAddsEther: (amount, uid, contractAddress, web3, sellerInterface, orderDB) => {
-      console.log("ui.ActiveTradeContainer.sellerAddsEther")
-      dispatch(actions.sellerAddsEther(amount, uid, contractAddress, web3, sellerInterface, orderDB))
-    },
-    createSellerInterfaceContract: (web3, sellerInterfaceFactory, user) => {
-      console.log("ui.ActiveTradeContainer.createSellerInterfaceContract")
-      dispatch(actions.sellerCreatesSellerInterface(web3, sellerInterfaceFactory, user))
     },
     clearState: ()=>{
       dispatch(actions.clearState())

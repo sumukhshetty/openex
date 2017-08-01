@@ -8,7 +8,6 @@ export default class TradeAdvertisementsHeader extends Component {
           <th className='fb5 tc'>ID</th>
           <th className='fb10 tc'>Status</th>
           <th className='fb10 tc'>Info</th>
-          <th className='fb10 tc'> Balance</th>
           <th className='fb10 tc'>Country</th>
           <th className='fb10 tc'>Method</th>
           <th className='fb10 tc'>Limits</th>

@@ -58,18 +58,9 @@ class PostTradeForm extends Component {
         margin: 0,
         currency: this.props.user.profile.currency
       },
-      buyFormBool: true,
-      showMetaMaskWaitModal: false
+      buyFormBool: true
       //isButtonDisabled: _isButtonDisabled
     })
-  }
-
-  componentWillUnmount() {
-    this.props.resetEtherState()
-  }
-
-  showWaitModal() {
-    this.setState({ showMetaMaskWaitModal: true })
   }
 
   onInputChange(event) {
@@ -195,7 +186,6 @@ class PostTradeForm extends Component {
     var selltrade
     try {
       selltrade = this.props.tradeadvertisements.data.sellether
-      console.log(selltrade);
     } catch (error) {
       selltrade = undefined
     }
