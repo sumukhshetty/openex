@@ -367,7 +367,7 @@ module.exports = {
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
         const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
-        var event = _instance.DisputeResolved()
+        var event = _instance.DisputeResolved({uid: purchaseRequestId})
         console.log(_instance)
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
@@ -426,7 +426,7 @@ module.exports = {
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
         const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
-        var event = _instance.DisputeResolved()
+        var event = _instance.DisputeResolved({uid: purchaseRequestId})
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
           console.log(error, result)
@@ -519,14 +519,11 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(purchaseRequest.contractAddress)) {
-        throw new Error("Invalid address")
-      } else {
         // get the dispute resolver contract
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
         const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
         // create an event, on the callback of the event do somme firebase stuff
-        var event = _instance.DisputeAssigned()
+        var event = _instance.DisputeAssigned({uid: purchaseRequestId})
         event.watch((error, result) => {
           console.log("ActiveTradeActions.assignArbiter.watch")
           console.log(error, result)
@@ -541,7 +538,7 @@ module.exports = {
           }
         })
         // call on the assign arbiter function
-        _instance.assignDispute(purchaseRequestId, purchaseRequest.contractAddress, seller.country, coinbase, {from:coinbase}, function(error, result){
+        _instance.assignDispute(purchaseRequestId, purchaseRequest.sellerAddress, seller.country, coinbase, {from:coinbase}, function(error, result){
           if(!error) {
             console.log("ok we've assigned the dispute")
             console.log(result)
@@ -553,7 +550,6 @@ module.exports = {
             dispatch(sendEtherState('init'))
           }
         })
-      }
     } catch (error) {
       if(error.message==='Wallet Address Undefined'){
         notify.show("Please unlock your MetaMask Account")
