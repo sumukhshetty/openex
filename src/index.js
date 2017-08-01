@@ -52,7 +52,7 @@ import Raven from 'raven-js'
 
 var ReactGA = require('react-ga')
 
-ReactGA.initialize('UA-90843374-4')
+ReactGA.initialize('UA-102946005-1')
 
 function logPageView() {
   ReactGA.set({ page: window.location.pathname })
