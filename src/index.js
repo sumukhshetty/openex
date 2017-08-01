@@ -38,7 +38,7 @@ import BrowseBuyAdvertisement from './browsebuyadvertisement/layouts/BrowseBuyAd
 import BrowseSellAdvertisement from './browseselladvertisement/layouts/BrowseSellAdvertisement'
 
 import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
-
+import GettingStarted from './gettingstarted/layouts/GettingStarted'
 import KycUpload from './kycupload/layouts/KycUpload'
 import ProcessKyc from './processkyc/layouts/ProcessKyc'
 import ActiveTrade from './activetrade/layouts/ActiveTrade'
@@ -96,6 +96,10 @@ ReactDOM.render(
         <Route
           path="dashboard"
           component={UserIsAuthenticated(DashboardContainer)}
+        />
+        <Route
+          path="gettingstarted"
+          component={UserIsNotAuthenticated(GettingStarted)}
         />
         <Route path="wrongnetwork" component={WrongNetwork} />
         <Route path="admin" component={UserIsAuthenticated(Admin)} />
