@@ -53,7 +53,7 @@ export default class SellTradeAdvertisement extends Component {
       this.setState({ fiatAmount: e.target.value })
       this.setState({
         etherAmount: (e.target.value /
-          (this.props.etherPrice.data * marginMultiplier).toFixed(2)).toFixed(2)
+          (this.props.etherPrice.data * marginMultiplier).toFixed(6)).toFixed(6)
       })
     }
   }
