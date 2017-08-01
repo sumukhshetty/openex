@@ -41,12 +41,12 @@ module.exports = {
   sellerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, buyTradeAdvertisementId, buyTradeAdvertisement, buyer, sellerAddress, seller) => (dispatch) => {
     var now = new Date()
     var purchaseRequestData = {
-      bankinformation:'Request the bank information from the seller in chat.', //need to set this to the user's profile. the 
+      bankinformation:'Request the bank information from the seller in chat.', //need to set this to the user's profile. the
       buyerAddress: buyTradeAdvertisement.buyerAddress,
       buyerUid: buyTradeAdvertisement.buyerUid,
       buyerUsername: buyer.data.username,
       // TODO get the contractAddress
-      contractAddress:'TODO', 
+      //contractAddress:'TODO',
       currency: buyer.data.currency,
       createdAt:now.toUTCString(),
       etherAmount: etherAmount,
@@ -76,8 +76,8 @@ module.exports = {
     try {
       var newRequest = firebaseRef.database().ref('/purchaserequests/' + seller.profile.country)
         .push(purchaseRequestData, function(err){
-          firebaseRef.database().ref('/users/'+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
-          firebaseRef.database().ref('/users/'+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
+          // firebaseRef.database().ref('/users/'+ seller.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
+          // firebaseRef.database().ref('/users/'+ buyTradeAdvertisement.buyerUid+'/activetrades/'+newRequest.key).set({'tradeType': buyTradeAdvertisement.tradeType})
           notificationHelpers.sendSellerCreatesPurchaseRequestNotification(purchaseRequestData, newRequest.key, buyTradeAdvertisementId, buyTradeAdvertisement, seller, buyer)
           })
         } catch (error) {

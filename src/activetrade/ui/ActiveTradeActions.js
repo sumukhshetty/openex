@@ -108,51 +108,54 @@ module.exports = {
       } else {
         throw new Error('Wallet Address Undefined')
       }
-            dispatch(sendEtherState('sending'));
+    dispatch(sendEtherState('sending'));
 
-            var event = exchange.OrderAdded({uid: purchaseRequestId, seller: coinbase, buyer: buyer})
-            event.watch(function(error, result) {
-              // the order was added do stuff
-              console.log('addOrder.event.watch')
-              console.log(error,result)
-              console.log("we were able to add the order to the smart contract")
-              // START FIREBASE
-              var now = new Date()
-              var updatedPurchaseRequest = Object.assign({},
-                purchaseRequest, {
-                  lastUpdated: now.toUTCString(),
-                  sellerconfirmtime: now.toUTCString(),
-                  status: 'Awaiting Payment'
-                })
-              firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-              .set(updatedPurchaseRequest, function(error){
-                if(error){
-                  console.log(error)
-                }
-                dispatch(sendEtherState('init'));
-                dispatch(clearTxHash())
-                dispatch(updateConfirmButtonIsDisabled(false))
-                notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
-                event.stopWatching()
-              })
-              // END FIREBASE
-            })
-            console.log(purchaseRequest.buyerAddress)
-            console.log(purchaseRequestId)
-            exchange.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
-              etherAmount, price, purchaseRequest.currency, {from:coinbase, value: web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')},
-              function(error, result){
-                if(!error){
-                  console.log("exchange.data.addOrder")
-                  dispatch(sendEtherState('waiting-for-tx-to-mine'))
-                  dispatch(setTxHash(result))
-                  }else {
-                    console.log(exchange.addOrder)
-                    console.log(error)
-                    dispatch(sendEtherState('init'));
-                    dispatch(updateConfirmButtonIsDisabled(false))
-                  }
-              })
+    var event = exchange.OrderAdded({uid: purchaseRequestId, seller: coinbase, buyer: buyer})
+    event.watch(function(error, result) {
+      // the order was added do stuff
+      console.log('addOrder.event.watch')
+      console.log(error,result)
+      console.log("we were able to add the order to the smart contract")
+      // START FIREBASE
+      var now = new Date()
+      var updatedPurchaseRequest = Object.assign({},
+        purchaseRequest, {
+          lastUpdated: now.toUTCString(),
+          sellerconfirmtime: now.toUTCString(),
+          status: 'Awaiting Payment'
+        })
+      firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+      .set(updatedPurchaseRequest, function(error){
+        if(error){
+          console.log(error)
+        }
+        dispatch(sendEtherState('init'));
+        dispatch(clearTxHash())
+        dispatch(updateConfirmButtonIsDisabled(false))
+        notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+        event.stopWatching()
+      })
+      // END FIREBASE
+    })
+
+    console.log(purchaseRequest.buyerAddress)
+    console.log(purchaseRequestId)
+    exchange.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
+      etherAmount, price, purchaseRequest.currency, {from:coinbase, value: web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')},
+      function(error, result){
+        if(!error){
+          console.log("exchange.data.addOrder")
+          dispatch(sendEtherState('waiting-for-tx-to-mine'))
+          dispatch(setTxHash(result))
+          firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId + '/contractAddress')
+          .set(result)
+          }else {
+            console.log(exchange.addOrder)
+            console.log(error)
+            dispatch(sendEtherState('init'));
+            dispatch(updateConfirmButtonIsDisabled(false))
+          }
+      })
       // END WEB3
     } catch (error) {
       console.log(error)

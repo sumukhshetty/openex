@@ -159,11 +159,13 @@ module.exports = {
             const auth = firebaseRef.auth()
             auth.signOut().then(function(promise){
             console.log("logout")
+            dispatch(updateReduxStoreDataState(false))
             dispatch(userLoggedOut())
           })
           }
         })
       } else {
+        dispatch(updateReduxStoreDataState(false))
         dispatch({ type: "USER_LOGGED_OUT"});
         return browserHistory.push('/')
       }
