@@ -11,7 +11,6 @@ class SellTradeAdvertisementsList extends Component {
     var selltradeadvertisements = this.props.selltradeadvertisements.data
     var etherPrice = this.props.etherPrice.data;
     var users = this.props.users
-    console.log(users)
     var uid = this.props.user.data.uid;
     var seller;
 
@@ -33,7 +32,7 @@ class SellTradeAdvertisementsList extends Component {
             var price = etherPrice ? (etherPrice*marginMultiplier) : null;
             var _presence
             if (component.props.presence.data){
-              _presence = component.props.presence.data[selltradeadvertisement.value.buyerUid]
+              _presence = component.props.presence.data[selltradeadvertisement.value.sellerUid]
             }
             return (<SellTradeAdvertisementRow 
               price={price} 
