@@ -7,7 +7,7 @@ export default class Kyc extends Component {
     try{
       if(!this.props.user.profile.kycComplete){
         return (
-          <div>Automte needs you to provide <a onClick={()=>browserHistory.push('/kyc')}>ID proof</a> to enlist your ads on the exchange.
+          <div>EZ Ether needs you to provide <a onClick={()=>browserHistory.push('/kyc')}>ID proof</a> to enlist your ads on the exchange.
           </div>
           )
       } else {

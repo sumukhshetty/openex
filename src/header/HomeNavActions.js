@@ -30,7 +30,7 @@ module.exports = {
     if(web3.wrongnetwork){
       notify.show("It looks like you're on the wrong network, please switch over to Kovan")
     } else {
-      var data = cryptoHelpers.toHex('I am logging into the automte ether marketplace and I have read the terms and conditions');
+      var data = cryptoHelpers.toHex('I am logging into the EZ Ether marketplace and I have read the terms and conditions');
       try {
         web3.data.currentProvider.sendAsync({id: 1, method: 'personal_sign', params: [web3.data.eth.accounts[0], data] },
           function(err, result) {

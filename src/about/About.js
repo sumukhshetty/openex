@@ -29,7 +29,7 @@ A decentralized world would require a decentralized solution for buying ether, a
 </p>
 <p className='pv1'>
 Product:
-To make this a reality, we are building Automte, a decentralized dapp built using the cutting edge decentralized stack.
+To make this a reality, we've built EZ Ether, a decentralized dapp built using the cutting edge decentralized stack.
 We are the most secure solution because we at no point have access to your ether, we use metamask for wallet management and smart contracts for the escrows. So the only thing we can do is direct the funds to the honest party in case of a dispute. Metamask is a chrome plugin that allows you to make your chrome browser a decentralized browser and Metamask handles all the private keys locally on your device.
 Most centralized exchanges handle your private keys, so they are vulnerable to hacks, even if they try to secure it in any way, all the hackers need to do is attack the weak point which is generally some sort of admin account that has access to all the private keys.
 </p>

@@ -49,7 +49,7 @@ export function signUpUserCustomAuth (signUpInfo, web3, country) {
           // TODO handle this placeholder country appropriately
           _country = 'jaaga'
         }
-        var data = toHex('I am signing up for the automte ether marketplace and I have read the terms and conditions');
+        var data = toHex('I am signing up for the EZ Ether marketplace and I have read the terms and conditions');
         web3.currentProvider.sendAsync({ id: 1, method: 'personal_sign', params: [web3.eth.accounts[0], data] },
           function(err, result) {
             if(result.error){

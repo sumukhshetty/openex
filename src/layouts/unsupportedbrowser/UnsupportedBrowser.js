@@ -6,7 +6,7 @@ const UseChrome = () => {
     <div className='flex x absolute--fill absolute bg-black-80 z-1'>
       <div className='bg-white w-75 h-75 br3 tc mt6 flex col x pv3'>
         <p className='measure f3'>You seem to be using an unsupported browser</p>
-        <p className='measure f5'>To get the most out of using the new Automte Ether Exchange
+        <p className='measure f5'>To get the most out of using the new EZ Ether marketplace
 please login to the new experience with a supported browser.</p>
         <img
           src={browserImages}

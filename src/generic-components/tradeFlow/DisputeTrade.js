@@ -32,7 +32,7 @@ class DisputeTrade extends Component {
                 If the buyer does not respond, does not pay or there is a disagreement regarding the terms of the trade, you can dispute this trade.
               </p>
               <p>
-                Open a dispute with the button below. Automte support will be in contact to resolve the dispute.
+                Open a dispute with the button below. EZ Ether support will be in contact to resolve the dispute.
               </p>
             </div>)}
         <div className='tc'>

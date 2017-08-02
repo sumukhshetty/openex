@@ -206,7 +206,7 @@ exports.signUpUserCustomAuth = functions.https.onRequest((req, res) => {
 
       var sig = req.body.signature;
       var account_address = req.body.account_address
-      var data = "I am signing up for the automte ether marketplace and I have read the terms and conditions"
+      var data = "I am signing up for the EZ Ether marketplace and I have read the terms and conditions"
 
       var message = ethUtil.toBuffer(data)
       var msgHash = ethUtil.hashPersonalMessage(message)
@@ -251,7 +251,7 @@ exports.loginUserCustomAuth = functions.https.onRequest((req, res) => {
       var sig = req.body.signature;
       admin.database().ref('/registeredAccounts/'+ account_address).once('value', function(snap){
         if(snap.val()){
-          var data = "I am logging into the automte ether marketplace and I have read the terms and conditions"
+          var data = "I am logging into the EZ Ether marketplace and I have read the terms and conditions"
 
           var message = ethUtil.toBuffer(data)
           var msgHash = ethUtil.hashPersonalMessage(message)
