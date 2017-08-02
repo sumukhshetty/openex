@@ -14,6 +14,7 @@ var web3Location = `http://${truffleConfig.networks.development
 import { firebaseRef } from './index'
 
 import logo from './images/logo.svg'
+import ezetherlogowhite from './images/ezetherlogowhite.svg'
 import AutoLogoLight from './images/svgReactComponents/autoLogoLight.js'
 
 // UI Components
@@ -101,7 +102,7 @@ class App extends Component {
                 <Link to="/admin">
                   <img
                     className="brand"
-                    src={logo}
+                    src={ezetherlogowhite}
                     alt="Automte Ether Exchange"
                   />
                 </Link>
