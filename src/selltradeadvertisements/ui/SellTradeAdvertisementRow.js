@@ -36,7 +36,7 @@ const SellTradeAdvertisementRow = props => {
           {lastTransfer}
         </td>
         <Trustworthiness trustLevel={props.seller.avgFeedback} />
-        <LastOnline time={props.seller.lastOnline} />
+        <LastOnline time={props.presence} />
         <BuyButton sellTradeAdvertisementId={props.sellTradeAdvertisementId} />
       </tr>
     )
