@@ -8,7 +8,8 @@ class SellerStepNote extends Component {
         return(
           <div className="measure pb4">
             <p className='tc flarge b'>Awaiting confirmation</p>
-            <p>A buyer has requested to purchase ether from you.</p>
+            <p>Metamask will prompt to take the amount of transaction into escrow. Once in escrow, the buyer will transfer the amount, and once you receive the amount you release it.
+By putting the amount in escrow, niether parties can cheat each other.</p>
             <p>Please confirm here to begin the trade.</p>
           </div>
         )
