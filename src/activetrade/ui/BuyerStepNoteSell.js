@@ -42,7 +42,7 @@ class BuyerStepNote extends Component {
           <div className="measure pb4">
             <p className='tc flarge b'>Ether has been released</p>
             <p>The seller has released the ether!</p>
-            <p>Click <a href="https://kovan.etherscan.io/address/0xd03fcf6ef9e02e8e2d54ecad19e24369a6e56341">here</a> to view the transcation.</p>
+            <p>Click <a href="https://etherscan.io/address/0xd03fcf6ef9e02e8e2d54ecad19e24369a6e56341">here</a> to view the transcation.</p>
           </div>
         )
       case 'Seller Canceled Trade':

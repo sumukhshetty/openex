@@ -362,11 +362,11 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(contractAddresses.kovanDisputeResolver)) {
+      if (!ethUtil.isValidAddress(contractAddresses.mainnetDisputeResolver)) {
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.mainnetDisputeResolver)
         var event = _instance.DisputeResolved({uid: purchaseRequestId})
         console.log(_instance)
         event.watch((error, result) => {
@@ -421,11 +421,11 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(contractAddresses.kovanDisputeResolver)){
+      if (!ethUtil.isValidAddress(contractAddresses.mainnetDisputeResolver)){
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.mainnetDisputeResolver)
         var event = _instance.DisputeResolved({uid: purchaseRequestId})
         event.watch((error, result) => {
           console.log("ActiveTradeActions.arbiterReleasesToSeller")
@@ -521,7 +521,7 @@ module.exports = {
       }
         // get the dispute resolver contract
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.mainnetDisputeResolver)
         // create an event, on the callback of the event do somme firebase stuff
         var event = _instance.DisputeAssigned({uid: purchaseRequestId})
         event.watch((error, result) => {

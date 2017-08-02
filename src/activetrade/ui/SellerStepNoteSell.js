@@ -34,7 +34,7 @@ By putting the amount in escrow, niether parties can cheat each other.</p>
           <div className="measure pb4">
             <p className='tc flarge b'>Ether has been released</p>
             <p>Thank you for releasing the ether!</p>
-            <p>Click <a href="https://kovan.etherscan.io/address/0xd03fcf6ef9e02e8e2d54ecad19e24369a6e56341">here</a> to view the transcation.</p>
+            <p>Click <a href="https://etherscan.io/address/0xd03fcf6ef9e02e8e2d54ecad19e24369a6e56341">here</a> to view the transcation.</p>
           </div>
         )
       case 'Seller Canceled Trade':

@@ -80,7 +80,7 @@ class ManageContract extends Component {
         )
     } else {
       // switch to mainnet
-      var url = 'https://kovan.etherscan.io/address/' + this.props.sellerInterface.data.address
+      var url = 'https://etherscan.io/address/' + this.props.sellerInterface.data.address
 
       return (
         <div className="w-100 bg-smoke h-100">
