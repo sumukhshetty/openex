@@ -103,7 +103,7 @@ class App extends Component {
                   <img
                     className="brand"
                     src={ezetherlogowhite}
-                    alt="Automte Ether Exchange"
+                    alt="EZ Ether"
                   />
                 </Link>
               </div>

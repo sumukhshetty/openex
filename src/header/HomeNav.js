@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import logo from '../images/logo.svg';
+import ezetherlogowhite from './../images/ezetherlogowhite.svg'
 import { browserHistory } from 'react-router'
 
 class HomeNav extends Component {
@@ -14,7 +15,7 @@ class HomeNav extends Component {
         <div className='pure-g'>
           <div className='pure-u-1-4 brand'>
             <Link to='/'>
-              <img className='brand' src={logo} alt='' />
+              <img className='brand' src={ezetherlogowhite} alt='' />
             </Link>
           </div>
           <div className='pure-u-3-4 menu'>
