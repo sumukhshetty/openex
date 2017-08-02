@@ -1,4 +1,4 @@
-import { connect } from 'react-redux'
+/*import { connect } from 'react-redux'
 import ETHOrderBook from './ETHOrderBook'
 import { loadUserOrderBook, clearOrderBook } from './ETHOrderBookActions'
 
@@ -27,3 +27,4 @@ const ETHOrderBookContainer = connect(
 )(ETHOrderBook)
 
 export default ETHOrderBookContainer
+*/

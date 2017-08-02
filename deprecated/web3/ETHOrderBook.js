@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+/*import React, { Component } from 'react'
 
 
 class ETHOrderBook extends Component {
@@ -25,3 +25,4 @@ class ETHOrderBook extends Component {
 }
 
 export default ETHOrderBook
+*/

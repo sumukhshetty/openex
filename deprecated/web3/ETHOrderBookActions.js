@@ -1,4 +1,4 @@
-const contract = require('truffle-contract')
+/*const contract = require('truffle-contract')
 import ETHOrderBookContract from '../../contracts/abi/ETHOrderBook.json'
 
 export const USER_ORDER_BOOK = 'USER_ORDER_BOOK'
@@ -32,3 +32,4 @@ export function clearOrderBook() {
     dispatch(userOrderBook(null))
   }
 }
+*/

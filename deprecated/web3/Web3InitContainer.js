@@ -1,4 +1,4 @@
-import { connect } from 'react-redux'
+/*import { connect } from 'react-redux'
 import Web3Init from './Web3Init'
 import { web3Initialize } from './Web3InitActions'
 
@@ -22,3 +22,4 @@ const Web3InitContainer = connect(
 )(Web3Init)
 
 export default Web3InitContainer
+*/
