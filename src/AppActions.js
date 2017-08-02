@@ -80,7 +80,7 @@ module.exports = {
       web3.version.getNetwork(function(error, result){
         if(!error){
           console.log(result)
-          if(result==='42'){
+          if(result==='1'){
             dispatch(wrongNetwork(false))
           } else {
             dispatch(wrongNetwork(true))
