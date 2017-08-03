@@ -77,11 +77,13 @@ module.exports = {
 
               }
               if (statusCode === 500){
+                dispatch(updateReduxStoreDataState(false))
                 dispatch(userLoggedInError(res.body.error))
                 throw res.body.error
               }
               if (statusCode === 401){
                 //this should toast the message
+                dispatch(updateReduxStoreDataState(false))
                 notify.show(res.body.error)
                 console.log(res.body.error)
                 dispatch(userLoggedInError(res.body.error))
