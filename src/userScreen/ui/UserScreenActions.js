@@ -13,11 +13,15 @@ function clearUserScreen(){
 }
 
 module.exports = {
-  userScreen: (userUid, users) => (dispatch) => {
+  userScreen: (userUid, users, presence) => (dispatch) => {
+    var _presence
+/*    if(presence.data){
+      _presence = presence.data[userUid]
+    }*/
     var user = users.data[userUid]
     var userScreenPayload = {
       username: user.username,
-      lastOnline: user.lastOnline,
+      lastOnline: _presence,
       numberOfTrades: user.numberOfTrades,
       verifiedEmail: user.verifiedEmail,
       verifiedPhoneNumber: user.verifiedPhoneNumber,
