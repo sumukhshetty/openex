@@ -169,6 +169,17 @@ class App extends Component {
                     Contact Us
                   </Link>
                 </li>
+                <li className="pure-menu-item">
+                  <Link
+                    to="/guide"
+                    activeStyle={{
+                      color: 'white',
+                      borderBottom: '2px solid white'
+                    }}
+                  >
+                    Guide
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
