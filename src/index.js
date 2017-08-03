@@ -101,6 +101,10 @@ ReactDOM.render(
           path="gettingstarted"
           component={UserIsNotAuthenticated(GettingStarted)}
         />
+        <Route
+          path="guide"
+          component={UserIsAuthenticated(GettingStarted)}
+        />
         <Route path="wrongnetwork" component={WrongNetwork} />
         <Route path="admin" component={UserIsAuthenticated(Admin)} />
         <Route
