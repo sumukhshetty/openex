@@ -28,8 +28,14 @@ export class EditBuyForm extends Component {
         <div className='flex mb3'>
           <label htmlFor='minTransactionLimit' className='w5'>Min Transaction Limit</label>
           <div className='flex w5 h-100'>
-            <input id='minTransactionLimit' type='number' onChange={this.props.onChangeProp} value={this.props.minTransactionLimit}
+            <input 
+              id='minTransactionLimit'
+              type='number'
+              onChange={this.props.onChangeProp}
+              value={this.props.minTransactionLimit}
               className='br--white'
+              min="1"
+              max="1000000"
               required />
             <button className='ftiny br0 bg-gray bl--gray b--blue ba gray'>{this.props.currency}</button>
           </div>
@@ -41,8 +47,14 @@ export class EditBuyForm extends Component {
         <div className='flex mb3'>
           <label htmlFor='maxTransactionLimit' className='w5 '>Max Transaction Limit</label>
           <div className='flex w5 h-100'>
-            <input id='maxTransactionLimit' type='number' onChange={this.props.onChangeProp} value={this.props.maxTransactionLimit}
+            <input 
+              id='maxTransactionLimit' 
+              type='number'
+              onChange={this.props.onChangeProp}
+              value={this.props.maxTransactionLimit}
               className='br--white'
+              min="1"
+              max="1000000"
               required />
             <button className='ftiny br0 bg-gray bl--gray b--blue ba gray'>{this.props.currency}</button>
           </div>
