@@ -52,6 +52,8 @@ export class SellForm extends Component {
               onChange={this.props.onChangeProp}
               value={this.props.minTransactionLimit}
               className="br--white"
+              min="1"
+              max="1000000"
               required
             />
             <button
@@ -76,6 +78,8 @@ export class SellForm extends Component {
               onChange={this.props.onChangeProp}
               value={this.props.maxTransactionLimit}
               className="br--white"
+              min="1"
+              max="1000000"
               required
             />
             <button
