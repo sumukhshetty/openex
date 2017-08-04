@@ -84,7 +84,7 @@ class Dashboard extends Component {
               <div>
                 <div>
                   <EnableNotifications />
-                  <Kyc/>
+                  {/*<Kyc/>*/}
                   <DashboardInfoMessage />
                   <ActiveTrades />
                   <TradeAdvertisements />

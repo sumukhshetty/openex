@@ -15,8 +15,6 @@ const BuyTradeAdvertismentRow = props => {
     } else {
       lastTransfer = '-'
     }
-    console.log('BuyTradeAdvertismentRow.render')
-    console.log(props.presence)
     return (
       <tr className="flex cxc">
         <td className="fb20">

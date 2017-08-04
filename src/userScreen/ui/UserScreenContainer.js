@@ -8,15 +8,16 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user,
     users: state.users,
     userScreen: state.userScreen,
-    userScreenUid: ownProps.userScreenUid
+    userScreenUid: ownProps.userScreenUid,
+    presence: state.presence
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoad: (user, users) => {
+    onBeforeComponentLoad: (user, users, presence) => {
 
-      dispatch(userScreen(user, users))
+      dispatch(userScreen(user, users, presence))
     },
     onBeforeComponentUnmount: ()=>{
       dispatch(clearState())

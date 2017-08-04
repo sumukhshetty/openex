@@ -88,10 +88,10 @@ export function signUpUserCustomAuth (signUpInfo, web3, country) {
                       'country': country,
                       'currency': currency,
                       'username': username,
-                      //'isAdmin': false,
+                      'isAdmin': false,
                       'trustworthiness': 'unknown',
-                      //'verifiedIdentification': false,
-                      //'verifiedPhoneNumber': false,
+                      'verifiedIdentification': false,
+                      'verifiedPhoneNumber': false,
                       'verifiedEmail': true,
                       'numberOfTrades': 0,
                       'accountCreated': FIREBASE_TIMESTAMP,
@@ -99,9 +99,8 @@ export function signUpUserCustomAuth (signUpInfo, web3, country) {
                       'avgFeedback': 0,
                       //'firstPurchase': '-',
                       'shownotificationrequest': 'true',
-                      //'kycComplete': false,
+                      'kycComplete': false,
                     }
-                    firebaseRef.database().ref('/registeredAccounts/'+userid).set(true)
                     firebaseRef.database().ref('/users/' + userid).set(userdata).then(function(result){
                       firebaseUser.updateProfile({
                         displayName: username

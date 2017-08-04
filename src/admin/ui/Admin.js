@@ -31,6 +31,7 @@ export default class Admin extends Component {
                     purchaseRequestId={key}
                     time={time}
                     purchaserequest={purchaserequest}
+                    countryCode={value.country}
                   />)
         })
 

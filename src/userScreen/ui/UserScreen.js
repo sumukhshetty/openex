@@ -4,7 +4,7 @@ const moment = require('moment')
 
 export default class UserScreen extends Component {
   componentWillMount(){
-    this.props.onBeforeComponentLoad(this.props.userScreenUid, this.props.users)
+    this.props.onBeforeComponentLoad(this.props.userScreenUid, this.props.users, this.props.presence)
   }
 
   componentWillUnmount(){
@@ -40,7 +40,7 @@ export default class UserScreen extends Component {
                   </tr>
                   <tr className='w-50'>
                     <td className='w4 pv2'>First Purchase</td>
-                    <td className='pl3'>{this.props.userScreen.data.firstPurchase} ago</td>
+                    <td className='pl3'>{moment(this.props.userScreen.data.firstPurchase).fromNow()}</td>
                   </tr>
                   <tr className='w-50'>
                     <td className='w4 pv2'>Account Created</td>

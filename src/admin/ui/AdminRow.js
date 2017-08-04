@@ -16,7 +16,7 @@ const AdminRow = (props) => {
       <td className='fb10 tc'>{props.purchaserequest.fiatAmount}</td>
       <td className='fb10 tc danger'> {props.purchaserequest.status}</td>
       <td className='me'>
-        <button onClick={() => browserHistory.push('/activetrade/' + props.purchaseRequestId)}>
+        <button onClick={() => browserHistory.push('/activetrade/' + props.purchaseRequestId + '/' + props.countryCode)}>
         View / Message</button>
       </td>
     </tr>
