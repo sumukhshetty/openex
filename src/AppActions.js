@@ -74,7 +74,7 @@ module.exports = {
     try {
       web3.version.getNetwork(function(error, result){
         if(!error){
-          if(result==='1'){
+          if(result==='42'){
             dispatch(wrongNetwork(false))
           } else {
             dispatch(wrongNetwork(true))
@@ -122,24 +122,10 @@ module.exports = {
           currency = 'USD'
         }
         dispatch(setCurrency(currency))
-        request({
-          method: 'GET',
-          url: 'https://min-api.cryptocompare.com/data/price',
-          qs: { fsym: 'ETH', tsyms: currency }
-        },
-        function(err, res, body) {
-          if (err) {
-            console.error('error querying for price: ', err)
-            throw err
-          }
-          if(res.statusCode === 200) {
-            let prices = JSON.parse(body);
-            // ISSUE-253 dont dispatch this to the store - make a write to firebase
-            // and then dipatch from firebase as the single source of truth
-            dispatch(etherPrice(prices[currency]))
-          }
+
+        firebaseRef.database().ref('/prices/ETH/' + currency).once('value', function(snap) {
+          dispatch(etherPrice(snap.val()));
         })
-        //dispatch(etherPrice(prices[toSymbols]))
       }
       if (statusCode === 500){
         throw res.body.error
