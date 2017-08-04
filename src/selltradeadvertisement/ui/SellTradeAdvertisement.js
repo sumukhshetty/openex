@@ -28,11 +28,12 @@ export default class SellTradeAdvertisement extends Component {
 
   createPurchaseRequest(e) {
     e.preventDefault()
+    var _etherPrice = (this.props.etherPrice.data * (1 + parseInt(this.props.selltradeadvertisement.data.margin, 10) * 0.01)).toFixed(2)
     this.setState({ isButtonDisabled: true })
     this.props.createPurchaseRequest(
       this.state.etherAmount,
       this.state.fiatAmount,
-      this.props.etherPrice.data,
+      _etherPrice,
       this.props.sellTradeAdvertisementId,
       this.props.selltradeadvertisement.data,
       this.props.seller,
