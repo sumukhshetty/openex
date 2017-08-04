@@ -16,7 +16,6 @@ class DisputedTrades extends Component {
       headers: { "Content-Type": "application/json" },
       json: true,
       url: url,
-      headers: { "Content-Type": "application/json" },
     }
     request(options, function (err, res, body) {
       if (err) {

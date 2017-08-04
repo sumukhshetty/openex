@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import EditTradeAdvertisementButton from './../layouts/EditTradeAdvertisementButton'
-import AddEtherModal from './../layouts/AddEtherModal'
-import { browserHistory } from 'react-router'
 
 export default class TradeAdvertisementsRow extends Component {
   constructor(props) {

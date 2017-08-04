@@ -70,11 +70,6 @@ export default class BuyTradeAdvertisement extends Component {
   render() {
     var buyTradeAdvertisement = this.props.buytradeadvertisement.data
     var buyer = this.props.buyer.data
-    var requestComponent = (
-      <div className="w-50">
-        <h2 className="pv1 tc">Getting balance...</h2>
-      </div>
-    )
     if (buyTradeAdvertisement && buyer) {
       var minLimit =
         Number(buyTradeAdvertisement.minTransactionLimit) /

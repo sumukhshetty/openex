@@ -11,9 +11,8 @@ import WrongNetwork from './../wrongnetwork/WrongNetwork'
 import LockedAccount from './../lockedaccount/LockedAccount'
 import WrongAccount from './../wrongaccount/WrongAccount'
 import UserPresenceContainer from './../../userpresence/UserPresenceContainer'
-//import LoadingContracts from './../../loadingcontracts/LoadingContracts'
 
-import Kyc from './kyc/layouts/Kyc'
+//import Kyc from './kyc/layouts/Kyc'
 
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
@@ -23,9 +22,6 @@ import contractAddresses from './../../contract_addresses/contractAddresses.js'
 class Dashboard extends Component {
 
   componentWillMount () {
-    console.log('');
-    // TODO change this to mainnet
-    console.log("Dashboard.componentWillMount")
     this.props.loadExchange(this.props.web3.data, contractAddresses.exchange)
     this.props.checkBrowserWalletAddress(this.props.web3.data, this.props.user)
     firebaseMessaging.onTokenRefresh(function () {

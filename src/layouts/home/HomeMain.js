@@ -1,4 +1,3 @@
-import Web3 from 'web3'
 import React, { Component } from 'react'
 import ProductShortDescription from './ProductShortDescription'
 import SignUpContainer from './../../signup/SignUpContainer'
@@ -8,10 +7,7 @@ import Footer from './../../footer/Footer'
 import Features from './Features'
 import BrowseAdvertisementsContainer from './../../browseadvertisements/ui/BrowseAdvertisementsContainer'
 
-import truffleConfig from './../../../truffle-config.js'
 
-var web3Location = `http://${truffleConfig.networks.development
-  .host}:${truffleConfig.networks.development.port}`
 
 class HomeMain extends Component {
   render() {

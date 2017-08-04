@@ -7,7 +7,6 @@ import YouAreFirst from './../../generic-components/YouAreFirst'
 
 class SellTradeAdvertisementsList extends Component {
   render(){
-    console.log('SellTradeAdvertisementsList.render')
     var selltradeadvertisements = this.props.selltradeadvertisements.data
     var etherPrice = this.props.etherPrice.data;
     var users = this.props.users

@@ -11,8 +11,6 @@ class BuyTradeAdvertisementsList extends Component {
     var uid = this.props.user.data.uid;
     var users = this.props.users
     var buyer
-    console.log('BuyTradeAdvertisementsList.render')
-    console.log(this.props.presence)
     var arr = _.map(buytradeadvertisements, function(value, prop){
       return {prop: prop, value: value}
     });
@@ -34,7 +32,6 @@ class BuyTradeAdvertisementsList extends Component {
           if (component.props.presence.data){
             _presence = component.props.presence.data[buytradeadvertisement.value.buyerUid]
           }
-          console.log(_presence)
           return <BuyTradeAdvertisementRow 
             buyTradeAdvertisementData={buytradeadvertisement.value} 
             buyTradeAdvertisementId={buytradeadvertisement.prop} 

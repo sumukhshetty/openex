@@ -31,8 +31,6 @@ import SellTradeAdvertisement from './selltradeadvertisement/layouts/SellTradeAd
 import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTradeAdvertisements'
 import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAdvertisement'
 
-import ManageContractContainer from './manageContract/ui/ManageContractContainer'
-
 import BrowseAdvertisements from './browseadvertisements/layouts/BrowseAdvertisements'
 import BrowseBuyAdvertisement from './browsebuyadvertisement/layouts/BrowseBuyAdvertisement'
 import BrowseSellAdvertisement from './browseselladvertisement/layouts/BrowseSellAdvertisement'
@@ -145,10 +143,7 @@ ReactDOM.render(
           path="edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId"
           component={UserIsAuthenticated(EditTradeAdvertisement)}
         />
-        <Route
-          path="manage/:tradeId"
-          component={UserIsAuthenticated(ManageContractContainer)}
-        />
+
         <Route path="kyc" component={UserIsAuthenticated(KycUpload)} />
         <Route
           path="processkyc/:country/:userUid"

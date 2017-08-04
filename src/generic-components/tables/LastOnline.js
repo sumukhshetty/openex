@@ -5,8 +5,6 @@ const moment = require('moment')
 const LastOnline = props => {
   var time
   try {
-    console.log("LastOnline")
-    console.log(props.time)
     if (props.time === 'Active') {
       time = 'a few seconds ago'
     } else {
@@ -16,11 +14,6 @@ const LastOnline = props => {
     time = '-'
   }
 
-  console.log(
-    'days',
-    props.time,
-    moment(props.time).diff(moment(Date.now()), 'minutes')
-  )
   let dot
   if (moment(props.time).diff(moment(Date.now()), 'minutes') >= -15 || time === 'a few seconds ago') {
     dot = 'greenDot'
@@ -31,7 +24,6 @@ const LastOnline = props => {
   } else {
     dot = 'redDot'
   }
-  console.log(time)
   return (
     <td className="fb15 flex cxc mxc">
       <span className={`${dot} mr1`} />

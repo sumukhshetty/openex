@@ -1,5 +1,4 @@
-import {firebaseRef, raven} from './../../index.js'
-import {notify} from 'react-notify-toast'
+import {firebaseRef} from './../../index.js'
 
 
 export function userCreatesBuyTradeAdvertisement(tradeDetails, user){

@@ -378,14 +378,12 @@ module.exports = {
     firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid).push(buyerNotificationData)
   },
   sendNewChatNotification: (userUid, purchaseRequest, purchaseRequestId, content) => {
-    var senderUid, senderUsername, recipientUid, recipientUsername
+    var senderUsername, recipientUid, recipientUsername
     if(userUid  === purchaseRequest.buyerUid) {
-      senderUid = userUid
       senderUsername = purchaseRequest.buyerUsername
       recipientUid = purchaseRequest.sellerUid
       recipientUsername = purchaseRequest.sellerUsername
     } else if (userUid === purchaseRequest.sellerUid) {
-      senderUid = userUid
       senderUsername = purchaseRequest.sellerUsername
       recipientUid = purchaseRequest.buyerUid
       recipientUsername = purchaseRequest.buyerUsername

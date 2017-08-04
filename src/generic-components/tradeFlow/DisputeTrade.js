@@ -9,8 +9,6 @@ class DisputeTrade extends Component {
   }
 
   render () {
-    console.log("DisputeTrade.render")
-    console.log(this.props)
     return (
       <div className='measure pv4'>
         <p className='tc flarge b'>

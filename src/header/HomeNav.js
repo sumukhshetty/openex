@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import logo from '../images/logo.svg';
 import ezetherlogowhite from './../images/ezetherlogowhite.svg'
 import { browserHistory } from 'react-router'
 

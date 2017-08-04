@@ -1,8 +1,6 @@
 import {firebaseRef, FIREBASE_TIMESTAMP} from '../index.js'
-import * as firebase from 'firebase'
 
 export function userPresence(uid) {
-  console.log('userPresence')
   // since I can connect from multiple devices or browser tabs, we store each connection instance separately
   // any time that connectionsRef's value is null (i.e. has no children) I am offline
   //var myConnectionsRef = firebaseRef.database().ref('/users/'+uid+'/connections');
@@ -12,7 +10,6 @@ export function userPresence(uid) {
   var userRef = firebaseRef.database().ref('/presence/'+uid);
   var connectedRef = firebaseRef.database().ref('.info/connected');
   connectedRef.on('value', function(snap) {
-    console.log(snap.val())
     if (snap.val() === true) {
       // We're connected (or reconnected)! Do anything here that should happen only if online (or on reconnect)
       //lastOnlineRef.set(firebase.database.ServerValue.TIMESTAMP);

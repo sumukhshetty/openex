@@ -1,4 +1,3 @@
-import {firebaseRef} from './../../index.js'
 import * as contractAbis from './../../contract_addresses/contractAbi'
 import {notify} from 'react-notify-toast'
 
@@ -25,7 +24,6 @@ function setLockedWalletStatus(value){
 
 module.exports = {
   loadExchange: (web3, exchangeAddress) => (dispatch) => {
-    console.log('DashboardActions.loadExchange')
     dispatch(setExchange('obtaining...'))
     try {
       const Exchange = web3.eth.contract(contractAbis.EZEtherExchange)
@@ -39,8 +37,6 @@ module.exports = {
     }
   },
   checkBrowserWalletAddress:(web3, user) => (dispatch) =>{
-    console.log('DashboardActions.checkBrowserWalletAddress')
-    console.log(web3)
     try{
       if(web3.eth.coinbase){
         var coinbase = web3.eth.coinbase

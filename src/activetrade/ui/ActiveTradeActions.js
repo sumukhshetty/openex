@@ -80,13 +80,6 @@ function updateConfirmButtonIsDisabled(value){
   }
 }
 
-function updateConfirmationButtonColor(value) {
-  return {
-    type: 'UPDATE_CONFIRM_BUTTON_COLOR',
-    payload: value
-  }
-}
-
 module.exports = {
   activeTrade: (purchaseRequests, purchaseRequestId, users, user, countryCode) => (dispatch) => {
     var _countryCode
@@ -95,7 +88,6 @@ module.exports = {
     } else {
       _countryCode = user.profile.country
     }
-    var purchaseRequest = purchaseRequests[purchaseRequestId]
     firebaseRef.database().ref('/purchaserequests/'+_countryCode+'/'+purchaseRequestId).on('value', function(snap){
       var activeTrade = snap.val()
       dispatch(setActiveTrade(activeTrade))
@@ -281,7 +273,7 @@ module.exports = {
       // DEVELOPER NOTE: optimize spot - we don't have to check this each time only if we know that the purchase
       // request was in dispute
       if (!purchaseRequest.postProcessingCompleted){
-        var ref = firebaseRef.database().ref('/disputes/'+purchaseRequestId).once('value', function(snap){
+        firebaseRef.database().ref('/disputes/'+purchaseRequestId).once('value', function(snap){
           console.log(snap.val())
           if(snap.val()){
             firebaseRef.database().ref('/disputes/'+purchaseRequestId).remove()
@@ -509,15 +501,11 @@ module.exports = {
         firebaseRef.database().ref('/traderating/'+ purchaseRequest.sellerUid).once('value',function(snap){
           var totalRating = 0
           var ratings = snap.val()
-          console.log(ratings)
           Object.entries(ratings).forEach(
             ([key,value])=>{
               totalRating += value.rating
             })
-          console.log(totalRating)
-          console.log(Object.keys(ratings).length)
           var averageFeedback = totalRating/(Object.keys(ratings).length)
-          console.log(averageFeedback)
           firebaseRef.database().ref('/users/'+purchaseRequest.sellerUid + '/avgFeedback').set(averageFeedback.toFixed(1))
         })
       })

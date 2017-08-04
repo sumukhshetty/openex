@@ -52,9 +52,7 @@ export default class BrowseBuyAdvertisement extends Component {
   render () {
     var buyTradeAdvertisement = this.props.buytradeadvertisement.data;
     var buyer = this.props.buyer.data
-    var requestComponent = <div className='w-50' >
-      <h2 className='pv1 tc'>Getting balance...</h2>
-    </div>;
+
     if(buyTradeAdvertisement && buyer) {
       var marginMultiplier = (1 + (parseInt(this.props.buytradeadvertisement.data.margin,10) * 0.01))
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;

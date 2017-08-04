@@ -6,21 +6,16 @@ import Web3 from 'web3'
 import truffleConfig from './../truffle-config.js'
 import getWeb3 from './util/getWeb3'
 
-var request = require('request')
-//var fetch = require('fetch')
 var web3Location = `http://${truffleConfig.networks.development
   .host}:${truffleConfig.networks.development.port}`
 
 import { firebaseRef } from './index'
 
-import logo from './images/logo.svg'
 import ezetherlogowhite from './images/ezetherlogowhite.svg'
 import AutoLogoLight from './images/svgReactComponents/autoLogoLight.js'
 
 // UI Components
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
-import EtherPriceContainer from './etherprice/EtherPriceContainer'
-import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
 
 // Styles
@@ -28,7 +23,6 @@ import './css/pure-min.css'
 import './css/styles-common.css'
 import './css/atomic.css'
 import './css/swatch.css'
-// import logo from './images/logo.svg'
 
 import Bell from './images/svgReactComponents/Bell'
 import NotificationsContainer from './notifications/ui/NotificationsContainer'
@@ -48,12 +42,8 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log('App.componentWillMount')
     getWeb3.then(results => {
-      console.log('getWeb3.then')
-      console.log(results.web3)
       this.web3Initialize(results.web3)
-      //dispatch(web3Init(results.web3))
     })
   }
 
@@ -207,10 +197,8 @@ class App extends Component {
         return (
           <section className="Site">
             <Toast />
-            {/*<EtherPriceContainer />*/}
             <OnlyGuestLinks />
             <OnlyAuthLinks />
-            {/*<UserPresenceContainer />*/}
             <main
               role="main"
               className={firebaseRef.auth().currentUser && 'bg-smoke'}
