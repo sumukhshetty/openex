@@ -74,7 +74,7 @@ export default class BrowseSellAdvertisement extends Component {
           </div>
         }
       }
-      var url = '/user/' + sellTradeAdvertisement.sellerUid
+      var url = '/browseuser/' + sellTradeAdvertisement.sellerUid
       return (
         <div className='w-100 bg-smoke vh-100'>
           <div className='w-75 center pv3'>

@@ -59,7 +59,7 @@ export default class BrowseBuyAdvertisement extends Component {
       // TODO get the available balance from web3
       var availableBalance = 5
 
-      var url = '/user/' + buyTradeAdvertisement.buyerUid
+      var url = '/browseuser/' + buyTradeAdvertisement.buyerUid
       return (
         <div className='w-100 bg-smoke vh-100'>
           <div className='w-75 center pv3'>

@@ -57,9 +57,10 @@ function logPageView() {
   ReactGA.pageview(window.location.pathname)
 }
 
-export const raven = Raven.config(
+var raven
+/*export const raven = Raven.config(
   'https://e84964259dc24e9e902198566c748cdb@sentry.io/178466'
-).install()
+).install()*/
 
 var config = {
   apiKey: _firebaseconfig._apiKey,
@@ -126,6 +127,10 @@ ReactDOM.render(
         <Route
           path="user/:userUid"
           component={UserIsAuthenticated(UserScreen)}
+        />
+        <Route
+          path="browseuser/:userUid"
+          component={UserIsNotAuthenticated(UserScreen)}
         />
         <Route
           path="selltradeadvertisement/:sellTradeAdvertisementId"

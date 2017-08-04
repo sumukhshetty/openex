@@ -45,7 +45,6 @@ export default class BrowseAdvertisements extends Component {
         var marginMultiplier =
           1 + parseInt(buytradeadvertisement.value.margin, 10) * 0.01
         var price = etherPrice ? etherPrice * marginMultiplier : null
-        console.log(price)
         var _presence
         if (component.props.presence.data) {
           _presence =
@@ -81,7 +80,6 @@ export default class BrowseAdvertisements extends Component {
           var marginMultiplier =
             1 + parseInt(selltradeadvertisement.value.margin, 10) * 0.01
           var price = etherPrice ? etherPrice * marginMultiplier : null
-          console.log(price)
           var _presence
           if (component.props.presence.data) {
             _presence =
