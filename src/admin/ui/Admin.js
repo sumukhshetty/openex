@@ -8,9 +8,9 @@ export default class Admin extends Component {
     this.props.onBeforeComponentLoad()
   }
 
-  componentWillUnmount(){
+/*  componentWillUnmount(){
     this.props.onBeforeComponentWillUnmount()
-  }
+  }*/
 
   render () {
     var purchaserequests = this.props.admin.purchaserequests
