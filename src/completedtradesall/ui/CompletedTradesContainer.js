@@ -6,7 +6,8 @@ const mapStateToProps = (state, ownProps) => {
     web3: state.web3,
     user: state.user,
     completedtrades: state.completedtrades,
-    purchaserequesets: state.purchaserequesets
+    purchaserequesets: state.purchaserequesets,
+    countryCode: ownProps.countryCode
   }
 }
 

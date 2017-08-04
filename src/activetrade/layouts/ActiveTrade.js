@@ -6,7 +6,7 @@ class ActiveTrade extends Component {
     return (
       <section className='bg-smoke'>
         <div className='w-100 center'>
-          <ActiveTradeContainer purchaseRequestId={this.props.params.purchaseRequestId}/>
+          <ActiveTradeContainer purchaseRequestId={this.props.params.purchaseRequestId} countryCode={this.props.params.countryCode}/>
         </div>
       </section>
     )

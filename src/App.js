@@ -207,7 +207,7 @@ class App extends Component {
         return (
           <section className="Site">
             <Toast />
-            <EtherPriceContainer />
+            {/*<EtherPriceContainer />*/}
             <OnlyGuestLinks />
             <OnlyAuthLinks />
             {/*<UserPresenceContainer />*/}
