@@ -15,14 +15,15 @@ const mapStateToProps = (state, ownProps) => {
     cancelTradeState: state.cancelTradeState,
     purchaseRequestId: ownProps.purchaseRequestId,
     exchange: state.exchange,
-    txhash: state.txhash
+    txhash: state.txhash,
+    countryCode: ownProps.countryCode
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users, user) => {
-      dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users, user))
+    onBeforeComponentLoad: (purchaseRequests, purchaseRequestId, users, user, countryCode) => {
+      dispatch(actions.activeTrade(purchaseRequests, purchaseRequestId, users, user, countryCode))
     },
     sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, exchange) => {
       dispatch(actions.sellerConfirmsTrade(seller, buyer, purchaseRequest, purchaseRequestId, web3, exchange))

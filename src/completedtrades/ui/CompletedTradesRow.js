@@ -24,7 +24,7 @@ class CompletedTradesRow extends Component {
             <td className='fb10 tc'>{purchaseRequest.fiatAmount}</td>
             <td className='fb10 tc'>{purchaseRequest.status}</td>
             <td className='fb10 tc'><i className='icon'>greendot</i> Active</td>
-            <ViewCompletedTradeButton purchaseRequestId={this.props.purchaseRequestId} tradeType={purchaseRequest.tradeAdvertisementType} />
+            <ViewCompletedTradeButton purchaseRequestId={this.props.purchaseRequestId} tradeType={purchaseRequest.tradeAdvertisementType} countryCode={this.props.countryCode}/>
           </tr>
         )
       } catch (error){

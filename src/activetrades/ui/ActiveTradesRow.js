@@ -27,7 +27,7 @@ class ActiveTradeRow extends Component {
           <td className='fb10 tc'>{purchaseRequest.fiatAmount}</td>
           <td className='fb10 tc'>{purchaseRequest.status}</td>
           <td className='fb10 tc'><i className='icon'>greendot</i> Active</td>
-          <ViewActiveTradeButton purchaseRequest={purchaseRequest} purchaseRequestId={this.props.purchaseRequestId} tradeType={purchaseRequest.tradeAdvertisementType} />
+          <ViewActiveTradeButton purchaseRequest={purchaseRequest} purchaseRequestId={this.props.purchaseRequestId} tradeType={purchaseRequest.tradeAdvertisementType} countryCode={this.props.user.profile.country}/>
         </tr>
       )
     } else {

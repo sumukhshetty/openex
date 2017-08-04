@@ -19,7 +19,7 @@ class CompletedTrades extends Component {
       var reversedList = _.reverse(list)
       var rows = [];
       reversedList.forEach((s) => {
-        rows.push(<CompletedTradesRowContainer purchaseRequestId={s[0]} key={s[0]} tradeType={s[1].tradeType} />);
+        rows.push(<CompletedTradesRowContainer purchaseRequestId={s[0]} key={s[0]} tradeType={s[1].tradeType} countryCode={this.props.user.profile.country}/>);
       })
 
       return (

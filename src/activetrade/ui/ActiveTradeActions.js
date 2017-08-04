@@ -88,8 +88,15 @@ function updateConfirmationButtonColor(value) {
 }
 
 module.exports = {
-  activeTrade: (purchaseRequests, purchaseRequestId, users, user) => (dispatch) => {
-    firebaseRef.database().ref('/purchaserequests/'+user.profile.country+'/'+purchaseRequestId).on('value', function(snap){
+  activeTrade: (purchaseRequests, purchaseRequestId, users, user, countryCode) => (dispatch) => {
+    var _countryCode
+    if(countryCode){
+      _countryCode = countryCode
+    } else {
+      _countryCode = user.profile.country
+    }
+    var purchaseRequest = purchaseRequests[purchaseRequestId]
+    firebaseRef.database().ref('/purchaserequests/'+_countryCode+'/'+purchaseRequestId).on('value', function(snap){
       var activeTrade = snap.val()
       dispatch(setActiveTrade(activeTrade))
       dispatch(updateConfirmButtonIsDisabled(false))
