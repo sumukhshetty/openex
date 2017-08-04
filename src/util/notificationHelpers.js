@@ -2,7 +2,7 @@ import {firebaseRef, FIREBASE_TIMESTAMP} from './../index.js'
 
 module.exports = {
   sendBuyerCreatesPurchaseRequestNotification: (purchaseRequest, purchaseRequestId, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer) => {
-    var _body = "Hi " + seller.data.username +" - you got a new offer to your SELL advertisement. You'll have to approve the transaction before the buyer transfers the money to you. DEAL: " +  purchaseRequest.fiatAmount + " " + seller.data.currency +" = " + purchaseRequest.etherAmount + "ETH (price " + purchaseRequest.price + " " + seller.data.currency + "/ETH). You can communicate with the buyer on the chat window of your trade page. Please respond on our website: alpha.automte.com/activetrade/"+purchaseRequestId 
+    var _body = "Hi " + seller.data.username +" - you got a new offer to your SELL advertisement. You'll have to approve the transaction before the buyer transfers the money to you. DEAL: " +  purchaseRequest.fiatAmount + " " + seller.data.currency +" = " + purchaseRequest.etherAmount + "ETH (price " + purchaseRequest.price + " " + seller.data.currency + "/ETH). You can communicate with the buyer on the chat window of your trade page. Please respond on our website: ezether.com/activetrade/"+purchaseRequestId 
     var _fcmToken
     if(seller.data.fcmToken){
       _fcmToken = seller.data.fcmToken
@@ -25,7 +25,7 @@ module.exports = {
     }
     firebaseRef.database().ref("/notifications/"+sellTradeAdvertisement.sellerUid).push(notificationData)
 
-    var _bodyToBuyer = "Hi " + buyer.profile.username + " - Your trade has been initiated with " + seller.data.username +". Wait for the seller to approve the transaction before you transfer the money to him. DEAL: " +  purchaseRequest.fiatAmount + " " +seller.data.currency +" = " + purchaseRequest.etherAmount + "ETH (price " + purchaseRequest.price + " " + seller.data.currency + "/ETH). You can communicate with the seller on the chat window of your trade page. Please respond on our website: alpha.automte.com/activetrade/"+purchaseRequestId
+    var _bodyToBuyer = "Hi " + buyer.profile.username + " - Your trade has been initiated with " + seller.data.username +". Wait for the seller to approve the transaction before you transfer the money to him. DEAL: " +  purchaseRequest.fiatAmount + " " +seller.data.currency +" = " + purchaseRequest.etherAmount + "ETH (price " + purchaseRequest.price + " " + seller.data.currency + "/ETH). You can communicate with the seller on the chat window of your trade page. Please respond on our website: ezether.com/activetrade/"+purchaseRequestId
     if(buyer.profile.fcmToken){
       _fcmToken = buyer.profile.fcmToken
     } else {
@@ -48,7 +48,7 @@ module.exports = {
     firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid).push(notificationDataBuyer)
   },
   sendSellerCreatesPurchaseRequestNotification: (purchaseRequest, purchaseRequestId, buyTradeAdvertisementId, buyTradeAdvertisement, seller, buyer) => {
-    var _body = "Hi " + buyer.data.username + " - You got a new offer to your BUY advertisement. You'll have to wait for the seller to approve the transaction before you transfer the money. DEAL: " + purchaseRequest.fiatAmount + " " + seller.profile.currency + " = " + purchaseRequest.etherAmount + "ETH (price " + purchaseRequest.price + " " + seller.data.currency + "/ETH). You can communicate with the seller on the chat window of your trade page. Please respond on our website: alpha.automte.com/activetrade/"+purchaseRequestId
+    var _body = "Hi " + buyer.data.username + " - You got a new offer to your BUY advertisement. You'll have to wait for the seller to approve the transaction before you transfer the money. DEAL: " + purchaseRequest.fiatAmount + " " + seller.profile.currency + " = " + purchaseRequest.etherAmount + "ETH (price " + purchaseRequest.price + " " + seller.data.currency + "/ETH). You can communicate with the seller on the chat window of your trade page. Please respond on our website: ezether.com/activetrade/"+purchaseRequestId
     var _fcmToken
     if(buyer.data.fcmToken){
       _fcmToken = buyer.data.fcmToken
@@ -72,7 +72,7 @@ module.exports = {
       }
     firebaseRef.database().ref("/notifications/"+buyTradeAdvertisement.buyerUid).push(notificationData)
 
-    var _bodyToSeller = "Hi " + purchaseRequest.sellerUsername + " - Your trade has been initiated with " + purchaseRequest.buyerUsername + ". You'll have to approve the transaction before the buyer transfers the money to you. DEAL: " + purchaseRequest.fiatAmount + " " + seller.data.currency + " = " + purchaseRequest.etherAmount + "ETH (price " + purchaseRequest.price + " " + seller.data.currency + "/ETH). You can communicate with the buyer on the chat window of your trade page. Please respond on our website: alpha.automte.com/activetrade/"+purchaseRequestId
+    var _bodyToSeller = "Hi " + purchaseRequest.sellerUsername + " - Your trade has been initiated with " + purchaseRequest.buyerUsername + ". You'll have to approve the transaction before the buyer transfers the money to you. DEAL: " + purchaseRequest.fiatAmount + " " + seller.data.currency + " = " + purchaseRequest.etherAmount + "ETH (price " + purchaseRequest.price + " " + seller.data.currency + "/ETH). You can communicate with the buyer on the chat window of your trade page. Please respond on our website: ezether.com/activetrade/"+purchaseRequestId
     var _fcmTokenSeller
     if(seller.profile.fcmToken){
       _fcmToken = seller.profile.fcmToken
@@ -153,7 +153,7 @@ module.exports = {
       _fcmToken = null
     }
 
-    var _body = "Hi " + purchaseRequest.sellerUsername + " - You have released the transaction to " + purchaseRequest.buyerUsername +", and funds ("+purchaseRequest.etherAmount+" ETH) have been sent to the buyer. Please rate the buyer at alpha.automte.com/activetrade/"+purchaseRequestId
+    var _body = "Hi " + purchaseRequest.sellerUsername + " - You have released the transaction to " + purchaseRequest.buyerUsername +", and funds ("+purchaseRequest.etherAmount+" ETH) have been sent to the buyer. Please rate the buyer at ezether.com/activetrade/"+purchaseRequestId
     var notificationData = {
       "title": "Ether released from escrow",
       "body": _body,
@@ -168,7 +168,7 @@ module.exports = {
       "createdAt": FIREBASE_TIMESTAMP
     }
     firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid).push(notificationData)
-    var _bodyToBuyer = "Hi " + purchaseRequest.buyerUsername + " - The seller has released the ether. The balance should reflect on your metamask wallet. The transaction is complete. Please rate the seller at alpha.automte.com/activetrade/"+purchaseRequestId
+    var _bodyToBuyer = "Hi " + purchaseRequest.buyerUsername + " - The seller has released the ether. The balance should reflect on your metamask wallet. The transaction is complete. Please rate the seller at ezether.com/activetrade/"+purchaseRequestId
     var _fcmTokenSeller
     if(seller.fcmToken){
       _fcmToken = seller.fcmToken
@@ -315,7 +315,7 @@ module.exports = {
       _buyerfcmToken = null
     }
 
-    var _bodyToBuyer = "Hi " + purchaseRequest.buyerUsername + " - Your trade has been canceled by the seller. Please reinitiate the trade with another seller on alpha.automte.com/buyether"
+    var _bodyToBuyer = "Hi " + purchaseRequest.buyerUsername + " - Your trade has been canceled by the seller. Please reinitiate the trade with another seller on ezether.com/buyether"
     var buyerNotificationData = {
       "title": "Seller cancels trade",
       "body": _bodyToBuyer,
@@ -332,7 +332,7 @@ module.exports = {
     firebaseRef.database().ref("/notifications/"+purchaseRequest.buyerUid).push(buyerNotificationData)
   },
   sendBuyerRaisesDispute: (seller, buyer, purchaseRequest, purchaseRequestId) => {
-    var _bodyToSeller = "Hi " + purchaseRequest.sellerUsername + " - Your trade has been disputed by the buyer. Please upload proof of your transaction by uploading a transaction receipt, bank statement and any other document that supports your case in the chat box at alpha.automte.com/activetrade/" + purchaseRequestId + " Our dispute management team will look into the dispute within the next 24 hours and resolve the case as soon as a possible."
+    var _bodyToSeller = "Hi " + purchaseRequest.sellerUsername + " - Your trade has been disputed by the buyer. Please upload proof of your transaction by uploading a transaction receipt, bank statement and any other document that supports your case in the chat box at ezether.com/activetrade/" + purchaseRequestId + " Our dispute management team will look into the dispute within the next 24 hours and resolve the case as soon as a possible."
     var _sellerfcmToken
     if(seller.fcmToken){
       _sellerfcmToken = seller.fcmToken
@@ -355,7 +355,7 @@ module.exports = {
     firebaseRef.database().ref("/notifications/"+purchaseRequest.sellerUid).push(sellerNotificationData)
   },
   sendSellerRaisesDispute: (seller, buyer, purchaseRequest, purchaseRequestId) => {
-    var _bodyToBuyer = "Hi " + purchaseRequest.buyerUsername + " - Your trade has been disputed by the seller. Please upload proof of your transaction by uploading a transaction receipt, bank statement and any other document that supports your case in the chat box at alpha.automte.com/activetrade/" + purchaseRequestId + " Our dispute management team will look into the dispute within the next 24 hours and resolve the case as soon as a possible."
+    var _bodyToBuyer = "Hi " + purchaseRequest.buyerUsername + " - Your trade has been disputed by the seller. Please upload proof of your transaction by uploading a transaction receipt, bank statement and any other document that supports your case in the chat box at ezether.com/activetrade/" + purchaseRequestId + " Our dispute management team will look into the dispute within the next 24 hours and resolve the case as soon as a possible."
     var _buyerfcmToken
     if(buyer.fcmToken){
       _buyerfcmToken = buyer.fcmToken
@@ -390,7 +390,7 @@ module.exports = {
       recipientUid = purchaseRequest.buyerUid
       recipientUsername = purchaseRequest.buyerUsername
     }
-    var _body = "Hi " + recipientUsername + "- You've got a new chat message from " + senderUsername + ". Message: '" + content +"'. You can repond by going to alpha.automte.com/activetrade/"+purchaseRequestId
+    var _body = "Hi " + recipientUsername + "- You've got a new chat message from " + senderUsername + ". Message: '" + content +"'. You can repond by going to ezether.com/activetrade/"+purchaseRequestId
     var _title = "New Chat Message from " + senderUsername
     var newChatMessageNotificationData = {
       "title": _title,
