@@ -27,6 +27,12 @@
         "$purchaseRequestId":{
           "status": {
             ".validate": "newData.isString() && (data.val() == null && newData.val() == 'Awaiting Seller Confirmation') || (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Awaiting Payment')|| (data.val() == 'Awaiting Payment' && newData.val() == 'Awaiting Release')|| (data.val() == 'Awaiting Release' && newData.val() == 'All Done')|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Seller Canceled Trade' )|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Buyer Canceled Trade' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Buyer Raised Dispute' && newData.val() == 'All Done' )|| (data.val() == 'Seller Raised Dispute' && newData.val() == 'All Done' )"
+          },
+          "sellerAddress": {
+            ".validate": "!data.exists() || newData.val() == data.val()"
+          },
+          "buyerAddress": {
+            ".validate": "!data.exists() || newData.val() == data.val()"
           }
         }
       }
@@ -36,40 +42,34 @@
       ".write": "auth != null",
       "$uid": {
         "accountCreated": {
-          ".validate": "!data.exists() && newData.val() <= now"
+          ".validate": "!data.exists() || newData.val() === data.val()"
         },
         "active": {
-          ".validate": "!data.exists()"
-        },
-        "avgFeedback": {
-          ".write": "false"
+          ".validate": "!data.exists() || newData.val() === data.val()"
         },
         "country": {
-          ".validate": "!data.exists()"
+          ".validate": "!data.exists() || newData.val() === data.val()"
         },
         "currency": {
-          ".validate": "!data.exists()"
+          ".validate": "!data.exists() || newData.val() === data.val()"
         },
         "firstPurchase": {
-          ".validate": "!data.exists() && newData.val() <= now"
+          ".validate": "(!data.exists() && newData.val() <= now) || newData.val() === data.val()"
         },
         "isAdmin": {
-          ".write": "false"
+          ".validate": "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
         },
         "kycComplete": {
-          ".write": "false"
+          ".validate": "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
         },
         "username": {
-          ".validate": "!data.exists()"
-        },
-        "verifiedEmail":{
-         ".write": "false"
+          ".validate": "!data.exists() || newData.val() === data.val()"
         },
         "verifiedIdentification":{
-         ".write": "false"
+         ".validate": "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
         },
         "verifiedPhoneNumber":{
-         ".write": "false"
+         ".validate": "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
         }
       }
     },
@@ -94,18 +94,17 @@
       ".write": "auth != null",
       "$country": {
         "$uid": {
-          ".validate": "auth.uid == data.child('sellerUid').val()",
           "currency": {
-            ".validate": "!data.exists()"
+            ".validate": "!data.exists() || newData.val() == data.val()"
           },
           "sellerAddress": {
-            ".validate": "!data.exists()"
+            ".validate": "!data.exists() || newData.val() == data.val()"
           },
           "sellerUid": {
-            ".validate": "!data.exists()"
+            ".validate": "!data.exists() || newData.val() == data.val()"
           },
           "sellerUsername": {
-            ".validate": "!data.exists()"
+            ".validate": "!data.exists() || newData.val() == data.val()"
           },
           "tradeType": {
             ".validate": "newData.val() == 'sell-ether'"
@@ -125,11 +124,11 @@
       ".read": "auth != null",
       ".write": "auth != null",
       "$country": {
-        ".validate": "auth.uid == newData.val()",
         "$uid": {
+          ".write": "auth.uid === $uid",
           "sellerInterfaceAddress": {
             ".validate": "!data.exists()"
-          }
+          } 
         }
       }
     },

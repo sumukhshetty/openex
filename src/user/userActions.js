@@ -81,6 +81,7 @@ function updateReduxStoreDataState (value) {
   }
 }
 
+
 function getUserNotifications(notificationsPayload){
   return {
     type: 'GET_USER_NOTIFICATIONS',
@@ -100,6 +101,12 @@ function getUserPresence(userPresencePayload) {
   return {
     type: 'SET_USER_PRESENCE',
     payload: userPresencePayload
+  }
+}
+function etherPrice(pricesPayload) {
+  return {
+    type: 'GET_ETHER_PRICE',
+    payload: pricesPayload
   }
 }
 
@@ -151,6 +158,10 @@ module.exports = {
             })
             firebaseRef.database().ref('/presence/').on('value', function(snap){
               dispatch(getUserPresence(snap.val()))
+            })
+            firebaseRef.database().ref('/prices/ETH/' + userProfile.currency).on('value', function(snap) {
+              console.log('got price for ETH in ' + userProfile.currency + ' : ' + snap.val());
+              dispatch(etherPrice(snap.val()));
             })
 
             dispatch(updateReduxStoreDataState(false))

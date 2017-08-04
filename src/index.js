@@ -138,7 +138,7 @@ ReactDOM.render(
           component={UserIsAuthenticated(BuyTradeAdvertisement)}
         />
         <Route
-          path="activetrade/:purchaseRequestId"
+          path="activetrade/:purchaseRequestId/:countryCode"
           component={UserIsAuthenticated(ActiveTrade)}
         />
         <Route
