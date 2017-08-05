@@ -1,4 +1,3 @@
-import getWeb3 from './util/getWeb3'
 import { firebaseRef } from './index'
 
 var request = require('request')
@@ -20,7 +19,6 @@ function wrongNetwork(wrongNetworkBool){
 }
 
 function setCountry(countryCode) {
-  console.log("AppActions.setCountry")
   return {
     type: 'SET_COUNTRY_CODE',
     payload: countryCode
@@ -28,7 +26,6 @@ function setCountry(countryCode) {
 }
 
 function setCurrency(currency){
-  console.log("AppActions.setCurrency")
   return {
     type: 'SET_CURRENCY',
     payload: currency
@@ -50,7 +47,6 @@ function getSellTradeAdvertisements(sellTradeAdvertisements){
 }
 
 function users(usersPayload){
-  console.log('AppActions.users')
   return {
     type: 'GET_USERS',
     payload: usersPayload
@@ -73,13 +69,11 @@ function getUserPresence(userPresencePayload) {
 
 module.exports = {
   setWeb3: (web3) => (dispatch) => {
-    console.log('AppActions.setWeb3')
     dispatch(web3Init(web3))
     // TODO change this to mainnet
     try {
       web3.version.getNetwork(function(error, result){
         if(!error){
-          console.log(result)
           if(result==='42'){
             dispatch(wrongNetwork(false))
           } else {
@@ -128,6 +122,7 @@ module.exports = {
           currency = 'USD'
         }
         dispatch(setCurrency(currency))
+
         firebaseRef.database().ref('/prices/ETH/' + currency).once('value', function(snap) {
           dispatch(etherPrice(snap.val()));
         })
@@ -141,7 +136,6 @@ module.exports = {
     })
   },
   getUsers: () => (dispatch) => {
-    console.log('AppActions.getUsers')
     firebaseRef.database().ref('/users').on('value', function(snap){
       dispatch(users(snap.val()))
     })

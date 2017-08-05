@@ -116,11 +116,11 @@ export default class BrowseAdvertisements extends Component {
         <div>
           <h2 className="pt4 pb3 tc">Users Selling Ether</h2>
           <div>
-            {selltable ? selltable : null}
+            {selltable ? selltable : <div className="tc">Looks like you're the first one here, pioneer</div>}
           </div>
           <h2 className="pt4 pb3 tc">Users Buying Ether</h2>
           <div>
-            {buytable ? buytable : null}
+            {buytable ? buytable : <div className="tc">Looks like you're the first one here, pioneer</div>}
           </div>
         </div>
       )
