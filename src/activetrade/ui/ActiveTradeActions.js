@@ -158,6 +158,8 @@ module.exports = {
             }else {
               console.log(exchange.addOrder)
               console.log(error)
+              raven.captureException(error)              
+              notify.show("Please contact support.")
               dispatch(sendEtherState('init'));
               dispatch(updateConfirmButtonIsDisabled(false))
             }
