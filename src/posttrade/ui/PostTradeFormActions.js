@@ -1,6 +1,6 @@
 import {firebaseRef, raven} from './../../index.js'
 import {notify} from 'react-notify-toast'
-
+import { browserHistory } from 'react-router'
 
 export function userCreatesBuyTradeAdvertisement(tradeDetails, user){
   return function(dispatch){
@@ -18,6 +18,7 @@ export function userCreatesSellTradeAdvertisement(tradeDetails, user){
               .push(tradeDetails, function(err){
                 firebaseRef.database().ref('/users/'+user.data.uid+'/advertisements/sellether/' +
                     newAdvertisement.key + '/tradetype').set('sell-ether')
+                browserHistory.push('/dashboard')
               })
   }
 }
