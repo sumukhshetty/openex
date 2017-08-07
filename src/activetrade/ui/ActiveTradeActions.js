@@ -107,7 +107,7 @@ module.exports = {
   sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, exchange) => (dispatch) => {
     dispatch(updateConfirmButtonIsDisabled(true))
     try {
-      let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
+      let etherAmount = web3.toBigNumber(web3.toWei(Number(purchaseRequest.etherAmount), 'ether'));
       //let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
       let price = web3.toWei(purchaseRequest.price)
       if(web3.eth.coinbase){
@@ -149,7 +149,7 @@ module.exports = {
       })
 
       exchange.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
-        etherAmount, price, purchaseRequest.currency, {from:coinbase, value: web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')},
+        etherAmount, price, purchaseRequest.currency, {from:coinbase, value: etherAmount.mul(1.01)},
         function(error, result){
           if(!error){
             console.log("exchange.data.addOrder")
