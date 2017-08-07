@@ -13,6 +13,18 @@ export default class UserScreen extends Component {
 
   render () {
     if(this.props.userScreen.data){
+      var _firstPurchase, _lastSeen
+      if (this.props.userScreen.data.firstPurchase) {
+        _firstPurchase = moment(this.props.userScreen.data.accountCreated).fromNow()
+      } else {
+        _firstPurchase = '-'
+      }
+      if (this.props.userScreen.data.lastOnline === 'Active'){
+        _lastSeen = 'a few seconds ago'
+      } else {
+        _lastSeen = moment(this.props.userScreen.data.lastOnline).fromNow()
+      }
+
       return (
         <div className='w-100 bg-smoke'>
           <div className='w-75 center pv3'>
@@ -40,7 +52,7 @@ export default class UserScreen extends Component {
                   </tr>
                   <tr className='w-50'>
                     <td className='w4 pv2'>First Purchase</td>
-                    <td className='pl3'>{moment(this.props.userScreen.data.firstPurchase).fromNow()}</td>
+                    <td className='pl3'>{_firstPurchase}</td>
                   </tr>
                   <tr className='w-50'>
                     <td className='w4 pv2'>Account Created</td>
@@ -48,7 +60,7 @@ export default class UserScreen extends Component {
                   </tr>
                   <tr className='w-50'>
                     <td className='w4 pv2'>Last Seen</td>
-                    <td className='pl3'>{moment(this.props.userScreen.data.lastOnline).fromNow()}</td>
+                    <td className='pl3'>{_lastSeen}</td>
                   </tr> 
 {/*                  <tr className='w-50'>
                     <td className='w4 pv2'>Language</td>
