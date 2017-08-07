@@ -49,7 +49,7 @@ exports.notificationPostProcesing1 = functions.database.ref('/notifications/{rec
     if (notificationData.verifiedEmail) {
       admin.database().ref('/notificationsConfig/'+recipientUid+'/email').once('value',function(snap){
         var emaildata = {
-          from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
+          from: 'EZ Ether <no-reply@mg.automte.com>',
           to: snap.val(),
           subject: notificationData.title,
           text: notificationData.body

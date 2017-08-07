@@ -50,7 +50,7 @@ class BuyTradeAdvertisementsList extends Component {
       }
     })
 
-    if(rows[0] !== null) {
+    if(rows[0] !== undefined) {
 
         return (
           <table>
