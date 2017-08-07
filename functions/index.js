@@ -141,7 +141,7 @@ exports.helpForm = functions.https.onRequest((req, res) => {
       var _text = req.body.postData.email + " says: " + req.body.postData.message
       var emaildata = {
         from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
-        to: 'quijano@automte.com, sumukh@automte.com, support@automte.com',
+        to: 'quijano@automte.com, sumukh@automte.com, support@ezether.com',
         subject: _subject,
         text: _text
       }
