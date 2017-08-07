@@ -6,10 +6,10 @@ import "./zeppelin/ownership/Ownable.sol";
 contract EZEtherMarketplace is Ownable {
   using SafeMath for uint;
 
-  event OrderAdded(string indexed uid, address indexed seller, address indexed buyer, uint amount, uint price, string currency);
-  event OrderCompleted(string indexed uid, address indexed seller, address indexed buyer, uint amount);
-  event DisputeResolved(string indexed uid, address indexed seller, address indexed buyer, string resolvedTo);
-  event OrderDisputed(address indexed seller, string indexed uid, address indexed buyer);
+  event OrderAdded(string uid, address seller, address buyer, uint amount, uint price, string currency);
+  event OrderCompleted(string uid, address seller, address buyer, uint amount);
+  event DisputeResolved(string uid, address seller, address buyer, string resolvedTo);
+  event OrderDisputed(address seller, string uid, address buyer);
 
   mapping(address => address) private specialFeeRecipient;
   mapping(address => uint256) private specialFeeRates;

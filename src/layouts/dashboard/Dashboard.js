@@ -26,7 +26,7 @@ class Dashboard extends Component {
     console.log('');
     // TODO change this to mainnet
     console.log("Dashboard.componentWillMount")
-    this.props.loadExchange(this.props.web3.data, contractAddresses.exchange)
+    this.props.loadExchange(this.props.web3.data, contractAddresses.market)
     this.props.checkBrowserWalletAddress(this.props.web3.data, this.props.user)
     firebaseMessaging.onTokenRefresh(function () {
       firebaseMessaging.getToken()
