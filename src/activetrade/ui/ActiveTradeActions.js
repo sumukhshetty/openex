@@ -120,30 +120,32 @@ module.exports = {
 
       var event = exchange.OrderAdded({uid: purchaseRequestId, seller: coinbase, buyer: buyer})
       event.watch(function(error, result) {
-        // the order was added do stuff
-        console.log('addOrder.event.watch')
-        console.log(error,result)
-        console.log("we were able to add the order to the smart contract")
-        // START FIREBASE
-        var now = new Date()
-        var updatedPurchaseRequest = Object.assign({},
-          purchaseRequest, {
-            lastUpdated: now.toUTCString(),
-            sellerconfirmtime: now.toUTCString(),
-            status: 'Awaiting Payment'
+        if(result.args.uid === purchaseRequestId) {
+          // the order was added do stuff
+          console.log('addOrder.event.watch')
+          console.log(error,result)
+          console.log("we were able to add the order to the smart contract")
+          // START FIREBASE
+          var now = new Date()
+          var updatedPurchaseRequest = Object.assign({},
+            purchaseRequest, {
+              lastUpdated: now.toUTCString(),
+              sellerconfirmtime: now.toUTCString(),
+              status: 'Awaiting Payment'
+            })
+          firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+          .set(updatedPurchaseRequest, function(error){
+            if(error){
+              console.log(error)
+            }
+            dispatch(sendEtherState('init'));
+            dispatch(clearTxHash())
+            dispatch(updateConfirmButtonIsDisabled(false))
+            notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+            event.stopWatching()
           })
-        firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-        .set(updatedPurchaseRequest, function(error){
-          if(error){
-            console.log(error)
-          }
-          dispatch(sendEtherState('init'));
-          dispatch(clearTxHash())
-          dispatch(updateConfirmButtonIsDisabled(false))
-          notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
-          event.stopWatching()
-        })
-        // END FIREBASE
+          // END FIREBASE
+      }
       })
 
       exchange.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
@@ -158,7 +160,7 @@ module.exports = {
             }else {
               console.log(exchange.addOrder)
               console.log(error)
-              raven.captureException(error)              
+              raven.captureException(error)
               notify.show("Please contact support.")
               dispatch(sendEtherState('init'));
               dispatch(updateConfirmButtonIsDisabled(false))
