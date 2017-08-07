@@ -12,21 +12,19 @@ contract DisputeResolver is usingOraclize {
 
   // simple single-sig function modifier.
   modifier onlyOwner {
-    if (!isOwner(msg.sender)) {
-      throw;
-    }
+    require(isOwner(msg.sender));
     _;
   }
 
   struct DisputeAssignment {
     address assignee;
-    address ethOrderBook;
+    address seller;
   }
 
   mapping(string => DisputeAssignment) disputes;
 
   struct Dispute {
-    address ethOrderBook;
+    address seller;
     string uid;
   }
 
@@ -50,45 +48,45 @@ contract DisputeResolver is usingOraclize {
 
   }
 
-  event DisputeAssigned(address ethOrderBook, string uid, address assignee, address assigner);
-  event DisputeEscalated(address ethOrderBook, string uid, address assignee, address assigner);
-  event DisputeResolved(address ethOrderBook, string uid, string resolvedTo, address assignee);
+  event DisputeAssigned(address seller, string uid, address assignee, address assigner);
+  event DisputeEscalated(address seller, string uid, address assignee, address assigner);
+  event DisputeResolved(address seller, string uid, string resolvedTo, address assignee);
 
-  function assignDispute(string _uid, address _ethOrderBook, string country) onlyOwner {
-    assignDispute(_uid, _ethOrderBook, country, msg.sender);
+  function assignDispute(string _uid, address _seller, string country) onlyOwner {
+    assignDispute(_uid, _seller, country, msg.sender);
   }
 
-  function assignDispute(string _uid, address _ethOrderBook, string country, address assignee) onlyOwner {
+  function assignDispute(string _uid, address _seller, string country, address assignee) onlyOwner {
+    require(!isContract(assignee));
     bytes32 queryId = oraclize_query("URL", "json(https://us-central1-automteetherexchange.cloudfunctions.net/checkDispute).dispute", strConcat('\n{"country" :"', country, '", "orderId": "', _uid, '"}'));
     disputeQueryIds[queryId].uid = _uid;
-    disputeQueryIds[queryId].ethOrderBook = _ethOrderBook;
+    disputeQueryIds[queryId].seller = _seller;
 
     disputes[_uid].assignee = assignee;
-    disputes[_uid].ethOrderBook = _ethOrderBook;
-    DisputeAssigned(_ethOrderBook, _uid, assignee, msg.sender);
+    disputes[_uid].seller = _seller;
+    DisputeAssigned(_seller, _uid, assignee, msg.sender);
   }
 
   function __callback(bytes32 id, string result) {
     if(msg.sender != oraclize_cbAddress() || strCompare(disputeQueryIds[id].uid, "VOID") == 0) throw;
     if(strCompare(result, "true") == 0) {
-      disputeInterface.setDisputed(disputeQueryIds[id].ethOrderBook, disputeQueryIds[id].uid);
+      disputeInterface.setDisputed(disputeQueryIds[id].seller, disputeQueryIds[id].uid);
     }
     disputeQueryIds[id].uid = "VOID";
   }
 
   function resolveDisputeSeller(string uid) onlyAssignee(uid) {
-    disputeInterface.resolveDisputeSeller(uid, disputes[uid].ethOrderBook);
-    DisputeResolved(disputes[uid].ethOrderBook, uid, 'seller', msg.sender);
+    disputeInterface.resolveDisputeSeller(uid, disputes[uid].seller);
+    DisputeResolved(disputes[uid].seller, uid, 'seller', msg.sender);
   }
 
   function resolveDisputeBuyer(string uid) onlyAssignee(uid) {
-    disputeInterface.resolveDisputeBuyer(uid, disputes[uid].ethOrderBook);
-    DisputeResolved(disputes[uid].ethOrderBook, uid, 'buyer', msg.sender);
+    disputeInterface.resolveDisputeBuyer(uid, disputes[uid].seller);
+    DisputeResolved(disputes[uid].seller, uid, 'buyer', msg.sender);
   }
 
   modifier onlyAssignee(string uid) {
-    if(disputes[uid].assignee != msg.sender && !isOwner(msg.sender))
-      throw;
+    require(disputes[uid].assignee == msg.sender && isOwner(msg.sender));
     _;
   }
 
@@ -99,6 +97,12 @@ contract DisputeResolver is usingOraclize {
 
   function isOwner(address _addr) constant returns (bool) {
     return ownerIndex[_addr] > 0;
+  }
+
+  function isContract(address addr) internal returns (bool) {
+    uint size;
+    assembly { size := extcodesize(addr) }
+    return size > 0;
   }
 
 }

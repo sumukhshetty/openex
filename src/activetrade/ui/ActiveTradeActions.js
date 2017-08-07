@@ -378,11 +378,11 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(contractAddresses.kovanDisputeResolver)) {
+      if (!ethUtil.isValidAddress(contractAddresses.disputeResolver)) {
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.disputeResolver)
         var event = _instance.DisputeResolved({uid: purchaseRequestId})
         console.log(_instance)
         event.watch((error, result) => {
@@ -439,11 +439,11 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(contractAddresses.kovanDisputeResolver)){
+      if (!ethUtil.isValidAddress(contractAddresses.disputeResolver)){
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.disputeResolver)
         var event = _instance.DisputeResolved({uid: purchaseRequestId})
         event.watch((error, result) => {
           if(result.args.uid === purchaseRequestId) {
@@ -541,7 +541,7 @@ module.exports = {
       }
         // get the dispute resolver contract
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.disputeResolver)
         // create an event, on the callback of the event do somme firebase stuff
         var event = _instance.DisputeAssigned({uid: purchaseRequestId})
         event.watch((error, result) => {

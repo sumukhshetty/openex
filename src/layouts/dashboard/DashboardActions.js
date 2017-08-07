@@ -28,7 +28,7 @@ module.exports = {
     console.log('DashboardActions.loadExchange')
     dispatch(setExchange('obtaining...'))
     try {
-      const Exchange = web3.eth.contract(contractAbis.EZEtherExchange)
+      const Exchange = web3.eth.contract(contractAbis.EZEtherMarketplace)
       const exchange = Exchange.at(exchangeAddress)
       dispatch(setExchange(exchange))
 
