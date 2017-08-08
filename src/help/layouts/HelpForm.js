@@ -96,7 +96,7 @@ class HelpForm extends Component {
                 className='w5 h-100'
                 placeholder='Transaction stuck in escrow' required/>
               <div className='min-w-30 me'>
-                <span className='fw1 i'>What is the problem that your facing ?</span>
+                <span className='fw1 i'>What is the problem that you're facing ?</span>
               </div>
             </div>
 
