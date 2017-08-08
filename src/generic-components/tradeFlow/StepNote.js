@@ -117,7 +117,7 @@ class StepNote extends Component {
           <strong>Step 2: Confirm the Payment</strong>
         </p>
         <p>
-          The Ether is held in escrow for 88 minutes, which it is safe to pay. After paying,you need to mark the payment complete or the trade will automatically cancel.
+          The Ether is held in escrow for 88 minutes, which it is safe to pay. After paying, you need to mark the payment complete.
         </p>
       </div>
     );

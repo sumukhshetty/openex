@@ -5,7 +5,7 @@ class MetaMaskWaitModal extends Component {
     var url
     if (this.props.txhash){
       // TODO change this to mainnet
-      url = 'https://kovan.etherscan.io/tx/' + this.props.txhash
+      url = 'https://etherscan.io/tx/' + this.props.txhash
     }
     return (
       <div className='flex x absolute--fill fixed bg-black-80 z-1'>
