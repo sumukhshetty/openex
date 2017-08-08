@@ -26,7 +26,7 @@ class BuyerStepNote extends Component {
             </p>
             <p className='tc flarge b'>Step 2: Confirm the Payment</p>
             <p> The Ether is held in escrow for {this.props.activetrade.timeLimit ? this.props.activetrade.timeLimit : '-'} minutes, which it is safe to pay.
-            After paying,you need to mark the payment complete or the trade will automatically cancel. </p>
+            After paying,you need to mark the payment complete. </p>
           </div>
         )
       case 'Awaiting Release':
