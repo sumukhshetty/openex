@@ -18,4 +18,3 @@ npm-debug.log
 secrets
 functions/service-account.json
 functions/staging-service-account.json
-
