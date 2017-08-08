@@ -203,7 +203,7 @@ class EditTradeAdvertisementForm extends Component {
               <input
                 type='submit'
                 className='mv5'
-                value='Publish Advertisement' />
+                value='Update Advertisement' />
             </div>
 
           </fieldset>
