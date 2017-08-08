@@ -19,7 +19,7 @@ class BuyTradeAdvertisementsList extends Component {
 
     var byMargin = arr.slice(0)
     byMargin.sort(function(a,b){
-      return a.value.margin - b.value.margin
+      return b.value.margin - a.value.margin
     })
 
     byMargin = Object.assign({},byMargin)
