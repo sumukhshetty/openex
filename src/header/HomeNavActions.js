@@ -28,7 +28,7 @@ function updateReduxStoreDataState (value) {
 module.exports = {
   login: (web3) => (dispatch) => {
     if(web3.wrongnetwork){
-      notify.show("It looks like you're on the wrong network, please switch over to Kovan")
+      notify.show("It looks like you're on the wrong network, please switch over to the Main Ethereum Network")
     } else {
       var data = cryptoHelpers.toHex('I am logging into the EZ Ether marketplace and I have read the terms and conditions');
       try {
