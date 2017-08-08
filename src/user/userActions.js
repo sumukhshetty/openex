@@ -160,7 +160,6 @@ module.exports = {
               dispatch(getUserPresence(snap.val()))
             })
             firebaseRef.database().ref('/prices/ETH/' + userProfile.currency).on('value', function(snap) {
-              console.log('got price for ETH in ' + userProfile.currency + ' : ' + snap.val());
               dispatch(etherPrice(snap.val()));
             })
 

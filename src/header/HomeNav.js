@@ -14,9 +14,7 @@ class HomeNav extends Component {
       <div className='container'>
         <div className='pure-g'>
           <div className='pure-u-1-4 brand'>
-            <Link to='/'>
               <img className='brand' src={ezetherlogowhite} alt='' />
-            </Link>
           </div>
           <div className='pure-u-3-4 menu'>
             <nav className='pure-menu pure-menu-horizontal'>

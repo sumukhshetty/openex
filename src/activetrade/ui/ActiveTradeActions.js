@@ -107,7 +107,7 @@ module.exports = {
   sellerConfirmsTrade: (seller, buyer, purchaseRequest, purchaseRequestId, web3, exchange) => (dispatch) => {
     dispatch(updateConfirmButtonIsDisabled(true))
     try {
-      let etherAmount = web3.toWei(Number(purchaseRequest.etherAmount), 'ether');
+      let etherAmount = web3.toBigNumber(web3.toWei(Number(purchaseRequest.etherAmount), 'ether'));
       //let fiatAmount = web3.toWei(purchaseRequest.fiatAmount)
       let price = web3.toWei(purchaseRequest.price)
       if(web3.eth.coinbase){
@@ -118,36 +118,41 @@ module.exports = {
     if(coinbase.toString() === purchaseRequest.sellerAddress){
       dispatch(sendEtherState('sending'));
 
-      var event = exchange.OrderAdded({uid: purchaseRequestId, seller: coinbase, buyer: buyer})
+      var event = exchange.OrderAdded()
       event.watch(function(error, result) {
-        // the order was added do stuff
         console.log('addOrder.event.watch')
-        console.log(error,result)
-        console.log("we were able to add the order to the smart contract")
-        // START FIREBASE
-        var now = new Date()
-        var updatedPurchaseRequest = Object.assign({},
-          purchaseRequest, {
-            lastUpdated: now.toUTCString(),
-            sellerconfirmtime: now.toUTCString(),
-            status: 'Awaiting Payment'
+        console.log(error);
+        console.log(result);
+        if(result.args.uid === purchaseRequestId) {
+          // the order was added do stuff
+          console.log('addOrder.event.watch')
+          console.log(error,result)
+          console.log("we were able to add the order to the smart contract")
+          // START FIREBASE
+          var now = new Date()
+          var updatedPurchaseRequest = Object.assign({},
+            purchaseRequest, {
+              lastUpdated: now.toUTCString(),
+              sellerconfirmtime: now.toUTCString(),
+              status: 'Awaiting Payment'
+            })
+          firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
+          .set(updatedPurchaseRequest, function(error){
+            if(error){
+              console.log(error)
+            }
+            dispatch(sendEtherState('init'));
+            dispatch(clearTxHash())
+            dispatch(updateConfirmButtonIsDisabled(false))
+            notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+            event.stopWatching()
           })
-        firebaseRef.database().ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
-        .set(updatedPurchaseRequest, function(error){
-          if(error){
-            console.log(error)
-          }
-          dispatch(sendEtherState('init'));
-          dispatch(clearTxHash())
-          dispatch(updateConfirmButtonIsDisabled(false))
-          notificationHelpers.sendSellerConfirmsTradeNotification(seller, buyer, purchaseRequest, purchaseRequestId)
-          event.stopWatching()
-        })
-        // END FIREBASE
+          // END FIREBASE
+      }
       })
 
       exchange.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
-        etherAmount, price, purchaseRequest.currency, {from:coinbase, value: web3.toWei(Number(purchaseRequest.etherAmount*1.01), 'ether')},
+        etherAmount, price, purchaseRequest.currency, {from:coinbase, value: etherAmount.mul(1.01)},
         function(error, result){
           if(!error){
             console.log("exchange.data.addOrder")
@@ -158,6 +163,8 @@ module.exports = {
             }else {
               console.log(exchange.addOrder)
               console.log(error)
+              raven.captureException(error)
+              notify.show("Please contact support.")
               dispatch(sendEtherState('init'));
               dispatch(updateConfirmButtonIsDisabled(false))
             }
@@ -233,28 +240,30 @@ module.exports = {
 
       var event = exchange.OrderCompleted({uid: purchaseRequestId, seller: coinbase, buyer: purchaseRequest.buyerAddress})
       event.watch(function(error,result) {
-        console.log('event.OrderCompleted')
-        console.log(error,result)
-        if(!error){
-          // START FIREBASE STUFF
-          var now = new Date()
-          var updatedPurchaseRequest = Object.assign({},
-            purchaseRequest, {
-              lastUpdated: now.toUTCString(),
-              sellerreleaseethertime: now.toUTCString(),
-              status: 'All Done'
-          })
-          firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
-            .set(updatedPurchaseRequest, function(error){
-              dispatch(sendEtherState('init'));
-              event.stopWatching()
-              notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+        if(result.args.uid === purchaseRequestId) {
+          console.log('event.OrderCompleted')
+          console.log(error,result)
+          if(!error){
+            // START FIREBASE STUFF
+            var now = new Date()
+            var updatedPurchaseRequest = Object.assign({},
+              purchaseRequest, {
+                lastUpdated: now.toUTCString(),
+                sellerreleaseethertime: now.toUTCString(),
+                status: 'All Done'
             })
+            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
+              .set(updatedPurchaseRequest, function(error){
+                dispatch(sendEtherState('init'));
+                event.stopWatching()
+                notificationHelpers.sendSellerReleasesEtherNotification(seller, buyer, purchaseRequest, purchaseRequestId)
+              })
 
-          // END FIREBASE STUFF
-        } else {
-          raven.captureException(error)
-        }
+            // END FIREBASE STUFF
+          } else {
+            raven.captureException(error)
+          }
+      }
       })
       exchange.completeOrder(purchaseRequestId, {from: coinbase}, function(error, result) {
         if(!error){
@@ -372,36 +381,38 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(contractAddresses.kovanDisputeResolver)) {
+      if (!ethUtil.isValidAddress(contractAddresses.disputeResolver)) {
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.disputeResolver)
         var event = _instance.DisputeResolved({uid: purchaseRequestId})
         console.log(_instance)
         event.watch((error, result) => {
-          console.log("ActiveTradeActions.arbiterReleasesToSeller")
-          console.log(error, result)
-          if(!error){
-            // update the status of the trade to all done
-            var now = new Date()
-            var updatedPurchaseRequest = Object.assign({},
-            purchaseRequest, {
-              lastUpdated: now.toUTCString(),
-              sellerreleaseethertime: now.toUTCString(),
-              status: 'All Done'
-            })
-            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
-              .set(updatedPurchaseRequest, function(error){
-                dispatch(sendEtherState('init'));
-                event.stopWatching()
-                notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
+          if(result.args.uid === purchaseRequestId) {
+            console.log("ActiveTradeActions.arbiterReleasesToSeller")
+            console.log(error, result)
+            if(!error){
+              // update the status of the trade to all done
+              var now = new Date()
+              var updatedPurchaseRequest = Object.assign({},
+              purchaseRequest, {
+                lastUpdated: now.toUTCString(),
+                sellerreleaseethertime: now.toUTCString(),
+                status: 'All Done'
               })
+              firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
+                .set(updatedPurchaseRequest, function(error){
+                  dispatch(sendEtherState('init'));
+                  event.stopWatching()
+                  notificationHelpers.sendArbiterReleasesToSeller(seller, buyer, purchaseRequest, purchaseRequestId)
+                })
 
-          } else {
-            dispatch(sendEtherState('init'));
-            raven.captureException(error)
-          }
+            } else {
+              dispatch(sendEtherState('init'));
+              raven.captureException(error)
+            }
+        }
         })
         _instance.resolveDisputeSeller(purchaseRequestId,{from:coinbase}, function(error, result){
           if(!error) {
@@ -431,33 +442,35 @@ module.exports = {
       } else {
         throw new Error("Wallet Address Undefined")
       }
-      if (!ethUtil.isValidAddress(contractAddresses.kovanDisputeResolver)){
+      if (!ethUtil.isValidAddress(contractAddresses.disputeResolver)){
         throw new Error("Invalid address")
       } else {
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.disputeResolver)
         var event = _instance.DisputeResolved({uid: purchaseRequestId})
         event.watch((error, result) => {
-          console.log("ActiveTradeActions.arbiterReleasesToSeller")
-          console.log(error, result)
-          // update the status of the trade to all done
-          var now = new Date()
-          var updatedPurchaseRequest = Object.assign({},
-            purchaseRequest, {
-              lastUpdated: now.toUTCString(),
-              sellerreleaseethertime: now.toUTCString(),
-              status: 'All Done'
-          })
-          firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
-            .set(updatedPurchaseRequest, function(error){
-              dispatch(sendEtherState('init'));
-              event.stopWatching()
-              notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
+          if(result.args.uid === purchaseRequestId) {
+            console.log("ActiveTradeActions.arbiterReleasesToSeller")
+            console.log(error, result)
+            // update the status of the trade to all done
+            var now = new Date()
+            var updatedPurchaseRequest = Object.assign({},
+              purchaseRequest, {
+                lastUpdated: now.toUTCString(),
+                sellerreleaseethertime: now.toUTCString(),
+                status: 'All Done'
             })
-          /*firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+purchaseRequestId+'/status').update('All Done')
-          // send a notification to the buyer and the seller
-          notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
-          event.stopWatching()*/
+            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId)
+              .set(updatedPurchaseRequest, function(error){
+                dispatch(sendEtherState('init'));
+                event.stopWatching()
+                notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
+              })
+            /*firebaseRef.database().ref('/purchaserequests/'+buyer.country+'/'+purchaseRequestId+'/status').update('All Done')
+            // send a notification to the buyer and the seller
+            notificationHelpers.sendArbiterReleasesToBuyer(seller, buyer, purchaseRequest, purchaseRequestId)
+            event.stopWatching()*/
+        }
         })
         console.log("about to resolve to buyer")
         _instance.resolveDisputeBuyer(purchaseRequestId,{from:coinbase}, function(error, result){
@@ -531,20 +544,22 @@ module.exports = {
       }
         // get the dispute resolver contract
         const DisputeResolver = web3.eth.contract(contractAbis.DisputeResolver)
-        const _instance = DisputeResolver.at(contractAddresses.kovanDisputeResolver)
+        const _instance = DisputeResolver.at(contractAddresses.disputeResolver)
         // create an event, on the callback of the event do somme firebase stuff
         var event = _instance.DisputeAssigned({uid: purchaseRequestId})
         event.watch((error, result) => {
-          console.log("ActiveTradeActions.assignArbiter.watch")
-          console.log(error, result)
-          if(!error){
-            // update the status of the trade to all done
-            firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/aribiterUid').set(coinbase)
-            // send a notification to the buyer and the seller
-            event.stopWatching()
-          } else {
-            dispatch(sendEtherState('init'));
-            raven.captureException(error)
+          if(result.args.uid === purchaseRequestId) {
+            console.log("ActiveTradeActions.assignArbiter.watch")
+            console.log(error, result)
+            if(!error){
+              // update the status of the trade to all done
+              firebaseRef.database().ref('/purchaserequests/'+seller.country+'/'+purchaseRequestId+'/aribiterUid').set(coinbase)
+              // send a notification to the buyer and the seller
+              event.stopWatching()
+            } else {
+              dispatch(sendEtherState('init'));
+              raven.captureException(error)
+            }
           }
         })
         // call on the assign arbiter function

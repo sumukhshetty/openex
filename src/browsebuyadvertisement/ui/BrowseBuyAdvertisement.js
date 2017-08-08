@@ -52,16 +52,14 @@ export default class BrowseBuyAdvertisement extends Component {
   render () {
     var buyTradeAdvertisement = this.props.buytradeadvertisement.data;
     var buyer = this.props.buyer.data
-    var requestComponent = <div className='w-50' >
-      <h2 className='pv1 tc'>Getting balance...</h2>
-    </div>;
+
     if(buyTradeAdvertisement && buyer) {
       var marginMultiplier = (1 + (parseInt(this.props.buytradeadvertisement.data.margin,10) * 0.01))
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
       // TODO get the available balance from web3
       var availableBalance = 5
 
-      var url = '/user/' + buyTradeAdvertisement.buyerUid
+      var url = '/browseuser/' + buyTradeAdvertisement.buyerUid
       return (
         <div className='w-100 bg-smoke vh-100'>
           <div className='w-75 center pv3'>

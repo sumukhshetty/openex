@@ -52,7 +52,6 @@ class SellTradeAdvertisementsList extends Component {
       }
     })
     if(rows[0] !== undefined){
-
         return (
           <table>
           {this.props.selltradeadvertisements.data && <SellTradeAdvertisementsHeader />}

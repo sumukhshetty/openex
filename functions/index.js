@@ -49,7 +49,7 @@ exports.notificationPostProcesing1 = functions.database.ref('/notifications/{rec
     if (notificationData.verifiedEmail) {
       admin.database().ref('/notificationsConfig/'+recipientUid+'/email').once('value',function(snap){
         var emaildata = {
-          from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
+          from: 'EZ Ether <no-reply@mg.automte.com>',
           to: snap.val(),
           subject: notificationData.title,
           text: notificationData.body
@@ -141,7 +141,7 @@ exports.helpForm = functions.https.onRequest((req, res) => {
       var _text = req.body.postData.email + " says: " + req.body.postData.message
       var emaildata = {
         from: 'Automte Ether Exchange <no-reply@mg.automte.com>',
-        to: 'quijano@automte.com, sumukh@automte.com, support@automte.com',
+        to: 'quijano@automte.com, sumukh@automte.com, support@ezether.com',
         subject: _subject,
         text: _text
       }

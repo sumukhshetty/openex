@@ -7,7 +7,7 @@ export default class LockedAccount extends Component {
       <div className='bg-white w-75 h-75 br3 tc mt6 flex col x pv3'>
         <p className='measure f3'>Your wallet seems to be locked</p>
         <p className='measure f5'>please check that your wallet is unlocked and refresh the page</p>
-        <p className='measure f5'>For help email support@automte.com</p>
+        <p className='measure f5'>For help email support@ezether.com</p>
       </div>
     </div>
   )  

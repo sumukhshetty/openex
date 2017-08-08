@@ -7,7 +7,7 @@ export default class WrongAccount extends Component {
       <div className='bg-white w-75 h-75 br3 tc mt6 flex col x pv3'>
         <p className='measure f3'>Your wallet address seems to be different from your account</p>
         <p className='measure f5'>please check that you're logged into {this.props.walletAddress}</p>
-        <p className='measure f5'>For help email support@automte.com</p>
+        <p className='measure f5'>For help email support@ezether.com</p>
       </div>
     </div>
   )  

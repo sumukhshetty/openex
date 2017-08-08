@@ -31,8 +31,6 @@ import SellTradeAdvertisement from './selltradeadvertisement/layouts/SellTradeAd
 import SellTradeAdvertisements from './selltradeadvertisements/layouts/SellTradeAdvertisements'
 import EditTradeAdvertisement from './edittradeadvertisement/layouts/EditTradeAdvertisement'
 
-import ManageContractContainer from './manageContract/ui/ManageContractContainer'
-
 import BrowseAdvertisements from './browseadvertisements/layouts/BrowseAdvertisements'
 import BrowseBuyAdvertisement from './browsebuyadvertisement/layouts/BrowseBuyAdvertisement'
 import BrowseSellAdvertisement from './browseselladvertisement/layouts/BrowseSellAdvertisement'
@@ -59,6 +57,7 @@ function logPageView() {
   ReactGA.pageview(window.location.pathname)
 }
 
+//var raven
 export const raven = Raven.config(
   'https://e84964259dc24e9e902198566c748cdb@sentry.io/178466'
 ).install()
@@ -130,6 +129,10 @@ ReactDOM.render(
           component={UserIsAuthenticated(UserScreen)}
         />
         <Route
+          path="browseuser/:userUid"
+          component={UserIsNotAuthenticated(UserScreen)}
+        />
+        <Route
           path="selltradeadvertisement/:sellTradeAdvertisementId"
           component={UserIsAuthenticated(SellTradeAdvertisement)}
         />
@@ -145,10 +148,7 @@ ReactDOM.render(
           path="edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId"
           component={UserIsAuthenticated(EditTradeAdvertisement)}
         />
-        <Route
-          path="manage/:tradeId"
-          component={UserIsAuthenticated(ManageContractContainer)}
-        />
+
         <Route path="kyc" component={UserIsAuthenticated(KycUpload)} />
         <Route
           path="processkyc/:country/:userUid"
