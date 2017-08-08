@@ -43,7 +43,10 @@ import ActiveTrade from './activetrade/layouts/ActiveTrade'
 // Redux Store
 import store from './store'
 import * as firebase from 'firebase'
-import * as _firebaseconfig from './../secrets/firebaseconfig'
+//production
+//import * as _firebaseconfig from './../secrets/firebaseconfig'
+//staging
+import * as _firebaseconfig from './../secrets/firebasestagingconfig'
 import * as useractions from './user/userActions'
 
 import Raven from 'raven-js'
@@ -57,10 +60,10 @@ function logPageView() {
   ReactGA.pageview(window.location.pathname)
 }
 
-//var raven
-export const raven = Raven.config(
+var raven
+/*export const raven = Raven.config(
   'https://e84964259dc24e9e902198566c748cdb@sentry.io/178466'
-).install()
+).install()*/
 
 var config = {
   apiKey: _firebaseconfig._apiKey,
@@ -70,6 +73,7 @@ var config = {
   messagingSenderId: _firebaseconfig._messagingSenderId
 }
 export var firebaseRef = firebase.initializeApp(config)
+console.log(firebaseRef)
 export var firebaseMessaging = firebase.messaging()
 export const firebaseStorage = firebase.storage()
 const history = syncHistoryWithStore(browserHistory, store)

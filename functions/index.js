@@ -1,10 +1,16 @@
 var functions = require('firebase-functions');
 const admin = require('firebase-admin');
+//production
 var serviceAccount = require("./service-account.json");
+var databaseURL = "https://ezether-staging.firebaseio.com"
+//staging
+var stagingServiceAccount = require('./staging-service-account.json')
+var stagingDatabaseURL = "https://ezether-staging.firebaseio.com"
+
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://automteetherexchange.firebaseio.com"
+  credential: admin.credential.cert(stagingServiceAccount),
+  databaseURL: stagingDatabaseURL
 });
 
 const cors = require('cors')({origin: true});

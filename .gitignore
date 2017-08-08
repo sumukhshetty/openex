@@ -17,3 +17,5 @@ npm-debug.log
 .truffle-solidity-loader
 secrets
 functions/service-account.json
+functions/staging-service-account.json
+
