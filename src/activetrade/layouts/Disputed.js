@@ -20,7 +20,7 @@ class Disputed extends Component {
             <ChatBox
               tradeId={this.props.purchaseRequestId}
               sellerId={this.props.activetrade.sellerUid}
-              buyerId={this.props.activetrade.buyerUid} 
+              buyerId={this.props.activetrade.buyerUid}
               purchaseRequest={this.props.activetrade}/>
             <div className='w-50 ma3'>
               {this.props.viewerRole === 'buyer' &&
@@ -30,15 +30,12 @@ class Disputed extends Component {
             }
               {this.props.viewerRole === 'seller' &&
               <div className='tc'>
-                <SellerStepNote step={this.props.step} />
-                <button onClick={this.props.releaseEther}>
-                  Release Ether
-                </button>                
+                <SellerStepNote step={this.props.step} />            
               </div>}
             {this.props.viewerRole === 'arbiter' &&
               <div>
-              <AdminStepNote 
-                releaseToBuyer={this.props.releaseToBuyer} 
+              <AdminStepNote
+                releaseToBuyer={this.props.releaseToBuyer}
                 releaseToSeller={this.props.releaseToSeller}
                 assignArbiter={this.props.assignArbiter}
               />
