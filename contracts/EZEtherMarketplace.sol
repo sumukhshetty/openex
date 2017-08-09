@@ -90,11 +90,12 @@ contract EZEtherMarketplace is Ownable {
     require(orders[seller][uid].status == Status.Disputed);
     orders[seller][uid].buyer.transfer(orders[seller][uid].amount);
     getFeeRecipient(seller).transfer(orders[seller][uid].fee);
+    orders[seller][uid].status = Status.ResolvedBuyer;
     DisputeResolved(uid, seller, orders[seller][uid].buyer, 'buyer');
   }
 
   function resolveDisputeSeller(address seller, string uid) onlyDisputeInterface external {
-    require(!isContract(msg.sender) && orders[seller][uid].status == Status.Disputed);
+    require(orders[seller][uid].status == Status.Disputed);
     seller.transfer(orders[seller][uid].amount.add(orders[seller][uid].fee));
     orders[seller][uid].status = Status.ResolvedSeller;
     DisputeResolved(uid, seller, orders[seller][uid].buyer, 'seller');
