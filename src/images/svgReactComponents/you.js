@@ -16,9 +16,9 @@ export default props => {
       <g
         id="Mockups"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <circle id="Oval-4" fill="#EBEDED" cx="69.5" cy="69.5" r="69.5" />
       </g>

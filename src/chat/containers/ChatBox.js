@@ -14,15 +14,15 @@ const mapStateToProps = (state, props) => {
     purchaseRequest: props.purchaseRequest
   }
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getUser (tradeId, buyerId, sellerId) {
+    getUser(tradeId, buyerId, sellerId) {
       dispatch(getUser(tradeId, buyerId, sellerId))
     },
-    startListeningForMessages (tradeId) {
+    startListeningForMessages(tradeId) {
       dispatch(startListeningForMessages(tradeId))
     },
-    clearMessagesFromState () {
+    clearMessagesFromState() {
       dispatch(clearMessagesFromState())
     }
   }
