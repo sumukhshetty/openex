@@ -8,7 +8,8 @@ export default function messagesReducer(state = {}, action) {
           timeStamp: action.timeStamp,
           uid: action.uid,
           download: action.download,
-          fileType: action.fileType
+          fileType: action.fileType,
+          tradeId: action.tradeId
         }
       }
     case 'CLEAR_MESSAGES_FROM_STATE':
