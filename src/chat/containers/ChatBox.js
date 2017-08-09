@@ -20,7 +20,6 @@ const mapDispatchToProps = dispatch => {
     getUser(tradeId, buyerId, sellerId) {
       dispatch(getUser(tradeId, buyerId, sellerId))
     },
-    // console.log(tradeId)
     startListeningForMessages(tradeId) {
       dispatch(startListeningForMessages(tradeId))
     },

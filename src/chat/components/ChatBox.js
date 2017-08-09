@@ -29,10 +29,6 @@ export default class ChatBox extends Component {
 
   render() {
     const messages = this.props.chatMessages
-
-    // all chat messages that are added
-    console.log('chatmessages', this.props.chatMessages)
-
     const you = this.props.chatAuth.uid
     console.log(messages)
     return (
