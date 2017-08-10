@@ -33,8 +33,6 @@ class EditTradeAdvertisementForm extends Component {
       _postTradeDetails['margin'] = event.target.value
     } else if (event.target.id === 'equation') {
       _postTradeDetails['equation'] = event.target.value
-    } else if (event.target.id === 'amount') {
-      _postTradeDetails['amount'] = event.target.value
     } else if (event.target.id === 'bankInformation') {
       _postTradeDetails['bankInformation'] = event.target.value
     } else if (event.target.id === 'minTransactionLimit') {
@@ -91,7 +89,7 @@ class EditTradeAdvertisementForm extends Component {
     this.props.updateTradeAdvertisement(
       _postTradeDetails,
       this.props.tradeAdvertisementId,
-      this.props.tradeAdvertisementType, 
+      this.props.tradeAdvertisementType,
       this.props.user)
   }
 
