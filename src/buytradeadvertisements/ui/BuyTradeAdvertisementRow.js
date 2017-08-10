@@ -18,7 +18,8 @@ const BuyTradeAdvertismentRow = props => {
     return (
       <tr className="flex cxc">
         <td className="fb20">
-          {props.buyTradeAdvertisementData.buyerUsername}
+          {props.buyTradeAdvertisementData.buyerUsername} -{' '}
+          {props.buyTradeAdvertisementData.location}
         </td>
         <td className="fb10 tc">
           {props.buyTradeAdvertisementData.paymentMethod}
