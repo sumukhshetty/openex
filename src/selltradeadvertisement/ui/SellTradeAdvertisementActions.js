@@ -72,7 +72,8 @@ module.exports = {
       buyerconfirrmpaymenttime: '-',
       sellerreleaseethertime: '-',
       buyraisesdisputetime: '-',
-      sellerraisesdisputetime: '-'
+      sellerraisesdisputetime: '-',
+      advertiser: sellTradeAdvertisement.sellerUid
     }
     var newRequest = firebaseRef.database().ref('/purchaserequests/' + buyer.profile.country)
       .push(purchaseRequestData, function(err){

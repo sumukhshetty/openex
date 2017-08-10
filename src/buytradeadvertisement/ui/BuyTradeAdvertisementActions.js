@@ -70,7 +70,8 @@ module.exports = {
       buyerconfirrmpaymenttime: '-',
       sellerreleaseethertime: '-',
       buyraisesdisputetime: '-',
-      sellerraisesdisputetime: '-'
+      sellerraisesdisputetime: '-',
+      advertiser: buyTradeAdvertisement.buyerUid
     }
 
     try {
