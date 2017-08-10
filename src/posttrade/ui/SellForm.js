@@ -64,7 +64,7 @@ export class SellForm extends Component {
             </button>
           </div>
           <div className="min-w-30 me">
-            <span className="fw1 i">Min Transaction Limit</span>
+            <span className="fw1 i">Minimum transaction limit in one trade</span>
           </div>
         </div>
         <div className="flex mb3">
@@ -89,11 +89,9 @@ export class SellForm extends Component {
               {this.props.currency}
             </button>
           </div>
-          <span className="measure-narrow fw1 i pa0 me">
-            Optional. Maximum transaction limit in one trade. For online sells,
-            your sell smart contract balance may limit the maximum fundable
-            trade also.
-          </span>
+          <div className="min-w-30 me">
+            <span className="fw1 i">Maximum transaction limit in one trade</span>
+          </div>
         </div>
 
         <div className="flex mb3">
