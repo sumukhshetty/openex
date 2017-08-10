@@ -292,8 +292,7 @@ class PostTradeForm extends Component {
 
                 <span className="measure-narrow fw1 i pa0 me">
                   Margin you want over the ether market price. Use a negative
-                  value for buying or selling under the market price to attract
-                  more contracts.
+                  value to trade under the market price.
                 </span>
               </div>
 
