@@ -311,7 +311,7 @@ class PostTradeForm extends Component {
                   <option value="cash">cash</option>
                   <option value="mobile">mobile</option>
                 </select>
-              </div>
+              </div> 
 
               {this.state.buyFormBool
                 ? <BuyForm
