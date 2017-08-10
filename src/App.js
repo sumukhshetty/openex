@@ -99,7 +99,7 @@ class App extends Component {
               <NotificationsContainer close={this.removeNotifications} />}
             <div className="pure-g flex mxb cxc ">
               <div className="pure-u-1-4 brand">
-                <Link to="/">
+                <Link to="/dashboard">
                   <img
                     className="brand"
                     src={ezetherlogowhite}
