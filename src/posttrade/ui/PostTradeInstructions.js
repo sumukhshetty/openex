@@ -11,7 +11,7 @@ class PostTradeInstructions extends Component {
               Create an ether trade advertisement if you plan to trade ether regularly. We recommend clicking on buy or sell if you want to trade quicker.
             </p>
         <p>
-              Create an advertisement is FREE. Sellers have to pay gas fee for uploading a sell contract.
+              For each completed trade, advertisers pay 1% of the amount in fees.
             </p>
         <p>
               Before setting up your advertisement please read through our <a onClick={()=>browserHistory.push("termsofservice")}>terms of service</a> and online sale advertisement guide.
