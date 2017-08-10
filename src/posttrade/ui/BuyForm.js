@@ -33,25 +33,6 @@ export class BuyForm extends Component {
           : null}
 
         <div className="flex mb3">
-          <label htmlFor="amount" className="w5">
-            Amount to Buy
-          </label>
-          <input
-            id="amount"
-            type="number"
-            step="0.00001"
-            min="0.00001"
-            onChange={this.props.onChangeProp}
-            value={this.props.amount}
-            className="w5 h-100"
-            required
-          />
-          <div className="min-w-30 me">
-            <span className="fw1 i">Amount in Ether</span>
-          </div>
-        </div>
-
-        <div className="flex mb3">
           <label htmlFor="minTransactionLimit" className="w5">
             Min Transaction Limit
           </label>

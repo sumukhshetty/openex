@@ -13,7 +13,6 @@ class PostTradeForm extends Component {
       etherPrice: this.props.etherPrice,
       postTradeDetails: {
         tradeType: '',
-        amount: 0,
         location: '',
         buyerAddress: '',
         buyerUid: '',
@@ -49,7 +48,6 @@ class PostTradeForm extends Component {
 
     this.setState({
       postTradeDetails: {
-        amount: 0,
         buyerAddress: buyerAddress,
         tradeType: 'buy-ether', // NOTE Arseniy: Set default values here.
         buyerUid: this.props.uid, // Submitting a from without changing values leaves them as blank
@@ -71,8 +69,6 @@ class PostTradeForm extends Component {
       _postTradeDetails['margin'] = event.target.value
     } else if (event.target.id === 'equation') {
       _postTradeDetails['equation'] = event.target.value
-    } else if (event.target.id === 'amount') {
-      _postTradeDetails['amount'] = event.target.value
     } else if (event.target.id === 'bankInformation') {
       _postTradeDetails['bankInformation'] = event.target.value
     } else if (event.target.id === 'minTransactionLimit') {
@@ -340,7 +336,6 @@ class PostTradeForm extends Component {
               {this.state.buyFormBool
                 ? <BuyForm
                     onChangeProp={this.onInputChange.bind(this)}
-                    amount={this.state.postTradeDetails.amount}
                     paymentMethod={this.state.postTradeDetails.paymentMethod}
                     onCurrencyChange={this.onCurrencyChange.bind(this)}
                     bankInformation={
@@ -358,7 +353,6 @@ class PostTradeForm extends Component {
                 : <SellForm
                     onChangeProp={this.onInputChange.bind(this)}
                     currency={this.props.user.profile.currency}
-                    amount={this.state.postTradeDetails.amount}
                     paymentMethod={this.state.postTradeDetails.paymentMethod}
                     onCurrencyChange={this.onCurrencyChange.bind(this)}
                     bankInformation={

@@ -95,7 +95,7 @@ export default class BuyTradeAdvertisement extends Component {
         <div className="w-100 bg-smoke vh-100">
           <div className="w-75 center pv3">
             <h1 className="pv1">
-              Sell {buyTradeAdvertisement.amount} ether to {buyer.username}{' '}
+              Sell ether to {buyer.username}{' '}
               using {buyTradeAdvertisement.paymentMethod}
             </h1>
             <div className="flex mxb w-100 cxc">
@@ -152,9 +152,6 @@ export default class BuyTradeAdvertisement extends Component {
               </div>
               <div className="w-50">
                 <h2 className="pv1 tc">How much do you wish to sell?</h2>
-                <h2 className="pv1 tc">
-                  {' '}Max Trade Limit:{availableBalance} Ether
-                </h2>
                 <div className="flex mxc">
                   <Converter
                     maxEther={availableBalance}
