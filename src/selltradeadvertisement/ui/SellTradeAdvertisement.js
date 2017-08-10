@@ -73,26 +73,17 @@ export default class SellTradeAdvertisement extends Component {
       var price = this.props.etherPrice
         ? (this.props.etherPrice.data * marginMultiplier).toFixed(2)
         : null
-      // ISSUE-254 get available balance from the ETHOrderBook
-      //var availableBalance = this.props.sellOrderContract.availableBalance;
       var minLimit =
         Number(sellTradeAdvertisement.minTransactionLimit) /
         this.props.etherPrice.data
       var maxLimit =
         Number(sellTradeAdvertisement.maxTransactionLimit) /
         this.props.etherPrice.data
-      var availableBalance = 5
-      if (typeof availableBalance !== 'undefined') {
-        if (availableBalance > 0) {
           requestComponent = (
             <div className="w-50">
               <h2 className="pv1 tc">How much do you wish to buy?</h2>
-              <h2 className="pv1 tc">
-                Max Trade Limit:{availableBalance} Ether
-              </h2>
               <div className="flex mxc">
                 <Converter
-                  maxEther={availableBalance}
                   handleTradeRequest={this.createPurchaseRequest.bind(this)}
                   onAmountChange={this.onAmountChange.bind(this)}
                   currency={this.props.user.profile.currency}
@@ -107,17 +98,6 @@ export default class SellTradeAdvertisement extends Component {
               </div>
             </div>
           )
-        } else {
-          requestComponent = (
-            <div className="w-50">
-              <h2 className="pv1 tc">
-                Sorry, the seller does not have enough ether to sell.
-              </h2>
-              <button>Return to Buy page</button>
-            </div>
-          )
-        }
-      }
       var url = '/user/' + sellTradeAdvertisement.sellerUid
       return (
         <div className="w-100 bg-smoke vh-100">
