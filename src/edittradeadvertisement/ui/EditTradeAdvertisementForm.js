@@ -170,7 +170,6 @@ class EditTradeAdvertisementForm extends Component {
               (this.state.buyFormBool)
                 ? <EditBuyForm
                   onChangeProp={this.onInputChange.bind(this)}
-                  amount={this.state.postTradeDetails.amount}
                   paymentMethod={this.state.postTradeDetails.paymentMethod}
                   onPaymentMethodChange={this.onPaymentMethodChange.bind(this)}
                   onCurrencyChange={this.onCurrencyChange.bind(this)}
@@ -182,7 +181,6 @@ class EditTradeAdvertisementForm extends Component {
               : <EditSellForm
                 onChangeProp={this.onInputChange.bind(this)}
                 currency={this.props.user.profile.currency}
-                amount={this.state.postTradeDetails.amount}
                 onPaymentMethodChange={this.onPaymentMethodChange.bind(this)}
                 paymentMethod={this.state.postTradeDetails.paymentMethod}
                 onCurrencyChange={this.onCurrencyChange.bind(this)}
