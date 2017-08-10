@@ -224,9 +224,7 @@ class PostTradeForm extends Component {
                   </label>
                 </div>
                 <span className="measure-narrow fw1 i pa0 me">
-                  What kind of trade advertisement do you wish to create? If you
-                  wish to sell ether make sure you have ether in your Metamask
-                  wallet.
+                  What kind of trade advertisement do you wish to create?
                 </span>
               </div>
 
@@ -249,22 +247,6 @@ class PostTradeForm extends Component {
                   trade, please specify a city, postal code or street name.
                 </span>
               </div>
-
-              {this.state.buyFormBool &&
-                <div className="flex mb3">
-                  <label htmlFor="buyerAddress" className="w5">
-                    Buyer Address
-                  </label>
-                  <textarea
-                    id="buyerAddress"
-                    type="textArea"
-                    rows="4"
-                    value={this.state.postTradeDetails.buyerAddress}
-                    placeholder="Please make sure you are logged into metamask in your chrome browser."
-                    className="w5"
-                    disabled
-                  />
-                </div>}
 
               <div className="flex mv3">
                 <label htmlFor="margin" className="w5">
@@ -311,8 +293,7 @@ class PostTradeForm extends Component {
                 <span className="measure-narrow fw1 i pa0 me">
                   Margin you want over the ether market price. Use a negative
                   value for buying or selling under the market price to attract
-                  more contracts. For more complex pricing edit the price
-                  equation directly.
+                  more contracts.
                 </span>
               </div>
 
