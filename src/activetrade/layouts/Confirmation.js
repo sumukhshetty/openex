@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {etherScanUrl} from './../../index.js'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
 import ChatBox from '../../chat/containers/ChatBox'
@@ -30,11 +31,11 @@ class Confirmation extends Component {
   render () {
     var txHashUrl
     if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
-      txHashUrl = "https://etherscan.io/tx/"+this.props.txhash
+      txHashUrl = etherScanUrl + "tx/" + this.props.txhash
     }
     var contractUrl
     if(this.props.sendEtherState === 'insufficient-available-balance'){
-      contractUrl = "https://etherscan.io/address/"+this.props.sellerInterface.address
+      contractUrl = etherScanUrl + "address/"+this.props.sellerInterface.address
     }
     return (
       <section className='bg-smoke'>

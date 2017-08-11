@@ -1,5 +1,5 @@
 import {notify} from 'react-notify-toast';
-import {firebaseRef, FIREBASE_TIMESTAMP} from './../../../index.js'
+import {firebaseRef, FIREBASE_TIMESTAMP, firebaseFunctionsUrl} from './../../../index.js'
 const request = require('request')
 
 const currencies = require('country-currency')
@@ -59,7 +59,7 @@ export function signUpUserCustomAuth (signUpInfo, web3, country) {
               throw result.error
             }
             let signature = result.result;
-            var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/signUpUserCustomAuth'
+            var url = firebaseFunctionsUrl + 'signUpUserCustomAuth'
             var options = {
               method: 'post',
               body: {

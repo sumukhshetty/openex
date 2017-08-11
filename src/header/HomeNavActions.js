@@ -1,4 +1,4 @@
-import { firebaseRef } from './../index'
+import { firebaseRef, networkName, firebaseFunctionsUrl } from './../index'
 import * as cryptoHelpers from './../util/cryptoHelpers'
 import {notify} from 'react-notify-toast';
 const request = require('request')
@@ -28,7 +28,7 @@ function updateReduxStoreDataState (value) {
 module.exports = {
   login: (web3) => (dispatch) => {
     if(web3.wrongnetwork){
-      notify.show("It looks like you're on the wrong network, please switch over to the Main Ethereum Network")
+      notify.show("It looks like you're on the wrong network, please switch over to the " + networkName)
     } else {
       var data = cryptoHelpers.toHex('I am logging into the EZ Ether marketplace and I have read the terms and conditions');
       try {
@@ -41,7 +41,7 @@ module.exports = {
               throw result.error
             }
             let signature = result.result;
-            var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/loginUserCustomAuth'
+            var url = firebaseFunctionsUrl + 'loginUserCustomAuth'
             var options = {
               method: 'post',
               body: {

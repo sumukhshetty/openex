@@ -44,9 +44,9 @@ import ActiveTrade from './activetrade/layouts/ActiveTrade'
 import store from './store'
 import * as firebase from 'firebase'
 //production
-//import * as _firebaseconfig from './../secrets/firebaseconfig'
+import * as _productionFirebaseConfig from './../secrets/firebaseconfig'
 //staging
-import * as _firebaseconfig from './../secrets/firebasestagingconfig'
+import * as _stagingFirebaseConfig from './../secrets/firebasestagingconfig'
 import * as useractions from './user/userActions'
 
 import Raven from 'raven-js'
@@ -64,6 +64,26 @@ var raven
 /*export const raven = Raven.config(
   'https://e84964259dc24e9e902198566c748cdb@sentry.io/178466'
 ).install()*/
+
+var PROJECT_ENV = 'staging'
+var version = '1.0.0'
+
+export var _firebaseconfig, firebaseFunctionsUrl, contractAddresses, networkId, networkName, etherScanUrl
+
+if(PROJECT_ENV === 'staging') {
+  console.log('inside staging')
+  _firebaseconfig =  _stagingFirebaseConfig
+  firebaseFunctionsUrl = 'https://us-central1-ezether-staging.cloudfunctions.net/'
+  networkId = '42'
+  networkName = 'Kovan Test Network'
+  etherScanUrl = 'https://etherscan.io/'
+} else {
+  _firebaseconfig = _productionFirebaseConfig
+  firebaseFunctionsUrl = 'https://us-central1-automteetherexchange.cloudfunctions.net/'
+  networkId = '1'
+  networkName = 'Main Ethereum Network'
+  etherScanUrl = 'https://kovan.etherscan.io/'
+}
 
 var config = {
   apiKey: _firebaseconfig._apiKey,

@@ -1,4 +1,4 @@
-import { firebaseRef } from './index'
+import { firebaseRef, networkId } from './index'
 
 var request = require('request')
 const currencies = require('country-currency')
@@ -69,12 +69,14 @@ function getUserPresence(userPresencePayload) {
 
 module.exports = {
   setWeb3: (web3) => (dispatch) => {
+    console.log('AppActions.setWeb3')
+    console.log(networkId)
     dispatch(web3Init(web3))
     // TODO change this to mainnet
     try {
       web3.version.getNetwork(function(error, result){
         if(!error){
-          if(result==='42'){
+          if(result===networkId){
             dispatch(wrongNetwork(false))
           } else {
             dispatch(wrongNetwork(true))

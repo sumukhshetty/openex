@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router'
-import {firebaseRef} from './../../index.js'
+import {firebaseRef, firebaseFunctionsUrl} from './../../index.js'
 const request = require('request')
 
 class DisputedTrades extends Component {
@@ -9,7 +9,7 @@ class DisputedTrades extends Component {
     console.log('DisputedTrades.checkAdmin')
     //TODO reimplement admin
     browserHistory.push('/admin')
-    var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/checkAdmin'
+    var url = firebaseFunctionsUrl + 'checkAdmin'
     var options = {
       method: 'post',
       body: {userUid:firebaseRef.auth().currentUser.uid},

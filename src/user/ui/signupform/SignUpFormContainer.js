@@ -14,10 +14,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSignUpFormSubmit: (signUpInfo, web3) => {
+/*    onSignUpFormSubmit: (signUpInfo, web3) => {
       event.preventDefault()
       dispatch(signUpUser(signUpInfo, web3))
-    },
+    },*/
     onSignUpFormCustomAuthSubmit: (signUpInfo, web3, country) => {
       event.preventDefault()
       dispatch(signUpUserCustomAuth(signUpInfo, web3, country))

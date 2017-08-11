@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {etherScanUrl} from './../../index.js'
 import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
 import Progress from '../../generic-components/tradeFlow/Progress'
 import ChatBox from '../../chat/containers/ChatBox'
@@ -11,7 +12,7 @@ class Release extends Component {
   render () {
     var txHashUrl
     if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
-      txHashUrl = "https://etherscan.io/tx/"+this.props.txhash
+      txHashUrl = etherScanUrl + "tx/"+this.props.txhash
     }
     return (
       <section className='bg-smoke'>
