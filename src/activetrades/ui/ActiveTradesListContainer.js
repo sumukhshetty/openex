@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => {
     purchaserequests: state.purchaserequests,
     user: state.user,
     users: state.users,
+    presence: state.presence
   }
 }
 

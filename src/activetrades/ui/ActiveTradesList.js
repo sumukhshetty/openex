@@ -9,7 +9,7 @@ class ActiveTradesList extends Component {
       var rows = [];
       Object.entries(_activeTrades).forEach(
             ([key, value]) => {
-              rows.push(<ActiveTradesRow purchaseRequest={this.props.purchaserequests.data[key]} purchaseRequestId={key} key={key} tradeType={value.tradeType} user={this.props.user}/>);
+              rows.push(<ActiveTradesRow purchaseRequest={this.props.purchaserequests.data[key]} purchaseRequestId={key} key={key} tradeType={value.tradeType} user={this.props.user} presence={this.props.presence}/>);
             }
         );
       return (
