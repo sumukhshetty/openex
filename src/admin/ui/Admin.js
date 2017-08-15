@@ -79,6 +79,7 @@ export default class Admin extends Component {
                         </tbody>
                       </table>
                     </div>
+                   <p className='pv3 measure-wide'>Version 1.0.0</p>
                   </div>
                 </div>
               </div>
