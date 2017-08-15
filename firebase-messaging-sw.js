@@ -1,5 +1,7 @@
 importScripts('https://www.gstatic.com/firebasejs/3.8.0/firebase-app.js')
 importScripts('https://www.gstatic.com/firebasejs/3.8.0/firebase-messaging.js')
+import {_firebaseconfig} from './src/index.js'
+console.log("firebase-messaging-sw")
 
 var config = {
   apiKey: "AIzaSyCABMDvmhvqZ1uMMFZqjRKeaONk2H3YcBQ",
@@ -9,7 +11,7 @@ var config = {
   messagingSenderId: "929792166528"
 }
 
-const firebaseRef = firebase.initializeApp(config)
+const firebaseRef = firebase.initializeApp(_firebaseconfig)
   
 const messaging = firebaseRef.messaging();
 
