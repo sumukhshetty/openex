@@ -5,6 +5,7 @@ import { startListeningForMessages } from '../actions/messages.js'
 import { clearMessagesFromState } from '../actions/messages.js'
 
 const mapStateToProps = (state, props) => {
+  console.log('mapSTate2', props.chatMessages)
   return {
     chatAuth: state.chatAuth,
     chatMessages: state.chatMessages,
@@ -14,15 +15,16 @@ const mapStateToProps = (state, props) => {
     purchaseRequest: props.purchaseRequest
   }
 }
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getUser (tradeId, buyerId, sellerId) {
+    getUser(tradeId, buyerId, sellerId) {
       dispatch(getUser(tradeId, buyerId, sellerId))
     },
-    startListeningForMessages (tradeId) {
+    // console.log(tradeId)
+    startListeningForMessages(tradeId) {
       dispatch(startListeningForMessages(tradeId))
     },
-    clearMessagesFromState () {
+    clearMessagesFromState() {
       dispatch(clearMessagesFromState())
     }
   }

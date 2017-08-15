@@ -15,7 +15,8 @@ export const createMessage = ({
       uid,
       timeStamp: Date.now(),
       download,
-      fileType
+      fileType,
+      tradeId
     }
     firebaseRef
       .database()
