@@ -15,7 +15,8 @@ export const createMessage = ({
       uid,
       timeStamp: Date.now(),
       download,
-      fileType
+      fileType,
+      tradeId
     }
     firebaseRef
       .database()
@@ -31,14 +32,14 @@ export const createMessage = ({
   }
 }
 
-export const addMessage = (key, message, tradeId) => {
+export const addMessage = (key, message) => {
   return {
     type: 'ADD_MESSAGE',
     content: message.content,
     key,
     timeStamp: message.timeStamp,
     uid: message.uid,
-    tradeId,
+    tradeId: message.tradeId,
     download: message.download,
     fileType: message.fileType
   }
@@ -52,7 +53,7 @@ export const startListeningForMessages = tradeId => {
       .ref('chatrooms')
       .child(`${tradeId}/messages`)
       .on('child_added', snapshot => {
-        dispatch(addMessage(snapshot.key, snapshot.val(), tradeId))
+        dispatch(addMessage(snapshot.key, snapshot.val()))
       })
   }
 }
