@@ -30,7 +30,7 @@ export default class ChatBox extends Component {
   render() {
     const messages = this.props.chatMessages
     const you = this.props.chatAuth.uid
-    console.log(messages)
+    console.log('chats', this.props.chatMessages)
     return (
       <div
         className="pa3 w-50 bg-white overflow-y-auto"
@@ -38,7 +38,7 @@ export default class ChatBox extends Component {
         ref={`thing`}
       >
         {Object.keys(messages)
-          .filter(trade => trade.tradeId !== this.props.tradeId)
+          .filter(trade => messages[trade].tradeId === this.props.tradeId)
           .sort((a, b) => messages[a].timeStamp - messages[b].timeStamp)
           .map((message, index) =>
             <ChatMessage
