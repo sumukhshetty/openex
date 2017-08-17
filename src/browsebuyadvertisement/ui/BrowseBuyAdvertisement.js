@@ -63,7 +63,7 @@ export default class BrowseBuyAdvertisement extends Component {
       return (
         <div className='w-100 bg-smoke vh-100'>
           <div className='w-75 center pv3'>
-            <h1 className='pv1'>Sell {buyTradeAdvertisement.amount} ether to {buyTradeAdvertisement.buyerUsername} using {buyTradeAdvertisement.paymentMethod}</h1>
+            <h1 className='pv1'>Sell ether to {buyTradeAdvertisement.buyerUsername} using {buyTradeAdvertisement.paymentMethod}</h1>
             <div className='flex mxb w-100 cxc'>
               <div className='w-50'>
                 <div className='w-100'>
