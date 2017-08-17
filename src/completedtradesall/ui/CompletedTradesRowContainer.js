@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => {
     purchaseRequestId: ownProps.purchaseRequestId,
     purchaserequests: state.purchaserequests,
     tradeType: ownProps.tradeType,
+    presence: state.presence
   }
 }
 
