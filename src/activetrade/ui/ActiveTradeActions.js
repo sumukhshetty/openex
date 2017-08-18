@@ -420,6 +420,7 @@ module.exports = {
             dispatch(setTxHash(result))
           } else {
             console.log(error)
+            raven.captureException(error)
             dispatch(sendEtherState('init'))
           }
 
