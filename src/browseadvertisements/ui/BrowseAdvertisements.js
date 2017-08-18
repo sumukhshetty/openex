@@ -33,7 +33,7 @@ export default class BrowseAdvertisements extends Component {
 
       var sellTradeAdvertisementsByMargin = sellTradeAdvertisementsArray.slice(0)
       sellTradeAdvertisementsByMargin.sort(function(a, b) {
-        return a.value.margin - b.value.margin
+        return b.value.margin - a.value.margin
       })
 
       var component = this
