@@ -228,7 +228,7 @@ exports.signUpUserCustomAuth = functions.https.onRequest((req, res) => {
           country: req.body.signUpInfo.country,
           username: req.body.signUpInfo.username
         };
-        admin.database().ref('/registeredAccounts/'+ account_address).set(true)
+        // admin.database().ref('/registeredAccounts/'+ account_address).set(true)
         admin.auth().createCustomToken(uid, additionalClaims)
           .then(function(token){
             console.log(token)

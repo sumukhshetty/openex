@@ -102,6 +102,7 @@ export function signUpUserCustomAuth (signUpInfo, web3, country) {
                       'kycComplete': false,
                     }
                     firebaseRef.database().ref('/users/' + userid).set(userdata).then(function(result){
+                      firebaseRef.database().ref('/registeredAccounts/'+ userid).set(true)
                       firebaseUser.updateProfile({
                         displayName: username
                       })
