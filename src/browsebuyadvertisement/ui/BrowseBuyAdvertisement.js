@@ -32,7 +32,7 @@ export default class BrowseBuyAdvertisement extends Component {
   }
 
   onAmountChange(e) {
-    var marginMultiplier = (1 + (parseInt(this.props.buytradeadvertisement.data.margin, 10) * 0.01))
+    var marginMultiplier = (1 + (parseFloat(this.props.buytradeadvertisement.data.margin) * 0.01))
     if(e.target.id === 'etherAmount') {
       this.setState({etherAmount: e.target.value});
       this.setState({fiatAmount: (e.target.value * (this.props.etherPrice.data * marginMultiplier).toFixed(2)).toFixed(2)})
@@ -54,7 +54,7 @@ export default class BrowseBuyAdvertisement extends Component {
     var buyer = this.props.buyer.data
 
     if(buyTradeAdvertisement && buyer) {
-      var marginMultiplier = (1 + (parseInt(this.props.buytradeadvertisement.data.margin,10) * 0.01))
+      var marginMultiplier = (1 + (parseFloat(this.props.buytradeadvertisement.data.margin) * 0.01))
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
       // TODO get the available balance from web3
       var availableBalance = 5
@@ -102,14 +102,14 @@ export default class BrowseBuyAdvertisement extends Component {
               <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to sell?</h2>
             <h2 className='pv1 tc'> Max Trade Limit:{availableBalance} Ether</h2>
-            <div className='flex mxc'><Converter maxEther={availableBalance} 
+            <div className='flex mxc'><Converter maxEther={availableBalance}
               handleTradeRequest={this.createPurchaseRequest.bind(this)}
-              onAmountChange={this.onAmountChange.bind(this)} 
-              currency={this.props.currency.data} 
-              price={price} 
-              country={this.props.country.data} 
-              etherAmount={this.state.etherAmount} 
-              fiatAmount={this.state.fiatAmount} 
+              onAmountChange={this.onAmountChange.bind(this)}
+              currency={this.props.currency.data}
+              price={price}
+              country={this.props.country.data}
+              etherAmount={this.state.etherAmount}
+              fiatAmount={this.state.fiatAmount}
               tradeAdvertisementAmount={buyTradeAdvertisement.amount}
               isButtonDisabled={this.state.isButtonDisabled}
               /></div>

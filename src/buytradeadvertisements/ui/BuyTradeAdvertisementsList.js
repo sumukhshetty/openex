@@ -28,25 +28,25 @@ class BuyTradeAdvertisementsList extends Component {
       if (buytradeadvertisement.value.buyerUid !== uid){
         if (buytradeadvertisement.value.active){
           buyer = users.data[buytradeadvertisement.value.buyerUid]
-          var marginMultiplier = (1 + (parseInt(buytradeadvertisement.value.margin, 10) * 0.01))
+          var marginMultiplier = (1 + (parseFloat(buytradeadvertisement.value.margin) * 0.01))
           var price = etherPrice ? (etherPrice*marginMultiplier) : null;
           var _presence
           if (component.props.presence.data){
             _presence = component.props.presence.data[buytradeadvertisement.value.buyerUid]
           }
           console.log(_presence)
-          return <BuyTradeAdvertisementRow 
-            buyTradeAdvertisementData={buytradeadvertisement.value} 
-            buyTradeAdvertisementId={buytradeadvertisement.prop} 
-            price={price.toFixed(2)} 
-            buyer={buyer} 
-            key={buytradeadvertisement.prop} 
+          return <BuyTradeAdvertisementRow
+            buyTradeAdvertisementData={buytradeadvertisement.value}
+            buyTradeAdvertisementId={buytradeadvertisement.prop}
+            price={price.toFixed(2)}
+            buyer={buyer}
+            key={buytradeadvertisement.prop}
             presence={_presence}/>
         } else {
           return null
         }
       } else {
-        return null 
+        return null
       }
     })
 
@@ -60,7 +60,7 @@ class BuyTradeAdvertisementsList extends Component {
           </tbody>
           </table>
           )
-      
+
     } else {
       return (<YouAreFirst />)
     }

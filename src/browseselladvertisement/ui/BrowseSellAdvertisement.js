@@ -29,7 +29,7 @@ export default class BrowseSellAdvertisement extends Component {
   }
 
   onAmountChange(e) {
-    var marginMultiplier = (1 + (parseInt(this.props.selltradeadvertisement.data.margin, 10) * 0.01))
+    var marginMultiplier = (1 + (parseFloat(this.props.selltradeadvertisement.data.margin) * 0.01))
     if(e.target.id === 'etherAmount') {
       this.setState({etherAmount: e.target.value});
       this.setState({fiatAmount: (e.target.value * (this.props.etherPrice.data * marginMultiplier).toFixed(2)).toFixed(2)})
@@ -46,9 +46,9 @@ export default class BrowseSellAdvertisement extends Component {
       <h2 className='pv1 tc'>Getting balance...</h2>
     </div>;
     if(sellTradeAdvertisement && seller) {
-      var marginMultiplier = (1 + (parseInt(sellTradeAdvertisement.margin, 10) * 0.01))
+      var marginMultiplier = (1 + (parseFloat(sellTradeAdvertisement.margin) * 0.01))
       var price = this.props.etherPrice ? (this.props.etherPrice.data * marginMultiplier).toFixed(2) : null;
-      // ISSUE-254 get available balance from the ETHOrderBook 
+      // ISSUE-254 get available balance from the ETHOrderBook
       //var availableBalance = this.props.sellOrderContract.availableBalance;
       var availableBalance = 5
       if(typeof availableBalance !== 'undefined') {
@@ -56,14 +56,14 @@ export default class BrowseSellAdvertisement extends Component {
           requestComponent = <div className='w-50' >
             <h2 className='pv1 tc'>How much do you wish to buy?</h2>
             <h2 className='pv1 tc'>Max Trade Limit:{availableBalance} Ether</h2>
-            <div className='flex mxc'><Converter maxEther={availableBalance} 
+            <div className='flex mxc'><Converter maxEther={availableBalance}
               handleTradeRequest={this.createPurchaseRequest.bind(this)}
-              onAmountChange={this.onAmountChange.bind(this)} 
-              currency={this.props.currency.data} 
-              price={price} 
-              country={this.props.country.data} 
-              etherAmount={this.state.etherAmount} 
-              fiatAmount={this.state.fiatAmount} 
+              onAmountChange={this.onAmountChange.bind(this)}
+              currency={this.props.currency.data}
+              price={price}
+              country={this.props.country.data}
+              etherAmount={this.state.etherAmount}
+              fiatAmount={this.state.fiatAmount}
               isButtonDisabled={this.state.isButtonDisabled}
               /></div>
           </div>

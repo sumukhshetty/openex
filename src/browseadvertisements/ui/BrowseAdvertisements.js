@@ -43,7 +43,7 @@ export default class BrowseAdvertisements extends Component {
       ) {
         var buyer = users.data[buytradeadvertisement.value.buyerUid]
         var marginMultiplier =
-          1 + parseInt(buytradeadvertisement.value.margin, 10) * 0.01
+          1 + parseFloat(buytradeadvertisement.value.margin) * 0.01
         var price = etherPrice ? etherPrice * marginMultiplier : null
         console.log(price)
         var _presence
@@ -79,7 +79,7 @@ export default class BrowseAdvertisements extends Component {
         function(selltradeadvertisement, key) {
           var seller = users.data[selltradeadvertisement.value.sellerUid]
           var marginMultiplier =
-            1 + parseInt(selltradeadvertisement.value.margin, 10) * 0.01
+            1 + parseFloat(selltradeadvertisement.value.margin) * 0.01
           var price = etherPrice ? etherPrice * marginMultiplier : null
           console.log(price)
           var _presence

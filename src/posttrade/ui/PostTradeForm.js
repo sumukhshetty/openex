@@ -153,7 +153,7 @@ class PostTradeForm extends Component {
     event.preventDefault()
     var now = new Date()
     var marginMultiplier =
-      1 + parseInt(this.state.postTradeDetails.margin, 10) * 0.01
+      1 + parseFloat(this.state.postTradeDetails.margin) * 0.01
     var price
     if (this.props.etherPrice.data) {
       price = (this.props.etherPrice.data * marginMultiplier).toFixed(2)
@@ -295,7 +295,7 @@ class PostTradeForm extends Component {
                       {this.props.etherPrice
                         ? (this.props.etherPrice.data *
                             (1 +
-                              parseInt(this.state.postTradeDetails.margin, 10) *
+                              parseFloat(this.state.postTradeDetails.margin) *
                                 0.01)).toFixed(2)
                         : 'Getting price...'}{' '}
                       {this.props.user.profile.currency + '/ETH'}
