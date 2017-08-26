@@ -73,7 +73,7 @@ class EditTradeAdvertisementForm extends Component {
   handleSubmit (event) {
     event.preventDefault()
     var now = new Date()
-    var marginMultiplier = (1 + (parseInt(this.state.postTradeDetails.margin, 10) * 0.01))
+    var marginMultiplier = (1 + (parseFloat(this.state.postTradeDetails.margin) * 0.01))
     var price
     if (this.props.etherPrice.data){
       price =(this.props.etherPrice.data * marginMultiplier).toFixed(2)
@@ -91,7 +91,7 @@ class EditTradeAdvertisementForm extends Component {
     this.props.updateTradeAdvertisement(
       _postTradeDetails,
       this.props.tradeAdvertisementId,
-      this.props.tradeAdvertisementType, 
+      this.props.tradeAdvertisementType,
       this.props.user)
   }
 

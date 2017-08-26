@@ -28,17 +28,17 @@ class SellTradeAdvertisementsList extends Component {
         if (users.data[selltradeadvertisement.value.sellerUid].active){
           if (selltradeadvertisement.value.active){
             seller = users.data[selltradeadvertisement.value.sellerUid]
-            var marginMultiplier = (1 + (parseInt(selltradeadvertisement.value.margin, 10) * 0.01))
+            var marginMultiplier = (1 + (parseFloat(selltradeadvertisement.value.margin) * 0.01))
             var price = etherPrice ? (etherPrice*marginMultiplier) : null;
             var _presence
             if (component.props.presence.data){
               _presence = component.props.presence.data[selltradeadvertisement.value.sellerUid]
             }
-            return (<SellTradeAdvertisementRow 
-              price={price} 
-              sellTradeAdvertisementData={selltradeadvertisement.value} 
-              sellTradeAdvertisementId={selltradeadvertisement.prop} 
-              seller={seller} etherPrice={etherPrice} 
+            return (<SellTradeAdvertisementRow
+              price={price}
+              sellTradeAdvertisementData={selltradeadvertisement.value}
+              sellTradeAdvertisementId={selltradeadvertisement.prop}
+              seller={seller} etherPrice={etherPrice}
               key={selltradeadvertisement.prop}
               presence={_presence}/>)
           } else {
@@ -48,7 +48,7 @@ class SellTradeAdvertisementsList extends Component {
           return null
         }
       } else {
-        return null 
+        return null
       }
     })
     if(rows[0] !== undefined){
@@ -60,7 +60,7 @@ class SellTradeAdvertisementsList extends Component {
           </tbody>
           </table>
           )
-      
+
     } else {
       return (<YouAreFirst />)
     }

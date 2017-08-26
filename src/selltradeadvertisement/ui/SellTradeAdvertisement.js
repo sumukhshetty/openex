@@ -28,7 +28,7 @@ export default class SellTradeAdvertisement extends Component {
 
   createPurchaseRequest(e) {
     e.preventDefault()
-    var _etherPrice = (this.props.etherPrice.data * (1 + parseInt(this.props.selltradeadvertisement.data.margin, 10) * 0.01)).toFixed(2)
+    var _etherPrice = (this.props.etherPrice.data * (1 + parseFloat(this.props.selltradeadvertisement.data.margin) * 0.01)).toFixed(2)
     this.setState({ isButtonDisabled: true })
     this.props.createPurchaseRequest(
       this.state.etherAmount,
@@ -43,7 +43,7 @@ export default class SellTradeAdvertisement extends Component {
 
   onAmountChange(e) {
     var marginMultiplier =
-      1 + parseInt(this.props.selltradeadvertisement.data.margin, 10) * 0.01
+      1 + parseFloat(this.props.selltradeadvertisement.data.margin) * 0.01
     if (e.target.id === 'etherAmount') {
       this.setState({ etherAmount: e.target.value })
       this.setState({
@@ -69,7 +69,7 @@ export default class SellTradeAdvertisement extends Component {
     )
     if (sellTradeAdvertisement && seller) {
       var marginMultiplier =
-        1 + parseInt(sellTradeAdvertisement.margin, 10) * 0.01
+        1 + parseFloat(sellTradeAdvertisement.margin) * 0.01
       var price = this.props.etherPrice
         ? (this.props.etherPrice.data * marginMultiplier).toFixed(2)
         : null
