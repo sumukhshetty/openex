@@ -151,8 +151,10 @@ module.exports = {
       }
       })
 
+      let value = (purchaseRequest.advertiser === coinbase) ? etherAmount.mul(1.01) : etherAmount;
+
       exchange.addOrder(purchaseRequestId, purchaseRequest.buyerAddress,
-        etherAmount, price, purchaseRequest.currency, {from:coinbase, value: etherAmount.mul(1.01)},
+        etherAmount, price, purchaseRequest.currency, purchaseRequest.advertiser, {from:coinbase, value: value},
         function(error, result){
           if(!error){
             console.log("exchange.data.addOrder")
