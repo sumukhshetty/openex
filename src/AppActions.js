@@ -98,41 +98,41 @@ module.exports = {
       url: url
     }
     request(options, function (err, res, body) {
+      var country_code;
       if (err) {
         console.error('error posting json: ', err)
-        throw err
-      }
-      var statusCode = res.statusCode
-      if (statusCode === 200){
-        firebaseRef.database().ref('/buytradeadvertisements/'+res.body.country_code).once('value', function(snap){
-          dispatch(getBuyTradeAdvertisements(snap.val()))
-        })
-        firebaseRef.database().ref('/selltradeadvertisements/'+res.body.country_code).once('value', function(snap){
-          dispatch(getSellTradeAdvertisements(snap.val()))
-        })
-        firebaseRef.database().ref('/presence/').once('value', function(snap){
-          dispatch(getUserPresence(snap.val()))
-        })
-        dispatch(setCountry(res.body.country_code))
-
-        var currency
-        try {
-          currency = currencies.byCountry().get(res.body.country_code)
-        } catch(e){
-          currency = 'USD'
+        //throw err
+        country_code = "IN";
+      } else {
+        if(res.statusCode === 200) {
+          country_code = res.body.country_code;
+        } else {
+          console.log('error requesting geolocation: ' + res.body.error);
+          country_code = "IN";
         }
-        dispatch(setCurrency(currency))
+      }
+      firebaseRef.database().ref('/buytradeadvertisements/'+country_code).once('value', function(snap){
+        dispatch(getBuyTradeAdvertisements(snap.val()))
+      })
+      firebaseRef.database().ref('/selltradeadvertisements/'+country_code).once('value', function(snap){
+        dispatch(getSellTradeAdvertisements(snap.val()))
+      })
+      firebaseRef.database().ref('/presence/').once('value', function(snap){
+        dispatch(getUserPresence(snap.val()))
+      })
+      dispatch(setCountry(country_code))
 
-        firebaseRef.database().ref('/prices/ETH/' + currency).once('value', function(snap) {
-          dispatch(etherPrice(snap.val()));
-        })
+      var currency
+      try {
+        currency = currencies.byCountry().get(country_code)
+      } catch(e){
+        currency = 'USD'
       }
-      if (statusCode === 500){
-        throw res.body.error
-      }
-      if (statusCode === 401){
-        throw res.body.error
-      }
+      dispatch(setCurrency(currency))
+
+      firebaseRef.database().ref('/prices/ETH/' + currency).once('value', function(snap) {
+        dispatch(etherPrice(snap.val()));
+      })
     })
   },
   getUsers: () => (dispatch) => {
