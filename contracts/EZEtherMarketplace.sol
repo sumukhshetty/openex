@@ -43,20 +43,29 @@ contract EZEtherMarketplace is Ownable {
      feePercent = 100; //1%
   }
 
-  function addOrder(string uid, address buyer, uint _amount, uint price, string currency) payable external {
+  function addOrder(string uid, address buyer, uint _amount, uint price, string currency, address advertiser) payable external {
     require(!isContract(msg.sender));
     uint fee = calculateFee(_amount, msg.sender);
 
+    if(advertiser == msg.sender) {
+      require(msg.value == (_amount + fee));
+    } else {
+      require(msg.value == _amount);
+    }
+
     require(
       (!isContract(buyer)) &&
-      (msg.value == (_amount + fee)) &&
       (_amount >= getMinAmount(msg.sender)) &&
       (_amount <= getMaxAmount(msg.sender)) &&
       (orders[msg.sender][uid].status == Status.None)
       );
 
     orders[msg.sender][uid].buyer = buyer;
-    orders[msg.sender][uid].amount = _amount;
+    if(advertiser == msg.sender) {
+      orders[msg.sender][uid].amount = _amount;
+    } else {
+      orders[msg.sender][uid].amount = _amount - fee;
+    }
     orders[msg.sender][uid].fee = fee;
     orders[msg.sender][uid].status = Status.Open;
 

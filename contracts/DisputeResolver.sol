@@ -10,6 +10,8 @@ contract DisputeResolver is usingOraclize {
   // index on the list of owners to allow reverse lookup
   mapping(address => uint) ownerIndex;
 
+  uint public oraclizeGasLimit;
+
   // simple single-sig function modifier.
   modifier onlyOwner {
     require(isOwner(msg.sender));
@@ -42,10 +44,23 @@ contract DisputeResolver is usingOraclize {
     }
 
     disputeInterface = DisputeInterface(_disputeInterface);
+    oraclizeGasLimit = 200000;
+  }
+
+  function setOraclizeGasPrice(uint gasPrice) onlyOwner {
+    oraclize_setCustomGasPrice(gasPrice);
+  }
+
+  function setOraclizeGasLimit(uint gasLimit) onlyOwner {
+    oraclizeGasLimit = gasLimit;
   }
 
   function() payable {
 
+  }
+
+  function withdraw(uint amount) onlyOwner {
+      msg.sender.transfer(amount);
   }
 
   event DisputeAssigned(address seller, string uid, address assignee, address assigner);
@@ -58,7 +73,7 @@ contract DisputeResolver is usingOraclize {
 
   function assignDispute(string _uid, address _seller, string country, address assignee) onlyOwner {
     require(!isContract(assignee));
-    bytes32 queryId = oraclize_query("URL", "json(https://us-central1-automteetherexchange.cloudfunctions.net/checkDispute).dispute", strConcat('\n{"country" :"', country, '", "orderId": "', _uid, '"}'));
+    bytes32 queryId = oraclize_query("URL", "json(https://us-central1-automteetherexchange.cloudfunctions.net/checkDispute).dispute", strConcat('\n{"country" :"', country, '", "orderId": "', _uid, '"}'), oraclizeGasLimit);
     disputeQueryIds[queryId].uid = _uid;
     disputeQueryIds[queryId].seller = _seller;
 
@@ -86,7 +101,7 @@ contract DisputeResolver is usingOraclize {
   }
 
   modifier onlyAssignee(string uid) {
-    require(disputes[uid].assignee == msg.sender && isOwner(msg.sender));
+    require(disputes[uid].assignee == msg.sender || isOwner(msg.sender));
     _;
   }
 
