@@ -66,6 +66,7 @@
     "react-browser-detection": "^1.0.2",
     "react-dom": "^15.4.2",
     "react-ga": "^2.2.0",
+    "react-intl": "^2.3.0",
     "react-notify-toast": "^0.1.5",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
@@ -83,8 +84,12 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
-    "setupFiles": ["./config/polyfills.js"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "./config/polyfills.js"
+    ],
     "testPathIgnorePatterns": [
       "<rootDir>[/\\\\](build|docs|node_modules)[/\\\\]"
     ],
@@ -95,7 +100,9 @@
       "^.+\\.css$": "./config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "./config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     }
@@ -104,7 +111,9 @@
     "parser": "babel-eslint"
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"

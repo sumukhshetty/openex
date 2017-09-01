@@ -52,6 +52,21 @@ var ReactGA = require('react-ga')
 
 ReactGA.initialize('UA-102946005-1')
 
+// this if for internationalization, so that it's easy to create a chinese version of the site in the future
+import languages from './langauges'
+import { addLocaleData, IntlProvider } from 'react-intl'
+import en from 'react-intl/locale-data/en'
+import es from 'react-intl/locale-data/es'
+import fr from 'react-intl/locale-data/fr'
+addLocaleData([...en, ...es, ...fr])
+import { flattenMessages } from './util/flatI18n'
+
+let locale =
+  (navigator.languages && navigator.languages[0]) ||
+  navigator.language ||
+  navigator.userLanguage ||
+  'en-US'
+
 function logPageView() {
   ReactGA.set({ page: window.location.pathname })
   ReactGA.pageview(window.location.pathname)
@@ -89,96 +104,95 @@ export var FIREBASE_TIMESTAMP = firebase.database.ServerValue.TIMESTAMP
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history} onUpdate={logPageView}>
-      <Route path="/" component={AppContainer}>
-        <IndexRoute component={HomeContainer} />
-        <Route
-          path="dashboard"
-          component={UserIsAuthenticated(DashboardContainer)}
-        />
-        <Route
-          path="gettingstarted"
-          component={UserIsNotAuthenticated(GettingStarted)}
-        />
-        <Route
-          path="guide"
-          component={UserIsAuthenticated(GettingStarted)}
-        />
-        <Route path="wrongnetwork" component={WrongNetwork} />
-        <Route path="admin" component={UserIsAuthenticated(Admin)} />
-        <Route
-          path="sellether"
-          component={UserIsAuthenticated(BuyTradeAdvertisements)}
-        />
-        <Route
-          path="buyether"
-          component={UserIsAuthenticated(SellTradeAdvertisements)}
-        />
-        <Route path="help" component={UserIsAuthenticated(Help)} />
-        <Route
-          path="help/confirmation"
-          component={UserIsAuthenticated(HelpConfirmation)}
-        />
-        <Route path="support" component={UserIsNotAuthenticated(Support)} />
-        <Route
-          path="posttrade"
-          component={UserIsAuthenticated(PostTradeForm)}
-        />
-        <Route
-          path="user/:userUid"
-          component={UserIsAuthenticated(UserScreen)}
-        />
-        <Route
-          path="browseuser/:userUid"
-          component={UserIsNotAuthenticated(UserScreen)}
-        />
-        <Route
-          path="selltradeadvertisement/:sellTradeAdvertisementId"
-          component={UserIsAuthenticated(SellTradeAdvertisement)}
-        />
-        <Route
-          path="buytradeadvertisement/:buyTradeAdvertisementId"
-          component={UserIsAuthenticated(BuyTradeAdvertisement)}
-        />
-        <Route
-          path="activetrade/:purchaseRequestId/:countryCode"
-          component={UserIsAuthenticated(ActiveTrade)}
-        />
-        <Route
-          path="edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId"
-          component={UserIsAuthenticated(EditTradeAdvertisement)}
-        />
+    <IntlProvider locale={locale} messages={flattenMessages(languages[locale])}>
+      <Router history={history} onUpdate={logPageView}>
+        <Route path="/" component={AppContainer}>
+          <IndexRoute component={HomeContainer} />
+          <Route
+            path="dashboard"
+            component={UserIsAuthenticated(DashboardContainer)}
+          />
+          <Route
+            path="gettingstarted"
+            component={UserIsNotAuthenticated(GettingStarted)}
+          />
+          <Route path="guide" component={UserIsAuthenticated(GettingStarted)} />
+          <Route path="wrongnetwork" component={WrongNetwork} />
+          <Route path="admin" component={UserIsAuthenticated(Admin)} />
+          <Route
+            path="sellether"
+            component={UserIsAuthenticated(BuyTradeAdvertisements)}
+          />
+          <Route
+            path="buyether"
+            component={UserIsAuthenticated(SellTradeAdvertisements)}
+          />
+          <Route path="help" component={UserIsAuthenticated(Help)} />
+          <Route
+            path="help/confirmation"
+            component={UserIsAuthenticated(HelpConfirmation)}
+          />
+          <Route path="support" component={UserIsNotAuthenticated(Support)} />
+          <Route
+            path="posttrade"
+            component={UserIsAuthenticated(PostTradeForm)}
+          />
+          <Route
+            path="user/:userUid"
+            component={UserIsAuthenticated(UserScreen)}
+          />
+          <Route
+            path="browseuser/:userUid"
+            component={UserIsNotAuthenticated(UserScreen)}
+          />
+          <Route
+            path="selltradeadvertisement/:sellTradeAdvertisementId"
+            component={UserIsAuthenticated(SellTradeAdvertisement)}
+          />
+          <Route
+            path="buytradeadvertisement/:buyTradeAdvertisementId"
+            component={UserIsAuthenticated(BuyTradeAdvertisement)}
+          />
+          <Route
+            path="activetrade/:purchaseRequestId/:countryCode"
+            component={UserIsAuthenticated(ActiveTrade)}
+          />
+          <Route
+            path="edittradeadvertisement/:tradeAdvertisementType/:tradeAdvertisementId"
+            component={UserIsAuthenticated(EditTradeAdvertisement)}
+          />
 
-        <Route path="kyc" component={UserIsAuthenticated(KycUpload)} />
-        <Route
-          path="processkyc/:country/:userUid"
-          component={UserIsAuthenticated(ProcessKyc)}
-        />
-        <Route
-          path="termsofservice"
-          component={UserIsNotAuthenticated(TermsOfService)}
-        />
-        <Route path="about" component={UserIsNotAuthenticated(About)} />
-        <Route
-          path="completedtrades"
-          component={UserIsAuthenticated(CompletedTradesAll)}
-        />
-        <Route
-          path="browseads"
-          component={UserIsNotAuthenticated(BrowseAdvertisements)}
-        />
-        <Route
-          path="browsebuyadvertisement/:buyTradeAdvertisementId"
-          component={UserIsNotAuthenticated(BrowseBuyAdvertisement)}
-        />
-        <Route
-          path="browseselladvertisement/:sellTradeAdvertisementId"
-          component={UserIsNotAuthenticated(BrowseSellAdvertisement)}
-        />
-        <Route path="html" component={HTMLStyles} />
-        <Route path="static" component={Static} />
-      </Route>
-    </Router>
+          <Route path="kyc" component={UserIsAuthenticated(KycUpload)} />
+          <Route
+            path="processkyc/:country/:userUid"
+            component={UserIsAuthenticated(ProcessKyc)}
+          />
+          <Route
+            path="termsofservice"
+            component={UserIsNotAuthenticated(TermsOfService)}
+          />
+          <Route path="about" component={UserIsNotAuthenticated(About)} />
+          <Route
+            path="completedtrades"
+            component={UserIsAuthenticated(CompletedTradesAll)}
+          />
+          <Route
+            path="browseads"
+            component={UserIsNotAuthenticated(BrowseAdvertisements)}
+          />
+          <Route
+            path="browsebuyadvertisement/:buyTradeAdvertisementId"
+            component={UserIsNotAuthenticated(BrowseBuyAdvertisement)}
+          />
+          <Route
+            path="browseselladvertisement/:sellTradeAdvertisementId"
+            component={UserIsNotAuthenticated(BrowseSellAdvertisement)}
+          />
+          <Route path="html" component={HTMLStyles} />
+          <Route path="static" component={Static} />
+        </Route>
+      </Router>
+    </IntlProvider>
   </Provider>,
   document.getElementById('root')
 )
