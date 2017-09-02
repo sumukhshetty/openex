@@ -8,7 +8,7 @@ import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
 // Layouts
 import AppContainer from './AppContainer'
 
-import HomeContainer from './layouts/home/HomeContainer'
+import HomeContainer from './homepage/container'
 import DashboardContainer from './layouts/dashboard/DashboardContainer'
 import WrongNetwork from './layouts/wrongnetwork/WrongNetwork'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'

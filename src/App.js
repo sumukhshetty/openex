@@ -189,7 +189,12 @@ class App extends Component {
       )
     })
 
-    const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />)
+    const OnlyGuestLinks = HiddenOnlyAuth(() =>
+      <div>
+        <Header />
+        <div className="h4 h3-l w-100" />
+      </div>
+    )
 
     const isMobile = window.innerWidth <= 800
     if (isMobile) {
@@ -197,9 +202,17 @@ class App extends Component {
         <div className="absolute absolute--fill gradient white">
           <div className="flex col x h-100">
             <AutoLogoLight />
-            <p className="w5">Hey guys, decentralized browsers haven't been developed for mobile phones as of yet.</p>
-            <p className="w5">To trade ether, please head to ezether.com through the desktop, and we will make sure you get your ether as soon as possible.</p>
-            <p className="w5">Sorry for the inconvenience, we hope to serve you today.</p>
+            <p className="w5">
+              Hey guys, decentralized browsers haven't been developed for mobile
+              phones as of yet.
+            </p>
+            <p className="w5">
+              To trade ether, please head to ezether.com through the desktop,
+              and we will make sure you get your ether as soon as possible.
+            </p>
+            <p className="w5">
+              Sorry for the inconvenience, we hope to serve you today.
+            </p>
           </div>
         </div>
       )

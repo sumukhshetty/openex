@@ -1,36 +1,56 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
-import logo from '../images/logo.svg';
-import ezetherlogowhite from './../images/ezether_logo.png'
+import React, { Component } from 'react'
+import { Link } from 'react-router'
+import logo from '../images/logo.svg'
+import ezetherlogowhite from './../images/ezetherLogo.png'
 import { browserHistory } from 'react-router'
 
-class HomeNav extends Component {
-  login () {
+export default class HomeNav extends Component {
+  login() {
     this.props.login(this.props.web3)
   }
 
-  render () {
+  render() {
     return (
-      <div className='container'>
-        <div className='pure-g'>
-          <div className='pure-u-1-4 brand'>
-              <img className='brand' src={ezetherlogowhite} alt='' />
-          </div>
-          <div className='pure-u-3-4 menu'>
-            <nav className='pure-menu pure-menu-horizontal'>
-              <ul className='pure-menu-list'>
-                <li className='pure-menu-item'><a onClick={()=>browserHistory.push('/')}>Home</a></li>
-                <li className='pure-menu-item'><a onClick={()=>browserHistory.push('/gettingstarted')}>Getting Started</a></li>
-                <li className='pure-menu-item'><a onClick={() => browserHistory.push('support')}>Support</a></li>
-
-                <li className='pure-menu-item' onClick={this.login.bind(this)}><a>Log in</a></li>
-              </ul>
-            </nav>
-          </div>
+      <nav className="db dt-l w-100 border-box pa3 ph5-l">
+        <a
+          className="db dtc-l v-mid white link dim w-100 w-25-l tc tl-l mb2 mb0-l"
+          href="#"
+          title="Home"
+        >
+          <img src={ezetherlogowhite} className="dib w5" alt="Ezether" />
+        </a>
+        <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
+          <a
+            className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
+            title="about us"
+            onClick={() => browserHistory.push('/about')}
+          >
+            about us
+          </a>
+          <a
+            className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
+            onClick={() => browserHistory.push('/gettingstarted')}
+            title="how this works"
+          >
+            how this works
+          </a>
+          <a
+            className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
+            onClick={() => browserHistory.push('support')}
+            title="support"
+          >
+            support
+          </a>
+          <a
+            className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
+            onClick={this.login.bind(this)}
+            title="login"
+          >
+            login
+          </a>
+          <button className="ba br3 b--white ttc mv3">sign up</button>
         </div>
-      </div>
-    );
+      </nav>
+    )
   }
 }
-
-export default HomeNav;
