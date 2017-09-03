@@ -22,15 +22,15 @@ export default class HomeNav extends Component {
         <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
           <a
             className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
-            title="about us"
+            title="About Us"
             onClick={() => browserHistory.push('/about')}
           >
             about us
           </a>
           <a
             className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
-            onClick={() => browserHistory.push('/gettingstarted')}
-            title="how this works"
+            onClick={() => browserHistory.push('/how')}
+            title="How This Works"
           >
             how this works
           </a>

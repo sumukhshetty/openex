@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import Footer from '../footer/Footer'
 import Testimonials from './Testimonials'
-// import Link from 'react-router'
 
 export default class Home extends Component {
   render() {
@@ -21,18 +19,18 @@ export default class Home extends Component {
               <button className="bg-white blue br3 ma3">How This Works</button>
             </div>
           </section>
-          <section className="tc pa4">
-            <p className="measure-narrow tc ma3 flarge">
+          <section className="pa4">
+            <p className="measure-narrow center ma3 flarge tc">
               Trade directly with other users, keeping your money safe in smart
               contracts.
             </p>
-            
+
             <iframe
               width="560"
               height="315"
               src="https://www.youtube.com/embed/W0qn3oPYo5c"
               frameborder="0"
-              className="ma3"
+              className="ma3 center"
             />
           </section>
           <section className="flex wrap col cxc bg-blue pa4">
@@ -69,7 +67,6 @@ export default class Home extends Component {
             <p>dApp Universe</p>
           </section>
           <Testimonials />
-          <Footer />
         </div>
       )
     }

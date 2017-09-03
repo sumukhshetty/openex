@@ -22,6 +22,7 @@ import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import EtherPriceContainer from './etherprice/EtherPriceContainer'
 import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
+import Footer from './footer/Footer'
 
 // Styles
 import './css/pure-min.css'
@@ -233,6 +234,7 @@ class App extends Component {
             >
               {this.props.children}
             </main>
+            <Footer />
           </section>
         )
       }

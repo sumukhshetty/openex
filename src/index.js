@@ -20,8 +20,9 @@ import Support from './support/layouts/Support'
 import HTMLStyles from './css/HTMLStyles.js'
 import Static from './staticPages/Master/Static'
 import UserScreen from './userScreen/layouts/UserScreen'
-import TermsOfService from './termsofservice/TermsOfService'
-import About from './about/About'
+import Terms from './pages/Terms'
+import About from './pages/About'
+import How from './pages/How'
 // import ResetPassword from './signup/ResetPassword'
 import Admin from './admin/layouts/Admin'
 
@@ -36,7 +37,6 @@ import BrowseBuyAdvertisement from './browsebuyadvertisement/layouts/BrowseBuyAd
 import BrowseSellAdvertisement from './browseselladvertisement/layouts/BrowseSellAdvertisement'
 
 import CompletedTradesAll from './completedtradesall/layouts/CompletedTradesAll'
-import GettingStarted from './gettingstarted/layouts/GettingStarted'
 import KycUpload from './kycupload/layouts/KycUpload'
 import ProcessKyc from './processkyc/layouts/ProcessKyc'
 import ActiveTrade from './activetrade/layouts/ActiveTrade'
@@ -112,11 +112,8 @@ ReactDOM.render(
             path="dashboard"
             component={UserIsAuthenticated(DashboardContainer)}
           />
-          <Route
-            path="gettingstarted"
-            component={UserIsNotAuthenticated(GettingStarted)}
-          />
-          <Route path="guide" component={UserIsAuthenticated(GettingStarted)} />
+          <Route path="how" component={UserIsNotAuthenticated(How)} />
+          <Route path="guide" component={UserIsAuthenticated(How)} />
           <Route path="wrongnetwork" component={WrongNetwork} />
           <Route path="admin" component={UserIsAuthenticated(Admin)} />
           <Route
@@ -167,11 +164,9 @@ ReactDOM.render(
             path="processkyc/:country/:userUid"
             component={UserIsAuthenticated(ProcessKyc)}
           />
-          <Route
-            path="termsofservice"
-            component={UserIsNotAuthenticated(TermsOfService)}
-          />
+          <Route path="terms" component={UserIsNotAuthenticated(Terms)} />
           <Route path="about" component={UserIsNotAuthenticated(About)} />
+          <Route path="how" component={UserIsNotAuthenticated(How)} />
           <Route
             path="completedtrades"
             component={UserIsAuthenticated(CompletedTradesAll)}

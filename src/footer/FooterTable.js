@@ -6,7 +6,6 @@ class FooterTable extends Component {
     return (
       <div className="w-50">
         <div className="pure-u-1-3">
-          {/* About us */}
           <nav className="pure-menu">
             <ul className="pure-menu-list">
               <li>
@@ -25,13 +24,10 @@ class FooterTable extends Component {
                   Who Are We
                 </a>
               </li>
-              {/*<li className='pure-menu-item'><a href='#'>Media Coverage</a></li>
-              <li className='pure-menu-item'><a href='#'>Jobs</a></li>*/}
             </ul>
           </nav>
         </div>
         <div className="pure-u-1-3">
-          {/* Support */}
           <nav className="pure-menu">
             <ul className="pure-menu-list">
               <li>
@@ -48,8 +44,8 @@ class FooterTable extends Component {
               </li>
               <li className="pure-menu-item">
                 <a
-                  onClick={() => browserHistory.push('termsofservice')}
-                  className="white"
+                  onClick={() => browserHistory.push('/terms')}
+                  className="white pointer"
                 >
                   Privacy &amp; Terms
                 </a>
@@ -66,14 +62,12 @@ class FooterTable extends Component {
           </nav>
         </div>
         <div className="pure-u-1-3">
-          {/* Community */}
           <nav className="pure-menu">
             <ul className="pure-menu-list">
               <li>
                 <h3 className="white">Community</h3>
               </li>
-              {/*<li className='pure-menu-item'><a href='#'>Reddit</a></li>*/}
-              {/*<li className='pure-menu-item'><a href='#'>Forum</a></li>*/}
+
               <li className="pure-menu-item">
                 <a
                   target="_blank"
@@ -82,6 +76,8 @@ class FooterTable extends Component {
                 >
                   Slack
                 </a>
+              </li>
+              <li className="pure-menu-item">
                 <a
                   target="_blank"
                   href="https://automte.herokuapp.com/"
@@ -89,6 +85,8 @@ class FooterTable extends Component {
                 >
                   Facebook
                 </a>
+              </li>
+              <li className="pure-menu-item">
                 <a
                   target="_blank"
                   href="https://automte.herokuapp.com/"
