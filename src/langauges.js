@@ -1,8 +1,5 @@
 export default {
   'en-US': {
-    signup: {
-      primary: 'Sign Up'
-    },
     about: {
       header: `We're a diverse and passionate bunch`,
 
@@ -66,18 +63,15 @@ export default {
       section3: `Taxes`,
       section3P1: `It is your responsibility to determine, collect, report, and submit any taxes applicable to the payments you make or receive in connection with the use of the Website and the Service to the appropriate tax authority. EZ Ether is not responsible for determining whether taxes apply to your transaction, or for collecting, reporting or remitting any taxes arising from any transaction.`,
       section4: `Identity Verification`,
-      section4P1: `To comply with AML/KYC recommendations, we require our clients to verify their identity by providing scanned copies* of the following**: 1. PAN card (mandatory), 2. Photo identity (which could be avalid passport, Aadhaar card, driving license, Voter id), 3. Passport sized photo (not older than 6 months) (mandatory), and *Copies should be in color and a good resolution. ** The above documents provided by the clients shall be kept on the server safely and the Company shall not disclose the same to any third party unless we are mandated to do so under the provisions of any applicable laws. EZ Ether may use your personal information: 4. To identify you 5. To process transactions, 6. To send periodic emails with updates, promotions, company news, and notices regarding changes to policies, 7. Customize, measure, and improve EZ Ether Service and the content and layout of our Website and applications, 8. To analyze use of the Website, 9. Prevent potentially prohibited or illegal activities, and 10. To undertake a verification of your identity with third party electronic identification providers. Notwithstanding anything contained in these terms of use, the Company shall be free to transfer/ disclose any information shared by you with the Company, to a related party or to an affiliate or to any entity controlled by the promoters of EZ Ether. We may also transfer your information during sale of assets or business to another company, de-merger into another company, while getting acquired by another company or getting merged with another company.
-
-By opening an account to use the Service (“Account”), you expressly represent and warrant that:
-
-11. You have accepted these Terms of Use;
-12. You do have read and understood the information provided by the Website through its How-it-works and Resources section; and
-13. You are at least 18 years of age and have the full capacity to accept these Terms of Use and enter into a transaction involving Ethers. Risks The use of the Website and the Service may entail the following risks:
-14. Ether transactions are irreversible. The Ethers you buy will be sent to the Ether address provided. If you lose or delete your own Ether wallet, you will lose your Ethers in it and the same cannot be restored.
-15. Ether value tends to fluctuate on a minute to minute basis, due to which there may be increase or decrease in the value of the Ethers. Ethers are subject to large swings in value and may even become worthless. There is an inherent risk that losses will occur as a result of buying, selling or trading in Ethers.
-16. Ether is an as-yet autonomous and largely unregulated worldwide system of value transfer between individuals. It is not backed by any government or commodities and hence may be susceptible to risks not generally associated with government or central bank backed currencies.
-17. There is also the risk of loss of confidence in Ether trading, which could collapse demand relative to supply. For example, confidence might collapse in Ether because of unexpected changes imposed by the software developers, the creation of superior competing alternatives, a deflationary or inflationary spiral, or due to governmental actions. Confidence might also collapse because of technical problems, for instance, if the anonymity of the system is compromised, or if any entity is able to prevent any transactions from settling.
-18. There may be additional risks that we have not foreseen or identified in these Terms of Use.`,
+      section4P1: `To comply with AML/KYC recommendations, we require our clients to verify their identity by providing scanned copies* of the following**: 1. PAN card (mandatory), 2. Photo identity (which could be avalid passport, Aadhaar card, driving license, Voter id), 3. Passport sized photo (not older than 6 months) (mandatory), and *Copies should be in color and a good resolution. ** The above documents provided by the clients shall be kept on the server safely and the Company shall not disclose the same to any third party unless we are mandated to do so under the provisions of any applicable laws. EZ Ether may use your personal information: 4. To identify you 5. To process transactions, 6. To send periodic emails with updates, promotions, company news, and notices regarding changes to policies, 7. Customize, measure, and improve EZ Ether Service and the content and layout of our Website and applications, 8. To analyze use of the Website, 9. Prevent potentially prohibited or illegal activities, and 10. To undertake a verification of your identity with third party electronic identification providers. Notwithstanding anything contained in these terms of use, the Company shall be free to transfer/ disclose any information shared by you with the Company, to a related party or to an affiliate or to any entity controlled by the promoters of EZ Ether. We may also transfer your information during sale of assets or business to another company, de-merger into another company, while getting acquired by another company or getting merged with another company.By opening an account to use the Service (“Account”), you expressly represent and warrant that:
+      11. You have accepted these Terms of Use;
+      12. You do have read and understood the information provided by the Website through its How-it-works and Resources section; and
+      13. You are at least 18 years of age and have the full capacity to accept these Terms of Use and enter into a transaction involving Ethers. Risks The use of the Website and the Service may entail the following risks:
+      14. Ether transactions are irreversible. The Ethers you buy will be sent to the Ether address provided. If you lose or delete your own Ether wallet, you will lose your Ethers in it and the same cannot be restored.
+      15. Ether value tends to fluctuate on a minute to minute basis, due to which there may be increase or decrease in the value of the Ethers. Ethers are subject to large swings in value and may even become worthless. There is an inherent risk that losses will occur as a result of buying, selling or trading in Ethers.
+      16. Ether is an as-yet autonomous and largely unregulated worldwide system of value transfer between individuals. It is not backed by any government or commodities and hence may be susceptible to risks not generally associated with government or central bank backed currencies.
+      17. There is also the risk of loss of confidence in Ether trading, which could collapse demand relative to supply. For example, confidence might collapse in Ether because of unexpected changes imposed by the software developers, the creation of superior competing alternatives, a deflationary or inflationary spiral, or due to governmental actions. Confidence might also collapse because of technical problems, for instance, if the anonymity of the system is compromised, or if any entity is able to prevent any transactions from settling.
+      18. There may be additional risks that we have not foreseen or identified in these Terms of Use.`,
       section5: `Limited Rights of Use`,
       section5P1: `Unless otherwise specified, all Materials on this Website are the property of the Company and are protected by copyright, trademark, and other applicable laws. You may view, print, and/or download a copy of such Materials on any single computer solely for your personal, informational, non-commercial use, provided you keep intact all copyright and other proprietary notices.
 `,
@@ -125,6 +119,22 @@ By opening an account to use the Service (“Account”), you expressly represen
       section5P2: `Support members are randomly selected decreasing the probability of collusion. The support team has nothing to gain as the funds can be released only to the buyer or seller`,
       section5T3: `Thats awesome, How do I get started ?`,
       section5P3: `Easiest way to get started is by installing a chrome plugin called MetaMask on Chrome or Firefox. Use dApps like ours to trade and then transfer all your funds to hardware or paper wallets to keep it more secure.`
+    },
+    support: {
+      header: `Having problems? We’ll sort you out.`,
+      byline: `Please browse through our documentation, and you may well find the answer to your problem here.`,
+      docHeader0: `Security`,
+      docBody0: `If you have any concerns about the safety of your money or your ether, we explain best practices and why our system is secure.`,
+      docHeader1: `User Guide`,
+      docBody1: `Step by step instructions for all the actions required on the site.`,
+      docHeader2: `Glossary`,
+      docBody2: `Confused by the terminology? Here we convert the crypto-speak into simple everyday terms so that you don’t feel left out.`,
+      docHeader3: `FAQs`,
+      docBody3: `IWhat is ether useful for? How much gas should I pay for a transaction?? This, and many more frequently asked questions answered here`,
+      legend: `Still got a query? Reach out anytime and we’re happy to answer
+      your questions.`,
+      returnEmail: `Return Email`,
+      messageLabel: `Message`
     }
   }
 }

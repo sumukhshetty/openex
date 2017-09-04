@@ -61,11 +61,12 @@ import fr from 'react-intl/locale-data/fr'
 addLocaleData([...en, ...es, ...fr])
 import { flattenMessages } from './util/flatI18n'
 
-let locale =
-  (navigator.languages && navigator.languages[0]) ||
-  navigator.language ||
-  navigator.userLanguage ||
-  'en-US'
+let locale = 'en-US'
+// if we want to automatically set language based on browser preferences replace the line above with...
+// (navigator.languages && navigator.languages[0]) ||
+// navigator.language ||
+// navigator.userLanguage ||
+// 'en-US'
 
 function logPageView() {
   ReactGA.set({ page: window.location.pathname })

@@ -43,6 +43,10 @@
   border-color: #4c92c2;
 }
 
+.b---gray {
+  border-color: #ccc !important;
+}
+
 .bl--gray {
   border-left-color: #ccc !important;
 }
