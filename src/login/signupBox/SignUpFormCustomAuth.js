@@ -46,12 +46,11 @@ class SignUpFormCustomAuth extends Component {
     }
     return (
       <form
-        action="#"
-        className="pv3 w-auto"
+        className="pa3 bg-light-gray"
         onSubmit={this.handleSubmit.bind(this)}
       >
         <input
-          className="mv1"
+          className="mv1 w-100 br3 b---gray"
           id="email"
           name="email"
           type="email"
@@ -60,7 +59,7 @@ class SignUpFormCustomAuth extends Component {
           required
         />
         <input
-          className="mv1 br3 pa2 b---gray"
+          className="mv1 w-100 br3 b---gray"
           id="username"
           name="username"
           type="text"
@@ -69,7 +68,7 @@ class SignUpFormCustomAuth extends Component {
           required
         />
         <select
-          className="mv1"
+          className="mv1 pv1 mb2 w-100 br3 b---gray"
           name="country"
           id="country"
           onChange={this.onInputChange.bind(this)}
@@ -331,11 +330,18 @@ class SignUpFormCustomAuth extends Component {
           <option value="ZW">Zimbabwe</option>
           <option value="AX">Åland Islands</option>
         </select>
-        <div style={{ color: 'red' }}>
-          {error_message}
+        <div className="flex mxe">
+          {error_message
+            ? <div style={{ color: 'red' }} className="mv2">
+                {error_message}
+              </div>
+            : <a href="" className="mv2 link ftiny">
+                Terms & Conditions
+              </a>}
         </div>
-        <button type="submit" className="mb3">
-          Sign Up &rarr;
+
+        <button type="submit" className="w-100 br3 b---gray mb2">
+          LOGIN
         </button>
       </form>
     )

@@ -135,6 +135,13 @@ export default {
       your questions.`,
       returnEmail: `Return Email`,
       messageLabel: `Message`
+    },
+    login: {
+      header: `Welcome Back.`,
+      P1: `By using the metamask wallet, EZEther’s system ensures that you have control over your funds.`,
+      P2: `Please backup your private keys and wallet seed. We won’t be able to access your wallet if you forget your password.`,
+      P3: `If you’re new here, check out step-by-step instructions on the Signup page.`,
+      P4: `If you’re feeling lost, please go though our Support documentation.`
     }
   }
 }

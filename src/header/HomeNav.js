@@ -36,19 +36,31 @@ export default class HomeNav extends Component {
           </a>
           <a
             className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
-            onClick={() => browserHistory.push('support')}
+            onClick={() => browserHistory.push('/support')}
             title="support"
           >
             support
           </a>
           <a
             className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
-            onClick={this.login.bind(this)}
-            title="login"
+            onClick={() => browserHistory.push('/login')}
+            title="support"
           >
             login
           </a>
-          <button className="ba br3 b--white ttc mv3">sign up</button>
+          {/* <a
+            className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
+            onClick={this.login.bind(this)}
+            title="login"
+            >
+            login
+          </a> */}
+          <button
+            className="ba br3 b--white ttc mv3"
+            onClick={() => browserHistory.push('/signup')}
+          >
+            sign up
+          </button>
         </div>
       </nav>
     )

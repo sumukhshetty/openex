@@ -9,6 +9,17 @@
   height: 1px;
 }
 
+.absolute--fill {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.min-h-5 {
+  min-height: 16rem;
+}
+
 .w-50i {
   width: 50% !important;
 }

@@ -23,6 +23,8 @@ import UserScreen from './userScreen/layouts/UserScreen'
 import Terms from './pages/Terms'
 import About from './pages/About'
 import How from './pages/How'
+import Login from './login'
+import Signup from './signupPage'
 // import ResetPassword from './signup/ResetPassword'
 import Admin from './admin/layouts/Admin'
 
@@ -116,6 +118,11 @@ ReactDOM.render(
           <Route path="how" component={UserIsNotAuthenticated(How)} />
           <Route path="guide" component={UserIsAuthenticated(How)} />
           <Route path="wrongnetwork" component={WrongNetwork} />
+          <Route path="login" component={UserIsNotAuthenticated(Login)} />
+          <Route path="signup" component={UserIsNotAuthenticated(Signup)} />
+          <Route path="terms" component={UserIsNotAuthenticated(Terms)} />
+          <Route path="about" component={UserIsNotAuthenticated(About)} />
+          <Route path="how" component={UserIsNotAuthenticated(How)} />
           <Route path="admin" component={UserIsAuthenticated(Admin)} />
           <Route
             path="sellether"
@@ -165,9 +172,7 @@ ReactDOM.render(
             path="processkyc/:country/:userUid"
             component={UserIsAuthenticated(ProcessKyc)}
           />
-          <Route path="terms" component={UserIsNotAuthenticated(Terms)} />
-          <Route path="about" component={UserIsNotAuthenticated(About)} />
-          <Route path="how" component={UserIsNotAuthenticated(How)} />
+
           <Route
             path="completedtrades"
             component={UserIsAuthenticated(CompletedTradesAll)}
