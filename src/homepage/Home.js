@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Testimonials from './Testimonials'
+import Testimonials from '../testimonials/Testimonials'
+import { FormattedMessage } from 'react-intl'
 
 export default class Home extends Component {
   render() {

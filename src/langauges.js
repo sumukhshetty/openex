@@ -142,6 +142,15 @@ export default {
       P2: `Please backup your private keys and wallet seed. We won’t be able to access your wallet if you forget your password.`,
       P3: `If you’re new here, check out step-by-step instructions on the Signup page.`,
       P4: `If you’re feeling lost, please go though our Support documentation.`
+    },
+    testimonials: {
+      title: `What our users say about us`,
+      home1copy: `I’ve been trading in cryptocurrencies since 2012, and always had to transfer my funds to a local wallet.I like having funds close at hand, on my browser, where I spend most of my day.`,
+      home1name: `DHIREN`,
+      home1title: `Day Trader`,
+      home2copy: `As someone who earns his money in cash, this service helps me keep my funds safe and accessible from anywhere.`,
+      home2name: `ARPAN`,
+      home2title: `Programmer & Digital Nomad`
     }
   }
 }

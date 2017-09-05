@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
-import UseSupportedBrowser from './unsupportedbrowser/UnsupportedBrowser'
 
 import Web3 from 'web3'
 import truffleConfig from './../truffle-config.js'
@@ -225,6 +224,25 @@ class App extends Component {
         const unsupportedBrowser =
           !/chrome/i.test(navigator.userAgent) &&
           !/firefox/i.test(navigator.userAgent)
+
+        const UseSupportedBrowser = (
+          <div className="absolute bg-danger w-100 z-1 flex mxa cxc mt3">
+            <p className="white tc ph3">
+              Transactions are only supported on Chrome & Firefox at the moment.
+            </p>
+            <div>
+              <button className="white ba br3 b--white ttc mv3 bg-danger bg-white-hover danger-hover">
+                Use Firefox
+              </button>
+            </div>
+
+            <div>
+              <button className="white ba br3 b--white ttc mv3 bg-danger bg-white-hover danger-hover">
+                Use Chrome
+              </button>
+            </div>
+          </div>
+        )
         return (
           <section className="Site">
             <Toast />
