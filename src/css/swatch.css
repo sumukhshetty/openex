@@ -59,6 +59,10 @@
   background-color: #fff;
 }
 
+.bg-white-hover:hover {
+  background-color: #fff !important;
+}
+
 .white {
   color: #fff;
 }
@@ -92,6 +96,10 @@
 }
 
 .danger {
+  color: #d0011b;
+}
+
+.danger-hover:hover {
   color: #d0011b;
 }
 

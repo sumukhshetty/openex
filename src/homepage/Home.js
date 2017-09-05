@@ -9,7 +9,9 @@ export default class Home extends Component {
       return (
         <div>
           <section className="tc gradient pa4">
-            <p className="fhuge white">Decentralized Ethereum Marketplace</p>
+            <p className="fhuge white pt5">
+              Decentralized Ethereum Marketplace
+            </p>
             <p className="flarge white">
               A cutting edge platform that combines security and ease of use
             </p>

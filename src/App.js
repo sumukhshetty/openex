@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
+import UseSupportedBrowser from './unsupportedbrowser/UnsupportedBrowser'
 
 import Web3 from 'web3'
 import truffleConfig from './../truffle-config.js'
@@ -221,12 +222,16 @@ class App extends Component {
       if (this.props.loadinguserdata.data) {
         return <LoadingUserData />
       } else {
+        const unsupportedBrowser =
+          !/chrome/i.test(navigator.userAgent) &&
+          !/firefox/i.test(navigator.userAgent)
         return (
           <section className="Site">
             <Toast />
             {/*<EtherPriceContainer />*/}
             <OnlyGuestLinks />
             <OnlyAuthLinks />
+            {unsupportedBrowser && <UseSupportedBrowser />}
             {/*<UserPresenceContainer />*/}
             <main
               role="main"
