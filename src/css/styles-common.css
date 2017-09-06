@@ -692,4 +692,6 @@ Contains styles for all buttons, please delete whichever buttos we dont use in t
 .unlock-gif {
   max-height:100%;
   max-width:100%;
+  border: 1px solid gray;
+  border-radius: 6px;
 }
