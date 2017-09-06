@@ -688,3 +688,8 @@ Contains styles for all buttons, please delete whichever buttos we dont use in t
   background-color: #c23321;
   border-color: #c23321;
 }
+
+.unlock-gif {
+  max-height:100%;
+  max-width:100%;
+}
