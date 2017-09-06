@@ -4,16 +4,11 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
-
-// Layouts
 import AppContainer from './AppContainer'
-
 import HomeContainer from './homepage/container'
 import DashboardContainer from './layouts/dashboard/DashboardContainer'
 import WrongNetwork from './layouts/wrongnetwork/WrongNetwork'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'
-// import Login from './user/layouts/login/Login'
-
 import Help from './help/layouts/Help'
 import HelpConfirmation from './help/layouts/HelpConfirmation'
 import Support from './support/layouts/Support'
@@ -23,9 +18,8 @@ import UserScreen from './userScreen/layouts/UserScreen'
 import Terms from './pages/Terms'
 import About from './pages/About'
 import How from './pages/How'
-import Login from './login'
+import Login from './auth/Login'
 import Signup from './signupPage'
-// import ResetPassword from './signup/ResetPassword'
 import Admin from './admin/layouts/Admin'
 
 import BuyTradeAdvertisement from './buytradeadvertisement/layouts/BuyTradeAdvertisement'
