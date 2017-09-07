@@ -15,7 +15,7 @@ export default class About extends Component {
       'abhishek'
     ]
     const teamBios = team.map((person, index) =>
-      <div key={index} className="pa3 w-25">
+      <div key={index} className="pa3 w-25-l w-50">
         <div className="w-100 tc">
           <img src={face} />
         </div>
@@ -47,18 +47,18 @@ export default class About extends Component {
         <div className="w-100 bg-white pa3">
           <div className="w-75 center flex mxb">
             <div className="w-25">
-              {Array(5).fill(null).map((value, index) =>
+              {/* {Array(5).fill(null).map((value, index) =>
                 <div>
                   <p className="tc pa3 ttu">
-                    <FormattedMessage id={`about.section${index + 1}`} />
+                <FormattedMessage id={`about.section${index + 1}`} />
                   </p>
                   {index !== 4 &&
-                    <div className="flex h3">
-                      <div className="w-50" />
-                      <div className="w-50 bl b--black" />
-                    </div>}
+                <div className="flex h3">
+                <div className="w-50" />
+                <div className="w-50 bl b--black" />
+                </div>}
                 </div>
-              )}
+              )} */}
             </div>
             <div className="w-75 pl4">
               <h2>

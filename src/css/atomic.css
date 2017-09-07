@@ -16,6 +16,14 @@
   left: 0;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
 .min-h-5 {
   min-height: 16rem;
 }
@@ -1605,10 +1613,17 @@
     width: 25%;
   }
 
+  .w-50-l {
+    width: 50%;
+  }
+
   .w-75-l {
     width: 75%;
   }
 
+  .w-100-l {
+    width: 100%;
+  }
   .ph5-l {
     padding-left: 4rem;
     padding-right: 4rem;

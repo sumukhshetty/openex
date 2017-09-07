@@ -8,7 +8,7 @@ export default () =>
       <FormattedMessage id="testimonials.title" />
     </h2>
     <div className="flex wrap mxc">
-      <div className="w-50 flex col mxs tl pa3">
+      <div className="w-50-l w-100 flex col mxs tl pa3">
         <div className="flex cxs h4">
           <p className="fhuge flex cxs mv0">"</p>
           <p className="mv3">
@@ -32,7 +32,7 @@ export default () =>
           </div>
         </div>
       </div>
-      <div className="w-50 flex col mxs tl pa3">
+      <div className="w-50-l w-100 flex col mxs tl pa3">
         <div className="flex cxs h4">
           <p className="fhuge flex cxs mv0">"</p>
           <p className="mv3">

@@ -1,15 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SignUpContainer from './signupBox/SignUpContainer'
 import { FormattedMessage } from 'react-intl'
 import metamask from '../images/metamask_1.png'
+import { connect } from 'react-redux'
+import { signUpUser, signUpUserCustomAuth } from './authBox/SignUpFormActions'
+import AuthBox from './authBox/AuthBox'
+import ResponsiveEmbed from 'react-responsive-embed'
 
-const Login = ({ loadinguserdata, web3, presence }) =>
+const Signup = ({
+  loadinguserdata,
+  web3,
+  presence,
+  user,
+  country,
+  onSignUpFormCustomAuthSubmit,
+  onSignUpFormSubmit
+}) =>
   <div>
     <div className="w-100 bg-smoke pa3">
       <div className="w-75 center flex wrap pv4">
         <div className="w-50 pt3">
-          <SignUpContainer web3={web3.data} />
+          <section className="h-auto min-h-5">
+            {web3.data.eth.accounts[0]
+              ? <div className="w5 center bg-white shadow-1">
+                  <div className="bg-gray tc ba pv1">
+                    <p className="ftiny">Address</p>
+                    <p className="ftiny">
+                      {web3.data.eth.accounts[0]}
+                    </p>
+                  </div>
+                  <div className="signup-form">
+                    <AuthBox />
+                  </div>
+                </div>
+              : <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
+                  <p>Seems like you’re new here.</p>
+                  <p>
+                    Please <a href="https://metamask.io/">install metamask</a>
+                    and proceed to Sign Up.
+                  </p>
+                </div>}
+          </section>
         </div>
         <div className="w-50 pa3">
           <div className="pl3">
@@ -33,20 +64,13 @@ const Login = ({ loadinguserdata, web3, presence }) =>
       </div>
     </div>
     <div className="w-100 bg-white pa3">
-      <div className="w-75 center flex wrap pv4">
-        <section className="pa4">
-          <p className="measure-narrow center ma3 flarge tc">
-            Signing Up is Easy
-          </p>
-
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/W0qn3oPYo5c"
-            frameborder="0"
-            className="ma3 center"
-          />
-        </section>
+      <div className="flex col pv4">
+        <p className="measure-narrow center ma3 flarge tc ">
+          Signing Up is Easy
+        </p>
+        <div className="tc center ma3 w-50-l w-100">
+          <ResponsiveEmbed src="https://www.youtube.com/embed/W0qn3oPYo5c" />
+        </div>
       </div>
     </div>
     <div className="w-100 bg-smoke pa3">
@@ -138,11 +162,19 @@ const Login = ({ loadinguserdata, web3, presence }) =>
     </div>
   </div>
 
-Login.propTypes = {
-  loadinguserdata: PropTypes.array.isRequired,
-  web3: PropTypes.array.isRequired,
-  presence: PropTypes.array.isRequired
-}
-Login.defaultProps = {}
+// Login.propTypes = {
+//   loadinguserdata: PropTypes.array.isRequired,
+//   web3: PropTypes.array.isRequired,
+//   presence: PropTypes.array.isRequired
+// }
+// Login.defaultProps = {}
 
-export default Login
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loadinguserdata: state.loadinguserdata,
+    web3: state.web3,
+    presence: state.presence
+  }
+}
+
+export default connect(mapStateToProps)(Signup)

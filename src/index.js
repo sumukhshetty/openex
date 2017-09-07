@@ -19,7 +19,7 @@ import Terms from './pages/Terms'
 import About from './pages/About'
 import How from './pages/How'
 import Login from './auth/Login'
-import Signup from './signupPage'
+import Signup from './auth/Signup'
 import Admin from './admin/layouts/Admin'
 
 import BuyTradeAdvertisement from './buytradeadvertisement/layouts/BuyTradeAdvertisement'

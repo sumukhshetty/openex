@@ -8,10 +8,7 @@ const routingMiddleware = routerMiddleware(browserHistory)
 
 const store = createStore(
   reducer,
-  applyMiddleware(
-    thunkMiddleware,
-    routingMiddleware
-  )
+  applyMiddleware(thunkMiddleware, routingMiddleware)
 )
 
 export default store

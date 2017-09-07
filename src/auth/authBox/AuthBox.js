@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { FormattedMessage } from 'react-intl'
+// import { FormattedMessage } from 'react-intl'
+import { connect } from 'react-redux'
+import { signUpUser, signUpUserCustomAuth } from './SignUpFormActions'
 
 class SignUpFormCustomAuth extends Component {
   constructor(props) {
@@ -341,11 +343,34 @@ class SignUpFormCustomAuth extends Component {
         </div>
 
         <button type="submit" className="w-100 br3 b---gray mb2">
-          LOGIN
+          Sign Up
         </button>
       </form>
     )
   }
 }
 
-export default SignUpFormCustomAuth
+const mapStateToProps = (state, ownProps) => {
+  return {
+    web3: state.web3,
+    user: state.user,
+    country: state.country
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSignUpFormSubmit: (signUpInfo, web3) => {
+      event.preventDefault()
+      dispatch(signUpUser(signUpInfo, web3))
+    },
+    onSignUpFormCustomAuthSubmit: (signUpInfo, web3, country) => {
+      event.preventDefault()
+      dispatch(signUpUserCustomAuth(signUpInfo, web3, country))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  SignUpFormCustomAuth
+)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import Testimonials from '../testimonials/Testimonials'
+import Testimonials from '../testimonials/Homepage'
 import { FormattedMessage } from 'react-intl'
+import ResponsiveEmbed from 'react-responsive-embed'
 
 export default class Home extends Component {
   render() {
@@ -27,14 +28,9 @@ export default class Home extends Component {
               Trade directly with other users, keeping your money safe in smart
               contracts.
             </p>
-
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/W0qn3oPYo5c"
-              frameborder="0"
-              className="ma3 center"
-            />
+            <div className="tc center ma3 w-50-l w-100">
+              <ResponsiveEmbed src="https://www.youtube.com/embed/W0qn3oPYo5c" />
+            </div>
           </section>
           <section className="flex wrap col cxc bg-blue pa4">
             <div className="flex mxc wrap">

@@ -197,8 +197,7 @@ class App extends Component {
       </div>
     )
 
-    const isMobile = window.innerWidth <= 800
-    if (isMobile) {
+    const noMobileWhenLoggedIn = VisibleOnlyAuth(() => {
       return (
         <div className="absolute absolute--fill gradient white">
           <div className="flex col x h-100">
@@ -217,6 +216,11 @@ class App extends Component {
           </div>
         </div>
       )
+    })
+
+    const isMobile = window.innerWidth <= 800
+    if (isMobile) {
+      return <noMobileWhenLoggedIn />
     } else {
       if (this.props.loadinguserdata.data) {
         return <LoadingUserData />

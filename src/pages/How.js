@@ -98,7 +98,7 @@ export default class How extends Component {
                 <p>
                   <FormattedMessage id="how.section3T2" />
                 </p>
-                <div className="flex wrap w-100 mxa h5 cxc">
+                <div className="flex wrap w-100 mxa h-auto cxc">
                   <figure className="tc">
                     <img src={face} alt="Sumukh" />
                     <figcaption>

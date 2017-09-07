@@ -1,7 +1,7 @@
 import React from 'react'
 import { mountWithIntl, shallowWithIntl } from '../../util/i18n-enzyme'
 import toJson from 'enzyme-to-json'
-import Testimonials from '../Testimonials'
+import Testimonials from '../Homepage'
 
 let wrapper = null
 

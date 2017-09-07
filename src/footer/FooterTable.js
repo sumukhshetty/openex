@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router'
 class FooterTable extends Component {
   render() {
     return (
-      <div className="w-50">
+      <div className="w-50-l w-100 flex wrap">
         <div className="pure-u-1-3">
           <nav className="pure-menu">
             <ul className="pure-menu-list">
