@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import WalletComponent from './../wallet/WalletComponent'
 import SignUpFormContainer from './../user/ui/signupform/SignUpFormContainer'
 import Help from './Help'
+import unlock from '../images/unlock.gif'
 
 class SignUpContainer extends Component {
   render() {
@@ -10,7 +11,7 @@ class SignUpContainer extends Component {
         <section>
           <h3>Your Address</h3>
         </section>
-    {this.props.web3.eth.accounts[0] ? 
+    {this.props.web3.eth.accounts[0] ?
       <div>
         <section className="metamask">
           <WalletComponent web3={this.props.web3}/>
@@ -20,10 +21,11 @@ class SignUpContainer extends Component {
           <SignUpFormContainer/>
         </section>
         </div>
-      : 
+      :
       <section>
       <div>Unlock MetaMask and refresh your browser to signup </div>
-      </section> 
+      <img src={unlock} alt='' className='unlock-gif' />
+      </section>
     }
 
 
