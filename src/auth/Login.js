@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { loginUser } from './authBox/LoginFormActions'
 import * as actions from '../header/HomeNavActions'
+import { browserHistory } from 'react-router'
 
 const Login = ({ loadinguserdata, web3, presence, user, login }) =>
   <div className="w-100 bg-smoke pa3">
@@ -13,7 +14,9 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
           {web3.data.eth.accounts[0]
             ? <div className="w5 center bg-white shadow-1">
                 <div className="bg-gray tc ba pv1">
-                  <p className="ftiny">Address</p>
+                  <p className="ftiny">
+                    <FormattedMessage id="login.authBoxAddress" />
+                  </p>
                   <p className="ftiny">
                     {web3.data.eth.accounts[0]}
                   </p>
@@ -24,15 +27,25 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
                     className="pure-button pure-button-primary"
                     onClick={() => login(web3)}
                   >
-                    Login
+                    <FormattedMessage id="login.loginButton" />
                   </button>
                 </div>
               </div>
             : <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
-                <p>Seems like you’re new here.</p>
                 <p>
-                  Please <a href="https://metamask.io/">install metamask</a> and
-                  proceed to Sign Up.
+                  <FormattedMessage id="login.authBoxNoEntryP1" />
+                </p>
+                <p>
+                  <FormattedMessage
+                    id="login.authBoxNoEntryP2"
+                    values={{
+                      metamaskLink: (
+                        <a href="https://metamask.io/" target="_blank">
+                          install metamask
+                        </a>
+                      )
+                    }}
+                  />
                 </p>
               </div>}
         </section>
@@ -53,10 +66,31 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
     </div>
     <div className="w-75 center">
       <p>
-        <FormattedMessage id="login.P3" />
+        <FormattedMessage
+          id="login.P3"
+          values={{
+            signupLink: (
+              <a onClick={() => browserHistory.push('/signup')} target="_blank">
+                Signup Page
+              </a>
+            )
+          }}
+        />
       </p>
       <p>
-        <FormattedMessage id="login.P4" />
+        <FormattedMessage
+          id="login.P4"
+          values={{
+            supportLink: (
+              <a
+                onClick={() => browserHistory.push('/support')}
+                target="_blank"
+              >
+                Support
+              </a>
+            )
+          }}
+        />
       </p>
     </div>
   </div>

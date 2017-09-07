@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import face from '../images/face1.png'
 import ethChart from '../images/ethChart.png'
+import sumukh from '../images/team/sumukh.png'
+import qj from '../images/team/qj.png'
+import zakhil from '../images/team/zakhil.png'
+import arseniy from '../images/team/arseniy.png'
+import josh from '../images/team/josh.png'
 
 export default class About extends Component {
   render() {
@@ -14,22 +19,25 @@ export default class About extends Component {
       'josh',
       'abhishek'
     ]
-    const teamBios = team.map((person, index) =>
-      <div key={index} className="pa3 w-25-l w-50">
-        <div className="w-100 tc">
-          <img src={face} />
+
+    const teamBios = team.map((person, index) => {
+      return (
+        <div key={index} className="pa3 w-25-l w-50">
+          <div className="w-100 tc">
+            <img src={face} alt={person} />
+          </div>
+          <p className="tc b ttu">
+            <FormattedMessage id={`about.${person}Name`} />
+          </p>
+          <p className="tc ttu">
+            <FormattedMessage id={`about.${person}Title`} />
+          </p>
+          <p>
+            <FormattedMessage id={`about.${person}Bio`} />
+          </p>
         </div>
-        <p className="tc b ttu">
-          <FormattedMessage id={`about.${person}Name`} />
-        </p>
-        <p className="tc ttu">
-          <FormattedMessage id={`about.${person}Title`} />
-        </p>
-        <p>
-          <FormattedMessage id={`about.${person}Bio`} />
-        </p>
-      </div>
-    )
+      )
+    })
     return (
       <div>
         <div className="w-100 bg-smoke pt4">
@@ -73,7 +81,7 @@ export default class About extends Component {
                       <FormattedMessage id="about.section1caption1" />
                     </figcaption>
                   </figure>
-                  <figure className=" tc">
+                  <figure className="tc">
                     <img src={face} alt="QJ" />
                     <figcaption>
                       <FormattedMessage id="about.section1caption2" />

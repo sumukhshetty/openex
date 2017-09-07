@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import Testimonials from '../testimonials/Homepage'
 import { FormattedMessage } from 'react-intl'
 import ResponsiveEmbed from 'react-responsive-embed'
+import { connect } from 'react-redux'
 
-export default class Home extends Component {
+class Home extends Component {
   render() {
     if (this.props.loadinguserdata.data) {
       return <div>Loading</div>
@@ -83,3 +84,13 @@ const Step = ({ image, byline }) =>
       </p>
     </div>
   </div>
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loadinguserdata: state.loadinguserdata,
+    web3: state.web3,
+    presence: state.presence
+  }
+}
+
+export default connect(mapStateToProps)(Home)

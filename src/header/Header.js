@@ -4,7 +4,7 @@ import HomeNavContainer from './HomeNavContainer'
 export default class Header extends Component {
   render() {
     return (
-      <header className="bg-blue z-999">
+      <header className="bg-blue z-999 fixed-IMPORTANT">
         <HomeNavContainer />
       </header>
     )

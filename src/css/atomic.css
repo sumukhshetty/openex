@@ -1194,6 +1194,9 @@
 .fixed {
   position: fixed;
 }
+.fixed-IMPORTANT {
+  position: fixed !important;
+}
 
 /*COORDINATES*/
 

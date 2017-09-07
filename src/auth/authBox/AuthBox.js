@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import { FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { signUpUser, signUpUserCustomAuth } from './SignUpFormActions'
+import { browserHistory } from 'react-router'
 
 class SignUpFormCustomAuth extends Component {
   constructor(props) {
@@ -337,7 +338,10 @@ class SignUpFormCustomAuth extends Component {
             ? <div style={{ color: 'red' }} className="mv2">
                 {error_message}
               </div>
-            : <a href="" className="mv2 link ftiny">
+            : <a
+                onClick={() => browserHistory.push('terms')}
+                className="mv2 link ftiny pointer"
+              >
                 Terms & Conditions
               </a>}
         </div>

@@ -143,9 +143,9 @@ a:hover {
 }
 
 header {
-  position: fixed;
+  position: relative;
   width: 100%;
-  /*min-height: 80px;*/
+  min-height: 80px;
 }
 
 header img.brand {

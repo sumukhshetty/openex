@@ -5,15 +5,15 @@ import { Provider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
 import AppContainer from './AppContainer'
-import HomeContainer from './homepage/container'
+import Home from './pages/Homepage'
 import DashboardContainer from './layouts/dashboard/DashboardContainer'
 import WrongNetwork from './layouts/wrongnetwork/WrongNetwork'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'
 import Help from './help/layouts/Help'
 import HelpConfirmation from './help/layouts/HelpConfirmation'
 import Support from './support/layouts/Support'
-import HTMLStyles from './css/HTMLStyles.js'
-import Static from './staticPages/Master/Static'
+import HTMLStyles from './css/HTMLStyles'
+
 import UserScreen from './userScreen/layouts/UserScreen'
 import Terms from './pages/Terms'
 import About from './pages/About'
@@ -104,7 +104,7 @@ ReactDOM.render(
     <IntlProvider locale={locale} messages={flattenMessages(languages[locale])}>
       <Router history={history} onUpdate={logPageView}>
         <Route path="/" component={AppContainer}>
-          <IndexRoute component={HomeContainer} />
+          <IndexRoute component={Home} />
           <Route
             path="dashboard"
             component={UserIsAuthenticated(DashboardContainer)}
@@ -116,7 +116,7 @@ ReactDOM.render(
           <Route path="signup" component={UserIsNotAuthenticated(Signup)} />
           <Route path="terms" component={UserIsNotAuthenticated(Terms)} />
           <Route path="about" component={UserIsNotAuthenticated(About)} />
-          <Route path="how" component={UserIsNotAuthenticated(How)} />
+
           <Route path="admin" component={UserIsAuthenticated(Admin)} />
           <Route
             path="sellether"
@@ -183,8 +183,8 @@ ReactDOM.render(
             path="browseselladvertisement/:sellTradeAdvertisementId"
             component={UserIsNotAuthenticated(BrowseSellAdvertisement)}
           />
-          <Route path="html" component={HTMLStyles} />
-          <Route path="static" component={Static} />
+
+          <Route path="html" component={UserIsNotAuthenticated(HTMLStyles)} />
         </Route>
       </Router>
     </IntlProvider>

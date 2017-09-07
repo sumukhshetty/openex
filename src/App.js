@@ -94,7 +94,7 @@ class App extends Component {
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() => {
       return (
-        <div className="menu">
+        <div className="tr pt3 menu mt0 bg-blue">
           <div className="w-75 center">
             {this.state.showNotifications &&
               <NotificationsContainer close={this.removeNotifications} />}

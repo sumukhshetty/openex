@@ -138,10 +138,38 @@ export default {
     },
     login: {
       header: `Welcome Back.`,
+      authBoxAddress: 'Address',
+      authBoxNoEntryP1: `Seems like you’re new here.`,
+      authBoxNoEntryP2: `Please {metamaskLink} and
+      proceed to Sign Up.`,
+      loginButton: 'Login',
       P1: `By using the metamask wallet, EZEther’s system ensures that you have control over your funds.`,
       P2: `Please backup your private keys and wallet seed. We won’t be able to access your wallet if you forget your password.`,
-      P3: `If you’re new here, check out step-by-step instructions on the Signup page.`,
-      P4: `If you’re feeling lost, please go though our Support documentation.`
+      P3: `If you’re new here, check out step-by-step instructions on the {signupLink}.`,
+      P4: `If you’re feeling lost, please go though our {supportLink} documentation.`
+    },
+    signup: {
+      header: `Signing up is easy.`,
+      authBoxAddress: 'Address',
+      authBoxNoEntryP1: `Seems like you’re new here.`,
+      authBoxNoEntryP2: `Please {metamaskLink} and
+      proceed to Sign Up.`,
+      loginButton: 'Login',
+      P1: `EZEther’s system lets you keep your money with you at all times.`,
+      P2: `We use the metamask browser extension to connect your wallet to  to the Ethereum Blockchain.`,
+      section2Header: `How to setup an account`,
+      section3Header: `Step by step instructions`,
+      stage1: `STAGE I: Creating a metamask account`,
+      stage1caption1: `a. Accept the privacy notice`,
+      stage1caption2: `b. Scroll down to the end of the Terms of Use, and click on Accept.`,
+      stage1caption3: `c. Choose a password to create your wallet; please remember this carefully.`,
+      stage1caption4: `d. {dangerWord} Save your wallet seed words somewhere safe. `,
+      stage2: `STAGE II: Backing up your private keya. Accept the privacy notice`,
+      stage2caption1: `a. Accept the privacy notice`,
+      stage2caption2: `b. Scroll down to the end of the Terms of Use, and click on Accept.`,
+      stage2caption3: `c. Choose a password to create your wallet; please remember this carefully.`,
+      stage2caption4: `d. {dangerWord}
+Save your wallet seed words somewhere safe. `
     },
     testimonials: {
       title: `What our users say about us`,
