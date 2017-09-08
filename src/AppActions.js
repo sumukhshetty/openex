@@ -67,6 +67,13 @@ function getUserPresence(userPresencePayload) {
   }
 }
 
+function newAccount(accountPayload) {
+  return {
+    type: 'UPDATE_ACCOUNT',
+    payload: accountPayload
+  }
+}
+
 module.exports = {
   setWeb3: (web3) => (dispatch) => {
     dispatch(web3Init(web3))
@@ -140,4 +147,7 @@ module.exports = {
       dispatch(users(snap.val()))
     })
   },
+  updateAccount: (account) => (dispatch) => {
+    dispatch(newAccount(account));
+  }
 }

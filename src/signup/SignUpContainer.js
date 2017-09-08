@@ -23,7 +23,7 @@ class SignUpContainer extends Component {
         </div>
       :
       <section>
-      <div>Unlock MetaMask and refresh your browser to signup </div>
+      <div>Please Unlock MetaMask to signup or login </div>
       <img src={unlock} alt='' className='unlock-gif' />
       </section>
     }

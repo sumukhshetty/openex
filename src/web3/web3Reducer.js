@@ -10,7 +10,7 @@ const initialState = {
   locked: false,
   verified: false,
   wrongnetwork: true,
-  orderBookFactory: null
+  account: null
 }
 
 const web3Reducer = (state = initialState, action) => {
@@ -38,10 +38,10 @@ const web3Reducer = (state = initialState, action) => {
       verified:action.payload
     })
   }
-  if (action.type === "ORDER_BOOK_FACTORY")
+  if (action.type === "UPDATE_ACCOUNT")
   {
     return Object.assign({}, state, {
-      orderBookFactory: action.payload
+      account: action.payload
     })
   }
 
