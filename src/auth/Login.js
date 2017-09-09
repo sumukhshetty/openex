@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { connect } from 'react-redux'
-import { loginUser } from './authBox/LoginFormActions'
-import * as actions from '../header/HomeNavActions'
+import * as actions from './authBox/loginActions'
 import { browserHistory } from 'react-router'
 
 const Login = ({ loadinguserdata, web3, presence, user, login }) =>
@@ -13,19 +12,19 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
         <section className="h-auto">
           {web3.data.eth.accounts[0]
             ? <div className="w5 center bg-white shadow-1">
-                <div className="bg-gray tc ba pv1">
-                  <p className="ftiny">
-                    <FormattedMessage id="login.authBoxAddress" />
-                  </p>
-                  <p className="ftiny">
-                    {web3.data.eth.accounts[0]}
-                  </p>
-                </div>
-                <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
-                  <button
-                    type="submit"
-                    className="pure-button pure-button-primary"
+              <div className="bg-gray tc ba pv1">
+                <p className="ftiny">
+                  <FormattedMessage id="login.authBoxAddress" />
+                </p>
+                <p className="ftiny">
+                  {web3.data.eth.accounts[0]}
+                </p>
+              </div>
+              <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
+                <button
+                  type="submit"
                     onClick={() => login(web3)}
+                    className="w-100 br3 b---gray mb2"
                   >
                     <FormattedMessage id="login.loginButton" />
                   </button>
@@ -95,12 +94,14 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
     </div>
   </div>
 
-// Login.propTypes = {
-//   loadinguserdata: PropTypes.array.isRequired,
-//   web3: PropTypes.array.isRequired,
-//   presence: PropTypes.array.isRequired
-// }
-// Login.defaultProps = {}
+Login.propTypes = {
+  loadinguserdata: PropTypes.object.isRequired,
+  web3: PropTypes.object.isRequired,
+  presence: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired
+}
+Login.defaultProps = {}
 
 const mapStateToProps = (state, ownProps) => {
   return {

@@ -66,6 +66,26 @@ exports[`testimonials renders expected markup 1`] = `
         "about.zakhilBio": "Zakhil’s been trading Ether since 2015, one of the first points of sale for Ether tokens in India.  He brings immense patience and experience in dealing with the technicalities and issues that crop up when dealing with introducing these ideas to new users.",
         "about.zakhilName": "ZAKHIL",
         "about.zakhilTitle": "Support Ninja",
+        "home.asFeaturedOn": "As Featured On",
+        "home.benefit1line1": "FLAT 1%",
+        "home.benefit1line2": "TRANSACTION FEE",
+        "home.benefit2line1": "USER DEFINED",
+        "home.benefit2line2": "PAYMENT METHODS",
+        "home.benefit3line1": "QUICK & EFFICIENT",
+        "home.benefit3line2": "KYC PROCESS",
+        "home.benefit4line1": "TRANSPARENT",
+        "home.benefit4line2": "COINGECKO BASE RATE",
+        "home.byline": "A cutting edge platform that combines security and ease of use",
+        "home.feature1": "Bitcoin talk",
+        "home.feature2": "dApp Universe",
+        "home.header": "Decentralized Ethereum Marketplace",
+        "home.howThisWorks": "How This Works",
+        "home.login": "Login",
+        "home.metric1": "VOLUME TRADED TODAY",
+        "home.metric2": "BEST BUY PRICE",
+        "home.metric3": "BEST SELL PRICE",
+        "home.section2Header": "Trade directly with other users, keeping your money safe in smart contracts.",
+        "home.signup": "Signup",
         "how.header": "Here’s why you should go with us.",
         "how.section1": "There’s a need for trustless mediation in markets",
         "how.section1P1": "We are a dApp, built on the cutting edge web3 stack supported by the ethereum blockchain.",
@@ -106,9 +126,35 @@ exports[`testimonials renders expected markup 1`] = `
         "how.section5T3": "Thats awesome, How do I get started ?",
         "login.P1": "By using the metamask wallet, EZEther’s system ensures that you have control over your funds.",
         "login.P2": "Please backup your private keys and wallet seed. We won’t be able to access your wallet if you forget your password.",
-        "login.P3": "If you’re new here, check out step-by-step instructions on the Signup page.",
-        "login.P4": "If you’re feeling lost, please go though our Support documentation.",
+        "login.P3": "If you’re new here, check out step-by-step instructions on the {signupLink}.",
+        "login.P4": "If you’re feeling lost, please go though our {supportLink} documentation.",
+        "login.authBoxAddress": "Address",
+        "login.authBoxNoEntryP1": "Seems like you’re new here.",
+        "login.authBoxNoEntryP2": "Please {metamaskLink} and
+      proceed to Sign Up.",
         "login.header": "Welcome Back.",
+        "login.loginButton": "Login",
+        "signup.P1": "EZEther’s system lets you keep your money with you at all times.",
+        "signup.P2": "We use the metamask browser extension to connect your wallet to  to the Ethereum Blockchain.",
+        "signup.authBoxAddress": "Address",
+        "signup.authBoxNoEntryP1": "Seems like you’re new here.",
+        "signup.authBoxNoEntryP2": "Please {metamaskLink} and
+      proceed to Sign Up.",
+        "signup.header": "Signing up is easy.",
+        "signup.loginButton": "Login",
+        "signup.section2Header": "How to setup an account",
+        "signup.section3Header": "Step by step instructions",
+        "signup.stage1": "STAGE I: Creating a metamask account",
+        "signup.stage1caption1": "a. Accept the privacy notice",
+        "signup.stage1caption2": "b. Scroll down to the end of the Terms of Use, and click on Accept.",
+        "signup.stage1caption3": "c. Choose a password to create your wallet; please remember this carefully.",
+        "signup.stage1caption4": "d. {dangerWord} Save your wallet seed words somewhere safe. ",
+        "signup.stage2": "STAGE II: Backing up your private keya. Accept the privacy notice",
+        "signup.stage2caption1": "a. Accept the privacy notice",
+        "signup.stage2caption2": "b. Scroll down to the end of the Terms of Use, and click on Accept.",
+        "signup.stage2caption3": "c. Choose a password to create your wallet; please remember this carefully.",
+        "signup.stage2caption4": "d. {dangerWord}
+Save your wallet seed words somewhere safe. ",
         "support.byline": "Please browse through our documentation, and you may well find the answer to your problem here.",
         "support.docBody0": "If you have any concerns about the safety of your money or your ether, we explain best practices and why our system is secure.",
         "support.docBody1": "Step by step instructions for all the actions required on the site.",
@@ -177,7 +223,7 @@ exports[`testimonials renders expected markup 1`] = `
       className="flex wrap mxc"
     >
       <div
-        className="w-50 flex col mxs tl pa3"
+        className="w-50-l w-100 flex col mxs tl pa3"
       >
         <div
           className="flex cxs h4"
@@ -240,7 +286,7 @@ exports[`testimonials renders expected markup 1`] = `
         </div>
       </div>
       <div
-        className="w-50 flex col mxs tl pa3"
+        className="w-50-l w-100 flex col mxs tl pa3"
       >
         <div
           className="flex cxs h4"

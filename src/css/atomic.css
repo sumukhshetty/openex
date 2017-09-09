@@ -1,6 +1,11 @@
 .debug {
   outline: 1px dotted red;
 }
+
+.dn {
+  display: none;
+}
+
 .hidden {
   position: absolute;
   overflow: hidden;
@@ -1600,7 +1605,42 @@
   transition: opacity .15s ease-out;
 }
 
-@media screen and (min-width: 60em) {
+.tc {
+  text-align: center;
+}
+
+@media screen and (min-width: 480px) {
+  .tc-m {
+    text-align: center;
+  }
+  .dib-m {
+    display: inline-block;
+  }
+
+  .dn-m {
+    display: none;
+  }
+  .w-33-m {
+    width: 33%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .tc-l {
+    text-align: center;
+  }
+  .w-33-l {
+    width: 33%;
+  }
+  .flex-l {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .dib-l {
+    display: inline-block;
+  }
+
   .h3-l {
     height: 4rem;
   }

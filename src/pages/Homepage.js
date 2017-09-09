@@ -3,31 +3,86 @@ import Testimonials from '../testimonials/Homepage'
 import { FormattedMessage } from 'react-intl'
 import ResponsiveEmbed from 'react-responsive-embed'
 import { connect } from 'react-redux'
+import { firebaseRef } from '../index.js'
+import NumberFormat from 'react-number-format'
 
 class Home extends Component {
+  state = {
+    highestSellTrade: null,
+    lowestBuyTrade: null,
+    buyTradeCount: null,
+    sellTradeCount: null
+  }
+  getHighestSellTrade = async () => {
+    await firebaseRef
+      .database()
+      .ref('/selltradeadvertisements/IN')
+      .orderByChild('price')
+      .limitToFirst(1)
+      .on(`child_added`, snap =>
+        this.setState({ highestSellTrade: snap.val().price })
+      )
+  }
+  getLowestBuyTrade = async () => {
+    await firebaseRef
+      .database()
+      .ref('/buytradeadvertisements/IN')
+      .orderByChild('price')
+      .limitToLast(1)
+      .on(`child_added`, snap =>
+        this.setState({ lowestBuyTrade: snap.val().price })
+      )
+  }
+  getTotalTradeCount = async () => {
+    const allBuyTrades = await firebaseRef
+      .database()
+      .ref('/buytradeadvertisements/IN')
+      .on('value', snap =>
+        this.setState({ buyTradeCount: Object.keys(snap.val()).length })
+      )
+
+    const allSellTrades = await firebaseRef
+      .database()
+      .ref('/selltradeadvertisements/IN')
+      .on('value', snap =>
+        this.setState({ sellTradeCount: Object.keys(snap.val()).length })
+      )
+  }
+  componentDidMount() {
+    this.getHighestSellTrade()
+    this.getLowestBuyTrade()
+    this.getTotalTradeCount()
+  }
   render() {
     if (this.props.loadinguserdata.data) {
-      return <div>Loading</div>
+      return <div>Loading...</div>
     } else {
       return (
         <div>
           <section className="tc gradient pa4">
-            <p className="fhuge white pt5">
-              Decentralized Ethereum Marketplace
-            </p>
-            <p className="flarge white">
-              A cutting edge platform that combines security and ease of use
-            </p>
-            <div className="flex wrap mxa w-50 center cxc pt3">
-              <a className="white link underline ma3">Login</a>
-              <button className="bg-white blue br3 ma3">SignUp</button>
-              <button className="bg-white blue br3 ma3">How This Works</button>
+            <h1 className="fhuge white pt5 b">
+              <FormattedMessage id="home.header" />
+            </h1>
+            <h2 className="flarge white">
+              <FormattedMessage id="home.byline" />
+            </h2>
+            <div className="flex wrap mxa cxe w-50 center pt3 dn-m flex-l">
+              <div className="col mxc dn flex-l">
+                <a className="white link underline ma2">
+                  <FormattedMessage id="home.login" />
+                </a>
+                <button className="bg-white blue br3 ma2">
+                  <FormattedMessage id="home.signup" />
+                </button>
+              </div>
+              <button className="bg-white blue br3 ma2">
+                <FormattedMessage id="home.howThisWorks" />
+              </button>
             </div>
           </section>
           <section className="pa4">
             <p className="measure-narrow center ma3 flarge tc">
-              Trade directly with other users, keeping your money safe in smart
-              contracts.
+              <FormattedMessage id="home.section2Header" />
             </p>
             <div className="tc center ma3 w-50-l w-100">
               <ResponsiveEmbed src="https://www.youtube.com/embed/W0qn3oPYo5c" />
@@ -35,36 +90,92 @@ class Home extends Component {
           </section>
           <section className="flex wrap col cxc bg-blue pa4">
             <div className="flex mxc wrap">
-              <div className="flex col tc ph4">
-                <p className="f1 white mb2">87 ETH</p>
-                <p className="fmedium white ttu">VOLUME TRADED TODAY</p>
+              <div className=" col tc ph4 flex-l dn">
+                <p className="f1 white mb2">
+                  {this.state.buyTradeCount && this.state.sellTradeCount
+                    ? this.state.buyTradeCount + this.state.sellTradeCount
+                    : `...`}
+                </p>
+                <p className="fmedium white ">
+                  <FormattedMessage id="home.metric1" />
+                </p>
               </div>
               <div className="flex col tc ph4">
-                <p className="f1 white mb2">Rp 21,780</p>
-                <p className="fmedium white ttu">Best Buy price</p>
+                <p className="f1 white mb2">
+                  {this.state.lowestBuyTrade
+                    ? <NumberFormat
+                        value={this.state.lowestBuyTrade}
+                        thousandSeparator={true}
+                        prefix={'₹'}
+                        className="bg-blue white bn"
+                      />
+                    : `...`}
+                </p>
+                <p className="fmedium white ">
+                  <FormattedMessage id="home.metric2" />
+                </p>
               </div>
               <div className="flex col tc ph4">
-                <p className="f1 white mb2">Rp 19,280</p>
-                <p className="fmedium white ttu">Best sell price</p>
+                <p className="f1 white mb2">
+                  {this.state.highestSellTrade
+                    ? <NumberFormat
+                        value={this.state.highestSellTrade}
+                        thousandSeparator={true}
+                        prefix={'₹'}
+                        className="bg-blue white bn"
+                      />
+                    : `...`}
+                </p>
+                <p className="fmedium white ">
+                  <FormattedMessage id="home.metric3" />
+                </p>
               </div>
             </div>
             <div className="flex wrap mxa w-75">
-              <p className="ttu fsmall w4 white tc">FLAT 1% TRANSACTION FEE</p>
-              <p className="ttu fsmall w4 white tc">
-                USER DEFINED PAYMENT METHODS
-              </p>
-              <p className="ttu fsmall w4 white tc">
-                QUICK & EFFICIENT KYC PROCESS
-              </p>
-              <p className="ttu fsmall w4 white tc">
-                TRANSPARENT COINGECKO BASE RATE
-              </p>
+              <div className="cflex col mxc mv3">
+                <p className=" fsmall w4 white tc mv0">
+                  <FormattedMessage id="home.benefit1line1" />
+                </p>
+                <p className=" fsmall w4 white tc mv0">
+                  <FormattedMessage id="home.benefit1line2" />
+                </p>
+              </div>
+              <div className="cflex col mxc mv3">
+                <p className=" fsmall w4 white tc mv0">
+                  <FormattedMessage id="home.benefit2line1" />
+                </p>
+                <p className=" fsmall w4 white tc mv0">
+                  <FormattedMessage id="home.benefit2line2" />
+                </p>
+              </div>
+              <div className="cflex col mxc mv3">
+                <p className=" fsmall w4 white tc mv0">
+                  <FormattedMessage id="home.benefit3line1" />
+                </p>
+                <p className=" fsmall w4 white tc mv0">
+                  <FormattedMessage id="home.benefit3line2" />
+                </p>
+              </div>
+              <div className="cflex col mxc mv3">
+                <p className=" fsmall w4 white tc mv0">
+                  <FormattedMessage id="home.benefit4line1" />
+                </p>
+                <p className=" fsmall w4 white tc mv0">
+                  <FormattedMessage id="home.benefit4line2" />
+                </p>
+              </div>
             </div>
           </section>
           <section className="flex wrap bg-gray mxa pa3">
-            <p>As featured on</p>
-            <p>Bitcoin talk</p>
-            <p>dApp Universe</p>
+            <p>
+              <FormattedMessage id="home.asFeaturedOn" />
+            </p>
+            <p className="b">
+              <FormattedMessage id="home.feature1" />
+            </p>
+            <p className="b">
+              <FormattedMessage id="home.feature2" />
+            </p>
           </section>
           <Testimonials />
         </div>

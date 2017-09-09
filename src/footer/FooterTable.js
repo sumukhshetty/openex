@@ -4,19 +4,19 @@ import { browserHistory } from 'react-router'
 class FooterTable extends Component {
   render() {
     return (
-      <div className="w-50-l w-100 flex wrap">
-        <div className="pure-u-1-3">
-          <nav className="pure-menu">
-            <ul className="pure-menu-list">
+      <div className="w-50-l w-100 flex wrap mxe">
+        <div className="w-50 w-33-l w-33-m">
+          <nav>
+            <ul className="list">
               <li>
                 <h3 className="white">About Us</h3>
               </li>
-              <li className="pure-menu-item">
+              <li>
                 <a href="https://medium.com/automte/" className="white">
                   Blog
                 </a>
               </li>
-              <li className="pure-menu-item">
+              <li>
                 <a
                   onClick={() => browserHistory.push('about')}
                   className="white"
@@ -27,13 +27,13 @@ class FooterTable extends Component {
             </ul>
           </nav>
         </div>
-        <div className="pure-u-1-3">
-          <nav className="pure-menu">
-            <ul className="pure-menu-list">
+        <div className="w-50 w-33-l w-33-m">
+          <nav>
+            <ul className="list">
               <li>
                 <h3 className="white">Support</h3>
               </li>
-              <li className="pure-menu-item">
+              <li>
                 <a
                   target="_blank"
                   href="https://www.youtube.com/watch?v=jY16rNgexE4"
@@ -42,7 +42,7 @@ class FooterTable extends Component {
                   User Guide
                 </a>
               </li>
-              <li className="pure-menu-item">
+              <li>
                 <a
                   onClick={() => browserHistory.push('/terms')}
                   className="white pointer"
@@ -50,7 +50,7 @@ class FooterTable extends Component {
                   Privacy &amp; Terms
                 </a>
               </li>
-              <li className="pure-menu-item">
+              <li>
                 <a
                   onClick={() => browserHistory.push('support')}
                   className="white"
@@ -61,14 +61,14 @@ class FooterTable extends Component {
             </ul>
           </nav>
         </div>
-        <div className="pure-u-1-3">
-          <nav className="pure-menu">
-            <ul className="pure-menu-list">
+        <div className="w-50 w-33-l w-33-m">
+          <nav>
+            <ul className="list">
               <li>
                 <h3 className="white">Community</h3>
               </li>
 
-              <li className="pure-menu-item">
+              <li>
                 <a
                   target="_blank"
                   href="https://automte.herokuapp.com/"
@@ -77,7 +77,7 @@ class FooterTable extends Component {
                   Slack
                 </a>
               </li>
-              <li className="pure-menu-item">
+              <li>
                 <a
                   target="_blank"
                   href="https://automte.herokuapp.com/"
@@ -86,7 +86,7 @@ class FooterTable extends Component {
                   Facebook
                 </a>
               </li>
-              <li className="pure-menu-item">
+              <li>
                 <a
                   target="_blank"
                   href="https://automte.herokuapp.com/"

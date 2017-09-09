@@ -45,8 +45,11 @@ import * as useractions from './user/userActions'
 import Raven from 'raven-js'
 
 var ReactGA = require('react-ga')
-
 ReactGA.initialize('UA-102946005-1')
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname })
+  ReactGA.pageview(window.location.pathname)
+}
 
 // this if for internationalization, so that it's easy to create a chinese version of the site in the future
 import languages from './langauges'
@@ -63,11 +66,6 @@ let locale = 'en-US'
 // navigator.language ||
 // navigator.userLanguage ||
 // 'en-US'
-
-function logPageView() {
-  ReactGA.set({ page: window.location.pathname })
-  ReactGA.pageview(window.location.pathname)
-}
 
 //var raven
 export const raven = Raven.config(

@@ -1,5 +1,27 @@
 export default {
   'en-US': {
+    home: {
+      header: `Decentralized Ethereum Marketplace`,
+      byline: `A cutting edge platform that combines security and ease of use`,
+      login: 'Login',
+      signup: `Signup`,
+      howThisWorks: `How This Works`,
+      section2Header: `Trade directly with other users, keeping your money safe in smart contracts.`,
+      metric1: `TRADES AVAILABLE TODAY`,
+      metric2: `BEST BUY PRICE`,
+      metric3: `BEST SELL PRICE`,
+      benefit1line1: `FLAT 1%`,
+      benefit1line2: `TRANSACTION FEE`,
+      benefit2line1: `USER DEFINED`,
+      benefit2line2: `PAYMENT METHODS`,
+      benefit3line1: `QUICK & EFFICIENT`,
+      benefit3line2: `KYC PROCESS`,
+      benefit4line1: `TRANSPARENT`,
+      benefit4line2: `COINGECKO BASE RATE`,
+      asFeaturedOn: `As Featured On`,
+      feature1: `Bitcoin talk`,
+      feature2: `dApp Universe`
+    },
     about: {
       header: `We're a diverse and passionate bunch`,
 

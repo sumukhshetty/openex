@@ -49,10 +49,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log('App.componentWillMount')
     getWeb3.then(results => {
-      console.log('getWeb3.then')
-      console.log(results.web3)
       this.web3Initialize(results.web3)
       //dispatch(web3Init(results.web3))
     })
@@ -197,29 +194,26 @@ class App extends Component {
       </div>
     )
 
-    const noMobileWhenLoggedIn = VisibleOnlyAuth(() => {
-      return (
-        <div className="absolute absolute--fill gradient white">
-          <div className="flex col x h-100">
-            <AutoLogoLight />
-            <p className="w5">
-              Hey guys, decentralized browsers haven't been developed for mobile
-              phones as of yet.
-            </p>
-            <p className="w5">
-              To trade ether, please head to ezether.com through the desktop,
-              and we will make sure you get your ether as soon as possible.
-            </p>
-            <p className="w5">
-              Sorry for the inconvenience, we hope to serve you today.
-            </p>
-          </div>
+    const noMobileWhenLoggedIn = () =>
+      <div className="absolute absolute--fill gradient white">
+        <div className="flex col x h-100">
+          <AutoLogoLight />
+          <p className="w5">
+            Hey guys, decentralized browsers haven't been developed for mobile
+            phones as of yet.
+          </p>
+          <p className="w5">
+            To trade ether, please head to ezether.com through the desktop, and
+            we will make sure you get your ether as soon as possible.
+          </p>
+          <p className="w5">
+            Sorry for the inconvenience, we hope to serve you today.
+          </p>
         </div>
-      )
-    })
+      </div>
 
     const isMobile = window.innerWidth <= 800
-    if (isMobile) {
+    if (isMobile && firebaseRef.auth().currentUser) {
       return <noMobileWhenLoggedIn />
     } else {
       if (this.props.loadinguserdata.data) {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import LoginForm from './LoginForm'
 import { loginUser } from './LoginFormActions'
-import * as actions from '../../../header/HomeNavActions'
+import * as actions from '../../../auth/authBox/loginActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
