@@ -38,27 +38,29 @@ module.exports = {
       dispatch(setExchange(null))
     }
   },
-  checkBrowserWalletAddress:(web3, user) => (dispatch) =>{
+  checkBrowserWalletAddress:(user, account) => (dispatch) =>{
     console.log('DashboardActions.checkBrowserWalletAddress')
-    console.log(web3)
-    try{
-      if(web3.eth.coinbase){
-        var coinbase = web3.eth.coinbase
-      } else {
-        throw new Error("Wallet Address Undefined")
-      }
-      if(user.data.uid === coinbase){
+    // console.log(web3)
+    // try{
+      // if(web3.eth.coinbase){
+      //   var coinbase = web3.eth.coinbase
+      // } else {
+      //   throw new Error("Wallet Address Undefined")
+      // }
+      if(user.data.uid === account){
         dispatch(userAccountCorrect(true))
       } else {
+        console.log('user.data.uid: ' + user.data.uid);
+        console.log('account: ' + account);
         dispatch(userAccountCorrect(false))
       }
-    } catch(error){
-      console.log("checkBrowserWalletAddress.error")
-      console.log(error)
-      dispatch(setLockedWalletStatus(true))
-      if (error.message === 'Wallet Address Undefined') {
-        notify.show("Please unlock your MetaMask account")
-      }
-    }
+    // } catch(error){
+    //   console.log("checkBrowserWalletAddress.error")
+    //   console.log(error)
+    //   dispatch(setLockedWalletStatus(true))
+    //   if (error.message === 'Wallet Address Undefined') {
+    //     notify.show("Please unlock your MetaMask account")
+    //   }
+    // }
   }
 }

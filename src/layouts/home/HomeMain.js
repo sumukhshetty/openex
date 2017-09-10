@@ -26,7 +26,7 @@ class HomeMain extends Component {
               </div>
 
               <div className="pure-u-1-3">
-                <SignUpContainer web3={this.props.web3.data} />
+                <SignUpContainer web3={this.props.web3.data} account={this.props.account.data} />
               </div>
               <BrowseAdvertisementsContainer />
               <Features />

@@ -11,10 +11,10 @@ class SignUpContainer extends Component {
         <section>
           <h3>Your Address</h3>
         </section>
-    {this.props.web3.eth.accounts[0] ?
+    {this.props.account ?
       <div>
         <section className="metamask">
-          <WalletComponent web3={this.props.web3}/>
+          <WalletComponent account={this.props.account}/>
         </section>
 
         <section className="signup-form">

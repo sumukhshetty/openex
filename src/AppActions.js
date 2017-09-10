@@ -147,7 +147,7 @@ module.exports = {
       dispatch(users(snap.val()))
     })
   },
-  updateAccount: (account) => (dispatch) => {
+  updateAccount: (account, oldAccount) => (dispatch) => {
     dispatch(newAccount(account));
   }
 }
