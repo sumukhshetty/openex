@@ -1,7 +1,7 @@
 export default {
   'en-US': {
     home: {
-      header: `Decentralized Ethereum Marketplace`,
+      header: `Buy and Sell Ethereum`,
       byline: `A cutting edge platform that combines security and ease of use`,
       login: 'Login',
       signup: `Signup`,
@@ -25,7 +25,7 @@ export default {
     about: {
       header: `We're a diverse and passionate bunch`,
 
-      sumukhName: `Sumukh Shetty`,
+      sumukhName: `SUMUKH SHETTY`,
       sumukhTitle: `Co-founder`,
       sumukhBio: `I build products that solve real world  problems. I have been an avid bitcoin and blockchain enthusiast for the past 4 years, an early investor & miner in Bitcoin. I have worked as a business developer, sales & marketing intern, web developer, UX designer.`,
 
@@ -37,21 +37,22 @@ export default {
       arseniyTitle: `Co-founder`,
       arseniyBio: `Arseniy studied at Cal Poly, and has interned at …`,
 
-      zakhilName: `ZAKHIL`,
+      zakhilName: `ZAKHIL SURESH`,
       zakhilTitle: `Support Ninja`,
       zakhilBio: `Zakhil’s been trading Ether since 2015, one of the first points of sale for Ether tokens in India.  He brings immense patience and experience in dealing with the technicalities and issues that crop up when dealing with introducing these ideas to new users.`,
 
       bharatName: `BHARAT AGARWAL`,
-      bharatTitle: `UX DESIGNER`,
+      bharatTitle: `UX Designer`,
       bharatBio: `Bharat's been using cryptocurrencies since 2014, and tried to convince his architecture school classmates to take up the technology to no avail. Now he's trying to solve the usability problems he encountered by working on this exchange.`,
 
-      joshName: `Josh Pitzalis`,
-      joshTitle: `FRONT-END DEV`,
+      joshName: `JOSH PITZALIS`,
+      joshTitle: `Front-end Developer`,
       joshBio: `Josh has been building websites for more than 2 years, and his expertise with React has been a major contributor to the responsiveness and speed of the website`,
 
+/*    will my deleting this break anything? - bharat 
       abhishekName: `Abhishek`,
       abhishekTitle: `GROWTH HACKER`,
-      abhishekBio: `Abhishek's a chartered accountant by education and has been an advocate of cryptocurrency for some time.`,
+      abhishekBio: `Abhishek's a chartered accountant by education and has been an advocate of cryptocurrency for some time.`,*/
 
       section1: `Unusual Beginnings`,
       section2: `State Of Ether Trade Today`,
@@ -59,11 +60,11 @@ export default {
       section4: `Where We Are Right Now`,
       section5: `Road Ahead`,
       section1P1: `Our story starts amidst a blur of electric unicycles, morning yoga, and commune living in an organic farm on the outskirts of Bangalore. Quijano and Sumukh met at the Ethereum camp at Jaaga, found a shared love of the blockchain, and got motivated to make DApps together.`,
-      section1P2: `However, they soon realised that the Ethereum ecosystem was still very nascent. Before trying to solve problems in automation, there was a liquidity problem staring at them. There was no simple, working method for buying and selling Ethereum for fiat currencies in India.`,
+      section1P2: `However, they soon realised that the Ethereum ecosystem was still nascent. Before trying to solve problems in automation, there was a liquidity problem staring at them. There was no simple, working method for buying and selling Ethereum for fiat currencies in India.`,
       section1caption1: `caption`,
       section1caption2: `capton 2`,
       section2P1: `Although its demand is global, buying and selling Ether for the local currency in each country is still an issue, especially in emerging markets. Centralized exchanges such as Coinbase don’t operate in most nations, charge high service fees, and require traders to keep Ether in the exchange’s wallets. Obtaining Ether often becomes a matter of obtaining Bitcoin first, and then trading it for Ether, adding friction and extra fees to the transaction.`,
-      section2P2: `Most people in the ecosystem already know about the exponential growth of the ethereum blockcain. This is a great article by codetract that explains the different hockey stick graphs in the ethereum ecosystem. With a market cap of over $7B we definitely believe that ether is here to stay.`,
+      section2P2: `Most people in the ecosystem already know about the exponential growth of the ethereum blockchain. This is a great article by CodeTract that explains the different hockey stick graphs in the ethereum ecosystem. With a market capitalisation of over $30B we definitely believe that ether is here to stay.`,
       section2caption1: `caption`,
       section3P1: `A lot of countries that have bad financial infrastructure will be getting onto the ethereum blockchain for managing finances, because its a globally scalable system and a lot of decentralized fintech applications are being built, which need ether to run. This allows for underdeveloped countries to take part in the economy. But building centralized exchanges in all countries is not a possibility because of regulatory uncertainty and just because the technology is so cutting edge that a lot of people would find it hard to build a secure exchange.`,
       section3P2: `We believe that ethereum is going to play a very important role in the future of human society and an ether exchange would be most necessary in emerging markets. The markets maybe small for a centralized company like coinbase to get into, but a global solution like ours would make the most sense.`,
@@ -71,7 +72,7 @@ export default {
       section4P1: `The solution we saw was having a decentralised trading marketplace for ether, we built the whole solution using React, truffle, web3, metamask for wallet management, smart contracts for escrow and in the future uport for identity management.`,
       section4P2: `This also meant that our product would be global from day 1, and it would be much cheaper for the customer to use the platform compared to a centralised solution. As a customer, you end up paying for all the costs plus the profits of a centralised exchange. In our system, you’d pay a flat 1% fee and get the most competitive rates in the market.`,
       section5P1: `The past 6 months we have experimented and moved from an idea to product. We know that as a core team we work great, but we need to get more people on board to scale globally.`,
-      section5P2: `We also believe in the power of community, and think that ownership of the DAO should be with the stakeholders of the project. In the next few months, we intend to release a token that would allow us to create a better experience for our users and also help us fund development until we breakeven.`,
+      section5P2: `We also believe in the power of community, and think that ownership of the DAO should be with the stakeholders of the project. In the next few months, we intend to release a token that would allow us to create a better experience for our users and also help us fund development until we break even.`,
       section5P3: `Our goals for the next few months are to release a white paper in the next few months, make the product better as we have identified multiple challenges in the onboarding process for new users.`,
       section5P4: `We would act as a gateway platform for many users and educating the users on different aspects of decentralization is an important goal for us, and as of now we are creating a lot of content that would help users use dApps in general.`
     },
