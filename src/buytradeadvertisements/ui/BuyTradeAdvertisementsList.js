@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import BuyTradeAdvertisementRow from './BuyTradeAdvertisementRow'
 import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
 import YouAreFirst from './../../generic-components/YouAreFirst'
+const moment = require('moment')
 
 class BuyTradeAdvertisementsList extends Component {
   render () {
@@ -33,6 +34,9 @@ class BuyTradeAdvertisementsList extends Component {
           var _presence
           if (component.props.presence.data){
             _presence = component.props.presence.data[buytradeadvertisement.value.buyerUid]
+            if(moment().diff(_presence, 'days') >= 5) {
+              return null
+            }
           }
           console.log(_presence)
           return <BuyTradeAdvertisementRow
