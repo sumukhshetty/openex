@@ -7,7 +7,7 @@ class WalletComponent extends Component {
       <div>
         <div className='ethereum-wallet-id gradient ftiny'>
           {/* Following gets replaced by actual wallet address for authenticated users */}
-          {this.props.web3.eth.accounts[0]}
+          {this.props.account}
         </div>
         <div className='check-mark'><img src={tick} alt='' /></div>
       </div>

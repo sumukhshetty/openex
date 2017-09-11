@@ -22,6 +22,7 @@ import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import EtherPriceContainer from './etherprice/EtherPriceContainer'
 import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
+import AccountWatcher from './web3/AccountWatcherContainer'
 
 // Styles
 import './css/pure-min.css'
@@ -207,8 +208,13 @@ class App extends Component {
       if (this.props.loadinguserdata.data) {
         return <LoadingUserData />
       } else {
+        var accountWatcher
+        if(this.props.web3.data) {
+          accountWatcher = <AccountWatcher />
+        }
         return (
           <section className="Site">
+            <AccountWatcher />
             <Toast />
             {/*<EtherPriceContainer />*/}
             <OnlyGuestLinks />

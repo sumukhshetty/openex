@@ -9,8 +9,7 @@ const initialState = {
   data: web3,
   locked: false,
   verified: false,
-  wrongnetwork: true,
-  orderBookFactory: null
+  wrongnetwork: true
 }
 
 const web3Reducer = (state = initialState, action) => {
@@ -36,12 +35,6 @@ const web3Reducer = (state = initialState, action) => {
   {
     return Object.assign({}, state, {
       verified:action.payload
-    })
-  }
-  if (action.type === "ORDER_BOOK_FACTORY")
-  {
-    return Object.assign({}, state, {
-      orderBookFactory: action.payload
     })
   }
 
