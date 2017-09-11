@@ -43,16 +43,15 @@ export default {
 
       bharatName: `BHARAT AGARWAL`,
       bharatTitle: `UX Designer`,
-      bharatBio: `Bharat's been using cryptocurrencies since 2014, and tried to convince his architecture school classmates to take up the technology to no avail. Now he's trying to solve the usability problems he encountered by working on this exchange.`,
+      bharatBio: `Bharat's been using cryptocurrencies since 2014, and met the team while designing public spaces for Jaaga. His focus was on human-centred design during his education, and is applying the principles learned by being the users' advocate on the team. `,
 
       joshName: `JOSH PITZALIS`,
       joshTitle: `Front-end Developer`,
       joshBio: `Josh has been building websites for more than 2 years, and his expertise with React has been a major contributor to the responsiveness and speed of the website`,
 
-/*    will my deleting this break anything? - bharat 
       abhishekName: `Abhishek`,
       abhishekTitle: `GROWTH HACKER`,
-      abhishekBio: `Abhishek's a chartered accountant by education and has been an advocate of cryptocurrency for some time.`,*/
+      abhishekBio: `Abhishek's a chartered accountant by education and has been an advocate of cryptocurrency for some time.`,
 
       section1: `Unusual Beginnings`,
       section2: `State Of Ether Trade Today`,
