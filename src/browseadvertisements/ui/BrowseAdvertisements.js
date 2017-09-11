@@ -28,16 +28,19 @@ export default class BrowseAdvertisements extends Component {
 
       var buyTradeAdvertisementsByMargin = buyTradeAdvertisementsArray.slice(0)
       buyTradeAdvertisementsByMargin.sort(function(a, b) {
-        return a.value.margin - b.value.margin
+        return b.value.margin - a.value.margin
       })
+      var activeBuyAds = buyTradeAdvertisementsByMargin.filter(ad => ad.value.active)
 
       var sellTradeAdvertisementsByMargin = sellTradeAdvertisementsArray.slice(0)
       sellTradeAdvertisementsByMargin.sort(function(a, b) {
-        return b.value.margin - a.value.margin
+        return a.value.margin - b.value.margin
       })
+      var activeSellAds = sellTradeAdvertisementsByMargin.filter(ad => ad.value.active)
+
 
       var component = this
-      const buyrows = _.map(buyTradeAdvertisementsByMargin.slice(0, 4), function(
+      const buyrows = _.map(activeBuyAds.slice(0, 4), function(
         buytradeadvertisement,
         key
       ) {
@@ -75,7 +78,7 @@ export default class BrowseAdvertisements extends Component {
       }
 
       const sellrows = _.map(
-        sellTradeAdvertisementsByMargin.slice(0, 4),
+        activeSellAds.slice(0, 4),
         function(selltradeadvertisement, key) {
           var seller = users.data[selltradeadvertisement.value.sellerUid]
           var marginMultiplier =
