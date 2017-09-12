@@ -84,7 +84,7 @@ const Signup = ({
           <FormattedMessage id="signup.section2Header" />
         </p>
         <div className="tc center ma3 w-50-l w-100">
-          <ResponsiveEmbed src="https://www.youtube.com/embed/W0qn3oPYo5c" />
+          <ResponsiveEmbed src="https://www.youtube.com/embed/K7BepI1aobg" />
         </div>
       </div>
     </div>
@@ -130,15 +130,15 @@ const Signup = ({
             </figure>
             <figure className="tc w5 w-25-l mh0 mv2">
               <img src={stage1e} alt="step 5" className="w-100" />
-              <figcaption>
+              {/* <figcaption>
                 <FormattedMessage id="signup.stage1caption5" />
-              </figcaption>
+              </figcaption> */}
             </figure>
             <figure className="tc w5 w-25-l mh0 mv2">
               <img src={stage1f} alt="step 6" className="w-100" />
-              <figcaption>
+              {/* <figcaption>
                 <FormattedMessage id="signup.stage1caption6" />
-              </figcaption>
+              </figcaption> */}
             </figure>
           </div>
         </section>
@@ -155,26 +155,26 @@ const Signup = ({
             <figure className="tc w5 w-25-l mh0 mv2">
               <img src={stage2a} alt="step 1" className="w-100" />
               <figcaption>
-                <FormattedMessage id="about.stage1caption1" />
+                <FormattedMessage id="signup.stage2caption1" />
               </figcaption>
             </figure>
             <figure className="tc w5 w-25-l mh0 mv2">
               <img src={stage2b} alt="step 2" className="w-100" />
               <figcaption>
-                <FormattedMessage id="about.stage1caption2" />
+                <FormattedMessage id="signup.stage2caption2" />
               </figcaption>
             </figure>
             <figure className="tc w5 w-25-l mh0 mv2">
               <img src={stage2c} alt="step 3" className="w-100" />
               <figcaption>
-                <FormattedMessage id="about.stage1caption1" />
+                <FormattedMessage id="signup.stage2caption3" />
               </figcaption>
             </figure>
             <figure className="tc w5 w-25-l mh0 mv2">
               <img src={stage2d} alt="step 4" className="w-100" />
               <figcaption>
                 <FormattedMessage
-                  id="about.stage1caption2"
+                  id="signup.stage2caption4"
                   values={{
                     dangerWord: <span className="danger">IMPORTANT</span>
                   }}

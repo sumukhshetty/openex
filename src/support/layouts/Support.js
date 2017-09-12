@@ -13,11 +13,11 @@ class Support extends Component {
               <h1 className="b">
                 <FormattedMessage id="support.header" />
               </h1>
-              <p>
+              {/* <p>
                 <FormattedMessage id="support.byline" />
-              </p>
+              </p> */}
             </div>
-            <Docs />
+            {/* <Docs /> */}
           </div>
         </div>
         <div className="w-75 center pv3">
