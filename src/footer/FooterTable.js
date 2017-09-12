@@ -61,7 +61,7 @@ class FooterTable extends Component {
             </ul>
           </nav>
         </div>
-        <div className="w-50 w-33-l w-33-m">
+        {/* <div className="w-50 w-33-l w-33-m">
           <nav>
             <ul className="list">
               <li>
@@ -97,7 +97,7 @@ class FooterTable extends Component {
               </li>
             </ul>
           </nav>
-        </div>
+        </div> */}
       </div>
     )
   }
