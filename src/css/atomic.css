@@ -2,6 +2,13 @@
   outline: 1px dotted red;
 }
 
+.cover {
+  -o-object-fit: contain;
+  object-fit: contain;
+  width: 100%;
+  height: 250px; /* optional, but in my case it was good */
+}
+
 .dn {
   display: none;
 }

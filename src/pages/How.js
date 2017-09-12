@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import face from '../images/face1.png'
-import ethChart from '../images/ethChart.png'
+import mediation from '../images/need_for_trustless mediation.png'
+import resilienceA from '../images/a_resilient_infrastructure.png'
+import resilienceB from '../images/b_resilient_infrastructure.png'
 
 export default class How extends Component {
   render() {
@@ -26,18 +28,22 @@ export default class How extends Component {
                 <p>
                   <FormattedMessage id="how.section1P3" />
                 </p>
-                <div className="flex wrap w-100 mxa h5 cxc">
-                  <figure className="tc">
-                    <img src={face} alt="Sumukh" />
-                    <figcaption>
-                      <FormattedMessage id="about.section1caption1" />
-                    </figcaption>
+                <div className="flex wrap w-100 mxs cxc ">
+                  <figure className="tc w-50-l w-100 pa0 mh0 mv4">
+                    <img
+                      src={mediation}
+                      alt="Building the stucture at Jaaga"
+                      className="cover"
+                    />
+                    <figcaption />
                   </figure>
-                  <figure className="tc">
-                    <img src={face} alt="QJ" />
-                    <figcaption>
-                      <FormattedMessage id="about.section1caption2" />
-                    </figcaption>
+                  <figure className="tc w-50-l w-100 pa0 mh0 mv4">
+                    <img
+                      src={resilienceA}
+                      alt="The founding team at hillhacks"
+                      className="cover"
+                    />
+                    <figcaption />
                   </figure>
                 </div>
               </div>
