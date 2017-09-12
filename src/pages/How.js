@@ -76,10 +76,10 @@ export default class How extends Component {
               <p>
                 <FormattedMessage id="how.section2P1" />
               </p>
-              <p>
+              {/* <p>
                 <FormattedMessage id="how.section2P2" />
-              </p>
-
+                </p>
+              */}
               <p>
                 <FormattedMessage id="how.section2T2" />
               </p>
