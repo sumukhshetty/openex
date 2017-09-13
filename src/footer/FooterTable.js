@@ -64,37 +64,37 @@ class FooterTable extends Component {
         {/* <div className="w-50 w-33-l w-33-m">
           <nav>
             <ul className="list">
-              <li>
-                <h3 className="white">Community</h3>
-              </li>
+          <li>
+          <h3 className="white">Community</h3>
+          </li>
 
-              <li>
-                <a
-                  target="_blank"
-                  href="https://automte.herokuapp.com/"
-                  className="white"
-                >
-                  Slack
-                </a>
-              </li>
-              <li>
-                <a
-                  target="_blank"
-                  href="https://automte.herokuapp.com/"
-                  className="white"
-                >
-                  Facebook
-                </a>
-              </li>
-              <li>
-                <a
-                  target="_blank"
-                  href="https://automte.herokuapp.com/"
-                  className="white"
-                >
-                  Twitter
-                </a>
-              </li>
+          <li>
+          <a
+          target="_blank"
+          href="https://automte.herokuapp.com/"
+          className="white"
+          >
+          Slack
+          </a>
+          </li>
+          <li>
+          <a
+          target="_blank"
+          href="https://automte.herokuapp.com/"
+          className="white"
+          >
+          Facebook
+          </a>
+          </li>
+          <li>
+          <a
+          target="_blank"
+          href="https://automte.herokuapp.com/"
+          className="white"
+          >
+          Twitter
+          </a>
+          </li>
             </ul>
           </nav>
         </div> */}

@@ -16,7 +16,8 @@ class Home extends Component {
   getHighestSellTrade = async () => {
     await firebaseRef
       .database()
-      .ref('/selltradeadvertisements/IN')
+      // .ref(`/selltradeadvertisements/${this.props.country}`)
+      .ref(`/selltradeadvertisements/${this.props.country}`)
       .orderByChild('price')
       .limitToFirst(1)
       .on(`child_added`, snap =>
@@ -26,7 +27,7 @@ class Home extends Component {
   getLowestBuyTrade = async () => {
     await firebaseRef
       .database()
-      .ref('/buytradeadvertisements/IN')
+      .ref(`/buytradeadvertisements/${this.props.country}`)
       .orderByChild('price')
       .limitToLast(1)
       .on(`child_added`, snap =>
@@ -36,14 +37,14 @@ class Home extends Component {
   getTotalTradeCount = async () => {
     const allBuyTrades = await firebaseRef
       .database()
-      .ref('/buytradeadvertisements/IN')
+      .ref(`/buytradeadvertisements/${this.props.country}`)
       .on('value', snap =>
         this.setState({ buyTradeCount: Object.keys(snap.val()).length })
       )
 
     const allSellTrades = await firebaseRef
       .database()
-      .ref('/selltradeadvertisements/IN')
+      .ref(`/selltradeadvertisements/${this.props.country}`)
       .on('value', snap =>
         this.setState({ sellTradeCount: Object.keys(snap.val()).length })
       )
@@ -91,7 +92,7 @@ class Home extends Component {
           <section className="flex wrap col cxc bg-blue pa4">
             <div className="flex mxc wrap">
               <div className=" col tc ph4 flex-l dn">
-                <p className="f1 white mb2">
+                <p className="f2 white mb2">
                   {this.state.buyTradeCount && this.state.sellTradeCount
                     ? this.state.buyTradeCount + this.state.sellTradeCount
                     : `...`}
@@ -101,12 +102,12 @@ class Home extends Component {
                 </p>
               </div>
               <div className="flex col tc ph4">
-                <p className="f1 white mb2">
+                <p className="f2 white mb2">
                   {this.state.lowestBuyTrade
                     ? <NumberFormat
                         value={this.state.lowestBuyTrade}
                         thousandSeparator={true}
-                        prefix={'₹'}
+                        suffix={` ${this.props.currency.data}`}
                         className="bg-blue white bn"
                       />
                     : `...`}
@@ -116,12 +117,12 @@ class Home extends Component {
                 </p>
               </div>
               <div className="flex col tc ph4">
-                <p className="f1 white mb2">
+                <p className="f2 white mb2">
                   {this.state.highestSellTrade
                     ? <NumberFormat
                         value={this.state.highestSellTrade}
                         thousandSeparator={true}
-                        prefix={'₹'}
+                        suffix={` ${this.props.currency.data}`}
                         className="bg-blue white bn"
                       />
                     : `...`}
@@ -132,35 +133,35 @@ class Home extends Component {
               </div>
             </div>
             <div className="flex wrap mxa w-75">
-              <div className="cflex col mxc mv3">
+              <div className="flex col mxc mv3">
                 <p className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit1line1" />
                 </p>
-                <p className=" fsmall w4 white tc mv0">
+                <p className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit1line2" />
                 </p>
               </div>
-              <div className="cflex col mxc mv3">
+              <div className="flex col mxc mv3">
                 <p className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit2line1" />
                 </p>
-                <p className=" fsmall w4 white tc mv0">
+                <p className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit2line2" />
                 </p>
               </div>
-              <div className="cflex col mxc mv3">
+              <div className="flex col mxc mv3">
                 <p className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit3line1" />
                 </p>
-                <p className=" fsmall w4 white tc mv0">
+                <p className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit3line2" />
                 </p>
               </div>
-              <div className="cflex col mxc mv3">
+              <div className="flex col mxc mv3">
                 <p className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit4line1" />
                 </p>
-                <p className=" fsmall w4 white tc mv0">
+                <p className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit4line2" />
                 </p>
               </div>
@@ -200,7 +201,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loadinguserdata: state.loadinguserdata,
     web3: state.web3,
-    presence: state.presence
+    presence: state.presence,
+    country: state.country,
+    currency: state.currency
   }
 }
 

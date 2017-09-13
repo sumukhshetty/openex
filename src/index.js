@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
 import AppContainer from './AppContainer'
 import Home from './pages/Homepage'
+
 import DashboardContainer from './layouts/dashboard/DashboardContainer'
 import WrongNetwork from './layouts/wrongnetwork/WrongNetwork'
 import PostTradeForm from './posttrade/layouts/PostTradeForm'
@@ -13,7 +14,6 @@ import Help from './help/layouts/Help'
 import HelpConfirmation from './help/layouts/HelpConfirmation'
 import Support from './support/layouts/Support'
 import HTMLStyles from './css/HTMLStyles'
-
 import UserScreen from './userScreen/layouts/UserScreen'
 import Terms from './pages/Terms'
 import About from './pages/About'
@@ -107,6 +107,7 @@ ReactDOM.render(
             path="dashboard"
             component={UserIsAuthenticated(DashboardContainer)}
           />
+
           <Route path="how" component={UserIsNotAuthenticated(How)} />
           <Route path="guide" component={UserIsAuthenticated(How)} />
           <Route path="wrongnetwork" component={WrongNetwork} />
