@@ -12,16 +12,17 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
         <section className="h-auto">
           {web3.data && web3.data.eth.accounts[0]
             ? <div className="w5 center bg-white shadow-1">
-                <div className="bg-gray tc ba pv1">
-                  <p className="ftiny">
-                    <FormattedMessage id="login.authBoxAddress" />
-                  </p>
-                  <p className="ftiny">
-                    {web3.data.eth.accounts[0]}
-                  </p>
-                </div>
-                <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
-                  <button
+              <div className="bg-gray tc ba pv1">
+                <p className="ftiny">
+                  <FormattedMessage id="login.authBoxAddress" />
+                </p>
+                <p className="ftiny">
+                  {web3.data.eth.accounts[0]}
+                </p>
+              </div>
+              <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
+                <button
+                  data-test="loginButton"
                     type="submit"
                     onClick={() => login(web3)}
                     className="w-100 br3 b---gray mb2"

@@ -44,6 +44,7 @@ class Header extends Component {
               support
             </a>
             <a
+              data-test="navLogin"
               className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
               onClick={() => browserHistory.push('/login')}
               title="support"
