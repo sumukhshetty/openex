@@ -5,19 +5,19 @@ import { connect } from 'react-redux'
 import * as actions from './authBox/loginActions'
 import { browserHistory } from 'react-router'
 
-const Login = ({ loadinguserdata, web3, presence, user, login }) =>
+const Login = ({ loadinguserdata, web3, presence, user, login, account }) =>
   <div className="w-100 bg-smoke pa3">
     <div className="w-75 center flex wrap pv4">
       <div className="w-50-l w-100 pt3 flex x">
         <section className="h-auto">
-          {web3.data && web3.data.eth.accounts[0]
+          {web3.data && account.data
             ? <div className="w5 center bg-white shadow-1">
                 <div className="bg-gray tc ba pv1">
                   <p className="ftiny">
                     <FormattedMessage id="login.authBoxAddress" />
                   </p>
                   <p className="ftiny">
-                    {web3.data.eth.accounts[0]}
+                    {account.data}
                   </p>
                 </div>
                 <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
@@ -108,7 +108,8 @@ const mapStateToProps = (state, ownProps) => {
     loadinguserdata: state.loadinguserdata,
     web3: state.web3,
     presence: state.presence,
-    user: state.user
+    user: state.user,
+    account: state.account
   }
 }
 

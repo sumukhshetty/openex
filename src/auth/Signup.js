@@ -23,21 +23,22 @@ const Signup = ({
   user,
   country,
   onSignUpFormCustomAuthSubmit,
-  onSignUpFormSubmit
+  onSignUpFormSubmit,
+  account
 }) =>
   <div>
     <div className="w-100 bg-smoke pa3">
       <div className="w-75 center flex wrap pv4">
         <div className="w-50-l w-100 pt3">
           <section className="h-auto min-h-5">
-            {web3.data && web3.data.eth.accounts[0]
+            {web3.data && account.data
               ? <div className="w5 center bg-white shadow-1">
                   <div className="bg-gray tc ba pv1">
                     <p className="ftiny">
                       <FormattedMessage id="signup.authBoxAddress" />
                     </p>
                     <p className="ftiny">
-                      {web3.data.eth.accounts[0]}
+                      {account.data}
                     </p>
                   </div>
                   <div className="signup-form">
@@ -198,7 +199,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loadinguserdata: state.loadinguserdata,
     web3: state.web3,
-    presence: state.presence
+    presence: state.presence,
+    account: state.account
   }
 }
 
