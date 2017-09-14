@@ -20,7 +20,7 @@ import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import EtherPriceContainer from './etherprice/EtherPriceContainer'
 import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
-import Footer from './footer/Footer'
+import AccountWatcher from './web3/AccountWatcherContainer'
 
 // Styles
 import './css/pure-min.css'
@@ -242,6 +242,7 @@ class App extends Component {
         )
         return (
           <section className="Site">
+            <AccountWatcher />
             <Toast />
             {/*<EtherPriceContainer />*/}
             <OnlyGuestLinks />

@@ -4,6 +4,9 @@ import BrowseBuyAdvertisementRow from './BrowseBuyAdvertisementRow'
 import BrowseSellAdvertisementRow from './BrowseSellAdvertisementRow'
 import BuyTradeAdvertisementsHeader from '../layouts/BuyTradeAdvertisementsHeader'
 
+const moment = require('moment')
+
+
 export default class BrowseAdvertisements extends Component {
   render() {
     if(this.props.etherPrice.data){
@@ -28,16 +31,28 @@ export default class BrowseAdvertisements extends Component {
 
       var buyTradeAdvertisementsByMargin = buyTradeAdvertisementsArray.slice(0)
       buyTradeAdvertisementsByMargin.sort(function(a, b) {
-        return a.value.margin - b.value.margin
+        return b.value.margin - a.value.margin
       })
+      var activeBuyAds = buyTradeAdvertisementsByMargin.filter(ad => {
+        return ad.value.active && !(moment().diff(this.props.presence.data[ad.value.buyerUid], 'days') >= 5)
+      })
+      // activeBuyAds = activeBuyAds.filter(ad => {
+      //   console.log('filter presence');
+      //   console.log(this.props.presence.data[ad.value.buyerUid]);
+      //   console.log(!(moment().diff(this.props.presence.data[ad.value.buyerUid], 'days') >= 7));
+      // })
 
       var sellTradeAdvertisementsByMargin = sellTradeAdvertisementsArray.slice(0)
       sellTradeAdvertisementsByMargin.sort(function(a, b) {
-        return b.value.margin - a.value.margin
+        return a.value.margin - b.value.margin
+      })
+      var activeSellAds = sellTradeAdvertisementsByMargin.filter(ad => {
+        return ad.value.active && !(moment().diff(this.props.presence.data[ad.value.sellerUid], 'days') >= 5)
       })
 
+
       var component = this
-      const buyrows = _.map(buyTradeAdvertisementsByMargin.slice(0, 4), function(
+      const buyrows = _.map(activeBuyAds.slice(0, 4), function(
         buytradeadvertisement,
         key
       ) {
@@ -75,7 +90,7 @@ export default class BrowseAdvertisements extends Component {
       }
 
       const sellrows = _.map(
-        sellTradeAdvertisementsByMargin.slice(0, 4),
+        activeSellAds.slice(0, 4),
         function(selltradeadvertisement, key) {
           var seller = users.data[selltradeadvertisement.value.sellerUid]
           var marginMultiplier =

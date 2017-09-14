@@ -14,7 +14,6 @@ const BrowseSellAdvertisementRow = props => {
     } else {
       lastTransfer = '-'
     }
-
     return (
       <tr className="flex cxc">
         <td className="fb20">

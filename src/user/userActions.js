@@ -164,6 +164,10 @@ module.exports = {
             })
 
             dispatch(updateReduxStoreDataState(false))
+            console.log('numtrades: ' + userProfile['numberOfTrades']);
+            if(userProfile['numberOfTrades'] < 1) {
+              return browserHistory.push('/buyether')
+            }
             return browserHistory.push('/dashboard')
           } else {
             const auth = firebaseRef.auth()
