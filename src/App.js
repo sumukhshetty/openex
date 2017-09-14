@@ -8,8 +8,6 @@ import getWeb3 from './util/getWeb3'
 
 var request = require('request')
 //var fetch = require('fetch')
-var web3Location = `http://${truffleConfig.networks.development
-  .host}:${truffleConfig.networks.development.port}`
 
 import { firebaseRef } from './index'
 
@@ -74,9 +72,9 @@ class App extends Component {
       // if the Web3 object cannot be initialized with the httpProvider
       // given from the loction in the truffle-config file?
       // dev haiku
-      this.web3Provided = new Web3(
-        new Web3.providers.HttpProvider(web3Location)
-      )
+      // this.web3Provided = new Web3(
+      //   new Web3.providers.HttpProvider(web3Location)
+      // )
     }
   }
 
@@ -247,7 +245,7 @@ class App extends Component {
             {/*<EtherPriceContainer />*/}
             <OnlyGuestLinks />
             <OnlyAuthLinks />
-            {unsupportedBrowser && <UseSupportedBrowser />}
+            {/* {unsupportedBrowser && <UseSupportedBrowser />} */}
             {/*<UserPresenceContainer />*/}
             <main
               role="main"

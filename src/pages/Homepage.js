@@ -5,6 +5,7 @@ import ResponsiveEmbed from 'react-responsive-embed'
 import { connect } from 'react-redux'
 import { firebaseRef } from '../index.js'
 import NumberFormat from 'react-number-format'
+import { browserHistory } from 'react-router'
 
 class Home extends Component {
   state = {
@@ -69,14 +70,14 @@ class Home extends Component {
             </h2>
             <div className="flex wrap mxa cxe w-50 center pt3 dn-m flex-l">
               <div className="col mxc dn flex-l">
-                <a className="white link underline ma2">
+                <a className="white link underline ma2" onClick={()=>browserHistory.push('/login')}>
                   <FormattedMessage id="home.login" />
                 </a>
-                <button className="bg-white blue br3 ma2">
+                <button className="bg-white blue br3 ma2" onClick={()=>browserHistory.push('/signup')}>
                   <FormattedMessage id="home.signup" />
                 </button>
               </div>
-              <button className="bg-white blue br3 ma2">
+              <button className="bg-white blue br3 ma2" onClick={()=>browserHistory.push('/how')}>
                 <FormattedMessage id="home.howThisWorks" />
               </button>
             </div>
