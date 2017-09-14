@@ -17,6 +17,7 @@ import HTMLStyles from './css/HTMLStyles'
 import UserScreen from './userScreen/layouts/UserScreen'
 import Terms from './pages/Terms'
 import About from './pages/About'
+import Landing from './pages/Landing'
 import How from './pages/How'
 import Login from './auth/Login'
 import Signup from './auth/Signup'
@@ -107,7 +108,10 @@ ReactDOM.render(
             path="dashboard"
             component={UserIsAuthenticated(DashboardContainer)}
           />
-
+          <Route
+            path="country/:country"
+            component={UserIsNotAuthenticated(Landing)}
+          />
           <Route path="how" component={UserIsNotAuthenticated(How)} />
           <Route path="guide" component={UserIsAuthenticated(How)} />
           <Route path="wrongnetwork" component={WrongNetwork} />
