@@ -8,8 +8,6 @@ import getWeb3 from './util/getWeb3'
 
 var request = require('request')
 //var fetch = require('fetch')
-// var web3Location = `http://${truffleConfig.networks.development
-//   .host}:${truffleConfig.networks.development.port}`
 
 import { firebaseRef } from './index'
 
@@ -22,6 +20,7 @@ import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import EtherPriceContainer from './etherprice/EtherPriceContainer'
 import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
+import Footer from './footer/Footer'
 import AccountWatcher from './web3/AccountWatcherContainer'
 
 // Styles
@@ -34,6 +33,7 @@ import './css/swatch.css'
 import Bell from './images/svgReactComponents/Bell'
 import NotificationsContainer from './notifications/ui/NotificationsContainer'
 import { default as Toast } from 'react-notify-toast'
+
 import LoadingUserData from './loadinguserdata/LoadingUserData'
 
 class App extends Component {
@@ -49,10 +49,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log('App.componentWillMount')
     getWeb3.then(results => {
-      console.log('getWeb3.then')
-      console.log(results.web3)
       this.web3Initialize(results.web3)
       //dispatch(web3Init(results.web3))
     })
@@ -94,7 +91,7 @@ class App extends Component {
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() => {
       return (
-        <div className="menu">
+        <div className="tr pt3 menu mt0 bg-blue">
           <div className="w-75 center">
             {this.state.showNotifications &&
               <NotificationsContainer close={this.removeNotifications} />}
@@ -190,28 +187,60 @@ class App extends Component {
       )
     })
 
-    const OnlyGuestLinks = HiddenOnlyAuth(() => <Header />)
+    const OnlyGuestLinks = HiddenOnlyAuth(() =>
+      <div>
+        <Header />
+        <div className="h4 h3-l w-100" />
+      </div>
+    )
+
+    const noMobileWhenLoggedIn = () =>
+      <div className="absolute absolute--fill gradient white">
+        <div className="flex col x h-100">
+          <AutoLogoLight />
+          <p className="w5">
+            Hey guys, decentralized browsers haven't been developed for mobile
+            phones as of yet.
+          </p>
+          <p className="w5">
+            To trade ether, please head to ezether.com through the desktop, and
+            we will make sure you get your ether as soon as possible.
+          </p>
+          <p className="w5">
+            Sorry for the inconvenience, we hope to serve you today.
+          </p>
+        </div>
+      </div>
 
     const isMobile = window.innerWidth <= 800
-    if (isMobile) {
-      return (
-        <div className="absolute absolute--fill gradient white">
-          <div className="flex col x h-100">
-            <AutoLogoLight />
-            <p className="w5">Hey guys, decentralized browsers haven't been developed for mobile phones as of yet.</p>
-            <p className="w5">To trade ether, please head to ezether.com through the desktop, and we will make sure you get your ether as soon as possible.</p>
-            <p className="w5">Sorry for the inconvenience, we hope to serve you today.</p>
-          </div>
-        </div>
-      )
+    if (isMobile && firebaseRef.auth().currentUser) {
+      return <noMobileWhenLoggedIn />
     } else {
       if (this.props.loadinguserdata.data) {
         return <LoadingUserData />
       } else {
-        var accountWatcher
-        if(this.props.web3.data) {
-          accountWatcher = <AccountWatcher />
-        }
+        const unsupportedBrowser =
+          !/chrome/i.test(navigator.userAgent) &&
+          !/firefox/i.test(navigator.userAgent)
+
+        const UseSupportedBrowser = (
+          <div className="absolute bg-danger w-100 z-1 flex mxa cxc mt3">
+            <p className="white tc ph3">
+              Transactions are only supported on Chrome & Firefox at the moment.
+            </p>
+            <div>
+              <button className="white ba br3 b--white ttc mv3 bg-danger bg-white-hover danger-hover">
+                Use Firefox
+              </button>
+            </div>
+
+            <div>
+              <button className="white ba br3 b--white ttc mv3 bg-danger bg-white-hover danger-hover">
+                Use Chrome
+              </button>
+            </div>
+          </div>
+        )
         return (
           <section className="Site">
             <AccountWatcher />
@@ -219,6 +248,7 @@ class App extends Component {
             {/*<EtherPriceContainer />*/}
             <OnlyGuestLinks />
             <OnlyAuthLinks />
+            {/* {unsupportedBrowser && <UseSupportedBrowser />} */}
             {/*<UserPresenceContainer />*/}
             <main
               role="main"
@@ -226,6 +256,8 @@ class App extends Component {
             >
               {this.props.children}
             </main>
+
+            <Footer />
           </section>
         )
       }

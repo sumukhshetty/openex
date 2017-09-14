@@ -2,49 +2,102 @@ import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 
 class FooterTable extends Component {
-  render () {
+  render() {
     return (
-      <div className='w-50'>
-        <div className='pure-u-1-3'>
-          {/* About us */}
-          <nav className='pure-menu'>
-            <ul className='pure-menu-list'>
-              <li><h3>About Us</h3></li>
-              <li className='pure-menu-item'><a href='https://medium.com/automte/'>Blog</a></li>
-              <li className='pure-menu-item'><a onClick={() => browserHistory.push('about')}>Who Are We</a></li>
-              {/*<li className='pure-menu-item'><a href='#'>Media Coverage</a></li>
-              <li className='pure-menu-item'><a href='#'>Jobs</a></li>*/}
-            </ul>
-          </nav>
-        </div>
-        <div className='pure-u-1-3'>
-          {/* Support */}
-          <nav className='pure-menu'>
-            <ul className='pure-menu-list'>
-              <li><h3>Support</h3></li>
-              <li className='pure-menu-item'>
-                <a target="_blank" href='https://www.youtube.com/watch?v=jY16rNgexE4'>User Guide</a>
+      <div className="w-50-l w-100 flex wrap mxe">
+        <div className="w-50 w-33-l w-33-m">
+          <nav>
+            <ul className="list">
+              <li>
+                <h3 className="white">About Us</h3>
               </li>
-              <li className='pure-menu-item'>
-                <a onClick={() => browserHistory.push('support')}>Contact Us</a>
+              <li>
+                <a href="https://medium.com/automte/" className="white">
+                  Blog
+                </a>
               </li>
-              <li className='pure-menu-item'>
-                <a onClick={() => browserHistory.push('termsofservice')}>Privacy &amp; Terms</a>
+              <li>
+                <a
+                  onClick={() => browserHistory.push('about')}
+                  className="white"
+                >
+                  Who Are We
+                </a>
               </li>
             </ul>
           </nav>
         </div>
-        <div className='pure-u-1-3'>
-          {/* Community */}
-          <nav className='pure-menu'>
-            <ul className='pure-menu-list'>
-              <li><h3>Community</h3></li>
-              {/*<li className='pure-menu-item'><a href='#'>Reddit</a></li>*/}
-              {/*<li className='pure-menu-item'><a href='#'>Forum</a></li>*/}
-              <li className='pure-menu-item'><a target="_blank" href='https://automte.herokuapp.com/'>Slack</a></li>
+        <div className="w-50 w-33-l w-33-m">
+          <nav>
+            <ul className="list">
+              <li>
+                <h3 className="white">Support</h3>
+              </li>
+              <li>
+                <a
+                  target="_blank"
+                  href="https://www.youtube.com/watch?v=jY16rNgexE4"
+                  className="white"
+                >
+                  User Guide
+                </a>
+              </li>
+              <li>
+                <a
+                  onClick={() => browserHistory.push('/terms')}
+                  className="white pointer"
+                >
+                  Privacy &amp; Terms
+                </a>
+              </li>
+              <li>
+                <a
+                  onClick={() => browserHistory.push('support')}
+                  className="white"
+                >
+                  Contact Us
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
+        {/* <div className="w-50 w-33-l w-33-m">
+          <nav>
+            <ul className="list">
+          <li>
+          <h3 className="white">Community</h3>
+          </li>
+
+          <li>
+          <a
+          target="_blank"
+          href="https://automte.herokuapp.com/"
+          className="white"
+          >
+          Slack
+          </a>
+          </li>
+          <li>
+          <a
+          target="_blank"
+          href="https://automte.herokuapp.com/"
+          className="white"
+          >
+          Facebook
+          </a>
+          </li>
+          <li>
+          <a
+          target="_blank"
+          href="https://automte.herokuapp.com/"
+          className="white"
+          >
+          Twitter
+          </a>
+          </li>
+            </ul>
+          </nav>
+        </div> */}
       </div>
     )
   }

@@ -30,7 +30,9 @@
     "gzip-size": "3.0.0",
     "html-webpack-plugin": "2.24.0",
     "http-proxy-middleware": "0.17.2",
-    "jest": "^20.0.4",
+    "jest": "^21.0.1",
+    "jsdom": "11.2.0",
+    "jsdom-global": "3.0.2",
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
     "path-exists": "2.1.0",
@@ -38,6 +40,7 @@
     "promise": "7.1.1",
     "react-dev-utils": "^0.4.2",
     "recursive-readdir": "2.1.0",
+    "redux-mock-store": "^1.2.3",
     "regenerator-runtime": "^0.10.5",
     "strip-ansi": "3.0.1",
     "style-loader": "0.13.1",
@@ -54,6 +57,8 @@
     "babel-polyfill": "^6.23.0",
     "babel-register": "^6.23.0",
     "country-currency": "git+https://github.com/srcagency/country-currencies.git",
+    "enzyme": "^2.9.1",
+    "enzyme-to-json": "^1.5.1",
     "firebase": "^3.7.1",
     "i": "^0.3.5",
     "jquery": "^3.2.1",
@@ -63,28 +68,39 @@
     "prop-types": "^15.5.8",
     "raven-js": "^3.15.0",
     "react": "^15.4.2",
+    "react-addons-test-utils": "^15.6.0",
     "react-browser-detection": "^1.0.2",
     "react-dom": "^15.4.2",
     "react-ga": "^2.2.0",
+    "react-intl": "^2.3.0",
     "react-notify-toast": "^0.1.5",
+    "react-number-format": "^2.0.4",
     "react-redux": "^5.0.2",
+    "react-responsive-embed": "^2.0.0",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.7",
     "react-spinkit": "^3.0.0",
+    "react-test-render": "^1.0.3",
     "react-youtube": "^7.4.0",
     "rebass": "^0.3.4",
     "redux": "^3.6.0",
     "redux-auth-wrapper": "^1.0.0",
+    "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/testEnv.js --env=jsdom",
+    "coverage": "yarn run test -- --coverage"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
-    "setupFiles": ["./config/polyfills.js"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "./config/polyfills.js"
+    ],
     "testPathIgnorePatterns": [
       "<rootDir>[/\\\\](build|docs|node_modules)[/\\\\]"
     ],
@@ -95,7 +111,9 @@
       "^.+\\.css$": "./config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "./config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     }
@@ -104,7 +122,9 @@
     "parser": "babel-eslint"
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
