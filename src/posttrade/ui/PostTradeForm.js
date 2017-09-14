@@ -334,6 +334,7 @@ class PostTradeForm extends Component {
                   <option value="National Bank">National Bank</option>
                   <option value="cash">cash</option>
                   <option value="mobile">mobile</option>
+                  <option value="PayPal">PayPal</option>
                 </select>
               </div>
 
