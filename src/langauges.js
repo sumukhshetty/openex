@@ -35,7 +35,7 @@ export default {
 
       arseniyName: `ARSENIY KLEMPNER`,
       arseniyTitle: `Co-founder`,
-      arseniyBio: `Arseniy studied at Cal Poly, and has interned at …`,
+      arseniyBio: `Arseniy specializes in writing secure Ethereum smart contracts and integrating them with web applications. He brings experience from open-source contributions in the blockchain space and insights from researching and investing in other cryptocurrency-based projects.`,
 
       zakhilName: `ZAKHIL SURESH`,
       zakhilTitle: `Support Ninja`,
