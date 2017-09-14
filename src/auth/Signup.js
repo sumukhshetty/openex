@@ -28,7 +28,7 @@ const Signup = ({
   <div>
     <div className="w-100 bg-smoke pa3">
       <div className="w-75 center flex wrap pv4">
-        <div className="w-50 pt3">
+        <div className="w-50-l w-100 pt3">
           <section className="h-auto min-h-5">
             {web3.data && web3.data.eth.accounts[0]
               ? <div className="w5 center bg-white shadow-1">
@@ -63,7 +63,7 @@ const Signup = ({
                 </div>}
           </section>
         </div>
-        <div className="w-50 pa3">
+        <div className="w-50-l w-100 pa3">
           <div className="pl3">
             <h1>
               <FormattedMessage id="signup.header" />

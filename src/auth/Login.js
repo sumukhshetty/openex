@@ -8,21 +8,21 @@ import { browserHistory } from 'react-router'
 const Login = ({ loadinguserdata, web3, presence, user, login }) =>
   <div className="w-100 bg-smoke pa3">
     <div className="w-75 center flex wrap pv4">
-      <div className="w-50 pt3 flex x">
+      <div className="w-50-l w-100 pt3 flex x">
         <section className="h-auto">
           {web3.data && web3.data.eth.accounts[0]
             ? <div className="w5 center bg-white shadow-1">
-              <div className="bg-gray tc ba pv1">
-                <p className="ftiny">
-                  <FormattedMessage id="login.authBoxAddress" />
-                </p>
-                <p className="ftiny">
-                  {web3.data.eth.accounts[0]}
-                </p>
-              </div>
-              <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
-                <button
-                  type="submit"
+                <div className="bg-gray tc ba pv1">
+                  <p className="ftiny">
+                    <FormattedMessage id="login.authBoxAddress" />
+                  </p>
+                  <p className="ftiny">
+                    {web3.data.eth.accounts[0]}
+                  </p>
+                </div>
+                <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
+                  <button
+                    type="submit"
                     onClick={() => login(web3)}
                     className="w-100 br3 b---gray mb2"
                   >
@@ -49,7 +49,7 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
               </div>}
         </section>
       </div>
-      <div className="w-50 pa3">
+      <div className="w-50-l w-100 pa3">
         <div className="pl3">
           <h1>
             <FormattedMessage id="login.header" />

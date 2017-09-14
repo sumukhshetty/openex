@@ -31,6 +31,9 @@ export function login(web3) {
     // module.exports = {
     //   login: web3 => dispatch => {
     if (web3.wrongnetwork) {
+      console.log(
+        "It looks like you're on the wrong network, please switch over to the Main Ethereum Network"
+      )
       notify.show(
         "It looks like you're on the wrong network, please switch over to the Main Ethereum Network"
       )
@@ -77,7 +80,7 @@ export function login(web3) {
               }
               var statusCode = res.statusCode
               if (statusCode === 200) {
-                console.log('loginUserCustomAuth.200')
+                // console.log('loginUserCustomAuth.200')
                 // do more stuff
                 firebaseRef
                   .auth()

@@ -32,6 +32,7 @@ import './css/swatch.css'
 import Bell from './images/svgReactComponents/Bell'
 import NotificationsContainer from './notifications/ui/NotificationsContainer'
 import { default as Toast } from 'react-notify-toast'
+
 import LoadingUserData from './loadinguserdata/LoadingUserData'
 
 class App extends Component {
@@ -253,6 +254,7 @@ class App extends Component {
             >
               {this.props.children}
             </main>
+
             <Footer />
           </section>
         )
