@@ -2,11 +2,11 @@ import Web3 from 'web3'
 
 //const provider = new Web3.providers.HttpProvider('http://localhost:8545')
 // TODO change this to mainnet on launch
-const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/QmKbFq9RrJ0qz6zqSRPO'));
+//const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/QmKbFq9RrJ0qz6zqSRPO'));
 //const web3 = new Web3(provider)
 
 const initialState = {
-  data: web3,
+  data: null,
   locked: false,
   verified: false,
   wrongnetwork: true,

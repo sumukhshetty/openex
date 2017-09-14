@@ -10,7 +10,7 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
     <div className="w-75 center flex wrap pv4">
       <div className="w-50 pt3 flex x">
         <section className="h-auto">
-          {web3.data.eth.accounts[0]
+          {web3.data && web3.data.eth.accounts[0]
             ? <div className="w5 center bg-white shadow-1">
               <div className="bg-gray tc ba pv1">
                 <p className="ftiny">
