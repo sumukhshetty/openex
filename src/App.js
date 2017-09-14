@@ -22,6 +22,7 @@ import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 import EtherPriceContainer from './etherprice/EtherPriceContainer'
 import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
+import NotificationButtonInHeader from './notifications/NotificationButtonInHeader'
 import AccountWatcher from './web3/AccountWatcherContainer'
 
 // Styles
@@ -31,7 +32,6 @@ import './css/atomic.css'
 import './css/swatch.css'
 // import logo from './images/logo.svg'
 
-import Bell from './images/svgReactComponents/Bell'
 import NotificationsContainer from './notifications/ui/NotificationsContainer'
 import { default as Toast } from 'react-notify-toast'
 import LoadingUserData from './loadinguserdata/LoadingUserData'
@@ -41,7 +41,8 @@ class App extends Component {
     super(props)
     this.state = {
       showNotifications: false,
-      web3: null
+      web3: null,
+      notifications: null
     }
     this.removeNotifications = this.removeNotifications.bind(this)
     this.showNotifications = this.showNotifications.bind(this)
@@ -49,10 +50,9 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log('App.componentWillMount')
     getWeb3.then(results => {
-      console.log('getWeb3.then')
-      console.log(results.web3)
+      // console.log('getWeb3.then')
+      // console.log(results.web3)
       this.web3Initialize(results.web3)
       //dispatch(web3Init(results.web3))
     })
@@ -111,7 +111,9 @@ class App extends Component {
                 </Link>
               </div>
               <div className="flex mxe cxc">
-                <Bell action={this.showNotifications} />
+                <NotificationButtonInHeader
+                  showNotifications={this.showNotifications}
+                />
                 <LogoutButtonContainer />
               </div>
             </div>
@@ -198,9 +200,17 @@ class App extends Component {
         <div className="absolute absolute--fill gradient white">
           <div className="flex col x h-100">
             <AutoLogoLight />
-            <p className="w5">Hey guys, decentralized browsers haven't been developed for mobile phones as of yet.</p>
-            <p className="w5">To trade ether, please head to ezether.com through the desktop, and we will make sure you get your ether as soon as possible.</p>
-            <p className="w5">Sorry for the inconvenience, we hope to serve you today.</p>
+            <p className="w5">
+              Hey guys, decentralized browsers haven't been developed for mobile
+              phones as of yet.
+            </p>
+            <p className="w5">
+              To trade ether, please head to ezether.com through the desktop,
+              and we will make sure you get your ether as soon as possible.
+            </p>
+            <p className="w5">
+              Sorry for the inconvenience, we hope to serve you today.
+            </p>
           </div>
         </div>
       )
@@ -209,7 +219,7 @@ class App extends Component {
         return <LoadingUserData />
       } else {
         var accountWatcher
-        if(this.props.web3.data) {
+        if (this.props.web3.data) {
           accountWatcher = <AccountWatcher />
         }
         return (
