@@ -15,18 +15,18 @@ class AccountWatcher extends Component {
   }
 
   componentWillMount() {
-    var interval = setInterval(() => {
-      if (this.props.web3.data.eth.accounts[0] !== this.props.account.data) {
-        console.log('AccountWatcher');
-        console.log('this.props.account: ' + this.props.account.data);
-        console.log('accounts[0]' + this.props.web3.data.eth.accounts[0]);
-        this.props.accountUpdated(this.props.web3.data.eth.accounts[0])
-        if(this.props.user.data && this.props.web3.data.eth.accounts[0]) {
-          this.props.checkBrowserWalletAddress(this.props.user, this.props.web3.data.eth.accounts[0]);
+      var interval = setInterval(() => {
+        if (this.props.web3.data && this.props.web3.data.eth.accounts[0] !== this.props.account.data) {
+          console.log('AccountWatcher');
+          console.log('this.props.account: ' + this.props.account.data);
+          console.log('accounts[0]' + this.props.web3.data.eth.accounts[0]);
+          this.props.accountUpdated(this.props.web3.data.eth.accounts[0])
+          if(this.props.user.data && this.props.web3.data.eth.accounts[0]) {
+            this.props.checkBrowserWalletAddress(this.props.user, this.props.web3.data.eth.accounts[0]);
+          }
         }
-      }
-    }, 1000);
-    this.setState({interval: interval})
+      }, 1000);
+      this.setState({interval: interval})
   }
 
   componentWillUnmount() {
@@ -46,7 +46,7 @@ class AccountWatcher extends Component {
       return(<LockedAccount />)
     }
     if(this.props.user.data && this.props.user.data.uid && !this.props.user.correctUserAccount) {
-      return (<WrongAccount />)
+      return (<WrongAccount walletAddress={this.props.user.data.uid}/>)
     }
     return(<span></span>
     )
