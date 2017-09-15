@@ -4,14 +4,16 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import * as actions from './authBox/loginActions'
 import { browserHistory } from 'react-router'
+import unlock from '../images/unlock.gif'
+
 
 const Login = ({ loadinguserdata, web3, presence, user, login, account }) =>
   <div className="w-100 bg-smoke pa3">
     <div className="w-75 center flex wrap pv4">
       <div className="w-50-l w-100 pt3 flex x">
         <section className="h-auto">
-          {web3.data && account.data
-            ? <div className="w5 center bg-white shadow-1">
+          {web3.data && account.data &&
+              <div className="w5 center bg-white shadow-1">
                 <div className="bg-gray tc ba pv1">
                   <p className="ftiny">
                     <FormattedMessage id="login.authBoxAddress" />
@@ -29,8 +31,19 @@ const Login = ({ loadinguserdata, web3, presence, user, login, account }) =>
                     <FormattedMessage id="login.loginButton" />
                   </button>
                 </div>
+              </div>}
+            {web3.data && !account.data &&
+              <div className="w5 center bg-white shadow-1">
+                <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
+                <p className='measure f3'>Please unlock your MetaMask wallet</p>
+                <div className='h-50'>
+                  <img src={unlock} alt='' className='unlock-gif' />
+                </div>
+                </div>
               </div>
-            : <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
+            }
+            {!web3.data &&
+              <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
                 <p>
                   <FormattedMessage id="login.authBoxNoEntryP1" />
                 </p>

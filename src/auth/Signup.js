@@ -15,6 +15,7 @@ import stage2a from '../images/stage2a.png'
 import stage2b from '../images/stage2b.png'
 import stage2c from '../images/stage2c.png'
 import stage2d from '../images/stage2d.png'
+import unlock from '../images/unlock.gif'
 
 const Signup = ({
   loadinguserdata,
@@ -31,8 +32,8 @@ const Signup = ({
       <div className="w-75 center flex wrap pv4">
         <div className="w-50-l w-100 pt3">
           <section className="h-auto min-h-5">
-            {web3.data && account.data
-              ? <div className="w5 center bg-white shadow-1">
+            {web3.data && account.data &&
+                <div className="w5 center bg-white shadow-1">
                   <div className="bg-gray tc ba pv1">
                     <p className="ftiny">
                       <FormattedMessage id="signup.authBoxAddress" />
@@ -44,8 +45,18 @@ const Signup = ({
                   <div className="signup-form">
                     <AuthBox />
                   </div>
-                </div>
-              : <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
+                </div>}
+                {web3.data && !account.data &&
+                  <div className="w5 center bg-white shadow-1">
+                    <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
+                    <p className='measure f3'>Please unlock your MetaMask wallet</p>
+                    <div className='h-50'>
+                      <img src={unlock} alt='' className='unlock-gif' />
+                    </div>
+                    </div>
+                  </div>}
+              {!web3.data&&
+                <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
                   <p>
                     <FormattedMessage id="signup.authBoxNoEntryP1" />
                   </p>
