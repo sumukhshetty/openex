@@ -17,8 +17,7 @@ class Home extends Component {
   getHighestSellTrade = async () => {
     await firebaseRef
       .database()
-      // .ref(`/selltradeadvertisements/${this.props.country}`)
-      .ref(`/selltradeadvertisements/${this.props.country}`)
+      .ref(`/selltradeadvertisements/${this.props.country.data}`)
       .orderByChild('price')
       .limitToFirst(1)
       .on(`child_added`, snap =>
@@ -28,7 +27,7 @@ class Home extends Component {
   getLowestBuyTrade = async () => {
     await firebaseRef
       .database()
-      .ref(`/buytradeadvertisements/${this.props.country}`)
+      .ref(`/buytradeadvertisements/${this.props.country.data}`)
       .orderByChild('price')
       .limitToLast(1)
       .on(`child_added`, snap =>
@@ -38,23 +37,27 @@ class Home extends Component {
   getTotalTradeCount = async () => {
     const allBuyTrades = await firebaseRef
       .database()
-      .ref(`/buytradeadvertisements/${this.props.country}`)
+      .ref(`/buytradeadvertisements/${this.props.country.data}`)
       .on('value', snap =>
         this.setState({ buyTradeCount: Object.keys(snap.val()).length })
       )
 
     const allSellTrades = await firebaseRef
       .database()
-      .ref(`/selltradeadvertisements/${this.props.country}`)
+      .ref(`/selltradeadvertisements/${this.props.country.data}`)
       .on('value', snap =>
         this.setState({ sellTradeCount: Object.keys(snap.val()).length })
       )
   }
-  componentDidMount() {
-    this.getHighestSellTrade()
-    this.getLowestBuyTrade()
-    this.getTotalTradeCount()
+
+  componentDidUpdate(prevProps, prevState) {
+    if(!prevProps.country.data && this.props.country.data) {
+      this.getHighestSellTrade()
+      this.getLowestBuyTrade()
+      this.getTotalTradeCount()
+    }
   }
+
   render() {
     if (this.props.loadinguserdata.data) {
       return <div>Loading...</div>
