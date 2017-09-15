@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import face from '../images/face1.png'
+import face1 from '../images/dhiren.png'
+import face2 from '../images/arpan.png'
 import { FormattedMessage } from 'react-intl'
 
 export default () =>
@@ -17,7 +18,7 @@ export default () =>
         </div>
         <div className="flex mv3 mxs cxc">
           <img
-            src={face}
+            src={face1}
             alt=""
             onClick={() => this.select('review1')}
             className={`mh2 w-auto h3`}
@@ -42,7 +43,7 @@ export default () =>
 
         <div className="flex mv3 mxs cxc">
           <img
-            src={face}
+            src={face2}
             alt=""
             onClick={() => this.select('review1')}
             className={`mh2 w-auto h3`}
