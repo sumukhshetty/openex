@@ -101,7 +101,7 @@ class Home extends Component {
               <FormattedMessage id="home.section2Header" />
             </p>
             <div className="tc center ma3 w-50-l w-100">
-              <ResponsiveEmbed src="https://www.youtube.com/embed/K7BepI1aobg" />
+              <ResponsiveEmbed src="https://www.youtube.com/embed/i2iXD59CvhA" />
             </div>
           </section>
           <section className="flex wrap col cxc bg-blue pa4">
