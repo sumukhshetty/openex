@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { firebaseRef } from '../index.js'
 import NumberFormat from 'react-number-format'
 import { browserHistory } from 'react-router'
+import FactorDailyLogo from '../images/featured/FactorDaily.png'
+import Dapps from '../images/featured/dapps.png'
 
 class Home extends Component {
   state = {
@@ -51,7 +53,7 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(!prevProps.country.data && this.props.country.data) {
+    if (!prevProps.country.data && this.props.country.data) {
       this.getHighestSellTrade()
       this.getLowestBuyTrade()
       this.getTotalTradeCount()
@@ -116,14 +118,16 @@ class Home extends Component {
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
-                  {this.state.lowestBuyTrade
-                    ? <NumberFormat
-                        value={this.state.lowestBuyTrade}
-                        thousandSeparator={true}
-                        suffix={` ${this.props.currency.data}`}
-                        className="bg-blue white bn"
-                      />
-                    : `...`}
+                  {this.state.lowestBuyTrade ? (
+                    <NumberFormat
+                      value={this.state.lowestBuyTrade}
+                      thousandSeparator={true}
+                      suffix={` ${this.props.currency.data}`}
+                      className="bg-blue white bn"
+                    />
+                  ) : (
+                    `...`
+                  )}
                 </p>
                 <p className="fmedium white ">
                   <FormattedMessage id="home.metric2" />
@@ -131,14 +135,16 @@ class Home extends Component {
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
-                  {this.state.highestSellTrade
-                    ? <NumberFormat
-                        value={this.state.highestSellTrade}
-                        thousandSeparator={true}
-                        suffix={` ${this.props.currency.data}`}
-                        className="bg-blue white bn"
-                      />
-                    : `...`}
+                  {this.state.highestSellTrade ? (
+                    <NumberFormat
+                      value={this.state.highestSellTrade}
+                      thousandSeparator={true}
+                      suffix={` ${this.props.currency.data}`}
+                      className="bg-blue white bn"
+                    />
+                  ) : (
+                    `...`
+                  )}
                 </p>
                 <p className="fmedium white ">
                   <FormattedMessage id="home.metric3" />
@@ -180,16 +186,34 @@ class Home extends Component {
               </div>
             </div>
           </section>
-          <section className="flex wrap bg-gray mxa pa3">
+          <section
+            className="flex wrap mxa pa3 cxc"
+            style={{ backgroundColor: '#fafafa' }}
+          >
             <p>
               <FormattedMessage id="home.asFeaturedOn" />
             </p>
-            <p className="b">
-              <FormattedMessage id="home.feature1" />
-            </p>
-            <p className="b">
-              <FormattedMessage id="home.feature2" />
-            </p>
+            <a
+              href="https://factordaily.com/altcoin-cryptocurrency-exchanges-in-india/"
+              target="_blank"
+            >
+              <img
+                src={FactorDailyLogo}
+                height="75px"
+                alt="Factor Daily Logo"
+              />
+            </a>
+            <a
+              href="https://dapps.ethercasts.com/dapp/ezether"
+              target="_blank"
+              className="w-33-l"
+            >
+              <img
+                src={Dapps}
+                alt="Dapps Universe Logo"
+                className="mw-100 h-auto "
+              />
+            </a>
           </section>
           <Testimonials />
         </div>
@@ -198,17 +222,14 @@ class Home extends Component {
   }
 }
 
-const Step = ({ image, byline }) =>
+const Step = ({ image, byline }) => (
   <div className="flex col mxa cxc w5 h5 bg-white shadow-1 ma3">
-    <div className="w3 flex mxc">
-      {image}
-    </div>
+    <div className="w3 flex mxc">{image}</div>
     <div className="w-100 tc">
-      <p>
-        {byline}
-      </p>
+      <p>{byline}</p>
     </div>
   </div>
+)
 
 const mapStateToProps = (state, ownProps) => {
   return {

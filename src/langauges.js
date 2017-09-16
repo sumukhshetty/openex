@@ -18,9 +18,7 @@ export default {
       benefit3line2: `KYC PROCESS`,
       benefit4line1: `TRANSPARENT`,
       benefit4line2: `COINGECKO BASE RATE`,
-      asFeaturedOn: `As Featured On`,
-      feature1: `Bitcoin talk`,
-      feature2: `dApp Universe`
+      asFeaturedOn: `As Featured on...`
     },
     about: {
       header: `We're a diverse and passionate bunch`,
