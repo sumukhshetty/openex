@@ -1,14 +1,14 @@
 import React from 'react'
-import YouTube from 'react-youtube'
+import ResponsiveEmbed from 'react-responsive-embed'
 // usage docs for youtube component https://github.com/troybetz/react-youtube
 
 const YouAreFirst = () => (
   <div className='tc'>
     <h1>It Seems like you are the first one here from your country.</h1>
     <h2>How to Use the Site...</h2>
-    <YouTube
-      videoId='https://www.youtube.com/watch?v=Clw-qf1sUZg'
-    />
+    <div className="tc center ma3 w-50-l w-100">
+      <ResponsiveEmbed src="https://www.youtube.com/embed/bFy4yC0cGfk" />
+    </div>
     <div className='mv3'>
       {/* <!-- Sharingbutton Facebook --> */}
       <a className='resp-sharing-button__link' href='https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fsharingbuttons.io' target='_blank' aria-label='Share on Facebook'>
