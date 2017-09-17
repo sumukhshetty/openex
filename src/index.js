@@ -135,6 +135,8 @@ ReactDOM.render(
             component={UserIsAuthenticated(HelpConfirmation)}
           />
           <Route path="support" component={UserIsNotAuthenticated(Support)} />
+          <Route path="support/0" component={UserIsNotAuthenticated(How)} />
+          <Route path="support/1" component={UserIsNotAuthenticated(Signup)} />
           <Route
             path="posttrade"
             component={UserIsAuthenticated(PostTradeForm)}

@@ -6,7 +6,7 @@ class Copyright extends Component {
     return (
       <p className="white tc tl-m tl-l">
         <span onClick={() => browserHistory.push('/html')}>&copy;</span> 2017,
-        Ezether | Version 1.1.3
+        Ezether | Version 1.1.5
       </p>
     )
   }
