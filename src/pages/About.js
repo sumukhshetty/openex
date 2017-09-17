@@ -16,8 +16,8 @@ import ethChart from '../images/Ethereum_prices_have_skyrocketed_over_the_past_y
 
 export default class About extends Component {
   render() {
-    const teamMember = (name, photo) =>
-      <div className="pa3 w-33-l w-50">
+    const teamMember = (name, photo) => (
+      <div className="pa3 w-33-l w-50-m w-100">
         <div className="w-100 tc">
           <img src={photo} alt={name} />
         </div>
@@ -31,6 +31,7 @@ export default class About extends Component {
           <FormattedMessage id={`about.${name}Bio`} />
         </p>
       </div>
+    )
 
     return (
       <div>
