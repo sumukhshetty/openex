@@ -68,7 +68,7 @@ export default class About extends Component {
                 </div>
               )}
             </div> */}
-            <div className="w-75 pl4">
+            <div className="w-100">
               <h2>
                 <FormattedMessage id="about.section1" />
               </h2>
@@ -105,7 +105,7 @@ export default class About extends Component {
         <div className="w-100 bg-smoke pa3">
           <div className="w-75 center flex mxs">
             {/* <div className="w-25" /> */}
-            <div className="w-75 pl4">
+            <div className="w-100">
               <h2>
                 <FormattedMessage id="about.section2" />
               </h2>
@@ -132,7 +132,7 @@ export default class About extends Component {
         <div className="w-100 bg-white pa3">
           <div className="w-75 center flex mxs">
             {/* <div className="w-25" /> */}
-            <div className="w-75 pl4">
+            <div className="w-100">
               <h2>
                 <FormattedMessage id="about.section3" />
               </h2>
@@ -154,7 +154,7 @@ export default class About extends Component {
         <div className="w-100 bg-smoke pa3">
           <div className="w-75 center flex mxs">
             {/* <div className="w-25" /> */}
-            <div className="w-75 pl4">
+            <div className="w-100">
               <h2>
                 <FormattedMessage id="about.section4" />
               </h2>
@@ -185,7 +185,7 @@ export default class About extends Component {
         <div className="w-100 bg-white pa3 mb4">
           <div className="w-75 center flex mxs">
             {/* <div className="w-25" /> */}
-            <div className="w-75 pl4">
+            <div className="w-100">
               <h2>
                 <FormattedMessage id="about.section5" />
               </h2>
