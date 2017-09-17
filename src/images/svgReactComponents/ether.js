@@ -5,7 +5,7 @@ export default (props) => {
 
     <svg width='72px' height='118px' viewBox='0 0 72 118' version='1.1' xmlns='http://www.w3.org/2000/svg'>
 
-      <desc>Created with Sketch.</desc>
+      <desc> </desc>
       <defs />
       <g id='Page-1' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
         <g id='Home' transform='translate(-1013.000000, -1502.000000)' fillRule='nonzero'>
