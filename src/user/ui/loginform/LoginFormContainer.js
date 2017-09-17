@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import LoginForm from './LoginForm'
 import { loginUser } from './LoginFormActions'
+import * as actions from '../../../auth/authBox/loginActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -9,18 +10,20 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    onLoginFormSubmit: (loginInfo, web3) => {
-      event.preventDefault();
-      dispatch(loginUser(loginInfo, web3))
+    // onLoginFormSubmit: (loginInfo, web3) => {
+    //   event.preventDefault()
+    //   dispatch(loginUser(loginInfo, web3))
+    // },
+    login: web3 => {
+      dispatch(actions.login(web3))
     }
   }
 }
 
-const LoginFormContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginForm)
+const LoginFormContainer = connect(mapStateToProps, mapDispatchToProps)(
+  LoginForm
+)
 
 export default LoginFormContainer

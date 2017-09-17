@@ -43,6 +43,10 @@
   border-color: #4c92c2;
 }
 
+.b---gray {
+  border-color: #ccc !important;
+}
+
 .bl--gray {
   border-left-color: #ccc !important;
 }
@@ -53,6 +57,10 @@
 
 .bg-white {
   background-color: #fff;
+}
+
+.bg-white-hover:hover {
+  background-color: #fff !important;
 }
 
 .white {
@@ -88,6 +96,10 @@
 }
 
 .danger {
+  color: #d0011b;
+}
+
+.danger-hover:hover {
   color: #d0011b;
 }
 

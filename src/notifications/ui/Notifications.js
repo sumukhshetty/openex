@@ -42,10 +42,7 @@ export class Notifications extends Component {
       )
     })
     return (
-      <div
-        className="flex mxe absolute--fill fixed bg-black-80 z-1"
-        onClick={this.props.close}
-      >
+      <div className="flex mxe absolute--fill fixed bg-black-80 z-1">
         <div className="w5 bg-smoke pa3 overflow-y-auto">
           <div className="flex mxb cxc coal">
             <CancelIcon action={this.props.close} />
@@ -53,9 +50,9 @@ export class Notifications extends Component {
             {/* <GearIcon /> */}
           </div>
           <div className="flex col ">
-            {/* <div className="flex mxe mv2">
+            <div className="flex mxe mv2">
               <ClearIcon action={this.handleClear} />
-            </div> */}
+            </div>
             {rows}
           </div>
         </div>

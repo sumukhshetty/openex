@@ -11,14 +11,15 @@ const NotificationButtonInHeader = ({ notifications, showNotifications }) => {
     )
   }
   return (
-    <div className="flex">
+    <div className="flex pointer">
       <Bell action={showNotifications} className="pointer" />
-      {unseenNotifications &&
+      {unseenNotifications && (
         <div
           className="bigRedDot"
           onClick={showNotifications}
           className="pointer"
-        />}
+        />
+      )}
     </div>
   )
 }
