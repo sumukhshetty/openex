@@ -7,7 +7,7 @@ export default {
       signup: `Signup`,
       howThisWorks: `How This Works`,
       section2Header: `Trade directly with other users, keeping your money safe in smart contracts.`,
-      metric1: `TRADES AVAILABLE TODAY`,
+      metric1: `TOTAL VOLUME TRADED`,
       metric2: `BEST BUY PRICE`,
       metric3: `BEST SELL PRICE`,
       benefit1line1: `FLAT 1%`,
