@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import Testimonials from '../testimonials/Homepage'
+import Testimonials from '../../testimonials/Homepage'
 import { FormattedMessage } from 'react-intl'
 import ResponsiveEmbed from 'react-responsive-embed'
 import { connect } from 'react-redux'
-import { firebaseRef } from '../index.js'
+import { firebaseRef } from '../../index.js'
 import NumberFormat from 'react-number-format'
 import { browserHistory } from 'react-router'
-import FactorDailyLogo from '../images/featured/FactorDaily.png'
-import Dapps from '../images/featured/dapps.png'
+import Features from './Features'
+import EmailCapture from './EmailCapture'
 
 class Home extends Component {
   state = {
@@ -94,6 +94,7 @@ class Home extends Component {
               <ResponsiveEmbed src="https://www.youtube.com/embed/i2iXD59CvhA" />
             </div>
           </section>
+
           <section className="flex wrap col cxc bg-blue pa4">
             <div className="flex mxc wrap">
               <div className=" col tc ph4 flex-l dn">
@@ -176,50 +177,15 @@ class Home extends Component {
               </div>
             </div>
           </section>
-          <section
-            className="flex wrap mxa pa3 cxc"
-            style={{ backgroundColor: '#fafafa' }}
-          >
-            <p>
-              <FormattedMessage id="home.asFeaturedOn" />
-            </p>
-            <a
-              href="https://factordaily.com/altcoin-cryptocurrency-exchanges-in-india/"
-              target="_blank"
-            >
-              <img
-                src={FactorDailyLogo}
-                height="75px"
-                alt="Factor Daily Logo"
-              />
-            </a>
-            <a
-              href="https://dapps.ethercasts.com/dapp/ezether"
-              target="_blank"
-              className="w-33-l"
-            >
-              <img
-                src={Dapps}
-                alt="Dapps Universe Logo"
-                className="mw-100 h-auto "
-              />
-            </a>
-          </section>
+
+          <Features />
           <Testimonials />
+          <EmailCapture />
         </div>
       )
     }
   }
 }
-
-const Step = ({ image, byline }) => (
-  <div className="flex col mxa cxc w5 h5 bg-white shadow-1 ma3">
-    <div className="w3 flex mxc">{image}</div>
-    <div className="w-100 tc">
-      <p>{byline}</p>
-    </div>
-  </div>
-)
 
 const mapStateToProps = (state, ownProps) => {
   return {
