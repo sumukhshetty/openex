@@ -57,11 +57,10 @@ class Home extends Component {
       return (
         <div>
           <section className="tc gradient pa4">
-            <h1 className="fhuge white pt5 b">
-              <FormattedMessage id="home.header" />
-            </h1>
-            <h2 className="flarge white">
-              <FormattedMessage id="home.byline" />
+            <h1 className=" white pt5 b">Sell and Buy Ether in India.</h1>
+            <h2 className="white">
+              A Secure Ethereum Marketplace That Makes It Easy To Sell And Buy
+              Ether In India.
             </h2>
             <div className="flex wrap mxa cxe w-50 center pt3 dn-m flex-l">
               <div className="col mxc dn flex-l">
@@ -87,9 +86,10 @@ class Home extends Component {
             </div>
           </section>
           <section className="pa4">
-            <p className="measure-narrow center ma3 flarge tc">
-              <FormattedMessage id="home.section2Header" />
-            </p>
+            <h3 className="measure center pb3 flarge tc">
+              Trade Ethereum directly with other users in India. <br />We will
+              keep your money safe using smart contracts.
+            </h3>
             <div className="tc center ma3 w-50-l w-100">
               <ResponsiveEmbed src="https://www.youtube.com/embed/i2iXD59CvhA" />
             </div>
@@ -102,9 +102,9 @@ class Home extends Component {
                     ? `${Math.floor(this.state.totalTradeVolume)} ETH`
                     : `...`}
                 </p>
-                <p className="fmedium white ">
+                <h4 className="fmedium white ">
                   <FormattedMessage id="home.metric1" />
-                </p>
+                </h4>
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
@@ -119,9 +119,9 @@ class Home extends Component {
                     `...`
                   )}
                 </p>
-                <p className="fmedium white ">
+                <h4 className="fmedium white ">
                   <FormattedMessage id="home.metric2" />
-                </p>
+                </h4>
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
@@ -136,43 +136,43 @@ class Home extends Component {
                     `...`
                   )}
                 </p>
-                <p className="fmedium white ">
+                <h4 className="fmedium white">
                   <FormattedMessage id="home.metric3" />
-                </p>
+                </h4>
               </div>
             </div>
             <div className="flex wrap mxa w-75">
               <div className="flex col mxc mv3">
-                <p className=" fsmall w4 white tc mv0">
+                <h5 className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit1line1" />
-                </p>
-                <p className="fsmall w4 white tc mv0">
+                </h5>
+                <h5 className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit1line2" />
-                </p>
+                </h5>
               </div>
               <div className="flex col mxc mv3">
-                <p className=" fsmall w4 white tc mv0">
+                <h5 className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit2line1" />
-                </p>
-                <p className="fsmall w4 white tc mv0">
+                </h5>
+                <h5 className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit2line2" />
-                </p>
+                </h5>
               </div>
               <div className="flex col mxc mv3">
-                <p className=" fsmall w4 white tc mv0">
+                <h5 className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit3line1" />
-                </p>
-                <p className="fsmall w4 white tc mv0">
+                </h5>
+                <h5 className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit3line2" />
-                </p>
+                </h5>
               </div>
               <div className="flex col mxc mv3">
-                <p className=" fsmall w4 white tc mv0">
+                <h5 className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit4line1" />
-                </p>
-                <p className="fsmall w4 white tc mv0">
+                </h5>
+                <h5 className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit4line2" />
-                </p>
+                </h5>
               </div>
             </div>
           </section>
@@ -180,9 +180,9 @@ class Home extends Component {
             className="flex wrap mxa pa3 cxc"
             style={{ backgroundColor: '#fafafa' }}
           >
-            <p>
+            <h6>
               <FormattedMessage id="home.asFeaturedOn" />
-            </p>
+            </h6>
             <a
               href="https://factordaily.com/altcoin-cryptocurrency-exchanges-in-india/"
               target="_blank"
