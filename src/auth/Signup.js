@@ -101,7 +101,7 @@ const Signup = ({
           <FormattedMessage id="signup.section2Header" />
         </p>
         <div className="tc center ma3 w-50-l w-100">
-          <ResponsiveEmbed src="https://www.youtube.com/embed/i2iXD59CvhA" />
+          <ResponsiveEmbed src="https://www.youtube.com/embed/9eJhipwfQRo" />
         </div>
       </div>
     </div>
