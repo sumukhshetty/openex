@@ -204,7 +204,7 @@ export default {
 Save your wallet seed words somewhere safe. `
     },
     testimonials: {
-      title: `What our users say about us`,
+      title: `What our users say about us...`,
       home1copy: `I’ve been trading in cryptocurrencies since 2012, and always had to transfer my funds to a local wallet.I like having funds close at hand, on my browser, where I spend most of my day.`,
       home1name: `DHIREN`,
       home1title: `Day Trader`,
