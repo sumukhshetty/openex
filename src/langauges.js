@@ -160,9 +160,9 @@ export default {
       docHeader2: `Glossary`,
       docBody2: `Confused by the terminology? Here we convert the crypto-speak into simple everyday terms so that you don’t feel left out.`,
       docHeader3: `FAQs`,
-      docBody3: `IWhat is ether useful for? How much gas should I pay for a transaction?? This, and many more frequently asked questions answered here`,
-      // legend: `Still got a query? Reach out anytime and we’re happy to answer
-      // your questions.`,
+      docBody3: `What is ether useful for? How much gas should I pay for a transaction?? This, and many more frequently asked questions answered here`,
+      legend: `Still got a query? Reach out anytime and we’re happy to answer
+      your questions.`,
       legend: `Reach out anytime and we’re happy to answer
       your questions.`,
       returnEmail: `Return Email`,
