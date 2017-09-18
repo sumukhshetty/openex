@@ -13,8 +13,7 @@ class Home extends Component {
   state = {
     highestSellTrade: null,
     lowestBuyTrade: null,
-    buyTradeCount: null,
-    sellTradeCount: null
+    totalTradeVolume: null
   }
   getHighestSellTrade = async () => {
     await firebaseRef
@@ -36,27 +35,18 @@ class Home extends Component {
         this.setState({ lowestBuyTrade: snap.val().price })
       )
   }
-  getTotalTradeCount = async () => {
-    const allBuyTrades = await firebaseRef
+  getTotalVolume = async () => {
+    await firebaseRef
       .database()
-      .ref(`/buytradeadvertisements/${this.props.country.data}`)
-      .on('value', snap =>
-        this.setState({ buyTradeCount: Object.keys(snap.val()).length })
-      )
-
-    const allSellTrades = await firebaseRef
-      .database()
-      .ref(`/selltradeadvertisements/${this.props.country.data}`)
-      .on('value', snap =>
-        this.setState({ sellTradeCount: Object.keys(snap.val()).length })
-      )
+      .ref('totalvolume')
+      .on('value', snap => this.setState({ totalTradeVolume: snap.val() }))
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (!prevProps.country.data && this.props.country.data) {
+      this.getTotalVolume()
       this.getHighestSellTrade()
       this.getLowestBuyTrade()
-      this.getTotalTradeCount()
     }
   }
 
@@ -108,8 +98,8 @@ class Home extends Component {
             <div className="flex mxc wrap">
               <div className=" col tc ph4 flex-l dn">
                 <p className="f2 white mb2">
-                  {this.state.buyTradeCount && this.state.sellTradeCount
-                    ? this.state.buyTradeCount + this.state.sellTradeCount
+                  {this.state.totalTradeVolume
+                    ? `${Math.floor(this.state.totalTradeVolume)} ETH`
                     : `...`}
                 </p>
                 <p className="fmedium white ">
