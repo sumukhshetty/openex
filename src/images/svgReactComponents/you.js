@@ -11,7 +11,7 @@ export default props => {
       className="mh1"
       style={{ minWidth: '25px' }}
     >
-      <desc>Created with Sketch.</desc>
+      <desc>You</desc>
       <defs />
       <g
         id="Mockups"
