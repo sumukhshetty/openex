@@ -37,9 +37,9 @@ export default {
       arseniyTitle: `Co-founder`,
       arseniyBio: `Arseniy studied at Cal Poly, and has interned at …`,
 
-      zakhilName: `ZAKHIL SURESH`,
-      zakhilTitle: `Support Ninja`,
-      zakhilBio: `Zakhil’s been trading Ether since 2015, one of the first points of sale for Ether tokens in India.  He brings immense patience and experience in dealing with the technicalities and issues that crop up when dealing with introducing these ideas to new users.`,
+      zakhilName: `Team ZakaSiviS`,
+      zakhilTitle: `Support Ninjas`,
+      zakhilBio: `A group of 3 cryptocurrency enthusiasts, they been involved with digital currency projects since 2014, running one of the first points of sale for Ether tokens in India. They bring immense experience in dealing with issues that crop up while introducing these ideas to new users.`,
 
       bharatName: `BHARAT AGARWAL`,
       bharatTitle: `UX Designer`,
