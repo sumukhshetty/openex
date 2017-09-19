@@ -190,6 +190,10 @@ module.exports = {
           { from: coinbase, value: value },
           function(error, result) {
             if (!error) {
+              window.analytics.track('Seller Confirmed Trade', {
+                location: 'activetrade',
+                text: 'Confirm Trade'
+              })
               console.log('exchange.data.addOrder')
               dispatch(sendEtherState('waiting-for-tx-to-mine'))
               dispatch(setTxHash(result))
@@ -250,6 +254,10 @@ module.exports = {
         if (error) {
           console.log(error)
         }
+        window.analytics.track('Buyer Confirms Payment', {
+          location: 'activetrade',
+          text: 'Confirm Payment'
+        })
         notificationHelpers.sendBuyerConfirmsPaymentNotification(
           buyer,
           seller,
@@ -454,6 +462,10 @@ module.exports = {
           purchaseRequestId,
           purchaseRequest.tradeAdvertisementType
         )
+        window.analytics.track('Seller Cancels Trade', {
+          location: 'activetrade',
+          text: 'Cancel Trade'
+        })
       })
     notificationHelpers.sendSellerCancelsTrade(
       seller,
@@ -497,6 +509,10 @@ module.exports = {
           purchaseRequestId,
           purchaseRequest.tradeAdvertisementType
         )
+        window.analytics.track('Buyer Cancels Trade', {
+          location: 'activetrade',
+          text: 'Cancel Trade'
+        })
       })
     notificationHelpers.sendBuyerCancelsTrade(
       seller,
@@ -523,6 +539,10 @@ module.exports = {
       .ref('/purchaserequests/' + seller.country + '/' + purchaseRequestId)
       .set(updatedPurchaseRequest)
       .then(function() {
+        window.analytics.track('Seller Raises Dispute', {
+          location: 'activetrade',
+          text: 'Dispute Trade'
+        })
         purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(
           seller,
           purchaseRequestId,
@@ -553,6 +573,10 @@ module.exports = {
       .ref('/purchaserequests/' + buyer.country + '/' + purchaseRequestId)
       .set(updatedPurchaseRequest)
       .then(function() {
+        window.analytics.track('Buyer Raises Dispute', {
+          location: 'activetrade',
+          text: 'Dispute Trade'
+        })
         purchaseRequestHelpers.addPurchaseRequestToDisputedTrades(
           buyer,
           purchaseRequestId,

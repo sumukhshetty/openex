@@ -131,6 +131,10 @@ export function signUpUserCustomAuth(signUpInfo, web3, country) {
                             .database()
                             .ref('/registeredAccounts/' + userid)
                             .set(true)
+                          window.analytics.identify(userid)
+                          window.analytics.track('User Signed Up', {
+                            location: 'signup'
+                          })
                           firebaseUser.updateProfile({
                             displayName: username
                           })

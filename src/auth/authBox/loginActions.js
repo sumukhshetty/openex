@@ -86,6 +86,10 @@ export function login(web3) {
                   .auth()
                   .signInWithCustomToken(res.body.token)
                   .then(function(firebaseUser) {
+                    window.analytics.identify(firebaseUser.uid)
+                    window.analytics.track('User Logged In', {
+                      location: 'login'
+                    })
                     console.log('firebaseUser', firebaseUser)
                     dispatch(userLoggedIn(firebaseUser))
                   })
