@@ -138,7 +138,9 @@ module.exports = {
       dispatch(setCurrency(currency))
 
       firebaseRef.database().ref('/prices/ETH/' + currency).once('value', function(snap) {
-        dispatch(etherPrice(snap.val()));
+        if(!Number.isNaN(snap.val())) {
+          dispatch(etherPrice(snap.val()))
+        }
       })
     })
   },

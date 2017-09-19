@@ -41,6 +41,9 @@ module.exports = {
   },
   buyerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer) => (dispatch) => {
     var now = new Date()
+    if(Number.isNaN(fiatAmount)) {
+      throw new Error('fiatAmount isNaN')
+    }
     var purchaseRequestData = {
       bankinformation: sellTradeAdvertisement.bankInformation,
       buyerAddress: buyer.data.uid,
@@ -80,7 +83,7 @@ module.exports = {
         firebaseRef.database().ref('/users/'+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
 
         notificationHelpers.sendBuyerCreatesPurchaseRequestNotification(purchaseRequestData, newRequest.key, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer)
-        
+
       })
   },
   clearState: () => (dispatch) => {
