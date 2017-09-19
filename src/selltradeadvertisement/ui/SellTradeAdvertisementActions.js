@@ -41,6 +41,9 @@ module.exports = {
   },
   buyerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer) => (dispatch) => {
     var now = new Date()
+    if(Number.isNaN(fiatAmount)) {
+      throw new Error('fiatAmount isNaN')
+    }
     var purchaseRequestData = {
       bankinformation: sellTradeAdvertisement.bankInformation,
       buyerAddress: buyer.data.uid,

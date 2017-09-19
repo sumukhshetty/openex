@@ -40,6 +40,9 @@ module.exports = {
   },
   sellerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, buyTradeAdvertisementId, buyTradeAdvertisement, buyer, sellerAddress, seller) => (dispatch) => {
     var now = new Date()
+    if(Number.isNaN(fiatAmount)) {
+      throw new Error('fiatAmount isNaN')
+    }
     var purchaseRequestData = {
       bankinformation:'Request the bank information from the seller in chat.', //need to set this to the user's profile. the
       buyerAddress: buyTradeAdvertisement.buyerAddress,
