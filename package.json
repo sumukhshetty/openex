@@ -92,6 +92,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "buildStaging": "node scripts/buildStaging",
     "test": "node scripts/testEnv.js --env=jsdom",
     "coverage": "yarn run test -- --coverage"
   },
