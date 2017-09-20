@@ -34,8 +34,9 @@ export function login(web3) {
       console.log(
         "It looks like you're on the wrong network, please switch over to the Main Ethereum Network"
       )
+      var _message = "It looks like you're on the wrong network, please switch over to the " + process.env.ETHEREUM_NETWORK_NAME
       notify.show(
-        "It looks like you're on the wrong network, please switch over to the Main Ethereum Network"
+        _message
       )
     } else {
       var data = cryptoHelpers.toHex(
@@ -60,8 +61,7 @@ export function login(web3) {
               throw result.error
             }
             let signature = result.result
-            var url =
-              'https://us-central1-automteetherexchange.cloudfunctions.net/loginUserCustomAuth'
+            var url = process.env.FIREBASE_FUNCTIONS_URL +'loginUserCustomAuth'
             var options = {
               method: 'post',
               body: {

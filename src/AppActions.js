@@ -81,7 +81,7 @@ module.exports = {
     try {
       web3.version.getNetwork(function(error, result){
         if(!error){
-          if(result==='1'){
+          if(result===process.env.ETHEREUM_NETWORK_ID.toString()){
             dispatch(wrongNetwork(false))
           } else {
             dispatch(wrongNetwork(true))

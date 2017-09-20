@@ -4,8 +4,7 @@ class MetaMaskWaitModal extends Component {
   render () {
     var url
     if (this.props.txhash){
-      // TODO change this to mainnet
-      url = 'https://etherscan.io/tx/' + this.props.txhash
+      url = process.env.ETHER_SCAN_URL + 'tx/' + this.props.txhash
     }
     return (
       <div className='flex x absolute--fill fixed bg-black-80 z-1'>
