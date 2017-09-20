@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
-import Testimonials from '../testimonials/Homepage'
+import Testimonials from '../../testimonials/Homepage'
 import { FormattedMessage } from 'react-intl'
 import ResponsiveEmbed from 'react-responsive-embed'
 import { connect } from 'react-redux'
-import { firebaseRef } from '../index.js'
+import { firebaseRef } from '../../index.js'
 import NumberFormat from 'react-number-format'
 import { browserHistory } from 'react-router'
+import Features from './Features'
+import EmailCapture from './EmailCapture'
 
 class Home extends Component {
   state = {
     highestSellTrade: null,
     lowestBuyTrade: null,
-    buyTradeCount: null,
-    sellTradeCount: null
+    totalTradeVolume: null
   }
   getHighestSellTrade = async () => {
     await firebaseRef
       .database()
-      // .ref(`/selltradeadvertisements/${this.props.country}`)
-      .ref(`/selltradeadvertisements/${this.props.country}`)
+      .ref(`/selltradeadvertisements/${this.props.country.data}`)
       .orderByChild('price')
       .limitToFirst(1)
       .on(`child_added`, snap =>
@@ -28,33 +28,28 @@ class Home extends Component {
   getLowestBuyTrade = async () => {
     await firebaseRef
       .database()
-      .ref(`/buytradeadvertisements/${this.props.country}`)
+      .ref(`/buytradeadvertisements/${this.props.country.data}`)
       .orderByChild('price')
       .limitToLast(1)
       .on(`child_added`, snap =>
         this.setState({ lowestBuyTrade: snap.val().price })
       )
   }
-  getTotalTradeCount = async () => {
-    const allBuyTrades = await firebaseRef
+  getTotalVolume = async () => {
+    await firebaseRef
       .database()
-      .ref(`/buytradeadvertisements/${this.props.country}`)
-      .on('value', snap =>
-        this.setState({ buyTradeCount: Object.keys(snap.val()).length })
-      )
+      .ref('totalvolume')
+      .on('value', snap => this.setState({ totalTradeVolume: snap.val() }))
+  }
 
-    const allSellTrades = await firebaseRef
-      .database()
-      .ref(`/selltradeadvertisements/${this.props.country}`)
-      .on('value', snap =>
-        this.setState({ sellTradeCount: Object.keys(snap.val()).length })
-      )
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.country.data && this.props.country.data) {
+      this.getTotalVolume()
+      this.getHighestSellTrade()
+      this.getLowestBuyTrade()
+    }
   }
-  componentDidMount() {
-    this.getHighestSellTrade()
-    this.getLowestBuyTrade()
-    this.getTotalTradeCount()
-  }
+
   render() {
     if (this.props.loadinguserdata.data) {
       return <div>Loading...</div>
@@ -99,15 +94,16 @@ class Home extends Component {
               <FormattedMessage id="home.section2Header" />
             </p>
             <div className="tc center ma3 w-50-l w-100">
-              <ResponsiveEmbed src="https://www.youtube.com/embed/K7BepI1aobg" />
+              <ResponsiveEmbed src="https://www.youtube.com/embed/i2iXD59CvhA" />
             </div>
           </section>
+
           <section className="flex wrap col cxc bg-blue pa4">
             <div className="flex mxc wrap">
               <div className=" col tc ph4 flex-l dn">
                 <p className="f2 white mb2">
-                  {this.state.buyTradeCount && this.state.sellTradeCount
-                    ? this.state.buyTradeCount + this.state.sellTradeCount
+                  {this.state.totalTradeVolume
+                    ? `${Math.floor(this.state.totalTradeVolume)} ETH`
                     : `...`}
                 </p>
                 <p className="fmedium white ">
@@ -116,14 +112,17 @@ class Home extends Component {
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
-                  {this.state.lowestBuyTrade
-                    ? <NumberFormat
-                        value={this.state.lowestBuyTrade}
-                        thousandSeparator={true}
-                        suffix={` ${this.props.currency.data}`}
-                        className="bg-blue white bn"
-                      />
-                    : `...`}
+                  {this.state.lowestBuyTrade ? (
+                    <NumberFormat
+                      value={this.state.lowestBuyTrade}
+                      thousandSeparator={true}
+                      suffix={` ${this.props.currency.data}`}
+                      className="bg-blue white bn"
+                      disabled={true}
+                    />
+                  ) : (
+                    `...`
+                  )}
                 </p>
                 <p className="fmedium white ">
                   <FormattedMessage id="home.metric2" />
@@ -131,14 +130,17 @@ class Home extends Component {
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
-                  {this.state.highestSellTrade
-                    ? <NumberFormat
-                        value={this.state.highestSellTrade}
-                        thousandSeparator={true}
-                        suffix={` ${this.props.currency.data}`}
-                        className="bg-blue white bn"
-                      />
-                    : `...`}
+                  {this.state.highestSellTrade ? (
+                    <NumberFormat
+                      value={this.state.highestSellTrade}
+                      thousandSeparator={true}
+                      suffix={` ${this.props.currency.data}`}
+                      className="bg-blue white bn"
+                      disabled={true}
+                    />
+                  ) : (
+                    `...`
+                  )}
                 </p>
                 <p className="fmedium white ">
                   <FormattedMessage id="home.metric3" />
@@ -180,35 +182,15 @@ class Home extends Component {
               </div>
             </div>
           </section>
-          <section className="flex wrap bg-gray mxa pa3">
-            <p>
-              <FormattedMessage id="home.asFeaturedOn" />
-            </p>
-            <p className="b">
-              <FormattedMessage id="home.feature1" />
-            </p>
-            <p className="b">
-              <FormattedMessage id="home.feature2" />
-            </p>
-          </section>
+
+          <Features />
           <Testimonials />
+          <EmailCapture />
         </div>
       )
     }
   }
 }
-
-const Step = ({ image, byline }) =>
-  <div className="flex col mxa cxc w5 h5 bg-white shadow-1 ma3">
-    <div className="w3 flex mxc">
-      {image}
-    </div>
-    <div className="w-100 tc">
-      <p>
-        {byline}
-      </p>
-    </div>
-  </div>
 
 const mapStateToProps = (state, ownProps) => {
   return {

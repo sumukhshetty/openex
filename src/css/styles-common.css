@@ -28,7 +28,7 @@ html * {
 .file-input > * {
   pointer-events: none;
 }
-.file-input > input[type="file"] {
+.file-input > input[type='file'] {
   position: absolute;
   top: 0;
   right: 0;
@@ -69,7 +69,7 @@ code {
   background-color: #233e5e;
 }
 
-.pure-form input[type="text"]:focus {
+.pure-form input[type='text']:focus {
   border-color: #0c1a2b;
 }
 
@@ -206,8 +206,8 @@ h6 {
 
 .ethereum-wallet-id {
   width: 100%;
-  padding: .2rem;
-  font-size: .8rem;
+  padding: 0.2rem;
+  font-size: 0.8rem;
   line-height: 2.6rem;
   text-align: center;
   color: white;
@@ -226,7 +226,7 @@ h6 {
   display: block;
   width: 20px;
   margin: auto;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .ethereum-automte {
@@ -235,8 +235,8 @@ h6 {
   min-height: 22rem;
   padding: 1px 1rem; /*prevent margin collapse with 1px padding on top*/
   background-color: white;
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .ethereum-automte h3 {
@@ -248,7 +248,7 @@ h6 {
   top: 1.5rem;
   right: 1rem;
   display: block;
-  font-size: .7rem;
+  font-size: 0.7rem;
 }
 
 .ethereum-automte a {
@@ -273,7 +273,7 @@ h6 {
 
 .ethereum-automte footer {
   margin-top: 1rem;
-  font-size: .8rem;
+  font-size: 0.8rem;
   line-height: 35px;
 }
 
@@ -318,7 +318,7 @@ footer.page-footer {
 
 /* button customizations */
 button {
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   color: white;
   border: none;
   border-radius: 2px;
@@ -416,19 +416,19 @@ fieldset {
 
 input {
   width: 16rem;
-  padding: 3px 0;
-  text-indent: .25rem;
+  padding: 8px;
+  text-indent: 0.25rem;
   border: 1px solid #4c92c2;
 }
 
-input[type="radio"] {
+input[type='radio'] {
   width: inherit;
 }
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder,
 select {
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-style: italic;
   color: #9b9b9b;
 }
@@ -436,7 +436,7 @@ select {
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder,
 select {
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-style: italic;
   color: #9b9b9b;
 }
@@ -444,7 +444,7 @@ select {
 input::placeholder,
 textarea::placeholder,
 select {
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-style: italic;
   color: #9b9b9b;
 }
@@ -456,29 +456,29 @@ textarea {
 select {
   width: 16rem;
   padding: 3px 0;
-  text-indent: .25rem;
+  text-indent: 0.25rem;
   border: 1px solid #4c92c2;
   border-radius: 0;
-  background: url("../images/dropdownCaret.png") white no-repeat 95% !important; /* !important used for overriding all other customisations */
+  background: url('../images/dropdownCaret.png') white no-repeat 95% !important; /* !important used for overriding all other customisations */
 
   -webkit-appearance: none;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   width: inherit;
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   color: white;
   border: none;
   border-radius: 2px;
   background-color: #2196f3;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   position: absolute;
 }
 
-input[type="number"] {
+input[type='number'] {
   text-indent: 1rem;
 }
 
@@ -496,8 +496,8 @@ thead tr {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  margin: .25rem 0;
-  padding: .5rem;
+  margin: 0.25rem 0;
+  padding: 0.5rem;
   color: #9e9e9e;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -507,8 +507,8 @@ tbody tr {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  margin: .25rem 0;
-  padding: .5rem;
+  margin: 0.25rem 0;
+  padding: 0.5rem;
   color: #757575;
   background-color: white;
 }
@@ -687,4 +687,11 @@ Contains styles for all buttons, please delete whichever buttos we dont use in t
 .resp-sharing-button--google:active {
   background-color: #c23321;
   border-color: #c23321;
+}
+
+.unlock-gif {
+  max-height: 100%;
+  max-width: 100%;
+  border: 1px solid gray;
+  border-radius: 6px;
 }

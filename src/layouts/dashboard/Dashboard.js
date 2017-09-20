@@ -26,8 +26,12 @@ class Dashboard extends Component {
     console.log('');
     // TODO change this to mainnet
     console.log("Dashboard.componentWillMount")
-    this.props.loadExchange(this.props.web3.data, contractAddresses.market)
-    this.props.checkBrowserWalletAddress(this.props.web3.data, this.props.user)
+    if(!this.props.exchange.data) {
+      this.props.loadExchange(this.props.web3.data, process.env.MARKETPLACE_CONTRACT_ADDRESS)
+    }
+    // if(this.props.account.data) {
+    //   this.props.checkBrowserWalletAddress(this.props.user, this.props.account.data)
+    // }
     firebaseMessaging.onTokenRefresh(function () {
       firebaseMessaging.getToken()
     .then(function (refreshedToken) {
@@ -72,11 +76,11 @@ class Dashboard extends Component {
 
   render () {
     if(!this.props.web3.wrongnetwork){
-      if(this.props.web3.locked){
-        return (
-          <LockedAccount />
-          )
-      }
+      // if(this.props.web3.locked){
+      //   return (
+      //     <LockedAccount />
+      //     )
+      // }
       if(this.props.user.correctUserAccount){
         return (
           <section className='bg-smoke'>

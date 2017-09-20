@@ -4,25 +4,24 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import * as actions from './authBox/loginActions'
 import { browserHistory } from 'react-router'
+import unlock from '../images/unlock.gif'
 
-const Login = ({ loadinguserdata, web3, presence, user, login }) =>
+const Login = ({ loadinguserdata, web3, presence, user, login, account }) => (
   <div className="w-100 bg-smoke pa3">
     <div className="w-75 center flex wrap pv4">
       <div className="w-50-l w-100 pt3 flex x">
         <section className="h-auto">
-          {web3.data && web3.data.eth.accounts[0]
-            ? <div className="w5 center bg-white shadow-1">
-              <div className="bg-gray tc ba pv1">
-                <p className="ftiny">
-                  <FormattedMessage id="login.authBoxAddress" />
-                </p>
-                <p className="ftiny">
-                  {web3.data.eth.accounts[0]}
-                </p>
-              </div>
-              <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
-                <button
-                  data-test="loginButton"
+          {web3.data &&
+            account.data && (
+              <div className="w5 center bg-white shadow-1">
+                <div className="bg-gray tc ba pv1">
+                  <p className="ftiny">
+                    <FormattedMessage id="login.authBoxAddress" />
+                  </p>
+                  <p className="ftiny">{account.data}</p>
+                </div>
+                <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
+                  <button
                     type="submit"
                     onClick={() => login(web3)}
                     className="w-100 br3 b---gray mb2"
@@ -31,23 +30,39 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
                   </button>
                 </div>
               </div>
-            : <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
-                <p>
-                  <FormattedMessage id="login.authBoxNoEntryP1" />
-                </p>
-                <p>
-                  <FormattedMessage
-                    id="login.authBoxNoEntryP2"
-                    values={{
-                      metamaskLink: (
-                        <a href="https://metamask.io/" target="_blank">
-                          install metamask
-                        </a>
-                      )
-                    }}
-                  />
-                </p>
-              </div>}
+            )}
+          {web3.data &&
+            !account.data && (
+              <div className="w5 center bg-white shadow-1">
+                <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
+                  <p className="measure f3">
+                    Please unlock your MetaMask wallet
+                  </p>
+                  <div className="h-50">
+                    <img src={unlock} alt="" className="unlock-gif" />
+                  </div>
+                </div>
+              </div>
+            )}
+          {!web3.data && (
+            <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
+              <p>
+                <FormattedMessage id="login.authBoxNoEntryP1" />
+              </p>
+              <p>
+                <FormattedMessage
+                  id="login.authBoxNoEntryP2"
+                  values={{
+                    metamaskLink: (
+                      <a href="https://metamask.io/" target="_blank">
+                        install metamask
+                      </a>
+                    )
+                  }}
+                />
+              </p>
+            </div>
+          )}
         </section>
       </div>
       <div className="w-50-l w-100 pa3">
@@ -94,6 +109,7 @@ const Login = ({ loadinguserdata, web3, presence, user, login }) =>
       </p>
     </div>
   </div>
+)
 
 Login.propTypes = {
   loadinguserdata: PropTypes.object.isRequired,
@@ -109,7 +125,8 @@ const mapStateToProps = (state, ownProps) => {
     loadinguserdata: state.loadinguserdata,
     web3: state.web3,
     presence: state.presence,
-    user: state.user
+    user: state.user,
+    account: state.account
   }
 }
 

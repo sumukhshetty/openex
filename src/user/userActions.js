@@ -128,6 +128,7 @@ module.exports = {
   startListeningUserAuth: () => (dispatch, getState) =>{
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
+        window.analytics.identify(user.uid)
         dispatch(updateReduxStoreDataState(true))
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
           var userProfile = snap.val()
@@ -164,6 +165,10 @@ module.exports = {
             })
 
             dispatch(updateReduxStoreDataState(false))
+            console.log('numtrades: ' + userProfile['numberOfTrades']);
+            if(userProfile['numberOfTrades'] < 1) {
+              return browserHistory.push('/buyether')
+            }
             return browserHistory.push('/dashboard')
           } else {
             const auth = firebaseRef.auth()

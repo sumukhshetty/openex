@@ -9,7 +9,7 @@ class DisputedTrades extends Component {
     console.log('DisputedTrades.checkAdmin')
     //TODO reimplement admin
     browserHistory.push('/admin')
-    var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/checkAdmin'
+    var url = process.env.FIREBASE_FUNCTIONS_URL + 'checkAdmin'
     var options = {
       method: 'post',
       body: {userUid:firebaseRef.auth().currentUser.uid},

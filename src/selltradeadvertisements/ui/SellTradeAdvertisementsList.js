@@ -4,6 +4,7 @@ import SellTradeAdvertisementRow from './SellTradeAdvertisementRow'
 import SellTradeAdvertisementsHeader from './../layouts/SellTradeAdvertisementsHeader'
 //import LoadMoreSellOrders from './LoadMoreSellOrders'
 import YouAreFirst from './../../generic-components/YouAreFirst'
+const moment = require('moment')
 
 class SellTradeAdvertisementsList extends Component {
   render(){
@@ -33,6 +34,9 @@ class SellTradeAdvertisementsList extends Component {
             var _presence
             if (component.props.presence.data){
               _presence = component.props.presence.data[selltradeadvertisement.value.sellerUid]
+              if(moment().diff(_presence, 'days') >= 5) {
+                return null
+              }
             }
             return (<SellTradeAdvertisementRow
               price={price}

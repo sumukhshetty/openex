@@ -5,10 +5,12 @@
       "$orderId": {
         ".write": "auth != null",
         "status": {
-          ".validate": "(data.val() == null && newData.val() == 'Initiated') || (data.val() == 'In Escrow' && newData.val() == 'Payment Confirmed' && auth.uid == data.parent().child('buyerUid').val())"
+          ".validate":
+            "(data.val() == null && newData.val() == 'Initiated') || (data.val() == 'In Escrow' && newData.val() == 'Payment Confirmed' && auth.uid == data.parent().child('buyerUid').val())"
         },
         "cancelled": {
-          ".validate": "(auth.uid == data.parent().child('buyerUid').val() || auth.uid == data.parent().child('sellerUid').val()) && auth.uid == newData.val()"
+          ".validate":
+            "(auth.uid == data.parent().child('buyerUid').val() || auth.uid == data.parent().child('sellerUid').val()) && auth.uid == newData.val()"
         }
       }
     },
@@ -23,10 +25,11 @@
     "purchaserequests": {
       ".read": "auth != null",
       ".write": "auth != null",
-      "$countryCode":{
-        "$purchaseRequestId":{
+      "$countryCode": {
+        "$purchaseRequestId": {
           "status": {
-            ".validate": "newData.isString() && (data.val() == null && newData.val() == 'Awaiting Seller Confirmation') || (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Awaiting Payment')|| (data.val() == 'Awaiting Payment' && newData.val() == 'Awaiting Release')|| (data.val() == 'Awaiting Release' && newData.val() == 'All Done')|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Seller Canceled Trade' )|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Buyer Canceled Trade' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Buyer Raised Dispute' && newData.val() == 'All Done' )|| (data.val() == 'Seller Raised Dispute' && newData.val() == 'All Done' )"
+            ".validate":
+              "newData.isString() && (data.val() == null && newData.val() == 'Awaiting Seller Confirmation') || (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Awaiting Payment')|| (data.val() == 'Awaiting Payment' && newData.val() == 'Awaiting Release')|| (data.val() == 'Awaiting Release' && newData.val() == 'All Done')|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Seller Canceled Trade' )|| (data.val() == 'Awaiting Seller Confirmation' && newData.val() == 'Buyer Canceled Trade' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Payment' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Buyer Raised Dispute' )|| (data.val() == 'Awaiting Release' && newData.val() == 'Seller Raised Dispute' )|| (data.val() == 'Buyer Raised Dispute' && newData.val() == 'All Done' )|| (data.val() == 'Seller Raised Dispute' && newData.val() == 'All Done' )"
           },
           "sellerAddress": {
             ".validate": "!data.exists() || newData.val() == data.val()"
@@ -54,22 +57,27 @@
           ".validate": "!data.exists() || newData.val() === data.val()"
         },
         "firstPurchase": {
-          ".validate": "(!data.exists() && newData.val() <= now) || newData.val() === data.val()"
+          ".validate":
+            "(!data.exists() && newData.val() <= now) || newData.val() === data.val()"
         },
         "isAdmin": {
-          ".validate": "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
+          ".validate":
+            "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
         },
         "kycComplete": {
-          ".validate": "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
+          ".validate":
+            "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
         },
         "username": {
           ".validate": "!data.exists() || newData.val() === data.val()"
         },
-        "verifiedIdentification":{
-         ".validate": "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
+        "verifiedIdentification": {
+          ".validate":
+            "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
         },
-        "verifiedPhoneNumber":{
-         ".validate": "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
+        "verifiedPhoneNumber": {
+          ".validate":
+            "(!data.exists() && newData.val() === false) || newData.val() === data.val()"
         }
       }
     },
@@ -128,11 +136,11 @@
           ".write": "auth.uid === $uid",
           "sellerInterfaceAddress": {
             ".validate": "!data.exists()"
-          } 
+          }
         }
       }
     },
-    "registeredAccounts":{
+    "registeredAccounts": {
       ".read": "true",
       ".validate": "!data.exists()"
     },
@@ -140,9 +148,13 @@
       ".read": "true",
       ".write": "false"
     },
-    "presence":{
-      ".read":"true",
+    "presence": {
+      ".read": "true",
       ".write": "true"
+    },
+    "totalvolume": {
+      ".read": "true",
+      ".write": "false"
     }
   }
 }

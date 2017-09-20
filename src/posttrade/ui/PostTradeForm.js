@@ -63,6 +63,12 @@ class PostTradeForm extends Component {
     })
   }
 
+  componentDidMount(){
+    window.analytics.track('User Clicked Post a Trade Tab', {
+      location: 'posttrade'
+    })
+  }
+
   onInputChange(event) {
     var _postTradeDetails = this.state.postTradeDetails
     if (event.target.id === 'location') {
@@ -334,6 +340,7 @@ class PostTradeForm extends Component {
                   <option value="National Bank">National Bank</option>
                   <option value="cash">cash</option>
                   <option value="mobile">mobile</option>
+                  <option value="PayPal">PayPal</option>
                 </select>
               </div>
 

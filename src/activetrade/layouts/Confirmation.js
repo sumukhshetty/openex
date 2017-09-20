@@ -30,11 +30,11 @@ class Confirmation extends Component {
   render () {
     var txHashUrl
     if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
-      txHashUrl = "https://etherscan.io/tx/"+this.props.txhash
+      txHashUrl = process.env.ETHER_SCAN_URL + "tx/" + this.props.txhash
     }
     var contractUrl
     if(this.props.sendEtherState === 'insufficient-available-balance'){
-      contractUrl = "https://etherscan.io/address/"+this.props.sellerInterface.address
+      contractUrl = process.env.ETHER_SCAN_URL + "address/" + this.props.sellerInterface.address
     }
     return (
       <section className='bg-smoke'>
@@ -68,23 +68,6 @@ class Confirmation extends Component {
                }
                  {this.props.sendEtherState === 'sending' &&
                  <span>Please accept the transaction in MetaMask</span>}
-                 {this.props.sendEtherState === 'insufficient-available-balance' &&
-                 <div>
-                 <span> You need to add {this.props.activetrade.etherAmount*1.01} ETH to the smart contract to initiate the trade. Please accept the transaction on Metamask</span>
-                 <span> <a target="_blank" href={contractUrl}>{contractUrl}</a></span>
-                 <input type='number' onChange={this.onEtherAmountChange.bind(this)} required/>
-                 <button onClick={this.handleEscrowRequest.bind(this)}> submit </button>
-                 </div>
-               }
-               {this.props.sendEtherState === 'no-eth-order-book' &&
-               <div>
-               <div>
-                 <span>You haven't created an Order Book Contract</span>
-                 </div>
-                 <div>
-                 <button onClick={this.props.createSellerInterfaceContract}> Create Contract</button>
-                 </div>
-               </div>}
                {this.props.sendEtherState === 'waiting-for-tx-to-mine' &&
                <div>
               <div> Your contract is being mined. You can check the status of you transaction here: </div>

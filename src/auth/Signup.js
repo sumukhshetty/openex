@@ -15,6 +15,7 @@ import stage2a from '../images/stage2a.png'
 import stage2b from '../images/stage2b.png'
 import stage2c from '../images/stage2c.png'
 import stage2d from '../images/stage2d.png'
+import unlock from '../images/unlock.gif'
 
 const Signup = ({
   loadinguserdata,
@@ -23,44 +24,60 @@ const Signup = ({
   user,
   country,
   onSignUpFormCustomAuthSubmit,
-  onSignUpFormSubmit
-}) =>
+  onSignUpFormSubmit,
+  account
+}) => (
   <div>
     <div className="w-100 bg-smoke pa3">
       <div className="w-75 center flex wrap pv4">
         <div className="w-50-l w-100 pt3">
           <section className="h-auto min-h-5">
-            {web3.data && web3.data.eth.accounts[0]
-              ? <div className="w5 center bg-white shadow-1">
+            {web3.data &&
+              account.data && (
+                <div className="w5 center bg-white shadow-1">
                   <div className="bg-gray tc ba pv1">
                     <p className="ftiny">
                       <FormattedMessage id="signup.authBoxAddress" />
                     </p>
-                    <p className="ftiny">
-                      {web3.data.eth.accounts[0]}
-                    </p>
+                    <p className="ftiny">{account.data}</p>
                   </div>
                   <div className="signup-form">
                     <AuthBox />
                   </div>
                 </div>
-              : <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
-                  <p>
-                    <FormattedMessage id="signup.authBoxNoEntryP1" />
-                  </p>
-                  <p>
-                    <FormattedMessage
-                      id="signup.authBoxNoEntryP2"
-                      values={{
-                        metamaskLink: (
-                          <a href="https://metamask.io/" target="_blank">
-                            install metamask
-                          </a>
-                        )
-                      }}
-                    />
-                  </p>
-                </div>}
+              )}
+            {web3.data &&
+              !account.data && (
+                <div className="w5 center bg-white shadow-1">
+                  <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
+                    <p className="measure f3">
+                      Please unlock your MetaMask wallet
+                    </p>
+                    <div className="h-50">
+                      <img src={unlock} alt="" className="unlock-gif" />
+                    </div>
+                  </div>
+                </div>
+              )}
+            {!web3.data && (
+              <div className="w5 center flex col mxc h-100 min-h-5 tc bg-white shadow-1 pa3">
+                <p>
+                  <FormattedMessage id="signup.authBoxNoEntryP1" />
+                </p>
+                <p>
+                  <FormattedMessage
+                    id="signup.authBoxNoEntryP2"
+                    values={{
+                      metamaskLink: (
+                        <a href="https://metamask.io/" target="_blank">
+                          install metamask
+                        </a>
+                      )
+                    }}
+                  />
+                </p>
+              </div>
+            )}
           </section>
         </div>
         <div className="w-50-l w-100 pa3">
@@ -84,7 +101,7 @@ const Signup = ({
           <FormattedMessage id="signup.section2Header" />
         </p>
         <div className="tc center ma3 w-50-l w-100">
-          <ResponsiveEmbed src="https://www.youtube.com/embed/K7BepI1aobg" />
+          <ResponsiveEmbed src="https://www.youtube.com/embed/9eJhipwfQRo" />
         </div>
       </div>
     </div>
@@ -186,6 +203,7 @@ const Signup = ({
       </div>
     </div>
   </div>
+)
 
 // Login.propTypes = {
 //   loadinguserdata: PropTypes.array.isRequired,
@@ -198,7 +216,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     loadinguserdata: state.loadinguserdata,
     web3: state.web3,
-    presence: state.presence
+    presence: state.presence,
+    account: state.account
   }
 }
 

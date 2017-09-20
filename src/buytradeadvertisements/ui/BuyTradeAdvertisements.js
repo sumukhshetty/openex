@@ -6,6 +6,11 @@ import BuyTradeAdvertisementsListContainer from './BuyTradeAdvertisementsListCon
 import YouAreFirst from './../../generic-components/YouAreFirst'
 
 class BuyTradeAdvertisements extends Component {
+  componentDidMount(){
+    window.analytics.track('User Clicked Sell Tab', {
+      location: 'buytradeadvertisements'
+    })
+  }
   render () {
     return (
       <div>
