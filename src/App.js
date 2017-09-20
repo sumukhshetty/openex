@@ -28,6 +28,7 @@ import './css/pure-min.css'
 import './css/styles-common.css'
 import './css/atomic.css'
 import './css/swatch.css'
+import './css/forms.css'
 
 import Bell from './images/svgReactComponents/Bell'
 import NotificationsContainer from './notifications/ui/NotificationsContainer'
@@ -243,7 +244,7 @@ class App extends Component {
           </div>
         )
         return (
-          <section className="Site">
+          <main className="Site">
             <AccountWatcher />
             <Toast />
             {/*<EtherPriceContainer />*/}
@@ -251,15 +252,15 @@ class App extends Component {
             <OnlyAuthLinks />
             {/* {unsupportedBrowser && <UseSupportedBrowser />} */}
             {/*<UserPresenceContainer />*/}
-            <main
+            <section
               role="main"
               className={firebaseRef.auth().currentUser && 'bg-smoke'}
             >
               {this.props.children}
-            </main>
+            </section>
 
             <Footer />
-          </section>
+          </main>
         )
       }
     }
