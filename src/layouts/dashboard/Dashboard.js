@@ -90,6 +90,7 @@ class Dashboard extends Component {
                   <EnableNotifications />
                   {/*<Kyc/>*/}
                   <DashboardInfoMessage />
+                  <Kyc />
                   <ActiveTrades />
                   <TradeAdvertisements />
                   <CompletedTrades />
