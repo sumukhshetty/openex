@@ -39,13 +39,13 @@ class HelpForm extends Component {
       topic: this.state.helpFormDetails.topic
     }
     this.setState({ isButtonDisabled: true })
+    var _url = process.env.FIREBASE_FUNCTIONS_URL + '/helpForm'
     request(
       {
         method: 'post',
         body: { postData: postData },
         json: true,
-        url:
-          'https://us-central1-automteetherexchange.cloudfunctions.net/helpForm'
+        url: _url
       },
       function(err, res, body) {
         if (err) {

@@ -47,7 +47,7 @@ import * as useractions from './user/userActions'
 import Raven from 'raven-js'
 
 var ReactGA = require('react-ga')
-ReactGA.initialize('UA-102946005-1')
+ReactGA.initialize(process.env.GOOGLE_ANALYTICS_ID)
 function logPageView() {
   ReactGA.set({ page: window.location.pathname })
   ReactGA.pageview(window.location.pathname)
@@ -69,17 +69,20 @@ let locale = 'en-US'
 // navigator.userLanguage ||
 // 'en-US'
 
-//var raven
-export const raven = Raven.config(
-  'https://e84964259dc24e9e902198566c748cdb@sentry.io/178466'
-).install()
+if(process.env.NODE_ENV==='production'){
+  var raven = Raven.config(
+    'https://e84964259dc24e9e902198566c748cdb@sentry.io/178466'
+  ).install()
+} else {
+  var raven
+}
 
 var config = {
-  apiKey: _firebaseconfig._apiKey,
-  authDomain: _firebaseconfig._authDomain,
-  databaseURL: _firebaseconfig._databaseURL,
-  storageBucket: _firebaseconfig._storageBucket,
-  messagingSenderId: _firebaseconfig._messagingSenderId
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DB_URL,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGE_SENDER_ID
 }
 export var firebaseRef = firebase.initializeApp(config)
 export var firebaseMessaging = firebase.messaging()

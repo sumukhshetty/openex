@@ -63,6 +63,12 @@ class PostTradeForm extends Component {
     })
   }
 
+  componentDidMount(){
+    window.analytics.track('User Clicked Post a Trade Tab', {
+      location: 'posttrade'
+    })
+  }
+
   onInputChange(event) {
     var _postTradeDetails = this.state.postTradeDetails
     if (event.target.id === 'location') {

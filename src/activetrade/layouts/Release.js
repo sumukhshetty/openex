@@ -11,7 +11,7 @@ class Release extends Component {
   render () {
     var txHashUrl
     if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
-      txHashUrl = "https://etherscan.io/tx/"+this.props.txhash
+      txHashUrl = process.env.ETHER_SCAN_URL + "tx/"+this.props.txhash
     }
     return (
       <section className='bg-smoke'>

@@ -81,7 +81,7 @@ module.exports = {
     try {
       web3.version.getNetwork(function(error, result){
         if(!error){
-          if(result==='1'){
+          if(result===process.env.ETHEREUM_NETWORK_ID.toString()){
             dispatch(wrongNetwork(false))
           } else {
             dispatch(wrongNetwork(true))
@@ -138,7 +138,9 @@ module.exports = {
       dispatch(setCurrency(currency))
 
       firebaseRef.database().ref('/prices/ETH/' + currency).once('value', function(snap) {
-        dispatch(etherPrice(snap.val()));
+        if(!Number.isNaN(snap.val())) {
+          dispatch(etherPrice(snap.val()))
+        }
       })
     })
   },

@@ -115,6 +115,7 @@ class Home extends Component {
                       thousandSeparator={true}
                       suffix={` ${this.props.currency.data}`}
                       className="bg-blue white bn"
+                      disabled={true}
                     />
                   ) : (
                     `...`
@@ -132,6 +133,7 @@ class Home extends Component {
                       thousandSeparator={true}
                       suffix={` ${this.props.currency.data}`}
                       className="bg-blue white bn"
+                      disabled={true}
                     />
                   ) : (
                     `...`

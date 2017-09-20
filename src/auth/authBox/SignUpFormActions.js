@@ -61,7 +61,7 @@ export function signUpUserCustomAuth(signUpInfo, web3, country) {
           )
           web3.currentProvider.sendAsync(
             {
-              id: 1,
+              id: process.env.ETHEREUM_NETWORK_ID,
               method: 'personal_sign',
               params: [web3.eth.accounts[0], data]
             },
@@ -77,8 +77,7 @@ export function signUpUserCustomAuth(signUpInfo, web3, country) {
                 throw result.error
               }
               let signature = result.result
-              var url =
-                'https://us-central1-automteetherexchange.cloudfunctions.net/signUpUserCustomAuth'
+              var url = process.env.FIREBASE_FUNCTIONS_URL +'signUpUserCustomAuth'
               var options = {
                 method: 'post',
                 body: {
@@ -131,6 +130,10 @@ export function signUpUserCustomAuth(signUpInfo, web3, country) {
                             .database()
                             .ref('/registeredAccounts/' + userid)
                             .set(true)
+                          window.analytics.identify(userid)
+                          window.analytics.track('User Signed Up', {
+                            location: 'signup'
+                          })
                           firebaseUser.updateProfile({
                             displayName: username
                           })
