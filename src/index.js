@@ -20,6 +20,7 @@ import About from './pages/About'
 import Landing from './pages/Landing'
 import How from './pages/How'
 import UserGuide from './pages/UserGuide'
+import FAQ from './pages/FAQ'
 import Login from './auth/Login'
 import Signup from './auth/Signup'
 import Admin from './admin/layouts/Admin'
@@ -116,8 +117,9 @@ ReactDOM.render(
             path="country/:country"
             component={UserIsNotAuthenticated(Landing)}
           />
-          <Route path="how" component={UserIsNotAuthenticated(How)} />
+
           <Route path="guide" component={UserIsNotAuthenticated(UserGuide)} />
+          <Route path="faq" component={UserIsNotAuthenticated(FAQ)} />
           <Route path="wrongnetwork" component={WrongNetwork} />
           <Route path="login" component={UserIsNotAuthenticated(Login)} />
           <Route path="signup" component={UserIsNotAuthenticated(Signup)} />
@@ -143,6 +145,10 @@ ReactDOM.render(
           <Route
             path="support/1"
             component={UserIsNotAuthenticated(UserGuide)}
+          />
+          <Route
+            path="support/2"
+            component={UserIsNotAuthenticated(FAQ)}
           />
           <Route
             path="posttrade"

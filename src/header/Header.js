@@ -31,7 +31,7 @@ class Header extends Component {
             </a>
             <a
               className="link dim white f6 f5-l dn dib-m dib-l mr3 mr4-l ttc pointer dn"
-              onClick={() => browserHistory.push('/how')}
+              onClick={() => browserHistory.push('/guide')}
               title="How This Works"
             >
               how this works
@@ -40,6 +40,7 @@ class Header extends Component {
               className="link dim white f6 f5-l mr3 mr4-l ttc pointer dn dib-m dib-l"
               onClick={() => browserHistory.push('/support')}
               title="support"
+              data-test="SupportPageButton"
             >
               support
             </a>
@@ -47,7 +48,7 @@ class Header extends Component {
               data-test="navLogin"
               className="link dim white f6 f5-l dib mr3 mr4-l ttc pointer"
               onClick={() => browserHistory.push('/login')}
-              title="support"
+              title="Login"
             >
               login
             </a>

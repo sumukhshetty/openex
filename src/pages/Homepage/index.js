@@ -83,7 +83,7 @@ class Home extends Component {
               <button
                 data-test="homeHowButton"
                 className="bg-white blue br3 ma2"
-                onClick={() => browserHistory.push('/how')}
+                onClick={() => browserHistory.push('/guide')}
               >
                 <FormattedMessage id="home.howThisWorks" />
               </button>
@@ -94,7 +94,7 @@ class Home extends Component {
               <FormattedMessage id="home.section2Header" />
             </p>
             <div className="tc center ma3 w-50-l w-100">
-              <ResponsiveEmbed src="https://www.youtube.com/embed/i2iXD59CvhA" />
+              <ResponsiveEmbed src="https://www.youtube.com/embed/9eJhipwfQRo" />
             </div>
           </section>
 
