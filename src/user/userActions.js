@@ -126,6 +126,7 @@ module.exports = {
     }
   },
   startListeningUserAuth: () => (dispatch, getState) =>{
+    console.log("redirected login")
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
         window.analytics.identify(user.uid)
@@ -165,11 +166,10 @@ module.exports = {
             })
 
             dispatch(updateReduxStoreDataState(false))
-            console.log('numtrades: ' + userProfile['numberOfTrades']);
-            if(userProfile['numberOfTrades'] < 1) {
+            /*if(userProfile['numberOfTrades'] < 1) {
               return browserHistory.push('/buyether')
             }
-            return browserHistory.push('/dashboard')
+            return browserHistory.push('/dashboard')*/
           } else {
             const auth = firebaseRef.auth()
             auth.signOut().then(function(promise){

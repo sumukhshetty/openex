@@ -23,9 +23,6 @@ import {firebaseRef} from './../../index.js'
 class Dashboard extends Component {
 
   componentWillMount () {
-    console.log('');
-    // TODO change this to mainnet
-    console.log("Dashboard.componentWillMount")
     if(!this.props.exchange.data) {
       this.props.loadExchange(this.props.web3.data, process.env.MARKETPLACE_CONTRACT_ADDRESS)
     }
