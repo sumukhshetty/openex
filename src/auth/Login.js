@@ -23,6 +23,7 @@ const Login = ({ loadinguserdata, web3, presence, user, login, account }) => (
                 <div className="w5 center flex col mxc h-100 pv3 tc bg-white shadow-1 pa3">
                   <button
                     type="submit"
+                    data-test="loginButton"
                     onClick={() => login(web3)}
                     className="w-100 br3 b---gray mb2"
                   >
