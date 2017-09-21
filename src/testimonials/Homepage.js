@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import face1 from '../images/testimonials/dhiren.png'
 import face2 from '../images/testimonials/arpan.png'
 import { FormattedMessage } from 'react-intl'

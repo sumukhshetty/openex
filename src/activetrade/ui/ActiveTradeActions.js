@@ -3,7 +3,6 @@ import * as purchaseRequestHelpers from './../../util/purchaseRequestHelpers'
 import * as notificationHelpers from './../../util/notificationHelpers'
 import { notify } from 'react-notify-toast'
 import * as contractAbis from './../../contract_addresses/contractAbi'
-import * as contractAddresses from './../../contract_addresses/contractAddresses'
 
 var ethUtil = require('ethereumjs-util')
 
@@ -78,12 +77,12 @@ function updateConfirmButtonIsDisabled(value) {
   }
 }
 
-function updateConfirmationButtonColor(value) {
+/*function updateConfirmationButtonColor(value) {
   return {
     type: 'UPDATE_CONFIRM_BUTTON_COLOR',
     payload: value
   }
-}
+}*/
 
 module.exports = {
   activeTrade: (

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { BuyForm } from './BuyForm'
 import { SellForm } from './SellForm'
 import PostTradeInstructions from './PostTradeInstructions'
-import MetaMaskWaitModal from './../../generic-components/metamaskmodal/MetaMaskWaitModal'
 import { browserHistory } from 'react-router'
 
 class PostTradeForm extends Component {
@@ -107,7 +106,6 @@ class PostTradeForm extends Component {
         buyerAddress: '',
         buyerUsername: '',
         sellerUsername: this.props.user.data.displayName,
-        buyerUsername: ''
       })
       /*      if(this.props.tradeadvertisements.data.buyether){
         _isButtonDisabled=true

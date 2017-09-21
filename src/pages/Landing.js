@@ -36,14 +36,14 @@ class Landing extends Component {
       )
   }
   getTotalTradeCount = async () => {
-    const allBuyTrades = await firebaseRef
+    await firebaseRef
       .database()
       .ref(`/buytradeadvertisements/${this.props.country}`)
       .on('value', snap =>
         this.setState({ buyTradeCount: Object.keys(snap.val()).length })
       )
 
-    const allSellTrades = await firebaseRef
+    await firebaseRef
       .database()
       .ref(`/selltradeadvertisements/${this.props.country}`)
       .on('value', snap =>
@@ -190,7 +190,7 @@ class Landing extends Component {
   }
 }
 
-const Step = ({ image, byline }) =>
+/*const Step = ({ image, byline }) =>
   <div className="flex col mxa cxc w5 h5 bg-white shadow-1 ma3">
     <div className="w3 flex mxc">
       {image}
@@ -200,7 +200,7 @@ const Step = ({ image, byline }) =>
         {byline}
       </p>
     </div>
-  </div>
+  </div>*/
 
 const mapStateToProps = (state, ownProps) => {
   return {

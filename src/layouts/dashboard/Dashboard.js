@@ -8,17 +8,17 @@ import CompletedTrades from './../../completedtrades/layouts/CompletedTrades'
 import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades'
 
 import WrongNetwork from './../wrongnetwork/WrongNetwork'
-import LockedAccount from './../lockedaccount/LockedAccount'
+//import LockedAccount from './../lockedaccount/LockedAccount'
 import WrongAccount from './../wrongaccount/WrongAccount'
 import UserPresenceContainer from './../../userpresence/UserPresenceContainer'
 //import LoadingContracts from './../../loadingcontracts/LoadingContracts'
 
-import Kyc from './kyc/layouts/Kyc'
+//import Kyc from './kyc/layouts/Kyc'
 
 import {firebaseMessaging} from './../../index.js'
 import {firebaseRef} from './../../index.js'
 
-import contractAddresses from './../../contract_addresses/contractAddresses.js'
+//import contractAddresses from './../../contract_addresses/contractAddresses.js'
 
 class Dashboard extends Component {
 

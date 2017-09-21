@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import EditTradeAdvertisementButton from './../layouts/EditTradeAdvertisementButton'
-import AddEtherModal from './../layouts/AddEtherModal'
-import { browserHistory } from 'react-router'
 
 export default class TradeAdvertisementsRow extends Component {
   constructor(props) {
@@ -30,7 +28,6 @@ export default class TradeAdvertisementsRow extends Component {
   }
 
   handleEscrowRequest() {
-    console.log('trade request handled')
 
     this.props.addEther(
       this.state.sendAmount,
@@ -46,22 +43,8 @@ export default class TradeAdvertisementsRow extends Component {
   }
 
   render() {
-    console.log('TradeAdvertisementsRow.render')
-    console.log(this.props.ethorderbook)
     if (this.props.tradeadvertisement) {
       var tradeAdvertisement = this.props.tradeadvertisement
-
-      // TODO @arseniy
-      var availableBalance
-      if (tradeAdvertisement.availableBalance) {
-        availableBalance =
-          tradeAdvertisement.availableBalance -
-          tradeAdvertisement.pendingBalance
-        availableBalance =
-          availableBalance % 1 !== 0
-            ? availableBalance.toFixed(4)
-            : availableBalance
-      }
 
       return (
         <tr className="flex cxc">

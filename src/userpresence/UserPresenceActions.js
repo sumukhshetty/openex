@@ -1,5 +1,4 @@
 import {firebaseRef, FIREBASE_TIMESTAMP} from '../index.js'
-import * as firebase from 'firebase'
 
 export function userPresence(uid) {
   console.log('userPresence')

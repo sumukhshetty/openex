@@ -32,10 +32,10 @@ class Confirmation extends Component {
     if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
       txHashUrl = process.env.ETHER_SCAN_URL + "tx/" + this.props.txhash
     }
-    var contractUrl
+    /*var contractUrl
     if(this.props.sendEtherState === 'insufficient-available-balance'){
       contractUrl = process.env.ETHER_SCAN_URL + "address/" + this.props.sellerInterface.address
-    }
+    }*/
     return (
       <section className='bg-smoke'>
         <div className='w-75 center'>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import face from '../images/face1.png'
-import ethChart from '../images/ethChart.png'
 
 export default class Terms extends Component {
   render() {

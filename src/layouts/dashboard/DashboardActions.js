@@ -1,6 +1,4 @@
-import {firebaseRef} from './../../index.js'
 import * as contractAbis from './../../contract_addresses/contractAbi'
-import {notify} from 'react-notify-toast'
 
 function setExchange(exchange) {
   return {
@@ -16,12 +14,12 @@ function userAccountCorrect(value){
   }
 }
 
-function setLockedWalletStatus(value){
+/*function setLockedWalletStatus(value){
   return {
     type: 'SET_BROWSER_WALLET_LOCK_STATUS',
     payload: value
   }
-}
+}*/
 
 module.exports = {
   loadExchange: (web3, exchangeAddress) => (dispatch) => {

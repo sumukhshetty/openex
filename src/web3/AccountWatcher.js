@@ -17,9 +17,6 @@ class AccountWatcher extends Component {
   componentWillMount() {
       var interval = setInterval(() => {
         if (this.props.web3.data && this.props.web3.data.eth.accounts[0] !== this.props.account.data) {
-          console.log('AccountWatcher');
-          console.log('this.props.account: ' + this.props.account.data);
-          console.log('accounts[0]' + this.props.web3.data.eth.accounts[0]);
           this.props.accountUpdated(this.props.web3.data.eth.accounts[0])
           if(this.props.user.data && this.props.web3.data.eth.accounts[0]) {
             this.props.checkBrowserWalletAddress(this.props.user, this.props.web3.data.eth.accounts[0]);
@@ -34,10 +31,10 @@ class AccountWatcher extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('nextProps: ');
+/*    console.log('nextProps: ');
     console.log(nextProps);
     console.log('nextState');
-    console.log(nextState);
+    console.log(nextState);*/
   }
 
 

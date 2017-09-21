@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import face from '../images/face1.png'
 
 import sumukh from '../images/team/sumukh.png'
 import qj from '../images/team/qj.png'

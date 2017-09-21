@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import face from '../images/face1.png'
 import mediation from '../images/need_for_trustless mediation.png'
 import resilienceA from '../images/a_resilient_infrastructure.png'
 import resilienceB from '../images/b_resilient_infrastructure.png'

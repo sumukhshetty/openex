@@ -3,22 +3,15 @@ import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
 import Web3 from 'web3'
-import truffleConfig from './../truffle-config.js'
 import getWeb3 from './util/getWeb3'
-
-var request = require('request')
-//var fetch = require('fetch')
 
 import { firebaseRef } from './index'
 
-import logo from './images/logo.svg'
 import ezetherlogowhite from './images/ezether_logo.png'
 import AutoLogoLight from './images/svgReactComponents/autoLogoLight.js'
 
 // UI Components
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
-import EtherPriceContainer from './etherprice/EtherPriceContainer'
-import UserPresenceContainer from './userpresence/UserPresenceContainer'
 import Header from './header/Header'
 import Footer from './footer/Footer'
 import AccountWatcher from './web3/AccountWatcherContainer'
@@ -224,7 +217,7 @@ class App extends Component {
           !/chrome/i.test(navigator.userAgent) &&
           !/firefox/i.test(navigator.userAgent)
 
-        const UseSupportedBrowser = (
+        /*const UseSupportedBrowser = (
           <div className="absolute bg-danger w-100 z-1 flex mxa cxc mt3">
             <p className="white tc ph3">
               Transactions are only supported on Chrome & Firefox at the moment.
@@ -241,7 +234,7 @@ class App extends Component {
               </button>
             </div>
           </div>
-        )
+        )*/
         return (
           <section className="Site">
             <AccountWatcher />

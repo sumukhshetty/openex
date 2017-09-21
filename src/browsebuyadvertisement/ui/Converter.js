@@ -1,7 +1,6 @@
 import React from 'react';
 import etherium from '../../images/etherium.png';
 import Flag from '../../images/Flag';
-import ConvertSymbol from '../../images/convert.png';
 
 export default (props) => (
   <form className='w-75 flex col cxc' onSubmit={props.handleTradeRequest}>
