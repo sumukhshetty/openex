@@ -66,12 +66,14 @@ class Home extends Component {
             <div className="flex wrap mxa cxe w-50 center pt3 dn-m flex-l">
               <div className="col mxc dn flex-l">
                 <a
+                  data-test="homeLoginButton"
                   className="white link underline ma2"
                   onClick={() => browserHistory.push('/login')}
                 >
                   <FormattedMessage id="home.login" />
                 </a>
                 <button
+                  data-test="homeSignupButton"
                   className="bg-white blue br3 ma2"
                   onClick={() => browserHistory.push('/signup')}
                 >
@@ -79,6 +81,7 @@ class Home extends Component {
                 </button>
               </div>
               <button
+                data-test="homeHowButton"
                 className="bg-white blue br3 ma2"
                 onClick={() => browserHistory.push('/how')}
               >
@@ -87,7 +90,7 @@ class Home extends Component {
             </div>
           </section>
           <section className="pa4">
-            <p className="measure-narrow center ma3 flarge tc">
+            <p className="measure-narrow center pb4 flarge tc">
               <FormattedMessage id="home.section2Header" />
             </p>
             <div className="tc center ma3 w-50-l w-100">

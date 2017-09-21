@@ -117,6 +117,7 @@ class App extends Component {
               <ul className="flex mxb ma0 pa0">
                 <li className="pure-menu-item">
                   <Link
+                    data-test="dashboardButton"
                     to="/dashboard"
                     activeStyle={{
                       color: 'white',
