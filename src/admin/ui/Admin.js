@@ -25,7 +25,7 @@ export default class Admin extends Component {
           } else {
             time = purchaserequest.buyerraisesdisputetime
           }
-          rows.push(<AdminRow 
+          rows.push(<AdminRow
                     index={key}
                     key={key}
                     purchaseRequestId={key}
@@ -49,7 +49,7 @@ export default class Admin extends Component {
                 />)
             })
           })
-          
+
         }
 
           return (
@@ -73,13 +73,13 @@ export default class Admin extends Component {
                           </tr>
                         </thead>
                         <tbody>
-                          { rows }                          
+                          { rows }
                           { kycRows ? kycRows : null}
-                          
+
                         </tbody>
                       </table>
                     </div>
-                   <p className='pv3 measure-wide'>Version 1.0.0</p>
+                   <p className='pv3 measure-wide'>Version 1.0.1</p>
                   </div>
                 </div>
               </div>

@@ -23,9 +23,9 @@ module.exports = {
   setEditTradeAdvertisement: (tradeAdvertisementId, tradeAdvertisementType, buytradeadvertisements, selltradeadvertisements) => (dispatch) => {
     var editTradeAdvertisement
     if (tradeAdvertisementType === 'buy-ether') {
-      editTradeAdvertisement = buytradeadvertisements.data[tradeAdvertisementId] 
+      editTradeAdvertisement = buytradeadvertisements.data[tradeAdvertisementId]
     } else {
-      editTradeAdvertisement = selltradeadvertisements.data[tradeAdvertisementId] 
+      editTradeAdvertisement = selltradeadvertisements.data[tradeAdvertisementId]
     }
     dispatch(setEditTradeAdvertisement(editTradeAdvertisement))
   },
@@ -40,6 +40,9 @@ module.exports = {
     firebaseRef.database().ref(tradeTypeRef+user.profile.country+'/'+tradeAdvertisementId)
       .set(editTradeAdvertisementData)
       .then(function(snap){
+        window.analytics.track('User Edited Ad', {
+          location: 'edittradeadvertisement'
+        })
         browserHistory.push('/dashboard')
       })
   },

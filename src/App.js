@@ -28,7 +28,7 @@ import './css/pure-min.css'
 import './css/styles-common.css'
 import './css/atomic.css'
 import './css/swatch.css'
-// import logo from './images/logo.svg'
+import './css/forms.css'
 
 import Bell from './images/svgReactComponents/Bell'
 import NotificationsContainer from './notifications/ui/NotificationsContainer'
@@ -93,8 +93,9 @@ class App extends Component {
       return (
         <div className="tr pt3 menu mt0 bg-blue">
           <div className="w-75 center">
-            {this.state.showNotifications &&
-              <NotificationsContainer close={this.removeNotifications} />}
+            {this.state.showNotifications && (
+              <NotificationsContainer close={this.removeNotifications} />
+            )}
             <div className="pure-g flex mxb cxc ">
               <div className="pure-u-1-4 brand">
                 <Link to="/">
@@ -116,6 +117,7 @@ class App extends Component {
               <ul className="flex mxb ma0 pa0">
                 <li className="pure-menu-item">
                   <Link
+                    data-test="dashboardButton"
                     to="/dashboard"
                     activeStyle={{
                       color: 'white',
@@ -187,14 +189,14 @@ class App extends Component {
       )
     })
 
-    const OnlyGuestLinks = HiddenOnlyAuth(() =>
+    const OnlyGuestLinks = HiddenOnlyAuth(() => (
       <div>
         <Header />
         <div className="h4 h3-l w-100" />
       </div>
-    )
+    ))
 
-    const noMobileWhenLoggedIn = () =>
+    const noMobileWhenLoggedIn = () => (
       <div className="absolute absolute--fill gradient white">
         <div className="flex col x h-100">
           <AutoLogoLight />
@@ -211,6 +213,7 @@ class App extends Component {
           </p>
         </div>
       </div>
+    )
 
     const isMobile = window.innerWidth <= 800
     if (isMobile && firebaseRef.auth().currentUser) {
@@ -242,7 +245,7 @@ class App extends Component {
           </div>
         )
         return (
-          <section className="Site">
+          <main className="Site">
             <AccountWatcher />
             <Toast />
             {/*<EtherPriceContainer />*/}
@@ -250,15 +253,15 @@ class App extends Component {
             <OnlyAuthLinks />
             {/* {unsupportedBrowser && <UseSupportedBrowser />} */}
             {/*<UserPresenceContainer />*/}
-            <main
+            <section
               role="main"
               className={firebaseRef.auth().currentUser && 'bg-smoke'}
             >
               {this.props.children}
-            </main>
+            </section>
 
             <Footer />
-          </section>
+          </main>
         )
       }
     }

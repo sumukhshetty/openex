@@ -7,7 +7,7 @@ class FooterTable extends Component {
       <div className="w-50-l w-100 flex wrap mxe">
         <div className="w-50 w-33-l w-33-m">
           <nav>
-            <ul className="list">
+            <ul className="list" style={{ borderColor: '#2c98f0' }}>
               <li>
                 <h3 className="white">About Us</h3>
               </li>

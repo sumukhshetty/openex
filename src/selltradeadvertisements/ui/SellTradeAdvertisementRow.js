@@ -26,7 +26,7 @@ const SellTradeAdvertisementRow = props => {
           {props.sellTradeAdvertisementData.paymentMethod}
         </td>
         <td className="fb15 tc">
-          {props.price.toFixed(2)}
+          {props.price && props.price.toFixed(2)}
         </td>
         <td className="fb5 tc">
           {props.sellTradeAdvertisementData.minTransactionLimit} -{' '}

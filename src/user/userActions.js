@@ -128,6 +128,7 @@ module.exports = {
   startListeningUserAuth: () => (dispatch, getState) =>{
     firebaseRef.auth().onAuthStateChanged(function(user){
       if(user){
+        window.analytics.identify(user.uid)
         dispatch(updateReduxStoreDataState(true))
         firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
           var userProfile = snap.val()
