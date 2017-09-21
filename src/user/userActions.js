@@ -182,7 +182,7 @@ module.exports = {
       } else {
         dispatch(updateReduxStoreDataState(false))
         dispatch({ type: "USER_LOGGED_OUT"});
-        return browserHistory.push('/')
+        //return browserHistory.push('/')
       }
     })
   }
