@@ -1,24 +1,34 @@
 var functions = require('firebase-functions');
 const admin = require('firebase-admin');
+//PRODUCTION
 var serviceAccount = require("./service-account.json");
+var databaseURL = "https://automteetherexchange.firebaseio.com"
+//STAGING - comment out to deploy to production
+// serviceAccount = require("./staging-service-account.json")
+// databaseURL = "https://ezether-staging.firebaseio.com/"
+//---------------------------------------------
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://automteetherexchange.firebaseio.com"
+  databaseURL: databaseURL
 });
 
 const cors = require('cors')({origin: true});
 
-const SolidityCoder = require("web3/lib/solidity/coder.js");
+//const SolidityCoder = require("web3/lib/solidity/coder.js");
 var ethUtil = require('ethereumjs-util');
-const Web3 = require("web3");
-const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/QmKbFq9RrJ0qz6zqSRPO'));
-const infura = web3.currentProvider;
+// const Web3 = require("web3");
+// const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/QmKbFq9RrJ0qz6zqSRPO'));
+// const infura = web3.currentProvider;
 
 //Maligun
 var mgApiKey = "key-3d2bd1463fc87e2aff2224f96c1df70a"
 var domain = "mg.automte.com"
 var mailgun= require('mailgun-js')({apiKey: mgApiKey, domain:domain})
+
+//authy - twiliorecov: QLetRWWxk5fh5QtfQgsHBiG7dL3Ug3zB/Vpr2OPg
+var phoneReg = require('./phonelib.js')('ickOj7CeoeDVaCfvODUjaZyYk5FxhjME');
+var callingCodes = require('country-data').callingCountries
 
 
 exports.notificationPostProcesing1 = functions.database.ref('/notifications/{recipientUid}/{purchaseRequestId}/status/{step}')
@@ -102,34 +112,34 @@ exports.notificationPostProcesing2 = functions.database.ref('/notifications/{rec
   })
 
 
-//TODO AK: update db rules for availableBalance: only account ownercan  write to balanceUpdateTx, which triggers this function
-exports.etherSent = functions.database.ref('/users/{uid}/balanceUpdateTx')
-  .onWrite(event=>{
-    //TODO AK: possibly check that txhash hasn't already been submitted. though right now I don't see a reason for the user to abuse this.
-    setTimeout(function(){
-      infura.sendAsync({
-        jsonrpc: "2.0",
-        method: "eth_getTransactionReceipt",
-        id: 1,
-        params: [event.data.val()]
-      }, function(err, result) {
-        if(err) {
-          throw err;
-        }
-        //check if tx went to the user's ETHOrderBook
-        let uid = event.params.uid;
-        admin.database().ref('/users/'+uid+'/orderBookAddress').once("value", function(snap) {
-          if(result.result.logs[0].address != snap.val()) {
-            res.status(500).send({error: 'Tx did not go to users ETHOrderBook. Tx address: ' + result.result.logs[0].address + ' orderBookAddress: ' + snap.val()});
-            throw 'Tx did not go to users ETHOrderBook';
-          }
-          //check for updated balance in logs
-          var balance = SolidityCoder.decodeParams(["uint"], result.result.logs[0].data.replace("0x", ""));
-          admin.database().ref('/users/'+uid+'/availableBalance').set(web3.fromWei(balance, 'ether'));
-        })
-      });
-    }, 10000)
-  })
+// DEPRECATED
+// exports.etherSent = functions.database.ref('/users/{uid}/balanceUpdateTx')
+//   .onWrite(event=>{
+//     //TODO AK: possibly check that txhash hasn't already been submitted. though right now I don't see a reason for the user to abuse this.
+//     setTimeout(function(){
+//       infura.sendAsync({
+//         jsonrpc: "2.0",
+//         method: "eth_getTransactionReceipt",
+//         id: 1,
+//         params: [event.data.val()]
+//       }, function(err, result) {
+//         if(err) {
+//           throw err;
+//         }
+//         //check if tx went to the user's ETHOrderBook
+//         let uid = event.params.uid;
+//         admin.database().ref('/users/'+uid+'/orderBookAddress').once("value", function(snap) {
+//           if(result.result.logs[0].address != snap.val()) {
+//             res.status(500).send({error: 'Tx did not go to users ETHOrderBook. Tx address: ' + result.result.logs[0].address + ' orderBookAddress: ' + snap.val()});
+//             throw 'Tx did not go to users ETHOrderBook';
+//           }
+//           //check for updated balance in logs
+//           var balance = SolidityCoder.decodeParams(["uint"], result.result.logs[0].data.replace("0x", ""));
+//           admin.database().ref('/users/'+uid+'/availableBalance').set(web3.fromWei(balance, 'ether'));
+//         })
+//       });
+//     }, 10000)
+//   })
 
 
 // Help Form
@@ -285,6 +295,69 @@ exports.loginUserCustomAuth = functions.https.onRequest((req, res) => {
   })
 })
 
+exports.requestPhoneVerification = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    var uid = req.body.uid
+    var phoneNumber = req.body.phoneNumber;
+    var countryCode = callingCodes[req.body.country].countryCallingCodes[0];
+    var via = 'sms';
+
+    console.log("body: ", req.body);
+    console.log('phonenumber: ' + phoneNumber);
+    console.log('countryCode: ' + countryCode);
+
+    if (phoneNumber && countryCode && via && uid) {
+        phoneReg.requestPhoneVerification(phoneNumber, countryCode, via, (err, response) => {
+            if (err) {
+                console.log('error creating phone reg request', err);
+                console.log('response:' + response);
+                res.status(500).json(err);
+            } else {
+                console.log('Success register phone API call: ', response);
+                //Write time otp was sent
+                admin.database().ref('/users/'+uid+'/otpSent').set(admin.database.ServerValue.TIMESTAMP)
+                admin.database().ref('/users/'+uid+'/phoneNumber').set(phoneNumber)
+                res.status(200).json(response);
+            }
+        });
+    } else {
+        console.log('Failed in Register Phone API Call', req.body);
+        res.status(500).json({error: "Missing fields"});
+    }
+  })
+})
+
+exports.verifyPhoneToken = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    var uid = req.body.uid
+    var countryCode = callingCodes[req.body.country].countryCallingCodes[0];
+    var phoneNumber = req.body.phoneNumber;
+    var token = req.body.token;
+
+    if (phoneNumber && countryCode && token && uid) {
+        phoneReg.verifyPhoneToken(phoneNumber, countryCode, token, (err, response) => {
+            if (err) {
+                console.log('error creating phone reg request', err);
+                console.log(response);
+                res.status(500).json(err);
+            } else {
+                console.log('Confirm phone success confirming code: ', response);
+                if (response.success) {
+                    //WRITE TO DB USER VERIFIED PHONE
+                    admin.database().ref('/users/'+uid+'/verifiedPhoneNumber').set(true)
+                    res.status(200).json(response)
+                }
+                res.status(200).json(err);
+            }
+
+        });
+    } else {
+        console.log('Failed in Confirm Phone request body: ', req.body);
+        res.status(500).json({error: "Missing fields"});
+    }
+  })
+})
+
 exports.newPurchaseRequest = functions.database.ref('/purchaserequests/{country}/{uid}')
   .onCreate(event=>{
     console.log(event.data.val());
@@ -292,39 +365,40 @@ exports.newPurchaseRequest = functions.database.ref('/purchaserequests/{country}
     admin.database().ref('/users/'+ event.data.val()['buyerUid']+'/activetrades/'+event.params.uid).set({'tradeType': event.data.val()['tradeAdvertisementType']})
   })
 
-exports.tradeConfirmed = functions.database.ref('/purchaserequests/{country}/{uid}/contractAddress')
-  .onWrite(event =>{
-    console.log(event.data.val());
-    setTimeout(function(){
-      infura.sendAsync({
-        method: "eth_getTransactionReceipt",
-        params: [event.data.val()],
-        jsonrpc: "2.0",
-        id: new Date().getTime()
-      }, function (error, result) {
-        console.log(result);
-        console.log(result.result.logs[1]);
-        if(error) console.error(error);
-
-        var data = SolidityCoder.decodeParams(["string","address","address","uint","uint","string","uint"], result.result.logs[1].data.replace("0x", ""));
-        var uid = data[0];
-        console.log('uid from data:' + data[0]);
-        var buyer = data[2];
-        console.log('buyer from data:' + data[2]);
-        var amount = data[3];
-        console.log('amount from data: ' + web3.fromWei(data[3], 'ether'));
-        admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid).once('value', function(snap) {
-          console.log('uid: ' + event.params.uid);
-          console.log('buyer: ' + snap.val()['buyerAddress']);
-          console.log('etherAmount: ' + snap.val()['etherAmount']);
-          if(data[0] == event.params.uid && data[2] == snap.val()['buyerAddress'] && web3.fromWei(data[3], 'ether') == snap.val()['etherAmount']) {
-            admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid+'/status').set('Awaiting Payment');
-            var now = (new Date()).toUTCString();
-            admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid+'/lastUpdated').set(now);
-            admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid+'/sellerconfirmtime').set(now);
-          }
-        })
-      });
-    }, 10000);
-
-  })
+//DEPRECATED: this check is now performed in our cloud server script, ezether-eventwatcher
+// exports.tradeConfirmed = functions.database.ref('/purchaserequests/{country}/{uid}/contractAddress')
+//   .onWrite(event =>{
+//     console.log(event.data.val());
+//     setTimeout(function(){
+//       infura.sendAsync({
+//         method: "eth_getTransactionReceipt",
+//         params: [event.data.val()],
+//         jsonrpc: "2.0",
+//         id: new Date().getTime()
+//       }, function (error, result) {
+//         console.log(result);
+//         console.log(result.result.logs[1]);
+//         if(error) console.error(error);
+//
+//         var data = SolidityCoder.decodeParams(["string","address","address","uint","uint","string","uint"], result.result.logs[1].data.replace("0x", ""));
+//         var uid = data[0];
+//         console.log('uid from data:' + data[0]);
+//         var buyer = data[2];
+//         console.log('buyer from data:' + data[2]);
+//         var amount = data[3];
+//         console.log('amount from data: ' + web3.fromWei(data[3], 'ether'));
+//         admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid).once('value', function(snap) {
+//           console.log('uid: ' + event.params.uid);
+//           console.log('buyer: ' + snap.val()['buyerAddress']);
+//           console.log('etherAmount: ' + snap.val()['etherAmount']);
+//           if(data[0] == event.params.uid && data[2] == snap.val()['buyerAddress'] && web3.fromWei(data[3], 'ether') == snap.val()['etherAmount']) {
+//             admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid+'/status').set('Awaiting Payment');
+//             var now = (new Date()).toUTCString();
+//             admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid+'/lastUpdated').set(now);
+//             admin.database().ref('/purchaserequests/'+event.params.country+'/'+event.params.uid+'/sellerconfirmtime').set(now);
+//           }
+//         })
+//       });
+//     }, 10000);
+//
+//   })
