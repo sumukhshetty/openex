@@ -8,8 +8,8 @@ class AllDone extends Component {
   render() {
     const progressMap = [
       { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },
-      { status: 'completed', label: '', text: 'Awaiting Payment' },
-      { status: 'completed', label: '', text: 'Awaiting Release' },
+      { status: 'completed', label: '', text: 'Payment Received' },
+      { status: 'completed', label: '', text: 'Ether Released' },
       { status: 'completed', label: '', text: 'All Done' }
     ]
 
