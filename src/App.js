@@ -129,6 +129,7 @@ class App extends Component {
                 </li>
                 <li className="pure-menu-item">
                   <Link
+                    data-test="buyEtherButton"
                     to="/buyether"
                     activeStyle={{
                       color: 'white',

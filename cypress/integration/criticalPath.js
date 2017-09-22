@@ -1,14 +1,7 @@
 import { user1 } from './testUsers'
 
-describe('Dashboard', () => {
+describe('Complete a Trade', () => {
   Cypress.config('baseUrl', 'http://localhost:3000/')
-
-  it('does not log me in without a token', () => {
-    // first show that by not providing a valid CSRF token
-    // that we will get a 403 status code
-    cy.visit('/')
-    cy.get(`h1`).should(`contain`, `Sell and Buy Ether in India.`)
-  })
 
   it('logs in with a token', () => {
     cy.server()
@@ -21,7 +14,7 @@ describe('Dashboard', () => {
       }
     })
 
-    cy.get(`[data-test="dashboardButton"]`).click()
+    cy.get(`[data-test="buyEtherButton"]`).click()
     cy
       .get(`[data-test="dashboardMessage"]`)
       .should(
