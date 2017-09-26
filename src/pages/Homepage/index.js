@@ -9,6 +9,7 @@ import { browserHistory } from 'react-router'
 import Features from './Features'
 import EmailCapture from './EmailCapture'
 import {ac} from './../../index.js'
+var request = require('request')
 
 class Home extends Component {
   state = {
@@ -67,74 +68,33 @@ class Home extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    /*this.props.onSignUpFormCustomAuthSubmit(
-      this.state.signUpInfo,
-      this.props.web3.data,
-      this.props.country.data
-    )*/
-    console.log('Homepage.handleSubmit')
-    console.log(this.state.signUpInfo.email)
-    console.log(ac)
+
     var url = process.env.FIREBASE_FUNCTIONS_URL +'addContactToLeadsAutomation'
-    /*var options = {
+    var options = {
       method: 'post',
       body: {
-        email: this.state.signupInfo.email,
+        email: this.state.signUpInfo.email
       },
       headers: { 'Content-Type': 'application/json' },
       json: true,
       url: url
-    }*/
-    /*request(options, function(err, res, body) {
+    }
+    request(options, function(err, res, body) {
       if (err) {
         console.error('error posting json: ', err)
         throw err
       }
       var statusCode = res.statusCode
       if (statusCode === 200) {
-        // do more stuff
-        //TODO add the user email to the signup
         browserHistory.push('/signup')
-
       }
       if (statusCode === 500) {
         throw res.body.error
       }
       if (statusCode === 401) {
-        //this should toast the message
-        dispatch(userLoggedInError(res.body.error))
         throw res.body.error
       }
-    })*/
-
-    var add_contact = ac.api("contact/add",
-      {email:this.state.signUpInfo.email,
-      headers: { 'Content-Type': 'application/json' },
-      }).catch(function(error){
-        console.log('we got an error')
-        console.log(error)
-      })
-    add_contact.then(function(response){
-      console.log("got the response from active campaign")
-      console.log(response)
-      ac.api("automation/contact_add", 
-        {email:this.state.signUpInfo.email,
-          automation:2}).catch(function(error){
-            console.log('we got another error')
-            console.log(error)
-          }).then(function(response){
-            console.log('contact added to automation')
-          })
     })
-    ac.api("automation/contact_add", 
-        {email:this.state.signUpInfo.email,
-          automation:2}).catch(function(error){
-            console.log('we got another error')
-            console.log(error)
-          }).then(function(response){
-            console.log('contact added to automation')
-          })
-    // TODO add this person to the active campaign automation
   }
 
   componentDidUpdate(prevProps, prevState) {

@@ -22,19 +22,23 @@ var mailgun= require('mailgun-js')({apiKey: mgApiKey, domain:domain})
 
 var ActiveCampaign = require("activecampaign");
 
-export const ac = new ActiveCampaign("https://ezether.api-us1.com", "b4edb6ee1d62ebe5c1fba1af3b6451ca63cb3f327593551efe76531912a2cba4cd139497");
+const ac = new ActiveCampaign("https://ezether.api-us1.com", "b4edb6ee1d62ebe5c1fba1af3b6451ca63cb3f327593551efe76531912a2cba4cd139497");
 
 exports.addContactToLeadsAutomation = functions.https.onRequest((req, res)=>{
   cors(req, res, () => {
     try{
+      console.log(req.body)
       var add_contact = ac.api("contact/add",
-      {email:this.state.signUpInfo.email,
-      headers: { 'Content-Type': 'application/json' },
-      })
-      add_contact.then(function(response){
+        {email:req.body.email,
+        headers: { 'Content-Type': 'application/json' },
+        })
+      var contactAdd = ac.api("automation/contact_add", 
+        {contact_email:req.body.email,
+        automation:2})
+      /*add_contact.then(function(response){
         var addContactToAutomation = ac.api("automation/contact_add",{contact_email:req.body.email})
-        res.status(200).send()
-      })
+      })*/
+      res.status(200).send()
     } catch(e) {
       res.status(500).send({error:'[addContactToLeadsAutomation] Error' + e})
     }
