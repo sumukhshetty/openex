@@ -24,16 +24,12 @@ const BuyTradeAdvertismentRow = props => {
         <td className="fb10 tc">
           {props.buyTradeAdvertisementData.paymentMethod}
         </td>
-        <td className="fb15 tc">
-          {props.price}
-        </td>
+        <td className="fb15 tc">{props.price}</td>
         <td className="fb5 tc">
           {props.buyTradeAdvertisementData.minTransactionLimit} -{' '}
           {props.buyTradeAdvertisementData.maxTransactionLimit}
         </td>
-        <td className="fb15 tc">
-          {lastTransfer}
-        </td>
+        <td className="fb15 tc">{lastTransfer}</td>
         <Trustworthiness trustLevel={props.buyer.avgFeedback} />
         <LastOnline time={props.presence} />
         <SellButton buyTradeAdvertisementId={props.buyTradeAdvertisementId} />

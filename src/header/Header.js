@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../auth/authBox/loginActions'
-import { Link } from 'react-router'
-import logo from '../images/logo.svg'
+// import { Link } from 'react-router'
+// import logo from '../images/logo.svg'
 import ezetherlogowhite from './../images/ezetherLogo.png'
 import { browserHistory } from 'react-router'
 
