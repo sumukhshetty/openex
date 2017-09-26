@@ -157,10 +157,10 @@ export default {
       docBody0: `If you have any concerns about the safety of your money or your ether, we explain best practices and why our system is secure.`,
       docHeader1: `User Guide`,
       docBody1: `Step by step instructions for all the actions required on the site.`,
-      docHeader2: `Glossary`,
-      docBody2: `Confused by the terminology? Here we convert the crypto-speak into simple everyday terms so that you don’t feel left out.`,
-      docHeader3: `FAQs`,
-      docBody3: `What is ether useful for? How much gas should I pay for a transaction?? This, and many more frequently asked questions answered here`,
+      docHeader3: `Glossary`,
+      docBody3: `Confused by the terminology? Here we convert the crypto-speak into simple everyday terms so that you don’t feel left out.`,
+      docHeader2: `FAQs`,
+      docBody2: `What is ether useful for? How much gas should I pay for a transaction?? This, and many more frequently asked questions answered here`,
       legend: `Still got a query? Reach out anytime and we’re happy to answer
       your questions.`,
       legend: `Reach out anytime and we’re happy to answer

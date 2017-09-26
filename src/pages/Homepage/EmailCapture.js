@@ -9,7 +9,7 @@ const formProps = {
     btnLabel: 'Subscribe',
     sending: 'subscribing...',
     success: 'You are subscribed. Please check your inbox.',
-    error: 'Oops, please use another email address'
+    error: 'Oops, please use another email address.'
   },
   styles: {
     sending: {

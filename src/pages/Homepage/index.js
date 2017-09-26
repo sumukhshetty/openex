@@ -7,6 +7,8 @@ import { firebaseRef } from '../../index.js'
 import NumberFormat from 'react-number-format'
 import { browserHistory } from 'react-router'
 import Features from './Features'
+import WhyUseOurPlatform from './WhyUseOurPlatform'
+
 import EmailCapture from './EmailCapture'
 
 class Home extends Component {
@@ -54,24 +56,29 @@ class Home extends Component {
     if (this.props.loadinguserdata.data) {
       return <div>Loading...</div>
     } else {
+      // this will redirect people to the appropriate landing page for their country. The default landng page's SEO is optimised for India.
+      if (this.props.country.data && this.props.country.data !== 'IN') {
+        browserHistory.push(`/country/${this.props.country.data}`)
+      }
       return (
         <div>
           <section className="tc gradient pa4">
-            <h1 className="fhuge white pt5 b">
-              <FormattedMessage id="home.header" />
-            </h1>
-            <h2 className="flarge white">
-              <FormattedMessage id="home.byline" />
+            <h1 className=" white pt5 b">Sell and Buy Ether in India.</h1>
+            <h2 className="white">
+              A Secure Ethereum Marketplace That <br />Makes It Easy To Sell And
+              Buy Ether In India.
             </h2>
             <div className="flex wrap mxa cxe w-50 center pt3 dn-m flex-l">
               <div className="col mxc dn flex-l">
                 <a
+                  data-test="homeLoginButton"
                   className="white link underline ma2"
                   onClick={() => browserHistory.push('/login')}
                 >
                   <FormattedMessage id="home.login" />
                 </a>
                 <button
+                  data-test="homeSignupButton"
                   className="bg-white blue br3 ma2"
                   onClick={() => browserHistory.push('/signup')}
                 >
@@ -79,22 +86,24 @@ class Home extends Component {
                 </button>
               </div>
               <button
+                data-test="homeHowButton"
                 className="bg-white blue br3 ma2"
-                onClick={() => browserHistory.push('/how')}
+                onClick={() => browserHistory.push('/guide')}
               >
                 <FormattedMessage id="home.howThisWorks" />
               </button>
             </div>
           </section>
           <section className="pa4">
-            <p className="measure-narrow center ma3 flarge tc">
-              <FormattedMessage id="home.section2Header" />
-            </p>
+            <h3 className="measure center pb3 flarge tc">
+              Trade Ethereum directly with other users in India. <br />We will
+              keep your money safe using smart contracts.
+            </h3>
             <div className="tc center ma3 w-50-l w-100">
-              <ResponsiveEmbed src="https://www.youtube.com/embed/i2iXD59CvhA" />
+              <ResponsiveEmbed src="https://www.youtube.com/embed/9eJhipwfQRo" />
             </div>
           </section>
-
+          <EmailCapture />
           <section className="flex wrap col cxc bg-blue pa4">
             <div className="flex mxc wrap">
               <div className=" col tc ph4 flex-l dn">
@@ -103,9 +112,9 @@ class Home extends Component {
                     ? `${Math.floor(this.state.totalTradeVolume)} ETH`
                     : `...`}
                 </p>
-                <p className="fmedium white ">
+                <h4 className="fmedium white ">
                   <FormattedMessage id="home.metric1" />
-                </p>
+                </h4>
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
@@ -121,9 +130,9 @@ class Home extends Component {
                     `...`
                   )}
                 </p>
-                <p className="fmedium white ">
+                <h4 className="fmedium white ">
                   <FormattedMessage id="home.metric2" />
-                </p>
+                </h4>
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
@@ -139,50 +148,49 @@ class Home extends Component {
                     `...`
                   )}
                 </p>
-                <p className="fmedium white ">
+                <h4 className="fmedium white">
                   <FormattedMessage id="home.metric3" />
-                </p>
+                </h4>
               </div>
             </div>
             <div className="flex wrap mxa w-75">
               <div className="flex col mxc mv3">
-                <p className=" fsmall w4 white tc mv0">
+                <h5 className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit1line1" />
-                </p>
-                <p className="fsmall w4 white tc mv0">
+                </h5>
+                <h5 className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit1line2" />
-                </p>
+                </h5>
               </div>
               <div className="flex col mxc mv3">
-                <p className=" fsmall w4 white tc mv0">
+                <h5 className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit2line1" />
-                </p>
-                <p className="fsmall w4 white tc mv0">
+                </h5>
+                <h5 className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit2line2" />
-                </p>
+                </h5>
               </div>
               <div className="flex col mxc mv3">
-                <p className=" fsmall w4 white tc mv0">
+                <h5 className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit3line1" />
-                </p>
-                <p className="fsmall w4 white tc mv0">
+                </h5>
+                <h5 className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit3line2" />
-                </p>
+                </h5>
               </div>
               <div className="flex col mxc mv3">
-                <p className=" fsmall w4 white tc mv0">
+                <h5 className=" fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit4line1" />
-                </p>
-                <p className="fsmall w4 white tc mv0">
+                </h5>
+                <h5 className="fsmall w4 white tc mv0">
                   <FormattedMessage id="home.benefit4line2" />
-                </p>
+                </h5>
               </div>
             </div>
           </section>
-
           <Features />
+          <WhyUseOurPlatform />
           <Testimonials />
-          <EmailCapture />
         </div>
       )
     }
