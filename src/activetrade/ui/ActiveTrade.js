@@ -9,87 +9,169 @@ import Canceled from './../layouts/Canceled.js'
 import Dot from './../../images/svgReactComponents/Dot.js'
 
 class ActiveTrade extends Component {
-
-  componentWillMount () {
-    this.props.onBeforeComponentLoad(this.props.purchaserequests,
-      this.props.purchaseRequestId, this.props.users, this.props.user, this.props.countryCode)
+  componentWillMount() {
+    this.props.onBeforeComponentLoad(
+      this.props.purchaserequests,
+      this.props.purchaseRequestId,
+      this.props.users,
+      this.props.user,
+      this.props.countryCode
+    )
   }
 
-  componentWillUnmount () {
-    if (this.props.activetrade.data.status === 'All Done' &&  !this.props.activetrade.data.postProcessingCompleted){
+  componentWillUnmount() {
+    if (
+      this.props.activetrade.data.status === 'All Done' &&
+      !this.props.activetrade.data.postProcessingCompleted
+    ) {
       this.tradePostProcessing()
     }
     this.props.clearState()
   }
 
-  sellerConfirmsTrade () {
+  sellerConfirmsTrade() {
     this.props.sellerConfirmsTrade(
       this.props.seller.data,
       this.props.buyer.data,
       this.props.activetrade.data,
       this.props.purchaseRequestId,
       this.props.web3.data,
-      this.props.exchange.data)
+      this.props.exchange.data
+    )
   }
-  buyerConfirmsPayment () {
-    this.props.buyerConfirmsPayment(this.props.buyer.data, this.props.seller.data,this.props.activetrade.data, this.props.purchaseRequestId)
+  buyerConfirmsPayment() {
+    this.props.buyerConfirmsPayment(
+      this.props.buyer.data,
+      this.props.seller.data,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId
+    )
   }
 
-  sellerReleasesEther () {
-    this.props.sellerReleasesEther(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data, this.props.exchange.data)
+  sellerReleasesEther() {
+    this.props.sellerReleasesEther(
+      this.props.seller.data,
+      this.props.buyer.data,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId,
+      this.props.web3.data,
+      this.props.exchange.data
+    )
   }
-  sellerCancelsTrade () {
-    this.props.sellerCancelsTrade(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
+  sellerCancelsTrade() {
+    this.props.sellerCancelsTrade(
+      this.props.seller.data,
+      this.props.buyer.data,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId
+    )
   }
-  buyerCancelsTrade () {
-    this.props.buyerCancelsTrade(this.props.seller.data, this.props.buyer.data,this.props.activetrade.data, this.props.purchaseRequestId)
+  buyerCancelsTrade() {
+    this.props.buyerCancelsTrade(
+      this.props.seller.data,
+      this.props.buyer.data,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId
+    )
   }
-  buyerRaisesDispute () {
-    this.props.buyerRaisesDispute(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
+  buyerRaisesDispute() {
+    this.props.buyerRaisesDispute(
+      this.props.seller.data,
+      this.props.buyer.data,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId
+    )
   }
-  sellerRaisesDispute () {
-    this.props.sellerRaisesDispute(this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId)
+  sellerRaisesDispute() {
+    this.props.sellerRaisesDispute(
+      this.props.seller.data,
+      this.props.buyer.data,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId
+    )
   }
-  arbiterReleasesToSeller () {
-    console.log("ActiveTrade.arbiterReleasesToSeller")
-    this.props.arbiterReleasesToSeller(this.props.seller.data, this.props.buyer.data,this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
+  arbiterReleasesToSeller() {
+    // console.log("ActiveTrade.arbiterReleasesToSeller")
+    this.props.arbiterReleasesToSeller(
+      this.props.seller.data,
+      this.props.buyer.data,
+      this.props.user,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId,
+      this.props.web3.data
+    )
   }
-  arbiterReleasesToBuyer () {
-    this.props.arbiterReleasesToBuyer(this.props.buyer.data, this.props.seller.data, this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
+  arbiterReleasesToBuyer() {
+    this.props.arbiterReleasesToBuyer(
+      this.props.buyer.data,
+      this.props.seller.data,
+      this.props.user,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId,
+      this.props.web3.data
+    )
   }
-  tradePostProcessing () {
-    this.props.tradePostProcessing(this.props.user, this.props.activetrade.data, this.props.purchaseRequestId, this.props.users)
+  tradePostProcessing() {
+    this.props.tradePostProcessing(
+      this.props.user,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId,
+      this.props.users
+    )
   }
   resetEtherState() {
-    this.props.resetEtherState();
+    this.props.resetEtherState()
   }
-  assignArbiter () {
-    console.log('ui.ActiveTrade.assignArbiter')
-    this.props.assignArbiter(this.props.user, this.props.seller.data, this.props.buyer.data, this.props.activetrade.data, this.props.purchaseRequestId, this.props.web3.data)
+  assignArbiter() {
+    // console.log('ui.ActiveTrade.assignArbiter')
+    this.props.assignArbiter(
+      this.props.user,
+      this.props.seller.data,
+      this.props.buyer.data,
+      this.props.activetrade.data,
+      this.props.purchaseRequestId,
+      this.props.web3.data
+    )
   }
 
-  render () {
+  render() {
     const progress_maps = {
       'Awaiting Seller Confirmation': [
-        { status: 'active', label: <Dot />, text: 'Awaiting Seller Confirmation' },
+        {
+          status: 'active',
+          label: <Dot />,
+          text: 'Awaiting Seller Confirmation'
+        },
         { status: '', label: '', text: 'Awaiting Payment' },
         { status: '', label: '', text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
       ],
       'Awaiting Payment': [
-        { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },
+        {
+          status: 'completed',
+          label: '',
+          text: 'Seller Confirmed Transaction'
+        },
         { status: 'active', label: <Dot />, text: 'Awaiting Payment' },
         { status: '', label: '', text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
       ],
       'Awaiting Release': [
-        { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },
+        {
+          status: 'completed',
+          label: '',
+          text: 'Seller Confirmed Transaction'
+        },
         { status: 'completed', label: '', text: 'Buyer Confirmed Payment' },
         { status: 'active', label: <Dot />, text: 'Awaiting Release' },
         { status: '', label: '', text: 'All Done' }
       ],
       'Ether Released': [
-        { status: 'completed', label: '', text: 'Seller Confirmed Transaction' },
+        {
+          status: 'completed',
+          label: '',
+          text: 'Seller Confirmed Transaction'
+        },
         { status: 'completed', label: '', text: 'Buyer Confirmed Payment' },
         { status: 'completed', label: '', text: 'Seller Released Ether' },
         { status: 'completed', label: '', text: 'All Done' }
@@ -130,124 +212,138 @@ class ActiveTrade extends Component {
       } else if (activetrade.sellerUid === this.props.user.data.uid) {
         viewerRole = 'seller'
       } else {
-        if (this.props.user.profile.isAdmin){
+        if (this.props.user.profile.isAdmin) {
           viewerRole = 'arbiter'
         }
       }
 
       status = activetrade['status']
       var tradeFlowComponents = {
-        'Awaiting Seller Confirmation': <Confirmation
-          web3={this.props.web3.data}
-          activetrade={activetrade}
-          confirmTrade={this.sellerConfirmsTrade.bind(this)}
-          buyer={this.props.buyer}
-          exchange={this.props.exchange}
-          buyerCancelsTrade={this.buyerCancelsTrade.bind(this)}
-          progress_map={progress_maps[status]}
-          purchaseRequestId={this.props.purchaseRequestId}
-          resetEtherState={this.resetEtherState.bind(this)}
-          seller={this.props.seller}
-          sellerCancelsTrade={this.sellerCancelsTrade.bind(this)}
-          sendEtherState={this.props.sendEtherState}
-          sellerAddsEther={this.props.sellerAddsEther}
-          step={status}
-          viewerRole={viewerRole}
-          txhash={this.props.txhash.data}
-          confirmTradeButtonIsDisabled={this.props.activetrade.confirmTradeButtonIsDisabled}
-          confirmTradeButtonColor={this.props.activetrade.confirmTradeButtonColor}
-          />,
-        'Awaiting Payment': <Payment
-          activetrade={activetrade}
-          buyer={this.props.buyer}
-          buyerRaisesDispute={this.buyerRaisesDispute.bind(this)}
-          confirmPayment={this.buyerConfirmsPayment.bind(this)}
-          progress_map={progress_maps[status]}
-          purchaseRequestId={this.props.purchaseRequestId}
-          seller={this.props.seller}
-          sellerRaisesDispute={this.sellerRaisesDispute.bind(this)}
-          step={status}
-          viewerRole={viewerRole}
-          />,
-        'Awaiting Release': <Release
-          activetrade={activetrade}
-          buyer={this.props.buyer}
-          buyerRaisesDispute={this.buyerRaisesDispute.bind(this)}
-          progress_map={progress_maps[status]}
-          purchaseRequestId={this.props.purchaseRequestId}
-          releaseEther={this.sellerReleasesEther.bind(this)}
-          resetEtherState={this.resetEtherState.bind(this)}
-          seller={this.props.seller}
-          sellerRaisesDispute={this.sellerRaisesDispute.bind(this)}
-          sendEtherState={this.props.sendEtherState}
-          step={status}
-          txhash={this.props.txhash.data}
-          viewerRole={viewerRole}
-          />,
-        'All Done': <AllDone
-          activetrade={activetrade}
-          buyer={this.props.buyer}
-          buyerRatesSeller={this.props.buyerRatesSeller}
-          seller={this.props.seller}
-          sellerRatesBuyer={this.props.sellerRatesBuyer}
-          progress_map={progress_maps[status]}
-          purchaseRequestId={this.props.purchaseRequestId}
-          step={status}
-          viewerRole={viewerRole}
-          />,
-        'Seller Canceled Trade': <Canceled
-          activetrade={activetrade}
-          viewerRole={viewerRole}
-          progress_map={progress_maps[status]}
-          purchaseRequestId={this.props.purchaseRequestId}
-          step={status}
-          />,
-        'Buyer Canceled Trade':<Canceled
-          activetrade={activetrade}
-          viewerRole={viewerRole}
-          progress_map={progress_maps[status]}
-          purchaseRequestId={this.props.purchaseRequestId}
-          step={status}
-          />,
-        'Seller Raised Dispute': <Disputed
-          activetrade={activetrade}
-          progress_map={progress_maps[status]}
-          viewerRole={viewerRole}
-          step={status}
-          releaseEther={this.sellerReleasesEther.bind(this)}
-          purchaseRequestId={this.props.purchaseRequestId}
-          releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
-          releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
-          assignArbiter={this.assignArbiter.bind(this)}
-          />,
-        'Buyer Raised Dispute': <Disputed
-          activetrade={activetrade}
-          progress_map={progress_maps[status]}
-          viewerRole={viewerRole}
-          step={status}
-          releaseEther={this.sellerReleasesEther.bind(this)}
-          purchaseRequestId={this.props.purchaseRequestId}
-          releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
-          releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
-          assignArbiter={this.assignArbiter.bind(this)}
+        'Awaiting Seller Confirmation': (
+          <Confirmation
+            web3={this.props.web3.data}
+            activetrade={activetrade}
+            confirmTrade={this.sellerConfirmsTrade.bind(this)}
+            buyer={this.props.buyer}
+            exchange={this.props.exchange}
+            buyerCancelsTrade={this.buyerCancelsTrade.bind(this)}
+            progress_map={progress_maps[status]}
+            purchaseRequestId={this.props.purchaseRequestId}
+            resetEtherState={this.resetEtherState.bind(this)}
+            seller={this.props.seller}
+            sellerCancelsTrade={this.sellerCancelsTrade.bind(this)}
+            sendEtherState={this.props.sendEtherState}
+            sellerAddsEther={this.props.sellerAddsEther}
+            step={status}
+            viewerRole={viewerRole}
+            txhash={this.props.txhash.data}
+            confirmTradeButtonIsDisabled={
+              this.props.activetrade.confirmTradeButtonIsDisabled
+            }
+            confirmTradeButtonColor={
+              this.props.activetrade.confirmTradeButtonColor
+            }
           />
+        ),
+        'Awaiting Payment': (
+          <Payment
+            activetrade={activetrade}
+            buyer={this.props.buyer}
+            buyerRaisesDispute={this.buyerRaisesDispute.bind(this)}
+            confirmPayment={this.buyerConfirmsPayment.bind(this)}
+            progress_map={progress_maps[status]}
+            purchaseRequestId={this.props.purchaseRequestId}
+            seller={this.props.seller}
+            sellerRaisesDispute={this.sellerRaisesDispute.bind(this)}
+            step={status}
+            viewerRole={viewerRole}
+          />
+        ),
+        'Awaiting Release': (
+          <Release
+            activetrade={activetrade}
+            buyer={this.props.buyer}
+            buyerRaisesDispute={this.buyerRaisesDispute.bind(this)}
+            progress_map={progress_maps[status]}
+            purchaseRequestId={this.props.purchaseRequestId}
+            releaseEther={this.sellerReleasesEther.bind(this)}
+            resetEtherState={this.resetEtherState.bind(this)}
+            seller={this.props.seller}
+            sellerRaisesDispute={this.sellerRaisesDispute.bind(this)}
+            sendEtherState={this.props.sendEtherState}
+            step={status}
+            txhash={this.props.txhash.data}
+            viewerRole={viewerRole}
+          />
+        ),
+        'All Done': (
+          <AllDone
+            activetrade={activetrade}
+            buyer={this.props.buyer}
+            buyerRatesSeller={this.props.buyerRatesSeller}
+            seller={this.props.seller}
+            sellerRatesBuyer={this.props.sellerRatesBuyer}
+            progress_map={progress_maps[status]}
+            purchaseRequestId={this.props.purchaseRequestId}
+            step={status}
+            viewerRole={viewerRole}
+          />
+        ),
+        'Seller Canceled Trade': (
+          <Canceled
+            activetrade={activetrade}
+            viewerRole={viewerRole}
+            progress_map={progress_maps[status]}
+            purchaseRequestId={this.props.purchaseRequestId}
+            step={status}
+          />
+        ),
+        'Buyer Canceled Trade': (
+          <Canceled
+            activetrade={activetrade}
+            viewerRole={viewerRole}
+            progress_map={progress_maps[status]}
+            purchaseRequestId={this.props.purchaseRequestId}
+            step={status}
+          />
+        ),
+        'Seller Raised Dispute': (
+          <Disputed
+            activetrade={activetrade}
+            progress_map={progress_maps[status]}
+            viewerRole={viewerRole}
+            step={status}
+            releaseEther={this.sellerReleasesEther.bind(this)}
+            purchaseRequestId={this.props.purchaseRequestId}
+            releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
+            releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
+            assignArbiter={this.assignArbiter.bind(this)}
+          />
+        ),
+        'Buyer Raised Dispute': (
+          <Disputed
+            activetrade={activetrade}
+            progress_map={progress_maps[status]}
+            viewerRole={viewerRole}
+            step={status}
+            releaseEther={this.sellerReleasesEther.bind(this)}
+            purchaseRequestId={this.props.purchaseRequestId}
+            releaseToBuyer={this.arbiterReleasesToBuyer.bind(this)}
+            releaseToSeller={this.arbiterReleasesToSeller.bind(this)}
+            assignArbiter={this.assignArbiter.bind(this)}
+          />
+        )
       }
 
       currentStep = tradeFlowComponents[status]
 
-      return (
-        <section className='activeTrade'>
-          {currentStep}
-        </section>
-      )
+      return <section className="activeTrade">{currentStep}</section>
     }
     return (
-      <section className='activeTrade'>
-        <div className='container'>
-          <div className='pure-g'>
-            <div className='pure-u-1'>
-              {status}
-            </div>
+      <section className="activeTrade">
+        <div className="container">
+          <div className="pure-g">
+            <div className="pure-u-1">{status}</div>
           </div>
         </div>
       </section>

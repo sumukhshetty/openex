@@ -26,7 +26,6 @@ summary::-webkit-details-marker {
 summary::before {
   content: '\25B6';
   padding-right: 0.5em;
-
 }
 
 details[open] > summary::before {
@@ -67,8 +66,6 @@ details[open] > summary::before {
   width: 100%;
   height: 250px; /* optional, but in my case it was good */
 }
-
-
 
 .hidden {
   position: absolute;
@@ -768,4 +765,8 @@ Contains styles for all buttons, please delete whichever buttos we dont use in t
   max-width: 100%;
   border: 1px solid gray;
   border-radius: 6px;
+}
+
+p {
+  word-wrap: break-word;
 }
