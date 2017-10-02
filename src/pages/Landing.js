@@ -8,13 +8,16 @@ import NumberFormat from 'react-number-format'
 import currencies from 'country-currency'
 import Features from './Homepage/Features'
 import WhyUseOurPlatform from './Homepage/WhyUseOurPlatform'
+import { browserHistory } from 'react-router'
+var request = require('request')
 
 class Landing extends Component {
   state = {
     highestSellTrade: null,
     lowestBuyTrade: null,
     buyTradeCount: null,
-    sellTradeCount: null
+    sellTradeCount: null,
+    signUpInfo: {}
   }
   getHighestSellTrade = async () => {
     await firebaseRef
@@ -61,6 +64,58 @@ class Landing extends Component {
     }
   }
 
+  onInputChange(event) {
+    var _signUpInfo = this.state.signUpInfo
+    if (event.target.id === 'email') {
+      _signUpInfo = Object.assign({}, this.state.signUpInfo, {
+        email: event.target.value
+      })
+    }
+    if (event.target.id === 'country') {
+      _signUpInfo = Object.assign({}, this.state.signUpInfo, {
+        country: event.target.value
+      })
+    }
+    if (event.target.id === 'username') {
+      _signUpInfo = Object.assign({}, this.state.signUpInfo, {
+        username: event.target.value
+      })
+    }
+    this.setState({ signUpInfo: _signUpInfo })
+  }
+
+
+  handleSubmit(event) {
+    event.preventDefault()
+
+    var url = process.env.FIREBASE_FUNCTIONS_URL +'addContactToLeadsAutomation'
+    var options = {
+      method: 'post',
+      body: {
+        email: this.state.signUpInfo.email
+      },
+      headers: { 'Content-Type': 'application/json' },
+      json: true,
+      url: url
+    }
+    request(options, function(err, res, body) {
+      if (err) {
+        console.error('error posting json: ', err)
+        throw err
+      }
+      var statusCode = res.statusCode
+      if (statusCode === 200) {
+        browserHistory.push('/signup')
+      }
+      if (statusCode === 500) {
+        throw res.body.error
+      }
+      if (statusCode === 401) {
+        throw res.body.error
+      }
+    })
+  }
+
   render() {
     if (this.props.loadinguserdata.data) {
       return <div>Loading...</div>
@@ -75,7 +130,18 @@ class Landing extends Component {
               <FormattedMessage id="home.byline" />
             </h2>
             <div className="flex wrap mxa cxe w-50 center pt3 dn-m flex-l">
-              <div className="col mxc dn flex-l">
+            <div className="col mxc dn flex-l">
+              <input className="mv1 w-100 br3 b---gray"
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email address"
+                onChange={this.onInputChange.bind(this)}
+                required
+              />
+              <button className="bg-white blue br3 ma2" onClick={this.handleSubmit.bind(this)}> Get Started</button>
+              </div>
+              {/*<div className="col mxc dn flex-l">
                 <a className="white link underline ma2">
                   <FormattedMessage id="home.login" />
                 </a>
@@ -85,7 +151,7 @@ class Landing extends Component {
               </div>
               <button className="bg-white blue br3 ma2">
                 <FormattedMessage id="home.howThisWorks" />
-              </button>
+              </button>*/}
             </div>
           </section>
           <section className="pa4">
