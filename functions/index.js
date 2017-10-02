@@ -1,11 +1,19 @@
 var functions = require('firebase-functions');
 const admin = require('firebase-admin');
 var serviceAccount = require("./service-account.json");
+var stagingServiceAccount = require("./staging-service-account.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://automteetherexchange.firebaseio.com"
 });
+
+//MAKE SURE THIS IS COMMENTED IN THE MASTER BRANCH
+/*admin.initializeApp({
+  credential: admin.credential.cert(stagingServiceAccount),
+  databaseURL: "https://ezether-staging.firebaseio.com"
+});*/
+// END COMMENT
 
 const cors = require('cors')({origin: true});
 
@@ -41,6 +49,22 @@ exports.addContactToLeadsAutomation = functions.https.onRequest((req, res)=>{
       res.status(200).send()
     } catch(e) {
       res.status(500).send({error:'[addContactToLeadsAutomation] Error' + e})
+    }
+  })
+})
+
+exports.addContactToRegistrationAutomation = functions.https.onRequest((req, res)=> {
+  cors(req, res, () => {
+    try{
+      console.log(req.body)
+      var add_contact = ac.api("contact/add", 
+        {email: req.body.email,
+          headers:{'Content-Type': 'application/json'},
+        })
+      var removeNotRegisteredTag = ac.api("contact/tag_remove", {tags:'NotRegistered', email:req.body.email})
+      var addRegistrationTag = ac.api("contact/tag_add",{tags:"Registered",email:req.body.email})
+    } catch(e) {
+      res.status(500).send({error:'[addContactToRegistrationAutomation] Error' + e})
     }
   })
 })

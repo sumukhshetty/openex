@@ -31,6 +31,7 @@ function toHex(s) {
 
 export function signUpUserCustomAuth(signUpInfo, web3, country) {
   return function(dispatch) {
+    console.log("signUpUserCustomAuth")
     firebaseRef
       .database()
       .ref('/registeredAccounts/' + web3.eth.accounts[0])
@@ -78,6 +79,7 @@ export function signUpUserCustomAuth(signUpInfo, web3, country) {
               }
               let signature = result.result
               var url = process.env.FIREBASE_FUNCTIONS_URL +'signUpUserCustomAuth'
+              console.log(url)
               var options = {
                 method: 'post',
                 body: {
@@ -97,6 +99,31 @@ export function signUpUserCustomAuth(signUpInfo, web3, country) {
                 var statusCode = res.statusCode
                 if (statusCode === 200) {
                   // do more stuff
+                  var automationUrl = process.env.FIREBASE_FUNCTIONS_URL + 'addContactToRegistrationAutomation'
+                  var automationOptions = {
+                    method: 'post',
+                    body: {
+                      email: signUpInfo.email
+                    },
+                    headers: { 'Content-Type': 'application/json' },
+                    json: true,
+                    url: automationUrl
+                  }
+                  request(automationOptions, function(err, res, body){
+                    if(err){
+                      console.log('error posting registration automation')
+                    }
+                    var automationStatusCode = res.statusCode
+                    if (automationStatusCode===200){
+                      console.log('success posting registration automation')
+                    }
+                    if (automationStatusCode===500) {
+                      throw res.body.error
+                    }
+                    if (statusCode === 401) {
+                      throw res.body.error
+                    }
+                  })
                   firebaseRef
                     .auth()
                     .signInWithCustomToken(res.body.token)
