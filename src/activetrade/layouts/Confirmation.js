@@ -7,75 +7,110 @@ import BuyerStepNote from '../ui/BuyerStepNoteSell'
 import SellerStepNote from '../ui/SellerStepNoteSell'
 
 class Confirmation extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state={amountToSend:0}
+    this.state = { amountToSend: 0 }
   }
 
   componentWillUnmount() {
-    this.props.resetEtherState();
+    this.props.resetEtherState()
   }
 
-  onEtherAmountChange (e) {
+  onEtherAmountChange(e) {
     e.preventDefault()
-    this.setState({amountToSend:e.target.value})
+    this.setState({ amountToSend: e.target.value })
   }
 
-  handleEscrowRequest (e) {
+  handleEscrowRequest(e) {
     e.preventDefault()
-    this.props.sellerAddsEther(this.state.amountToSend, this.props.activetrade.sellerUid, this.props.sellerInterface.address, this.props.web3, this.props.sellerInterface, this.props.orderDB)
+    this.props.sellerAddsEther(
+      this.state.amountToSend,
+      this.props.activetrade.sellerUid,
+      this.props.sellerInterface.address,
+      this.props.web3,
+      this.props.sellerInterface,
+      this.props.orderDB
+    )
   }
 
-  render () {
+  render() {
     var txHashUrl
-    if(this.props.sendEtherState === 'waiting-for-tx-to-mine'){
-      txHashUrl = process.env.ETHER_SCAN_URL + "tx/" + this.props.txhash
+    if (this.props.sendEtherState === 'waiting-for-tx-to-mine') {
+      txHashUrl = process.env.ETHER_SCAN_URL + 'tx/' + this.props.txhash
     }
     var contractUrl
-    if(this.props.sendEtherState === 'insufficient-available-balance'){
-      contractUrl = process.env.ETHER_SCAN_URL + "address/" + this.props.sellerInterface.address
+    if (this.props.sendEtherState === 'insufficient-available-balance') {
+      contractUrl =
+        process.env.ETHER_SCAN_URL +
+        'address/' +
+        this.props.sellerInterface.address
     }
     return (
-      <section className='bg-smoke'>
-        <div className='w-75 center'>
-          <ActiveTradeInfo activetrade={this.props.activetrade} viewerRole={this.props.viewerRole} displayId={this.props.purchaseRequestId.slice(1,6)}/>
+      <section className="bg-smoke">
+        <div className="w-75 center">
+          <ActiveTradeInfo
+            activetrade={this.props.activetrade}
+            viewerRole={this.props.viewerRole}
+            displayId={this.props.purchaseRequestId.slice(1, 6)}
+          />
           <Progress progress_map={this.props.progress_map} />
-          <div className='flex'>
+          <div className="flex">
             <ChatBox
               tradeId={this.props.purchaseRequestId}
               sellerId={this.props.activetrade.sellerUid}
               buyerId={this.props.activetrade.buyerUid}
-              purchaseRequest={this.props.activetrade}/>
-            <div className='w-50 ma3'>
-              {this.props.viewerRole === 'buyer' &&
-              <div>
-              <BuyerStepNote step={this.props.step} />
-              <CancelTrade cancelTrade={this.props.buyerCancelsTrade} />
-              </div>
-            }
-              {this.props.viewerRole === 'seller' &&
-              <div>
-                <SellerStepNote step={this.props.step} />
-                <div className='tc'>
-                  {this.props.sendEtherState === 'init' &&
-                  <div>
-                  <button onClick={this.props.confirmTrade} disabled={this.props.confirmTradeButtonIsDisabled} style={{'backgroundColor':this.props.confirmTradeButtonColor}}>
-                   Confirm Trade
-                 </button>
-                <CancelTrade cancelTrade={this.props.sellerCancelsTrade}/>
+              purchaseRequest={this.props.activetrade}
+            />
+            <div className="w-50 ma3">
+              {this.props.viewerRole === 'buyer' && (
+                <div>
+                  <BuyerStepNote step={this.props.step} />
+                  <CancelTrade cancelTrade={this.props.buyerCancelsTrade} />
                 </div>
-               }
-                 {this.props.sendEtherState === 'sending' &&
-                 <span>Please accept the transaction in MetaMask</span>}
-               {this.props.sendEtherState === 'waiting-for-tx-to-mine' &&
-               <div>
-              <div> Your contract is being mined. You can check the status of you transaction here: </div>
-              <div><a target="_blank" href={txHashUrl}>{txHashUrl}</a></div>
-              </div>
-             }
+              )}
+              {this.props.viewerRole === 'seller' && (
+                <div>
+                  <SellerStepNote step={this.props.step} />
+                  <div className="tc">
+                    {this.props.sendEtherState === 'init' && (
+                      <div>
+                        <button
+                          onClick={this.props.confirmTrade}
+                          disabled={this.props.confirmTradeButtonIsDisabled}
+                          style={{
+                            backgroundColor: this.props.confirmTradeButtonColor
+                          }}
+                        >
+                          Confirm Trade
+                        </button>
+                        <CancelTrade
+                          cancelTrade={this.props.sellerCancelsTrade}
+                          tradeId={
+                            this.props.purchaseRequest.tradeAdvertisementId
+                          }
+                        />
+                      </div>
+                    )}
+                    {this.props.sendEtherState === 'sending' && (
+                      <span>Please accept the transaction in MetaMask</span>
+                    )}
+                    {this.props.sendEtherState === 'waiting-for-tx-to-mine' && (
+                      <div>
+                        <div>
+                          {' '}
+                          Your contract is being mined. You can check the status
+                          of you transaction here:{' '}
+                        </div>
+                        <div>
+                          <a target="_blank" href={txHashUrl}>
+                            {txHashUrl}
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>}
+              )}
             </div>
           </div>
         </div>

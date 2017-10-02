@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import { browserHistory } from 'react-router'
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
 class Copyright extends Component {
   render() {
     return (
       <p className="white tc tl-m tl-l">
         <span onClick={() => browserHistory.push('/html')}>&copy;</span> 2017,
-        Ezether | Version 1.2.1
+        Ezether | Version 1.3.0
       </p>
-    )
+    );
   }
 }
 
-export default Copyright
+export default Copyright;
