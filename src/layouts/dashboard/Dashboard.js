@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ActiveTrades from './../../activetrades/layouts/ActiveTrades';
 import TradeAdvertisements from './../../tradeadvertisements/layouts/TradeAdvertisements';
 
-import EnableNotifications from './../../enablenotifications/layouts/EnableNotifications';
 import CompletedTrades from './../../completedtrades/layouts/CompletedTrades';
 import DisputedTrades from './../../disputedtrades/layouts/DisputedTrades';
 
@@ -111,7 +110,7 @@ class Dashboard extends Component {
               <div>
                 <div>
                   <Onboarding />
-                  {/* <EnableNotifications /> */}
+
                   <ActiveTrades />
                   <TradeAdvertisements />
                   <CompletedTrades />
