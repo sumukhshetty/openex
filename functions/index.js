@@ -1,11 +1,19 @@
 var functions = require('firebase-functions');
 const admin = require('firebase-admin');
 var serviceAccount = require("./service-account.json");
+var stagingServiceAccount = require("./staging-service-account.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://automteetherexchange.firebaseio.com"
 });
+
+//MAKE SURE THIS IS COMMENTED IN THE MASTER BRANCH
+/*admin.initializeApp({
+  credential: admin.credential.cert(stagingServiceAccount),
+  databaseURL: "https://ezether-staging.firebaseio.com"
+});*/
+// END COMMENT
 
 const cors = require('cors')({origin: true});
 
@@ -20,6 +28,46 @@ var mgApiKey = "key-3d2bd1463fc87e2aff2224f96c1df70a"
 var domain = "mg.automte.com"
 var mailgun= require('mailgun-js')({apiKey: mgApiKey, domain:domain})
 
+var ActiveCampaign = require("activecampaign");
+
+const ac = new ActiveCampaign("https://ezether.api-us1.com", "b4edb6ee1d62ebe5c1fba1af3b6451ca63cb3f327593551efe76531912a2cba4cd139497");
+
+exports.addContactToLeadsAutomation = functions.https.onRequest((req, res)=>{
+  cors(req, res, () => {
+    try{
+      console.log(req.body)
+      var add_contact = ac.api("contact/add",
+        {email:req.body.email,
+        headers: { 'Content-Type': 'application/json' },
+        })
+      var contactAdd = ac.api("automation/contact_add", 
+        {contact_email:req.body.email,
+        automation:2})
+      /*add_contact.then(function(response){
+        var addContactToAutomation = ac.api("automation/contact_add",{contact_email:req.body.email})
+      })*/
+      res.status(200).send()
+    } catch(e) {
+      res.status(500).send({error:'[addContactToLeadsAutomation] Error' + e})
+    }
+  })
+})
+
+exports.addContactToRegistrationAutomation = functions.https.onRequest((req, res)=> {
+  cors(req, res, () => {
+    try{
+      console.log(req.body)
+      var add_contact = ac.api("contact/add", 
+        {email: req.body.email,
+          headers:{'Content-Type': 'application/json'},
+        })
+      var removeNotRegisteredTag = ac.api("contact/tag_remove", {tags:'NotRegistered', email:req.body.email})
+      var addRegistrationTag = ac.api("contact/tag_add",{tags:"Registered",email:req.body.email})
+    } catch(e) {
+      res.status(500).send({error:'[addContactToRegistrationAutomation] Error' + e})
+    }
+  })
+})
 
 exports.notificationPostProcesing1 = functions.database.ref('/notifications/{recipientUid}/{purchaseRequestId}/status/{step}')
   .onWrite(event=>{

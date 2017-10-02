@@ -10,12 +10,15 @@ import Features from './Features'
 import WhyUseOurPlatform from './WhyUseOurPlatform'
 
 import EmailCapture from './EmailCapture'
+import {ac} from './../../index.js'
+var request = require('request')
 
 class Home extends Component {
   state = {
     highestSellTrade: null,
     lowestBuyTrade: null,
-    totalTradeVolume: null
+    totalTradeVolume: null,
+    signUpInfo: {}
   }
   getHighestSellTrade = async () => {
     await firebaseRef
@@ -44,6 +47,58 @@ class Home extends Component {
       .on('value', snap => this.setState({ totalTradeVolume: snap.val() }))
   }
 
+  onInputChange(event) {
+    var _signUpInfo = this.state.signUpInfo
+    if (event.target.id === 'email') {
+      _signUpInfo = Object.assign({}, this.state.signUpInfo, {
+        email: event.target.value
+      })
+    }
+    if (event.target.id === 'country') {
+      _signUpInfo = Object.assign({}, this.state.signUpInfo, {
+        country: event.target.value
+      })
+    }
+    if (event.target.id === 'username') {
+      _signUpInfo = Object.assign({}, this.state.signUpInfo, {
+        username: event.target.value
+      })
+    }
+    this.setState({ signUpInfo: _signUpInfo })
+  }
+
+
+  handleSubmit(event) {
+    event.preventDefault()
+
+    var url = process.env.FIREBASE_FUNCTIONS_URL +'addContactToLeadsAutomation'
+    var options = {
+      method: 'post',
+      body: {
+        email: this.state.signUpInfo.email
+      },
+      headers: { 'Content-Type': 'application/json' },
+      json: true,
+      url: url
+    }
+    request(options, function(err, res, body) {
+      if (err) {
+        console.error('error posting json: ', err)
+        throw err
+      }
+      var statusCode = res.statusCode
+      if (statusCode === 200) {
+        browserHistory.push('/signup')
+      }
+      if (statusCode === 500) {
+        throw res.body.error
+      }
+      if (statusCode === 401) {
+        throw res.body.error
+      }
+    })
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (!prevProps.country.data && this.props.country.data) {
       this.getTotalVolume()
@@ -69,7 +124,19 @@ class Home extends Component {
               Buy Ether In India.
             </h2>
             <div className="flex wrap mxa cxe w-50 center pt3 dn-m flex-l">
+              {/*TODO: turn this into a form with validation and formatting*/}
               <div className="col mxc dn flex-l">
+              <input className="mv1 w-100 br3 b---gray"
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email address"
+                onChange={this.onInputChange.bind(this)}
+                required
+              />
+              <button className="bg-white blue br3 ma2" onClick={this.handleSubmit.bind(this)}> Get Started</button>
+              </div>
+              {/*<div className="col mxc dn flex-l">
                 <a
                   data-test="homeLoginButton"
                   className="white link underline ma2"
@@ -91,7 +158,7 @@ class Home extends Component {
                 onClick={() => browserHistory.push('/guide')}
               >
                 <FormattedMessage id="home.howThisWorks" />
-              </button>
+              </button>*/}
             </div>
           </section>
           <section className="pa4">
