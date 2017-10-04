@@ -22,4 +22,4 @@ config/env.local.js
 config/env.production.js
 
 #testusers
-cypress/integration/testUsers.js
+cypress/fixtures/testUsers.js

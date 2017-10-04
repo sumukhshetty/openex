@@ -31,6 +31,7 @@ class Dashboard extends Component {
         process.env.MARKETPLACE_CONTRACT_ADDRESS
       );
     }
+
     // if(this.props.account.data) {
     //   this.props.checkBrowserWalletAddress(this.props.user, this.props.account.data)
     // }
@@ -114,7 +115,7 @@ class Dashboard extends Component {
                   <ActiveTrades />
                   <TradeAdvertisements />
                   <CompletedTrades />
-                  <DisputedTrades />
+                  {this.props.user.profile.isAdmin && <DisputedTrades />}
                   <UserPresenceContainer />
                 </div>
               </div>
