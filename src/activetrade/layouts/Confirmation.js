@@ -1,28 +1,28 @@
-import React, { Component } from 'react'
-import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo'
-import Progress from '../../generic-components/tradeFlow/Progress'
-import ChatBox from '../../chat/containers/ChatBox'
-import CancelTrade from '../../generic-components/tradeFlow/CancelTrade'
-import BuyerStepNote from '../ui/BuyerStepNoteSell'
-import SellerStepNote from '../ui/SellerStepNoteSell'
+import React, { Component } from 'react';
+import ActiveTradeInfo from '../../generic-components/tradeFlow/ActiveTradeInfo';
+import Progress from '../../generic-components/tradeFlow/Progress';
+import ChatBox from '../../chat/containers/ChatBox';
+import CancelTrade from '../../generic-components/tradeFlow/CancelTrade';
+import BuyerStepNote from '../ui/BuyerStepNoteSell';
+import SellerStepNote from '../ui/SellerStepNoteSell';
 
 class Confirmation extends Component {
   constructor(props) {
-    super(props)
-    this.state = { amountToSend: 0 }
+    super(props);
+    this.state = { amountToSend: 0 };
   }
 
   componentWillUnmount() {
-    this.props.resetEtherState()
+    this.props.resetEtherState();
   }
 
   onEtherAmountChange(e) {
-    e.preventDefault()
-    this.setState({ amountToSend: e.target.value })
+    e.preventDefault();
+    this.setState({ amountToSend: e.target.value });
   }
 
   handleEscrowRequest(e) {
-    e.preventDefault()
+    e.preventDefault();
     this.props.sellerAddsEther(
       this.state.amountToSend,
       this.props.activetrade.sellerUid,
@@ -30,20 +30,20 @@ class Confirmation extends Component {
       this.props.web3,
       this.props.sellerInterface,
       this.props.orderDB
-    )
+    );
   }
 
   render() {
-    var txHashUrl
+    var txHashUrl;
     if (this.props.sendEtherState === 'waiting-for-tx-to-mine') {
-      txHashUrl = process.env.ETHER_SCAN_URL + 'tx/' + this.props.txhash
+      txHashUrl = process.env.ETHER_SCAN_URL + 'tx/' + this.props.txhash;
     }
-    var contractUrl
+    var contractUrl;
     if (this.props.sendEtherState === 'insufficient-available-balance') {
       contractUrl =
         process.env.ETHER_SCAN_URL +
         'address/' +
-        this.props.sellerInterface.address
+        this.props.sellerInterface.address;
     }
     return (
       <section className="bg-smoke">
@@ -65,7 +65,10 @@ class Confirmation extends Component {
               {this.props.viewerRole === 'buyer' && (
                 <div>
                   <BuyerStepNote step={this.props.step} />
-                  <CancelTrade cancelTrade={this.props.buyerCancelsTrade} />
+                  <CancelTrade
+                    cancelTrade={this.props.buyerCancelsTrade}
+                    tradeId={this.props.purchaseRequestId}
+                  />
                 </div>
               )}
               {this.props.viewerRole === 'seller' && (
@@ -85,9 +88,7 @@ class Confirmation extends Component {
                         </button>
                         <CancelTrade
                           cancelTrade={this.props.sellerCancelsTrade}
-                          tradeId={
-                            this.props.purchaseRequest.tradeAdvertisementId
-                          }
+                          tradeId={this.props.purchaseRequestId}
                         />
                       </div>
                     )}
@@ -115,8 +116,8 @@ class Confirmation extends Component {
           </div>
         </div>
       </section>
-    )
+    );
   }
 }
 
-export default Confirmation
+export default Confirmation;
