@@ -109,7 +109,7 @@ class Dashboard extends Component {
             <div className="w-75 center pv3">
               <div>
                 <div>
-                  <Onboarding />
+                  {/*<Onboarding />*/}
 
                   <ActiveTrades />
                   <TradeAdvertisements />

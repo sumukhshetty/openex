@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import Copyright from './Copyright'
-import FooterTable from './FooterTable'
+import React, { Component } from 'react';
+import Copyright from './Copyright';
+import FooterTable from './FooterTable';
 
 class Footer extends Component {
   render() {
@@ -13,8 +13,8 @@ class Footer extends Component {
           <Copyright />
         </div>
       </footer>
-    )
+    );
   }
 }
 
-export default Footer
+export default Footer;
