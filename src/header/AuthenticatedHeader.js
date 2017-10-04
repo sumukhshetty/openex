@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { VisibleOnlyAuth } from '../util/wrappers.js'
-import { Link } from 'react-router'
-import Bell from '../images/svgReactComponents/Bell'
-import NotificationsContainer from '../notifications/ui/NotificationsContainer'
-import ezetherlogowhite from '../images/ezether_logo.png'
-import LogoutButtonContainer from '../user/ui/logoutbutton/LogoutButtonContainer'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { VisibleOnlyAuth } from '../util/wrappers.js';
+import { Link } from 'react-router';
+import Bell from '../images/svgReactComponents/Bell';
+import NotificationsContainer from '../notifications/ui/NotificationsContainer';
+import ezetherlogowhite from '../images/ezether_logo.png';
+import LogoutButtonContainer from '../user/ui/logoutbutton/LogoutButtonContainer';
 
 const AuthHeader = VisibleOnlyAuth(
   ({ notificationStatus, removeNotifications, showNotifications }) => {
@@ -60,6 +60,7 @@ const AuthHeader = VisibleOnlyAuth(
               </li>
               <li className="pure-menu-item">
                 <Link
+                  data-test="sellEtherNavButton"
                   to="/sellether"
                   activeStyle={{
                     color: 'white',
@@ -107,14 +108,14 @@ const AuthHeader = VisibleOnlyAuth(
           </nav>
         </div>
       </div>
-    )
+    );
   }
-)
+);
 
 AuthHeader.propTypes = {
   notificationStatus: PropTypes.bool.isRequired,
   removeNotifications: PropTypes.func.isRequired,
   showNotifications: PropTypes.bool.isRequired
-}
+};
 
-export default AuthHeader
+export default AuthHeader;
