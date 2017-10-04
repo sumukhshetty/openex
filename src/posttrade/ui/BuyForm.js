@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export class BuyForm extends Component {
   render() {
@@ -45,6 +45,7 @@ export class BuyForm extends Component {
             value={this.props.amount}
             className="w5 h-100"
             required
+            data-test="submitATradeAmountToBuy"
           />
           <div className="min-w-30 me pl3">
             <span className="fw1 i">Amount in Ether</span>
@@ -65,6 +66,7 @@ export class BuyForm extends Component {
               min="1"
               max="1000000"
               required
+              data-test="submitATradeMinTransaction"
             />
             <button
               className="ftiny br0 bg-gray bl--gray b--blue ba gray"
@@ -91,6 +93,7 @@ export class BuyForm extends Component {
               className="br--white"
               min="1"
               max="1000000"
+              data-test="submitATradeMaxTransaction"
               required
             />
             <button
@@ -121,14 +124,15 @@ export class BuyForm extends Component {
             online, contact automte.com/ad/1234."
             rows="4"
             required
+            data-test="submitATradeTerms"
           />
           <span className="measure-narrow fw1 i pa0 me pl3">
             Other information you wish to tell about your trade.
           </span>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default BuyForm
+export default BuyForm;

@@ -16,7 +16,7 @@ it('user 2 bids on the trade', () => {
     .parent()
     .within(() => cy.contains('Buy').click());
   cy.url().should(`contain`, '/selltradeadvertisement');
-  cy.get('#etherAmount').type('.0001');
+  cy.get('#fiatAmount').type('100.');
   cy.contains('Send Trade Request').click();
   cy
     .wait(3000)
