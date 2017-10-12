@@ -15,8 +15,11 @@ export function logoutUser() {
     const auth = firebaseRef.auth()
     auth.signOut().then(function(promise){
       console.log("logout")
+      window.analytics.track('User Logged Out', {
+        location: ''
+      })
       dispatch(userLoggedOut())
-    })   
+    })
 
     // Redirect home.
     return browserHistory.push('/')

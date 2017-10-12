@@ -2,53 +2,63 @@ import React, { Component } from 'react'
 
 //import TrustButton from './../../trust/layouts/TrustButton'
 //import BlockButton from './../../block/layouts/BlockButton'
-import {Rating} from 'rebass'
+import { Rating } from 'rebass'
 
 class TradeFeedback extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.clickStar = this.clickStar.bind(this)
   }
 
-  componentWillMount () {
-    this.props.onBeforeComponentLoad(this.props.activetrade, this.props.purchaseRequestId, this.props.viewerRole)
+  componentWillMount() {
+    this.props.onBeforeComponentLoad(
+      this.props.activetrade,
+      this.props.purchaseRequestId,
+      this.props.viewerRole
+    )
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.props.onBeforeComponentUnmount()
   }
 
-  clickStar (rating) {
+  clickStar(rating) {
     var rater = this.props.user.data.uid
     if (!this.props.tradeFeedback.data) {
       switch (rater) {
-        case (this.props.activetrade.sellerUid):
-          this.props.sellerRatesBuyer(rating, this.props.purchaseRequestId, this.props.activetrade)
+        case this.props.activetrade.sellerUid:
+          this.props.sellerRatesBuyer(
+            rating,
+            this.props.purchaseRequestId,
+            this.props.activetrade
+          )
           break
 
-        case (this.props.activetrade.buyerUid):
-          this.props.buyerRatesSeller(rating, this.props.purchaseRequestId, this.props.activetrade)
-      } 
-    } 
+        case this.props.activetrade.buyerUid:
+          this.props.buyerRatesSeller(
+            rating,
+            this.props.purchaseRequestId,
+            this.props.activetrade
+          )
+      }
+    }
   }
-  render () {
+  render() {
     var _rating
-    if (this.props.tradeFeedback.data){
+    if (this.props.tradeFeedback.data) {
       _rating = this.props.tradeFeedback.data
     } else {
       _rating = 0
     }
     return (
-      <div className='measure pv4'>
-        <p className='tc flarge b'>
-          How would you rate this transaction?
-        </p>
-        <div className='flex col cxc' >
+      <div className="measure pb4 pt0 mt0">
+        <p className="tc flarge b mt0">How would you rate this transaction?</p>
+        <div className="flex col cxc">
           <Rating
-            color='gold'
+            color="gold"
             value={_rating}
-            onClick={(e) => this.clickStar(e)}
-            style={{fontSize:'2.5em'}}
+            onClick={e => this.clickStar(e)}
+            style={{ fontSize: '2.5em' }}
           />
         </div>
         {/*<div className='flex col cxc'>

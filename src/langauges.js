@@ -7,7 +7,7 @@ export default {
       signup: `Signup`,
       howThisWorks: `How This Works`,
       section2Header: `Trade directly with other users, keeping your money safe in smart contracts.`,
-      metric1: `TRADES AVAILABLE TODAY`,
+      metric1: `TOTAL VOLUME TRADED`,
       metric2: `BEST BUY PRICE`,
       metric3: `BEST SELL PRICE`,
       benefit1line1: `FLAT 1%`,
@@ -18,9 +18,7 @@ export default {
       benefit3line2: `KYC PROCESS`,
       benefit4line1: `TRANSPARENT`,
       benefit4line2: `COINGECKO BASE RATE`,
-      asFeaturedOn: `As Featured On`,
-      feature1: `Bitcoin talk`,
-      feature2: `dApp Universe`
+      asFeaturedOn: `As Featured on...`
     },
     about: {
       header: `We're a diverse and passionate bunch`,
@@ -159,12 +157,12 @@ export default {
       docBody0: `If you have any concerns about the safety of your money or your ether, we explain best practices and why our system is secure.`,
       docHeader1: `User Guide`,
       docBody1: `Step by step instructions for all the actions required on the site.`,
-      docHeader2: `Glossary`,
-      docBody2: `Confused by the terminology? Here we convert the crypto-speak into simple everyday terms so that you don’t feel left out.`,
-      docHeader3: `FAQs`,
-      docBody3: `IWhat is ether useful for? How much gas should I pay for a transaction?? This, and many more frequently asked questions answered here`,
-      // legend: `Still got a query? Reach out anytime and we’re happy to answer
-      // your questions.`,
+      docHeader3: `Glossary`,
+      docBody3: `Confused by the terminology? Here we convert the crypto-speak into simple everyday terms so that you don’t feel left out.`,
+      docHeader2: `FAQs`,
+      docBody2: `What is ether useful for? How much gas should I pay for a transaction?? This, and many more frequently asked questions answered here`,
+      legend: `Still got a query? Reach out anytime and we’re happy to answer
+      your questions.`,
       legend: `Reach out anytime and we’re happy to answer
       your questions.`,
       returnEmail: `Return Email`,
@@ -206,7 +204,7 @@ export default {
 Save your wallet seed words somewhere safe. `
     },
     testimonials: {
-      title: `What our users say about us`,
+      title: `What our users say about us...`,
       home1copy: `I’ve been trading in cryptocurrencies since 2012, and always had to transfer my funds to a local wallet.I like having funds close at hand, on my browser, where I spend most of my day.`,
       home1name: `DHIREN`,
       home1title: `Day Trader`,

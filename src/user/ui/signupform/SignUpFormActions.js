@@ -50,7 +50,7 @@ export function signUpUserCustomAuth (signUpInfo, web3, country) {
           _country = 'jaaga'
         }
         var data = toHex('I am signing up for the EZ Ether marketplace and I have read the terms and conditions');
-        web3.currentProvider.sendAsync({ id: 1, method: 'personal_sign', params: [web3.eth.accounts[0], data] },
+        web3.currentProvider.sendAsync({ id: process.env.ETHEREUM_NETWORK_ID, method: 'personal_sign', params: [web3.eth.accounts[0], data] },
           function(err, result) {
             if(result.error){
               if(result.error.message.includes("TypeError: Cannot use 'in' operator to search for 'from' in null")) {
@@ -59,7 +59,7 @@ export function signUpUserCustomAuth (signUpInfo, web3, country) {
               throw result.error
             }
             let signature = result.result;
-            var url = 'https://us-central1-automteetherexchange.cloudfunctions.net/signUpUserCustomAuth'
+            var _url = process.env.FIREBASE_FUNCTIONS_URL + 'signUpUserCustomAuth'
             var options = {
               method: 'post',
               body: {

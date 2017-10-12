@@ -63,6 +63,12 @@ class PostTradeForm extends Component {
     })
   }
 
+  componentDidMount() {
+    window.analytics.track('User Clicked Post a Trade Tab', {
+      location: 'posttrade'
+    })
+  }
+
   onInputChange(event) {
     var _postTradeDetails = this.state.postTradeDetails
     if (event.target.id === 'location') {
@@ -207,6 +213,7 @@ class PostTradeForm extends Component {
                 <div className="flex col">
                   <label htmlFor="buyTradeType">
                     <input
+                      data-test="postABuyTrade"
                       id="buyTradeType"
                       name="tradeType"
                       type="radio"
@@ -218,6 +225,7 @@ class PostTradeForm extends Component {
                   </label>
                   <label htmlFor="sellTradeType">
                     <input
+                      data-test="postASellTrade"
                       id="sellTradeType"
                       name="tradeType"
                       type="radio"
@@ -227,7 +235,7 @@ class PostTradeForm extends Component {
                     />Sell Ether
                   </label>
                 </div>
-                <span className="measure-narrow fw1 i pa0 me">
+                <span className="measure-narrow fw1 i pa0 me pl3">
                   What kind of trade advertisement do you wish to create? If you
                   wish to sell ether make sure you have ether in your Metamask
                   wallet.
@@ -239,6 +247,7 @@ class PostTradeForm extends Component {
                   Location
                 </label>
                 <input
+                  data-test="postATradeLocation"
                   id="location"
                   name="location"
                   type="text"
@@ -248,13 +257,13 @@ class PostTradeForm extends Component {
                   className="w5 h-100"
                   required
                 />
-                <span className="measure-narrow fw1 i pa0 me">
+                <span className="measure-narrow fw1 i pa0 me pl3">
                   For online trade you need to specify the country. For local
                   trade, please specify a city, postal code or street name.
                 </span>
               </div>
 
-              {this.state.buyFormBool &&
+              {this.state.buyFormBool && (
                 <div className="flex mb3">
                   <label htmlFor="buyerAddress" className="w5">
                     Buyer Address
@@ -268,7 +277,8 @@ class PostTradeForm extends Component {
                     className="w5"
                     disabled
                   />
-                </div>}
+                </div>
+              )}
 
               <div className="flex mv3">
                 <label htmlFor="margin" className="w5">
@@ -277,6 +287,7 @@ class PostTradeForm extends Component {
                 <div className="flex col">
                   <div className="flex w5 h-100">
                     <input
+                      data-test="postATradeMargin"
                       id="margin"
                       name="margin"
                       type="number"
@@ -296,7 +307,8 @@ class PostTradeForm extends Component {
                         ? (this.props.etherPrice.data *
                             (1 +
                               parseFloat(this.state.postTradeDetails.margin) *
-                                0.01)).toFixed(2)
+                                0.01)
+                          ).toFixed(2)
                         : 'Getting price...'}{' '}
                       {this.props.user.profile.currency + '/ETH'}
                     </span>
@@ -312,7 +324,7 @@ class PostTradeForm extends Component {
                   </small>
                 </div>
 
-                <span className="measure-narrow fw1 i pa0 me">
+                <span className="measure-narrow fw1 i pa0 me pl3">
                   Margin you want over the ether market price. Use a negative
                   value for buying or selling under the market price to attract
                   more contracts. For more complex pricing edit the price
@@ -325,6 +337,7 @@ class PostTradeForm extends Component {
                   Payment Method
                 </label>
                 <select
+                  data-test="postATradePaymentMethod"
                   id="paymentMethod"
                   name="paymentMethod"
                   onChange={this.onPaymentMethodChange.bind(this)}
@@ -338,45 +351,44 @@ class PostTradeForm extends Component {
                 </select>
               </div>
 
-              {this.state.buyFormBool
-                ? <BuyForm
-                    onChangeProp={this.onInputChange.bind(this)}
-                    amount={this.state.postTradeDetails.amount}
-                    paymentMethod={this.state.postTradeDetails.paymentMethod}
-                    onCurrencyChange={this.onCurrencyChange.bind(this)}
-                    bankInformation={
-                      this.state.postTradeDetails.bankInformation
-                    }
-                    minTransactionLimit={
-                      this.state.postTradeDetails.minTransactionLimit
-                    }
-                    maxTransactionLimit={
-                      this.state.postTradeDetails.maxTransactionLimit
-                    }
-                    termsOfTrade={this.state.postTradeDetails.termsOfTrade}
-                    currency={this.state.user.profile.currency}
-                  />
-                : <SellForm
-                    onChangeProp={this.onInputChange.bind(this)}
-                    currency={this.props.user.profile.currency}
-                    amount={this.state.postTradeDetails.amount}
-                    paymentMethod={this.state.postTradeDetails.paymentMethod}
-                    onCurrencyChange={this.onCurrencyChange.bind(this)}
-                    bankInformation={
-                      this.state.postTradeDetails.bankInformation
-                    }
-                    minTransactionLimit={
-                      this.state.postTradeDetails.minTransactionLimit
-                    }
-                    maxTransactionLimit={
-                      this.state.postTradeDetails.maxTransactionLimit
-                    }
-                    termsOfTrade={this.state.postTradeDetails.termsOfTrade}
-                  />}
+              {this.state.buyFormBool ? (
+                <BuyForm
+                  onChangeProp={this.onInputChange.bind(this)}
+                  amount={this.state.postTradeDetails.amount}
+                  paymentMethod={this.state.postTradeDetails.paymentMethod}
+                  onCurrencyChange={this.onCurrencyChange.bind(this)}
+                  bankInformation={this.state.postTradeDetails.bankInformation}
+                  minTransactionLimit={
+                    this.state.postTradeDetails.minTransactionLimit
+                  }
+                  maxTransactionLimit={
+                    this.state.postTradeDetails.maxTransactionLimit
+                  }
+                  termsOfTrade={this.state.postTradeDetails.termsOfTrade}
+                  currency={this.state.user.profile.currency}
+                />
+              ) : (
+                <SellForm
+                  onChangeProp={this.onInputChange.bind(this)}
+                  currency={this.props.user.profile.currency}
+                  amount={this.state.postTradeDetails.amount}
+                  paymentMethod={this.state.postTradeDetails.paymentMethod}
+                  onCurrencyChange={this.onCurrencyChange.bind(this)}
+                  bankInformation={this.state.postTradeDetails.bankInformation}
+                  minTransactionLimit={
+                    this.state.postTradeDetails.minTransactionLimit
+                  }
+                  maxTransactionLimit={
+                    this.state.postTradeDetails.maxTransactionLimit
+                  }
+                  termsOfTrade={this.state.postTradeDetails.termsOfTrade}
+                />
+              )}
 
               <div className="flex mv3">
                 <label className="w5 " />
                 <input
+                  data-test="submitATrade"
                   type="submit"
                   className="mv5"
                   value="Publish Advertisement"

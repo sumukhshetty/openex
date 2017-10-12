@@ -128,13 +128,16 @@
           ".write": "auth.uid === $uid",
           "sellerInterfaceAddress": {
             ".validate": "!data.exists()"
-          } 
+          }
         }
       }
     },
     "registeredAccounts":{
       ".read": "true",
-      ".validate": "!data.exists()"
+      ".write": "auth != null",
+      "$uid": {
+        ".validate": "!data.exists()"
+      }
     },
     "prices": {
       ".read": "true",
@@ -143,6 +146,10 @@
     "presence":{
       ".read":"true",
       ".write": "true"
+    },
+    "totalvolume": {
+      ".read":"true",
+      ".write": "false"
     }
   }
 }

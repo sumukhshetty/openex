@@ -1,64 +1,61 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router'
-import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
+import React, { Component } from 'react';
+import { HiddenOnlyAuth } from './util/wrappers.js';
 
-import Web3 from 'web3'
-import truffleConfig from './../truffle-config.js'
-import getWeb3 from './util/getWeb3'
+import Web3 from 'web3';
+import truffleConfig from './../truffle-config.js';
+import getWeb3 from './util/getWeb3';
 
-var request = require('request')
+// for cypress testing
+// var TestRPC = require('ethereumjs-testrpc')
+
+var request = require('request');
 //var fetch = require('fetch')
 
-import { firebaseRef } from './index'
+import { firebaseRef } from './index';
 
-import logo from './images/logo.svg'
-import ezetherlogowhite from './images/ezether_logo.png'
-import AutoLogoLight from './images/svgReactComponents/autoLogoLight.js'
+import logo from './images/logo.svg';
+import AutoLogoLight from './images/svgReactComponents/autoLogoLight.js';
 
 // UI Components
-import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
-import EtherPriceContainer from './etherprice/EtherPriceContainer'
-import UserPresenceContainer from './userpresence/UserPresenceContainer'
-import Footer from './footer/Footer'
-import AccountWatcher from './web3/AccountWatcherContainer'
-import Header from './header/Header'
-import NotificationButtonInHeader from './notifications/NotificationButtonInHeader'
+import EtherPriceContainer from './etherprice/EtherPriceContainer';
+import UserPresenceContainer from './userpresence/UserPresenceContainer';
+import Header from './header/Header';
+import OnlyAuthLinks from './header/AuthenticatedHeader';
+import Footer from './footer/Footer';
+import AccountWatcher from './web3/AccountWatcherContainer';
 
 // Styles
-import './css/pure-min.css'
-import './css/styles-common.css'
-import './css/atomic.css'
-import './css/swatch.css'
-// import logo from './images/logo.svg'
+import './css/pure-min.css';
+import './css/styles-common.css';
+import './css/atomic.css';
+import './css/swatch.css';
+import './css/forms.css';
 
-import NotificationsContainer from './notifications/ui/NotificationsContainer'
-import { default as Toast } from 'react-notify-toast'
+import { default as Toast } from 'react-notify-toast';
 
-import LoadingUserData from './loadinguserdata/LoadingUserData'
+import LoadingUserData from './loadinguserdata/LoadingUserData';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       showNotifications: false,
       web3: null,
       notifications: null
-    }
-    this.removeNotifications = this.removeNotifications.bind(this)
-    this.showNotifications = this.showNotifications.bind(this)
-    this.web3Initialize.bind(this)
+    };
+    this.web3Initialize.bind(this);
   }
 
   componentWillMount() {
     getWeb3.then(results => {
-      this.web3Initialize(results.web3)
+      this.web3Initialize(results.web3);
       //dispatch(web3Init(results.web3))
-    })
+    });
   }
 
   componentDidMount() {
-    this.props.getCountry()
-    this.props.getUsers()
+    this.props.getCountry();
+    this.props.getUsers();
   }
 
   web3Initialize(web3) {
@@ -66,9 +63,13 @@ class App extends Component {
       // Use the Mist/wallet provider.
       // DEVELOPER NOTE: removing the next commented line will break the app
       // eslint-disable-next-line
-      var web3Provided = new Web3(web3.currentProvider)
-      this.props.setWeb3(web3Provided)
-      // this.setState({web3:web3Provided})
+
+      var web3Provided = new Web3(web3.currentProvider);
+      this.props.setWeb3(web3Provided);
+
+      // for cypress testing
+      // var web3Provided = new Web3(TestRPC.provider())
+      // this.props.setWeb3(web3Provided)
     } else {
       // DEVELOPER NOTE: What happens in the wild if the
       // user does not have a browser based wallet? What happens
@@ -81,122 +82,21 @@ class App extends Component {
     }
   }
 
-  showNotifications() {
-    this.setState({ showNotifications: true })
-  }
+  showNotifications = () => {
+    this.setState({ showNotifications: true });
+  };
 
-  removeNotifications() {
-    this.setState({ showNotifications: false })
-  }
+  removeNotifications = () => {
+    this.setState({ showNotifications: false });
+  };
 
   render() {
-    const OnlyAuthLinks = VisibleOnlyAuth(() => {
-      return (
-        <div className="tr pt3 menu mt0 bg-blue">
-          <div className="w-75 center">
-            {this.state.showNotifications && (
-              <NotificationsContainer close={this.removeNotifications} />
-            )}
-            <div className="pure-g flex mxb cxc ">
-              <div className="pure-u-1-4 brand">
-                <Link to="/">
-                  <img
-                    className="brand"
-                    src={ezetherlogowhite}
-                    alt="EZ Ether"
-                    width="244px"
-                    height="100px"
-                  />
-                </Link>
-              </div>
-              <div className="flex mxe cxc">
-                <NotificationButtonInHeader
-                  showNotifications={this.showNotifications}
-                />
-                <LogoutButtonContainer />
-              </div>
-            </div>
-            <nav className="pure-menu pure-menu-horizontal">
-              <ul className="flex mxb ma0 pa0">
-                <li className="pure-menu-item">
-                  <Link
-                    to="/dashboard"
-                    activeStyle={{
-                      color: 'white',
-                      borderBottom: '2px solid white'
-                    }}
-                  >
-                    Dashboard
-                  </Link>
-                </li>
-                <li className="pure-menu-item">
-                  <Link
-                    to="/buyether"
-                    activeStyle={{
-                      color: 'white',
-                      borderBottom: '2px solid white'
-                    }}
-                  >
-                    Buy
-                  </Link>
-                </li>
-                <li className="pure-menu-item">
-                  <Link
-                    to="/sellether"
-                    activeStyle={{
-                      color: 'white',
-                      borderBottom: '2px solid white'
-                    }}
-                  >
-                    Sell
-                  </Link>
-                </li>
-                <li className="pure-menu-item">
-                  <Link
-                    to="/posttrade"
-                    activeStyle={{
-                      color: 'white',
-                      borderBottom: '2px solid white'
-                    }}
-                  >
-                    Post a Trade
-                  </Link>
-                </li>
-                <li className="pure-menu-item">
-                  <Link
-                    to="/help"
-                    activeStyle={{
-                      color: 'white',
-                      borderBottom: '2px solid white'
-                    }}
-                  >
-                    Contact Us
-                  </Link>
-                </li>
-                <li className="pure-menu-item">
-                  <Link
-                    to="/guide"
-                    activeStyle={{
-                      color: 'white',
-                      borderBottom: '2px solid white'
-                    }}
-                  >
-                    Guide
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      )
-    })
-
     const OnlyGuestLinks = HiddenOnlyAuth(() => (
       <div>
         <Header />
         <div className="h4 h3-l w-100" />
       </div>
-    ))
+    ));
 
     const noMobileWhenLoggedIn = () => (
       <div className="absolute absolute--fill gradient white">
@@ -215,18 +115,18 @@ class App extends Component {
           </p>
         </div>
       </div>
-    )
+    );
 
-    const isMobile = window.innerWidth <= 800
+    const isMobile = window.innerWidth <= 800;
     if (isMobile && firebaseRef.auth().currentUser) {
-      return <noMobileWhenLoggedIn />
+      return <noMobileWhenLoggedIn />;
     } else {
       if (this.props.loadinguserdata.data) {
-        return <LoadingUserData />
+        return <LoadingUserData />;
       } else {
         const unsupportedBrowser =
           !/chrome/i.test(navigator.userAgent) &&
-          !/firefox/i.test(navigator.userAgent)
+          !/firefox/i.test(navigator.userAgent);
 
         const UseSupportedBrowser = (
           <div className="absolute bg-danger w-100 z-1 flex mxa cxc mt3">
@@ -245,29 +145,31 @@ class App extends Component {
               </button>
             </div>
           </div>
-        )
+        );
         return (
-          <section className="Site">
+          <main className="Site">
             <AccountWatcher />
             <Toast />
             {/*<EtherPriceContainer />*/}
             <OnlyGuestLinks />
-            <OnlyAuthLinks />
+            <OnlyAuthLinks
+              showNotifications={this.showNotifications}
+              removeNotifications={this.removeNotifications}
+              notificationStatus={this.state.showNotifications}
+            />
             {/* {unsupportedBrowser && <UseSupportedBrowser />} */}
             {/*<UserPresenceContainer />*/}
-            <main
+            <section
               role="main"
               className={firebaseRef.auth().currentUser && 'bg-smoke'}
             >
               {this.props.children}
-            </main>
+            </section>
 
             <Footer />
-          </section>
-        )
+          </main>
+        );
       }
     }
   }
 }
-
-export default App

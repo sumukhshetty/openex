@@ -38,9 +38,15 @@ module.exports = {
     var sellTradeAdvertisement = sellTradeAdvertisements.data[sellTradeAdvertisementId]
     dispatch(setSellTradeAdvertisement(sellTradeAdvertisement))
     dispatch(setSeller(users.data[sellTradeAdvertisement.sellerUid]))
+    window.analytics.track('View Sell Trade Advertisement', {
+      location: 'selltradeadvertisement'
+    })
   },
   buyerCreatesPurchaseRequest: (etherAmount, fiatAmount, etherPrice, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer) => (dispatch) => {
     var now = new Date()
+    if(Number.isNaN(fiatAmount)) {
+      throw new Error('fiatAmount isNaN')
+    }
     var purchaseRequestData = {
       bankinformation: sellTradeAdvertisement.bankInformation,
       buyerAddress: buyer.data.uid,
@@ -79,7 +85,10 @@ module.exports = {
       .push(purchaseRequestData, function(err){
         // firebaseRef.database().ref('/users/' + sellTradeAdvertisement.sellerUid + '/activetrades/' + newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
         // firebaseRef.database().ref('/users/'+ buyer.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': sellTradeAdvertisement.tradeType})
-
+        window.analytics.track('Buyer Created Purchase Request', {
+          location: 'selltradeadvertisement',
+          text: 'Send Trade Request'
+        })
         notificationHelpers.sendBuyerCreatesPurchaseRequestNotification(purchaseRequestData, newRequest.key, sellTradeAdvertisementId, sellTradeAdvertisement, seller, buyer)
 
       })

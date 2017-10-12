@@ -5,6 +5,7 @@ admin.initializeApp(functions.config().firebase);
 const cors = require('cors')({origin: true});
 
 const SolidityCoder = require("web3/lib/solidity/coder.js");
+
 const Web3 = require("web3");
 const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/QmKbFq9RrJ0qz6zqSRPO'));
 const infura = web3.currentProvider;
@@ -19,7 +20,7 @@ exports.createBuyTradeAdvertisement = functions.https.onRequest((req, res) => {
     try{
       var newAdvertisement = admin.database().ref('/buytradeadvertisements/'+ req.body.user.profile.country)
         .push(req.body.tradeDetails, function(error){
-          admin.database().ref('/users/' + req.body.user.data.uid + '/advertisements/buyether/' + 
+          admin.database().ref('/users/' + req.body.user.data.uid + '/advertisements/buyether/' +
             newAdvertisement.key + '/tradetype').set('buy-ether')
         })
 
@@ -49,7 +50,7 @@ exports.sellerCreatesPurchaseRequest = function.https.onRequest((req, res) => {
       var newRequest = admin.database().ref(/purchaserequests/ + req.body.user.profile.country)
         .push(req.body.purchaseRequestData, function(err){
           admin.database().ref(/users/+ req.body.user.data.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
-          admin.database().ref(/users/+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})   
+          admin.database().ref(/users/+ req.body.buyer.uid+'/activetrades/'+newRequest.key).set({'tradeType': req.body.purchaseRequestData.tradeType})
         })
 
     } catch(error){
@@ -353,7 +354,7 @@ exports.postSellOrder = functions.https.onRequest((req, res) => {
     try {
       // ISSUE-231-4: the user profile will be passed as a prop so we don't have to do
       // two firebase calls to get the country. The sellorders will be changed to
-      // selltradeadvertisements 
+      // selltradeadvertisements
       //
       // req.body.country instead of userData.country
       // req.body.sellTradeAdvertisementDetails

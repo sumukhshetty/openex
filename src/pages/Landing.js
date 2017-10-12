@@ -6,13 +6,18 @@ import { connect } from 'react-redux'
 import { firebaseRef } from '../index.js'
 import NumberFormat from 'react-number-format'
 import currencies from 'country-currency'
+import Features from './Homepage/Features'
+import WhyUseOurPlatform from './Homepage/WhyUseOurPlatform'
+import { browserHistory } from 'react-router'
+var request = require('request')
 
 class Landing extends Component {
   state = {
     highestSellTrade: null,
     lowestBuyTrade: null,
     buyTradeCount: null,
-    sellTradeCount: null
+    sellTradeCount: null,
+    signUpInfo: {}
   }
   getHighestSellTrade = async () => {
     await firebaseRef
@@ -50,11 +55,67 @@ class Landing extends Component {
         this.setState({ sellTradeCount: Object.keys(snap.val()).length })
       )
   }
-  componentDidMount() {
-    this.getHighestSellTrade()
-    this.getLowestBuyTrade()
-    this.getTotalTradeCount()
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.country.data && this.props.country.data) {
+      this.getTotalTradeCount()
+      this.getHighestSellTrade()
+      this.getLowestBuyTrade()
+    }
   }
+
+  onInputChange(event) {
+    var _signUpInfo = this.state.signUpInfo
+    if (event.target.id === 'email') {
+      _signUpInfo = Object.assign({}, this.state.signUpInfo, {
+        email: event.target.value
+      })
+    }
+    if (event.target.id === 'country') {
+      _signUpInfo = Object.assign({}, this.state.signUpInfo, {
+        country: event.target.value
+      })
+    }
+    if (event.target.id === 'username') {
+      _signUpInfo = Object.assign({}, this.state.signUpInfo, {
+        username: event.target.value
+      })
+    }
+    this.setState({ signUpInfo: _signUpInfo })
+  }
+
+
+  handleSubmit(event) {
+    event.preventDefault()
+
+    var url = process.env.FIREBASE_FUNCTIONS_URL +'addContactToLeadsAutomation'
+    var options = {
+      method: 'post',
+      body: {
+        email: this.state.signUpInfo.email
+      },
+      headers: { 'Content-Type': 'application/json' },
+      json: true,
+      url: url
+    }
+    request(options, function(err, res, body) {
+      if (err) {
+        console.error('error posting json: ', err)
+        throw err
+      }
+      var statusCode = res.statusCode
+      if (statusCode === 200) {
+        browserHistory.push('/signup')
+      }
+      if (statusCode === 500) {
+        throw res.body.error
+      }
+      if (statusCode === 401) {
+        throw res.body.error
+      }
+    })
+  }
+
   render() {
     if (this.props.loadinguserdata.data) {
       return <div>Loading...</div>
@@ -69,7 +130,18 @@ class Landing extends Component {
               <FormattedMessage id="home.byline" />
             </h2>
             <div className="flex wrap mxa cxe w-50 center pt3 dn-m flex-l">
-              <div className="col mxc dn flex-l">
+            <div className="col mxc dn flex-l">
+              <input className="mv1 w-100 br3 b---gray"
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email address"
+                onChange={this.onInputChange.bind(this)}
+                required
+              />
+              <button className="bg-white blue br3 ma2" onClick={this.handleSubmit.bind(this)}> Get Started</button>
+              </div>
+              {/*<div className="col mxc dn flex-l">
                 <a className="white link underline ma2">
                   <FormattedMessage id="home.login" />
                 </a>
@@ -79,7 +151,7 @@ class Landing extends Component {
               </div>
               <button className="bg-white blue br3 ma2">
                 <FormattedMessage id="home.howThisWorks" />
-              </button>
+              </button>*/}
             </div>
           </section>
           <section className="pa4">
@@ -87,7 +159,7 @@ class Landing extends Component {
               <FormattedMessage id="home.section2Header" />
             </p>
             <div className="tc center ma3 w-50-l w-100">
-              <ResponsiveEmbed src="https://www.youtube.com/embed/K7BepI1aobg" />
+              <ResponsiveEmbed src="https://www.youtube.com/embed/9eJhipwfQRo" />
             </div>
           </section>
           <section className="flex wrap col cxc bg-blue pa4">
@@ -104,16 +176,18 @@ class Landing extends Component {
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
-                  {this.state.lowestBuyTrade
-                    ? <NumberFormat
-                        value={this.state.lowestBuyTrade}
-                        thousandSeparator={true}
-                        suffix={` ${currencies
-                          .byCountry()
-                          .get(this.props.country)}`}
-                        className="bg-blue white bn"
-                      />
-                    : `...`}
+                  {this.state.lowestBuyTrade ? (
+                    <NumberFormat
+                      value={this.state.lowestBuyTrade}
+                      thousandSeparator={true}
+                      suffix={` ${currencies
+                        .byCountry()
+                        .get(this.props.country)}`}
+                      className="bg-blue white bn"
+                    />
+                  ) : (
+                    `...`
+                  )}
                 </p>
                 <p className="fmedium white ">
                   <FormattedMessage id="home.metric2" />
@@ -121,16 +195,18 @@ class Landing extends Component {
               </div>
               <div className="flex col tc ph4">
                 <p className="f2 white mb2">
-                  {this.state.highestSellTrade
-                    ? <NumberFormat
-                        value={this.state.highestSellTrade}
-                        thousandSeparator={true}
-                        suffix={` ${currencies
-                          .byCountry()
-                          .get(this.props.country)}`}
-                        className="bg-blue white bn"
-                      />
-                    : `...`}
+                  {this.state.highestSellTrade ? (
+                    <NumberFormat
+                      value={this.state.highestSellTrade}
+                      thousandSeparator={true}
+                      suffix={` ${currencies
+                        .byCountry()
+                        .get(this.props.country)}`}
+                      className="bg-blue white bn"
+                    />
+                  ) : (
+                    `...`
+                  )}
                 </p>
                 <p className="fmedium white ">
                   <FormattedMessage id="home.metric3" />
@@ -172,17 +248,8 @@ class Landing extends Component {
               </div>
             </div>
           </section>
-          <section className="flex wrap bg-gray mxa pa3">
-            <p>
-              <FormattedMessage id="home.asFeaturedOn" />
-            </p>
-            <p className="b">
-              <FormattedMessage id="home.feature1" />
-            </p>
-            <p className="b">
-              <FormattedMessage id="home.feature2" />
-            </p>
-          </section>
+          <Features />
+          <WhyUseOurPlatform />
           <Testimonials />
         </div>
       )
@@ -190,17 +257,14 @@ class Landing extends Component {
   }
 }
 
-const Step = ({ image, byline }) =>
+const Step = ({ image, byline }) => (
   <div className="flex col mxa cxc w5 h5 bg-white shadow-1 ma3">
-    <div className="w3 flex mxc">
-      {image}
-    </div>
+    <div className="w3 flex mxc">{image}</div>
     <div className="w-100 tc">
-      <p>
-        {byline}
-      </p>
+      <p>{byline}</p>
     </div>
   </div>
+)
 
 const mapStateToProps = (state, ownProps) => {
   return {

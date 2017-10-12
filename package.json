@@ -54,12 +54,15 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "activecampaign": "^1.2.4",
     "babel-polyfill": "^6.23.0",
     "babel-register": "^6.23.0",
-    "country-currency": "git+https://github.com/srcagency/country-currencies.git",
+    "country-currency":
+      "git+https://github.com/srcagency/country-currencies.git",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",
-    "firebase": "^3.7.1",
+    "ethereumjs-testrpc": "^4.1.3",
+    "firebase": "^4.4.0",
     "i": "^0.3.5",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
@@ -73,6 +76,7 @@
     "react-dom": "^15.4.2",
     "react-ga": "^2.2.0",
     "react-intl": "^2.3.0",
+    "react-mailchimp-subscribe": "^1.0.2",
     "react-notify-toast": "^0.1.5",
     "react-number-format": "^2.0.4",
     "react-redux": "^5.0.2",
@@ -91,16 +95,13 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "buildStaging": "node scripts/buildStaging",
     "test": "node scripts/testEnv.js --env=jsdom",
     "coverage": "yarn run test -- --coverage"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
-    "setupFiles": [
-      "./config/polyfills.js"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
+    "setupFiles": ["./config/polyfills.js"],
     "testPathIgnorePatterns": [
       "<rootDir>[/\\\\](build|docs|node_modules)[/\\\\]"
     ],
@@ -111,9 +112,7 @@
       "^.+\\.css$": "./config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "./config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     }
@@ -122,9 +121,7 @@
     "parser": "babel-eslint"
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ]
+    "presets": ["react-app"]
   },
   "eslintConfig": {
     "extends": "react-app"
