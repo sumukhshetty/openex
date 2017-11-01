@@ -10,7 +10,7 @@ import Features from './Features'
 import WhyUseOurPlatform from './WhyUseOurPlatform'
 
 import EmailCapture from './EmailCapture'
-import {ac} from './../../index.js'
+import { ac } from './../../index.js'
 var request = require('request')
 
 class Home extends Component {
@@ -24,21 +24,25 @@ class Home extends Component {
     await firebaseRef
       .database()
       .ref(`/selltradeadvertisements/${this.props.country.data}`)
-      .orderByChild('price')
-      .limitToFirst(1)
-      .on(`child_added`, snap =>
-        this.setState({ highestSellTrade: snap.val().price })
-      )
+      .on(`value`, snap => {
+        const allPrices = snap.val()
+        const highestSellTrade = Object.keys(allPrices).reduce((a, b) =>
+          Math.max(allPrices[a].price, allPrices[b].price)
+        )
+        this.setState({ highestSellTrade })
+      })
   }
   getLowestBuyTrade = async () => {
     await firebaseRef
       .database()
       .ref(`/buytradeadvertisements/${this.props.country.data}`)
-      .orderByChild('price')
-      .limitToLast(1)
-      .on(`child_added`, snap =>
-        this.setState({ lowestBuyTrade: snap.val().price })
-      )
+      .on(`value`, snap => {
+        const allPrices = snap.val()
+        const lowestBuyTrade = Object.keys(allPrices).reduce((a, b) =>
+          Math.min(allPrices[a].price, allPrices[b].price)
+        )
+        this.setState({ lowestBuyTrade })
+      })
   }
   getTotalVolume = async () => {
     await firebaseRef
@@ -47,7 +51,7 @@ class Home extends Component {
       .on('value', snap => this.setState({ totalTradeVolume: snap.val() }))
   }
 
-  onInputChange(event) {
+  onInputChange (event) {
     var _signUpInfo = this.state.signUpInfo
     if (event.target.id === 'email') {
       _signUpInfo = Object.assign({}, this.state.signUpInfo, {
@@ -67,11 +71,10 @@ class Home extends Component {
     this.setState({ signUpInfo: _signUpInfo })
   }
 
-
-  handleSubmit(event) {
+  handleSubmit (event) {
     event.preventDefault()
 
-    var url = process.env.FIREBASE_FUNCTIONS_URL +'addContactToLeadsAutomation'
+    var url = process.env.FIREBASE_FUNCTIONS_URL + 'addContactToLeadsAutomation'
     var options = {
       method: 'post',
       body: {
@@ -81,7 +84,7 @@ class Home extends Component {
       json: true,
       url: url
     }
-    request(options, function(err, res, body) {
+    request(options, function (err, res, body) {
       if (err) {
         console.error('error posting json: ', err)
         throw err
@@ -99,7 +102,7 @@ class Home extends Component {
     })
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState) {
     if (!prevProps.country.data && this.props.country.data) {
       this.getTotalVolume()
       this.getHighestSellTrade()
@@ -107,7 +110,7 @@ class Home extends Component {
     }
   }
 
-  render() {
+  render () {
     if (this.props.loadinguserdata.data) {
       return <div>Loading...</div>
     } else {
@@ -117,26 +120,32 @@ class Home extends Component {
       }
       return (
         <div>
-          <section className="tc gradient pa4">
-            <h1 className=" white pt5 b">Sell and Buy Ether in India.</h1>
-            <h2 className="white">
+          <section className='tc gradient pa4'>
+            <h1 className=' white pt5 b'>Sell and Buy Ether in India.</h1>
+            <h2 className='white'>
               A Secure Ethereum Marketplace That <br />Makes It Easy To Sell And
               Buy Ether In India.
             </h2>
-            <div className="flex wrap mxa cxe w-50 center pt3 dn-m flex-l">
-              {/*TODO: turn this into a form with validation and formatting*/}
-              <div className="col mxc dn flex-l">
-              <input className="mv1 w-100 br3 b---gray"
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Email address"
-                onChange={this.onInputChange.bind(this)}
-                required
-              />
-              <button className="bg-white blue br3 ma2" onClick={this.handleSubmit.bind(this)}> Get Started</button>
+            <div className='flex wrap mxa cxe w-50 center pt3 dn-m flex-l'>
+              {/* TODO: turn this into a form with validation and formatting */}
+              <div className='col mxc dn flex-l'>
+                <input
+                  className='mv1 w-100 br3 b---gray'
+                  id='email'
+                  name='email'
+                  type='email'
+                  placeholder='Email address'
+                  onChange={this.onInputChange.bind(this)}
+                  required
+                />
+                <button
+                  className='bg-white blue br3 ma2'
+                  onClick={this.handleSubmit.bind(this)}
+                >
+                  {' '}Get Started
+                </button>
               </div>
-              {/*<div className="col mxc dn flex-l">
+              {/* <div className="col mxc dn flex-l">
                 <a
                   data-test="homeLoginButton"
                   className="white link underline ma2"
@@ -158,99 +167,95 @@ class Home extends Component {
                 onClick={() => browserHistory.push('/guide')}
               >
                 <FormattedMessage id="home.howThisWorks" />
-              </button>*/}
+              </button> */}
             </div>
           </section>
-          <section className="pa4">
-            <h3 className="measure center pb3 flarge tc">
+          <section className='pa4'>
+            <h3 className='measure center pb3 flarge tc'>
               Trade Ethereum directly with other users in India. <br />We will
               keep your money safe using smart contracts.
             </h3>
-            <div className="tc center ma3 w-50-l w-100">
-              <ResponsiveEmbed src="https://www.youtube.com/embed/9eJhipwfQRo" />
+            <div className='tc center ma3 w-50-l w-100'>
+              <ResponsiveEmbed src='https://www.youtube.com/embed/9eJhipwfQRo' />
             </div>
           </section>
           <EmailCapture />
-          <section className="flex wrap col cxc bg-blue pa4">
-            <div className="flex mxc wrap">
-              <div className=" col tc ph4 flex-l dn">
-                <p className="f2 white mb2">
+          <section className='flex wrap col cxc bg-blue pa4'>
+            <div className='flex mxc wrap'>
+              <div className=' col tc ph4 flex-l dn'>
+                <p className='f2 white mb2'>
                   {this.state.totalTradeVolume
                     ? `${Math.floor(this.state.totalTradeVolume)} ETH`
                     : `...`}
                 </p>
-                <h4 className="fmedium white ">
-                  <FormattedMessage id="home.metric1" />
+                <h4 className='fmedium white '>
+                  <FormattedMessage id='home.metric1' />
                 </h4>
               </div>
-              <div className="flex col tc ph4">
-                <p className="f2 white mb2">
-                  {this.state.lowestBuyTrade ? (
-                    <NumberFormat
+              <div className='flex col tc ph4'>
+                <p className='f2 white mb2'>
+                  {this.state.lowestBuyTrade
+                    ? <NumberFormat
                       value={this.state.lowestBuyTrade}
-                      thousandSeparator={true}
+                      thousandSeparator
                       suffix={` ${this.props.currency.data}`}
-                      className="bg-blue white bn"
-                      disabled={true}
-                    />
-                  ) : (
-                    `...`
-                  )}
+                      className='bg-blue white bn tc'
+                      disabled
+                      />
+                    : `...`}
                 </p>
-                <h4 className="fmedium white ">
-                  <FormattedMessage id="home.metric2" />
+                <h4 className='fmedium white '>
+                  <FormattedMessage id='home.metric2' />
                 </h4>
               </div>
-              <div className="flex col tc ph4">
-                <p className="f2 white mb2">
-                  {this.state.highestSellTrade ? (
-                    <NumberFormat
+              <div className='flex col tc ph4'>
+                <p className='f2 white mb2'>
+                  {this.state.highestSellTrade
+                    ? <NumberFormat
                       value={this.state.highestSellTrade}
-                      thousandSeparator={true}
+                      thousandSeparator
                       suffix={` ${this.props.currency.data}`}
-                      className="bg-blue white bn"
-                      disabled={true}
-                    />
-                  ) : (
-                    `...`
-                  )}
+                      className='bg-blue white bn tc'
+                      disabled
+                      />
+                    : `...`}
                 </p>
-                <h4 className="fmedium white">
-                  <FormattedMessage id="home.metric3" />
+                <h4 className='fmedium white'>
+                  <FormattedMessage id='home.metric3' />
                 </h4>
               </div>
             </div>
-            <div className="flex wrap mxa w-75">
-              <div className="flex col mxc mv3">
-                <h5 className=" fsmall w4 white tc mv0">
-                  <FormattedMessage id="home.benefit1line1" />
+            <div className='flex wrap mxa w-75'>
+              <div className='flex col mxc mv3'>
+                <h5 className=' fsmall w4 white tc mv0'>
+                  <FormattedMessage id='home.benefit1line1' />
                 </h5>
-                <h5 className="fsmall w4 white tc mv0">
-                  <FormattedMessage id="home.benefit1line2" />
-                </h5>
-              </div>
-              <div className="flex col mxc mv3">
-                <h5 className=" fsmall w4 white tc mv0">
-                  <FormattedMessage id="home.benefit2line1" />
-                </h5>
-                <h5 className="fsmall w4 white tc mv0">
-                  <FormattedMessage id="home.benefit2line2" />
+                <h5 className='fsmall w4 white tc mv0'>
+                  <FormattedMessage id='home.benefit1line2' />
                 </h5>
               </div>
-              <div className="flex col mxc mv3">
-                <h5 className=" fsmall w4 white tc mv0">
-                  <FormattedMessage id="home.benefit3line1" />
+              <div className='flex col mxc mv3'>
+                <h5 className=' fsmall w4 white tc mv0'>
+                  <FormattedMessage id='home.benefit2line1' />
                 </h5>
-                <h5 className="fsmall w4 white tc mv0">
-                  <FormattedMessage id="home.benefit3line2" />
+                <h5 className='fsmall w4 white tc mv0'>
+                  <FormattedMessage id='home.benefit2line2' />
                 </h5>
               </div>
-              <div className="flex col mxc mv3">
-                <h5 className=" fsmall w4 white tc mv0">
-                  <FormattedMessage id="home.benefit4line1" />
+              <div className='flex col mxc mv3'>
+                <h5 className=' fsmall w4 white tc mv0'>
+                  <FormattedMessage id='home.benefit3line1' />
                 </h5>
-                <h5 className="fsmall w4 white tc mv0">
-                  <FormattedMessage id="home.benefit4line2" />
+                <h5 className='fsmall w4 white tc mv0'>
+                  <FormattedMessage id='home.benefit3line2' />
+                </h5>
+              </div>
+              <div className='flex col mxc mv3'>
+                <h5 className=' fsmall w4 white tc mv0'>
+                  <FormattedMessage id='home.benefit4line1' />
+                </h5>
+                <h5 className='fsmall w4 white tc mv0'>
+                  <FormattedMessage id='home.benefit4line2' />
                 </h5>
               </div>
             </div>
