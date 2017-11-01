@@ -477,6 +477,16 @@ p.lead {
   background-color: #d0011b;
 }
 
+.bigRedDot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #d0011b;
+  position: relative;
+  right: 8px;
+  bottom: 3px;
+}
+
 /*form elements*/
 
 fieldset {

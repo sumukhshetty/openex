@@ -1,37 +1,37 @@
-import {firebaseRef} from './../index.js'
+import { firebaseRef } from './../index.js'
 import { browserHistory } from 'react-router'
 
 export const USER_LOGGED_IN = 'USER_LOGGED_IN'
 
-function userLoggedIn(user) {
+function userLoggedIn (user) {
   return {
     type: USER_LOGGED_IN,
-    payload: user,
+    payload: user
   }
 }
 
-function getUserProfile(userProfile) {
+function getUserProfile (userProfile) {
   return {
     type: 'GET_USER_PROFILE',
     payload: userProfile
   }
 }
 
-function users(usersPayload){
+function users (usersPayload) {
   return {
     type: 'GET_USERS',
     payload: usersPayload
   }
 }
 
-function getBuyTradeAdvertisements(buyTradeAdvertisements){
+function getBuyTradeAdvertisements (buyTradeAdvertisements) {
   return {
     type: 'GET_BUY_TRADE_ADVERTISEMENTS',
     payload: buyTradeAdvertisements
   }
 }
 
-function getSellTradeAdvertisements(sellTradeAdvertisements){
+function getSellTradeAdvertisements (sellTradeAdvertisements) {
   return {
     type: 'GET_SELL_TRADE_ADVERTISEMENTS',
     payload: sellTradeAdvertisements
@@ -42,7 +42,7 @@ function getActiveTrades (activeTradesPayload) {
   return {
     type: 'GET_ACTIVE_TRADES',
     payload: activeTradesPayload
-  };
+  }
 }
 
 function getCompletedTrades (completedTradesPayload) {
@@ -59,19 +59,18 @@ function getDisputedTrades (disputedTradesPayload) {
   }
 }
 
-
 function getPurchaseRequests (purchaseRequestsPayload) {
   return {
     type: 'GET_PURCHASE_REQUESTS',
     payload: purchaseRequestsPayload
-  };
+  }
 }
 
 function getTradeAdvertisements (tradeAdvertisementsPayload) {
   return {
     type: 'GET_TRADE_ADVERTISEMENTS',
     payload: tradeAdvertisementsPayload
-  };
+  }
 }
 
 function updateReduxStoreDataState (value) {
@@ -81,8 +80,7 @@ function updateReduxStoreDataState (value) {
   }
 }
 
-
-function getUserNotifications(notificationsPayload){
+function getUserNotifications (notificationsPayload) {
   return {
     type: 'GET_USER_NOTIFICATIONS',
     payload: notificationsPayload
@@ -90,20 +88,20 @@ function getUserNotifications(notificationsPayload){
 }
 
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT'
-function userLoggedOut(user) {
+function userLoggedOut (user) {
   return {
     type: USER_LOGGED_OUT,
     payload: user
   }
 }
 
-function getUserPresence(userPresencePayload) {
+function getUserPresence (userPresencePayload) {
   return {
     type: 'SET_USER_PRESENCE',
     payload: userPresencePayload
   }
 }
-function etherPrice(pricesPayload) {
+function etherPrice (pricesPayload) {
   return {
     type: 'GET_ETHER_PRICE',
     payload: pricesPayload
@@ -111,77 +109,95 @@ function etherPrice(pricesPayload) {
 }
 
 module.exports = {
-  checkLocalStorage: ()=>(dispatch,getState)=>{
+  checkLocalStorage: () => (dispatch, getState) => {
     if (!firebaseRef.auth().currentUser) {
-      let hasLocalStorageUser = false;
+      let hasLocalStorageUser = false
       for (let key in localStorage) {
-          if (key.startsWith("firebase:authUser:")) {
-              hasLocalStorageUser = true;
-              dispatch(updateReduxStoreDataState(true))
-          }
+        if (key.startsWith('firebase:authUser:')) {
+          hasLocalStorageUser = true
+          dispatch(updateReduxStoreDataState(true))
+        }
       }
       if (!hasLocalStorageUser) {
-          dispatch(updateReduxStoreDataState(false))
+        dispatch(updateReduxStoreDataState(false))
       }
     }
   },
-  startListeningUserAuth: () => (dispatch, getState) =>{
-    firebaseRef.auth().onAuthStateChanged(function(user){
-      if(user){
+  startListeningUserAuth: () => (dispatch, getState) => {
+    firebaseRef.auth().onAuthStateChanged(function (user) {
+      if (user) {
         window.analytics.identify(user.uid)
         dispatch(updateReduxStoreDataState(true))
-        firebaseRef.database().ref('/users/'+user.uid).on('value',function(snap){
-          var userProfile = snap.val()
-          if(userProfile) {
-            dispatch(getUserProfile(userProfile))
-            dispatch(getActiveTrades(userProfile['activetrades']))
-            dispatch(getDisputedTrades(userProfile['disputedtrades']))
-            dispatch(getTradeAdvertisements(userProfile['advertisements']))
-            dispatch(getCompletedTrades(userProfile['completedtrades']))
-            dispatch(userLoggedIn(user))
-            firebaseRef.database().ref('/users').on('value', function(snap){
-              dispatch(users(snap.val()))
-            })
-            firebaseRef.database().ref('/buytradeadvertisements/' + userProfile.country).on('value',function(snap){
+        firebaseRef
+          .database()
+          .ref('/users/' + user.uid)
+          .on('value', function (snap) {
+            var userProfile = snap.val()
+            if (userProfile) {
+              dispatch(getUserProfile(userProfile))
+              dispatch(getActiveTrades(userProfile['activetrades']))
+              dispatch(getDisputedTrades(userProfile['disputedtrades']))
+              dispatch(getTradeAdvertisements(userProfile['advertisements']))
+              dispatch(getCompletedTrades(userProfile['completedtrades']))
+              dispatch(userLoggedIn(user))
+              firebaseRef.database().ref('/users').on('value', function (snap) {
+                dispatch(users(snap.val()))
+              })
+              firebaseRef
+                .database()
+                .ref('/buytradeadvertisements/' + userProfile.country)
+                .on('value', function (snap) {
+                  dispatch(getBuyTradeAdvertisements(snap.val()))
+                })
+              firebaseRef
+                .database()
+                .ref('/selltradeadvertisements/' + userProfile.country)
+                .on('value', function (snap) {
+                  dispatch(getSellTradeAdvertisements(snap.val()))
+                })
+              firebaseRef
+                .database()
+                .ref('/purchaserequests/' + userProfile.country)
+                .on('value', function (snap) {
+                  dispatch(getPurchaseRequests(snap.val()))
+                })
+              firebaseRef
+                .database()
+                .ref('/notifications/' + user.uid)
+                .on('value', function (snap) {
+                  dispatch(getUserNotifications(snap.val()))
+                })
+              firebaseRef
+                .database()
+                .ref('/presence/')
+                .on('value', function (snap) {
+                  dispatch(getUserPresence(snap.val()))
+                })
+              firebaseRef
+                .database()
+                .ref('/prices/ETH/' + userProfile.currency)
+                .on('value', function (snap) {
+                  dispatch(etherPrice(snap.val()))
+                })
 
-              dispatch(getBuyTradeAdvertisements(snap.val()))
-            })
-            firebaseRef.database().ref('/selltradeadvertisements/'+userProfile.country).on('value', function(snap){
-
-              dispatch(getSellTradeAdvertisements(snap.val()))
-            })
-            firebaseRef.database().ref('/purchaserequests/'+ userProfile.country).on('value', function(snap){
-
-              dispatch(getPurchaseRequests(snap.val()))
-            })
-            firebaseRef.database().ref('/notifications/'+user.uid).on('value',function(snap){
-              dispatch(getUserNotifications(snap.val()))
-            })
-            firebaseRef.database().ref('/presence/').on('value', function(snap){
-              dispatch(getUserPresence(snap.val()))
-            })
-            firebaseRef.database().ref('/prices/ETH/' + userProfile.currency).on('value', function(snap) {
-              dispatch(etherPrice(snap.val()));
-            })
-
-            dispatch(updateReduxStoreDataState(false))
-            console.log('numtrades: ' + userProfile['numberOfTrades']);
-            if(userProfile['numberOfTrades'] < 1) {
-              return browserHistory.push('/buyether')
+              dispatch(updateReduxStoreDataState(false))
+              console.log('numtrades: ' + userProfile['numberOfTrades'])
+              if (userProfile['numberOfTrades'] < 1) {
+                return browserHistory.push('/buyether')
+              }
+              return browserHistory.push('/dashboard')
+            } else {
+              const auth = firebaseRef.auth()
+              auth.signOut().then(function (promise) {
+                console.log('logout')
+                dispatch(updateReduxStoreDataState(false))
+                dispatch(userLoggedOut())
+              })
             }
-            return browserHistory.push('/dashboard')
-          } else {
-            const auth = firebaseRef.auth()
-            auth.signOut().then(function(promise){
-            console.log("logout")
-            dispatch(updateReduxStoreDataState(false))
-            dispatch(userLoggedOut())
           })
-          }
-        })
       } else {
         dispatch(updateReduxStoreDataState(false))
-        dispatch({ type: "USER_LOGGED_OUT"});
+        dispatch({ type: 'USER_LOGGED_OUT' })
         return browserHistory.push('/')
       }
     })

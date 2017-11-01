@@ -1,14 +1,40 @@
-import React from 'react';
+import React from 'react'
 
-const Clear = (props) => {
+const Clear = ({ action }) => {
   return (
-
-    <svg width='14px' height='8px' viewBox='2 5 14 8' version='1.1' xmlns='http://www.w3.org/2000/svg' className='dim' onClick={props.action}>
-      <desc>Clear Icon</desc>
-      <defs />
-      <path d='M3.75,9.75 L14.25,9.75 L14.25,8.25 L3.75,8.25 L3.75,9.75 Z M2.25,12.75 L12.75,12.75 L12.75,11.25 L2.25,11.25 L2.25,12.75 Z M5.25,5.25 L5.25,6.75 L15.75,6.75 L15.75,5.25 L5.25,5.25 Z' id='Shape' stroke='none' fill='#000000' fillRule='nonzero' />
+    <svg
+      width='13px'
+      height='12px'
+      viewBox='0 0 23 22'
+      version='1.1'
+      xmlns='http://www.w3.org/2000/svg'
+      className='pointer dim'
+      onClick={action}
+    >
+      <g
+        id='Page-1'
+        stroke='none'
+        strokeWidth='2'
+        fill='none'
+        fillRule='evenodd'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      >
+        <g
+          id='check-circle'
+          transform='translate(1.000000, 0.000000)'
+          stroke='#000000'
+          strokeWidth='2'
+        >
+          <path
+            d='M20,10.07 L20,11 C19.9974678,15.4286859 17.082294,19.328213 12.8353524,20.583901 C8.58841086,21.839589 4.02139355,20.1523121 1.61095509,16.4370663 C-0.799483376,12.7218205 -0.479136554,7.86363898 2.39827419,4.49707214 C5.27568494,1.13050531 10.0247126,0.0575252842 14.07,1.86'
+            id='Shape'
+          />
+          <polyline id='Shape' points='21 2 10 13 7 10' />
+        </g>
+      </g>
     </svg>
-  );
-};
+  )
+}
 
-export default Clear;
+export default Clear
